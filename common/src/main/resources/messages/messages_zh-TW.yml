@@ -1,11 +1,11 @@
-# Aurelium Skills Chinese, Traditional (zh-TW) messages
-# Translators: 糟糕的頻道
-# Contribute here: https://crowdin.com/project/aureliumskills/zh-TW#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: 豐收
-    desc: "有{value}% 機率掉落兩倍農作物."
-    info: "{value}% 兩倍掉落"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: 農夫
     desc: "獲得{value}% 額外的農業經驗."
@@ -18,14 +18,10 @@ abilities:
     name: 遺傳學家
     desc: "從蔬菜增加{value}% 飽和度"
     info: "+{value} 飽和度"
-  triple_harvest:
-    name: 三倍豐收
-    desc: "有{value}% 機率掉落三倍農作物."
-    info: "{value}% 三倍掉落"
   lumberjack:
     name: 伐木工
-    desc: "有{value}% 機率掉落兩倍原木."
-    info: "{value}% 兩倍掉落"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: 伐木
     desc: "獲得{value}% 伐木經驗."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 三倍耐久度損壞"
   lucky_miner:
     name: 幸運礦工
-    desc: "有{value}% 機率掉落兩倍礦物."
-    info: "{value}% 兩倍掉落"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: 礦工
     desc: "獲得{value}% 挖礦經驗."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% 不會對耐久度造成損耗"
   lucky_catch:
     name: 幸運爪子
-    desc: "有{value}% 機率釣到兩倍漁獲."
-    info: "{value}% 兩倍漁獲"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: 漁夫
     desc: "獲得{value}% 額外的釣魚經驗"
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% 鏟子傷害"
   bigger_scoop:
     name: 大杓子
-    desc: "有{value}% 機率挖到三倍掉落物."
-    info: "{value}% 三倍掉落"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: 幸運黑桃
     desc: "有{value}% 機率釣到史詩級寶物."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% 持續速度"
   fleeting:
     name: 迅速
-    desc: "當血量小於20%時, 可獲得+{value} 速度"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% 速度"
     start: "<white>你獲得了短暫的速度提升! <gray>(+{value}% 速度)"
     end: "<gray>速度提升已失效"
@@ -481,6 +477,15 @@ commands:
     list: "<gold>{player}<white>的經驗值倍數: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
     skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
@@ -597,6 +602,10 @@ menus:
   stats:
     stats_title: 你的統計資料
     skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -703,10 +712,13 @@ skills:
     desc: "走路或跑步來獲得耐力{xp_unit}"
   agility:
     name: 敏捷
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
     name: 釀造
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
     name: 附魔
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
     name: 法術
     desc: "使用使用魔法能力來獲得法術{xp_unit}"
@@ -717,121 +729,6 @@ skills:
     name: 鍛造
     desc: "在鐵砧上使用書籍將物品結合來獲得鍛造{xp_unit}"
 sources:
-  block:
-    wheat: Wheat
-    potato: Potato
-    carrot: Carrot
-    beetroot: Beetroot
-    nether_wart: Nether Wart
-    pumpkin: Pumpkin
-    melon: Melon
-    sugar_cane: Sugar Cane
-    bamboo: Bamboo
-    cocoa: Cocoa
-    cactus: Cactus
-    brown_mushroom: Brown Mushroom
-    red_mushroom: Red Mushroom
-    kelp: Kelp
-    sea_pickle: Sea Pickles
-    sweet_berry_bush: Sweet Berries
-    glow_berries: Glow Berries
-    torchflower: Torchflower
-    pitcher_plant: Pitcher Plant
-    oak_log: Oak Log
-    spruce_log: Spruce Log
-    birch_log: Birch Log
-    jungle_log: Jungle Log
-    acacia_log: Acacia Log
-    dark_oak_log: Dark Oak Log
-    oak_leaves: Oak Leaves
-    spruce_leaves: Spruce Leaves
-    birch_leaves: Birch Leaves
-    jungle_leaves: Jungle Leaves
-    acacia_leaves: Acacia Leaves
-    dark_oak_leaves: Dark Oak Leaves
-    crimson_stem: Crimson Stem
-    warped_stem: Warped Stem
-    nether_wart_block: Nether Wart Block
-    warped_wart_block: Warped Wart Block
-    moss_block: Moss Block
-    moss_carpet: Moss Carpet
-    azalea: Azalea
-    flowering_azalea: Flowering Azalea
-    azalea_leaves: Azalea Leaves
-    flowering_azalea_leaves: Flowering Azalea Leaves
-    mangrove_log: Mangrove Log
-    mangrove_leaves: Mangrove Leaves
-    mangrove_roots: Mangrove Roots
-    cherry_log: Cherry Log
-    cherry_leaves: Cherry Leaves
-    pink_petals: Pink Petals
-    stone: Stone
-    cobblestone: Cobblestone
-    andesite: Andesite
-    diorite: Diorite
-    granite: Granite
-    coal_ore: Coal Ore
-    nether_quartz_ore: Nether Quartz Ore
-    iron_ore: Iron Ore
-    lapis_ore: Lapis Ore
-    redstone_ore: Redstone Ore
-    gold_ore: Gold Ore
-    diamond_ore: Diamond Ore
-    emerald_ore: Emerald Ore
-    terracotta: Terracotta
-    white_terracotta: White Terracotta
-    orange_terracotta: Orange Terracotta
-    yellow_terracotta: Yellow Terracotta
-    light_gray_terracotta: Light Gray Terrcotta
-    brown_terracotta: Brown Terrcotta
-    red_terracotta: Red Terracotta
-    netherrack: Netherrack
-    blackstone: Blackstone
-    basalt: Basalt
-    magma_block: Magma Block
-    nether_gold_ore: Nether Gold Ore
-    ancient_debris: Ancient Debris
-    end_stone: End Stone
-    obsidian: Obsidian
-    deepslate: Deepslate
-    copper_ore: Copper Ore
-    tuff: Tuff
-    calcite: Calcite
-    smooth_basalt: Smooth Basalt
-    amethyst_block: Amethyst Block
-    amethyst_cluster: Amethyst Cluster
-    deepslate_coal_ore: Deepslate Coal Ore
-    deepslate_iron_ore: Deepslate Iron Ore
-    deepslate_copper_ore: Deepslate Copper Ore
-    deepslate_gold_ore: Deepslate Gold Ore
-    deepslate_redstone_ore: Deepslate Redstone Ore
-    deepslate_lapis_ore: Deepslate Lapis Ore
-    deepslate_emerald_ore: Deepslate Emerald Ore
-    deepslate_diamond_ore: Deepslate Diamond Ore
-    dripstone_block: Dripstone Block
-    ice: Ice
-    packed_ice: Packed Ice
-    blue_ice: Blue Ice
-    reinforced_deepslate: Reinforced Deepslate
-    dirt: Dirt
-    grass_block: Grass Block
-    sand: Sand
-    gravel: Gravel
-    mycelium: Mycelium
-    clay: Clay
-    soul_sand: Soul Sand
-    coarse_dirt: Coarse Dirt
-    podzol: Podzol
-    soul_soil: Soul Soil
-    red_sand: Red Sand
-    rooted_dirt: Rooted Dirt
-    mud: Mud
-    muddy_mangrove_roots: Muddy Mangrove Roots
-    sculk: Sculk
-    sculk_vein: Sculk Vein
-    sculk_sensor: Sculk Sensor
-    sculk_catalyst: Sculk Catalyst
-    sculk_shrieker: Sculk Shrieker
   fishing:
     cod: Cod
     salmon: Salmon
@@ -841,85 +738,6 @@ sources:
     junk: Junk Items
     rare: Rare Loot
     epic: Epic Loot
-  entity:
-    player: Player
-    bat: Bat
-    cat: Cat
-    chicken: Chicken
-    cod: Cod
-    cow: Cow
-    donkey: Donkey
-    fox: Fox
-    giant: Giant
-    horse: Horse
-    mooshroom: Mooshroom
-    mule: Mule
-    ocelot: Ocelot
-    parrot: Parrot
-    pig: Pig
-    rabbit: Rabbit
-    salmon: Salmon
-    sheep: Sheep
-    skeleton_horse: Skeleton Horse
-    snow_golem: Snow Golem
-    squid: Squid
-    strider: Strider
-    tropical_fish: Tropical Fish
-    turtle: Turtle
-    villager: Villager
-    wandering_trader: Wandering Trader
-    bee: Bee
-    cave_spider: Cave Spider
-    dolphin: Dolphin
-    enderman: Enderman
-    iron_golem: Iron Golem
-    llama: Llama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Polar Bear
-    pufferfish: Pufferfish
-    spider: Spider
-    wolf: Wolf
-    zombified_piglin: Zombified Piglin
-    blaze: Blaze
-    creeper: Creeper
-    drowned: Drowned
-    elder_guardian: Elder Guardian
-    endermite: Endermite
-    evoker: Evoker
-    ghast: Ghast
-    guardian: Guardian
-    hoglin: Hoglin
-    husk: Husk
-    illusioner: Illusioner
-    magma_cube: Magma Cube
-    phantom: Phantom
-    piglin_brute: Piglin Brute
-    pillager: Pillager
-    ravager: Ravager
-    shulker: Shulker
-    silverfish: Silverfish
-    skeleton: Skeleton
-    slime: Slime
-    stray: Stray
-    vex: Vex
-    vindicator: Vindicator
-    witch: Witch
-    wither_skeleton: Wither Skeleton
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Zombie Villager
-    ender_dragon: Ender Dragon
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Glow Squid
-    goat: Goat
-    allay: Allay
-    frog: Frog
-    tadpole: Tadpole
-    warden: Warden
-    camel: Camel
-    sniffer: Sniffer
   damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -930,12 +748,26 @@ sources:
     swim_per_meter: Swimming
   jumping:
     jump_per_100: Jumping
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
   mana_ability_use:
     mana_ability_use: Using Mana Abilities
   item_consume:
     drink_regular: Drink Regular Potion
     drink_extended: Drink Extended Duration Potion
     drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
   potion_splash:
     splash_regular: Splash Regular Potion
     splash_extended: Splash Extended Duration Potion
@@ -970,7 +802,7 @@ stats:
     desc: "恢復可以增加恢復生命值和法力值的速度"
   luck:
     name: 運氣
-    desc: "運氣會增加您從怪物, 釣魚等中獲取稀有戰利品的機會"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: 智慧
     desc: "智慧可以增加最大法力值, 增加經驗值並減少鐵砧成本"
@@ -998,7 +830,7 @@ traits:
   mana_regen:
     name: Mana Regen
   luck:
-    name: Luck
+    name: Luck Attribute
   double_drop:
     name: Double Drop
   experience_bonus:
@@ -1015,6 +847,16 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAXED
 units:

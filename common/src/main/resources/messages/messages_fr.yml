@@ -1,11 +1,11 @@
-# Aurelium Skills French (fr) messages
-# Translators: superhize, Kilian Simon, HamtaBot TV, TigreDuBengale, Thibault Savenkoff
-# Contribute here: https://crowdin.com/project/aureliumskills/fr
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Récolte abondante
-    desc: "{value}% de chance d'obtenir deux fois plus de récoltes."
-    info: "{value}% de double drops"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: Fermier
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -18,14 +18,10 @@ abilities:
     name: Généticien
     desc: "Augmente le gain de saturation des aliments à base de plantes de {value}."
     info: "+{value} de Saturation"
-  triple_harvest:
-    name: Triple récolte
-    desc: "{value}% de chance d'obtenir un triple drops à partir des cultures."
-    info: "{value}% de chance de triple drop"
   lumberjack:
     name: Bûcheron
-    desc: "{value}% de chance d'obtenir un double drops de bûche."
-    info: "{value}% de chance de double drop"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: Butineuse
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 3x Dégâts de durabilité"
   lucky_miner:
     name: Mineur chanceux
-    desc: "{value}% de chance d'obtenir un double drops de minerai."
-    info: "{value}% de chance de double drop"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: Mineur
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% Aucune perte de durabilité"
   lucky_catch:
     name: Prise chanceuse
-    desc: "{value}% de chance d'obtenir un double drop en pêchant."
-    info: "{value}% de chance de double drop"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: Pêcheur
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% dégâts avec la pelle"
   bigger_scoop:
     name: Plus grande pelle
-    desc: "{value}% de chance d'obtenir un triple drops en creusant."
-    info: "{value}% de chance de triple drop"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: Pelles chanceuse
     desc: "{value}% de chance d'obtenir un butin rare en creusant."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% Potions de vitesse et saut plus longue"
   fleeting:
     name: Fugace
-    desc: "Gagnez +{value}% de vitesse de déplacement lorsque vous êtes à moins de 20% de votre vie"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% De vitesse"
     start: "<white>Vous avez gagné un boost de vitesse de déplacement! <gray>(+{value}% de vitesse)"
     end: "<gray>Le gain de vitesse s'est dissipé."
@@ -481,6 +477,15 @@ commands:
     list: "<white>Multiplicateur d'XP de <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} Multiplicateur d'XP : <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Seuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
     skills: "Profil de compétences Aurelium pour <gold>{name}:\n<gray>UUID : <white>{uuid}\n<gray>Compétences :{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Niveau : <white>{level}<gray>, XP : <white>{xp}"
@@ -597,6 +602,10 @@ menus:
   stats:
     stats_title: Vos statistiques
     skills: "7Compétences"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Réclamer les articles"
     inventory_full: "Vous n'avez pas assez de place dans votre inventaire pour récupérer ceci"
@@ -703,10 +712,13 @@ skills:
     desc: "Marchez et courez pour gagnez de l'{xp_unit} Endurance"
   agility:
     name: Agilité
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
     name: Alchimie
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
     name: Enchanteur
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
     name: Sorcier
     desc: "Utilisez des compétences à mana pour gagner de l'{xp_unit} Sorcier"
@@ -717,121 +729,6 @@ skills:
     name: Forgeron
     desc: "Combinez et appliquez un livre dans une enclume pour gagner de l'{xp_unit} Forgeron"
 sources:
-  block:
-    wheat: Blé
-    potato: Patate
-    carrot: Carotte
-    beetroot: Betterave
-    nether_wart: Verrue du Nether
-    pumpkin: Citrouille
-    melon: Pastèque
-    sugar_cane: Canne à sucre
-    bamboo: Bambu
-    cocoa: Cacao
-    cactus: Cactus
-    brown_mushroom: Champignon brun
-    red_mushroom: Champignon rouge
-    kelp: Algue
-    sea_pickle: Cornichon de mer
-    sweet_berry_bush: Baies sucrées
-    glow_berries: Baies luisantes
-    torchflower: Fleur de flambeau
-    pitcher_plant: Plante carnivore
-    oak_log: Bûche de Chêne
-    spruce_log: Bûche de Sapin
-    birch_log: Bûche de Bouleau
-    jungle_log: Bûche d'Acajou
-    acacia_log: Bûche d'Acacia
-    dark_oak_log: Bûche de chêne noir
-    oak_leaves: Feuilles de Chêne
-    spruce_leaves: Feuilles de sapin
-    birch_leaves: Feuilles de bouleau
-    jungle_leaves: Feuilles d'Acajou
-    acacia_leaves: Feuilles d'acacia
-    dark_oak_leaves: Feuilles de chêne noir
-    crimson_stem: Tige carmin
-    warped_stem: Tige biscornue
-    nether_wart_block: Bloc de Verrues du Nether
-    warped_wart_block: Bloc de verrues biscornues
-    moss_block: Bloc de mousse
-    moss_carpet: Tapis de mousse
-    azalea: Azalée
-    flowering_azalea: Azalée en fleurs
-    azalea_leaves: Feuilles d'azalée
-    flowering_azalea_leaves: Feuilles d'azalée fleuries
-    mangrove_log: Bûche de Mangrove
-    mangrove_leaves: Feuilles de Mangrove
-    mangrove_roots: Racines de Mangrove
-    cherry_log: Bûche de cerisier
-    cherry_leaves: Feuilles de cerisier
-    pink_petals: Pétales Roses
-    stone: Pierre
-    cobblestone: Cobblestone
-    andesite: Andésite
-    diorite: Diorite
-    granite: Granite
-    coal_ore: Minerai de Charbon
-    nether_quartz_ore: Minerai de quartz du Nether
-    iron_ore: Minerai de fer
-    lapis_ore: Minerai de Lapis
-    redstone_ore: Minerai de Redstone
-    gold_ore: Minerai d'Or
-    diamond_ore: Minerai de diamant
-    emerald_ore: Minerai d'émeraude
-    terracotta: Terre cuite
-    white_terracotta: Terre cuite blanche
-    orange_terracotta: Terre Cuite Orange
-    yellow_terracotta: Terre cuite jaune
-    light_gray_terracotta: Terre cuite grise claire
-    brown_terracotta: Terre cuite marron
-    red_terracotta: Terre Cuite Rouge
-    netherrack: Roche du Nether
-    blackstone: Pierre Noire
-    basalt: Basalte
-    magma_block: Bloc magma
-    nether_gold_ore: Minerai d'or du Nether
-    ancient_debris: Débris antiques
-    end_stone: Pierre de l'Ender
-    obsidian: Obsidienne
-    deepslate: Ardoise des abîmes
-    copper_ore: Minerai de cuivre
-    tuff: Tuf
-    calcite: Calcite
-    smooth_basalt: Basalte lisse
-    amethyst_block: Bloc d'améthyste
-    amethyst_cluster: Amas d'améthystes
-    deepslate_coal_ore: Minerai de charbon des abîmes
-    deepslate_iron_ore: Minerai de fer des abîmes
-    deepslate_copper_ore: Minerai de cuivre des abîmes
-    deepslate_gold_ore: Minerai d'or des abîmes
-    deepslate_redstone_ore: Minerai de redstone des abîmes
-    deepslate_lapis_ore: Minerai de lapis des abîmes
-    deepslate_emerald_ore: Minerai d'émeraude des abîmes
-    deepslate_diamond_ore: Minerai de diamant des abîmes
-    dripstone_block: Bloc de spéléothème
-    ice: Glace
-    packed_ice: Glace Compactée
-    blue_ice: Glace bleue
-    reinforced_deepslate: Ardoise des Abîmes Renforcée
-    dirt: Terre
-    grass_block: Bloc d'herbe
-    sand: Sable
-    gravel: Gravier
-    mycelium: Mycelium
-    clay: Argile
-    soul_sand: Sable des Ames
-    coarse_dirt: Terre stérile
-    podzol: Podzol
-    soul_soil: Terre des âmes
-    red_sand: Sable rouge
-    rooted_dirt: Terre avec racines
-    mud: Boue
-    muddy_mangrove_roots: Racines de Mangrove Boueuses
-    sculk: Sculk
-    sculk_vein: Veines de Sculk
-    sculk_sensor: Capteur Sculk
-    sculk_catalyst: Catalyseur de Sculk
-    sculk_shrieker: Hurleur Sculk
   fishing:
     cod: Morue
     salmon: Saumon
@@ -841,85 +738,6 @@ sources:
     junk: Éléments indésirables
     rare: Butin de groupe
     epic: Butin Épique
-  entity:
-    player: Joueur
-    bat: Chauve souris
-    cat: Chat
-    chicken: Poulet
-    cod: Morue
-    cow: Vache
-    donkey: Âne
-    fox: Renard
-    giant: Géant
-    horse: Cheval
-    mooshroom: Mooshroom
-    mule: Mule
-    ocelot: Ocelot
-    parrot: Perroquet
-    pig: Cochon
-    rabbit: Lapin
-    salmon: Saumon
-    sheep: Mouton
-    skeleton_horse: Cheval-squelette
-    snow_golem: Golem de Neige
-    squid: Poulpe
-    strider: Arpenteur
-    tropical_fish: Poisson tropical
-    turtle: Tortue
-    villager: Villageois
-    wandering_trader: Marchand voyageur
-    bee: Abeille
-    cave_spider: Araignée venimeuse
-    dolphin: Dauphin
-    enderman: Enderman
-    iron_golem: Golem de fer
-    llama: Lama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Ours Polaire
-    pufferfish: Poisson-globe
-    spider: Araignée
-    wolf: Loup
-    zombified_piglin: Piglin zombifié
-    blaze: Blaze
-    creeper: Creeper
-    drowned: Noyé
-    elder_guardian: Grand Gardien
-    endermite: Endermite
-    evoker: Évocateur
-    ghast: Ghast
-    guardian: Gardien
-    hoglin: Hoglin
-    husk: Zombie Momifié
-    illusioner: Illusionneur
-    magma_cube: Cube de magma
-    phantom: Fantôme
-    piglin_brute: Piglin Brute
-    pillager: Pilleur
-    ravager: Ravageur
-    shulker: Shulker
-    silverfish: Silverfish
-    skeleton: Squelette
-    slime: Slime
-    stray: Vagabond
-    vex: Vex
-    vindicator: Vindicateur
-    witch: Sorcière
-    wither_skeleton: Wither Squelette
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Zombie Villageois
-    ender_dragon: Dragon de l'Ender
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Poulpe luisant
-    goat: Chèvre
-    allay: Allay
-    frog: Grenouille
-    tadpole: Têtard
-    warden: Warden
-    camel: Chameau
-    sniffer: Sniffeur
   damage:
     mob_damage: Dégâts causés par les monstres
     player_damage: Dégâts infligés par un joueur
@@ -930,12 +748,26 @@ sources:
     swim_per_meter: Nager
   jumping:
     jump_per_100: Sauter
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
   mana_ability_use:
     mana_ability_use: Utiliser des aptitudes de mana
   item_consume:
     drink_regular: Buvez une potion normale
     drink_extended: Boire Potion de durée prolongée
     drink_upgraded: Boire Potion améliorée
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
   potion_splash:
     splash_regular: Jettez une potion normal
     splash_extended: Jettez une Potion de durée prolongée
@@ -970,7 +802,7 @@ stats:
     desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana"
   luck:
     name: Chance
-    desc: "Augmente vos chance d'obtenir des butins épique depuis les mobs, la pêche, et plus"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Sagesse
     desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume"
@@ -998,7 +830,7 @@ traits:
   mana_regen:
     name: Régénération de mana
   luck:
-    name: Chance
+    name: Luck Attribute
   double_drop:
     name: Butins Doublés
   experience_bonus:
@@ -1015,6 +847,16 @@ traits:
     name: Dégâts critique
   movement_speed:
     name: Vitesse de mouvement
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAX
 units:

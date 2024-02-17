@@ -1,11 +1,11 @@
-# Aurelium Skills German (de) messages
-# Translators: BlueGodBalmung, Sinonx3, Aiena Team, JABS7777, Korean BBQ, Fly
-# Contribute here: https://crowdin.com/project/aureliumskills/de#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Ertragreiche Ernte
-    desc: "{value}% Chance, doppelte Drops von Pflanzen zu bekommen."
-    info: "{value}% 2x Drops"
+    desc: "Gewährt +{value} Landwirtschafts-Glück, was die Chance auf zusätzliche Drops erhöht."
+    info: "+{value} Landwirtschafts-Glück"
   farmer:
     name: Landwirt
     desc: "Verdiene {value}% mehr Ackerbau EP."
@@ -18,14 +18,10 @@ abilities:
     name: Genetiker
     desc: "Erhöht den Sättigungsgewinn von pflanzlichen Lebensmitteln um {value}."
     info: "+{value} Sättigung"
-  triple_harvest:
-    name: Dreifache Ernte
-    desc: "{value}% Chance, dreifache Drops von Pflanzen zu bekommen."
-    info: "{value}% 3x Drops"
   lumberjack:
     name: Holzfäller
-    desc: "{value}% Chance, doppelte Drops von Baumstämmen zu bekommen."
-    info: "{value}% 2x Drops"
+    desc: "Gewährt +{value} Holzfäller-Glück, was die Chance auf zusätzliche Drops erhöht."
+    info: "+{value} Holzfäller-Glück"
   forager:
     name: Waldläufer
     desc: "Verdiene {value}% mehr Sammeln EP."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 3x Haltbarkeitsschaden"
   lucky_miner:
     name: Glückspilz
-    desc: "{value}% Chance, doppelte Drops von Erzen zu bekommen."
-    info: "{value}% 2x Drops"
+    desc: "Gewährt +{value} Bergbau-Glück, was die Chance auf zusätzliche Drops erhöht."
+    info: "+{value} Bergbau-Glück"
   miner:
     name: Minenarbeiter
     desc: "Verdiene {value}% mehr Bergbau EP."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% kein Haltbarkeitsverlust"
   lucky_catch:
     name: Glücklicher Fang
-    desc: "{value}% Chance hinzugefügt doppelte Ressourcen <gray> beim Fischen zu bekommen."
-    info: "{value}% 2x Drops"
+    desc: "Gewährt +{value} Angelglück, was die Chance auf zusätzliche Drops erhöht."
+    info: "+{value} Angelglück"
   fisher:
     name: Fischer
     desc: "Verdiene {value}% mehr Fischen EP"
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% Schaufelschaden"
   bigger_scoop:
     name: Riesen Schaufel
-    desc: "{value}% Chance, beim Graben dreifache Drops zu bekommen."
-    info: "{value}% 3x Drops"
+    desc: "Gewährt +{value} Ausgrab-Glück, was die Chance auf zusätzliche Drops erhöht."
+    info: "+{value}% Ausgrab-Glück"
   lucky_spades:
     name: Seltener Fund
     desc: "{value}% Chance, beim Graben epische Beute zu finden."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% längere Schnelligkeit/Sprungkraft"
   fleeting:
     name: Flüchtig
-    desc: "Deine Bewegungsgeschwindigkeit ist um {value}% erhöht solange deine Gesundheit unter 20% liegt."
+    desc: "Erhalte +{value} Geschwindigkeit bei weniger als 20% Gesundheit."
     info: "+{value}% Geschwindigkeit"
     start: "<white>Du hast einen flüchtigen Geschwindigkeitsschub erhalten! <gray>(+{value}% Schnelligkeit)"
     end: "<gray>Flüchtiger Geschwindigkeitsschub ist ausgelaufen"
@@ -606,6 +602,10 @@ menus:
   stats:
     stats_title: Deine Werte
     skills: "Fähigkeiten"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% für +{value} Drop"
+    chance_drops: "{chance}% für +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Gegenstand beanspruchen"
     inventory_full: "Du hast nicht genug Platz im Inventar um diesen Gegenstand zu beanspruchen"
@@ -729,121 +729,6 @@ skills:
     name: Schmieden
     desc: "Kombiniere und verwende deine Bücher in einem Amboss um Schmiede {xp_unit} zu bekommen"
 sources:
-  block:
-    wheat: Weizen
-    potato: Kartoffel
-    carrot: Karotte
-    beetroot: Rote Beete
-    nether_wart: Netherwarze
-    pumpkin: Kürbis
-    melon: Melone
-    sugar_cane: Zuckerrohr
-    bamboo: Bambou
-    cocoa: Kakao
-    cactus: Kaktus
-    brown_mushroom: Brauner Pilz
-    red_mushroom: Roter Pilz
-    kelp: Seetang
-    sea_pickle: Meeresgurke
-    sweet_berry_bush: Süße Beeren
-    glow_berries: Leuchtbeeren
-    torchflower: Fackellilie
-    pitcher_plant: Kannenpflanze
-    oak_log: Eichenstamm
-    spruce_log: Fichtenstamm
-    birch_log: Birkenstamm
-    jungle_log: Tropenstamm
-    acacia_log: Akazienstamm
-    dark_oak_log: Schwarzeichenstamm
-    oak_leaves: Eichenlaub
-    spruce_leaves: Fichtennadeln
-    birch_leaves: Birkenlaub
-    jungle_leaves: Tropenbaumblätter
-    acacia_leaves: Akazienblätter
-    dark_oak_leaves: Schwarzeichenlaub
-    crimson_stem: Karmesinstiel
-    warped_stem: Wirrstiel
-    nether_wart_block: Netherwarzenblock
-    warped_wart_block: Wirrwarzenblock
-    moss_block: Moosblock
-    moss_carpet: Moosteppich
-    azalea: Azalee
-    flowering_azalea: Blühende Azalee
-    azalea_leaves: Azaleenblätter
-    flowering_azalea_leaves: Blühendes Azaleenlaub
-    mangrove_log: Mangrovenstamm
-    mangrove_leaves: Mangrovenlaub
-    mangrove_roots: Mangrovenwurzel
-    cherry_log: Kirschstamm
-    cherry_leaves: Kirschlaub
-    pink_petals: Rosa Blütenblätter
-    stone: Stein
-    cobblestone: Bruchstein
-    andesite: Andesit
-    diorite: Diorit
-    granite: Granit
-    coal_ore: Kohleerz
-    nether_quartz_ore: Netherquarzerz
-    iron_ore: Eisenerz
-    lapis_ore: Lapis Stufe
-    redstone_ore: Redstone-Erz
-    gold_ore: Golderz
-    diamond_ore: Diamanterz
-    emerald_ore: Smaragderz
-    terracotta: Terrakotta
-    white_terracotta: Weiße Keramik
-    orange_terracotta: Orange Keramik
-    yellow_terracotta: Gelbe Keramik
-    light_gray_terracotta: Hellgraue Keramik
-    brown_terracotta: Braune Terrcotta
-    red_terracotta: Rote Keramik
-    netherrack: Netherrack
-    blackstone: Schwarzstein
-    basalt: Basalt
-    magma_block: Magmablock
-    nether_gold_ore: Nethergolderz
-    ancient_debris: Antiker Schrott
-    end_stone: Endstein
-    obsidian: Obsidian
-    deepslate: Tiefenschiefer
-    copper_ore: Kupfererz
-    tuff: Tuffstein
-    calcite: Kalzit
-    smooth_basalt: Glatter Basalt
-    amethyst_block: Amethystblock
-    amethyst_cluster: Amethysthaufen
-    deepslate_coal_ore: Tiefenschiefer-Steinkohle
-    deepslate_iron_ore: Tiefenschiefer-Eisenerz
-    deepslate_copper_ore: Tiefenschiefer-Kupfererz
-    deepslate_gold_ore: Tiefenschiefer-Golderz
-    deepslate_redstone_ore: Tiefenschiefer-Redstone-Erz
-    deepslate_lapis_ore: Tiefenschiefer-Lapislazulierz
-    deepslate_emerald_ore: Tiefenschiefer-Smaragderz
-    deepslate_diamond_ore: Tiefenschiefer-Diamanterz
-    dripstone_block: Tropfsteinblock
-    ice: Eis
-    packed_ice: Packeis
-    blue_ice: Blaueis
-    reinforced_deepslate: Verstärkter Tiefenschiefer
-    dirt: Erde
-    grass_block: Grasblock
-    sand: Sand
-    gravel: Kies
-    mycelium: Myzel
-    clay: Ton
-    soul_sand: Seelensand
-    coarse_dirt: Grobe Erde
-    podzol: Podsol
-    soul_soil: Seelenerde
-    red_sand: Roter Sand
-    rooted_dirt: Wurzelerde
-    mud: Schlamm
-    muddy_mangrove_roots: Schlammige Mangrovenwurzel
-    sculk: Sculk
-    sculk_vein: Sculk-Ader
-    sculk_sensor: Sculk-Sensor
-    sculk_catalyst: Sculk-Katalysator
-    sculk_shrieker: Sculk-Shrieker
   fishing:
     cod: Kabeljau
     salmon: Lachs
@@ -853,85 +738,6 @@ sources:
     junk: Müll
     rare: Seltene Beute
     epic: Epische Beute
-  entity:
-    player: Spieler
-    bat: Fledermaus
-    cat: Katze
-    chicken: Huhn
-    cod: Kabeljau
-    cow: Kuh
-    donkey: Esel
-    fox: Fuchs
-    giant: Riese
-    horse: Pferd
-    mooshroom: Mooshroom
-    mule: Maultier
-    ocelot: Ozelot
-    parrot: Papagei
-    pig: Schwein
-    rabbit: Hase
-    salmon: Lachs
-    sheep: Schaf
-    skeleton_horse: Skelettpferd
-    snow_golem: Schneegolem
-    squid: Tintenfisch
-    strider: Schreiter
-    tropical_fish: Tropischer Fisch
-    turtle: Schildkröte
-    villager: Dorfbewohner
-    wandering_trader: Wandernder Händler
-    bee: Biene
-    cave_spider: Höhlenspinne
-    dolphin: Delfin
-    enderman: Enderman
-    iron_golem: Eisengolem
-    llama: Lama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Eisbär
-    pufferfish: Kugelfisch
-    spider: Spinne
-    wolf: Wolf
-    zombified_piglin: Zombie-Piglin
-    blaze: Lohe
-    creeper: Creeper
-    drowned: Ertrunken
-    elder_guardian: Elder Wächter
-    endermite: Endermite
-    evoker: Magier
-    ghast: Ghast
-    guardian: Wächter
-    hoglin: Hoglin
-    husk: Wüstenzombie
-    illusioner: Illusionist
-    magma_cube: Magmawürfel
-    phantom: Phantom
-    piglin_brute: Piglin-Grobian
-    pillager: Plünderer
-    ravager: Verwüster
-    shulker: Shulker
-    silverfish: Silberfisch
-    skeleton: Skelett
-    slime: Schleim
-    stray: Streuner
-    vex: Plagegeist
-    vindicator: Verteidiger
-    witch: Hexe
-    wither_skeleton: Wither Skelett
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Zombiedorfbewohner
-    ender_dragon: Enderdrache
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Leuchttintenfisch
-    goat: Ziege
-    allay: Hilfsgeist
-    frog: Frosch
-    tadpole: Kaulquappe
-    warden: Wärter
-    camel: Dromedar
-    sniffer: Schnüffler
   damage:
     mob_damage: Schaden von Mobs
     player_damage: Schaden von Spielern
@@ -996,7 +802,7 @@ stats:
     desc: "Regeneration erhöht die Geschwindigkeit mit der sich sowohl Gesundheit als auch Mana erholen"
   luck:
     name: Glück
-    desc: "<gray>Glück erhöht deine Chance, seltene Beute<gray>von Mobs, Angeln und mehr zu erhalten"
+    desc: "Glück erhöht die Chance auf zusätzliche Drops von Blöcken beim Sammeln von Fertigkeiten."
   wisdom:
     name: Weisheit
     desc: "Weisheit erhöht dein maximales Mana, erhöht Erfahrungsgewinn und senkt Schmiedekosten"
@@ -1024,7 +830,7 @@ traits:
   mana_regen:
     name: Manaregeneration
   luck:
-    name: Glück
+    name: Glücksattribute
   double_drop:
     name: Doppelte Drops
   experience_bonus:
@@ -1041,6 +847,16 @@ traits:
     name: Kritischer Schaden
   movement_speed:
     name: Bewegungsgeschwindigkeit
+  farming_luck:
+    name: Landwirtschafts-Glück
+  foraging_luck:
+    name: Holzfäller-Glück
+  mining_luck:
+    name: Bergbau-Glück
+  excavation_luck:
+    name: Ausgrab-Glück
+  fishing_luck:
+    name: Angelglück
 ui:
   maxed: Maximiert
 units:

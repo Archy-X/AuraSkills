@@ -1,11 +1,11 @@
-# Aurelium Skills Chinese, Simplified (zh-CN) messages
-# Translators: SnowCutieOwO, Qian_ai, huiqiang233, Kauo
-# Contribute here: https://crowdin.com/project/aureliumskills/zh-CN#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: 收获满满
-    desc: "{value}% 的几率收获双倍农作物"
-    info: "{value}% 双倍 掉落物"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: 耕作专精
     desc: "获得额外的 {value}% 耕作熟练度."
@@ -18,14 +18,10 @@ abilities:
     name: 素食主义者
     desc: "额外增加 {value} 点植物食物回复的饥饿度"
     info: "+{value}% 回复的饱食度"
-  triple_harvest:
-    name: 超级丰收
-    desc: "{value}% 的几率收获三倍掉落物"
-    info: "{value}% 三倍 掉落物"
   lumberjack:
     name: 精准伐木
-    desc: "{value}% 的几率在伐木时获得双倍的木头"
-    info: "{value}% 双倍 掉落物"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: 伐木专精
     desc: "获得额外的 {value}% 伐木熟练度"
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 三倍耐久损耗"
   lucky_miner:
     name: 幸运挖掘者
-    desc: "{value}% 的几率在挖矿时掉落双倍矿物"
-    info: "{value}% 双倍矿物掉落"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: 矿工专精
     desc: "获得额外的 {value}% 挖矿熟练度"
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% 盔甲耐久损耗减免"
   lucky_catch:
     name: 幸运一竿
-    desc: "{value}% 的几率钓上双倍物品"
-    info: "{value}% 双倍 掉落物"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: 捕鱼专精
     desc: "获得额外的 {value}% 的钓鱼熟练度"
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% 任意 铲 伤害"
   bigger_scoop:
     name: 加倍掉落
-    desc: "{value}% 的几率在挖掘时掉落三倍掉落物"
-    info: "{value}% 三倍 掉落物"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: 捡漏之王
     desc: "{value}% 的几率在挖掘时掉落史诗掉落物"
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% 持续时间延长"
   fleeting:
     name: 残血飞奔
-    desc: "低于 20% 生命值时获得 +{value}% 的速度"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% 速度"
     start: "<white>你获得了残血速度提升! <gray>(+{value}% 速度)"
     end: "<gray>残血速度提升已被关闭"
@@ -606,6 +602,10 @@ menus:
   stats:
     stats_title: 你的属性
     skills: "技能"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "领取物品"
     inventory_full: "你的物品栏没有足够的空间"
@@ -729,121 +729,6 @@ skills:
     name: 锻造
     desc: "使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}"
 sources:
-  block:
-    wheat: 小麦
-    potato: 马铃薯
-    carrot: 胡萝卜
-    beetroot: 甜菜根
-    nether_wart: 下界疣
-    pumpkin: 南瓜
-    melon: 瓜
-    sugar_cane: 甘蔗
-    bamboo: 竹子
-    cocoa: 可可豆
-    cactus: 仙人掌
-    brown_mushroom: 棕色蘑菇
-    red_mushroom: 红色蘑菇
-    kelp: 海带
-    sea_pickle: 海泡菜
-    sweet_berry_bush: 甜浆果
-    glow_berries: 发光浆果
-    torchflower: 火把花
-    pitcher_plant: 瓶子草
-    oak_log: 橡木原木
-    spruce_log: 云杉木原木
-    birch_log: 白桦原木
-    jungle_log: 丛林原木
-    acacia_log: 金合欢原木
-    dark_oak_log: 深色橡木原木
-    oak_leaves: 橡树树叶
-    spruce_leaves: 云杉树叶
-    birch_leaves: 白桦树叶
-    jungle_leaves: 丛林树叶
-    acacia_leaves: 金合欢树叶
-    dark_oak_leaves: 深色橡树树叶
-    crimson_stem: 绯红菌柄
-    warped_stem: 诡异菌柄
-    nether_wart_block: 下界疣块
-    warped_wart_block: 诡异疣块
-    moss_block: 苔藓块
-    moss_carpet: 苔藓地毯
-    azalea: 杜鹃花丛
-    flowering_azalea: 盛开的杜鹃花丛
-    azalea_leaves: 杜鹃树叶
-    flowering_azalea_leaves: 盛开的杜鹃树叶
-    mangrove_log: 红树原木
-    mangrove_leaves: 红树树叶
-    mangrove_roots: 红树根
-    cherry_log: 樱花原木
-    cherry_leaves: 樱花树叶
-    pink_petals: 粉红色花簇
-    stone: 石头
-    cobblestone: 圆石
-    andesite: 安山岩
-    diorite: 闪长岩
-    granite: 花岗岩
-    coal_ore: 煤矿石
-    nether_quartz_ore: 下界石英矿石
-    iron_ore: 铁矿石
-    lapis_ore: 青金石矿石
-    redstone_ore: 红石矿石
-    gold_ore: 金矿石
-    diamond_ore: 钻石矿石
-    emerald_ore: 绿宝石矿石
-    terracotta: 陶瓦
-    white_terracotta: 白色陶瓦
-    orange_terracotta: 橙色陶瓦
-    yellow_terracotta: 黄色陶瓦
-    light_gray_terracotta: 淡灰色陶瓦
-    brown_terracotta: 棕色陶瓦
-    red_terracotta: 红色陶瓦
-    netherrack: 下界岩
-    blackstone: 黑石
-    basalt: 玄武岩
-    magma_block: 岩浆块
-    nether_gold_ore: 下界金矿石
-    ancient_debris: 远古残骸
-    end_stone: 末地石
-    obsidian: 黑曜石
-    deepslate: 深板岩
-    copper_ore: 铜矿石
-    tuff: 凝灰岩
-    calcite: 方解石
-    smooth_basalt: 平滑玄武岩
-    amethyst_block: 紫晶方块
-    amethyst_cluster: 紫水晶簇
-    deepslate_coal_ore: 深板岩煤矿
-    deepslate_iron_ore: 深板岩铁矿
-    deepslate_copper_ore: 深板岩铜矿石
-    deepslate_gold_ore: 深板岩金矿石
-    deepslate_redstone_ore: 深板岩红矿石
-    deepslate_lapis_ore: 深板岩青金石矿石
-    deepslate_emerald_ore: 深板岩绿宝石矿石
-    deepslate_diamond_ore: 深板岩钻石矿石
-    dripstone_block: 深板岩
-    ice: 冰
-    packed_ice: 浮冰
-    blue_ice: 蓝冰
-    reinforced_deepslate: 强化深板岩
-    dirt: 泥土
-    grass_block: 草方块
-    sand: 沙子
-    gravel: 砂砾
-    mycelium: 菌丝
-    clay: 黏土块
-    soul_sand: 灵魂沙
-    coarse_dirt: 砂土
-    podzol: 灰化土
-    soul_soil: 灵魂土
-    red_sand: 红沙
-    rooted_dirt: 缠根泥土
-    mud: 泥巴
-    muddy_mangrove_roots: 沾泥的红树根
-    sculk: 幽匿块
-    sculk_vein: 幽匿脉络
-    sculk_sensor: 幽匿感测体
-    sculk_catalyst: 幽匿催发体
-    sculk_shrieker: 幽匿尖啸体
   fishing:
     cod: 鳕鱼
     salmon: 鲑鱼
@@ -853,85 +738,6 @@ sources:
     junk: 垃圾
     rare: 稀有战利品
     epic: 史诗级战利品
-  entity:
-    player: 玩家
-    bat: 蝙蝠
-    cat: 猫
-    chicken: 鸡
-    cod: 鳕鱼
-    cow: 牛
-    donkey: 驴
-    fox: 狐狸
-    giant: 巨人
-    horse: 马
-    mooshroom: 眸菇
-    mule: 骡子
-    ocelot: 豹猫
-    parrot: 鹦鹉
-    pig: 猪
-    rabbit: 兔子
-    salmon: 鲑鱼
-    sheep: 羊
-    skeleton_horse: 骷髅马
-    snow_golem: 雪傀儡
-    squid: 鱿鱼
-    strider: 炽足兽
-    tropical_fish: 热带鱼
-    turtle: 海龟
-    villager: 村民
-    wandering_trader: 流浪商人
-    bee: 蜜蜂
-    cave_spider: 洞穴蜘蛛
-    dolphin: 海豚
-    enderman: 末影人
-    iron_golem: 铁傀儡
-    llama: 羊驼
-    piglin: 猪灵
-    panda: 熊猫
-    polar_bear: 北极熊
-    pufferfish: 河豚
-    spider: 蜘蛛
-    wolf: 狼
-    zombified_piglin: 僵尸猪灵
-    blaze: 烈焰人
-    creeper: 苦力怕
-    drowned: 溺尸
-    elder_guardian: 远古守卫者
-    endermite: 末影螨
-    evoker: 唤魔者
-    ghast: 恶魂
-    guardian: 守卫者
-    hoglin: 疣猪兽
-    husk: 尸壳
-    illusioner: 幻术师
-    magma_cube: 岩浆怪
-    phantom: 幻翼
-    piglin_brute: 猪灵蛮兵
-    pillager: 掠夺者
-    ravager: 劫掠兽
-    shulker: 潜影贝
-    silverfish: 蠹虫
-    skeleton: 骷髅
-    slime: 史莱姆
-    stray: 流浪者
-    vex: 恼鬼
-    vindicator: 卫道士
-    witch: 女巫
-    wither_skeleton: 凋灵骷髅
-    zoglin: 僵尸疣猪兽
-    zombie: 僵尸
-    zombie_villager: 僵尸村民
-    ender_dragon: 末影龙
-    wither: 凋灵骷髅
-    axolotl: 美西螈
-    glow_squid: 发光鱿鱼
-    goat: 山羊
-    allay: 悦灵
-    frog: 青蛙
-    tadpole: 蝌蚪
-    warden: 监守者
-    camel: 骆驼
-    sniffer: 嗅探兽
   damage:
     mob_damage: 来自生物的伤害
     player_damage: 来自玩家的伤害
@@ -996,7 +802,7 @@ stats:
     desc: "<gray>再生增加你的生命和魔法值恢复速度"
   luck:
     name: 幸运
-    desc: "<gray>幸运能够提升掉落物的掉落几率, 以及获得稀有掉落物的几率"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: 智慧
     desc: "<gray>智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费"
@@ -1024,7 +830,7 @@ traits:
   mana_regen:
     name: 魔力再生
   luck:
-    name: 幸运
+    name: Luck Attribute
   double_drop:
     name: 双倍掉落
   experience_bonus:
@@ -1041,6 +847,16 @@ traits:
     name: 暴击伤害
   movement_speed:
     name: 移动速度
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: 满级
 units:

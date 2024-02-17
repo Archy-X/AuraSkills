@@ -29,11 +29,9 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("com.github.Archy-X:Slate:9ebff0099f") {
-        exclude("org.spigotmc", "spigot-api")
-    }
+    implementation("com.github.Archy-X:Slate:ce801c1810")
     implementation("org.jetbrains:annotations:24.0.1")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.2")
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
@@ -58,8 +56,6 @@ tasks.withType<ShadowJar> {
     relocate("org.bstats", "dev.aurelium.auraskills.bstats")
     relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
     relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
-    relocate("net.kyori.adventure", "dev.aurelium.auraskills.adventure")
-    relocate("net.kyori.examination", "dev.aurelium.auraskills.examination")
 
     finalizedBy("copyJar")
 }

@@ -1,11 +1,11 @@
-# Aurelium Skills Czech (cs) messages
-# Translators: Syndrom, Jitsuzai, L0wiee, Cikani Z hor, Jirman Jirman
-# Contribute here: https://crowdin.com/project/aureliumskills/cs#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Bohatá Sklizeň
-    desc: "{value}% šance na dvojité dropy z plodin."
-    info: "{value}% Dvojité dropy"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: Farmář
     desc: "Získejte o {value}% více XP při farmaření."
@@ -18,14 +18,10 @@ abilities:
     name: Genetik
     desc: "Zvyšuje nárůst nasycení pomocí rostlinných potravin o {value}."
     info: "+{value} Sytosti"
-  triple_harvest:
-    name: Trojnásobná sklizeň
-    desc: "{value}% šance na dvojité dropy z plodin."
-    info: "{value}% 2x Drops"
   lumberjack:
     name: Dřevorubec
-    desc: "{value}% šance na dvojité dropy z plodin."
-    info: "{value}% Dvojité dropy"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: Lesník
     desc: "Získejte o {value}% více XP při lesnictví."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 3x Poškození Odolnosti"
   lucky_miner:
     name: Horník Štěstěny
-    desc: "{value}% šance na dvojité dropy z rud."
-    info: "{value}% Dvojité dropy"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: Horník
     desc: "Získej o {value}% více XP při těžení."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% Bez ztráty životnosti"
   lucky_catch:
     name: Úlovek štěstěny
-    desc: "{value}% šance na dvojité dropy při rybaření."
-    info: "{value}% Dvojité dropy"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: Rybář
     desc: "Získejte o {value}% více XP k rybaření"
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% Poškození lopatou"
   bigger_scoop:
     name: Větší Naběračka
-    desc: "O {value}% vetší šance na získání trojitých dropů z kopání."
-    info: "{value}% šance na trojitý drop"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: Rýče štěstěny
     desc: "O {value}% vyšší šance na získání epické kořisti z kopání."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% Dlouhotrvající Rychlost"
   fleeting:
     name: Doznívání
-    desc: "Získej o +{value}% rychlosti pohybu, když máš méně než 20% životů"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% Rychlost"
     start: "<white>Právě jsi získal doznívající zvýšení rychlosti pohybu! <gray>(+{value}% Rychlost)"
     end: "<gray>Zvýšení rychlosti pohybu odeznělo"
@@ -481,6 +477,15 @@ commands:
     list: "<white>Global XP multiplikátor pro <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplikátor: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Pouze hráči mohou uvést svůj vlastní multiplikátor! Urči hráče!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
     skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
@@ -597,6 +602,10 @@ menus:
   stats:
     stats_title: Tvé statistiky
     skills: "Dovednosti"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Získej předměty"
     inventory_full: "Nemáš dostatek místa ve svém inventáři, abys sis tento předmět mohli nárokovat"
@@ -703,10 +712,13 @@ skills:
     desc: "Procházej se a spusť pro získaní zkušenosti {xp_unit}"
   agility:
     name: Agility
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
     name: Alchemie
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
     name: Enchanting
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
     name: Čarodějnictví
     desc: "Použij schopnost many k získání Sorceru {xp_unit}"
@@ -717,121 +729,6 @@ skills:
     name: Kovářství
     desc: "=Kombinuj knihy v kovadlině na Vydělávej jako kováč {xp_unit}"
 sources:
-  block:
-    wheat: Wheat
-    potato: Potato
-    carrot: Carrot
-    beetroot: Beetroot
-    nether_wart: Nether Wart
-    pumpkin: Pumpkin
-    melon: Melon
-    sugar_cane: Sugar Cane
-    bamboo: Bamboo
-    cocoa: Cocoa
-    cactus: Cactus
-    brown_mushroom: Brown Mushroom
-    red_mushroom: Red Mushroom
-    kelp: Kelp
-    sea_pickle: Sea Pickles
-    sweet_berry_bush: Sweet Berries
-    glow_berries: Glow Berries
-    torchflower: Torchflower
-    pitcher_plant: Pitcher Plant
-    oak_log: Oak Log
-    spruce_log: Spruce Log
-    birch_log: Birch Log
-    jungle_log: Jungle Log
-    acacia_log: Acacia Log
-    dark_oak_log: Dark Oak Log
-    oak_leaves: Oak Leaves
-    spruce_leaves: Spruce Leaves
-    birch_leaves: Birch Leaves
-    jungle_leaves: Jungle Leaves
-    acacia_leaves: Acacia Leaves
-    dark_oak_leaves: Dark Oak Leaves
-    crimson_stem: Crimson Stem
-    warped_stem: Warped Stem
-    nether_wart_block: Nether Wart Block
-    warped_wart_block: Warped Wart Block
-    moss_block: Moss Block
-    moss_carpet: Moss Carpet
-    azalea: Azalea
-    flowering_azalea: Flowering Azalea
-    azalea_leaves: Azalea Leaves
-    flowering_azalea_leaves: Flowering Azalea Leaves
-    mangrove_log: Mangrove Log
-    mangrove_leaves: Mangrove Leaves
-    mangrove_roots: Mangrove Roots
-    cherry_log: Cherry Log
-    cherry_leaves: Cherry Leaves
-    pink_petals: Pink Petals
-    stone: Stone
-    cobblestone: Cobblestone
-    andesite: Andesite
-    diorite: Diorite
-    granite: Granite
-    coal_ore: Coal Ore
-    nether_quartz_ore: Nether Quartz Ore
-    iron_ore: Iron Ore
-    lapis_ore: Lapis Ore
-    redstone_ore: Redstone Ore
-    gold_ore: Gold Ore
-    diamond_ore: Diamond Ore
-    emerald_ore: Emerald Ore
-    terracotta: Terracotta
-    white_terracotta: White Terracotta
-    orange_terracotta: Orange Terracotta
-    yellow_terracotta: Yellow Terracotta
-    light_gray_terracotta: Light Gray Terrcotta
-    brown_terracotta: Brown Terrcotta
-    red_terracotta: Red Terracotta
-    netherrack: Netherrack
-    blackstone: Blackstone
-    basalt: Basalt
-    magma_block: Magma Block
-    nether_gold_ore: Nether Gold Ore
-    ancient_debris: Ancient Debris
-    end_stone: End Stone
-    obsidian: Obsidian
-    deepslate: Deepslate
-    copper_ore: Copper Ore
-    tuff: Tuff
-    calcite: Calcite
-    smooth_basalt: Smooth Basalt
-    amethyst_block: Amethyst Block
-    amethyst_cluster: Amethyst Cluster
-    deepslate_coal_ore: Deepslate Coal Ore
-    deepslate_iron_ore: Deepslate Iron Ore
-    deepslate_copper_ore: Deepslate Copper Ore
-    deepslate_gold_ore: Deepslate Gold Ore
-    deepslate_redstone_ore: Deepslate Redstone Ore
-    deepslate_lapis_ore: Deepslate Lapis Ore
-    deepslate_emerald_ore: Deepslate Emerald Ore
-    deepslate_diamond_ore: Deepslate Diamond Ore
-    dripstone_block: Dripstone Block
-    ice: Ice
-    packed_ice: Packed Ice
-    blue_ice: Blue Ice
-    reinforced_deepslate: Reinforced Deepslate
-    dirt: Dirt
-    grass_block: Grass Block
-    sand: Sand
-    gravel: Gravel
-    mycelium: Mycelium
-    clay: Clay
-    soul_sand: Soul Sand
-    coarse_dirt: Coarse Dirt
-    podzol: Podzol
-    soul_soil: Soul Soil
-    red_sand: Red Sand
-    rooted_dirt: Rooted Dirt
-    mud: Mud
-    muddy_mangrove_roots: Muddy Mangrove Roots
-    sculk: Sculk
-    sculk_vein: Sculk Vein
-    sculk_sensor: Sculk Sensor
-    sculk_catalyst: Sculk Catalyst
-    sculk_shrieker: Sculk Shrieker
   fishing:
     cod: Cod
     salmon: Salmon
@@ -841,85 +738,6 @@ sources:
     junk: Junk Items
     rare: Rare Loot
     epic: Epic Loot
-  entity:
-    player: Player
-    bat: Bat
-    cat: Cat
-    chicken: Chicken
-    cod: Cod
-    cow: Cow
-    donkey: Donkey
-    fox: Fox
-    giant: Giant
-    horse: Horse
-    mooshroom: Mooshroom
-    mule: Mule
-    ocelot: Ocelot
-    parrot: Parrot
-    pig: Pig
-    rabbit: Rabbit
-    salmon: Salmon
-    sheep: Sheep
-    skeleton_horse: Skeleton Horse
-    snow_golem: Snow Golem
-    squid: Squid
-    strider: Strider
-    tropical_fish: Tropical Fish
-    turtle: Turtle
-    villager: Villager
-    wandering_trader: Wandering Trader
-    bee: Bee
-    cave_spider: Cave Spider
-    dolphin: Dolphin
-    enderman: Enderman
-    iron_golem: Iron Golem
-    llama: Llama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Polar Bear
-    pufferfish: Pufferfish
-    spider: Spider
-    wolf: Wolf
-    zombified_piglin: Zombified Piglin
-    blaze: Blaze
-    creeper: Creeper
-    drowned: Drowned
-    elder_guardian: Elder Guardian
-    endermite: Endermite
-    evoker: Evoker
-    ghast: Ghast
-    guardian: Guardian
-    hoglin: Hoglin
-    husk: Husk
-    illusioner: Illusioner
-    magma_cube: Magma Cube
-    phantom: Phantom
-    piglin_brute: Piglin Brute
-    pillager: Pillager
-    ravager: Ravager
-    shulker: Shulker
-    silverfish: Silverfish
-    skeleton: Skeleton
-    slime: Slime
-    stray: Stray
-    vex: Vex
-    vindicator: Vindicator
-    witch: Witch
-    wither_skeleton: Wither Skeleton
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Zombie Villager
-    ender_dragon: Ender Dragon
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Glow Squid
-    goat: Goat
-    allay: Allay
-    frog: Frog
-    tadpole: Tadpole
-    warden: Warden
-    camel: Camel
-    sniffer: Sniffer
   damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -930,12 +748,26 @@ sources:
     swim_per_meter: Swimming
   jumping:
     jump_per_100: Jumping
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
   mana_ability_use:
     mana_ability_use: Using Mana Abilities
   item_consume:
     drink_regular: Drink Regular Potion
     drink_extended: Drink Extended Duration Potion
     drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
   potion_splash:
     splash_regular: Splash Regular Potion
     splash_extended: Splash Extended Duration Potion
@@ -970,7 +802,7 @@ stats:
     desc: "Regenerace zvyšuje tvojí rychlost Obnovení zdraví i many"
   luck:
     name: Štěstí
-    desc: "Štěstí zvyšuje tvoji šancí na získaní Vzácnou kořist z příšer, rybaření, a ostátních"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Moudrost
     desc: "Moudrost zvyšuje tvoji maximální manu, zvyšuje Získávání zkušeností a snižuje náklad na kovadlinu"
@@ -998,7 +830,7 @@ traits:
   mana_regen:
     name: Mana Regen
   luck:
-    name: Luck
+    name: Luck Attribute
   double_drop:
     name: Double Drop
   experience_bonus:
@@ -1015,6 +847,16 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAXED
 units:

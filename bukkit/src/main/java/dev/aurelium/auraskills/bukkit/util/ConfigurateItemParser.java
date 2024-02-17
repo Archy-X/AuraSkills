@@ -291,7 +291,7 @@ public class ConfigurateItemParser {
     @Nullable
     public String parseDisplayName(ConfigurationNode section) {
         if (!section.node("display_name").virtual()) {
-            return TextUtil.applyColor(section.node("display_name").getString());
+            return TextUtil.toString(TextUtil.toComponent(section.node("display_name").getString()));
         }
         return null;
     }
@@ -302,7 +302,7 @@ public class ConfigurateItemParser {
             List<String> lore = section.node("lore").getList(String.class, new ArrayList<>());
             List<String> formattedLore = new ArrayList<>();
             for (String line : lore) {
-                line = TextUtil.applyColor(line);
+                line = TextUtil.toString(TextUtil.toComponent(line));
                 formattedLore.add(line);
             }
             return formattedLore;

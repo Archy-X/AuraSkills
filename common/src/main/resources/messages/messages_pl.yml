@@ -1,11 +1,11 @@
-# Aurelium Skills Polish (pl) messages
-# Translators: Kaspian, Xeymoi, PLKaratusPL
-# Contribute here: https://crowdin.com/project/aureliumskills/pl#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Obfite Zbiory
-    desc: "{value}% szans na zdobycie podwójnych dropów z upraw."
-    info: "{value}% 2x Dropów"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: Rolnik
     desc: "Zdobywaj {value}% więcej XP Rolnictwa."
@@ -18,14 +18,10 @@ abilities:
     name: Genetyk
     desc: "Zwiększa przyrost nasycenia z żywności roślinnej o {value}."
     info: "+{value} Nasycenia"
-  triple_harvest:
-    name: Potrójne Zbieranie
-    desc: "{value}% szans na zdobycie potrójnych dropów z upraw."
-    info: "{value}% 3x Dropów"
   lumberjack:
     name: Świetny Drwal
-    desc: "{value}% szans na zdobycie podwójnych dropów z pni."
-    info: "{value}% 2x Dropów"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: Stolarz
     desc: "Zdobywaj {value}% więcej XP Drwalnictwa."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 3x Obrażeń Wytrzymałości"
   lucky_miner:
     name: Szczęśliwy Górnik
-    desc: "{value}% szans na zdobycie podwójnych dropów z rud."
-    info: "{value}% 2x Dropów"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: Górnik
     desc: "Zdobywaj {value}% więcej XP Górnictwa."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% Brak Utraty Wytrzymałości"
   lucky_catch:
     name: Szczęśliwy Połów
-    desc: "{value}% szans na zdobycie podwójnych dropów z łowienia."
-    info: "{value}% 2x Dropów"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: Rybak
     desc: "Zdobywaj {value}% więcej XP Wędkarstwa."
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% Obrażeń Łopaty"
   bigger_scoop:
     name: Większa Miarka
-    desc: "{value}% szans na zdobycie potrójnych dropów z kopania."
-    info: "{value}% 3x Dropów"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: Szczęśliwe Szpady
     desc: "{value}% szans na zdobycie epickich łupów z kopania."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% Dłuższa Prędkość"
   fleeting:
     name: Trucht
-    desc: "Zyskaj +{value}% szybkości ruchu, gdy twoje zdrowie spadnie poniżej 20%"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% Prędkości"
     start: "<white>Otrzymałeś zwiększenie szybkości truchtu! <gray>(+{value}% Prędkości)"
     end: "<gray>Przyśpieszenie szybkości truchtu zostało wyłączone"
@@ -606,6 +602,10 @@ menus:
   stats:
     stats_title: Twoje Statystyki
     skills: "Umiejętności"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Odbierz Przedmioty"
     inventory_full: "Nie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot"
@@ -729,121 +729,6 @@ skills:
     name: Kowalstwo
     desc: "Łącz i stosuj książki w kowadle, aby zdobyć {xp_unit} Kowalstwa"
 sources:
-  block:
-    wheat: Pszenica
-    potato: Ziemniak
-    carrot: Marchewka
-    beetroot: Burak
-    nether_wart: Netherowa brodawka
-    pumpkin: Dynia
-    melon: Arbuz
-    sugar_cane: Trzcina cukrowa
-    bamboo: Bambus
-    cocoa: Kakao
-    cactus: Kaktus
-    brown_mushroom: Borowik
-    red_mushroom: Muchomor
-    kelp: Wodorost
-    sea_pickle: Iskrzyłuda
-    sweet_berry_bush: Słodkie jagody
-    glow_berries: Świecące jagody
-    torchflower: Torchflower
-    pitcher_plant: Pitcher Plant
-    oak_log: Dębowy pień
-    spruce_log: Świerkowy pień
-    birch_log: Brzozowy pień
-    jungle_log: Tropikalny pień
-    acacia_log: Akacjowy pień
-    dark_oak_log: Ciemnodębowy pień
-    oak_leaves: Dębowe liście
-    spruce_leaves: Świerkowe liście
-    birch_leaves: Brzozowe liście
-    jungle_leaves: Tropikalne liście
-    acacia_leaves: Akacjowe liście
-    dark_oak_leaves: Ciemnodębowe liście
-    crimson_stem: Szkarłatny trzon
-    warped_stem: Spaczony trzon
-    nether_wart_block: Blok netherowych brodawek
-    warped_wart_block: Blok spaczonych brodawek
-    moss_block: Blok mchu
-    moss_carpet: Warstwa mchu
-    azalea: Azalia
-    flowering_azalea: Kwitnąca azalia
-    azalea_leaves: Liście azalii
-    flowering_azalea_leaves: Kwitnące liście azalii
-    mangrove_log: Namorzynowy pień
-    mangrove_leaves: Namorzynowe liście
-    mangrove_roots: Namorzynowe korzenie
-    cherry_log: Cherry Log
-    cherry_leaves: Cherry Leaves
-    pink_petals: Pink Petals
-    stone: Kamień
-    cobblestone: Bruk
-    andesite: Andezyt
-    diorite: Dioryt
-    granite: Granit
-    coal_ore: Złoże węgla
-    nether_quartz_ore: Złoże kwarcu
-    iron_ore: Złoże żelaza
-    lapis_ore: Złoże lazurytu
-    redstone_ore: Złoże redstone
-    gold_ore: Złoże złota
-    diamond_ore: Złoże diamentu
-    emerald_ore: Złoże szmaragdu
-    terracotta: Terakota
-    white_terracotta: Biała terakota
-    orange_terracotta: Pomarańczowa terakota
-    yellow_terracotta: Żółta terakota
-    light_gray_terracotta: Jasnoszara terakota
-    brown_terracotta: Brązowa terakota
-    red_terracotta: Czerwona terakota
-    netherrack: Netherrack
-    blackstone: Czernit
-    basalt: Bazalt
-    magma_block: Blok magmy
-    nether_gold_ore: Netherowe złoże złota
-    ancient_debris: Pradawne zgliszcza
-    end_stone: Kamień Endu
-    obsidian: Obsydian
-    deepslate: Łupek
-    copper_ore: Złoże miedzi
-    tuff: Tuf
-    calcite: Kalcyt
-    smooth_basalt: Gładki bazalt
-    amethyst_block: Blok ametystu
-    amethyst_cluster: Skupisko ametystu
-    deepslate_coal_ore: Łupkowe złoże węgla
-    deepslate_iron_ore: Łupkowe złoże żelaza
-    deepslate_copper_ore: Łupkowe złoże miedzi
-    deepslate_gold_ore: Łupkowe złoże złota
-    deepslate_redstone_ore: Łupkowe złoże redstone
-    deepslate_lapis_ore: Łupkowe złoże lazurytu
-    deepslate_emerald_ore: Łupkowe złoże szmaragdu
-    deepslate_diamond_ore: Łupkowe złoże diamentu
-    dripstone_block: Blok nacieku
-    ice: Lód
-    packed_ice: Zbity lód
-    blue_ice: Niebieski lód lodowcowy
-    reinforced_deepslate: Zbrojony łupek
-    dirt: Ziemia
-    grass_block: Blok trawy
-    sand: Piasek
-    gravel: Żwir
-    mycelium: Grzybnia
-    clay: Glina
-    soul_sand: Piasek dusz
-    coarse_dirt: Twarda ziemia
-    podzol: Bielica
-    soul_soil: Gleba dusz
-    red_sand: Czerwony piasek
-    rooted_dirt: Zakorzeniona ziemia
-    mud: Błoto
-    muddy_mangrove_roots: Zabłocone namorzynowe korzenie
-    sculk: Sculk
-    sculk_vein: Żyły sculku
-    sculk_sensor: Sculkowy czujnik
-    sculk_catalyst: Sculkowy katalizator
-    sculk_shrieker: Sculkowe wrzeszczydło
   fishing:
     cod: Dorsz
     salmon: Łosoś
@@ -853,85 +738,6 @@ sources:
     junk: Śmieciowe przedmioty
     rare: Rzadkie łupy
     epic: Epickie łupy
-  entity:
-    player: Gracz
-    bat: Nietoperz
-    cat: Kot
-    chicken: Kurczak
-    cod: Dorsz
-    cow: Krowa
-    donkey: Osioł
-    fox: Lis
-    giant: Gigant
-    horse: Koń
-    mooshroom: Mooshroom
-    mule: Muł
-    ocelot: Ocelot
-    parrot: Papuga
-    pig: Świnia
-    rabbit: Królik
-    salmon: Łosoś
-    sheep: Owca
-    skeleton_horse: Koń-szkielet
-    snow_golem: Śnieżny golem
-    squid: Kałamarnica
-    strider: Magmołaz
-    tropical_fish: Ryba tropikalna
-    turtle: Żółw
-    villager: Osadnik
-    wandering_trader: Wędrowny handlarz
-    bee: Pszczoła
-    cave_spider: Pająk jaskiniowy
-    dolphin: Delfin
-    enderman: Enderman
-    iron_golem: Żelazny golem
-    llama: Lama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Niedźwiedź polarny
-    pufferfish: Rozdymka
-    spider: Pająk
-    wolf: Wilk
-    zombified_piglin: Zzombifikowany piglin
-    blaze: Płomyk
-    creeper: Creeper
-    drowned: Utopiec
-    elder_guardian: Prastrażnik
-    endermite: Endermit
-    evoker: Przywoływacz
-    ghast: Ghast
-    guardian: Strażnik
-    hoglin: Hoglin
-    husk: Posuch
-    illusioner: Iluzjoner
-    magma_cube: Kostka magmy
-    phantom: Fantom
-    piglin_brute: Piglin okrutnik
-    pillager: Rozbójnik
-    ravager: Dewastator
-    shulker: Shulker
-    silverfish: Rybik cukrowy
-    skeleton: Szkielet
-    slime: Szlam
-    stray: Tułacz
-    vex: Dręczyciel
-    vindicator: Obrońca
-    witch: Wiedźma
-    wither_skeleton: Witherowy szkielet
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Osadnik-zombie
-    ender_dragon: Smok kresu
-    wither: Wither
-    axolotl: Aksolotl
-    glow_squid: Świecąca kałamarnica
-    goat: Koza
-    allay: Otuszek
-    frog: Żaba
-    tadpole: Kijanka
-    warden: Nadzorca
-    camel: Camel
-    sniffer: Sniffer
   damage:
     mob_damage: Obrażenia od mobów
     player_damage: Obrażenia od graczy
@@ -996,7 +802,7 @@ stats:
     desc: "Regeneracja zwiększa szybkość odzyskiwania zarówno zdrowia jak i many"
   luck:
     name: Szczęście
-    desc: "Szczęście zwiększa twoje szanse na zdobycie rzadkich łupów z mobów, ryb i wielu więcej"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Mądrość
     desc: "Mądrość zwiększa twoją maksymalną manę, zwiększa zdobyte doświadczenie i zmniejsza koszty kowadła"
@@ -1024,7 +830,7 @@ traits:
   mana_regen:
     name: Mana Regen
   luck:
-    name: Luck
+    name: Luck Attribute
   double_drop:
     name: Double Drop
   experience_bonus:
@@ -1041,6 +847,16 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAXED
 units:

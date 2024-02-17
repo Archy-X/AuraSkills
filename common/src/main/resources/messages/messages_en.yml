@@ -1,11 +1,11 @@
-# ----------------------------
-# Aurelium Skills message file
-# ----------------------------
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Bountiful Harvest
     desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "{value}% 2x Drops"
+    info: "+{value} Farming Luck"
   farmer:
     name: Farmer
     desc: "Earn {value}% more Farming XP."
@@ -21,7 +21,7 @@ abilities:
   lumberjack:
     name: Lumberjack
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "{value}% 2x Drops"
+    info: "+{value} Foraging Luck"
   forager:
     name: Forager
     desc: "Earn {value}% more Foraging XP."
@@ -32,7 +32,7 @@ abilities:
     info: "+{value}% Axe Damage"
   valor:
     name: Valor
-    desc: "Grants +{value} Strength while holding an axe"
+    desc: "Grants +{value} Strength while holding an axe."
     info: "+{value} Strength"
   shredder:
     name: Shredder
@@ -41,7 +41,7 @@ abilities:
   lucky_miner:
     name: Lucky Miner
     desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "{value}% 2x Drops"
+    info: "+{value} Mining Luck"
   miner:
     name: Miner
     desc: "Earn {value}% more Mining XP."
@@ -52,7 +52,7 @@ abilities:
     info: "+{value}% Pickaxe Damage"
   stamina:
     name: Stamina
-    desc: "Grants +{value} Toughness while holding a pickaxe"
+    desc: "Grants +{value} Toughness while holding a pickaxe."
     info: "+{value} Toughness"
   hardened_armor:
     name: Hardened Armor
@@ -61,7 +61,7 @@ abilities:
   lucky_catch:
     name: Lucky Catch
     desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "{value}% 2x Drops"
+    info: "+{value} Fishing Luck"
   fisher:
     name: Fisher
     desc: "Earn {value}% more Fishing XP."
@@ -93,7 +93,7 @@ abilities:
   bigger_scoop:
     name: Bigger Scoop
     desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "{value}% 3x Drops"
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: Lucky Spades
     desc: "{value}% added chance to get epic loot from digging."
@@ -202,7 +202,7 @@ abilities:
     end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
     name: Thunder Fall
-    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius"
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
     info: "{value}% Chance, {value_2}% Damage"
   alchemist:
     name: Alchemist
@@ -243,7 +243,7 @@ abilities:
     info: "{value} Strength/Enchant"
   lucky_table:
     name: Lucky Table
-    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level"
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
     info: "{value}% Enchant Upgrade Chance"
   life_essence:
     name: Life Essence
@@ -729,121 +729,6 @@ skills:
     name: Forging
     desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
-  block:
-    wheat: Wheat
-    potato: Potato
-    carrot: Carrot
-    beetroot: Beetroot
-    nether_wart: Nether Wart
-    pumpkin: Pumpkin
-    melon: Melon
-    sugar_cane: Sugar Cane
-    bamboo: Bamboo
-    cocoa: Cocoa
-    cactus: Cactus
-    brown_mushroom: Brown Mushroom
-    red_mushroom: Red Mushroom
-    kelp: Kelp
-    sea_pickle: Sea Pickles
-    sweet_berry_bush: Sweet Berries
-    glow_berries: Glow Berries
-    torchflower: Torchflower
-    pitcher_plant: Pitcher Plant
-    oak_log: Oak Log
-    spruce_log: Spruce Log
-    birch_log: Birch Log
-    jungle_log: Jungle Log
-    acacia_log: Acacia Log
-    dark_oak_log: Dark Oak Log
-    oak_leaves: Oak Leaves
-    spruce_leaves: Spruce Leaves
-    birch_leaves: Birch Leaves
-    jungle_leaves: Jungle Leaves
-    acacia_leaves: Acacia Leaves
-    dark_oak_leaves: Dark Oak Leaves
-    crimson_stem: Crimson Stem
-    warped_stem: Warped Stem
-    nether_wart_block: Nether Wart Block
-    warped_wart_block: Warped Wart Block
-    moss_block: Moss Block
-    moss_carpet: Moss Carpet
-    azalea: Azalea
-    flowering_azalea: Flowering Azalea
-    azalea_leaves: Azalea Leaves
-    flowering_azalea_leaves: Flowering Azalea Leaves
-    mangrove_log: Mangrove Log
-    mangrove_leaves: Mangrove Leaves
-    mangrove_roots: Mangrove Roots
-    cherry_log: Cherry Log
-    cherry_leaves: Cherry Leaves
-    pink_petals: Pink Petals
-    stone: Stone
-    cobblestone: Cobblestone
-    andesite: Andesite
-    diorite: Diorite
-    granite: Granite
-    coal_ore: Coal Ore
-    nether_quartz_ore: Nether Quartz Ore
-    iron_ore: Iron Ore
-    lapis_ore: Lapis Ore
-    redstone_ore: Redstone Ore
-    gold_ore: Gold Ore
-    diamond_ore: Diamond Ore
-    emerald_ore: Emerald Ore
-    terracotta: Terracotta
-    white_terracotta: White Terracotta
-    orange_terracotta: Orange Terracotta
-    yellow_terracotta: Yellow Terracotta
-    light_gray_terracotta: Light Gray Terrcotta
-    brown_terracotta: Brown Terrcotta
-    red_terracotta: Red Terracotta
-    netherrack: Netherrack
-    blackstone: Blackstone
-    basalt: Basalt
-    magma_block: Magma Block
-    nether_gold_ore: Nether Gold Ore
-    ancient_debris: Ancient Debris
-    end_stone: End Stone
-    obsidian: Obsidian
-    deepslate: Deepslate
-    copper_ore: Copper Ore
-    tuff: Tuff
-    calcite: Calcite
-    smooth_basalt: Smooth Basalt
-    amethyst_block: Amethyst Block
-    amethyst_cluster: Amethyst Cluster
-    deepslate_coal_ore: Deepslate Coal Ore
-    deepslate_iron_ore: Deepslate Iron Ore
-    deepslate_copper_ore: Deepslate Copper Ore
-    deepslate_gold_ore: Deepslate Gold Ore
-    deepslate_redstone_ore: Deepslate Redstone Ore
-    deepslate_lapis_ore: Deepslate Lapis Ore
-    deepslate_emerald_ore: Deepslate Emerald Ore
-    deepslate_diamond_ore: Deepslate Diamond Ore
-    dripstone_block: Dripstone Block
-    ice: Ice
-    packed_ice: Packed Ice
-    blue_ice: Blue Ice
-    reinforced_deepslate: Reinforced Deepslate
-    dirt: Dirt
-    grass_block: Grass Block
-    sand: Sand
-    gravel: Gravel
-    mycelium: Mycelium
-    clay: Clay
-    soul_sand: Soul Sand
-    coarse_dirt: Coarse Dirt
-    podzol: Podzol
-    soul_soil: Soul Soil
-    red_sand: Red Sand
-    rooted_dirt: Rooted Dirt
-    mud: Mud
-    muddy_mangrove_roots: Muddy Mangrove Roots
-    sculk: Sculk
-    sculk_vein: Sculk Vein
-    sculk_sensor: Sculk Sensor
-    sculk_catalyst: Sculk Catalyst
-    sculk_shrieker: Sculk Shrieker
   fishing:
     cod: Cod
     salmon: Salmon
@@ -853,85 +738,6 @@ sources:
     junk: Junk Items
     rare: Rare Loot
     epic: Epic Loot
-  entity:
-    player: Player
-    bat: Bat
-    cat: Cat
-    chicken: Chicken
-    cod: Cod
-    cow: Cow
-    donkey: Donkey
-    fox: Fox
-    giant: Giant
-    horse: Horse
-    mooshroom: Mooshroom
-    mule: Mule
-    ocelot: Ocelot
-    parrot: Parrot
-    pig: Pig
-    rabbit: Rabbit
-    salmon: Salmon
-    sheep: Sheep
-    skeleton_horse: Skeleton Horse
-    snow_golem: Snow Golem
-    squid: Squid
-    strider: Strider
-    tropical_fish: Tropical Fish
-    turtle: Turtle
-    villager: Villager
-    wandering_trader: Wandering Trader
-    bee: Bee
-    cave_spider: Cave Spider
-    dolphin: Dolphin
-    enderman: Enderman
-    iron_golem: Iron Golem
-    llama: Llama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Polar Bear
-    pufferfish: Pufferfish
-    spider: Spider
-    wolf: Wolf
-    zombified_piglin: Zombified Piglin
-    blaze: Blaze
-    creeper: Creeper
-    drowned: Drowned
-    elder_guardian: Elder Guardian
-    endermite: Endermite
-    evoker: Evoker
-    ghast: Ghast
-    guardian: Guardian
-    hoglin: Hoglin
-    husk: Husk
-    illusioner: Illusioner
-    magma_cube: Magma Cube
-    phantom: Phantom
-    piglin_brute: Piglin Brute
-    pillager: Pillager
-    ravager: Ravager
-    shulker: Shulker
-    silverfish: Silverfish
-    skeleton: Skeleton
-    slime: Slime
-    stray: Stray
-    vex: Vex
-    vindicator: Vindicator
-    witch: Witch
-    wither_skeleton: Wither Skeleton
-    zoglin: Zoglin
-    zombie: Zombie
-    zombie_villager: Zombie Villager
-    ender_dragon: Ender Dragon
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Glow Squid
-    goat: Goat
-    allay: Allay
-    frog: Frog
-    tadpole: Tadpole
-    warden: Warden
-    camel: Camel
-    sniffer: Sniffer
   damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players

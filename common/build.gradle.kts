@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("net.kyori:adventure-api:4.13.0")
+    api("net.kyori:adventure-api:4.15.0")
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.13.1")
     api("net.kyori:adventure-text-serializer-gson:4.13.1")

@@ -1,11 +1,11 @@
-# Aurelium Skills Italian (it) messages
-# Translators: Interity, Zano, Nukecraft5419, Kiogren
-# Contribute here: https://crowdin.com/project/aureliumskills/it#
+#----------------------------
+#AuraSkills message file
+#----------------------------
 abilities:
   bountiful_harvest:
     name: Raccolto Abbondante
-    desc: "{value}% possibilità di ricevere doppi drop dalle colture."
-    info: "{value}% 2x Drop"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: Contadino
     desc: "Guadagna {value}% più XP Conltivazione."
@@ -18,14 +18,10 @@ abilities:
     name: Genetista
     desc: "Aumenta la saturazione ricevuta da cibi a base vegetale di {value}."
     info: "+{value} Saturazione"
-  triple_harvest:
-    name: Triple Harvest
-    desc: "{value}% possibilità di ricevere tripli drop da colture."
-    info: "{value}% 3x Drop"
   lumberjack:
     name: Falegname
-    desc: "{value}% possibilità di ricevere doppi drop dai tronchi."
-    info: "{value}% 2x Drop"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: Raccoglitore
     desc: "Guadagna {value}% più XP Foraggiamento."
@@ -44,8 +40,8 @@ abilities:
     info: "{value}% 3x Danno Durabilità"
   lucky_miner:
     name: Minatore Fortunato
-    desc: "{value}% possibilità di ricevere doppi drop dai minerali."
-    info: "{value}% 2x Drop"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: Minatore
     desc: "Guadagna {value}% più XP Estrazione."
@@ -64,8 +60,8 @@ abilities:
     info: "{value}% Nessuna perdita durabilità"
   lucky_catch:
     name: Presa Fortunata
-    desc: "{value}% possibilità di prendere doppi drop dalla pesca."
-    info: "{value}% 2x Drop"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: Pescatore
     desc: "Guadagna {value}% più XP Pesca"
@@ -96,8 +92,8 @@ abilities:
     info: "+{value}% Danno Pala"
   bigger_scoop:
     name: Paletta Grossa
-    desc: "{value}% possibilità di ricevere tripli drop scavando."
-    info: "{value}% 3x Drop"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: Pala Fortunata
     desc: "{value}% possibilità di prendere oggetti epici scavando."
@@ -200,7 +196,7 @@ abilities:
     info: "{value}% Maggiore Speed"
   fleeting:
     name: Fugace
-    desc: "Guadagna +{value}% velocità di movimento sotto il 20% di vita"
+    desc: "Gain +{value} Speed when below 20% health."
     info: "+{value}% Velocità"
     start: "<white>Hai guadagnato un aumento di velocità fugace! <gray>(+{value}% Velocità)"
     end: "<gray>Aumento di velocità fugace disattivato"
@@ -606,6 +602,10 @@ menus:
   stats:
     stats_title: Le tue abilità
     skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Reclama Oggetti"
     inventory_full: "Non hai abbastanza spazio nel tuo inventario per reclamare quell'oggetto"
@@ -729,121 +729,6 @@ skills:
     name: Forgiatura
     desc: "Combina e applica libri enchantati nell'incudine per guadagnare Forgiatura {xp_unit}"
 sources:
-  block:
-    wheat: Grano
-    potato: Patata
-    carrot: Carota
-    beetroot: Barbabietole
-    nether_wart: Verruca Del Nether
-    pumpkin: Zucca
-    melon: Melone
-    sugar_cane: Canna da zucchero
-    bamboo: Bambù
-    cocoa: Cacao
-    cactus: Cactus
-    brown_mushroom: Fungo Marrone
-    red_mushroom: Fungo Rosso
-    kelp: Alga
-    sea_pickle: Cetriolo di Mare
-    sweet_berry_bush: Bacche Dolci
-    glow_berries: Bacche Luminose
-    torchflower: FiorTorcia
-    pitcher_plant: Pianta Carnivora
-    oak_log: Legno di Quercia
-    spruce_log: Legno di Abete
-    birch_log: Legno di Betulla
-    jungle_log: Legno di Giungla
-    acacia_log: Legno di Acacia
-    dark_oak_log: Legno di Quercia Scura
-    oak_leaves: Foglia di Quercia
-    spruce_leaves: Foglia di Abete
-    birch_leaves: Foglia di Betulla
-    jungle_leaves: Foglia di Giungla
-    acacia_leaves: Foglia di Acacia
-    dark_oak_leaves: Foglia di Quercia Scura
-    crimson_stem: Gambo Cremisi
-    warped_stem: Gambo Distorto
-    nether_wart_block: Blocco di Verruche del Nether
-    warped_wart_block: Blocco di verruche distorte
-    moss_block: Blocco di muschio
-    moss_carpet: Tappeto di muschio
-    azalea: Azalea
-    flowering_azalea: Azalea fiorita
-    azalea_leaves: Foglie di azalea
-    flowering_azalea_leaves: Foglie di azalea fiorite
-    mangrove_log: Tronco di mangrovia
-    mangrove_leaves: Foglie di mangrovia
-    mangrove_roots: Radici di mangrovia
-    cherry_log: Tronco di ciliegio
-    cherry_leaves: Foglie di Ciliegio
-    pink_petals: Petali Rosa
-    stone: Pietra
-    cobblestone: Pietrisco
-    andesite: Andesite
-    diorite: Diorite
-    granite: Granito
-    coal_ore: Minerale di carbone
-    nether_quartz_ore: Minerale di quarzo del Nether
-    iron_ore: Minerale di ferro
-    lapis_ore: Minerale di lapislazzuli
-    redstone_ore: Minerale di redstone
-    gold_ore: Minerale d'oro
-    diamond_ore: Minerale di diamante
-    emerald_ore: Minerale di smeraldo
-    terracotta: Terracotta
-    white_terracotta: Terracotta bianca
-    orange_terracotta: Terracotta arancione
-    yellow_terracotta: Terracotta gialla
-    light_gray_terracotta: Terracotta grigio chiaro
-    brown_terracotta: Terracotta marrone
-    red_terracotta: Terracotta rossa
-    netherrack: Netherrack
-    blackstone: Pietranera
-    basalt: Basalto
-    magma_block: Blocco di magma
-    nether_gold_ore: Minerale d'oro del Nether
-    ancient_debris: Detriti antichi
-    end_stone: Pietra dell'End
-    obsidian: Ossidiana
-    deepslate: Ardesia profonda
-    copper_ore: Minerale di rame
-    tuff: Tufo
-    calcite: Calcite
-    smooth_basalt: Basalto liscio
-    amethyst_block: Blocco di ametista
-    amethyst_cluster: Aggregato di ametista
-    deepslate_coal_ore: Minerale di carbone in ardesia profonda
-    deepslate_iron_ore: Minerale di ferro in ardesia profonda
-    deepslate_copper_ore: Minerale di rame in ardesia profonda
-    deepslate_gold_ore: Minerale d'oro in ardesia profonda
-    deepslate_redstone_ore: Minerale di redstone in ardesia profonda
-    deepslate_lapis_ore: Minerale di lapislazzuli di ardesia
-    deepslate_emerald_ore: Minerale di smeraldo in ardesia profonda
-    deepslate_diamond_ore: Minerale di diamante in ardesia profonda
-    dripstone_block: Blocco di speleotema
-    ice: Ghiaccio
-    packed_ice: Ghiaccio Compatto
-    blue_ice: Ghiaccio Azzurro
-    reinforced_deepslate: Ardesia Profonda Rinforzata
-    dirt: Terra
-    grass_block: Blocco d'erba
-    sand: Sabbia
-    gravel: Ghiaia
-    mycelium: Micelio
-    clay: Argilla
-    soul_sand: Sabbia delle Anime
-    coarse_dirt: Terra Brulla
-    podzol: Podzol
-    soul_soil: Terra delle anime
-    red_sand: Sabbia rossa
-    rooted_dirt: Terra con radici
-    mud: Fango
-    muddy_mangrove_roots: Radici di mangrovia fangose
-    sculk: Sculk
-    sculk_vein: Vena di sculk
-    sculk_sensor: Sensore Di Sculk
-    sculk_catalyst: Catalizzatore Di Sculk
-    sculk_shrieker: Sculk urlatore
   fishing:
     cod: Merluzzo
     salmon: Salmone
@@ -853,85 +738,6 @@ sources:
     junk: Oggetti spazzatura
     rare: Bottino raro
     epic: Bottino epico
-  entity:
-    player: Giocatore
-    bat: Pipistrello
-    cat: Gatto
-    chicken: Gallina
-    cod: Merluzzo
-    cow: Mucca
-    donkey: Asino
-    fox: Volpe
-    giant: Gigante
-    horse: Cavallo
-    mooshroom: Mooshroom
-    mule: Mulo
-    ocelot: Gattopardo
-    parrot: Pappagallo
-    pig: Maiale
-    rabbit: Coniglio
-    salmon: Salmone
-    sheep: Pecora
-    skeleton_horse: Cavallo Scheletro
-    snow_golem: Golem di Neve
-    squid: Calamaro
-    strider: Strider
-    tropical_fish: Pesce tropicale
-    turtle: Tartaruga
-    villager: Villico
-    wandering_trader: Ambulante
-    bee: Ape
-    cave_spider: Ragno delle caverne
-    dolphin: Delfino
-    enderman: Enderman
-    iron_golem: Golem di ferro
-    llama: Lama
-    piglin: Piglin
-    panda: Panda
-    polar_bear: Orso polare
-    pufferfish: Pesce palla
-    spider: Ragno
-    wolf: Lupo
-    zombified_piglin: Piglin zombificato
-    blaze: Blaze
-    creeper: Creeper
-    drowned: Annegato
-    elder_guardian: Guardiano Antico
-    endermite: Endermite
-    evoker: Evocatore
-    ghast: Ghast
-    guardian: Guardiano
-    hoglin: Hoglin
-    husk: Zombie secco
-    illusioner: Illusionista
-    magma_cube: Cubo di Magma
-    phantom: Phantom
-    piglin_brute: Piglin bruto
-    pillager: Saccheggiatore
-    ravager: Devastatore
-    shulker: Shulker
-    silverfish: Pesciolino d'argento
-    skeleton: Scheletro
-    slime: Slime
-    stray: Errante
-    vex: Vex
-    vindicator: Vendicatore
-    witch: Strega
-    wither_skeleton: Scheletro wither
-    zoglin: Zoglin
-    zombie: Zombi
-    zombie_villager: Villico Zombi
-    ender_dragon: Drago dell'End
-    wither: Wither
-    axolotl: Axolotl
-    glow_squid: Calamaro luminescente
-    goat: Capra
-    allay: Alleviante
-    frog: Rana
-    tadpole: Girino
-    warden: Sorvegliante
-    camel: Dromedario
-    sniffer: Fiutatore
   damage:
     mob_damage: Danno causato da mostri
     player_damage: Danno inflitto dai giocatori
@@ -996,7 +802,7 @@ stats:
     desc: "La rigenerazione aumenta la velocità di recupero di punti vita e mana"
   luck:
     name: Fortuna
-    desc: "La fortuna aumenta le tue possibilità di ricevere bottino raro dai mob, pesca ed altro"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Saggezza
     desc: "La saggezza aumenta il tuo mana massimo, aumenta l'esperienza guadagnata, e diminuisce il costo dell'utilizzo dell'incudine"
@@ -1024,7 +830,7 @@ traits:
   mana_regen:
     name: Mana Regen
   luck:
-    name: Luck
+    name: Luck Attribute
   double_drop:
     name: Double Drop
   experience_bonus:
@@ -1041,6 +847,16 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAXED
 units:
