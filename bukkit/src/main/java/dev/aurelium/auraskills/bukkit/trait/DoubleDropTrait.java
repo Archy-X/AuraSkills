@@ -20,6 +20,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class DoubleDropTrait extends TraitImpl {
@@ -36,7 +37,7 @@ public class DoubleDropTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return NumberUtil.format1(value) + "%";
     }
 

@@ -63,6 +63,9 @@ public class AbilitySupplier implements AbilityProvider {
 
     @Override
     public double getValue(Ability ability, int level) {
+        if (level <= 0) {
+            return 0.0;
+        }
         return getBaseValue(ability) + (getValuePerLevel(ability) * (level - 1));
     }
 

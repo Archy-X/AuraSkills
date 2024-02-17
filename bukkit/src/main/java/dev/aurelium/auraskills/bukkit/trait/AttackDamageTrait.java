@@ -9,6 +9,8 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 public class AttackDamageTrait extends TraitImpl {
 
     AttackDamageTrait(AuraSkills plugin) {
@@ -33,7 +35,7 @@ public class AttackDamageTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         if (Traits.ATTACK_DAMAGE.optionBoolean("use_percent")) {
             return "+" + NumberUtil.format1(value) + "%";
         } else {

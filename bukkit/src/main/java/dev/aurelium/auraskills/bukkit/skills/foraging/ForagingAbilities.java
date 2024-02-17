@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -9,48 +8,18 @@ import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class ForagingAbilities extends AbilityImpl {
 
     public ForagingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LUMBERJACK, Abilities.FORAGER, Abilities.AXE_MASTER, Abilities.SHREDDER, Abilities.VALOR);
-    }
-
-    public void lumberjack(Player player, User user, Block block) {
-        var ability = Abilities.LUMBERJACK;
-
-        if (isDisabled(ability)) return;
-
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
-
-        if (failsChecks(player, ability)) return;
-
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        if (rand.nextDouble() < (getValue(ability, user) / 100)) {
-            for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand())) {
-                Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUMBERJACK, toInventory);
-                Bukkit.getPluginManager().callEvent(event);
-
-                if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, event);
-                }
-            }
-        }
     }
 
     public DamageModifier axeMaster(Player player, User user) {

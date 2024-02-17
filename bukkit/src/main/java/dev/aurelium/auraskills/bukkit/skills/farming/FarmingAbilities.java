@@ -1,91 +1,19 @@
 package dev.aurelium.auraskills.bukkit.skills.farming;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class FarmingAbilities extends AbilityImpl {
 
     public FarmingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.BOUNTIFUL_HARVEST, Abilities.FARMER, Abilities.TRIPLE_HARVEST, Abilities.GENETICIST, Abilities.SCYTHE_MASTER);
-    }
-
-    public void bountifulHarvest(Player player, User user, Block block) {
-        var ability = Abilities.BOUNTIFUL_HARVEST;
-
-        if (isDisabled(ability)) return;
-
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
-
-        if (failsChecks(player, ability)) return;
-
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        if (rand.nextDouble() < getValue(ability, user) / 100) {
-            for (ItemStack item : block.getDrops()) {
-                checkMelonSilkTouch(player, block, item);
-
-                Location location = block.getLocation().add(0.5, 0.5, 0.5);
-
-                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.BOUNTIFUL_HARVEST, toInventory);
-                Bukkit.getPluginManager().callEvent(event);
-
-                if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, event);
-                }
-            }
-        }
-    }
-
-    public void tripleHarvest(Player player, User user, Block block) {
-        var ability = Abilities.TRIPLE_HARVEST;
-
-        if (isDisabled(ability)) return;
-
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
-
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        if (rand.nextDouble() < getValue(ability, user) / 100) {
-            for (ItemStack item : block.getDrops()) {
-                checkMelonSilkTouch(player, block, item);
-                ItemStack droppedItem = item.clone();
-                droppedItem.setAmount(2);
-
-                Location location = block.getLocation().add(0.5, 0.5, 0.5);
-                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, LootDropEvent.Cause.TRIPLE_HARVEST, toInventory);
-                Bukkit.getPluginManager().callEvent(event);
-
-                if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, event);
-                }
-            }
-        }
-    }
-
-    private void checkMelonSilkTouch(Player player, Block block, ItemStack item) {
-        if (block.getType() == Material.MELON) {
-            if (player.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) {
-                item.setType(Material.MELON);
-                item.setAmount(1);
-            }
-        }
     }
 
     @EventHandler

@@ -8,6 +8,8 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 public class CritDamageTrait extends TraitImpl {
 
     CritDamageTrait(AuraSkills plugin) {
@@ -20,7 +22,7 @@ public class CritDamageTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return NumberUtil.format1(value) + "%";
     }
 

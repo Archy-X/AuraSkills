@@ -12,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 
+import java.util.Locale;
+
 public class AnvilDiscountTrait extends TraitImpl {
 
     AnvilDiscountTrait(AuraSkills plugin) {
@@ -24,7 +26,7 @@ public class AnvilDiscountTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return NumberUtil.format1(getDiscount(value) * 100) + "%";
     }
 

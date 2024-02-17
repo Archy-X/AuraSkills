@@ -5,7 +5,6 @@ skills:
       - auraskills/farmer
       - auraskills/scythe_master
       - auraskills/geneticist
-      - auraskills/triple_harvest
     mana_ability: auraskills/replenish
     options:
       enabled: true
@@ -53,10 +52,10 @@ skills:
       check_multiplier_permissions: true
   auraskills/excavation:
     abilities:
-      - auraskills/metal_detector
+      - auraskills/bigger_scoop
       - auraskills/excavator
       - auraskills/spade_master
-      - auraskills/bigger_scoop
+      - auraskills/metal_detector
       - auraskills/lucky_spades
     mana_ability: auraskills/terraform
     options:

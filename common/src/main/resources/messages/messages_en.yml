@@ -4,7 +4,7 @@
 abilities:
   bountiful_harvest:
     name: Bountiful Harvest
-    desc: "{value}% chance to get double drops from crops."
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
     info: "{value}% 2x Drops"
   farmer:
     name: Farmer
@@ -18,13 +18,9 @@ abilities:
     name: Geneticist
     desc: "Increases saturation gain from plant-based foods by {value}."
     info: "+{value} Saturation"
-  triple_harvest:
-    name: Triple Harvest
-    desc: "{value}% chance to get triple drops from crops."
-    info: "{value}% 3x Drops"
   lumberjack:
     name: Lumberjack
-    desc: "{value}% chance to get double drops from logs."
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
     info: "{value}% 2x Drops"
   forager:
     name: Forager
@@ -44,7 +40,7 @@ abilities:
     info: "{value}% 3x Durability Damage"
   lucky_miner:
     name: Lucky Miner
-    desc: "{value}% chance to get double drops from ores."
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
     info: "{value}% 2x Drops"
   miner:
     name: Miner
@@ -64,7 +60,7 @@ abilities:
     info: "{value}% No Durability Loss"
   lucky_catch:
     name: Lucky Catch
-    desc: "{value}% added chance to get double drops from fishing."
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
     info: "{value}% 2x Drops"
   fisher:
     name: Fisher
@@ -96,7 +92,7 @@ abilities:
     info: "+{value}% Shovel Damage"
   bigger_scoop:
     name: Bigger Scoop
-    desc: "{value}% chance to get triple drops from digging."
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
     info: "{value}% 3x Drops"
   lucky_spades:
     name: Lucky Spades
@@ -606,6 +602,10 @@ menus:
   stats:
     stats_title: Your Stats
     skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -996,7 +996,7 @@ stats:
     desc: "Regeneration increases how fast you recover both health and mana"
   luck:
     name: Luck
-    desc: "Luck increases your chances of getting rare loot from mobs, fishing, and more"
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Wisdom
     desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs"
@@ -1024,7 +1024,7 @@ traits:
   mana_regen:
     name: Mana Regen
   luck:
-    name: Luck
+    name: Luck Attribute
   double_drop:
     name: Double Drop
   experience_bonus:
@@ -1041,6 +1041,16 @@ traits:
     name: Crit Damage
   movement_speed:
     name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
 ui:
   maxed: MAXED
 units:

@@ -21,7 +21,12 @@ public enum TraitMessage implements MessageKey {
     DAMAGE_REDUCTION_NAME,
     CRIT_CHANCE_NAME,
     CRIT_DAMAGE_NAME,
-    MOVEMENT_SPEED_NAME;
+    MOVEMENT_SPEED_NAME,
+    FARMING_LUCK_NAME,
+    FORAGING_LUCK_NAME,
+    MINING_LUCK_NAME,
+    FISHING_LUCK_NAME,
+    EXCAVATION_LUCK_NAME;
 
     private final String path;
 

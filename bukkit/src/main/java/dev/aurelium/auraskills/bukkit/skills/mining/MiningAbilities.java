@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.mining;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -10,55 +9,17 @@ import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Collection;
 
 public class MiningAbilities extends AbilityImpl {
 
     public MiningAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LUCKY_MINER, Abilities.MINER, Abilities.PICK_MASTER, Abilities.HARDENED_ARMOR, Abilities.STAMINA);
-    }
-
-    public void luckyMiner(Player player, User user, Block block) {
-        var ability = Abilities.LUCKY_MINER;
-
-        if (isDisabled(ability)) return;
-
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) return;
-
-        if (failsChecks(player, ability)) return;
-
-        if (user.getAbilityLevel(ability) == 0) return;
-
-        if (rand.nextDouble() < (getValue(ability, user) / 100)) {
-            ItemStack tool = player.getInventory().getItemInMainHand();
-            // Don't give drops if Silk Touch is used
-            if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0 && dropsMineralDirectly(block)) {
-                return;
-            }
-            Collection<ItemStack> drops = block.getDrops(tool);
-            for (ItemStack item : drops) {
-                Location location = block.getLocation().add(0.5, 0.5, 0.5);
-
-                boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
-                LootDropEvent event = new LootDropEvent(player, user.toApi(), item.clone(), location, LootDropEvent.Cause.LUCKY_MINER, toInventory);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    ItemUtils.giveBlockLoot(player, event);
-                }
-            }
-        }
     }
 
     public boolean dropsMineralDirectly(Block block) {

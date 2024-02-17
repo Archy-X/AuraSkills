@@ -13,18 +13,24 @@ stats:
     enabled: true
     traits:
       auraskills/saturation_regen:
-        modifier: 0.01
+        modifier: 0.02
       auraskills/hunger_regen:
-        modifier: 0.01
+        modifier: 0.02
       auraskills/mana_regen:
-        modifier: 0.01
+        modifier: 0.02
   auraskills/luck:
     enabled: true
     traits:
-      auraskills/luck:
-        modifier: 0.1
-      auraskills/double_drop:
-        modifier: 0.5
+      auraskills/farming_luck:
+        modifier: 1
+      auraskills/foraging_luck:
+        modifier: 1
+      auraskills/mining_luck:
+        modifier: 1
+      auraskills/fishing_luck:
+        modifier: 1
+      auraskills/excavation_luck:
+        modifier: 1
   auraskills/wisdom:
     enabled: true
     traits:

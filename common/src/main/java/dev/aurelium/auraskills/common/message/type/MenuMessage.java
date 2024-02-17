@@ -60,6 +60,10 @@ public enum MenuMessage implements MessageKey {
     // Stats Menu
     STATS_TITLE(3),
     SKILLS(3),
+    ADDED_DROP(3),
+    ADDED_DROPS(3),
+    CHANCE_DROP(3),
+    CHANCE_DROPS(3),
     // Unclaimed items menu
     UNCLAIMED_ITEMS_TITLE(4),
     INVENTORY_FULL(4),

@@ -1,8 +1,8 @@
 abilities:
   auraskills/bountiful_harvest:
     enabled: true
-    base_value: 5.0
-    value_per_level: 5.0
+    base_value: 10.0
+    value_per_level: 10.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
@@ -37,7 +37,7 @@ abilities:
   auraskills/lumberjack:
     enabled: true
     base_value: 10.0
-    value_per_level: 5.0
+    value_per_level: 10.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
@@ -71,8 +71,8 @@ abilities:
     max_level: 0
   auraskills/lucky_miner:
     enabled: true
-    base_value: 3.0
-    value_per_level: 3.0
+    base_value: 5.0
+    value_per_level: 5.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
@@ -106,7 +106,7 @@ abilities:
     max_level: 0
   auraskills/lucky_catch:
     enabled: true
-    base_value: 10.0
+    base_value: 5.0
     value_per_level: 5.0
     unlock: '{start}+1'
     level_up: 5
@@ -141,14 +141,13 @@ abilities:
     level_up: 5
     max_level: 0
     scale_base_value_chance: false
-  auraskills/metal_detector:
+  auraskills/bigger_scoop:
     enabled: true
-    base_value: 0.3
-    value_per_level: 0.3
+    base_value: 10.0
+    value_per_level: 10.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
-    scale_base_value_chance: false
   auraskills/excavator:
     enabled: true
     base_value: 10.0
@@ -163,13 +162,14 @@ abilities:
     unlock: '{start}+3'
     level_up: 5
     max_level: 0
-  auraskills/bigger_scoop:
+  auraskills/metal_detector:
     enabled: true
-    base_value: 3.0
-    value_per_level: 2.0
+    base_value: 0.3
+    value_per_level: 0.3
     unlock: '{start}+4'
     level_up: 5
     max_level: 0
+    scale_base_value_chance: false
   auraskills/lucky_spades:
     enabled: true
     base_value: 0.05

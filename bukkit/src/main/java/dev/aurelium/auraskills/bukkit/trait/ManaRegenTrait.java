@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.event.mana.ManaRegenerateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.api.event.mana.ManaRegenerateEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class ManaRegenTrait extends TraitImpl {
@@ -26,7 +27,7 @@ public class ManaRegenTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return NumberUtil.format1(value) + "/s";
     }
 

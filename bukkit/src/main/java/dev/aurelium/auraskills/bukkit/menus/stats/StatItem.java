@@ -77,7 +77,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
             builder.append(activeMenu.getFormat("trait_entry"),
                     "{trait}", trait.getDisplayName(locale),
                     "{color}", stat.getColor(locale),
-                    "{level}", impl.getMenuDisplay(user.getEffectiveTraitLevel(trait), trait));
+                    "{level}", impl.getMenuDisplay(user.getEffectiveTraitLevel(trait), trait, locale));
         }
         return builder.build();
     }

@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
@@ -15,12 +15,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
-public class HealthRegenTrait extends TraitImpl {
+public class HealthRegenTraits extends TraitImpl {
 
-    public HealthRegenTrait(AuraSkills plugin) {
+    public HealthRegenTraits(AuraSkills plugin) {
         super(plugin, Traits.HUNGER_REGEN, Traits.SATURATION_REGEN);
         startRegenTasks();
     }
@@ -31,7 +32,7 @@ public class HealthRegenTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return "+" + NumberUtil.format2(value);
     }
 

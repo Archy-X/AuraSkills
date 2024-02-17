@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 
+import java.util.Locale;
+
 public class ExperienceBonusTrait extends TraitImpl {
 
     ExperienceBonusTrait(AuraSkills plugin) {
@@ -22,7 +24,7 @@ public class ExperienceBonusTrait extends TraitImpl {
     }
 
     @Override
-    public String getMenuDisplay(double value, Trait trait) {
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
         return "+" + NumberUtil.format1(value) + "%";
     }
 

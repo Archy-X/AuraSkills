@@ -24,7 +24,7 @@ public class StatDisplayHelper {
 
             BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             if (impl != null) {
-                return impl.getMenuDisplay(value, trait);
+                return impl.getMenuDisplay(value, trait, user.getLocale());
             } else {
                 return NumberUtil.format1(value);
             }

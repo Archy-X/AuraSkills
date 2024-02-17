@@ -27,7 +27,7 @@ public class BukkitTraitManager extends TraitManager {
 
     public void registerTraitImplementations() {
         registerTraitImpl(new HpTrait(plugin));
-        registerTraitImpl(new HealthRegenTrait(plugin));
+        registerTraitImpl(new HealthRegenTraits(plugin));
         registerTraitImpl(new ManaRegenTrait(plugin));
         registerTraitImpl(new LuckTrait(plugin));
         registerTraitImpl(new DoubleDropTrait(plugin));
@@ -39,6 +39,7 @@ public class BukkitTraitManager extends TraitManager {
         registerTraitImpl(new CritChanceTrait(plugin));
         registerTraitImpl(new CritDamageTrait(plugin));
         registerTraitImpl(new MovementSpeedTrait(plugin));
+        registerTraitImpl(new GatheringLuckTraits(plugin));
     }
 
     public void registerTraitImpl(BukkitTraitHandler bukkitTrait) {

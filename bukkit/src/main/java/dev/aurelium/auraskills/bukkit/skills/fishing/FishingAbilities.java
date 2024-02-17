@@ -2,8 +2,10 @@ package dev.aurelium.auraskills.bukkit.skills.fishing;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.trait.GatheringLuckTraits;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Item;
@@ -38,18 +40,18 @@ public class FishingAbilities extends AbilityImpl {
 
         User user = plugin.getUser(player);
 
-        if (rand.nextDouble() < (getValue(ability, user) / 100)) {
-            ItemStack drop = item.getItemStack();
-            if (drop.getMaxStackSize() <= 0) return;
+        int extraDrops = plugin.getTraitManager().getTraitImpl(GatheringLuckTraits.class).rollExtraDrops(user, Traits.FISHING_LUCK);
+        if (extraDrops == 0) return;
 
-            drop.setAmount(drop.getAmount() * 2);
+        ItemStack drop = item.getItemStack();
 
-            LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH, false);
-            Bukkit.getPluginManager().callEvent(dropEvent);
+        drop.setAmount(Math.min(drop.getAmount() + extraDrops, drop.getMaxStackSize()));
 
-            if (!dropEvent.isCancelled()) {
-                item.setItemStack(dropEvent.getItem());
-            }
+        LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH, false);
+        Bukkit.getPluginManager().callEvent(dropEvent);
+
+        if (!dropEvent.isCancelled()) {
+            item.setItemStack(dropEvent.getItem());
         }
     }
 
