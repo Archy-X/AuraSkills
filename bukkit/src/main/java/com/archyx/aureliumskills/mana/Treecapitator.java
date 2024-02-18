@@ -91,7 +91,7 @@ public class Treecapitator extends ReadiedManaAbility {
             boolean isTrunk = isTrunk(rel);
             boolean isLeaf = isLeaf(rel);
             if (!isTrunk && !isLeaf && !rel.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
-            // Make sure block was not placed (compare the material is well to account for saplings that are grown into wood logs)
+            // Make sure block was not placed (compare the material as well to account for saplings that are grown into wood logs)
             if (plugin.getRegionManager().isPlacedBlock(rel, rel.getType())) {
                 continue;
             }
