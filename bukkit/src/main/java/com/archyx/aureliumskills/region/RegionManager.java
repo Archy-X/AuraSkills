@@ -209,8 +209,8 @@ public class RegionManager {
             compound.setInteger("x", entry.getKey().getX());
             compound.setInteger("y", entry.getKey().getY());
             compound.setInteger("z", entry.getKey().getZ());
-            // make sure to check for null for backwards compatibility
-            if(entry.getValue() != null) {
+            // make sure to check this for backwards compatibility
+            if(entry.getValue() != Material.AIR) {
                 compound.setString("m", entry.getValue().toString());
             }
             placedBlocks.addCompound(compound);
