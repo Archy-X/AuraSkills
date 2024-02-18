@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.skills.fishing;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
@@ -47,7 +48,7 @@ public class FishingAbilities extends AbilityImpl {
 
         drop.setAmount(Math.min(drop.getAmount() + extraDrops, drop.getMaxStackSize()));
 
-        LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), LootDropEvent.Cause.LUCKY_CATCH, false);
+        LootDropEvent dropEvent = new LootDropEvent(player, user.toApi(), drop, item.getLocation(), Cause.FISHING_LUCK, false);
         Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (!dropEvent.isCancelled()) {

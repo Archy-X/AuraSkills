@@ -22,15 +22,15 @@ stats:
     enabled: true
     traits:
       auraskills/farming_luck:
-        modifier: 1
+        modifier: 0.5
       auraskills/foraging_luck:
-        modifier: 1
+        modifier: 0.5
       auraskills/mining_luck:
-        modifier: 1
+        modifier: 0.5
       auraskills/fishing_luck:
-        modifier: 1
+        modifier: 0.5
       auraskills/excavation_luck:
-        modifier: 1
+        modifier: 0.5
   auraskills/wisdom:
     enabled: true
     traits:
@@ -99,11 +99,16 @@ traits:
   auraskills/mana_regen:
     enabled: true
     base: 0.1
-  auraskills/luck:
+  auraskills/farming_luck:
     enabled: true
-  auraskills/double_drop:
+  auraskills/foraging_luck:
     enabled: true
-    max_percent: 100
+  auraskills/mining_luck:
+    enabled: true
+  auraskills/fishing_luck:
+    enabled: true
+  auraskills/excavation_luck:
+    enabled: true
   auraskills/experience_bonus:
     enabled: true
   auraskills/anvil_discount:
@@ -123,4 +128,9 @@ traits:
   auraskills/movement_speed:
     enabled: true
     max: 300.0
+  auraskills/luck:
+    enabled: true
+  auraskills/double_drop:
+    enabled: true
+    max_percent: 100
 file_version: 1

@@ -90,15 +90,10 @@ public class LootDropEvent extends Event implements Cancellable {
 
     public enum Cause {
 
-        BOUNTIFUL_HARVEST,
         TRIPLE_HARVEST,
-        LUMBERJACK,
-        LUCKY_MINER,
-        LUCKY_CATCH,
         TREASURE_HUNTER,
         EPIC_CATCH,
         METAL_DETECTOR,
-        BIGGER_SCOOP,
         LUCKY_SPADES,
         LUCK_DOUBLE_DROP,
         FISHING_OTHER_LOOT,
@@ -106,7 +101,12 @@ public class LootDropEvent extends Event implements Cancellable {
         MINING_OTHER_LOOT,
         FORAGING_OTHER_LOOT,
         UNKNOWN,
-        MOB_LOOT_TABLE
+        MOB_LOOT_TABLE,
+        FARMING_LUCK,
+        FORAGING_LUCK,
+        MINING_LUCK,
+        FISHING_LUCK,
+        EXCAVATION_LUCK
 
     }
 

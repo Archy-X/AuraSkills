@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -26,6 +27,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
@@ -69,7 +71,8 @@ public class GatheringLuckTraits extends TraitImpl {
             Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
             boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
-            LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, LootDropEvent.Cause.BOUNTIFUL_HARVEST, toInventory);
+            Cause cause = getCause(skill);
+            LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, cause, toInventory);
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
@@ -243,6 +246,21 @@ public class GatheringLuckTraits extends TraitImpl {
             };
         }
         return null;
+    }
+
+    @NotNull
+    private Cause getCause(Skill skill) {
+        if (skill instanceof Skills skills) {
+            return switch (skills) {
+                case FARMING -> Cause.FARMING_LUCK;
+                case FORAGING -> Cause.FORAGING_LUCK;
+                case MINING -> Cause.MINING_LUCK;
+                case FISHING -> Cause.FISHING_LUCK;
+                case EXCAVATION -> Cause.EXCAVATION_LUCK;
+                default -> Cause.UNKNOWN;
+            };
+        }
+        return Cause.UNKNOWN;
     }
 
 }
