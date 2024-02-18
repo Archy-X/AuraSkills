@@ -29,8 +29,8 @@ abilities:
     max_level: 0
   auraskills/growth_aura:
     enabled: true
-    base_value: 10.0
-    value_per_level: 10.0
+    base_value: 12.0
+    value_per_level: 12.0
     unlock: '{start}+5'
     level_up: 5
     max_level: 0

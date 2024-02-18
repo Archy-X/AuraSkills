@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
@@ -28,7 +29,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -182,7 +182,7 @@ public class FightingAbilities extends AbilityImpl {
 
     private void scheduleBleedTicks(LivingEntity entity, User user, Ability ability) {
         // Schedules bleed ticks
-        new BukkitRunnable() {
+        var task = new TaskRunnable() {
             @Override
             public void run() {
                 if (!entity.isValid()) { // Stop if entity died/transformed
@@ -223,7 +223,8 @@ public class FightingAbilities extends AbilityImpl {
                 }
                 cancel();
             }
-        }.runTaskTimer(plugin, 40L, ability.optionInt("tick_period", 40));
+        };
+        plugin.getScheduler().timerSync(task, 40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void displayBleedParticles(LivingEntity entity, Ability ability) {
