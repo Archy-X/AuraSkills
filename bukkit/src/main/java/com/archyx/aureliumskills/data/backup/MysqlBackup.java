@@ -42,35 +42,36 @@ public class MysqlBackup extends BackupProvider {
                     storageProvider.save(player, false);
                 }
             }
-            Connection connection = storageProvider.getConnection();
-            try (Statement statement = connection.createStatement()) {
-                String query = "SELECT * FROM SkillData;";
-                try (ResultSet result = statement.executeQuery(query)) {
-                    createBackupFolder();
-                    LocalTime time = LocalTime.now();
-                    File file = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now()
-                            + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
-                    FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-                    config.set("backup_version", 1);
-                    while (result.next()) {
-                        UUID id = UUID.fromString(result.getString("ID"));
-                        for (Skill skill : Skills.values()) {
-                            int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
-                            double xp = result.getDouble(skill.toString().toUpperCase(Locale.ROOT) + "_XP");
+            try (Connection connection = storageProvider.getConnection()) {
+                try (Statement statement = connection.createStatement()) {
+                    String query = "SELECT * FROM SkillData;";
+                    try (ResultSet result = statement.executeQuery(query)) {
+                        createBackupFolder();
+                        LocalTime time = LocalTime.now();
+                        File file = new File(plugin.getDataFolder() + "/backups/backup-" + LocalDate.now()
+                                + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
+                        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+                        config.set("backup_version", 1);
+                        while (result.next()) {
+                            UUID id = UUID.fromString(result.getString("ID"));
+                            for (Skill skill : Skills.values()) {
+                                int level = result.getInt(skill.toString().toUpperCase(Locale.ROOT) + "_LEVEL");
+                                double xp = result.getDouble(skill.toString().toUpperCase(Locale.ROOT) + "_XP");
 
-                            String path = "player_data." + id + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";
-                            config.set(path + "level", level);
-                            config.set(path + "xp", xp);
+                                String path = "player_data." + id + "." + skill.toString().toLowerCase(Locale.ROOT) + ".";
+                                config.set(path + "level", level);
+                                config.set(path + "xp", xp);
+                            }
                         }
-                    }
-                    config.save(file);
-                    Locale locale = plugin.getLang().getLocale(sender);
-                    String message = TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
-                            , "{type}", "MySQL", "{file}", file.getName());
-                    if (sender instanceof ConsoleCommandSender) {
-                        plugin.getLogger().info(ChatColor.stripColor(message));
-                    } else {
-                        sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
+                        config.save(file);
+                        Locale locale = plugin.getLang().getLocale(sender);
+                        String message = TextUtil.replace(Lang.getMessage(CommandMessage.BACKUP_SAVE_SAVED, locale)
+                                , "{type}", "MySQL", "{file}", file.getName());
+                        if (sender instanceof ConsoleCommandSender) {
+                            plugin.getLogger().info(ChatColor.stripColor(message));
+                        } else {
+                            sender.sendMessage(AureliumSkills.getPrefix(locale) + message);
+                        }
                     }
                 }
             }

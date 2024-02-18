@@ -43,6 +43,7 @@ dependencies {
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
+    implementation("com.zaxxer:HikariCP:4.0.3")
     implementation("org.bstats:bstats-bukkit:3.0.0")
     implementation("org.jetbrains:annotations:23.0.0")
     implementation("com.udojava:EvalEx:2.7")
@@ -76,6 +77,7 @@ tasks.withType<ShadowJar> {
     relocate("com.archyx.slate", "com.archyx.aureliumskills.slate")
     relocate("net.kyori.adventure", "com.archyx.aureliumskills.adventure")
     relocate("net.kyori.examination", "com.archyx.aureliumskills.examination")
+    relocate("com.zaxxer.hikari", "com.archyx.aureliumskills.hikari")
 
     finalizedBy("copyJar")
 }

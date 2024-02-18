@@ -17,8 +17,7 @@ public class LegacyMysqlToMysqlConverter extends DataConverter {
 
     @Override
     public void convert() {
-        Connection connection = storageProvider.getConnection();
-        try {
+        try (Connection connection = storageProvider.getConnection()) {
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, "SkillData", null);
             if (tables.next()) {

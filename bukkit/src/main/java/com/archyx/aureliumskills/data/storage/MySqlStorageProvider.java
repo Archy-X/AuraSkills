@@ -34,53 +34,31 @@ import java.util.*;
 
 public class MySqlStorageProvider extends StorageProvider {
 
-    private Connection connection;
-    private final String host, database, username, password;
-    private final int port;
-    private final boolean ssl;
+    private final MySqlConnectionPool pool;
 
     public MySqlStorageProvider(AureliumSkills plugin) {
         super(plugin);
-        this.host = OptionL.getString(Option.MYSQL_HOST);
-        this.database = OptionL.getString(Option.MYSQL_DATABASE);
-        this.username = OptionL.getString(Option.MYSQL_USERNAME);
-        this.password = OptionL.getString(Option.MYSQL_PASSWORD);
-        this.port = OptionL.getInt(Option.MYSQL_PORT);
-        this.ssl = OptionL.getBoolean(Option.MYSQL_SSL);
+        this.pool = new MySqlConnectionPool(
+                OptionL.getString(Option.MYSQL_HOST),
+                OptionL.getInt(Option.MYSQL_PORT),
+                OptionL.getBoolean(Option.MYSQL_SSL),
+                OptionL.getString(Option.MYSQL_DATABASE),
+                OptionL.getString(Option.MYSQL_USERNAME),
+                OptionL.getString(Option.MYSQL_PASSWORD));
     }
 
     public void init() {
         try {
-            openConnection();
             createTable();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             plugin.getLogger().severe("Failed to connect to MySQL database, see error below:");
             e.printStackTrace();
         }
     }
 
-    public void openConnection() throws SQLException, ClassNotFoundException {
-        if (connection != null && !connection.isClosed()) {
-            return;
-        }
-
-        synchronized (this) {
-            if (connection != null && !connection.isClosed()) {
-                return;
-            }
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                Class.forName("com.mysql.jdbc.Driver");
-            }
-            connection = DriverManager.getConnection("jdbc:mysql://" + this.host+ ":" + this.port + "/" + this.database + "?useSSL=" + ssl + "&autoReconnect=true", this.username, this.password);
-            plugin.getLogger().info("Connected to MySQL database");
-        }
-    }
-
     @Override
     public void load(Player player) {
-        try {
+        try (Connection connection = pool.getConnection()) {
             String query = "SELECT * FROM SkillData WHERE ID=?;";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, player.getUniqueId().toString());
@@ -186,7 +164,7 @@ public class MySqlStorageProvider extends StorageProvider {
     public PlayerDataState loadState(UUID uuid) {
         try {
             String query = "SELECT * FROM SkillData WHERE ID=?;";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
+            try (PreparedStatement statement = pool.getConnection().prepareStatement(query)) {
                 statement.setString(1, uuid.toString());
                 try (ResultSet result = statement.executeQuery()) {
                     if (result.next()) {
@@ -230,7 +208,7 @@ public class MySqlStorageProvider extends StorageProvider {
 
     @Override
     public boolean applyState(PlayerDataState state) {
-        try {
+        try (Connection connection = pool.getConnection()) {
             StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
             for (Skill skill : Skills.getOrderedValues()) {
                 sqlBuilder.append(skill.toString()).append("_LEVEL, ");
@@ -287,34 +265,37 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     private void createTable() throws SQLException {
-        DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, "SkillData", null);
-        if (!tables.next()) {
-            try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-                statement.execute("CREATE TABLE SkillData (" +
-                        "ID varchar(40), " +
-                        "AGILITY_LEVEL int, AGILITY_XP double, " +
-                        "ALCHEMY_LEVEL int, ALCHEMY_XP double, " +
-                        "ARCHERY_LEVEL int, ARCHERY_XP double, " +
-                        "DEFENSE_LEVEL int, DEFENSE_XP double, " +
-                        "ENCHANTING_LEVEL int, ENCHANTING_XP double, " +
-                        "ENDURANCE_LEVEL int, ENDURANCE_XP double, " +
-                        "EXCAVATION_LEVEL int, EXCAVATION_XP double, " +
-                        "FARMING_LEVEL int, FARMING_XP double, " +
-                        "FIGHTING_LEVEL int, FIGHTING_XP double, " +
-                        "FISHING_LEVEL int, FISHING_XP double, " +
-                        "FORAGING_LEVEL int, FORAGING_XP double, " +
-                        "FORGING_LEVEL int, FORGING_XP double, " +
-                        "HEALING_LEVEL int, HEALING_XP double, " +
-                        "MINING_LEVEL int, MINING_XP double, " +
-                        "SORCERY_LEVEL int, SORCERY_XP double, " +
-                        "LOCALE varchar(10), " +
-                        "STAT_MODIFIERS varchar(4096), " +
-                        "MANA double, " +
-                        "ABILITY_DATA varchar(4096), " +
-                        "UNCLAIMED_ITEMS varchar(4096), " +
-                        "CONSTRAINT PKEY PRIMARY KEY (ID))");
-                plugin.getLogger().info("Created new SkillData table");
+        try (Connection connection = pool.getConnection()) {
+            DatabaseMetaData dbm = connection.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, "SkillData", null);
+            if (!tables.next()) {
+                try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+                    statement.execute("CREATE TABLE SkillData (" +
+                            "ID varchar(40), " +
+                            "AGILITY_LEVEL " +
+                            "int, AGILITY_XP double, " +
+                            "ALCHEMY_LEVEL int, ALCHEMY_XP double, " +
+                            "ARCHERY_LEVEL int, ARCHERY_XP double, " +
+                            "DEFENSE_LEVEL int, DEFENSE_XP double, " +
+                            "ENCHANTING_LEVEL int, ENCHANTING_XP double, " +
+                            "ENDURANCE_LEVEL int, ENDURANCE_XP double, " +
+                            "EXCAVATION_LEVEL int, EXCAVATION_XP double, " +
+                            "FARMING_LEVEL int, FARMING_XP double, " +
+                            "FIGHTING_LEVEL int, FIGHTING_XP double, " +
+                            "FISHING_LEVEL int, FISHING_XP double, " +
+                            "FORAGING_LEVEL int, FORAGING_XP double, " +
+                            "FORGING_LEVEL int, FORGING_XP double, " +
+                            "HEALING_LEVEL int, HEALING_XP double, " +
+                            "MINING_LEVEL int, MINING_XP double, " +
+                            "SORCERY_LEVEL int, SORCERY_XP double, " +
+                            "LOCALE varchar(10), " +
+                            "STAT_MODIFIERS varchar(4096), " +
+                            "MANA double, " +
+                            "ABILITY_DATA varchar(4096), " +
+                            "UNCLAIMED_ITEMS varchar(4096), " +
+                            "CONSTRAINT PKEY PRIMARY KEY (ID))");
+                    plugin.getLogger().info("Created new SkillData table");
+                }
             }
         }
     }
@@ -326,7 +307,7 @@ public class MySqlStorageProvider extends StorageProvider {
         if (isInvalid(playerData, player, removeFromMemory)) {
             return;
         }
-        try {
+        try (Connection connection = pool.getConnection()) {
             StringBuilder sqlBuilder = new StringBuilder("INSERT INTO SkillData (ID, ");
             for (Skill skill : Skills.getOrderedValues()) {
                 sqlBuilder.append(skill.toString()).append("_LEVEL, ");
@@ -439,7 +420,7 @@ public class MySqlStorageProvider extends StorageProvider {
         ConfigurationSection playerDataSection = config.getConfigurationSection("player_data");
         Locale locale = plugin.getLang().getLocale(sender);
         if (playerDataSection != null) {
-            try {
+            try (Connection connection = pool.getConnection()) {
                 for (String stringId : playerDataSection.getKeys(false)) {
                     UUID id = UUID.fromString(stringId);
                     // Load levels and xp from backup
@@ -504,11 +485,15 @@ public class MySqlStorageProvider extends StorageProvider {
     }
 
     public Connection getConnection() {
-        return connection;
+        try {
+            return pool.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to get database connection from pool");
+        }
     }
 
     public boolean localeColumnExists() {
-        try {
+        try (Connection connection = pool.getConnection()) {
             DatabaseMetaData dbm = connection.getMetaData();
             try (ResultSet columns = dbm.getColumns(null, null, "SkillData", "LOCALE")) {
                 if (columns.next()) {
@@ -535,7 +520,7 @@ public class MySqlStorageProvider extends StorageProvider {
         // Add players already in memory
         Set<UUID> loadedFromMemory = addLoadedPlayersToLeaderboards(leaderboards, powerLeaderboard, averageLeaderboard);
 
-        try {
+        try (Connection connection = pool.getConnection()) {
             try (Statement statement = connection.createStatement()) {
                 String query = "SELECT * FROM SkillData;";
                 try (ResultSet result = statement.executeQuery(query)) {
@@ -588,7 +573,7 @@ public class MySqlStorageProvider extends StorageProvider {
     @Override
     public void delete(UUID uuid) throws IOException {
         String query = "DELETE FROM SkillData WHERE ID=?;";
-        try {
+        try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, uuid.toString());
                 statement.executeUpdate();
