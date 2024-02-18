@@ -18,7 +18,7 @@ mysql:
   always_load_on_join: false
   ssl: false
 default_language: en
-languages: [en, es, fr, de, zh-CN, zh-TW, cs]
+languages: [en, es, fr, de, zh-CN, zh-TW, cs, uk]
 try_detect_client_language: false
 hooks:
   HolographicDisplays:
