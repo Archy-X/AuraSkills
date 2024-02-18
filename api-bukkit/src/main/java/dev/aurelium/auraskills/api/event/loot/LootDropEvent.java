@@ -90,7 +90,6 @@ public class LootDropEvent extends Event implements Cancellable {
 
     public enum Cause {
 
-        TRIPLE_HARVEST,
         TREASURE_HUNTER,
         EPIC_CATCH,
         METAL_DETECTOR,

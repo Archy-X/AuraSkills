@@ -27,13 +27,14 @@ abilities:
     unlock: '{start}+4'
     level_up: 5
     max_level: 0
-  auraskills/triple_harvest:
+  auraskills/growth_aura:
     enabled: true
-    base_value: 5.0
-    value_per_level: 3.0
+    base_value: 10.0
+    value_per_level: 10.0
     unlock: '{start}+5'
     level_up: 5
     max_level: 0
+    radius: 30
   auraskills/lumberjack:
     enabled: true
     base_value: 10.0

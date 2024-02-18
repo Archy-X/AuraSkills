@@ -14,7 +14,7 @@ public enum Abilities implements Ability {
     FARMER("farming"),
     SCYTHE_MASTER("farming"),
     GENETICIST("farming"),
-    TRIPLE_HARVEST("farming"),
+    GROWTH_AURA("farming"),
     LUMBERJACK("foraging"),
     FORAGER("foraging"),
     AXE_MASTER("foraging"),

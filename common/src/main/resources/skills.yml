@@ -5,6 +5,7 @@ skills:
       - auraskills/farmer
       - auraskills/scythe_master
       - auraskills/geneticist
+      - auraskills/growth_aura
     mana_ability: auraskills/replenish
     options:
       enabled: true

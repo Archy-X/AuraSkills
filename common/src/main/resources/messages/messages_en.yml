@@ -18,6 +18,10 @@ abilities:
     name: Geneticist
     desc: "Increases saturation gain from plant-based foods by {value}."
     info: "+{value} Saturation"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Lumberjack
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."

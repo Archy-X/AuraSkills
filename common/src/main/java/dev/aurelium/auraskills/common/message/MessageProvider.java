@@ -18,7 +18,7 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.message.type.*;
+import dev.aurelium.auraskills.common.message.type.UnitMessage;
 
 import java.io.File;
 import java.io.InputStream;
@@ -62,100 +62,63 @@ public class MessageProvider implements PolyglotProvider {
     }
 
     public String getSkillDisplayName(Skill skill, Locale locale) {
-        if (skill instanceof Skills) {
-            return manager.get(locale, convertKey(SkillMessage.valueOf(skill.name() + "_NAME")));
-        } else {
-            return manager.get(locale, convertKey("skills." + skill.getId().toString() + ".name"));
-        }
+        String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
+        return manager.get(locale, convertKey("skills." + key + ".name"));
     }
 
     public String getSkillDescription(Skill skill, Locale locale) {
-        if (skill instanceof Skills) {
-            return manager.get(locale, convertKey(SkillMessage.valueOf(skill.name() + "_DESC")));
-        } else {
-            return manager.get(locale, convertKey("skills." + skill.getId().toString() + ".desc"));
-        }
+        String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
+        return manager.get(locale, convertKey("skills." + key + ".desc"));
     }
 
     public String getStatDisplayName(Stat stat, Locale locale) {
-        if (stat instanceof Stats) {
-            return manager.get(locale, convertKey(StatMessage.valueOf(stat.name() + "_NAME")));
-        } else {
-            return manager.get(locale, convertKey("stats." + stat.getId().toString() + ".name"));
-        }
+        String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
+        return manager.get(locale, convertKey("stats." + key + ".name"));
     }
 
     public String getStatDescription(Stat stat, Locale locale) {
-        if (stat instanceof Stats) {
-            return manager.get(locale, convertKey(StatMessage.valueOf(stat.name() + "_DESC")));
-        } else {
-            return manager.get(locale, convertKey("stats." + stat.getId().toString() + ".desc"));
-        }
+        String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
+        return manager.get(locale, convertKey("stats." + key + ".desc"));
     }
 
-
     public String getStatColor(Stat stat, Locale locale) {
-        if (stat instanceof Stats) {
-            return manager.get(locale, convertKey(StatMessage.valueOf(stat.name() + "_COLOR")));
-        } else {
-            return manager.get(locale, convertKey("stats." + stat.getId().toString() + ".color"));
-        }
+        String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
+        return manager.get(locale, convertKey("stats." + key + ".color"));
     }
 
     public String getStatSymbol(Stat stat, Locale locale) {
-        if (stat instanceof Stats) {
-            return manager.get(locale, convertKey(StatMessage.valueOf(stat.name() + "_SYMBOL")));
-        } else {
-            return manager.get(locale, convertKey("stats." + stat.getId().toString() + ".symbol"));
-        }
+        String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
+        return manager.get(locale, convertKey("stats." + key + ".symbol"));
     }
 
     public String getAbilityDisplayName(Ability ability, Locale locale) {
-        if (ability instanceof Abilities) {
-            return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_NAME")));
-        } else {
-            return manager.get(locale, convertKey("abilities." + ability.getId().toString() + ".name"));
-        }
+        String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
+        return manager.get(locale, convertKey("abilities." + key + ".name"));
     }
 
     public String getAbilityDescription(Ability ability, Locale locale) {
-        if (ability instanceof Abilities) {
-            return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_DESC")));
-        } else {
-            return manager.get(locale, convertKey("abilities." + ability.getId().toString() + ".desc"));
-        }
+        String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
+        return manager.get(locale, convertKey("abilities." + key + ".desc"));
     }
 
     public String getAbilityInfo(Ability ability, Locale locale) {
-        if (ability instanceof Abilities) {
-            return manager.get(locale, convertKey(AbilityMessage.valueOf(ability.name() + "_INFO")));
-        } else {
-            return manager.get(locale, convertKey("abilities." + ability.getId().toString() + ".info"));
-        }
+        String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
+        return manager.get(locale, convertKey("abilities." + key + ".info"));
     }
 
     public String getManaAbilityDisplayName(ManaAbility ability, Locale locale) {
-        if (ability instanceof ManaAbilities) {
-            return manager.get(locale, convertKey(ManaAbilityMessage.valueOf(ability.name() + "_NAME")));
-        } else {
-            return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".name"));
-        }
+        String key = ability instanceof ManaAbilities ? ability.getId().getKey() : ability.getId().toString();
+        return manager.get(locale, convertKey("mana_abilities." + key + ".name"));
     }
 
     public String getManaAbilityDescription(ManaAbility ability, Locale locale) {
-        if (ability instanceof ManaAbilities) {
-            return manager.get(locale, convertKey(ManaAbilityMessage.valueOf(ability.name() + "_DESC")));
-        } else {
-            return manager.get(locale, convertKey("mana_abilities." + ability.getId().toString() + ".desc"));
-        }
+        String key = ability instanceof ManaAbilities ? ability.getId().getKey() : ability.getId().toString();
+        return manager.get(locale, convertKey("mana_abilities." + key + ".desc"));
     }
 
     public String getTraitDisplayName(Trait trait, Locale locale) {
-        if (trait instanceof Traits) {
-            return manager.get(locale, convertKey(TraitMessage.valueOf(trait.name() + "_NAME")));
-        } else {
-            return manager.get(locale, convertKey("traits." + trait.getId().toString() + ".name"));
-        }
+        String key = trait instanceof Traits ? trait.getId().getKey() : trait.getId().toString();
+        return manager.get(locale, convertKey("traits." + key + ".name"));
     }
 
     public Locale getDefaultLanguage() {
