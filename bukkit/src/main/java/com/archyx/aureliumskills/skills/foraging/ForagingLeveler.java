@@ -32,7 +32,8 @@ public class ForagingLeveler extends SkillLeveler implements Listener{
 		}
 		Block block = event.getBlock();
 		// Check block replace
-		if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block)) {
+		// Check the exact material as well to grant XP for wood logs that were saplings before placed by the player
+		if (OptionL.getBoolean(Option.CHECK_BLOCK_REPLACE) && plugin.getRegionManager().isPlacedBlock(block, event.getBlock().getType())) {
 			return;
 		}
 		Player player = event.getPlayer();

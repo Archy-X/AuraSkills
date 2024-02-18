@@ -3,6 +3,7 @@ package com.archyx.aureliumskills.region;
 import com.archyx.aureliumskills.AureliumSkills;
 import de.tr7zw.changeme.nbtapi.*;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -31,6 +33,10 @@ public class RegionManager {
     }
 
     public boolean isPlacedBlock(Block block) {
+        return isPlacedBlock(block, null);
+    }
+
+    public boolean isPlacedBlock(Block block, Material material) {
         int chunkX = block.getChunk().getX();
         int chunkZ = block.getChunk().getZ();
 
@@ -44,7 +50,8 @@ public class RegionManager {
             ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
             if (chunkData != null) {
                 BlockPosition blockPosition = new BlockPosition(block.getX(), block.getY(), block.getZ());
-                return chunkData.isPlacedBlock(blockPosition);
+                if(material == null) return chunkData.isPlacedBlock(blockPosition);
+                return chunkData.isPlacedBlock(blockPosition, material);
             }
         }
         return false;
@@ -75,7 +82,7 @@ public class RegionManager {
             chunkData = new ChunkData(region, regionChunkX, regionChunkZ);
             region.setChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ), chunkData);
         }
-        chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+        chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()), block.getType());
     }
 
     public void removePlacedBlock(Block block) {
@@ -149,7 +156,13 @@ public class RegionManager {
             int x = block.getInteger("x");
             int y = block.getInteger("y");
             int z = block.getInteger("z");
-            chunkData.addPlacedBlock(new BlockPosition(x, y, z));
+            // make sure to check if material is present for backwards compatibility
+            if(block.hasTag("m")) {
+                Material material = Material.valueOf(block.getString("m"));
+                chunkData.addPlacedBlock(new BlockPosition(x, y, z), material);
+            } else {
+                chunkData.addPlacedBlock(new BlockPosition(x, y, z), null);
+            }
         }
         region.setChunkData(chunkCoordinate, chunkData);
     }
@@ -190,12 +203,16 @@ public class RegionManager {
         NBTCompound chunk = nbtFile.getOrCreateCompound("chunk[" + chunkData.getX() + "," + chunkData.getZ() + "]");
         NBTCompoundList placedBlocks = chunk.getCompoundList("placed_blocks");
         placedBlocks.clear(); // Clears list of block positions to account for removed positions
-        // Adds all positions to nbt compound list
-        for (BlockPosition block : chunkData.getPlacedBlocks().keySet()) {
+        // Adds all positions and materials to nbt compound list
+        for (Map.Entry<BlockPosition, Material> entry : chunkData.getPlacedBlocks().entrySet()) {
             NBTContainer compound = new NBTContainer();
-            compound.setInteger("x", block.getX());
-            compound.setInteger("y", block.getY());
-            compound.setInteger("z", block.getZ());
+            compound.setInteger("x", entry.getKey().getX());
+            compound.setInteger("y", entry.getKey().getY());
+            compound.setInteger("z", entry.getKey().getZ());
+            // make sure to check for null for backwards compatibility
+            if(entry.getValue() != null) {
+                compound.setString("m", entry.getValue().toString());
+            }
             placedBlocks.addCompound(compound);
         }
         if (placedBlocks.size() == 0) {
