@@ -102,10 +102,10 @@ abilities:
     name: Lucky Spades
     desc: "{value}% added chance to get epic loot from digging."
     info: "+{value}% Epic Loot"
-  crit_chance:
-    name: Crit Chance
-    desc: "Grants +{value}% Crit Chance."
-    info: "+{value}% Crit Chance"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Archer
     desc: "Earn {value}% more Archery XP."

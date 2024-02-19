@@ -35,6 +35,7 @@ public enum Abilities implements Ability {
     SPADE_MASTER("excavation"),
     BIGGER_SCOOP("excavation"),
     LUCKY_SPADES("excavation"),
+    RETRIEVAL("archery"),
     ARCHER("archery"),
     BOW_MASTER("archery"),
     PIERCING("archery"),

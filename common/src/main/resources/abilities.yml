@@ -179,13 +179,14 @@ abilities:
     level_up: 5
     max_level: 0
     scale_base_value_chance: false
-  auraskills/crit_chance:
+  auraskills/retrieval:
     enabled: true
     base_value: 5.0
     value_per_level: 5.0
     unlock: '{start}+1'
     level_up: 5
     max_level: 0
+    delay_sec: 3
   auraskills/archer:
     enabled: true
     base_value: 10.0

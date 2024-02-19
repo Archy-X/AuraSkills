@@ -66,6 +66,7 @@ skills:
       check_multiplier_permissions: true
   auraskills/archery:
     abilities:
+      - auraskills/retrieval
       - auraskills/archer
       - auraskills/bow_master
       - auraskills/piercing
