@@ -23,7 +23,7 @@ public abstract class StorageFactory {
                 pool.enable();
                 return new SqlStorageProvider(plugin, pool);
             case YAML:
-                new FileStorageProvider(plugin, getDataDirectory());
+                return new FileStorageProvider(plugin, getDataDirectory());
             default:
                 throw new IllegalArgumentException("Unknown storage type: " + type);
         }

@@ -166,6 +166,7 @@ public class CommandRegistrar {
         manager.registerCommand(new BackupCommand(plugin));
         manager.registerCommand(new XpCommand(plugin));
         manager.registerCommand(new PresetCommand(plugin));
+        manager.registerCommand(new StorageCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

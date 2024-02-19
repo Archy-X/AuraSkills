@@ -332,6 +332,7 @@ public class FileStorageProvider extends StorageProvider {
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("stat").set(modifier.stat().getId().toString());
             modifierNode.node("value").set(modifier.value());
+            index++;
         }
     }
 
@@ -342,6 +343,7 @@ public class FileStorageProvider extends StorageProvider {
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("trait").set(modifier.trait().getId().toString());
             modifierNode.node("value").set(modifier.value());
+            index++;
         }
     }
 
