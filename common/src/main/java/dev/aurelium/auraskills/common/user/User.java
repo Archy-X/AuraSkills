@@ -373,6 +373,14 @@ public abstract class User {
         return metadata;
     }
 
+    public boolean metadataBoolean(String key) {
+        Object o = metadata.getOrDefault(key, false);
+        if (o instanceof Boolean) {
+            return (boolean) o;
+        }
+        return false;
+    }
+
     public List<KeyIntPair> getUnclaimedItems() {
         return unclaimedItems;
     }

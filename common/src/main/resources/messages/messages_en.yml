@@ -142,10 +142,11 @@ abilities:
     name: No Debuff
     desc: "{value}% chance to negate a harmful potion effect from being applied."
     info: "{value}% No Debuff"
-  crit_damage:
-    name: Crit Damage
-    desc: "Grants +{value}% Crit Damage."
-    info: "+{value}% Crit Damage"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Fighter
     desc: "Earn {value}% more Fighting XP."

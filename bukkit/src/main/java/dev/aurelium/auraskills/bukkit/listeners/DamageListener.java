@@ -135,6 +135,10 @@ public class DamageListener implements Listener {
         plugin.getManaAbilityManager().getProvider(Absorption.class).handleAbsorption(event, player, user);
         if (event.isCancelled()) return;
 
+        // Handles parry
+        FightingAbilities fightingAbilities = plugin.getAbilityManager().getAbilityImpl(FightingAbilities.class);
+        fightingAbilities.handleParry(event, player, user);
+
         // Handles damage reduction trait
         var damageReduction = plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class);
         damageReduction.onDamage(event, user);

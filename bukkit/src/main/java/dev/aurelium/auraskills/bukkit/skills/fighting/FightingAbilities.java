@@ -2,10 +2,7 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
-import dev.aurelium.auraskills.api.skill.Skills;
-import dev.aurelium.auraskills.api.trait.TraitModifier;
-import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.ability.AbilityData;
@@ -14,29 +11,33 @@ import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class FightingAbilities extends AbilityImpl {
 
+    private final String PARRY_KEY = "parry_ready";
+    private final String PARRY_VECTOR = "parry_vector";
+
     public FightingAbilities(AuraSkills plugin) {
-        super(plugin, Abilities.CRIT_DAMAGE, Abilities.FIGHTER, Abilities.SWORD_MASTER, Abilities.FIRST_STRIKE, Abilities.BLEED);
+        super(plugin, Abilities.PARRY, Abilities.FIGHTER, Abilities.SWORD_MASTER, Abilities.FIRST_STRIKE, Abilities.BLEED);
     }
 
     @Override
@@ -45,30 +46,12 @@ public class FightingAbilities extends AbilityImpl {
             return TextUtil.replace(input,
                     "{base_ticks}", String.valueOf(ability.optionInt("base_ticks", 3)),
                     "{added_ticks}", String.valueOf(ability.optionInt("added_ticks", 2)));
+        } else if (ability.equals(Abilities.PARRY)) {
+            String secDisplay = NumberUtil.format2((double) ability.optionInt("time_ms", 250) / 1000);
+            return TextUtil.replace(input,
+                    "{time}", secDisplay);
         }
         return input;
-    }
-
-    public void reloadCritDamage(Player player, User user) {
-        Ability ability = Abilities.CRIT_DAMAGE;
-        String modifierName = "fighting_ability";
-        user.removeTraitModifier(modifierName, false);
-
-        if (isDisabled(ability)) return;
-        if (failsChecks(player, ability)) return;
-
-        double value = getValue(ability, user);
-        user.addTraitModifier(new TraitModifier(modifierName, Traits.CRIT_DAMAGE, value), false);
-    }
-
-    @EventHandler
-    public void onLevelUp(SkillLevelUpEvent event) {
-        if (!event.getSkill().equals(Skills.FIGHTING)) {
-            return;
-        }
-        Player player = event.getPlayer();
-        User user = plugin.getUser(player);
-        reloadCritDamage(player, user);
     }
 
     public DamageModifier swordMaster(Player player, User user) {
@@ -243,6 +226,79 @@ public class FightingAbilities extends AbilityImpl {
         PersistentDataContainer container = event.getPlayer().getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
         container.remove(key);
+    }
+
+    @EventHandler
+    public void parryReady(PlayerInteractEvent event) {
+        var ability = Abilities.PARRY;
+        if (isDisabled(ability)) return;
+
+        if (event.getAction() != Action.LEFT_CLICK_AIR && event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+
+        Player player = event.getPlayer();
+        if (!player.getInventory().getItemInMainHand().getType().toString().contains("SWORD")) {
+            return;
+        }
+
+        if (failsChecks(player, ability)) return;
+
+        User user = plugin.getUser(player);
+
+        // Return if already ready
+        if (user.metadataBoolean(PARRY_KEY)) {
+            return;
+        }
+        Vector facing = player.getLocation().getDirection();
+        user.getMetadata().put(PARRY_KEY, true);
+        user.getMetadata().put(PARRY_VECTOR, facing);
+
+        scheduleUnready(user);
+    }
+
+    public void handleParry(EntityDamageByEntityEvent event, Player player, User user) {
+        var ability = Abilities.PARRY;
+        if (failsChecks(player, ability)) return;
+        // Return if not parry ready
+        if (!user.metadataBoolean(PARRY_KEY)) return;
+
+        if (!isFacingCloseEnough(user, player, event.getDamager())) {
+            return;
+        }
+
+        double value = getValue(ability, user);
+        event.setDamage(event.getDamage() * (1 - value / 100));
+
+        plugin.getUiProvider().sendActionBar(user, plugin.getMsg(AbilityMessage.PARRY_PARRIED, user.getLocale()));
+        plugin.getUiProvider().getActionBarManager().setPaused(user, 1500, TimeUnit.MILLISECONDS);
+        if (ability.optionBoolean("enable_sound")) {
+            player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RETURN, SoundCategory.PLAYERS, 1f, 1.4f);
+        }
+
+        Vector velBefore = player.getVelocity();
+        // Disable knockback
+        plugin.getScheduler().scheduleSync(() -> {
+            player.setVelocity(velBefore);
+        }, 50, TimeUnit.MILLISECONDS);
+    }
+
+    private boolean isFacingCloseEnough(User user, Player player, Entity damager) {
+        Vector va = damager.getLocation().toVector();
+        Vector vb = player.getLocation().toVector();
+        Vector playerToDamager = va.subtract(vb).normalize();
+
+        Object facingObj = user.getMetadata().get(PARRY_VECTOR);
+        if (facingObj == null) return false;
+
+        Vector facing = (Vector) facingObj;
+
+        return playerToDamager.dot(facing) >= 0.7;
+    }
+
+    private void scheduleUnready(User user) {
+        plugin.getScheduler().scheduleSync(() -> {
+            user.getMetadata().remove(PARRY_KEY);
+            user.getMetadata().remove(PARRY_VECTOR);
+        }, Abilities.PARRY.optionInt("time_ms", 250), TimeUnit.MILLISECONDS);
     }
 
 }

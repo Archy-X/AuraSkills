@@ -8,6 +8,7 @@ import java.util.Locale;
 
 public enum AbilityMessage implements MessageKey {
 
+    PARRY_PARRIED,
     FIRST_STRIKE_DEALT,
     BLEED_ENEMY_BLEEDING,
     BLEED_SELF_BLEEDING,

@@ -96,5 +96,4 @@ public class LightningBlade extends ReadiedManaAbility {
             }
         }
     }
-
 }

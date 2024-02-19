@@ -249,13 +249,15 @@ abilities:
     unlock: '{start}+5'
     level_up: 5
     max_level: 0
-  auraskills/crit_damage:
+  auraskills/parry:
     enabled: true
     base_value: 5.0
-    value_per_level: 3.0
+    value_per_level: 2.0
     unlock: '{start}+1'
     level_up: 5
-    max_level: 0
+    max_level: 20
+    time_ms: 250
+    enable_sound: true
   auraskills/fighter:
     enabled: true
     base_value: 10.0

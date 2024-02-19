@@ -94,6 +94,7 @@ skills:
       check_multiplier_permissions: true
   auraskills/fighting:
     abilities:
+      - auraskills/parry
       - auraskills/fighter
       - auraskills/sword_master
       - auraskills/first_strike
