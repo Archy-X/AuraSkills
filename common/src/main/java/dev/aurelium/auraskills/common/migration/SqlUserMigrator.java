@@ -50,7 +50,7 @@ public class SqlUserMigrator {
                     }
                 }
             }
-            plugin.logger().info("[Migrator] Migrated " + rowsMigrated + " rows from the table SkillData to the tables  " + tablePrefix + "users, " + tablePrefix + "skill_levels, " + tablePrefix + "key_values");
+            plugin.logger().info("[Migrator] Migrated " + rowsMigrated + " rows from the table SkillData to the tables " + tablePrefix + "users, " + tablePrefix + "skill_levels, " + tablePrefix + "key_values");
         } catch (SQLException e) {
             plugin.logger().severe("[Migrator] Error migrating SQL SkillData table to new tables");
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class SqlUserMigrator {
         try {
             DatabaseMetaData dbm = connection.getMetaData();
             try (ResultSet tables = dbm.getTables(null, null, "SkillData", null)) {
-                return !tables.next();
+                return tables.next();
             }
         } catch (SQLException e) {
             plugin.logger().warn("[Migrator] Failed to check SQL migration status");

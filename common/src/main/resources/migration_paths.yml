@@ -1,14 +1,14 @@
 config.yml:
   config.yml:
-    mysql.enabled: ''
-    mysql.host: ''
-    mysql.port: ''
-    mysql.database: ''
-    mysql.username: ''
-    mysql.password: ''
-    mysql.load-delay: '_'
-    mysql.always-load-on-join: '_'
-    mysql.ssl: ''
+    mysql.enabled: sql.enabled
+    mysql.host: sql.host
+    mysql.port: sql.port
+    mysql.database: sql.database
+    mysql.username: sql.username
+    mysql.password: sql.password
+    mysql.load-delay: sql.load_delay
+    mysql.always-load-on-join: sql.always_load_on_join
+    mysql.ssl: sql.ssl
     hooks.HolographicDisplays.enabled: ''
     hooks.DecentHolograms.enabled: ''
     default-language: '_'

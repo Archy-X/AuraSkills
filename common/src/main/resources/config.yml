@@ -7,8 +7,9 @@
 # +----------------------------------------------------------------------------+ #
 # Plugin made by Archy
 
-mysql:
+sql:
   enabled: false
+  type: mysql
   host: localhost
   port: 3306
   database: auraskills

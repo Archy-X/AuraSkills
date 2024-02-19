@@ -4,15 +4,15 @@ package dev.aurelium.auraskills.common.config;
 public enum Option {
 
     // Mysql Options
-    MYSQL_ENABLED("mysql.enabled", OptionType.BOOLEAN),
-    MYSQL_HOST("mysql.host", OptionType.STRING),
-    MYSQL_PORT("mysql.port", OptionType.INT),
-    MYSQL_DATABASE("mysql.database", OptionType.STRING),
-    MYSQL_USERNAME("mysql.username", OptionType.STRING),
-    MYSQL_PASSWORD("mysql.password", OptionType.STRING),
-    MYSQL_LOAD_DELAY("mysql.load_delay", OptionType.INT),
-    MYSQL_ALWAYS_LOAD_ON_JOIN("mysql.always_load_on_join", OptionType.BOOLEAN),
-    MYSQL_SSL("mysql.ssl", OptionType.BOOLEAN),
+    SQL_ENABLED("sql.enabled", OptionType.BOOLEAN),
+    SQL_HOST("sql.host", OptionType.STRING),
+    SQL_PORT("sql.port", OptionType.INT),
+    SQL_DATABASE("sql.database", OptionType.STRING),
+    SQL_USERNAME("sql.username", OptionType.STRING),
+    SQL_PASSWORD("sql.password", OptionType.STRING),
+    SQL_LOAD_DELAY("sql.load_delay", OptionType.INT),
+    SQL_ALWAYS_LOAD_ON_JOIN("sql.always_load_on_join", OptionType.BOOLEAN),
+    SQL_SSL("sql.ssl", OptionType.BOOLEAN),
     TRY_DETECT_CLIENT_LANGUAGE("try_detect_client_language", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action_bar.enabled", OptionType.BOOLEAN),

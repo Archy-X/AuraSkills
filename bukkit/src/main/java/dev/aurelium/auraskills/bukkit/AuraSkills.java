@@ -46,6 +46,7 @@ import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
+import dev.aurelium.auraskills.bukkit.storage.BukkitStorageFactory;
 import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -78,13 +79,11 @@ import dev.aurelium.auraskills.common.source.SourceTypeRegistry;
 import dev.aurelium.auraskills.common.stat.StatLoader;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.stat.StatRegistry;
+import dev.aurelium.auraskills.common.storage.StorageFactory;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.storage.StorageType;
 import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
-import dev.aurelium.auraskills.common.storage.file.FileStorageProvider;
-import dev.aurelium.auraskills.common.storage.sql.DatabaseCredentials;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
-import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
-import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
@@ -266,10 +265,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             }
         }
         userManager.getUserMap().clear();
-        // Shut down connection pool
-        if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
-            sqlStorageProvider.getPool().disable();
-        }
         regionManager.saveAllRegions(false, true);
         regionManager.clearRegionMap();
         try {
@@ -277,6 +272,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         } catch (Exception e) {
             logger.warn("Error creating automatic backup");
             e.printStackTrace();
+        }
+        // Shut down connection pool
+        if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
+            sqlStorageProvider.getPool().disable();
         }
         itemRegistry.getStorage().save();
     }
@@ -340,21 +339,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void initStorageProvider() {
         // MySQL storage
-        if (configBoolean(Option.MYSQL_ENABLED)) {
-            DatabaseCredentials credentials = new DatabaseCredentials(
-                    configString(Option.MYSQL_HOST),
-                    configInt(Option.MYSQL_PORT),
-                    configString(Option.MYSQL_DATABASE),
-                    configString(Option.MYSQL_USERNAME),
-                    configString(Option.MYSQL_PASSWORD),
-                    configBoolean(Option.MYSQL_SSL)
-            );
-            ConnectionPool connectionPool = new MySqlConnectionPool(credentials);
-            connectionPool.enable();
-            storageProvider = new SqlStorageProvider(this, connectionPool);
-        } else { // File storage
-            storageProvider = new FileStorageProvider(this, getDataFolder().getPath() + "/userdata");
-        }
+        StorageType type = configBoolean(Option.SQL_ENABLED) ? StorageType.MYSQL : StorageType.YAML;
+        StorageFactory storageFactory = new BukkitStorageFactory(this);
+        storageProvider = storageFactory.createStorageProvider(type);
         storageProvider.startAutoSaving();
     }
 

@@ -29,8 +29,8 @@ public class PlayerJoinQuit implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (plugin.getStorageProvider() instanceof SqlStorageProvider) { // Handles MySQL storage
-            if (plugin.configBoolean(Option.MYSQL_ALWAYS_LOAD_ON_JOIN) || !plugin.getUserManager().hasUser(player.getUniqueId())) {
-                int loadDelay = plugin.configInt(Option.MYSQL_LOAD_DELAY);
+            if (plugin.configBoolean(Option.SQL_ALWAYS_LOAD_ON_JOIN) || !plugin.getUserManager().hasUser(player.getUniqueId())) {
+                int loadDelay = plugin.configInt(Option.SQL_LOAD_DELAY);
                 if (loadDelay == 0) {
                     // Load immediately
                     loadUserAsync(player);
