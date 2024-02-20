@@ -18,6 +18,10 @@ abilities:
     name: Genetiker
     desc: "Erhöht den Sättigungsgewinn von pflanzlichen Lebensmitteln um {value}."
     info: "+{value} Sättigung"
+  growth_aura:
+    name: Wachstumsaura
+    desc: "Pflanzen mit Wachstumsphasen innerhalb von {radius} Blöcken wachsen {value}% schneller."
+    info: "+{value}% Wachstum"
   lumberjack:
     name: Holzfäller
     desc: "Gewährt +{value} Holzfäller-Glück, was die Chance auf zusätzliche Drops erhöht."
@@ -98,10 +102,10 @@ abilities:
     name: Seltener Fund
     desc: "{value}% Chance, beim Graben epische Beute zu finden."
     info: "+{value}% Epische Beute"
-  crit_chance:
-    name: Kritische Trefferchance
-    desc: "+{value}% Chance, einen kritischen Treffer zu landen."
-    info: "+{value}% Kritische Trefferchance"
+  retrieval:
+    name: Rückholung
+    desc: "Pfeile, die du verschießt, werden automatisch zurückgeholt nach {time} und einer maximalen Distanz von {value}."
+    info: "{value} Distanz"
   archer:
     name: Bogenschütze
     desc: "Verdiene {value}% mehr Bogenschießen EP."
@@ -138,10 +142,11 @@ abilities:
     name: Statusschutz
     desc: "{value}% Chance einen schädlichen Trank Effekt nicht anzuwenden."
     info: "{value}% Statusschutz"
-  crit_damage:
-    name: Kritischer Schaden
-    desc: "Erhöht den kritischen Schaden um {value}%"
-    info: "+{value}% Kritischer Schaden"
+  parry:
+    name: Parieren
+    desc: "Das Verfehlen eines Schwertschwungs innerhalb von {time}s vor einem Gegentreffer, verringert den Schaden um {value}% und unterbricht den Rückstoß."
+    info: "{value}% Schaden-Reduzierung"
+    parried: "<red>Angriff pariert"
   fighter:
     name: Kämpfer
     desc: "Verdiene {value}% mehr Kampf EP"

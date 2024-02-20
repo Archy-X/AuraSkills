@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: 收获满满
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "额外获得 +{value} 点耕作幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 耕作幸运"
   farmer:
     name: 耕作专精
     desc: "获得额外的 {value}% 耕作熟练度."
@@ -18,10 +18,14 @@ abilities:
     name: 素食主义者
     desc: "额外增加 {value} 点植物食物回复的饥饿度"
     info: "+{value}% 回复的饱食度"
+  growth_aura:
+    name: 范围增生
+    desc: "将 {radius} 格范围内由你种植的农作物生成速度加快 {value}%."
+    info: "+{value}% 生长速度"
   lumberjack:
     name: 精准伐木
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "额外获得 +{value} 点伐木幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 伐木幸运"
   forager:
     name: 伐木专精
     desc: "获得额外的 {value}% 伐木熟练度"
@@ -40,8 +44,8 @@ abilities:
     info: "{value}% 三倍耐久损耗"
   lucky_miner:
     name: 幸运挖掘者
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "额外获得 +{value} 点挖矿幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 挖矿幸运"
   miner:
     name: 矿工专精
     desc: "获得额外的 {value}% 挖矿熟练度"
@@ -60,8 +64,8 @@ abilities:
     info: "{value}% 盔甲耐久损耗减免"
   lucky_catch:
     name: 幸运一竿
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "额外获得 +{value} 点渔技幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 渔技幸运"
   fisher:
     name: 捕鱼专精
     desc: "获得额外的 {value}% 的钓鱼熟练度"
@@ -92,16 +96,16 @@ abilities:
     info: "+{value}% 任意 铲 伤害"
   bigger_scoop:
     name: 加倍掉落
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "额外获得 +{value} 点采掘幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value}% 采掘幸运"
   lucky_spades:
     name: 捡漏之王
     desc: "{value}% 的几率在挖掘时掉落史诗掉落物"
     info: "+{value}% 史诗 掉落物获得率"
-  crit_chance:
-    name: 猛力一击
-    desc: "+{value}% 的几率造成一次暴击伤害"
-    info: "+{value}% 暴击几率"
+  retrieval:
+    name: 箭矢回收
+    desc: "射出的箭在未命中且距离超过 {value} 格方块远时会在 {time} 秒内自动收回至背包."
+    info: "{value} 格距离"
   archer:
     name: 弓箭专精
     desc: "获得额外的 {value}% 弓箭熟练度"
@@ -138,10 +142,11 @@ abilities:
     name: 负面效果清除
     desc: "{value}% 的几率清除获得的负面药水效果"
     info: "{value}% 清除负面效果几率"
-  crit_damage:
-    name: 暴击伤害
-    desc: "增加 {value}% 的暴击伤害"
-    info: "增加 {value}% 的暴击伤害"
+  parry:
+    name: 招架
+    desc: "受击后的 {time} 秒内所受剑横扫伤害降低 {value}% 并免疫击退."
+    info: "{value}% 伤害减免"
+    parried: "<red>闪避本次攻击"
   fighter:
     name: 战斗专精
     desc: "获得额外的 {value}% 战斗熟练度"
@@ -196,7 +201,7 @@ abilities:
     info: "{value}% 持续时间延长"
   fleeting:
     name: 残血飞奔
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "低于 20% 生命值时获得 +{value} 的速度."
     info: "+{value}% 速度"
     start: "<white>你获得了残血速度提升! <gray>(+{value}% 速度)"
     end: "<gray>残血速度提升已被关闭"
@@ -602,10 +607,10 @@ menus:
   stats:
     stats_title: 你的属性
     skills: "技能"
-    added_drop: "+{value} Drop"
-    added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    added_drop: "+{value} 掉落"
+    added_drops: "+{value} 掉落"
+    chance_drop: "{chance}% 的概率获得 +{value} 掉落"
+    chance_drops: "{chance}% 的概率获得 +{value} 掉落"
   unclaimed_items:
     unclaimed_items_title: "领取物品"
     inventory_full: "你的物品栏没有足够的空间"
@@ -802,7 +807,7 @@ stats:
     desc: "<gray>再生增加你的生命和魔法值恢复速度"
   luck:
     name: 幸运
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "幸运属性会增加升级技能的对应方块中产生额外掉落的几率."
   wisdom:
     name: 智慧
     desc: "<gray>智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费"
@@ -830,7 +835,7 @@ traits:
   mana_regen:
     name: 魔力再生
   luck:
-    name: Luck Attribute
+    name: 幸运属性
   double_drop:
     name: 双倍掉落
   experience_bonus:
@@ -848,15 +853,15 @@ traits:
   movement_speed:
     name: 移动速度
   farming_luck:
-    name: Farming Luck
+    name: 耕作幸运
   foraging_luck:
-    name: Foraging Luck
+    name: 伐木幸运
   mining_luck:
-    name: Mining Luck
+    name: 挖掘幸运
   excavation_luck:
-    name: Excavation Luck
+    name: 采掘幸运
   fishing_luck:
-    name: Fishing Luck
+    name: 渔技幸运
 ui:
   maxed: 满级
 units:
