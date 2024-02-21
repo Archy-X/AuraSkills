@@ -793,31 +793,31 @@ sources:
 stats:
   strength:
     name: Forza
-    desc: "La forza aumenta il tuo danno d'attacco con varie armi"
+    desc: "La forza aumenta il tuo danno d'attacco con varie armi."
   health:
     name: Salute
-    desc: "La salute aumenta la quantità di {hp_unit} che possiedi, permettendoti di combattere piú a lungo"
+    desc: "La salute aumenta la quantità di {hp_unit} che possiedi, permettendoti di combattere piú a lungo."
   regeneration:
     name: Rigenerazione
-    desc: "La rigenerazione aumenta la velocità di recupero di punti vita e mana"
+    desc: "La rigenerazione aumenta la velocità di recupero di punti vita e mana."
   luck:
     name: Fortuna
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Saggezza
-    desc: "La saggezza aumenta il tuo mana massimo, aumenta l'esperienza guadagnata, e diminuisce il costo dell'utilizzo dell'incudine"
+    desc: "La saggezza aumenta il tuo mana massimo, aumenta l'esperienza guadagnata, e diminuisce il costo dell'utilizzo dell'incudine."
   toughness:
     name: Toughness
-    desc: "La resistenza aumenta la quantità danno ricevuto dagli attacchi avversari"
+    desc: "La resistenza aumenta la quantità danno ricevuto dagli attacchi avversari."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage

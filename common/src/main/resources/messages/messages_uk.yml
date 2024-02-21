@@ -18,6 +18,10 @@ abilities:
     name: Генетик
     desc: "Збільшує кількість насиченості від продуктів на основі рослин на {value}."
     info: "+{value} Насиченість"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Лісоруб
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -98,10 +102,10 @@ abilities:
     name: Вдачлива піка
     desc: "{value}% Більший шанс отримати рідкісний лут від викопування."
     info: "+{value}% Епічного луту"
-  crit_chance:
-    name: Шанс критичного удару
-    desc: "+{value}% шанс завдавати критичного удару."
-    info: "+{value}% Шанс критичного удару"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Лучник
     desc: "Отримати {value}% більше XP Завдяки луку."
@@ -138,10 +142,11 @@ abilities:
     name: Скажи Ні! дебафу
     desc: "{value}% шанс заперечити шкідливе ефект зілля від застосування."
     info: "{value}% Не отримати дебаф"
-  crit_damage:
-    name: Критична шкода
-    desc: "Збільшує критичне пошкодження на {value}%"
-    info: "+{value}% Критичної шкоди"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Боєць
     desc: "Отримати {value}% більше XP Завдяки Мечу."
@@ -793,31 +798,31 @@ sources:
 stats:
   strength:
     name: Сила
-    desc: "Сили збільшує пошкодження від атаки з різною зброєю"
+    desc: "Сили збільшує пошкодження від атаки з різною зброєю."
   health:
     name: Здоров"я
-    desc: "Здоров\"я збільшує вашу кількість {hp_unit} мати, дозволяючи вам тривати довше бої"
+    desc: "Здоров\"я збільшує вашу кількість {hp_unit} мати, дозволяючи вам тривати довше бої."
   regeneration:
     name: Регенерація
-    desc: "Регенерація збільшує відновлення життя та мани"
+    desc: "Регенерація збільшує відновлення життя та мани."
   luck:
     name: Удача
-    desc: "Удача збільшує шанси отримати рідкісне здобичі від мобів, риболовлі та багато іншого."
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Мудрість
-    desc: "Мудрість збільшує ваш максимальний запас мани й отримуваний досвід, також знижує витрати на ковадло"
+    desc: "Мудрість збільшує ваш максимальний запас мани й отримуваний досвід, також знижує витрати на ковадло."
   toughness:
     name: Витривалість
-    desc: "Стійкість зменшує шкоду від атак противника"
+    desc: "Стійкість зменшує шкоду від атак противника."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage
@@ -848,7 +853,7 @@ traits:
   movement_speed:
     name: Movement Speed
   farming_luck:
-    name: Farming Luck
+    name: Вдача фермерства
   foraging_luck:
     name: Foraging Luck
   mining_luck:

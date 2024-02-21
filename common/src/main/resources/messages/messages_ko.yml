@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: 풍성한 수확
-    desc: "{value}%의 확률로 농작물 수확량이 2배가 됩니다."
-    info: "{value}% 2x 드롭"
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
     name: 농부
     desc: "농사 경험치가 {value}% 증가합니다."
@@ -24,8 +24,8 @@ abilities:
     info: "+{value}% Growth"
   lumberjack:
     name: 나무꾼
-    desc: "{value}%의 확률로 벌목량이 2배가 됩니다."
-    info: "{value}% 2x 드롭"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
     name: 채집
     desc: "채집 경험치가 {value}% 증가합니다."
@@ -44,8 +44,8 @@ abilities:
     info: "{value}% 3x 내구도 피해"
   lucky_miner:
     name: 행운의 광부
-    desc: "{value}%확률로 광물 채굴량이 2배가 됩니다."
-    info: "{value}% 2x 드롭"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
     name: 광부
     desc: "채굴 경험치가 {value}% 증가합니다."
@@ -64,8 +64,8 @@ abilities:
     info: "{value}% 내구도 손실 없음"
   lucky_catch:
     name: 행운의 낚시꾼
-    desc: "{value}% 확률로 어획량이 2배가 됩니다."
-    info: "{value}% 2x 드롭"
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
     name: 낚시꾼
     desc: "낚시 경험치가 {value}% 증가합니다."
@@ -96,8 +96,8 @@ abilities:
     info: "+{value}% 삽 피해"
   bigger_scoop:
     name: 큰 삽
-    desc: "{value}% 확률로 채굴량이 3배가 됩니다."
-    info: "{value}% 3x 드롭"
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
     name: 행운의 스페이드
     desc: "땅을 팔 때 에픽 전리품 획득 확률 {value}% 증가합니다."
@@ -816,13 +816,13 @@ stats:
     desc: "단단함은 적으로부터 입는 피해를 감소시킵니다."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage

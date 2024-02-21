@@ -19,9 +19,9 @@ abilities:
     desc: "Aumenta o ganho de saturação de alimentos de origem vegetal em {value}."
     info: "+{value} Saturação"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura de Crescimento
+    desc: "Plantas com estágios de crescimento no raio de {radius} blocos de você, crescem {value}% mais rápido."
+    info: "+{value}% de Crescimento"
   lumberjack:
     name: Lenhador
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -103,9 +103,9 @@ abilities:
     desc: "{value}% de chance de obter itens raros na escavação."
     info: "+{value}% Loot Épico"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Recuperar
+    desc: "Flechas que você errar retornarão para você instantaneamente após {time}s em até {value} blocos de distância."
+    info: "Distância de {value}"
   archer:
     name: Arqueiro
     desc: "Ganhe {value}% a mais de XP de Arqueiro."
@@ -143,10 +143,10 @@ abilities:
     desc: "{value}% de chance de ignorar um efeito negativo de poção ser aplicado."
     info: "{value}% Sem Debuff"
   parry:
-    name: Parry
+    name: Aparar
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    info: "{value}% de Redução de Dano"
+    parried: "<red>Ataques Aparados"
   fighter:
     name: Guerreiro
     desc: "Ganhe {value}% mais XP de Combate."
@@ -798,31 +798,31 @@ sources:
 stats:
   strength:
     name: Força
-    desc: "Força aumenta seu dano de ataque com várias armas diferentes"
+    desc: "Força aumenta seu dano de ataque com várias armas diferentes."
   health:
     name: Vida
-    desc: "Vida aumenta a quantidade de {hp_unit} que você tem, permitindo que você dure mais em lutas"
+    desc: "Vida aumenta a quantidade de {hp_unit} que você tem, permitindo que você dure mais em lutas."
   regeneration:
     name: Regeneração
-    desc: "Regeneração aumenta o quão rápido você recupera sua vida e mana"
+    desc: "Regeneração aumenta o quão rápido você recupera sua vida e mana."
   luck:
     name: Sorte
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Sabedoria
-    desc: "A sabedoria aumenta sua mana máxima, aumenta ganhos de experiência e reduz os custos da bigorna"
+    desc: "A sabedoria aumenta sua mana máxima, aumenta ganhos de experiência e reduz os custos da bigorna."
   toughness:
     name: Tenacidade
-    desc: "A Tenacidade aumenta a quantidade de de dano reduzido de ataques inimigos"
+    desc: "A Tenacidade aumenta a quantidade de de dano reduzido de ataques inimigos."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage

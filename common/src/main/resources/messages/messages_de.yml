@@ -798,31 +798,31 @@ sources:
 stats:
   strength:
     name: Stärke
-    desc: "Stärke erhöht deinen Angriffsschaden mit verschiedenen Waffen"
+    desc: "Stärke erhöht deinen Angriffsschaden mit verschiedenen Waffen."
   health:
     name: Gesundheit
-    desc: "Gesundheit erhöht deine maximalen {hp_unit} und erlaubt dir im Kampf länger durchzuhalten"
+    desc: "Gesundheit erhöht deine maximalen {hp_unit} und erlaubt dir im Kampf länger durchzuhalten."
   regeneration:
     name: Erholung
-    desc: "Regeneration erhöht die Geschwindigkeit mit der sich sowohl Gesundheit als auch Mana erholen"
+    desc: "Regeneration erhöht die Geschwindigkeit mit der sich sowohl Gesundheit als auch Mana erholen."
   luck:
     name: Glück
     desc: "Glück erhöht die Chance auf zusätzliche Drops von Blöcken beim Sammeln von Fertigkeiten."
   wisdom:
     name: Weisheit
-    desc: "Weisheit erhöht dein maximales Mana, erhöht Erfahrungsgewinn und senkt Schmiedekosten"
+    desc: "Weisheit erhöht dein maximales Mana, erhöht Erfahrungsgewinn und senkt Schmiedekosten."
   toughness:
     name: Widerstandskraft
-    desc: "Widerstandskraft reduziert den durch feindliche Angriffe erlittenen Schaden"
+    desc: "Widerstandskraft reduziert den durch feindliche Angriffe erlittenen Schaden."
   crit_chance:
     name: Kritische Trefferchance
-    desc: "Die kritische Trefferchance ist deine Chance, einen kritischen Treffer zu verüben"
+    desc: "Die kritische Trefferchance ist deine Chance, einen kritischen Treffer zu verüben."
   crit_damage:
     name: Kritischer Schaden
-    desc: "Der kritische Schaden ist die prozentuale Erhöhung deines Schadens bei einem kritischen Treffer"
+    desc: "Der kritische Schaden ist die prozentuale Erhöhung deines Schadens bei einem kritischen Treffer."
   speed:
     name: Bewegungsgeschwindigkeit
-    desc: "Bewegungsgeschwindigkeit erhöht die Geschwindigkeit, mit der du dich bewegst"
+    desc: "Bewegungsgeschwindigkeit erhöht die Geschwindigkeit, mit der du dich bewegst."
 traits:
   attack_damage:
     name: Angriffsschaden

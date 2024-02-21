@@ -18,6 +18,10 @@ abilities:
     name: Genetyk
     desc: "Zwiększa przyrost nasycenia z żywności roślinnej o {value}."
     info: "+{value} Nasycenia"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Świetny Drwal
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -98,10 +102,10 @@ abilities:
     name: Szczęśliwe Szpady
     desc: "{value}% szans na zdobycie epickich łupów z kopania."
     info: "+{value}% Epickich Łupów"
-  crit_chance:
-    name: Szansa Obrażeń Krytycznych
-    desc: "+{value}% szans na trafienie krytyczne."
-    info: "+{value}% Szansy na Krytykę"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Łucznik
     desc: "Zdobywaj {value}% więcej XP Łucznictwa."
@@ -138,10 +142,11 @@ abilities:
     name: Antidotum
     desc: "{value}% szans na negowanie szkodliwego efektu mikstury."
     info: "{value}% Braku Debufu"
-  crit_damage:
-    name: Obrażenia Krytyczne
-    desc: "Zwiększa obrażenia krytyczne o {value}%"
-    info: "+{value}% Obrażeń Krytycznych"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Wojownik
     desc: "Zdobywaj {value}% więcej XP Walki"
@@ -793,31 +798,31 @@ sources:
 stats:
   strength:
     name: Siła
-    desc: "Siła zwiększa obrażenia od ataku różnymi broniami"
+    desc: "Siła zwiększa obrażenia od ataku różnymi broniami."
   health:
     name: Zdrowie
-    desc: "Zdrowie zwiększa ilość {hp_unit} które posiadasz, umożliwiając Ci dłuższe trwanie w walkach"
+    desc: "Zdrowie zwiększa ilość {hp_unit} które posiadasz, umożliwiając Ci dłuższe trwanie w walkach."
   regeneration:
     name: Regeneracja
-    desc: "Regeneracja zwiększa szybkość odzyskiwania zarówno zdrowia jak i many"
+    desc: "Regeneracja zwiększa szybkość odzyskiwania zarówno zdrowia jak i many."
   luck:
     name: Szczęście
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Mądrość
-    desc: "Mądrość zwiększa twoją maksymalną manę, zwiększa zdobyte doświadczenie i zmniejsza koszty kowadła"
+    desc: "Mądrość zwiększa twoją maksymalną manę, zwiększa zdobyte doświadczenie i zmniejsza koszty kowadła."
   toughness:
     name: Twardość
-    desc: "Twardość zwiększa ilość obrażeń zmniejszonych po atakach wroga"
+    desc: "Twardość zwiększa ilość obrażeń zmniejszonych po atakach wroga."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage

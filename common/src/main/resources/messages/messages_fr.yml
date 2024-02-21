@@ -18,6 +18,10 @@ abilities:
     name: Généticien
     desc: "Augmente le gain de saturation des aliments à base de plantes de {value}."
     info: "+{value} de Saturation"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Bûcheron
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -98,10 +102,10 @@ abilities:
     name: Pelles chanceuse
     desc: "{value}% de chance d'obtenir un butin rare en creusant."
     info: "+{value}% Butin épique"
-  crit_chance:
-    name: Coup critique
-    desc: "+{value}% de chance d'infliger un coup critique."
-    info: "+{value}% Coup critique"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Archer
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -138,10 +142,11 @@ abilities:
     name: Pas de malus
     desc: "{value}% de chance d'empêcher un effet de potion négative d'être appliqué."
     info: "{value}% Pas de malus"
-  crit_damage:
-    name: Dégâts critique
-    desc: "Augmente les dégats d'un coup critique de {value}%"
-    info: "+{value}% Dégâts critique"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Combattant
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -793,31 +798,31 @@ sources:
 stats:
   strength:
     name: Force
-    desc: "La force augmente vos dégâts d'attaque avec différentes armes"
+    desc: "La force augmente vos dégâts d'attaque avec différentes armes."
   health:
     name: Santé
-    desc: "La santé augmente le nombre d'{hp_unit} que vous avez, vous permettant de durer plus longtemps en combat"
+    desc: "La santé augmente le nombre d'{hp_unit} que vous avez, vous permettant de durer plus longtemps en combat."
   regeneration:
     name: Régénération
-    desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana"
+    desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana."
   luck:
     name: Chance
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Sagesse
-    desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume"
+    desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume."
   toughness:
     name: Ténacité
-    desc: "La Ténacité augmente les dégats réduit par les attaques ennemies"
+    desc: "La Ténacité augmente les dégats réduit par les attaques ennemies."
   crit_chance:
     name: Chances de critique
-    desc: "Les chances de coup critique sont vos chances d'infliger un coup critique"
+    desc: "Les chances de coup critique sont vos chances d'infliger un coup critique."
   crit_damage:
     name: Dégâts critique
-    desc: "Les dégâts critiques augmentent en pourcentage les dégâts infligés par un coup critique"
+    desc: "Les dégâts critiques augmentent en pourcentage les dégâts infligés par un coup critique."
   speed:
     name: Vitesse
-    desc: "La vitesse augmente la vitesse de marche et de course"
+    desc: "La vitesse augmente la vitesse de marche et de course."
 traits:
   attack_damage:
     name: Dégâts d'attaque

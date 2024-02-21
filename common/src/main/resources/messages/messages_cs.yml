@@ -18,6 +18,10 @@ abilities:
     name: Genetik
     desc: "Zvyšuje nárůst nasycení pomocí rostlinných potravin o {value}."
     info: "+{value} Sytosti"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Dřevorubec
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -98,10 +102,10 @@ abilities:
     name: Rýče štěstěny
     desc: "O {value}% vyšší šance na získání epické kořisti z kopání."
     info: "+{value}% Epická kořist"
-  crit_chance:
-    name: Šance na Critical
-    desc: "+{value}% šance na udělení critical hitu."
-    info: "+{value}% Šance na Critical"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Střelec
     desc: "Získej o {value}% více XP k farmaření."
@@ -138,10 +142,11 @@ abilities:
     name: No Debuff
     desc: "{value}% šance na zrušení škodlivého účinku lektvaru."
     info: "{value}% No Debuff"
-  crit_damage:
-    name: Kritické Poškození
-    desc: "Zvyšuje kritické poškození o {value}%"
-    info: "+{value}% Kritické Požkození"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Bojovník
     desc: "Získej o {value}% více XP k bojování"
@@ -793,31 +798,31 @@ sources:
 stats:
   strength:
     name: Strength
-    desc: "Strength zvyšuje poškezení při útoku s různýni zbraněmi"
+    desc: "Strength zvyšuje poškezení při útoku s různýni zbraněmi."
   health:
     name: Zdraví
-    desc: "Zdraví zvyšuje počet {hp_unit} tobě Mít, což tobě úmožní vydržet déle v bojích"
+    desc: "Zdraví zvyšuje počet {hp_unit} tobě Mít, což tobě úmožní vydržet déle v bojích."
   regeneration:
     name: Regenarace
-    desc: "Regenerace zvyšuje tvojí rychlost Obnovení zdraví i many"
+    desc: "Regenerace zvyšuje tvojí rychlost Obnovení zdraví i many."
   luck:
     name: Štěstí
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Moudrost
-    desc: "Moudrost zvyšuje tvoji maximální manu, zvyšuje Získávání zkušeností a snižuje náklad na kovadlinu"
+    desc: "Moudrost zvyšuje tvoji maximální manu, zvyšuje Získávání zkušeností a snižuje náklad na kovadlinu."
   toughness:
     name: Odolnost
-    desc: "Tvrdost zvyšuje množství poškození snížených při útoku nepřítelem"
+    desc: "Tvrdost zvyšuje množství poškození snížených při útoku nepřítelem."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage

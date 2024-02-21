@@ -798,31 +798,31 @@ sources:
 stats:
   strength:
     name: 力量
-    desc: "<gray>力量能使你在使用各种不同的武器时提升伤害"
+    desc: "力量能使你在使用各种不同的武器时提升伤害。"
   health:
     name: 生命值
-    desc: "<gray>生命能够提升你的最大 {hp_unit}, 也允许你在战斗中能够活得更久"
+    desc: "生命能够提升你的最大 {hp_unit}, 也允许你在战斗中能够活得更久。"
   regeneration:
     name: 再生
-    desc: "<gray>再生增加你的生命和魔法值恢复速度"
+    desc: "再生增加你的生命和魔法值恢复速度。"
   luck:
     name: 幸运
-    desc: "幸运属性会增加升级技能的对应方块中产生额外掉落的几率."
+    desc: "幸运属性会增加升级技能的对应方块中产生额外掉落的几率。"
   wisdom:
     name: 智慧
-    desc: "<gray>智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费"
+    desc: "智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费。"
   toughness:
     name: 韧性
-    desc: "<gray>韧性能减少敌人对你造成的伤害"
+    desc: "韧性能减少敌人对你造成的伤害。"
   crit_chance:
     name: 猛力一击
-    desc: "暴击率为你对敌方造成高额伤害的概率"
+    desc: "暴击率为你对敌方造成高额伤害的概率。"
   crit_damage:
     name: 暴击伤害
-    desc: "暴击伤害是造成暴击时的伤害增幅"
+    desc: "暴击伤害是造成暴击时的伤害增幅。"
   speed:
     name: 速度
-    desc: "速度属性可提升你的移动速度"
+    desc: "速度属性可提升你的移动速度。"
 traits:
   attack_damage:
     name: 攻击伤害

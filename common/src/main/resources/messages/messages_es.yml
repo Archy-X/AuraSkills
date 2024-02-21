@@ -18,6 +18,10 @@ abilities:
     name: Genetista
     desc: "Aumenta la ganancia de saturación de los alimentos de origen vegetal en {value}."
     info: "+{value} Saturación"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Leñador
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -98,10 +102,10 @@ abilities:
     name: Pala de la Suerte
     desc: "{value}% de probabilidad añadida de obtener botín épico al excavar."
     info: "+{value}% Botín Epico"
-  crit_chance:
-    name: Probabilidad de Crítico
-    desc: "+{value}% de probabilidad de infligir un golpe crítico."
-    info: "+{value}% de Probabilidad de Crítico"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: Arquero
     desc: "Gana un {value}% más de XP de Arquero."
@@ -138,10 +142,11 @@ abilities:
     name: Sin Desventajas
     desc: "{value}% de probabilidad para negar el efecto de una poción que te perjudique."
     info: "{value}% Sin Desventajas"
-  crit_damage:
-    name: Daño Crítico
-    desc: "Incrementa el daño por golpe crítico en un {value}%"
-    info: "+{value}% Daño Crítico"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: Luchador
     desc: "Gana un {value}% más de XP de Luchador"
@@ -793,31 +798,31 @@ sources:
 stats:
   strength:
     name: Fuerza
-    desc: "La fuerza incrementa tu daño de ataque con diferentes armas"
+    desc: "La fuerza incrementa tu daño de ataque con diferentes armas."
   health:
     name: Vida
-    desc: "La salud incrementa la cantidad de {hp_unit} que tienes y te permite durar más tiempo en peleas"
+    desc: "La salud incrementa la cantidad de {hp_unit} que tienes y te permite durar más tiempo en peleas."
   regeneration:
     name: Regeneración
-    desc: "La regeneración incrementa la rapidez con la que recuperas salud y maná"
+    desc: "La regeneración incrementa la rapidez con la que recuperas salud y maná."
   luck:
     name: Suerte
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Sabiduría
-    desc: "La sabiduría incrementa tu maná máximo, incrementa la experiencia ganada y reduce el costo del yunque"
+    desc: "La sabiduría incrementa tu maná máximo, incrementa la experiencia ganada y reduce el costo del yunque."
   toughness:
     name: Resistencia
-    desc: "La Resistencia incrementa la cantidad de de daño reducido de los ataques enemigos"
+    desc: "La Resistencia incrementa la cantidad de de daño reducido de los ataques enemigos."
   crit_chance:
     name: Chansa de Critía
-    desc: "Chansa de crítica es tu probabilidad de causar un golpe crítico"
+    desc: "Chansa de crítica es tu probabilidad de causar un golpe crítico."
   crit_damage:
     name: Daño Crítico
-    desc: "Daño Crítico es el porcentaje de aumento el daño cuando infliges un golpe crítico"
+    desc: "Daño Crítico es el porcentaje de aumento el daño cuando infliges un golpe crítico."
   speed:
     name: Velocidad
-    desc: "La velocidad aumenta con la rapidez que puedes caminar y correr"
+    desc: "La velocidad aumenta con la rapidez que puedes caminar y correr."
 traits:
   attack_damage:
     name: Daño del Ataque

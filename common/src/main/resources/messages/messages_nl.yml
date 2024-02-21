@@ -798,31 +798,31 @@ sources:
 stats:
   strength:
     name: Kracht
-    desc: "Kracht verhoogt uw aanvalsschade met verschillende wapens"
+    desc: "Kracht verhoogt uw aanvalsschade met verschillende wapens."
   health:
     name: Gezondheid
-    desc: "Gezondheid verhoogt het aantal van {hp_unit} jij hebt waardoor je langer kunt meedoen in gevechten"
+    desc: "Gezondheid verhoogt het aantal van {hp_unit} jij hebt waardoor je langer kunt meedoen in gevechten."
   regeneration:
     name: Regeneratie
-    desc: "Regeneratie verhoogt hoe snel je herstel zowel gezondheid als mana"
+    desc: "Regeneratie verhoogt hoe snel je herstel zowel gezondheid als mana."
   luck:
     name: Luck
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: Wijsdom
-    desc: "Wisdom verhoogt je max mana, verhoogt ervaring winst en vermindert de aambeeld kosten"
+    desc: "Wisdom verhoogt je max mana, verhoogt ervaring winst en vermindert de aambeeld kosten."
   toughness:
     name: Hardheid
-    desc: "Hardheid verhoogt het aantal schade verminderd door vijandelijke aanvallen"
+    desc: "Hardheid verhoogt het aantal schade verminderd door vijandelijke aanvallen."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage
