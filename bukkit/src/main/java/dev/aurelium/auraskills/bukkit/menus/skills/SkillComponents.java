@@ -5,6 +5,7 @@ import com.archyx.slate.component.ComponentProvider;
 import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.menu.ActiveMenu;
+import com.archyx.slate.menu.ConfigurableMenu;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -184,6 +185,7 @@ public class SkillComponents {
                 case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
                 case "current_xp" -> NumberUtil.format2(currentXp);
                 case "level_xp" -> String.valueOf((int) xpToNext);
+                case "bar" -> getBar(currentXp, xpToNext);
                 default -> replaceMenuMessage(placeholder, player, activeMenu);
             };
         }
@@ -192,6 +194,27 @@ public class SkillComponents {
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
             return ((Skill) context).getMaxLevel() > plugin.getUser(player).getSkillLevel((Skill) context);
         }
+
+        private String getBar(double currentXp, double xpToNext) {
+            ConfigurableMenu menu = plugin.getMenuManager().getMenu("skills");
+            if (menu == null) return "";
+
+            int length = (int) menu.getOptions().getOrDefault("bar_length", 10);
+            double progress = currentXp / xpToNext;
+            int currentPos = (int) Math.round(progress * (length - 1));
+
+            StringBuilder bar = new StringBuilder();
+            // Completed portion
+            String completed = menu.getFormats().getOrDefault("bar_completed", "<green>■");
+            bar.append(completed.repeat(Math.max(0, currentPos)));
+            // Current
+            bar.append(menu.getFormats().getOrDefault("bar_current", "<yellow>■"));
+            // Remaining
+            String remaining = menu.getFormats().getOrDefault("bar_remaining", "<gray>■");
+            bar.append(remaining.repeat(length - currentPos - 1));
+            return bar.toString();
+        }
+
     }
 
     public static class MaxLevel extends AbstractComponent implements ComponentProvider {

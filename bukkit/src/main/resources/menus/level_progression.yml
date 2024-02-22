@@ -93,8 +93,6 @@ templates:
       - component: ability_levels
       - component: mana_ability_info
       - ' '
-      - '<gray>{{level}}: <yellow>{level}'
-      - ' '
       - component: progress
       - component: max_level
   unlocked:
@@ -151,13 +149,14 @@ components:
     context: Skill
     lore:
       - ' '
-      - '<light_purple><bold>{{mana_ability}} <blue>{name} {level}'
+      - '<light_purple><bold>{{mana_ability}}</bold> <blue>{name} {level}'
       - '  {entries[\n  ](3)}'
   progress:
     context: Skill
     lore:
       - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
-      - '  <gray>{current_xp}/{level_xp} {xp_unit}'
+      - '{bar}'
+      - '<gray>{current_xp}/{level_xp} {xp_unit}'
   max_level:
     context: Skill
     lore:

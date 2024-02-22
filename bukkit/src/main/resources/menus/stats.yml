@@ -63,7 +63,7 @@ components:
           2: '<white>'
 formats:
   player_stat_entry: '{color}{symbol} {stat} <white>{level}'
-  trait_entry: '<gray>{trait}: {color}{level}'
+  trait_entry: '<#d0d0d0>{trait}: {color}{level}'
   luck_trait_desc_chance: ' <dark_gray>({chance})'
   luck_trait_desc_added: ' <dark_gray>({added})'
   luck_trait_desc_both: ' <dark_gray>({added}, {chance})'
