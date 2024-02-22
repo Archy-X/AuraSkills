@@ -1,54 +1,67 @@
-# Aurelium Skills
-[![Release](https://jitpack.io/v/Archy-X/AureliumSkills.svg?style=flat-square)](https://jitpack.io/#Archy-X/AureliumSkills)
+<h1 style="text-align:center;">AuraSkills</h1>
 
-[![Downloads](https://badges.spiget.org/resources/downloads/Downloads-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
-[![Rating](https://badges.spiget.org/resources/rating/Rating-blue-81069.svg)](https://www.spigotmc.org/resources/81069/)
+<p style="text-align:center;">
+The ultra-versatile Minecraft RPG skills plugin
+</p>
 
-AureliumSkills is an advanced, feature-rich skills, stats, and abilities plugin, great for a variety of server gamemodes.
+<p style="text-align: center;font-weight: bold;">
+  <a href="https://aurelium.dev/auraskills/download">Downloads</a>
+  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="https://wiki.aurelium.dev/auraskills">Wiki</a>
+  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="https://discord.gg/Bh2EZfB">Discord</a>
+</p>
 
-Learn more and download here: https://www.spigotmc.org/resources/81069/
+## About
 
-### Support Discord:
+**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds skills, stats, abilities, and other RPG-related features. The plugin is fully configurable and customizable, enabling use on a wide-range of server types from small SMPs to large, custom MMORPG networks.
 
-https://discord.gg/Bh2EZfB (Join for support/suggestions/discussion)
+## API
 
-### Wiki
-The AureliumSkills wiki can be viewed [here](https://wiki.aurelium.dev/skills).
-The wiki contains documentation on how to use and configure the plugin. The wiki may not be always up to date.
+AuraSkills has an extensive developer API.
 
-## Developer API
+Read the full API documentation on the [wiki](https://wiki.aurelium.dev/auraskills/api), or view the [Javadocs](https://docs.aurelium.dev/auraskills-api-bukkit/).
 
-Aurelium Skills provides a developer API to interact with the plugin.
+Release versions are published to the Maven central repository, while versions ending in -SNAPSHOT are published to the Sonatype Nexus Snapshot repository.
 
 ### Maven
+
 ```xml
 <repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
+    <id>sonatype</id>
+    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
 </repository>
 
 <dependency>
-    <groupId>com.github.Archy-X</groupId>
-    <artifactId>AureliumSkills</artifactId>
-    <version>{version}</version>
-    <scope>provided</scope>
+    <groupId>dev.aurelium</groupId>
+    <artifactId>auraskills-api-bukkit</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
-
 ### Gradle
+
+**Groovy DSL:**
 ```gradle
 repositories {
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
-    compileOnly 'com.github.Archy-X:AureliumSkills:{version}'
+    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.0.0-SNAPSHOT'
 }
 ```
-**Replace `{version}` with the version of the plugin you are targeting**, see [releases](https://github.com/Archy-X/AureliumSkills/releases) for the most updated list of version names.
+**Kotlin DSL:**
+```kotlin
+repositories { 
+    mavenCentral()
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+}
 
-The main class to use for the API is AureliumAPI, which has many static methods for skills, xp, stats, and mana.
-There are also a few events, including ManaRegenerateEvent, SkillLevelUpEvent, XpGainEvent, PlayerLootDropEvent, and ManaAbilityActivateEvent
+dependencies { 
+    compileOnly("dev.aurelium:auraskills-api-bukkit:2.0.0-SNAPSHOT")
+}
+```
 
 ## Contributing
-Contributions are welcome! Open a pull request, and I will review it.
+Contributions are welcome, just open a pull request.
