@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: Récolte abondante
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Accorde +{value} à la chance de farm, ce qui augmente les chances d'obtenir des drops supplémentaires."
+    info: "+{value} Chance de Farm"
   farmer:
     name: Fermier
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -19,13 +19,13 @@ abilities:
     desc: "Augmente le gain de saturation des aliments à base de plantes de {value}."
     info: "+{value} de Saturation"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura de croissance
+    desc: "Les cultures dont les stades de croissance no terminé se trouvent dans un rayon de {radius} blocs autour de vous poussent {value} % plus rapidement."
+    info: "+{value}% de croissance"
   lumberjack:
     name: Bûcheron
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Accorde +{value} à la chance du bûcheron, ce qui augmente les chances d'obtenir des drops supplémentaires."
+    info: "+{value} Chance du bûcheron"
   forager:
     name: Butineuse
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -44,8 +44,8 @@ abilities:
     info: "{value}% 3x Dégâts de durabilité"
   lucky_miner:
     name: Mineur chanceux
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Accorde +{value} à la chance de minage, ce qui augmente les chances d'obtenir des drops supplémentaires."
+    info: "+{value} Chance de Minage"
   miner:
     name: Mineur
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -64,8 +64,8 @@ abilities:
     info: "{value}% Aucune perte de durabilité"
   lucky_catch:
     name: Prise chanceuse
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Accorde +{value} à la chance du pêcheur, ce qui augmente les chances d'obtenir des drops supplémentaires."
+    info: "+{value} Chance du pêcheur"
   fisher:
     name: Pêcheur
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -96,16 +96,16 @@ abilities:
     info: "+{value}% dégâts avec la pelle"
   bigger_scoop:
     name: Plus grande pelle
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Accorde +{value} a la chance de fouille qui augmente les chances de drops supplémentaires."
+    info: "+{value}% Chances de Fouilles"
   lucky_spades:
     name: Pelles chanceuse
     desc: "{value}% de chance d'obtenir un butin rare en creusant."
     info: "+{value}% Butin épique"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Récupération
+    desc: "Les flèches qui vous manquez seront immédiatement récupérées après {time} jusqu’à {value} blocs."
+    info: "{value} de distance"
   archer:
     name: Archer
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -143,10 +143,10 @@ abilities:
     desc: "{value}% de chance d'empêcher un effet de potion négative d'être appliqué."
     info: "{value}% Pas de malus"
   parry:
-    name: Parry
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    name: Parer
+    desc: "Manquer un coup d'épée dans les {time} avant d'être touché réduit les dégâts de {value} % et annule le recul."
+    info: "{value}% de réduction de Dégats"
+    parried: "<red>Attaque parée"
   fighter:
     name: Combattant
     desc: "Gagnez {value}% d'xp en plus dans ce skill."
@@ -201,7 +201,7 @@ abilities:
     info: "{value}% Potions de vitesse et saut plus longue"
   fleeting:
     name: Fugace
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "Gagnez +{value} de vitesse de déplacement lorsque vous êtes à moins de 20% de votre vie."
     info: "+{value}% De vitesse"
     start: "<white>Vous avez gagné un boost de vitesse de déplacement! <gray>(+{value}% de vitesse)"
     end: "<gray>Le gain de vitesse s'est dissipé."
@@ -484,13 +484,13 @@ commands:
     players_only: "<yellow>Seuls les joueurs peuvent lister leur propre multiplicateur! Spécifiez un joueur!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
-      skipped: Skipped files
+      confirm: "<red>Le chargement d'un préréglage remplacera vos fichiers de configuration ! Les fichiers suivants seront affectés à <gray>(<aqua>Appended<gray>, <yellow>Fusionné<gray>, <red>Replaced<gray>, <dark_red>A Supprimé<gray>): {entries} <red>Cette action est irréversible, sauvegarde manuelle des fichiers nécessaires. Tapez la commande à nouveau pour confirmer."
+      loaded: Le préréglage {name} a été chargé avec succès, redémarrez le serveur.
+      created: Fichiers créés
+      modified: Fichiers modifiés
+      replaced: Fichiers remplacés
+      deleted: Fichiers supprimés
+      skipped: Fichiers ignorés
   profile:
     skills: "Profil de compétences Aurelium pour <gold>{name}:\n<gray>UUID : <white>{uuid}\n<gray>Compétences :{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Niveau : <white>{level}<gray>, XP : <white>{xp}"
@@ -609,8 +609,8 @@ menus:
     skills: "7Compétences"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    chance_drop: "{chance}% pour +{value} Drop"
+    chance_drops: "{chance}% pour +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Réclamer les articles"
     inventory_full: "Vous n'avez pas assez de place dans votre inventaire pour récupérer ceci"
@@ -717,13 +717,13 @@ skills:
     desc: "Marchez et courez pour gagnez de l'{xp_unit} Endurance"
   agility:
     name: Agilité
-    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+    desc: "Déplacez-vous et subissez des dégâts de chute pour gagner de l'Agilité {xp_unit}"
   alchemy:
     name: Alchimie
-    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+    desc: "Buvez et lancez des potions pour gagner {xp_unit} en Guérison"
   enchanting:
     name: Enchanteur
-    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+    desc: "Les objets d'enchantement, de combinaison et de meule rapportent des {xp_unit} d'enchantement"
   sorcery:
     name: Sorcier
     desc: "Utilisez des compétences à mana pour gagner de l'{xp_unit} Sorcier"
@@ -754,25 +754,25 @@ sources:
   jumping:
     jump_per_100: Sauter
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: Brasser une potion maladroite
+    regular: Brasser une potion normale
+    extended: Brasser une potion de durée prolongée
+    upgraded: Brasser une potion améliorée
+    splash: Brasser une potion jettable
+    lingering: Brasser une potion persistante
   enchanting:
-    weapon_per_level: Enchant Weapon
-    armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    weapon_per_level: Enchanter une arme
+    armor_per_level: Enchanter l'armure
+    tool_per_level: Enchanter l'outil
+    book_per_level: Enchanter un livre
   mana_ability_use:
     mana_ability_use: Utiliser des aptitudes de mana
   item_consume:
     drink_regular: Buvez une potion normale
     drink_extended: Boire Potion de durée prolongée
     drink_upgraded: Boire Potion améliorée
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    golden_apple: Consommer une pomme Dorée
+    enchanted_golden_apple: Consommer une pomme Dorée Enchantée
   potion_splash:
     splash_regular: Jettez une potion normal
     splash_extended: Jettez une Potion de durée prolongée
@@ -807,7 +807,7 @@ stats:
     desc: "La régénération augmente la vitess à laquelle vous récupérez à la fois de la vie et du mana."
   luck:
     name: Chance
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "La chance augmente les chances d'obtenir des drops supplémentaires quand vous farmez le skill."
   wisdom:
     name: Sagesse
     desc: "La sagesse augmente votre mana maximum, augmente votre gain d'éxpérience, et réduit les coup de l'enclume."
@@ -835,7 +835,7 @@ traits:
   mana_regen:
     name: Régénération de mana
   luck:
-    name: Luck Attribute
+    name: Attribut Chance
   double_drop:
     name: Butins Doublés
   experience_bonus:
@@ -853,19 +853,19 @@ traits:
   movement_speed:
     name: Vitesse de mouvement
   farming_luck:
-    name: Farming Luck
+    name: Chance du Fermier
   foraging_luck:
-    name: Foraging Luck
+    name: Chance du bûcheron
   mining_luck:
-    name: Mining Luck
+    name: Chance de Minage
   excavation_luck:
-    name: Excavation Luck
+    name: Chances de Fouilles
   fishing_luck:
-    name: Fishing Luck
+    name: Chance du pêcheur
 ui:
   maxed: MAX
 units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 31
+file_version: 32
