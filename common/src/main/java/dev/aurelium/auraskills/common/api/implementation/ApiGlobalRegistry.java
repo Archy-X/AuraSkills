@@ -9,6 +9,8 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 
+import java.util.Collection;
+
 public class ApiGlobalRegistry implements GlobalRegistry {
 
     private final AuraSkillsPlugin plugin;
@@ -23,8 +25,18 @@ public class ApiGlobalRegistry implements GlobalRegistry {
     }
 
     @Override
+    public Collection<Skill> getSkills() {
+        return plugin.getSkillRegistry().getValues();
+    }
+
+    @Override
     public Stat getStat(NamespacedId id) {
         return plugin.getStatRegistry().getOrNull(id);
+    }
+
+    @Override
+    public Collection<Stat> getStats() {
+        return plugin.getStatRegistry().getValues();
     }
 
     @Override
@@ -33,12 +45,27 @@ public class ApiGlobalRegistry implements GlobalRegistry {
     }
 
     @Override
+    public Collection<Trait> getTraits() {
+        return plugin.getTraitRegistry().getValues();
+    }
+
+    @Override
     public Ability getAbility(NamespacedId id) {
         return plugin.getAbilityRegistry().getOrNull(id);
     }
 
     @Override
+    public Collection<Ability> getAbilities() {
+        return plugin.getAbilityRegistry().getValues();
+    }
+
+    @Override
     public ManaAbility getManaAbility(NamespacedId id) {
         return plugin.getManaAbilityRegistry().getOrNull(id);
+    }
+
+    @Override
+    public Collection<ManaAbility> getManaAbilities() {
+        return plugin.getManaAbilityRegistry().getValues();
     }
 }
