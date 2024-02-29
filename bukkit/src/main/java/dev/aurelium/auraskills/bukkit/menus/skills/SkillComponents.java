@@ -211,7 +211,7 @@ public class SkillComponents {
             bar.append(menu.getFormats().getOrDefault("bar_current", "<yellow>■"));
             // Remaining
             String remaining = menu.getFormats().getOrDefault("bar_remaining", "<gray>■");
-            bar.append(remaining.repeat(length - currentPos - 1));
+            bar.append(remaining.repeat(Math.max(0, length - currentPos - 1)));
             return bar.toString();
         }
 
