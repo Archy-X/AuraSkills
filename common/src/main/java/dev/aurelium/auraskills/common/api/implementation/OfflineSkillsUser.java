@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
@@ -123,6 +124,26 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public Map<String, StatModifier> getStatModifiers() {
         return new HashMap<>();
+    }
+
+    @Override
+    public void addTraitModifier(TraitModifier traitModifier) {
+
+    }
+
+    @Override
+    public void removeTraitModifier(String name) {
+
+    }
+
+    @Override
+    public @Nullable TraitModifier getTraitModifier(String name) {
+        return null;
+    }
+
+    @Override
+    public Map<String, TraitModifier> getTraitModifiers() {
+        return null;
     }
 
     @Override

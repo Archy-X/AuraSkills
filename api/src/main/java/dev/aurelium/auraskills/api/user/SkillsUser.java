@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -173,6 +174,36 @@ public interface SkillsUser {
      * @return the map of all stat modifiers
      */
     Map<String, StatModifier> getStatModifiers();
+
+    /**
+     * Adds a trait modifier to the player.
+     *
+     * @param traitModifier the trait modifier
+     */
+    void addTraitModifier(TraitModifier traitModifier);
+
+    /**
+     * Removes a trait modifier from the player with a given name.
+     *
+     * @param name the name of the trait modifier to remove
+     */
+    void removeTraitModifier(String name);
+
+    /**
+     * Gets a trait modifier from its name
+     *
+     * @param name the name of the modifier
+     * @return the trait modifier, or null if none exists with the name.
+     */
+    @Nullable
+    TraitModifier getTraitModifier(String name);
+
+    /**
+     * Gets a map of all the user's trait modifiers.
+     *
+     * @return the map of all trait modifiers
+     */
+    Map<String, TraitModifier> getTraitModifiers();
 
     /**
      * Gets the total level of a trait, including non-plugin base values.

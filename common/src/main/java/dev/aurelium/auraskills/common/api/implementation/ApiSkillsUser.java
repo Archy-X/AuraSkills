@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
@@ -136,6 +137,26 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public Map<String, StatModifier> getStatModifiers() {
         return user.getStatModifiers();
+    }
+
+    @Override
+    public void addTraitModifier(TraitModifier traitModifier) {
+        user.addTraitModifier(traitModifier);
+    }
+
+    @Override
+    public void removeTraitModifier(String name) {
+        user.removeTraitModifier(name);
+    }
+
+    @Override
+    public @Nullable TraitModifier getTraitModifier(String name) {
+        return user.getTraitModifier(name);
+    }
+
+    @Override
+    public Map<String, TraitModifier> getTraitModifiers() {
+        return user.getTraitModifiers();
     }
 
     @Override
