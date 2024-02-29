@@ -30,6 +30,7 @@ public class ReloadExecutor {
         plugin.getWorldManager().loadWorlds(plugin.getConfig());
         // Load skills
         plugin.loadSkills();
+        plugin.getLevelManager().loadXpRequirements();
         plugin.getUiProvider().getBossBarManager().loadOptions();
         plugin.getRewardManager().loadRewards();
         plugin.getLootTableManager().loadLootTables();
