@@ -97,6 +97,7 @@ public abstract class HologramsHook extends Hook implements Listener {
     }
 
     private String getText(double damage, boolean critical) {
+        damage = Math.max(0.0, damage); // Prevent negative values
         StringBuilder text = new StringBuilder(defaultColor + "");
         String damageText;
         if (plugin.configBoolean(Option.DAMAGE_HOLOGRAMS_SCALING)) {
