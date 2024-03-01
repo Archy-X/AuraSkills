@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: Colheita Abundante
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Concede +{value} Sorte de Agricultura, o que aumenta a chance de itens extras."
+    info: "+{value} Sorte de Agricultura"
   farmer:
     name: Agricultor
     desc: "Consiga {value}% de XP agrícola."
@@ -24,8 +24,8 @@ abilities:
     info: "+{value}% de Crescimento"
   lumberjack:
     name: Lenhador
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Concede +{value} Sorte de Colheita, o que aumenta a chance de itens extras."
+    info: "+{value} Sorte de Colheita"
   forager:
     name: Colheitador
     desc: "Ganhe {value}% a mais de EXP de Colheita."
@@ -44,8 +44,8 @@ abilities:
     info: "{value}% 3x Dano de Durabilidade"
   lucky_miner:
     name: Minerador Sortudo
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Concede +{value} Sorte de Mineração, o que aumenta a chance de itens extras."
+    info: "+{value} Sorte de Mineração"
   miner:
     name: Minerador
     desc: "Ganhe {value}% mais EXP de Mineração."
@@ -64,8 +64,8 @@ abilities:
     info: "{value}% Sem Perda de Durabilidade"
   lucky_catch:
     name: Pegada de Sorte
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Concede +{value} Sorte de Pesca, o que aumenta a chance de itens extras."
+    info: "+{value} Sorte de Pesca"
   fisher:
     name: Pescador
     desc: "Ganhe {value}% a mais XP de Pesca."
@@ -96,8 +96,8 @@ abilities:
     info: "+{value}% de Dano de Pá"
   bigger_scoop:
     name: Grande Escavador
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Concede +{value} Sorte de Escavação, o que aumenta a chance de itens extras."
+    info: "+{value}% Sorte de Escavação"
   lucky_spades:
     name: Pá da Sorte
     desc: "{value}% de chance de obter itens raros na escavação."
@@ -144,7 +144,7 @@ abilities:
     info: "{value}% Sem Debuff"
   parry:
     name: Aparar
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    desc: "Falta um golpe de espada dentro de {time}s antes de ser atingido reduz o dano em {value}% e cancela repulsão."
     info: "{value}% de Redução de Dano"
     parried: "<red>Ataques Aparados"
   fighter:
@@ -162,7 +162,7 @@ abilities:
     dealt: "<red>Primeiro Ataque Qualificado!"
   bleed:
     name: Sangramento
-    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    desc: "Chance de {value}% de fazer o inimigo sangrar por {base_ticks} ticks de sangramento, causando {value_2} de dano por tick. {added_ticks} ticks são adicionados aos inimigos que já estão sangrando."
     info: "{value}% de chance e {value_2} de dano"
     enemy_bleeding: "<red>Inimigo Sangrando!"
     self_bleeding: "<red>Você está sangrando!"
@@ -484,13 +484,13 @@ commands:
     players_only: "<yellow>Somente jogadores podem listar seu próprio multiplicador! Especifique um jogador!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
-      skipped: Skipped files
+      confirm: "<red>Carregando um predefinido irá substituir seus arquivos de configuração! Os seguintes arquivos serão afetados <gray>(<aqua>Acrescentado<gray>, <yellow>Mesclado<gray>, <red>Substituído<gray>, <dark_red>Excluído<gray>): {entries} <red>Esta ação não pode ser desfeita, faça backup manualmente de quaisquer arquivos necessários. Digite o comando novamente para confirmar."
+      loaded: Configuração {name} carregada com sucesso, reinicie o servidor agora.
+      created: Criar arquivos
+      modified: Arquivos modificados
+      replaced: Substituir arquivo
+      deleted: Apagar arquivos
+      skipped: Arquivos ignorados
   profile:
     skills: "Perfil de Habilidades Aurelius para <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Habilidades:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Nível: <white>{level}<gray>, XP: <white>{xp}"
@@ -513,7 +513,7 @@ commands:
       set: "<gray>Todas as habilidades definidas para o nível <aqua>{level} <gray>para o jogador <gold>{player}"
     setlevel:
       set: "<gray>Habilidade <aqua>{skill} <gray>definida para nível <aqua>{level} <gray>para jogador <gold>{player}"
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>Nível deve ser pelo menos {level}!"
   toggle:
     enabled: "<green>Sua barra de ação de habilidades foi ativada"
     disabled: "<red>Sua barra de ação de habilidades foi desativada"
@@ -541,97 +541,97 @@ commands:
     set: "<gray>Definido <aqua>{skill} <gray>XP do jogador <gray>{player} <gray>para {amount}"
     remove: "<gray>Removido <aqua>{amount} {skill} <gray>XP do jogador <gold>{player}"
   unknown_skill: "<yellow>Habilidade desconhecida!"
-  unknown_stat: "<yellow>Unknown stat!"
+  unknown_stat: "<yellow>Habilidade desconhecida!"
   no_profile: "<yellow>Jogador não tem um perfil de habilidades. Por favor, tente reentrar no jogo ou reiniciar o servidor."
 leveler:
   level_up: "{skill} Level Up"
-  skill_level_up: Skill Level Up
-  rewards: Rewards
-  ability_unlock: Ability Unlock
-  ability_level_up: Ability Level Up
-  mana_ability_unlock: Mana Ability Unlock
-  mana_ability_level_up: Mana Ability Level Up
-  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  skill_level_up: Nível de habilidade
+  rewards: Recompensas
+  ability_unlock: Habilidades desbloqueadas
+  ability_level_up: Habilidade Melhorada
+  mana_ability_unlock: Habilidades de Mana desbloqueadas
+  mana_ability_level_up: Habilidade de Mana Melhorada
+  unclaimed_item: "<red>Você tem itens não resgatados porque o seu inventário estava cheio, use <yellow>/skills claimitems <red>para reivindicar eles"
 menus:
   common:
-    close: "Close"
-    level: "Level"
-    progress_to_level: "Progress to Level"
-    max_level: "MAX LEVEL"
-    ability_levels: "Ability Levels"
-    stats_leveled: "Stats Leveled"
-    mana_ability: "Mana Ability"
-    duration: "Duration"
-    mana_cost: "Mana Cost"
+    close: "Fechar"
+    level: "Nível"
+    progress_to_level: "Progresso para o nível"
+    max_level: "NÍVEL MÁXIMO"
+    ability_levels: "Níveis de Habilidade"
+    stats_leveled: "Estatísticas de Nível"
+    mana_ability: "Habilidade de Mana"
+    duration: "Duração"
+    mana_cost: "Custo de Mana"
     cooldown: "Cooldown"
-    damage: "Damage"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
-    back: "Go Back"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
-    next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
-    previous_page_click: "Click to go to previous page"
+    damage: "Dano"
+    max_mana_cost: "Custo máximo de mana"
+    attack_speed: "Velocidade de ataque"
+    back: "Voltar"
+    back_click: "Voltar para o Menu {menu_name}"
+    unlocked: "DESBLOQUEADO"
+    in_progress: "EM PROGRESSO"
+    locked: "BLOQUEADO"
+    your_level: "Seu nível"
+    next_page: "Próxima página"
+    next_page_click: "Clique para a próxima página"
+    previous_page: "Página anterior"
+    previous_page_click: "Clique para a página anterior"
   skills:
-    skills_title: "Your Skills"
-    your_skills: "Your Skills"
-    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
-    your_skills_hover: "Hover over a Skill for more information!"
-    your_skills_click: "Click on a Skill to view level progression!"
-    skill_click: "Click to view Level Progression!"
-    stats: "Stats"
-    stats_desc: "Earn stat buffs by leveling up skills"
-    stats_click: "Click to learn more or view your stats"
+    skills_title: "Suas Habilidades"
+    your_skills: "Suas Habilidades"
+    your_skills_desc: "Melhore Habilidades fazendo várias tarefas para desbloquear aumentos de atributos, habilidades e muito mais!"
+    your_skills_hover: "Passe o mouse sobre uma Habilidade para mais informações!"
+    your_skills_click: "Clique em uma Habilidade para ver o progresso do nível!"
+    skill_click: "Clique para ver o Progresso do Nível!"
+    stats: "Estatísticas"
+    stats_desc: "Ganhe atributos de bônus ao evoluir habilidades"
+    stats_click: "Clique para saber mais ou ver suas estatísticas"
   level_progression:
-    level_progression_title: "{skill} Levels - Page {page}"
-    your_ranking: "Your Skill Ranking"
-    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
-    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
-    rewards: "Rewards"
-    ability_unlock: "Ability Unlock"
-    mana_ability_unlock: "Mana Ability Unlock"
-    progress: "Progress"
-    leaderboard_click: "Click to view the {skill} leaderboard"
-    sources: "XP Sources"
-    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
-    sources_click: "Click to view {skill} sources"
-    abilities: "Abilities"
-    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
-    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
-    abilities_click: "Click to view {skill} abilities"
+    level_progression_title: "Níveis de {skill} - Página {page}"
+    your_ranking: "Sua Classificação de Habilidade"
+    rank_out_of: "<1>Você está classificado em <2>{rank}</2> de {total} jogadores</1>"
+    rank_percent: "<1>Você está no topo <2>{percent}%</2> dos jogadores</1>"
+    rewards: "Recompensas"
+    ability_unlock: "Habilidades desbloqueadas"
+    mana_ability_unlock: "Habilidades de Mana desbloqueadas"
+    progress: "Progresso"
+    leaderboard_click: "Clique para visualizar o placar de {skill}"
+    sources: "Fontes de Experiência"
+    sources_desc: "O menu de fontes mostra todas as maneiras que você pode ganhar XP em uma habilidade, bem como quanto XP cada fonte dá."
+    sources_click: "Clique para ver fontes de Xp em {skill}"
+    abilities: "Habilidades"
+    abilities_desc: "<2>Habilidades</2> <1>são habilidades passivas que você desbloqueia e atualiza conforme você aumenta o nível das habilidades.</1>"
+    mana_abilities_desc: "<3>Habilidades da Mana</3> <1>são um tipo especial de habilidade que requer ativação e consumo de mana.</1>"
+    abilities_click: "Clique para ver habilidades de {skill}"
   stats:
-    stats_title: Your Stats
-    skills: "Skills"
+    stats_title: Suas Estatísticas
+    skills: "Habilidades"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    chance_drop: "{chance}% para +{value} Drop"
+    chance_drops: "{chance}% para +{value} Drops"
   unclaimed_items:
-    unclaimed_items_title: "Claim Items"
-    inventory_full: "You do not have enough space in your inventory to claim that item"
-    click_to_claim: "Click to claim!"
+    unclaimed_items_title: "Resgatar Items"
+    inventory_full: "Você não tem espaço suficiente no seu inventário para reivindicar esse item"
+    click_to_claim: "Clique para coletar!"
   leaderboard:
-    leaderboard_title: "{skill} Leaderboard"
+    leaderboard_title: "Ranking de {skill}"
   sources:
-    sources_title: "{skill} XP Sources"
-    sorter: "Sort XP Sources"
-    descending: "Highest to Lowest"
-    ascending: "Lowest to Highest"
-    alphabetical: "Name (A-Z)"
-    reverse_alphabetical: "Name (Z-A)"
-    sort_click: "Click to cycle sort type"
-    multiplied_xp: "Multiplied {xp_unit}"
-    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+    sources_title: "Fontes de XP em {skill}"
+    sorter: "Ordenar Fontes de XP"
+    descending: "Maior para o menor"
+    ascending: "Menor para maior"
+    alphabetical: "Nome (A-Z)"
+    reverse_alphabetical: "Nome (Z-A)"
+    sort_click: "Clique para alterar o tipo"
+    multiplied_xp: "Multiplicado em {xp_unit}"
+    multiplied_desc: "Esse é o XP que você realmente ganhará com base em seus multiplicadores de XP atuais"
   abilities:
-    abilities_title: "{skill} Abilities"
-    description: "Description"
-    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
-    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+    abilities_title: "Habilidades de {skill}"
+    description: "Descrição"
+    unlocked_at: "<1>Desbloqueado em <2>{skill} {level}"
+    next_upgrade_at: "<1>Próxima melhoria em <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Reabastecer
@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>A Absorção acabou"
   terraform:
     name: Terraplenagem
-    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    desc: "Quando cavar, quebre blocos instantaneamente em um raio de bloco de {radius} horizontalmente por {value} segundos. <1>[Clique com o botão direito na pá e no bloco de escavado para ativar]"
     raise: "<gray>Você levanta sua pá"
     lower: "<gray>Você abaixa sua pá"
     start: "<gold>Terraplenagem ativada! <gray>(-{mana} {mana_unit})"
@@ -717,13 +717,13 @@ skills:
     desc: "Caminhe e corra para ganhar Resistência {xp_unit}"
   agility:
     name: Agilidade
-    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+    desc: "Se mova e recebe dano de queda para ganhar {xp_unit} de Agilidade"
   alchemy:
     name: Alquimia
-    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+    desc: "Crie e arremesse poções para ganhar {xp_unit} de Alquimia"
   enchanting:
     name: Encantador
-    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+    desc: "Encantando, combinando, e usando o rebolo para ganhar {xp_unit} de Encantador"
   sorcery:
     name: Feitiços
     desc: "Use habilidades de mana para ganhar Feitiços {xp_unit}"
@@ -744,49 +744,49 @@ sources:
     rare: Drop Raro
     epic: Drop Épico
   damage:
-    mob_damage: Damage from Mobs
-    player_damage: Damage from Players
-    fall_damage: Taking Fall Damage
+    mob_damage: Dano de Mobs
+    player_damage: Dano por Jogadores
+    fall_damage: Dano de Queda
   statistic:
-    walk_per_meter: Walking
-    sprint_per_meter: Sprinting
-    swim_per_meter: Swimming
+    walk_per_meter: Caminhando
+    sprint_per_meter: Correndo
+    swim_per_meter: Nadando
   jumping:
-    jump_per_100: Jumping
+    jump_per_100: Pulando
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: Faça Poção Estranha
+    regular: Faça uma Poção Normal
+    extended: Faça uma Poção de Duração Estendida
+    upgraded: Faça uma Poção Melhorada
+    splash: Faça uma Poção arremessável
+    lingering: Faça uma Poção Prolongada
   enchanting:
-    weapon_per_level: Enchant Weapon
-    armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    weapon_per_level: Encante uma Arma
+    armor_per_level: Encante uma Armadura
+    tool_per_level: Encante uma Ferramenta
+    book_per_level: Encante um Livro
   mana_ability_use:
-    mana_ability_use: Using Mana Abilities
+    mana_ability_use: Use Habilidades de Mana
   item_consume:
-    drink_regular: Drink Regular Potion
-    drink_extended: Drink Extended Duration Potion
-    drink_upgraded: Drink Upgraded Potion
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    drink_regular: Beba uma Poção Normal
+    drink_extended: Beba uma Poção de Duração Estendida
+    drink_upgraded: Beber uma Poção Melhorada
+    golden_apple: Consuma uma Maçã dourada
+    enchanted_golden_apple: Consuma Maçã dourada Encantada
   potion_splash:
-    splash_regular: Splash Regular Potion
-    splash_extended: Splash Extended Duration Potion
-    splash_upgraded: Splash Upgraded Potion
-    lingering_regular: Use Regular Lingering Potion
-    lingering_extended: Use Extended Duration Lingering Potion
-    lingering_upgraded: Use Upgraded Lingering Potion
+    splash_regular: Poção arremessável Regular
+    splash_extended: Poção arremessável de Duração Estendida
+    splash_upgraded: Poção arremessável de Melhoria
+    lingering_regular: Use uma poção prolongada comum
+    lingering_extended: Use uma poção prolongada com duração extendida
+    lingering_upgraded: Use uma poção prolongada com nível aumentado
   anvil:
-    combine_books_per_level: Combine Enchanted Books
-    combine_weapon_per_level: Combine Weapon with Book
-    combine_armor_per_level: Combine Armor with Book
-    combine_tool_per_level: Combine Tool with Book
+    combine_books_per_level: Combine Livros Encantados
+    combine_weapon_per_level: Combine Arma com Livro
+    combine_armor_per_level: Combine Armadura com Livro
+    combine_tool_per_level: Combine Ferramenta com Livro
   grindstone:
-    grindstone_per_level: Disenchant Item with Grindstone
+    grindstone_per_level: Desencante um Item com um Rebolo
   units:
     damage: Dano
     meter: Medidor
@@ -807,7 +807,7 @@ stats:
     desc: "Regeneração aumenta o quão rápido você recupera sua vida e mana."
   luck:
     name: Sorte
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "Sorte aumenta a chance de drops extras de blocos na coleta de habilidades."
   wisdom:
     name: Sabedoria
     desc: "A sabedoria aumenta sua mana máxima, aumenta ganhos de experiência e reduz os custos da bigorna."
@@ -815,53 +815,53 @@ stats:
     name: Tenacidade
     desc: "A Tenacidade aumenta a quantidade de de dano reduzido de ataques inimigos."
   crit_chance:
-    name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit."
+    name: Chance de Crítico
+    desc: "A chance de crítico é sua chance de causar um golpe crítico."
   crit_damage:
-    name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+    name: Dano crítico
+    desc: "O Dano Crítico é a porcentagem de aumento de dano ao causar um golpe crítico."
   speed:
-    name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    name: Velocidade
+    desc: "A velocidade aumenta o quão rápido você consegue andar e correr."
 traits:
   attack_damage:
-    name: Attack Damage
+    name: Dano de Ataque
   hp:
     name: HP
   saturation_regen:
-    name: Saturation Regen
+    name: Regeneração de Saturação
   hunger_regen:
-    name: Hunger Regen
+    name: Regeneração de Fome
   mana_regen:
-    name: Mana Regen
+    name: Regeneração de Mana
   luck:
-    name: Luck Attribute
+    name: Atributo da Sorte
   double_drop:
-    name: Double Drop
+    name: Drop Duplo
   experience_bonus:
-    name: Experience Bonus
+    name: Bônus de experiência
   anvil_discount:
-    name: Anvil Discount
+    name: Desconto de Bigorna
   max_mana:
-    name: Max Mana
+    name: Mana máxima
   damage_reduction:
-    name: Damage Reduction
+    name: Redução de dano
   crit_chance:
-    name: Crit Chance
+    name: Chance de Crítico
   crit_damage:
-    name: Crit Damage
+    name: Dano crítico
   movement_speed:
-    name: Movement Speed
+    name: Velocidade de Movimento
   farming_luck:
-    name: Farming Luck
+    name: Sorte de Agricultura
   foraging_luck:
-    name: Foraging Luck
+    name: Sorte de Colheita
   mining_luck:
-    name: Mining Luck
+    name: Sorte de Mineração
   excavation_luck:
-    name: Excavation Luck
+    name: Sorte de Escavação
   fishing_luck:
-    name: Fishing Luck
+    name: Sorte de Pesca
 ui:
   maxed: MAXED
 units:

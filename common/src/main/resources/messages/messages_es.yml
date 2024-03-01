@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: Cosecha Abundante
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Otorga +{value} Suerte de Cosecha, lo que aumenta la probabilidad de botín extra."
+    info: "+{value} Suerte de Agricultura"
   farmer:
     name: Agricultor
     desc: "Gana un {value}% más de XP de Agricultura."
@@ -19,13 +19,13 @@ abilities:
     desc: "Aumenta la ganancia de saturación de los alimentos de origen vegetal en {value}."
     info: "+{value} Saturación"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura de crecimiento
+    desc: "Cultivos con fases de crecimiento dentro de un radio de {radius} bloques, crecen un {value}% más rápido."
+    info: "+{value}% Crecimiento"
   lumberjack:
     name: Leñador
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Otorga +{value} Suerte de Leñador, lo que aumenta la probabilidad de botín extra."
+    info: "+{value} Suerte de Leñador"
   forager:
     name: Forrajero
     desc: "Gana un {value}% más de XP de Forrajero."
@@ -44,8 +44,8 @@ abilities:
     info: "{value}% 3x Daño de Durabilidad"
   lucky_miner:
     name: Minero Afortunado
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Otorga +{value} Suerte de Minería, lo que aumenta la probabilidad de mineral extra."
+    info: "+{value} Suerte de Minería"
   miner:
     name: Minero
     desc: "Gana un {value}% más de XP de Minería."
@@ -64,8 +64,8 @@ abilities:
     info: "{value}% Sin Pérdida de Durabilidad"
   lucky_catch:
     name: Pesca de la Suerte
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Otorga +{value} Suerte de Pesca, lo que aumenta la probabilidad de botín extra."
+    info: "+{value} Suerte de pesca"
   fisher:
     name: Pescador
     desc: "Gana un {value}% más de XP de Pescador"
@@ -96,16 +96,16 @@ abilities:
     info: "+{value}% Daño de Pala"
   bigger_scoop:
     name: Pala Grande
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Otorga +{value} Suerte de Excavación, lo que aumenta la probabilidad de botín extra."
+    info: "+{value}% Suerte de Excavación"
   lucky_spades:
     name: Pala de la Suerte
     desc: "{value}% de probabilidad añadida de obtener botín épico al excavar."
     info: "+{value}% Botín Epico"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Recuperación
+    desc: "Las flechas que falles las recuperaras después de {time}s, hasta {value} bloques de distancia."
+    info: "Distancia {value}"
   archer:
     name: Arquero
     desc: "Gana un {value}% más de XP de Arquero."
@@ -143,10 +143,10 @@ abilities:
     desc: "{value}% de probabilidad para negar el efecto de una poción que te perjudique."
     info: "{value}% Sin Desventajas"
   parry:
-    name: Parry
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    name: Rechazar
+    desc: "Al fallar un barrido de espada {time}s antes de ser golpeado, reduce el daño un {value}% y cancela el empuje."
+    info: "{value}% Reducción de Daño"
+    parried: "<red>Ataque Bloqueado"
   fighter:
     name: Luchador
     desc: "Gana un {value}% más de XP de Luchador"
@@ -201,7 +201,7 @@ abilities:
     info: "{value}% Velocidad Duradera"
   fleeting:
     name: Fugaz
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "Gana +{value} Velocidad al estar por debajo del 20% de vida."
     info: "+{value}% de Velocidad"
     start: "<white>Has ganado una mejora de velocidad! <gray>(+{value}% Velocidad)"
     end: "<gray>La mejora de velocidad ha finalizado"
@@ -607,10 +607,10 @@ menus:
   stats:
     stats_title: Tus estadísticas
     skills: "Habilidades"
-    added_drop: "+{value} Drop"
-    added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    added_drop: "+{value} Botín"
+    added_drops: "+{value} Botín"
+    chance_drop: "{chance}% de +{value} de Botín"
+    chance_drops: "{chance}% para +{value} de Botín"
   unclaimed_items:
     unclaimed_items_title: "Reclamar objetos"
     inventory_full: "No tienes suficiente espacio en el inventario para reclamarlos"
@@ -807,7 +807,7 @@ stats:
     desc: "La regeneración incrementa la rapidez con la que recuperas salud y maná."
   luck:
     name: Suerte
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "La suerte aumenta la probabilidad de botín extra de bloques en habilidades recolectoras."
   wisdom:
     name: Sabiduría
     desc: "La sabiduría incrementa tu maná máximo, incrementa la experiencia ganada y reduce el costo del yunque."
@@ -835,7 +835,7 @@ traits:
   mana_regen:
     name: Regeneración de Maná
   luck:
-    name: Luck Attribute
+    name: Atributo de Suerte
   double_drop:
     name: Doble Suelta
   experience_bonus:
@@ -853,15 +853,15 @@ traits:
   movement_speed:
     name: Velocidad
   farming_luck:
-    name: Farming Luck
+    name: Suerte de Agricultura
   foraging_luck:
-    name: Foraging Luck
+    name: Suerte de Leñador
   mining_luck:
-    name: Mining Luck
+    name: Suerte de Minería
   excavation_luck:
-    name: Excavation Luck
+    name: Suerte de Excavación
   fishing_luck:
-    name: Fishing Luck
+    name: Suerte de Pesca
 ui:
   maxed: MAXED
 units:
