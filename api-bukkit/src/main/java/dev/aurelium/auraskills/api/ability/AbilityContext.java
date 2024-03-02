@@ -35,6 +35,9 @@ public class AbilityContext {
      * @return true if one of the checks failed, false if all checks passed
      */
     public boolean failsChecks(Player player, Ability ability) {
+        if (!ability.isEnabled()) {
+            return true;
+        }
         if (api.getUser(player.getUniqueId()).getAbilityLevel(ability) <= 0) {
             return true;
         }

@@ -156,6 +156,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Register the API
         this.api = new ApiAuraSkills(this);
         ApiRegistrationUtil.register(api);
+        this.itemManager = new ApiItemManager(this); // Needed in ApiAuraSkillsBukkit
         this.apiBukkit = new ApiAuraSkillsBukkit(this);
         ApiBukkitRegistrationUtil.register(apiBukkit);
 
@@ -215,7 +216,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
-        itemManager = new ApiItemManager(this);
         leaderboardManager.updateLeaderboards();
         leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
