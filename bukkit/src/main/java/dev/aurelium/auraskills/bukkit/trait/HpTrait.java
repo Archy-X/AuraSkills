@@ -2,10 +2,8 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
-import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.attribute.Attribute;
@@ -63,11 +61,6 @@ public class HpTrait extends TraitImpl {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         applyScaling(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onLoad(UserLoadEvent event) {
-        setHealth(event.getPlayer(), BukkitUser.getUser(event.getUser()));
     }
 
     @Override

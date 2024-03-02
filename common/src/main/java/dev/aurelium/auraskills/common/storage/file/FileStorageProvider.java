@@ -69,10 +69,10 @@ public class FileStorageProvider extends StorageProvider {
         user.setMana(mana);
 
         // Load stat modifiers
-        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> user.addStatModifier(modifier));
+        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> user.addStatModifier(modifier, false));
 
         // Load trait modifiers
-        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> user.addTraitModifier(modifier));
+        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> user.addTraitModifier(modifier, false));
 
         // Load ability data
         loadAbilityData(root.node("ability_data"), user);

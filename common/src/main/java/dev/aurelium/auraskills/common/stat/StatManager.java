@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.common.stat;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
-import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
@@ -83,12 +82,9 @@ public abstract class StatManager {
 
 
     private void reloadStats(User user) {
-        reloadStat(user, Stats.HEALTH);
-        reloadStat(user, Stats.LUCK);
-        reloadStat(user, Stats.WISDOM);
-        reloadStat(user, Stats.CRIT_CHANCE);
-        reloadStat(user, Stats.CRIT_DAMAGE);
-        reloadStat(user, Stats.SPEED);
+        for (Stat stat : getEnabledStats()) {
+            reloadStat(user, stat);
+        }
     }
 
     public boolean isLoaded(Stat stat) {

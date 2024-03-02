@@ -79,9 +79,9 @@ public class SqlStorageProvider extends StorageProvider {
                     double mana = resultSet.getDouble("mana");
                     user.setMana(mana);
                     // Load stat modifiers
-                    loadStatModifiers(connection, uuid, userId).values().forEach(user::addStatModifier);
+                    loadStatModifiers(connection, uuid, userId).values().forEach(m -> user.addStatModifier(m, false));
                     // Load trait modifiers
-                    loadTraitModifiers(connection, uuid, userId).values().forEach(user::addTraitModifier);
+                    loadTraitModifiers(connection, uuid, userId).values().forEach(m -> user.addTraitModifier(m, false));
                     // Load ability data
                     loadAbilityData(connection, user, userId);
                     // Load unclaimed items
