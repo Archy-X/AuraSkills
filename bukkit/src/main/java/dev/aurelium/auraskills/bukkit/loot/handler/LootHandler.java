@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.Loot;
 import dev.aurelium.auraskills.bukkit.loot.LootPool;
@@ -235,7 +236,7 @@ public abstract class LootHandler {
         if (plugin.getWorldManager().isInDisabledWorld(location)) return true;
 
         if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            return plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(location, player, WorldGuardHook.FlagKey.CUSTOM_LOOT);
+            return plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(location, player, FlagKey.CUSTOM_LOOT);
         }
         return false;
     }

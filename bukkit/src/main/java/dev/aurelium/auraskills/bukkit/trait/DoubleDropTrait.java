@@ -1,10 +1,11 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.user.User;
@@ -57,7 +58,7 @@ public class DoubleDropTrait extends TraitImpl {
         //Checks if in blocked region
         if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
             WorldGuardHook worldGuard = plugin.getHookManager().getHook(WorldGuardHook.class);
-            if (worldGuard.isBlocked(block.getLocation(), player, WorldGuardHook.FlagKey.XP_GAIN)) {
+            if (worldGuard.isBlocked(block.getLocation(), player, FlagKey.XP_GAIN)) {
                 return;
             }
         }

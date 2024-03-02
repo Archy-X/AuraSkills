@@ -29,7 +29,7 @@ public class TableCreator {
 
     public void createUsersTable(Connection connection) throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, tablePrefix + "users", null);
+        ResultSet tables = dbm.getTables(pool.getDatabaseName(), null, tablePrefix + "users", null);
         // Return if table already exists
         if (tables.next()) {
             return;
@@ -47,7 +47,7 @@ public class TableCreator {
 
     public void createSkillLevelsTable(Connection connection) throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, tablePrefix + "skill_levels", null);
+        ResultSet tables = dbm.getTables(pool.getDatabaseName(), null, tablePrefix + "skill_levels", null);
         // Return if table already exists
         if (tables.next()) {
             return;
@@ -69,7 +69,7 @@ public class TableCreator {
 
     public void createKeyValuesTable(Connection connection) throws SQLException {
         DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, tablePrefix + "key_values", null);
+        ResultSet tables = dbm.getTables(pool.getDatabaseName(), null, tablePrefix + "key_values", null);
         // Return if table already exists
         if (tables.next()) {
             return;

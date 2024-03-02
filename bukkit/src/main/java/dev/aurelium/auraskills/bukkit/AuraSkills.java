@@ -5,6 +5,7 @@ import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.MenuManager;
 import com.archyx.slate.option.SlateOptions;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.AuraSkillsBukkit;
@@ -19,6 +20,7 @@ import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
@@ -124,6 +126,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
     private HookManager hookManager;
+    private WorldGuardFlags worldGuardFlags;
     private LeaderboardManager leaderboardManager;
     private BukkitUiProvider uiProvider;
     private RewardManager rewardManager;
@@ -253,6 +256,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
+    public void onLoad() {
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
+                worldGuardFlags = new WorldGuardFlags(this);
+                worldGuardFlags.register();
+            }
+        }
+    }
+
+    @Override
     public void onDisable() {
         scheduler.shutdown();
         // Save users
@@ -313,7 +326,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             String sources = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
             loader.generateUserFile(sources);
         }
-        saveResource("presets/legacy.zip", false);
+        File legacyPreset = new File(getPluginFolder(), "presets/legacy.zip");
+        if (!legacyPreset.exists()) {
+            saveResource("presets/legacy.zip", false);
+        }
     }
 
     public void loadSkills() {
@@ -415,6 +431,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public AuraSkillsBukkit getApiBukkit() {
         return apiBukkit;
+    }
+
+    public WorldGuardFlags getWorldGuardFlags() {
+        return worldGuardFlags;
     }
 
     @Override

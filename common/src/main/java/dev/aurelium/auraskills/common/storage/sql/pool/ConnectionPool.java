@@ -16,6 +16,10 @@ public abstract class ConnectionPool {
         this.credentials = credentials;
     }
 
+    public String getDatabaseName() {
+        return credentials.database();
+    }
+
     public abstract void configure(HikariConfig config, DatabaseCredentials credentials);
 
     public void enable() {
