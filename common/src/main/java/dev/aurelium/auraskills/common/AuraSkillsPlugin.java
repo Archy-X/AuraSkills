@@ -33,6 +33,7 @@ import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
+import dev.aurelium.auraskills.common.util.PlatformUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -100,6 +101,8 @@ public interface AuraSkillsPlugin {
     EventHandler getEventHandler();
 
     PresetManager getPresetManager();
+
+    PlatformUtil getPlatformUtil();
 
     // Message convenience methods
 

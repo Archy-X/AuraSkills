@@ -5,16 +5,16 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.position.FixedPosition;
 import com.archyx.slate.position.GroupPosition;
 import com.archyx.slate.position.PositionProvider;
-import com.archyx.slate.util.NumberUtil;
-import com.archyx.slate.util.TextUtil;
-import com.archyx.slate.util.Validate;
 import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.util.PlatformUtil;
+import dev.aurelium.auraskills.common.util.data.Validate;
 import dev.dbassett.skullcreator.SkullCreator;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
@@ -291,7 +291,8 @@ public class ConfigurateItemParser {
     @Nullable
     public String parseDisplayName(ConfigurationNode section) {
         if (!section.node("display_name").virtual()) {
-            return TextUtil.toString(TextUtil.toComponent(section.node("display_name").getString()));
+            PlatformUtil util = plugin.getPlatformUtil();
+            return util.toString(util.toComponent(section.node("display_name").getString()));
         }
         return null;
     }
@@ -302,7 +303,8 @@ public class ConfigurateItemParser {
             List<String> lore = section.node("lore").getList(String.class, new ArrayList<>());
             List<String> formattedLore = new ArrayList<>();
             for (String line : lore) {
-                line = TextUtil.toString(TextUtil.toComponent(line));
+                PlatformUtil util = plugin.getPlatformUtil();
+                line = util.toString(util.toComponent(line));
                 formattedLore.add(line);
             }
             return formattedLore;
@@ -346,6 +348,7 @@ public class ConfigurateItemParser {
         return nbtItem.getItem();
     }
 
+    @Nullable
     protected Material parseMaterial(String name) {
         Material material = Material.getMaterial(name);
         if (material != null) {

@@ -131,7 +131,8 @@ public class EntityLeveler extends SourceLeveler {
             Skill skill = entry.getValue();
 
             // Discard if entity type does not match
-            if (!source.getEntity().toUpperCase(Locale.ROOT).equals(entity.getType().toString())) {
+            String entityName = plugin.getPlatformUtil().convertEntityName(source.getEntity().toLowerCase(Locale.ROOT));
+            if (!entityName.toUpperCase(Locale.ROOT).equals(entity.getType().toString())) {
                 continue;
             }
 

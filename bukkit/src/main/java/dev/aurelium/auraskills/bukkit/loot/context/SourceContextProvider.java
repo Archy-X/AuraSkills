@@ -33,11 +33,13 @@ public class SourceContextProvider extends ContextProvider {
             if (source != null) {
                 contexts.add(new SourceContext(source));
             } else {
-                SourceTag tag = SourceTag.valueOf(name.toUpperCase(Locale.ROOT));
-                List<XpSource> sourceList = plugin.getSkillManager().getSourcesWithTag(tag);
-                for (XpSource tagSource : sourceList) {
-                    contexts.add(new SourceContext(tagSource));
-                }
+                try {
+                    SourceTag tag = SourceTag.valueOf(name.toUpperCase(Locale.ROOT));
+                    List<XpSource> sourceList = plugin.getSkillManager().getSourcesWithTag(tag);
+                    for (XpSource tagSource : sourceList) {
+                        contexts.add(new SourceContext(tagSource));
+                    }
+                } catch (IllegalArgumentException ignored) { }
             }
         }
         return contexts;

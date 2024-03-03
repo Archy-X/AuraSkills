@@ -100,6 +100,17 @@ public class BlockSource extends Source implements BlockXpSource {
         return leaf;
     }
 
+    @Override
+    public boolean isVersionValid() {
+        // Check if at least one block string is invalid
+        for (String blockStr : blocks) {
+            if (!plugin.getPlatformUtil().isValidMaterial(blockStr)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static class BlockSourceState implements BlockXpSourceState {
 
         private final Map<String, Object> stateMap;

@@ -13,7 +13,7 @@ import java.util.Locale;
 
 public class Source implements XpSource {
 
-    private final AuraSkillsPlugin plugin;
+    protected final AuraSkillsPlugin plugin;
     private final SourceValues values;
 
     public Source(AuraSkillsPlugin plugin, SourceValues values) {

@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.parser.BlockSourceParser;
 import dev.aurelium.auraskills.common.source.parser.util.*;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -92,8 +93,10 @@ public class SourceLoader {
                 }
                 applyNodeReplacements(sourceNode, sourceNode, sourceName);
                 XpSource source = parseSourceFromType(type, sourceNode, sourceName);
-                deserializedSources.add(source);
-                registerMenuItem(source, sourceNode);
+                if (source != null) {
+                    deserializedSources.add(source);
+                    registerMenuItem(source, sourceNode);
+                }
             }
             return deserializedSources;
         } catch (Exception e) {
@@ -162,6 +165,7 @@ public class SourceLoader {
         });
     }
 
+    @Nullable
     private XpSource parseSourceFromType(String type, ConfigurationNode sourceNode, String sourceName) {
         NamespacedId sourceTypeId = NamespacedId.fromDefault(type.toLowerCase(Locale.ROOT));
         SourceType sourceType = plugin.getSourceTypeRegistry().get(sourceTypeId);
@@ -170,7 +174,13 @@ public class SourceLoader {
 
         SourceContext context = new SourceContext(plugin.getApi(), sourceType, sourceName);
         try {
-            return (XpSource) parser.parse(sourceNode, context);
+            XpSource source = (XpSource) parser.parse(sourceNode, context);
+            if (source.isVersionValid()) {
+                return source;
+            } else {
+                plugin.logger().debug("Source " + source.getId() + " is not version valid, skipping");
+                return null;
+            }
         } catch (SerializationException e) {
             throw new IllegalArgumentException("Error deserializing source of type " + type);
         }

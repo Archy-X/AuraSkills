@@ -44,4 +44,13 @@ public interface XpSource {
      */
     double getXp();
 
+    /**
+     * Checks if the XP source is valid on the server's Minecraft version.
+     *
+     * @return whether the XP source is valid
+     */
+    default boolean isVersionValid() {
+        return true;
+    }
+
 }

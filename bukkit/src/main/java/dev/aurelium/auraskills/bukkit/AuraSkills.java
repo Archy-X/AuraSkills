@@ -53,6 +53,7 @@ import dev.aurelium.auraskills.bukkit.trait.BukkitTraitManager;
 import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
+import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -88,6 +89,7 @@ import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
@@ -149,6 +151,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ItemManager itemManager;
     private ConfirmManager confirmManager;
     private PresetManager presetManager;
+    private PlatformUtil platformUtil;
     private boolean nbtApiEnabled;
 
     @Override
@@ -161,6 +164,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         ApiBukkitRegistrationUtil.register(apiBukkit);
 
         logger = new BukkitLogger(this);
+        platformUtil = new BukkitPlatformUtil();
         // Load messages
         messageProvider = new MessageProvider(this);
         messageProvider.loadMessages();
@@ -590,6 +594,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public PresetManager getPresetManager() {
         return presetManager;
+    }
+
+    @Override
+    public PlatformUtil getPlatformUtil() {
+        return platformUtil;
     }
 
     public ItemManager getItemManager() {

@@ -33,4 +33,9 @@ public class EntitySource extends Source implements EntityXpSource {
     public EntityDamagers[] getDamagers() {
         return damagers;
     }
+
+    @Override
+    public boolean isVersionValid() {
+        return plugin.getPlatformUtil().isValidEntityType(entity);
+    }
 }
