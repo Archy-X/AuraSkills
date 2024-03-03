@@ -28,7 +28,6 @@ import dev.aurelium.auraskills.bukkit.menus.stats.StatsComponents;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatsMenu;
 import dev.aurelium.auraskills.common.source.Source;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MenuRegistrar {
@@ -60,11 +59,15 @@ public class MenuRegistrar {
         manager.registerMenuProvider("sources", new SourcesMenu(plugin));
         manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
         // Register default options
-        Map<String, Object> levelProgressionOptions = new HashMap<>();
-        levelProgressionOptions.put("use_level_as_amount", false);
-        levelProgressionOptions.put("over_max_stack_amount", 1);
-        levelProgressionOptions.put("items_per_page", 24);
-        manager.registerDefaultOptions("level_progression", levelProgressionOptions);
+        Map<String, Object> skillsOptions = Map.of("bar_length", 20);
+        manager.registerDefaultOptions("skills", skillsOptions);
+        Map<String, Object> lpOptions = Map.of(
+                "use_level_as_amount", false,
+                "over_max_stack_amount", 1,
+                "items_per_page", 24,
+                "start_level", 1,
+                "track", SkillLevelItem.getDefaultTrack());
+        manager.registerDefaultOptions("level_progression", lpOptions);
         // Global items
         manager.registerSingleItem("back", () -> new BackItem(plugin));
         manager.registerSingleItem("close", () -> new CloseItem(plugin));

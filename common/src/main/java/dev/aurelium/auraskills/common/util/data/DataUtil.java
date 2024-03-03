@@ -67,6 +67,17 @@ public class DataUtil {
         return stringList;
     }
 
+    public static List<Integer> castIntegerList(Object listObj) {
+        List<?> unknownList = (List<?>) listObj;
+        List<Integer> intList = new ArrayList<>();
+        for (Object element : unknownList) {
+            if (element instanceof Integer) {
+                intList.add((Integer) element);
+            }
+        }
+        return intList;
+    }
+
     public static Map<?, ?> getMap(Map<?, ?> map, String key) {
         Object object = getElement(map, key);
         if (!(object instanceof Map<?, ?>)) {

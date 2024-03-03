@@ -223,3 +223,4 @@ options:
   over_max_stack_amount: 1
   items_per_page: 24
   start_level: 1
+  track: [9, 18, 27, 36, 37, 38, 29, 20, 11, 12, 13, 22, 31, 40, 41, 42, 33, 24, 15, 16, 17, 26, 35, 44]
