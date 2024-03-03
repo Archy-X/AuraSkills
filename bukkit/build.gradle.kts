@@ -56,6 +56,7 @@ tasks.withType<ShadowJar> {
     relocate("org.bstats", "dev.aurelium.auraskills.bstats")
     relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
     relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
+    relocate("net.kyori", "dev.aurelium.auraskills.kyori")
 
     finalizedBy("copyJar")
 }
