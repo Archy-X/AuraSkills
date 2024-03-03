@@ -48,7 +48,7 @@ public class Source implements XpSource {
                 return "!!REMOVE!!";
             }
             if (sourceType == SourceTypes.ENTITY) {
-                return "{lang:entity.minecraft." + this.getId().getKey() + "}";
+                return "<lang:entity.minecraft." + this.getId().getKey() + ">";
             }
         }
         return msg; // Return if exists in messages

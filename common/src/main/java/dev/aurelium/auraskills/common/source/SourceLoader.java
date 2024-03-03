@@ -178,7 +178,6 @@ public class SourceLoader {
             if (source.isVersionValid()) {
                 return source;
             } else {
-                plugin.logger().debug("Source " + source.getId() + " is not version valid, skipping");
                 return null;
             }
         } catch (SerializationException e) {

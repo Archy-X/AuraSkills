@@ -29,7 +29,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("com.github.Archy-X:Slate:4e7429eb81")
+    implementation("com.github.Archy-X:Slate:4ba55d703b")
     implementation("org.jetbrains:annotations:24.0.1")
     implementation("net.kyori:adventure-text-minimessage:4.11.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.2")

@@ -15,6 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +34,7 @@ public class BlockLeveler extends SourceLeveler {
         this.helper = new BlockLevelerHelper(plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent event) {
         if (disabled()) return;
 
@@ -67,7 +68,7 @@ public class BlockLeveler extends SourceLeveler {
         applyBlockLuck(skill, player, user, event.getBlock(), source);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(PlayerInteractEvent event) {
         if (disabled()) return;
         Player player = event.getPlayer();
