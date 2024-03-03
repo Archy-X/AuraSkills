@@ -35,7 +35,7 @@ public abstract class SkillLevelItem extends AbstractItem implements TemplateIte
     }
 
     @Override
-    public void onInitialize(Player player, ActiveMenu activeMenu, Integer context) {
+    public void onInitialize(Player player, ActiveMenu activeMenu) {
         this.START_LEVEL = activeMenu.getOption(Integer.class, "start_level", 1);
         this.ITEMS_PER_PAGE = activeMenu.getOption(Integer.class, "items_per_page", 24);
         Object trackObj = activeMenu.getOption("track");
