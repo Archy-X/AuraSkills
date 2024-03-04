@@ -185,7 +185,7 @@ public class SkillComponents {
                 case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
                 case "current_xp" -> NumberUtil.format2(currentXp);
                 case "level_xp" -> String.valueOf((int) xpToNext);
-                case "bar" -> getBar(currentXp, xpToNext);
+                case "bar" -> getBar(plugin, currentXp, xpToNext);
                 default -> replaceMenuMessage(placeholder, player, activeMenu);
             };
         }
@@ -195,7 +195,7 @@ public class SkillComponents {
             return ((Skill) context).getMaxLevel() > plugin.getUser(player).getSkillLevel((Skill) context);
         }
 
-        private String getBar(double currentXp, double xpToNext) {
+        public static String getBar(AuraSkills plugin, double currentXp, double xpToNext) {
             ConfigurableMenu menu = plugin.getMenuManager().getMenu("skills");
             if (menu == null) return "";
 

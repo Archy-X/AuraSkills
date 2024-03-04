@@ -118,8 +118,9 @@ templates:
       - component: mana_ability_unlock
       - component: mana_ability_level
       - ' '
-      - '<gray>{{progress}}: <yellow>{percent}'
-      - '  <gray>{current_xp}/{level_xp} {xp_unit}'
+      - '<gray>{{progress}}: <yellow>{percent}%'
+      - '{bar}'
+      - '<gray>{current_xp}/{level_xp} {xp_unit}'
       - ' '
       - '<yellow>{{in_progress}}'
   locked:

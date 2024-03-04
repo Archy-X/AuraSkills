@@ -5,6 +5,7 @@ import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.skills.SkillComponents.Progress;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 
@@ -29,6 +30,7 @@ public class InProgressItem extends SkillLevelItem {
             case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
             case "current_xp" -> NumberUtil.format2(currentXp);
             case "level_xp" -> String.valueOf((int) xpToNext);
+            case "bar" -> Progress.getBar(plugin, currentXp, xpToNext);
             default -> replaceMenuMessage(placeholder, player, activeMenu);
         };
     }
