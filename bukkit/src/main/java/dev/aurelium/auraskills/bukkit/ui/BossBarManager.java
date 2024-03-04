@@ -1,20 +1,20 @@
 package dev.aurelium.auraskills.bukkit.ui;
 
+import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.util.math.BigNumber;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,6 +43,7 @@ public class BossBarManager implements Listener {
     private Map<Skill, BossBar.Overlay> overlays;
     private final NumberFormat nf = new DecimalFormat("#.#");
     private final AuraSkills plugin;
+    private final TextFormatter tf = new TextFormatter();
 
     public BossBarManager(AuraSkills plugin) {
         this.bossBars = new HashMap<>();
@@ -149,7 +150,7 @@ public class BossBarManager implements Listener {
         BossBar.Overlay overlay = getOverlay(skill);
         String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, (long) xpGained, level, maxed, locale);
 
-        Component name = LegacyComponentSerializer.legacySection().deserialize(bossBarText);
+        Component name = tf.toComponent(bossBarText);
 
         // Calculate xp progress
         double progress = currentXp / levelXp;
@@ -172,7 +173,7 @@ public class BossBarManager implements Listener {
         Locale locale = plugin.getUser(player).getLocale();
         String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, locale);
 
-        Component name = LegacyComponentSerializer.legacySection().deserialize(bossBarText);
+        Component name = tf.toComponent(bossBarText);
 
         bossBar.name(name); // Update the boss bar to the new text value
         // Calculate xp progress

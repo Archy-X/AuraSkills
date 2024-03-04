@@ -62,8 +62,10 @@ public abstract class RegionManager {
                 if (deleted) {
                     plugin.logger().warn("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
                 }
+                region.setReload(false);
             } catch (Exception e) {
                 e.printStackTrace();
+                region.setReload(false);
             }
         }
         region.setLoading(false);

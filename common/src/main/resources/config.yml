@@ -126,7 +126,7 @@ leveler:
   title:
     enabled: true
     fade_in: 5
-    stay: 100
+    stay: 80
     fade_out: 5
   sound:
     enabled: true
