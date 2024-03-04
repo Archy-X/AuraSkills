@@ -115,24 +115,36 @@ public abstract class RegionManager {
 
         File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         try {
-            NamedTag namedTag = NBTUtil.read(file);
-            if (namedTag.getTag() instanceof CompoundTag compoundTag) {
-                for (ChunkData chunkData : region.getChunkMap().values()) {
-                    // Save each chunk
-                    saveChunk(compoundTag, chunkData);
-                }
-                if (compoundTag.keySet().isEmpty()) {
-                    if (file.exists()) {
-                        try {
-                            Files.delete(file.toPath());
-                        } catch (Exception ignored) {
-                        }
+            if (!file.exists()) {
+                File parent = file.getParentFile();
+                if (parent != null && !parent.exists()) {
+                    if (!parent.mkdirs()) {
+                        plugin.logger().warn("Failed to create directory " + parent.getName());
                     }
-                } else {
-                    NBTUtil.write(namedTag, file);
                 }
+                NBTUtil.write(new NamedTag(file.getName(), new CompoundTag()), file);
+            }
+            NamedTag namedTag = NBTUtil.read(file);
+            if (!(namedTag.getTag() instanceof CompoundTag)) {
+                namedTag.setTag(new CompoundTag());
+            }
+            CompoundTag compoundTag = (CompoundTag) namedTag.getTag();
+            for (ChunkData chunkData : region.getChunkMap().values()) {
+                // Save each chunk
+                saveChunk(compoundTag, chunkData);
+            }
+            if (compoundTag.keySet().isEmpty()) {
+                if (file.exists()) {
+                    try {
+                        Files.delete(file.toPath());
+                    } catch (Exception ignored) {
+                    }
+                }
+            } else {
+                NBTUtil.write(namedTag, file);
             }
         } catch (IOException e) {
+            e.printStackTrace();
             boolean deleted = file.delete();
             if (deleted) {
                 plugin.logger().warn("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
