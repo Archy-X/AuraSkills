@@ -47,7 +47,7 @@ public class MessageProvider implements PolyglotProvider {
                 .defaultLanguage("en")
                 .providedLanguages(new String[] {"global", "en", "fr", "de", "es", "zh-CN", "zh-TW", "pt-BR", "it", "cs", "pl", "uk", "ko", "nl", "ja", "ru", "id"})
                 .messageReplacements(new MessageReplacements(replace))
-                .processExcluded(List.of("color", "action_bar.*", "leveler_format.title", "leveler_format.subtitle"))
+                .processExcluded(List.of("color", "action_bar.boss_bar_xp", "action_bar.boss_bar_maxed", "leveler_format.title", "leveler_format.subtitle"))
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();

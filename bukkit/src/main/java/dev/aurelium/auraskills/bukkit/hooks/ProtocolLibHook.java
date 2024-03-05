@@ -15,8 +15,6 @@ import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.user.User;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -41,18 +39,17 @@ public class ProtocolLibHook extends Hook {
         return ProtocolLibHook.class;
     }
 
-    public void sendActionBar(Player player, Component component) {
-        String json = JSONComponentSerializer.json().serialize(component);
+    public void sendActionBar(Player player, String message) {
         if (VersionUtils.isAtLeastVersion(17)) {
-            sendActionBarTextPacket(player, json);
+            sendActionBarTextPacket(player, message);
         } else {
-            sendTitlePacket(player, json);
+            sendTitlePacket(player, message);
         }
     }
 
     private void sendActionBarTextPacket(Player player, String message) {
         PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromJson(message));
+        packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
         packet.setMeta("AuraSkills", true); // Mark packet as from Aurelium Skills
         protocolManager.sendServerPacket(player, packet);
     }
@@ -61,7 +58,7 @@ public class ProtocolLibHook extends Hook {
     private void sendTitlePacket(Player player, String message) {
         PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.TITLE);
         packet.getEnumModifier(EnumWrappers.TitleAction.class, 0).write(0, EnumWrappers.TitleAction.ACTIONBAR);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromJson(message));
+        packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
         packet.setMeta("AuraSkills", true); // Mark packet as from Aurelium Skills
         protocolManager.sendServerPacket(player, packet);
     }

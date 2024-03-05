@@ -9,10 +9,10 @@ import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.Title.Times;
 import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -46,12 +46,11 @@ public class BukkitUiProvider implements UiProvider {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;
 
-        Component component = tf.toComponent(message);
         if (plugin.getHookManager().isRegistered(ProtocolLibHook.class)) {
             ProtocolLibHook hook = plugin.getHookManager().getHook(ProtocolLibHook.class);
-            hook.sendActionBar(player, component);
+            hook.sendActionBar(player, message);
         } else {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, BungeeComponentSerializer.get().serialize(component));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
         }
     }
 
