@@ -4,8 +4,8 @@
 abilities:
   bountiful_harvest:
     name: Obfite Zbiory
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Dodaje +{value} Szczęścia Rolnictwa, które zwiększa szansę na dodatkowe łupy."
+    info: "+{value} Szczęście Rolnictwa"
   farmer:
     name: Rolnik
     desc: "Zdobywaj {value}% więcej XP Rolnictwa."
@@ -19,13 +19,13 @@ abilities:
     desc: "Zwiększa przyrost nasycenia z żywności roślinnej o {value}."
     info: "+{value} Nasycenia"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura wzrostu
+    desc: "Uprawy z etapami wzrostu w obrębie {radius} bloków rosną {value}% szybciej."
+    info: "+{value}% Wzrostu"
   lumberjack:
     name: Świetny Drwal
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Dodaje +{value} Szczęścia Drwalnictwa, które zwiększa szansę na dodatkowe łupy."
+    info: "+{value} Szczęście Drwalnictwa"
   forager:
     name: Stolarz
     desc: "Zdobywaj {value}% więcej XP Drwalnictwa."
@@ -44,8 +44,8 @@ abilities:
     info: "{value}% 3x Obrażeń Wytrzymałości"
   lucky_miner:
     name: Szczęśliwy Górnik
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Dodaje +{value} Szczęścia Górnictwa, które zwiększa szansę na dodatkowe łupy."
+    info: "+{value} Szczęścia Kopania"
   miner:
     name: Górnik
     desc: "Zdobywaj {value}% więcej XP Górnictwa."
@@ -64,8 +64,8 @@ abilities:
     info: "{value}% Brak Utraty Wytrzymałości"
   lucky_catch:
     name: Szczęśliwy Połów
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Dodaje +{value} Szczęścia Wędkarstwa, które zwiększa szansę na dodatkowe łupy."
+    info: "+{value} Szczęścia Łowienia"
   fisher:
     name: Rybak
     desc: "Zdobywaj {value}% więcej XP Wędkarstwa."
@@ -96,16 +96,16 @@ abilities:
     info: "+{value}% Obrażeń Łopaty"
   bigger_scoop:
     name: Większa Miarka
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Dodaje +{value} Szczęścia Wydobywania, które zwiększa szansę na dodatkowe łupy."
+    info: "+{value}% Szczęścia Wydobycia"
   lucky_spades:
     name: Szczęśliwe Szpady
     desc: "{value}% szans na zdobycie epickich łupów z kopania."
     info: "+{value}% Epickich Łupów"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Odzyskanie
+    desc: "Strzały, które chybisz, zostaną natychmiast odzyskane po {time}s w odległości {value} bloków."
+    info: "Odległość {value}"
   archer:
     name: Łucznik
     desc: "Zdobywaj {value}% więcej XP Łucznictwa."
@@ -143,10 +143,10 @@ abilities:
     desc: "{value}% szans na negowanie szkodliwego efektu mikstury."
     info: "{value}% Braku Debufu"
   parry:
-    name: Parry
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    name: Parowanie
+    desc: "Brak zamachu mieczem w ciągu {time}s przed trafieniem zmniejsza obrażenia o {value}% i anuluje Odrzut."
+    info: "{value}% Redukcji Obrażeń"
+    parried: "<red>Atak sparowany"
   fighter:
     name: Wojownik
     desc: "Zdobywaj {value}% więcej XP Walki"
@@ -201,7 +201,7 @@ abilities:
     info: "{value}% Dłuższa Prędkość"
   fleeting:
     name: Trucht
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "Zyskaj +{value} szybkości ruchu, gdy twoje zdrowie spadnie poniżej 20%."
     info: "+{value}% Prędkości"
     start: "<white>Otrzymałeś zwiększenie szybkości truchtu! <gray>(+{value}% Prędkości)"
     end: "<gray>Przyśpieszenie szybkości truchtu zostało wyłączone"
@@ -245,7 +245,7 @@ abilities:
   enchanted_strength:
     name: Zaklęta Siła
     desc: "Zdobądź {value} Siły za każdy unikalny enchant rzeczy trzymanej w ręce."
-    info: "{value} Strength/Enchant"
+    info: "{value} Siła/Zaklinanie"
   lucky_table:
     name: Szczęśliwy Stół
     desc: "Przedmioty, które zakląłeś za pomocą stołu do zaklinania mają {value}% szans na ulepszenie poziomu zaklęcia o 1, jeśli nie jest to ich maksymalny poziom"
@@ -274,7 +274,7 @@ abilities:
   disenchanter:
     name: Odczarowanie
     desc: Zdobądź {value}% więcej doświadczenia podczas odczarowania przedmiotów za pomocą kamienia szlifierskiego.
-    info: "+{value}% Grindstone EXP"
+    info: "+{value}% EXP-a z Kamienia szlifierskiego"
   forger:
     name: Wykuwacz
     desc: Zdobywaj {value}% więcej XP Kowalstwa.
@@ -484,13 +484,13 @@ commands:
     players_only: "<yellow>Tylko gracze mogą wyświetlić własny mnożnik! Określ gracza!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
-      skipped: Skipped files
+      confirm: "<red>Ładowanie ustawień zastąpi twoje pliki konfiguracyjne! Następujące pliki zostaną dotknięte <gray>(<aqua>Dołączone<gray>, <yellow>Scalone<gray>, <red>Zastąpione<gray>, <dark_red>Usunięte<gray>): {entries} <red>Tej akcji nie można cofnąć, ręcznie wykonaj kopię zapasową wszystkich potrzebnych plików. Wpisz polecenie ponownie, aby potwierdzić."
+      loaded: Pomyślnie załadowano ustawienie {name}, zrestartuj serwer.
+      created: Utworzone pliki
+      modified: Zmodyfikowane pliki
+      replaced: Zastąpione pliki
+      deleted: Usunięte pliki
+      skipped: Pominięte pliki
   profile:
     skills: "Profil Aurelium Skills dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
@@ -513,7 +513,7 @@ commands:
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
     setlevel:
       set: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>Poziom musi wynosić co najmniej {level}!"
   toggle:
     enabled: "<green>Twój pasek umiejętności został włączony"
     disabled: "<red>Twój pasek umiejętności został wyłączony"
@@ -541,7 +541,7 @@ commands:
     set: "<gray>Ustawiono XP <aqua>{skill} <gray>graczowi <gray>{player} <gray>na {amount}"
     remove: "<gray>Usunięto <aqua>{amount} <gray>XP <aqua>{skill} <gray>graczowi <gold>{player}"
   unknown_skill: "<yellow>Nieznana umiejętność!"
-  unknown_stat: "<yellow>Unknown stat!"
+  unknown_stat: "<yellow>Nieznana statystyka!"
   no_profile: "<yellow>Gracz nie ma profilu umiejętności. Spróbuj dołączyć ponownie do gry lub uruchomić ponownie serwer."
 leveler:
   level_up: "Nowy Poziom {skill}"
@@ -564,15 +564,15 @@ menus:
     duration: "Czas trwania"
     mana_cost: "Koszt many"
     cooldown: "Czas odnowienia"
-    damage: "Damage"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
+    damage: "Obrażenia"
+    max_mana_cost: "Maksymalny Koszt Many"
+    attack_speed: "Prędkość Ataku"
     back: "Wróć"
     back_click: "Wróć do menu {menu_name}"
     unlocked: "ODBLOKOWANE"
     in_progress: "W TRAKCIE"
     locked: "ZABLOKOWANE"
-    your_level: "Your Level"
+    your_level: "Twój poziom"
     next_page: "Następna Strona"
     next_page_click: "Kliknij aby przejść do następnej strony"
     previous_page: "Poprzednia Strona"
@@ -594,7 +594,7 @@ menus:
     rank_percent: "<1>Jesteś <2>{percent}%</2> lepszy od innych</1>"
     rewards: "Nagrody"
     ability_unlock: "Do Odblokowania"
-    mana_ability_unlock: "Mana Ability Unlock"
+    mana_ability_unlock: "Odblokowanie zdolności many"
     progress: "Postęp"
     leaderboard_click: "Kliknij, aby wyświetlić tablicę wyników {skill}"
     sources: "Źródła XP"
@@ -608,9 +608,9 @@ menus:
     stats_title: Twoje Statystyki
     skills: "Umiejętności"
     added_drop: "+{value} Drop"
-    added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    added_drops: "+{value} Dropy"
+    chance_drop: "{chance}% na +{value} Drop"
+    chance_drops: "{chance}% na +{value} Dropy"
   unclaimed_items:
     unclaimed_items_title: "Odbierz Przedmioty"
     inventory_full: "Nie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot"
@@ -629,9 +629,9 @@ menus:
     multiplied_desc: "To jest XP, które faktycznie zdobędziesz w oparciu o aktualne mnożniki XP"
   abilities:
     abilities_title: "Zdolności {skill}"
-    description: "Description"
+    description: "Opis"
     unlocked_at: "<1>Odblokowanie: <2>{skill} {level}"
-    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+    next_upgrade_at: "<1>Następne ulepszenie na <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -663,7 +663,7 @@ mana_abilities:
     end: "<gray>Absorbcja się skończyła"
   terraform:
     name: Terraforma
-    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    desc: "Podczas kopania, rozbij natychmiast połączone bloki w promieniu {radius} bloków poziomo przez {value} sekund. <1>[Wciśnij ppm i wykop blok, aby aktywować]"
     raise: "<gray>Podnosisz swoją łopatę"
     lower: "<gray>Obniżasz swoją łopatę"
     start: "<gold>Terraforma Aktywowana! <gray>(-{mana} {mana_unit})"
@@ -717,13 +717,13 @@ skills:
     desc: "Chodź i biegaj, aby zdobyć {xp_unit} Wytrzymałości"
   agility:
     name: Zręczność
-    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+    desc: "Poruszaj się i otrzymaj obrażenia od upadku, by otrzymać {xp_unit} Zręczności"
   alchemy:
     name: Alchemia
-    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+    desc: "Warz mikstury i je rozbijaj, aby zdobyć {xp_unit} Alchemii"
   enchanting:
     name: Zaklinanie
-    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+    desc: "Zaklęcie, kombinacja i kamień szlifierski zdobywają Zaklinanie {xp_unit}"
   sorcery:
     name: Czarodziejstwo
     desc: "Użyj zdolności many, by zdobyć {xp_unit} Czarodziejstwa"
@@ -754,25 +754,25 @@ sources:
   jumping:
     jump_per_100: Skakanie
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: Wywarz Klarowną Miksturę
+    regular: Wywarz Zwykłą Miksturę
+    extended: Wywarz Wydłużoną Czasowo Miksturę
+    upgraded: Wywarz Ulepszoną Miksturę
+    splash: Rzuć Miksturę Miotaną
+    lingering: Wywarz Trwałą Miksturę
   enchanting:
-    weapon_per_level: Enchant Weapon
-    armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    weapon_per_level: Zaklęcie broni
+    armor_per_level: Zaklęcie zbroi
+    tool_per_level: Narzędzie zaklęć
+    book_per_level: Zaklęta księga
   mana_ability_use:
     mana_ability_use: Używanie Zdolności Many
   item_consume:
     drink_regular: Picie zwykłej mikstury
     drink_extended: Picie mikstury z wydłużonym czasem trwania
     drink_upgraded: Picie ulepszonej mikstury
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    golden_apple: Zużyj Złote Jabłko
+    enchanted_golden_apple: Zużyj Zaklęte Złote Jabłko
   potion_splash:
     splash_regular: Miotanie zwykłej mikstury
     splash_extended: Miotanie mikstury z wydłużonym czasem trwania
@@ -807,7 +807,7 @@ stats:
     desc: "Regeneracja zwiększa szybkość odzyskiwania zarówno zdrowia jak i many."
   luck:
     name: Szczęście
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "Szczęście zwiększa szansę na dodatkowe dropy z bloków w gromadzeniu umiejętności."
   wisdom:
     name: Mądrość
     desc: "Mądrość zwiększa twoją maksymalną manę, zwiększa zdobyte doświadczenie i zmniejsza koszty kowadła."
@@ -815,55 +815,55 @@ stats:
     name: Twardość
     desc: "Twardość zwiększa ilość obrażeń zmniejszonych po atakach wroga."
   crit_chance:
-    name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit."
+    name: Szansa na cios krytyczny
+    desc: "Szansa na cios krytyczny to twoja możliwość na zadanie ciosu krytycznego."
   crit_damage:
-    name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+    name: Obrażenia Krytyczne
+    desc: "Obrażenia Krytyczne to procentowy wzrost obrażeń podczas krytycznego trafienia."
   speed:
-    name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    name: Prędkość
+    desc: "Prędkość zwiększa szybkość chodzenia i biegania."
 traits:
   attack_damage:
-    name: Attack Damage
+    name: Obrażenia Ataku
   hp:
-    name: HP
+    name: PŻ
   saturation_regen:
-    name: Saturation Regen
+    name: Regeneracja nasycenia
   hunger_regen:
-    name: Hunger Regen
+    name: Regeneracja Głodu
   mana_regen:
-    name: Mana Regen
+    name: Regeneracja many
   luck:
-    name: Luck Attribute
+    name: Atrybut Szczęścia
   double_drop:
-    name: Double Drop
+    name: Podwójny drop
   experience_bonus:
-    name: Experience Bonus
+    name: Premia do doświadczenia
   anvil_discount:
-    name: Anvil Discount
+    name: Zniżka na kowadło
   max_mana:
-    name: Max Mana
+    name: Maks Mana
   damage_reduction:
-    name: Damage Reduction
+    name: Redukcja Obrażeń
   crit_chance:
-    name: Crit Chance
+    name: Szansa na cios krytyczny
   crit_damage:
-    name: Crit Damage
+    name: Obrażenia Krytyczne
   movement_speed:
-    name: Movement Speed
+    name: Prędkość ruchu
   farming_luck:
-    name: Farming Luck
+    name: Szczęście Rolnictwa
   foraging_luck:
-    name: Foraging Luck
+    name: Szczęście Drwalnictwa
   mining_luck:
-    name: Mining Luck
+    name: Szczęście Kopania
   excavation_luck:
-    name: Excavation Luck
+    name: Szczęście Wydobycia
   fishing_luck:
-    name: Fishing Luck
+    name: Szczęście Łowienia
 ui:
-  maxed: MAXED
+  maxed: MAKSYMALNY
 units:
   mana: Mana
   hp: HP
