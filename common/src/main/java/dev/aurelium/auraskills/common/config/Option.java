@@ -13,6 +13,7 @@ public enum Option {
     SQL_LOAD_DELAY("sql.load_delay", OptionType.INT),
     SQL_ALWAYS_LOAD_ON_JOIN("sql.always_load_on_join", OptionType.BOOLEAN),
     SQL_SSL("sql.ssl", OptionType.BOOLEAN),
+    DEFAULT_LANGUAGE("default_language", OptionType.STRING),
     TRY_DETECT_CLIENT_LANGUAGE("try_detect_client_language", OptionType.BOOLEAN),
     // Action bar options
     ACTION_BAR_ENABLED("action_bar.enabled", OptionType.BOOLEAN),

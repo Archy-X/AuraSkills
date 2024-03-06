@@ -18,7 +18,9 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.UnitMessage;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,6 +34,8 @@ public class MessageProvider implements PolyglotProvider {
     private final AuraSkillsPlugin plugin;
     private final Polyglot polyglot;
     private final MessageManager manager;
+    @Nullable
+    private Locale defaultLanguage; // Lazy loaded by getDefaultLanguage
 
     public MessageProvider(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -51,6 +55,7 @@ public class MessageProvider implements PolyglotProvider {
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();
+        this.defaultLanguage = null;
     }
 
     public void loadMessages() {
@@ -121,8 +126,20 @@ public class MessageProvider implements PolyglotProvider {
         return manager.get(locale, convertKey("traits." + key + ".name"));
     }
 
+    public void loadDefaultLanguageOption() {
+        Locale locale = new Locale(plugin.configString(Option.DEFAULT_LANGUAGE));
+        if (manager.getLoadedLanguages().contains(locale)) {
+            defaultLanguage = locale;
+        } else {
+            defaultLanguage = manager.getDefaultLanguage();
+        }
+    }
+
     public Locale getDefaultLanguage() {
-        return manager.getDefaultLanguage();
+        if (defaultLanguage == null) {
+            loadDefaultLanguageOption();
+        }
+        return defaultLanguage;
     }
 
     private com.archyx.polyglot.lang.MessageKey convertKey(MessageKey key) {

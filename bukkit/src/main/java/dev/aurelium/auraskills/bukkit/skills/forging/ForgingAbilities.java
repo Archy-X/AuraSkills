@@ -184,6 +184,8 @@ public class ForgingAbilities extends AbilityImpl {
             return;
         }
 
+        if (failsChecks(player, ability)) return;
+
         User user = plugin.getUser(player);
 
         int maxCost = (int) Math.round(getValue(ability, user));
