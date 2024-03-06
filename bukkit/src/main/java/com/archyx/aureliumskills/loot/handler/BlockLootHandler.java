@@ -39,7 +39,7 @@ public abstract class BlockLootHandler extends LootHandler implements Listener {
 
     public abstract LootDropCause getCause(LootPool pool);
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBreak(BlockBreakEvent event) {
         if (!OptionL.isEnabled(skill)) return;
         if (event.isCancelled()) return;
