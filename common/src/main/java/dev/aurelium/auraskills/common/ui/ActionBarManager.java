@@ -62,6 +62,9 @@ public abstract class ActionBarManager {
         var task = new TaskRunnable() {
             @Override
             public void run() {
+                if (!plugin.configBoolean(Option.ACTION_BAR_IDLE)) {
+                    return;
+                }
                 for (User user : plugin.getUserManager().getOnlineUsers()) {
                     UUID uuid = user.getUuid();
                     // Check player setting
