@@ -167,31 +167,6 @@ public class ForgingAbilities extends AbilityImpl {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void anvilMaster(InventoryOpenEvent event) {
-        var ability = Abilities.ANVIL_MASTER;
-
-        if (event.isCancelled()) return;
-
-        if (isDisabled(ability)) return;
-
-        Inventory inventory = event.getInventory();
-        if (inventory.getType() != InventoryType.ANVIL || !(inventory instanceof AnvilInventory anvil)) {
-            return;
-        }
-
-        if (!(event.getPlayer() instanceof Player player)) {
-            return;
-        }
-
-        if (failsChecks(player, ability)) return;
-
-        User user = plugin.getUser(player);
-
-        int maxCost = (int) Math.round(getValue(ability, user));
-        anvil.setMaximumRepairCost(maxCost);
-    }
-
     @EventHandler
     public void skillMender(XpGainEvent event) {
         var ability = Abilities.SKILL_MENDER;

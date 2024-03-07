@@ -346,7 +346,11 @@ public class SqlStorageProvider extends StorageProvider {
             statement.setString(1, user.getUuid().toString());
             int curr = 2; // Current index to set
             for (int i = 0; i < 2; i++) { // Repeat twice to set duplicate values
-                statement.setString(curr++, user.getLocale().toLanguageTag());
+                if (user.hasLocale()) {
+                    statement.setString(curr++, user.getLocale().toString());
+                } else {
+                    statement.setNull(curr++, Types.NULL);
+                }
                 statement.setDouble(curr++, user.getMana());
             }
             statement.executeUpdate();

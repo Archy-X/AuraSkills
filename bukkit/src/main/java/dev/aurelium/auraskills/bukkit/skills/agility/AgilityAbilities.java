@@ -19,10 +19,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -305,6 +302,37 @@ public class AgilityAbilities extends AbilityImpl {
             lightFall(event, user, player);
         }
         fleeting(event, user, player);
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void mealSteal(EntityDamageByEntityEvent event) {
+        var ability = Abilities.MEAL_STEAL;
+
+        if (isDisabled(ability)) return;
+
+        if (event.isCancelled()) return;
+        // Checks if entity and damager are players
+        if (!(event.getEntity() instanceof Player enemy) || !(event.getDamager() instanceof Player player)) return;
+
+        if (failsChecks(player, ability)) return;
+
+        User user = plugin.getUser(player);
+        // Calculates chance
+        double chance = getValue(ability, user) / 100;
+        if (rand.nextDouble() < chance) {
+            // Removes food from enemy
+            if (enemy.getFoodLevel() >= 1) {
+                enemy.setFoodLevel(enemy.getFoodLevel() - 1);
+            }
+            // Adds food level to player
+            if (player.getFoodLevel() < 20) {
+                player.setFoodLevel(player.getFoodLevel() + 1);
+            }
+            // Adds saturation if food is full
+            else if (player.getSaturation() < 20f) {
+                player.setSaturation(player.getSaturation() + 1f);
+            }
+        }
     }
 
 }

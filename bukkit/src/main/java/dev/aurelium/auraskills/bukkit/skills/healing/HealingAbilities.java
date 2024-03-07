@@ -3,22 +3,15 @@ package dev.aurelium.auraskills.bukkit.skills.healing;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -55,66 +48,6 @@ public class HealingAbilities extends AbilityImpl {
 
         double multiplier = 1 + getValue(ability, user) / 100;
         event.setAmount(event.getAmount() * multiplier);
-    }
-
-    @EventHandler
-    public void lifeSteal(EntityDeathEvent event) {
-        var ability = Abilities.LIFE_STEAL;
-
-        if (isDisabled(ability)) return;
-
-        LivingEntity entity = event.getEntity();
-        boolean hostile = entity instanceof Monster || entity instanceof Player || entity instanceof Phantom;
-
-        if (!hostile) {
-            return;
-        }
-
-        if (entity.getKiller() == null) return;
-        Player player = entity.getKiller();
-        if (player.equals(entity)) return;
-
-        if (failsChecks(player, ability)) return;
-
-        User user = plugin.getUser(player);
-
-        AttributeInstance entityAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        if (entityAttribute == null) return;
-
-        // Get the health to regen from a percent of the mob's health
-        double maxHealth = entityAttribute.getValue();
-        double percent = getValue(ability, user) / 100;
-        double healthRegen = maxHealth * percent;
-
-        AttributeInstance playerAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        if (playerAttribute == null) return;
-
-        player.setHealth(player.getHealth() + Math.min(healthRegen, playerAttribute.getValue() - player.getHealth()));
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void goldenHeart(EntityDamageEvent event) {
-        var ability = Abilities.GOLDEN_HEART;
-
-        if (isDisabled(ability)) return;
-
-        if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-
-        if (failsChecks(player, ability)) return;
-
-        User user = plugin.getUser(player);
-
-        if (player.getAbsorptionAmount() <= 0) {
-            return;
-        }
-
-        double multiplier = 1 - getValue(ability, user) / 100;
-        if (multiplier < 0.01) { // Cap at 99% reduction
-            multiplier = 0.01;
-        }
-        event.setDamage(event.getDamage() * multiplier);
     }
 
     @EventHandler
