@@ -7,14 +7,12 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.Map;
 
@@ -126,7 +124,7 @@ public class DamageLeveler extends SourceLeveler {
             // Check damager
             if (source.getDamager() != null) {
                 if (event instanceof EntityDamageByEntityEvent entityEvent) {
-                    if (!damagerMatches(entityEvent.getDamager(), source.getDamager())) {
+                    if (!damagerMatches(source, entityEvent.getDamager(), source.getDamager())) {
                         continue;
                     }
                 } else {
@@ -138,12 +136,29 @@ public class DamageLeveler extends SourceLeveler {
         return null;
     }
 
-    private boolean damagerMatches(Entity damager, String name) {
+    private boolean damagerMatches(DamageXpSource source, Entity damager, String name) {
+        if (source.includeProjectiles() && damager instanceof Projectile projectile) {
+            return projectileSourceMatches(projectile.getShooter(), name);
+        } else {
+            return entityDamagerMatches(damager, name);
+        }
+    }
+
+    private boolean entityDamagerMatches(Entity damager, String name) {
         if (name.equalsIgnoreCase("mob")) {
             return damager instanceof Mob;
         } else {
             return damager.getType().toString().equalsIgnoreCase(name);
         }
+    }
+
+    private boolean projectileSourceMatches(ProjectileSource projectileSource, String name) {
+        if (name.equalsIgnoreCase("mob")) {
+            return projectileSource instanceof Mob;
+        } else if (projectileSource instanceof LivingEntity livingEntity) {
+            return livingEntity.getType().toString().equalsIgnoreCase(name);
+        }
+        return false;
     }
 
 }

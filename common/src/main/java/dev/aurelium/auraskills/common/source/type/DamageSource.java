@@ -13,14 +13,16 @@ public class DamageSource extends Source implements DamageXpSource {
     private final String damager;
     private final boolean mustSurvive;
     private final boolean useOriginalDamage;
+    private final boolean includeProjectiles;
 
-    public DamageSource(AuraSkillsPlugin plugin, SourceValues values, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage) {
+    public DamageSource(AuraSkillsPlugin plugin, SourceValues values, DamageCause[] causes, DamageCause[] excludedCauses, String damager, boolean mustSurvive, boolean useOriginalDamage, boolean includeProjectiles) {
         super(plugin, values);
         this.causes = causes;
         this.excludedCauses = excludedCauses;
         this.damager = damager;
         this.mustSurvive = mustSurvive;
         this.useOriginalDamage = useOriginalDamage;
+        this.includeProjectiles = includeProjectiles;
     }
 
     @Override
@@ -46,5 +48,10 @@ public class DamageSource extends Source implements DamageXpSource {
     @Override
     public boolean useOriginalDamage() {
         return useOriginalDamage;
+    }
+
+    @Override
+    public boolean includeProjectiles() {
+        return includeProjectiles;
     }
 }

@@ -44,6 +44,14 @@ public interface DamageXpSource extends XpSource {
      */
     boolean useOriginalDamage();
 
+    /**
+     * Gets whether being damaged by projectiles whose shooter matches the damager of the source should be
+     * counted as part of the source.
+     *
+     * @return Whether projectiles shot from the damager gives XP
+     */
+    boolean includeProjectiles();
+
     enum DamageCause {
         CONTACT,
         ENTITY_ATTACK,
@@ -74,6 +82,6 @@ public interface DamageXpSource extends XpSource {
         CRAMMING,
         DRYOUT,
         FREEZE,
-        SONIC_BOOM;
+        SONIC_BOOM
     }
 }

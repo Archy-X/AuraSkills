@@ -20,7 +20,8 @@ public class DamageSourceParser extends SourceParser<DamageSource> {
         String damager = source.node("damager").getString();
         boolean mustSurvive = source.node("must_survive").getBoolean(true);
         boolean useOriginalDamage = source.node("use_original_damage").getBoolean(true);
+        boolean includeProjectiles = source.node("include_projectiles").getBoolean(true);
 
-        return new DamageSource(plugin, context.parseValues(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage);
+        return new DamageSource(plugin, context.parseValues(source), causes, excludedCauses, damager, mustSurvive, useOriginalDamage, includeProjectiles);
     }
 }
