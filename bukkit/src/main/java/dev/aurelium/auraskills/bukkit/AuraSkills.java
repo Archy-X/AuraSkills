@@ -36,6 +36,7 @@ import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.menus.SlateMenuHelper;
+import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
@@ -69,7 +70,6 @@ import dev.aurelium.auraskills.common.level.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.auraskills.common.menu.MenuHelper;
 import dev.aurelium.auraskills.common.message.MessageKey;
-import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.migration.MigrationManager;
@@ -122,7 +122,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private SourceTypeRegistry sourceTypeRegistry;
     private BukkitItemRegistry itemRegistry;
     private PlatformLogger logger;
-    private MessageProvider messageProvider;
+    private BukkitMessageProvider messageProvider;
     private BukkitConfigProvider configProvider;
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
@@ -166,7 +166,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         logger = new BukkitLogger(this);
         platformUtil = new BukkitPlatformUtil();
         // Load messages
-        messageProvider = new MessageProvider(this);
+        messageProvider = new BukkitMessageProvider(this);
         messageProvider.loadMessages();
         // Init managers
         skillManager = new SkillManager(this);
@@ -447,7 +447,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public MessageProvider getMessageProvider() {
+    public BukkitMessageProvider getMessageProvider() {
         return messageProvider;
     }
 

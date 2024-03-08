@@ -70,6 +70,11 @@ public enum Stats implements Stat {
     }
 
     @Override
+    public String getColoredName(Locale locale) {
+        return provider.getColoredName(this, locale);
+    }
+
+    @Override
     public String getSymbol(Locale locale) {
         return provider.getSymbol(this, locale);
     }

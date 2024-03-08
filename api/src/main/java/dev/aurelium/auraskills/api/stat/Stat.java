@@ -61,6 +61,14 @@ public interface Stat extends Optioned, NamespaceIdentified {
     String getColor(Locale locale);
 
     /**
+     * Gets the stat's display name applied with its color
+     *
+     * @param locale the locale to get the name and color in
+     * @return the colored name
+     */
+    String getColoredName(Locale locale);
+
+    /**
      * Gets the symbol as defined in the messages file.
      *
      * @param locale the locale to get the symbol in

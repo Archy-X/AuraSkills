@@ -22,10 +22,11 @@ import java.util.Set;
 public class ModifierCommand extends BaseCommand {
 
     private final AuraSkills plugin;
-    private final StatFormat format = new StatFormat();
+    private final StatFormat format;
 
     public ModifierCommand(AuraSkills plugin) {
         this.plugin = plugin;
+        this.format = new StatFormat(plugin);
     }
 
     @Subcommand("add")

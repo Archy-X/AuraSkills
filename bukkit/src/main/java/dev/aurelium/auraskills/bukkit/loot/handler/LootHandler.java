@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
+import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -40,6 +41,7 @@ public abstract class LootHandler {
 
     protected final AuraSkills plugin;
     private final Random random = new Random();
+    private final TextFormatter tf = new TextFormatter();
 
     public LootHandler(AuraSkills plugin) {
         this.plugin = plugin;
@@ -210,7 +212,7 @@ public abstract class LootHandler {
         if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
             finalMessage = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, finalMessage);
         }
-        player.sendMessage(finalMessage);
+        user.sendMessage(tf.toComponent(finalMessage));
     }
 
     public double getCommonChance(LootPool pool, User user) {

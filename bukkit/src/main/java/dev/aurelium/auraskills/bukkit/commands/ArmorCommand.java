@@ -25,10 +25,11 @@ import java.util.Map;
 public class ArmorCommand extends BaseCommand {
 
     private final AuraSkills plugin;
-    private final StatFormat format = new StatFormat();
+    private final StatFormat format;
 
     public ArmorCommand(AuraSkills plugin) {
         this.plugin = plugin;
+        this.format = new StatFormat(plugin);
     }
 
     @Subcommand("modifier add")

@@ -121,7 +121,7 @@ public class LevelUpMessenger {
                         "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
                         "{value_2}", AbilityUtil.getUpgradeValue2(ability, level - 1, format));
         desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
-        return com.archyx.polyglot.util.TextUtil.applyColor(desc);
+        return desc;
     }
 
     private String getManaAbilityUnlockMessage() {
@@ -139,11 +139,11 @@ public class LevelUpMessenger {
                     "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
                     "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, 1)));
             desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
-            sb.append(TextUtil.replace(plugin.getMsg(LevelerFormat.MANA_ABILITY_UNLOCK, locale),
+            sb.append(TextUtil.replace(plugin.getMessageProvider().getRaw(LevelerFormat.MANA_ABILITY_UNLOCK, locale),
                     "{mana_ability}", manaAbility.getDisplayName(locale),
                     "{desc}", desc));
         }
-        return com.archyx.polyglot.util.TextUtil.applyColor(sb.toString());
+        return plugin.getMessageProvider().applyFormatting(sb.toString());
     }
 
     private String getManaAbilityLevelUpMessage() {
@@ -156,13 +156,13 @@ public class LevelUpMessenger {
         // If mana ability is unlocked at this level
         if (manaAbility.getUnlock() != level) {
             int level = user.getManaAbilityLevel(manaAbility);
-            sb.append(TextUtil.replace(plugin.getMsg(LevelerFormat.MANA_ABILITY_LEVEL_UP, locale),
+            sb.append(TextUtil.replace(plugin.getMessageProvider().getRaw(LevelerFormat.MANA_ABILITY_LEVEL_UP, locale),
                     "{mana_ability}", manaAbility.getDisplayName(locale),
                     "{previous}", RomanNumber.toRoman(level - 1, plugin),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{desc}", getManaAbilityLevelUpDesc(manaAbility, level, locale)));
         }
-        return com.archyx.polyglot.util.TextUtil.applyColor(sb.toString());
+        return plugin.getMessageProvider().applyFormatting(sb.toString());
     }
 
     private String getManaAbilityLevelUpDesc(ManaAbility manaAbility, int level, Locale locale) {

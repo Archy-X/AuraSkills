@@ -88,6 +88,7 @@ mana_abilities:
     max_level: 0
     enable_message: true
     enable_sound: true
+    always_enabled: false
   auraskills/absorption:
     enabled: true
     base_value: 2.0
@@ -116,4 +117,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 1
+file_version: 2

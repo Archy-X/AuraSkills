@@ -62,6 +62,11 @@ public class ChargedShot extends ManaAbilityProvider {
         Player player = event.getPlayer();
         if (failsChecks(player)) return;
 
+        // Disable toggling when always enabled
+        if (manaAbility.optionBoolean("always_enabled", false)) {
+            return;
+        }
+
         ItemStack item = event.getItem();
         if (item == null) return;
         if (item.getType() != Material.BOW) return;
@@ -111,20 +116,22 @@ public class ChargedShot extends ManaAbilityProvider {
 
         User user = plugin.getUser(player);
 
-        if (user.getAbilityData(manaAbility).getBoolean("enabled")) {
-            ManaAbilityData data = user.getManaAbilityData(manaAbility);
+        if (!user.getAbilityData(manaAbility).getBoolean("enabled") && !manaAbility.optionBoolean("always_enabled", false)) {
+            return;
+        }
 
-            int cooldown = data.getCooldown();
-            if (cooldown == 0) {
-                user.getMetadata().put("charged_shot_projectile", event.getProjectile());
-                user.getMetadata().put("charged_shot_force", event.getForce());
-                checkActivation(player);
-            } else {
-                if (data.getErrorTimer() == 0) {
-                    Locale locale = user.getLocale();
-                    plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
-                    data.setErrorTimer(2);
-                }
+        ManaAbilityData data = user.getManaAbilityData(manaAbility);
+
+        int cooldown = data.getCooldown();
+        if (cooldown == 0) {
+            user.getMetadata().put("charged_shot_projectile", event.getProjectile());
+            user.getMetadata().put("charged_shot_force", event.getForce());
+            checkActivation(player);
+        } else {
+            if (data.getErrorTimer() == 0) {
+                Locale locale = user.getLocale();
+                plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_READY, locale), "{cooldown}", NumberUtil.format1((double) (cooldown) / 20)));
+                data.setErrorTimer(2);
             }
         }
     }

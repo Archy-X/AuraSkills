@@ -28,7 +28,7 @@ public class PlaceholderHelper {
         if (placeholder.endsWith("_unit")) {
             for (UnitMessage unitMessage : UnitMessage.values()) {
                 if (placeholder.endsWith(unitMessage.toString().toLowerCase(Locale.ROOT) + "_unit")) {
-                    return plugin.getMessageProvider().get(unitMessage, locale);
+                    return plugin.getMessageProvider().getRaw(unitMessage, locale);
                 }
             }
         }
@@ -39,10 +39,10 @@ public class PlaceholderHelper {
         String stripped = TextUtil.replace(placeholder, "{", "", "}", ""); // Remove curly braces
 
         MessageKey key = MessageKey.of("menus." + activeMenu.getName().toLowerCase(Locale.ROOT) + "." + stripped);
-        String message = plugin.getMsg(key, locale);
+        String message = plugin.getMessageProvider().getRaw(key, locale);
         // No message found in menu section, try common section
         if (message.equals(key.getPath())) {
-            message = plugin.getMsg(MessageKey.of("menus.common." + stripped), locale);
+            message = plugin.getMessageProvider().getRaw(MessageKey.of("menus.common." + stripped), locale);
         }
         // Replace placeholders
         message = TextUtil.replace(message, replacer);

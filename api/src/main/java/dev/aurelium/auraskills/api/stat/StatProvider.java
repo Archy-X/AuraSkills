@@ -20,6 +20,8 @@ public interface StatProvider extends OptionedProvider<Stat> {
 
     String getColor(Stat stat, Locale locale);
 
+    String getColoredName(Stat stat, Locale locale);
+
     String getSymbol(Stat stat, Locale locale);
 
 }

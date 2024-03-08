@@ -73,6 +73,11 @@ public class CustomStat implements Stat {
     }
 
     @Override
+    public String getColoredName(Locale locale) {
+        return provider.getColoredName(this, locale);
+    }
+
+    @Override
     public String getSymbol(Locale locale) {
         return defined.symbol != null ? defined.symbol : provider.getSymbol(this, locale);
     }
