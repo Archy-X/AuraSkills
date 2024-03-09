@@ -8,6 +8,8 @@ import dev.aurelium.auraskills.bukkit.menus.AbstractMenu;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import org.bukkit.entity.Player;
 
+import java.util.Map;
+
 public class AbilitiesMenu extends AbstractMenu implements MenuProvider {
 
     public AbilitiesMenu(AuraSkills plugin) {
@@ -23,4 +25,9 @@ public class AbilitiesMenu extends AbstractMenu implements MenuProvider {
                 }));
     }
 
+    @Override
+    public Map<String, Object> getDefaultProperties(ActiveMenu activeMenu) {
+        return Map.of("skill", activeMenu.getProperty("skill"),
+                "previous_menu", "level_progression");
+    }
 }

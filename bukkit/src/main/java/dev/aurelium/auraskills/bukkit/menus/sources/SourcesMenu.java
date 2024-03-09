@@ -5,10 +5,13 @@ import com.archyx.slate.menu.MenuProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.AbstractMenu;
+import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem.SortType;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class SourcesMenu extends AbstractMenu implements MenuProvider {
 
@@ -34,5 +37,15 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
         int itemsPerPage = (Integer) activeMenu.getProperty("items_per_page");
         int numSources = plugin.getSkillManager().getSkill(skill).sources().size();
         return (numSources - 1) / itemsPerPage + 1;
+    }
+
+    @Override
+    public Map<String, Object> getDefaultProperties(ActiveMenu activeMenu) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("skill", activeMenu.getProperty("skill"));
+        properties.put("items_per_page", 28);
+        properties.put("sort_type", SortType.ASCENDING);
+        properties.put("previous_menu", "level_progression");
+        return properties;
     }
 }

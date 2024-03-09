@@ -14,9 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
 
@@ -33,10 +31,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("skill", activeMenu.getProperty("skill"));
-        properties.put("previous_menu", "level_progression");
-        plugin.getMenuManager().openMenu(player, "abilities", properties);
+        plugin.getMenuManager().openMenu(player, "abilities", plugin.getMenuManager().getDefaultProperties("abilities", activeMenu));
     }
 
     @Override
