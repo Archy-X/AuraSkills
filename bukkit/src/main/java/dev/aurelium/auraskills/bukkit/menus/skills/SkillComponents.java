@@ -139,7 +139,7 @@ public class SkillComponents {
         @Override
         public <T> boolean shouldShow(Player player, ActiveMenu activeMenu, T context) {
             ManaAbility manaAbility = ((Skill) context).getManaAbility();
-            return manaAbility != null && plugin.getUser(player).getManaAbilityLevel(manaAbility) > 0;
+            return manaAbility != null && manaAbility.isEnabled() && plugin.getUser(player).getManaAbilityLevel(manaAbility) > 0;
         }
 
         private double getDuration(ManaAbility manaAbility, int level) {

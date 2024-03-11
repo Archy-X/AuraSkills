@@ -189,7 +189,7 @@ public class LevelProgressionComponents {
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             ManaAbility manaAbility = skill.getManaAbility();
-            if (manaAbility != null) {
+            if (manaAbility != null && manaAbility.isEnabled()) {
                 return manaAbility.getUnlock() == level;
             } else {
                 return false;
@@ -232,7 +232,7 @@ public class LevelProgressionComponents {
             Skill skill = (Skill) activeMenu.getProperty("skill");
 
             ManaAbility manaAbility = skill.getManaAbility();
-            if (manaAbility != null) {
+            if (manaAbility != null && manaAbility.isEnabled()) {
                 return plugin.getManaAbilityManager().getManaAbilityAtLevel(skill, level) != null && manaAbility.getUnlock() != level;
             } else {
                 return false;
