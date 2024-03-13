@@ -175,10 +175,6 @@ public abstract class MessageProvider implements PolyglotProvider {
         return com.archyx.polyglot.lang.MessageKey.of(key.getPath());
     }
 
-    private com.archyx.polyglot.lang.MessageKey convertKey(String path) {
-        return com.archyx.polyglot.lang.MessageKey.of(path);
-    }
-
     private void clearComponentCache() {
         componentCache.clear();
     }

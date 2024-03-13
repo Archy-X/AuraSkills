@@ -93,6 +93,7 @@ import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import fr.minuskube.inv.InventoryManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -223,6 +224,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager.updateLeaderboards();
         leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
+        // Enabled bStats
+        new Metrics(this, 21318);
 
         // Stuff to be run on the first tick
         scheduler.executeSync(() -> {
