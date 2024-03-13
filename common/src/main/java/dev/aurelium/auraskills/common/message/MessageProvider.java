@@ -66,6 +66,7 @@ public abstract class MessageProvider implements PolyglotProvider {
     public abstract Component stringToComponent(String message);
 
     public void loadMessages() {
+        clearComponentCache();
         polyglot.getMessageManager().loadMessages();
     }
 
@@ -176,6 +177,10 @@ public abstract class MessageProvider implements PolyglotProvider {
 
     private com.archyx.polyglot.lang.MessageKey convertKey(String path) {
         return com.archyx.polyglot.lang.MessageKey.of(path);
+    }
+
+    private void clearComponentCache() {
+        componentCache.clear();
     }
 
     @Override
