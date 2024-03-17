@@ -148,7 +148,7 @@ public class BossBarManager implements Listener {
         Locale locale = plugin.getUser(player).getLocale();
         BossBar.Color color = getColor(skill);
         BossBar.Overlay overlay = getOverlay(skill);
-        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, (long) xpGained, level, maxed, locale);
+        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, locale);
 
         Component name = tf.toComponent(bossBarText);
 
