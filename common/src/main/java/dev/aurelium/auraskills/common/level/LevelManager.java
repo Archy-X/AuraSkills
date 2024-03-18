@@ -1,0 +1,156 @@
+package dev.aurelium.auraskills.common.level;
+
+import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.scheduler.Tick;
+import dev.aurelium.auraskills.common.user.User;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Interface with methods to add xp and level up players.
+ */
+public abstract class LevelManager {
+
+    private final AuraSkillsPlugin plugin;
+    protected final XpRequirements xpRequirements;
+
+    public LevelManager(AuraSkillsPlugin plugin) {
+        this.plugin = plugin;
+        this.xpRequirements = plugin.getXpRequirements();
+    }
+
+    public double getPermissionMultiplier(@NotNull User user, @Nullable Skill skill) {
+        return user.getPermissionMultiplier(skill);
+    }
+
+    public double getAbilityMultiplier(User user, Skill skill) {
+        Ability ability = skill.getXpMultiplierAbility();
+        double multiplier = 1.0;
+        if (ability != null && user.getAbilityLevel(ability) > 0) {
+            double abilityValue = ability.getValue(user.getAbilityLevel(ability));
+            double addedMultiplier = abilityValue / 100;
+            multiplier += addedMultiplier;
+        }
+        return multiplier;
+    }
+
+    public abstract void playLevelUpSound(@NotNull User user);
+
+    public abstract void reloadModifiers(User user);
+
+    public void addXp(User user, Skill skill, @Nullable XpSource source, double amount) {
+        if (amount == 0) return; // Ignore if source amount is 0
+
+        double amountToAdd = amount * calculateMultiplier(user, skill);
+
+        // Call event
+        var res = plugin.getEventHandler().callXpGainEvent(user, skill, source, amountToAdd);
+        if (res.first()) return;
+
+        addXpRaw(user, skill, res.second());
+    }
+
+    protected void addXpRaw(User user, Skill skill, double amount) {
+        user.addSkillXp(skill, amount);
+        checkLevelUp(user, skill);
+        // Send action bar and boss bar
+        sendXpUi(user, skill, amount);
+    }
+
+    public void setXp(User user, Skill skill, double amount) {
+        double originalAmount = user.getSkillXp(skill);
+        // Sets Xp
+        user.setSkillXp(skill, amount);
+        // Check if player leveled up
+        checkLevelUp(user, skill);
+        // Sends action bar message
+        double xpAmount = amount - originalAmount;
+
+        sendXpUi(user, skill, xpAmount);
+    }
+
+    private void sendXpUi(User user, Skill skill, double xpGained) {
+        double currentXp = user.getSkillXp(skill);
+        int level = user.getSkillLevel(skill);
+        double levelXp = xpRequirements.getXpRequired(skill, level + 1);
+        boolean maxed = xpRequirements.getListSize(skill) <= user.getSkillLevel(skill) - 1 || level >= skill.getMaxLevel();
+
+        plugin.getUiProvider().getActionBarManager().sendXpActionBar(user, skill, currentXp, levelXp, xpGained, level, maxed);
+        if (plugin.configBoolean(Option.BOSS_BAR_ENABLED)) {
+            plugin.getUiProvider().sendXpBossBar(user, skill, currentXp, levelXp, xpGained, level, maxed);
+        }
+    }
+
+    public void checkLevelUp(User user, Skill skill) {
+        int currentLevel = user.getSkillLevel(skill);
+        double currentXp = user.getSkillXp(skill);
+
+        if (currentLevel >= skill.getMaxLevel()) return; // Check max level options
+        if (xpRequirements.getListSize(skill) <= currentLevel - 1) return; // Check if skill is maxed
+
+        if (currentXp >= xpRequirements.getXpRequired(skill, currentLevel + 1)) {
+            levelUpSkill(user, skill);
+        }
+    }
+
+    private void levelUpSkill(User user, Skill skill) {
+        Locale locale = user.getLocale();
+
+        double currentXp = user.getSkillXp(skill);
+        int level = user.getSkillLevel(skill) + 1;
+
+        user.setSkillXp(skill, currentXp - xpRequirements.getXpRequired(skill, level));
+        user.setSkillLevel(skill, level);
+        // Give custom rewards
+        List<SkillReward> rewards = plugin.getRewardManager().getRewardTable(skill).getRewards(level);
+        for (SkillReward reward : rewards) {
+            reward.giveReward(user, skill, level);
+        }
+
+        // Reload items and armor to check for newly met requirements
+        reloadModifiers(user);
+        // Calls event
+        plugin.getEventHandler().callSkillLevelUpEvent(user, skill, level);
+
+        // Sends messages
+        LevelUpMessenger messenger = new LevelUpMessenger(plugin, user, locale, skill, level, rewards);
+        if (plugin.configBoolean(Option.LEVELER_TITLE_ENABLED)) {
+            messenger.sendTitle();
+        }
+        if (plugin.configBoolean(Option.LEVELER_SOUND_ENABLED)) {
+            playLevelUpSound(user);
+        }
+        messenger.sendChatMessage();
+
+        // Check for multiple level ups in a row after a delay
+        plugin.getScheduler().scheduleSync(() -> checkLevelUp(user, skill), Tick.MS * plugin.configInt(Option.LEVELER_DOUBLE_CHECK_DELAY), TimeUnit.MILLISECONDS);
+    }
+
+    public double calculateMultiplier(@NotNull User user, Skill skill) {
+        double multiplier = 1.0;
+        multiplier += getItemMultiplier(user, skill);
+        multiplier += getPermissionMultiplier(user, skill);
+        return getAbilityMultiplier(user, skill) * multiplier;
+    }
+
+    public double getGenericMultiplier(User user) {
+        double multiplier = 1.0;
+        multiplier += getItemMultiplier(user, null);
+        multiplier += getPermissionMultiplier(user, null);
+        return multiplier;
+    }
+
+    public double getItemMultiplier(@NotNull User user, Skill skill) {
+        return user.getTotalMultiplier(skill) / 100;
+    }
+
+}

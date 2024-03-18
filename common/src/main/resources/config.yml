@@ -1,0 +1,195 @@
+# +----------------------------------------------------------------------------+ #
+# |                           AuraSkills Main Config                           | #
+# |                                                                            | #
+# |                    Discord: https://discord.gg/Bh2EZfB                     | #
+# |           Source Code: https://github.com/Archy-X/AureliumSkills           | #
+# |      Config Guide: https://wiki.aurelium.dev/auraskills/main-config        | #
+# +----------------------------------------------------------------------------+ #
+# Plugin made by Archy
+
+sql:
+  enabled: false
+  type: mysql
+  host: localhost
+  port: 3306
+  database: auraskills
+  username: root
+  password: pass
+  load_delay: 0
+  always_load_on_join: false
+  ssl: false
+default_language: en
+languages: [en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi]
+try_detect_client_language: false
+hooks:
+  HolographicDisplays:
+    enabled: false
+  DecentHolograms:
+    enabled: true
+  LuckPerms:
+    enabled: true
+  PlaceholderAPI:
+    enabled: true
+  ProtocolLib:
+    enabled: true
+  Slimefun:
+    enabled: true
+  Towny:
+    enabled: true
+  Vault:
+    enabled: true
+  WorldGuard:
+    enabled: true
+    blocked_regions:
+      - 'Example'
+    blocked_check_replace_regions:
+      - 'Example'
+action_bar:
+  enabled: true
+  idle: true
+  ability: true
+  xp: false
+  maxed: false
+  update_period: 5
+  round_xp: false
+  placeholder_api: true
+  use_suffix: true
+boss_bar:
+  enabled: true
+  mode: single
+  stay_time: 60
+  update_every: 1
+  round_xp: false
+  display_maxed: true
+  placeholder_api: true
+  use_suffix: true
+  format:
+    - 'FARMING GREEN PROGRESS'
+    - 'FORAGING RED PROGRESS'
+    - 'MINING PURPLE PROGRESS'
+    - 'FISHING BLUE PROGRESS'
+    - 'EXCAVATION YELLOW PROGRESS'
+    - 'ARCHERY PINK PROGRESS'
+    - 'DEFENSE BLUE PROGRESS'
+    - 'FIGHTING RED PROGRESS'
+    - 'ENDURANCE PURPLE PROGRESS'
+    - 'AGILITY WHITE PROGRESS'
+    - 'ALCHEMY PINK PROGRESS'
+    - 'ENCHANTING PURPLE PROGRESS'
+    - 'SORCERY BLUE PROGRESS'
+    - 'HEALING WHITE PROGRESS'
+    - 'FORGING YELLOW PROGRESS'
+enable_roman_numerals: false
+damage_holograms:
+  enabled: true
+  scaling: true
+  decimal:
+    display_when_less_than: 1
+    max_amount: 1
+  offset:
+    x: 0.4
+    y: 0.4
+    z: 0.4
+    random:
+      enabled: false
+      x_min: -0.5
+      x_max: 0.5
+      y_min: 0
+      y_max: 0
+      z_min: -0.5
+      z_max: 0.5
+  colors:
+    default: gray
+    critical:
+      digits: [white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
+leaderboards:
+  update_period: 6000
+  update_delay: 6000
+start_level: 0
+enable_skill_commands: true
+check_block_replace:
+  enabled: true
+  blocked_worlds:
+    - Example
+blocked_worlds:
+  - Example
+disabled_worlds:
+  - Example
+disable_in_creative_mode: false
+on_death:
+  reset_skills: false
+  reset_xp: false
+auto_save:
+  enabled: true
+  interval_ticks: 12000
+leveler:
+  title:
+    enabled: true
+    fade_in: 5
+    stay: 80
+    fade_out: 5
+  sound:
+    enabled: true
+    type: ENTITY_PLAYER_LEVELUP
+    category: MASTER
+    volume: 1.0
+    pitch: 0.5
+  double_check_delay: 20
+modifier:
+  armor:
+    equip_blocked_materials:
+      - EXAMPLE
+    timer:
+      enabled: false
+      check_period: 3
+  item:
+    check_period: 3
+    enable_off_hand: true
+  multiplier:
+    enabled: true
+  auto_convert_from_legacy: true
+requirement:
+  enabled: true
+  item:
+    prevent_tool_use: true
+    prevent_weapon_use: true
+    prevent_block_place: true
+    prevent_interact: true
+    global:
+  armor:
+    prevent_armor_equip: true
+    global:
+critical:
+  enabled:
+    sword: true
+    bow: true
+    axe: true
+    pickaxe: true
+    shovel: true
+    hoe: true
+    hand: false
+    other: false
+source:
+  grindstone:
+    blocked_enchants:
+      - blinding_curse
+      - vanishing_curse
+  statistic:
+    gain_period_ticks: 12000
+  entity:
+    give_alchemy_on_potion_combat: false
+menus:
+  placeholder_api: true
+  stats:
+    show_trait_values_directly: true
+loot:
+  update_loot_tables: true
+check_for_updates: true
+automatic_backups:
+  enabled: true
+  minimum_interval_hours: 24
+save_blank_profiles: false
+metadata:
+  config_migration_complete: false
+  file_user_migration_complete: false
+  sql_user_migration_complete: false

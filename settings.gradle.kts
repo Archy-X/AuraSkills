@@ -1,3 +1,6 @@
-rootProject.name = "AureliumSkills"
+rootProject.name = "AuraSkills"
 
+include("api")
 include("bukkit")
+include("common")
+include("api-bukkit")

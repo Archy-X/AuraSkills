@@ -1,0 +1,88 @@
+default:
+  menu_item:
+    flags:
+      - hide_attributes
+sources:
+  weapon_per_level:
+    type: enchanting
+    item:
+      category: weapon
+    xp: 30
+    menu_item:
+      material: diamond_sword
+    unit: '{sources.units.enchant_level}'
+  armor_per_level:
+    type: enchanting
+    item:
+      category: armor
+    xp: 30
+    menu_item:
+      material: diamond_chestplate
+    unit: '{sources.units.enchant_level}'
+  tool_per_level:
+    type: enchanting
+    item:
+      category: tool
+    xp: 30
+    menu_item:
+      material: diamond_pickaxe
+    unit: '{sources.units.enchant_level}'
+  book_per_level:
+    type: enchanting
+    item: book
+    xp: 30
+    menu_item:
+      material: enchanted_book
+    unit: '{sources.units.enchant_level}'
+  combine_books_per_level:
+    type: anvil
+    left_item: enchanted_book
+    right_item: enchanted_book
+    multiplier: '{repair_cost}'
+    xp: 12
+    menu_item:
+      material: enchanted_book
+    unit: '{sources.units.combine_level}'
+  combine_weapon_per_level:
+    type: anvil
+    left_item:
+      category: weapon
+    right_item: enchanted_book
+    multiplier: '{repair_cost}'
+    xp: 18
+    menu_item:
+      material: iron_sword
+      flags:
+        - hide_attributes
+    unit: '{sources.units.combine_level}'
+  combine_armor_per_level:
+    type: anvil
+    left_item:
+      category: armor
+    right_item: enchanted_book
+    multiplier: '{repair_cost}'
+    xp: 24
+    menu_item:
+      material: iron_leggings
+      flags:
+        - hide_attributes
+    unit: '{sources.units.combine_level}'
+  combine_tool_per_level:
+    type: anvil
+    left_item:
+      category: tool
+    right_item: enchanted_book
+    multiplier: '{repair_cost}'
+    xp: 30
+    menu_item:
+      material: iron_shovel
+      flags:
+        - hide_attributes
+    unit: '{sources.units.combine_level}'
+  grindstone_per_level:
+    type: grindstone
+    multiplier: '{total_level}'
+    xp: 36
+    menu_item:
+      material: grindstone
+    unit: '{sources.units.grindstone_level}'

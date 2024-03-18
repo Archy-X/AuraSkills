@@ -1,4 +1,4 @@
-title: '{level_progression_menu_title}'
+title: '{{level_progression_title}}'
 size: 6
 fill:
   enabled: false
@@ -7,130 +7,221 @@ items:
   rank:
     pos: 0,1
     material: paper
-    display_name: '{your_ranking}'
+    display_name: '<gold>{{your_ranking}}'
     lore:
-      - '{out_of}'
-      - '{percent}'
+      - text: '{{rank_out_of}}'
+        styles:
+          1: '<white>'
+          2: '<gold>'
+      - text: '{{rank_percent}}'
+        styles:
+          1: '<white>'
+          2: '<gold>'
       - ' '
-      - '{leaderboard_click}'
+      - '<yellow>{{leaderboard_click}}'
   back:
     pos: 5,0
     material: arrow
-    display_name: '{back}'
+    display_name: '<green>{{back}}'
     lore:
-      - '{back_click}'
+      - '<gray>{{back_click}}'
   close:
     pos: 5,1
     material: barrier
-    display_name: '{close}'
+    display_name: '<red>{{close}}'
   next_page:
     pos: 5,8
     material: arrow
-    display_name: '{next_page}'
+    display_name: '<gold>{{next_page}}'
     lore:
-      - '{next_page_click}'
+      - '<yellow>{{next_page_click}}'
   previous_page:
     pos: 5,7
     material: arrow
-    display_name: '{previous_page}'
+    display_name: '<gold>{{previous_page}}'
     lore:
-      - '{previous_page_click}'
+      - '<yellow>{{previous_page_click}}'
   sources:
     pos: 0,2
     material: experience_bottle
-    display_name: '{sources}'
+    display_name: '<green>{{sources}}'
     lore:
-      - '{sources_desc}'
+      - text: '{{sources_desc}}'
+        wrap: true
+        style: '<gray>'
       - ' '
-      - '{sources_click}'
+      - '<yellow>{{sources_click}}'
   abilities:
     pos: 0,3
     material: light_blue_dye
-    display_name: '{abilities}'
+    display_name: '<red>{{abilities}}'
     lore:
-      - '{abilities_desc}'
+      - text: '{{abilities_desc}} {{mana_abilities_desc}}'
+        wrap: true
+        wrap_style: 1
+        styles:
+          1: '<gray>'
+          2: '<aqua>'
+          3: '<light_purple>'
       - ' '
-      - '{abilities_click}'
+      - '<yellow>{{abilities_click}}'
 templates:
   skill:
     pos: 0,0
-    farming:
-      material: diamond_hoe
-      flags: [hide_attributes]
-    foraging:
-      material: stone_axe
-      flags: [hide_attributes]
-    mining:
-      material: iron_pickaxe
-      flags: [hide_attributes]
-    fishing:
-      material: fishing_rod
-    excavation:
-      material: golden_shovel
-      flags: [hide_attributes]
-    archery:
-      material: bow
-    defense:
-      material: chainmail_chestplate
-      flags: [hide_attributes]
-    fighting:
-      material: diamond_sword
-      flags: [hide_attributes]
-    endurance:
-      material: golden_apple
-    agility:
-      material: feather
-    alchemy:
-      material: potion
-      potion_data:
-        type: instant_heal
-      flags: [hide_potion_effects]
-    enchanting:
-      material: enchanting_table
-    sorcery:
-      material: blaze_rod
-    healing:
-      material: splash_potion
-      potion_data:
-        type: instant_heal
-      flags: [hide_potion_effects]
-    forging:
-      material: anvil
-    display_name: '&b{skill} &3{level}'
+    contexts:
+      farming: {material: diamond_hoe, flags: [hide_attributes]}
+      foraging: {material: stone_axe, flags: [hide_attributes]}
+      mining: {material: iron_pickaxe, flags: [hide_attributes]}
+      fishing: {material: fishing_rod}
+      excavation: {material: golden_shovel, flags: [hide_attributes]}
+      archery: {material: bow}
+      defense: {material: chainmail_chestplate, flags: [hide_attributes]}
+      fighting: {material: diamond_sword, flags: [hide_attributes]}
+      endurance: {material: golden_apple}
+      agility: {material: feather}
+      alchemy: {material: potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
+      enchanting: {material: enchanting_table}
+      sorcery: {material: blaze_rod}
+      healing: {material: splash_potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
+      forging: {material: anvil}
+    display_name: '<aqua>{skill} <dark_aqua>{level}'
     lore:
-      - '{skill_desc}'
-      - '{stats_leveled}'
-      - '{ability_levels}{mana_ability}'
-      - '{level}'
+      - text: '{desc}'
+        wrap: true
+        style: '<gray>'
+      - component: stats_leveled
+      - component: ability_levels
+      - component: mana_ability_info
       - ' '
-      - '{progress_to_level}{max_level}'
+      - component: progress
+      - component: max_level
   unlocked:
     material: lime_stained_glass_pane
-    display_name: '{level_unlocked}'
+    display_name: '<green>{{level}} {level}'
     lore:
-      - '{level_number}'
-      - '{rewards}'
-      - '{ability}{mana_ability}'
-      - '{unlocked}'
+      - '<gray>{{level}} <white>{level}'
+      - component: rewards
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
+      - ' '
+      - '<green>{{unlocked}}'
   in_progress:
     material: yellow_stained_glass_pane
-    display_name: '{level_in_progress}'
+    display_name: '<yellow>{{level}} {level}'
     lore:
-      - '{level_number}'
-      - '{rewards}'
-      - '{ability}{mana_ability}'
-      - '{progress}'
+      - '<gray>{{level}} <white>{level}'
+      - component: rewards
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
       - ' '
-      - '{in_progress}'
+      - '<gray>{{progress}}: <yellow>{percent}%'
+      - '{bar}'
+      - '<gray>{current_xp}/{level_xp} {xp_unit}'
+      - ' '
+      - '<yellow>{{in_progress}}'
   locked:
     material: red_stained_glass_pane
-    display_name: '{level_locked}'
+    display_name: '<red>{{level}} {level}'
     lore:
-      - '{level_number}'
-      - '{rewards}'
-      - '{ability}{mana_ability}'
-      - '{locked}'
+      - '<gray>{{level}} <white>{level}'
+      - component: rewards
+      - component: ability_unlock
+      - component: ability_level
+      - component: mana_ability_unlock
+      - component: mana_ability_level
+      - ' '
+      - '<red>{{locked}}'
+components:
+  stats_leveled:
+    context: Skill
+    lore:
+      - ' '
+      - '<gray>{{stats_leveled}}: {entries[<gray>, ]}'
+  ability_levels:
+    context: Skill
+    lore:
+      - ' '
+      - '<gray>{{ability_levels}}: {entries[]}'
+  mana_ability_info:
+    context: Skill
+    lore:
+      - ' '
+      - '<light_purple><bold>{{mana_ability}}</bold> <blue>{name} {level}'
+      - '  {entries[\n  ](3)}'
+  progress:
+    context: Skill
+    lore:
+      - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
+      - '{bar}'
+      - '<gray>{current_xp}/{level_xp} {xp_unit}'
+  max_level:
+    context: Skill
+    lore:
+      - '<gold>{{max_level}}'
+  rewards:
+    context: Integer
+    lore:
+      - '<gray>{{rewards}}: {entries[]}'
+  ability_unlock:
+    context: Integer
+    lore:
+      - ' '
+      - '<gold>{name} <green><bold>{{ability_unlock}}'
+      - text: '{desc}'
+        wrap: true
+        wrap_indent: '  '
+        style: '<gray>'
+  ability_level:
+    context: Integer
+    lore:
+      - ' '
+      - '<gold>{name} {level}'
+      - text: '{desc}'
+        wrap: true
+        wrap_indent: '  '
+        style: '<gray>'
+  mana_ability_unlock:
+    context: Integer
+    lore:
+      - ' '
+      - '<blue>{name} <light_purple><bold>{{mana_ability_unlock}}'
+      - text: '{desc}'
+        wrap: true
+        wrap_indent: '  '
+        styles:
+          0: '<gray>'
+          1: '<yellow>'
+  mana_ability_level:
+    context: Integer
+    lore:
+      - ' '
+      - '<blue>{name} {level}'
+      - text: '{desc}'
+        wrap: true
+        wrap_indent: '  '
+        styles:
+          0: '<gray>'
+          1: '<yellow>'
+formats:
+  stat_leveled_entry: '{color}{stat}<gray>'
+  unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'
+  locked_ability_entry: '\n  <dark_gray><strikethrough>{name}'
+  duration_entry: '<gray>{{duration}}: <green>{duration}s '
+  mana_cost_entry: '<gray>{{mana_cost}}: <aqua>{mana_cost} '
+  cooldown_entry: '<gray>{{cooldown}}: <yellow>{cooldown}s '
+  damage_entry: '<gray>{{damage}}: <red>{value} '
+  damage_per_mana_entry: '<gray>{{damage}}: <red>+{value}% / Mana '
+  max_mana_cost_entry: '<gray>{{max_mana_cost}}: <aqua>{mana_cost} '
+  attack_speed_entry: '<gray>{{attack_speed}}: <red>+{value}% '
+  stat_reward_entry: '\n  {color}+{num} {symbol} {stat}'
+  money_reward_entry: '\n  <green>${amount}'
 options:
   use_level_as_amount: false
   over_max_stack_amount: 1
   items_per_page: 24
+  start_level: 1
+  track: [9, 18, 27, 36, 37, 38, 29, 20, 11, 12, 13, 22, 31, 40, 41, 42, 33, 24, 15, 16, 17, 26, 35, 44]

@@ -1,6 +1,5 @@
 plugins {
     java
-    `maven-publish`
 }
 
 repositories {
@@ -12,19 +11,13 @@ dependencies {
 }
 
 allprojects {
-    group = "com.archyx.aureliumskills"
+    group = "dev.aurelium.auraskills"
     version = project.property("projectVersion") as String
     description = "Advanced skills, stats, and abilties plugin"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
-}
-
-tasks.withType<JavaCompile>() {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }

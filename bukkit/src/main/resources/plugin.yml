@@ -1,206 +1,123 @@
-name: AureliumSkills
-version: Beta 1.3.24
-main: com.archyx.aureliumskills.AureliumSkills
+name: AuraSkills
+version: 2.0.0
+main: dev.aurelium.auraskills.bukkit.AuraSkills
 description: Feature-Packed Skills Plugin
 author: Archyx
 website: https://www.spigotmc.org/resources/aurelium-skills-advanced-skills-stats-abilities-and-more.81069/
 softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, DecentHolograms, Vault, ProtocolLib, LuckPerms, Slimefun, Towny]
 api-version: '1.13'
-prefix: AureliumSkills
+prefix: AuraSkills
 
 permissions:
-    aureliumskills.*:
-        description: Gives access to all Aurelium Skills commands
-        children:
-            aureliumskills.skill.setlevel: true
-            aureliumskills.ability.setlevel: true
-            aureliumskills.reload: true
-            aureliumskills.lang: true
-            aureliumskills.xp.add: true
-            aureliumskills.top: true
-            aureliumskills.skill.reset: true
-            aureliumskills.xp.set: true
-            aureliumskills.xp.remove: true
-            aureliumskills.modifier.add: true
-            aureliumskills.modifier.remove: true
-            aureliumskills.modifier.list: true
-            aureliumskills.modifier.removeall: true
-            aureliumskills.item.modifier.add: true
-            aureliumskills.item.modifier.remove: true
-            aureliumskills.item.modifier.list: true
-            aureliumskills.item.modifier.removeall: true
-            aureliumskills.armor.modifier.add: true
-            aureliumskills.armor.modifier.remove: true
-            aureliumskills.armor.modifier.list: true
-            aureliumskills.armor.modifier.removeall: true
-            aureliumskills.help: true
-            aureliumskills.abtoggle: true
-            aureliumskills.save: true
-            aureliumskills.updateleaderboards: true
-            aureliumskills.rank: true
-            aureliumskills.item.requirement.add: true
-            aureliumskills.item.requirement.remove: true
-            aureliumskills.item.requirement.removeall: true
-            aureliumskills.armor.requirement.add: true
-            aureliumskills.armor.requirement.remove: true
-            aureliumskills.armor.requirement.removeall: true
-            aureliumskills.mana.add: true
-            aureliumskills.mana.remove: true
-            aureliumskills.mana.set: true
-            aureliumskills.mana.other: true
-            aureliumskills.backup.save: true
-            aureliumskills.backup.load: true
-            aureliumskills.checkupdates: true
-            aureliumskills.item.register: true
-            aureliumskills.item.give: true
-            aureliumskills.profile: true
-    aureliumskills.skill.setlevel:
-        default: op
-    aureliumskills.reload:
-        default: op
-    aureliumskills.lang:
+    auraskills.command.skills:
         default: true
-    aureliumskills.xp.add:
-        default: op
-    aureliumskills.xp.set:
-        default: op
-    aureliumskills.xp.remove:
-        default: op
-    aureliumskills.top:
+    auraskills.command.stats:
         default: true
-    aureliumskills.skill.reset:
-        default: op
-    aureliumskills.mana:
+    auraskills.command.sources:
         default: true
-    aureliumskills.mana.add:
+    auraskills.command.help:
+        default: true
+    auraskills.command.mana:
+        default: true
+    auraskills.command.top:
+        default: true
+    auraskills.command.rank:
+        default: true
+    auraskills.command.lang:
+        default: true
+    auraskills.command.abtoggle:
+        default: true
+    auraskills.command.save:
         default: op
-    aureliumskills.mana.remove:
+    auraskills.command.claimitems:
+        default: true
+    auraskills.command.version:
         default: op
-    aureliumskills.mana.set:
+    auraskills.command.multiplier:
         default: op
-    aureliumskills.mana.other:
+    auraskills.command.updateleaderboards:
         default: op
-    aureliumskills.modifier.add:
+    auraskills.command.transfer:
         default: op
-    aureliumskills.modifier.remove:
+    auraskills.command.mana.add:
         default: op
-    aureliumskills.modifier.list:
+    auraskills.command.mana.remove:
         default: op
-    aureliumskills.modifier.removeall:
+    auraskills.command.mana.set:
         default: op
-    aureliumskills.item.modifier.add:
+    auraskills.command.mana.other:
         default: op
-    aureliumskills.item.modifier.remove:
+    auraskills.command.reload:
         default: op
-    aureliumskills.item.modifier.list:
+    auraskills.command.backup.save:
         default: op
-    aureliumskills.item.modifier.removeall:
+    auraskills.command.backup.load:
         default: op
-    aureliumskills.armor.modifier.add:
+    auraskills.command.skill.setlevel:
         default: op
-    aureliumskills.armor.modifier.remove:
+    auraskills.command.skill.reset:
         default: op
-    aureliumskills.armor.modifier.list:
+    auraskills.command.xp.add:
         default: op
-    aureliumskills.armor.modifier.removeall:
+    auraskills.command.xp.set:
         default: op
-    aureliumskills.item.requirement.add:
+    auraskills.command.xp.remove:
         default: op
-    aureliumskills.item.requirement.remove:
+    auraskills.command.preset:
         default: op
-    aureliumskills.item.requirement.removeall:
+    auraskills.command.profile:
         default: op
-    aureliumskills.item.requirement.list:
+    auraskills.command.modifier:
         default: op
-    aureliumskills.armor.requirement.add:
+    auraskills.command.armor.modifier:
         default: op
-    aureliumskills.armor.requirement.remove:
+    auraskills.command.armor.requirement:
         default: op
-    aureliumskills.armor.requirement.removeall:
+    auraskills.command.armor.multiplier:
         default: op
-    aureliumskills.armor.requirement.list:
+    auraskills.command.item.modifier:
         default: op
-    aureliumskills.multipliercommand:
+    auraskills.command.item.requirement:
         default: op
-    aureliumskills.multiplier:
+    auraskills.command.item.multiplier:
+        default: op
+    auraskills.command.item.register:
+        default: op
+    auraskills.command.item.give:
+        default: op
+    auraskills.command.storage:
+        default: op
+    auraskills.multiplier:
         default: false
-    aureliumskills.help:
+    auraskills.skill.farming:
         default: true
-    aureliumskills.skills:
+    auraskills.skill.foraging:
         default: true
-    aureliumskills.stats:
+    auraskills.skill.mining:
         default: true
-    aureliumskills.abtoggle:
+    auraskills.skill.fishing:
         default: true
-    aureliumskills.updateleaderboards:
-        default: op
-    aureliumskills.save:
-        default: op
-    aureliumskills.rank:
+    auraskills.skill.excavation:
         default: true
-    aureliumskills.farming:
+    auraskills.skill.archery:
         default: true
-    aureliumskills.foraging:
+    auraskills.skill.defense:
         default: true
-    aureliumskills.mining:
+    auraskills.skill.fighting:
         default: true
-    aureliumskills.fishing:
+    auraskills.skill.endurance:
         default: true
-    aureliumskills.excavation:
+    auraskills.skill.agility:
         default: true
-    aureliumskills.archery:
+    auraskills.skill.alchemy:
         default: true
-    aureliumskills.defense:
+    auraskills.skill.enchanting:
         default: true
-    aureliumskills.fighting:
+    auraskills.skill.sorcery:
         default: true
-    aureliumskills.endurance:
+    auraskills.skill.healing:
         default: true
-    aureliumskills.agility:
+    auraskills.skill.forging:
         default: true
-    aureliumskills.alchemy:
-        default: true
-    aureliumskills.enchanting:
-        default: true
-    aureliumskills.sorcery:
-        default: true
-    aureliumskills.healing:
-        default: true
-    aureliumskills.forging:
-        default: true
-    aureliumskills.backup.save:
-        default: op
-    aureliumskills.backup.load:
-        default: op
-    aureliumskills.checkupdates:
-        default: op
-    aureliumskills.claimitems:
-        default: true
-    aureliumskills.item.register:
-        default: op
-    aureliumskills.item.give:
-        default: op
-    aureliumskills.armor.multiplier.add:
-        default: op
-    aureliumskills.armor.multiplier.remove:
-        default: op
-    aureliumskills.armor.multiplier.list:
-        default: op
-    aureliumskills.armor.multiplier.removeall:
-        default: op
-    aureliumskills.item.multiplier.add:
-        default: op
-    aureliumskills.item.multiplier.remove:
-        default: op
-    aureliumskills.item.multiplier.list:
-        default: op
-    aureliumskills.item.multiplier.removeall:
-        default: op
-    aureliumskills.version:
-        default: op
-    aureliumskills.sources:
-        default: true
-    aureliumskills.profile:
-        default: op
-    aureliumskills.transfer:
+    auraskills.checkupdates:
         default: op

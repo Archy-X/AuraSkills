@@ -1,0 +1,866 @@
+#----------------------------
+#AuraSkills message file
+#----------------------------
+abilities:
+  bountiful_harvest:
+    name: 豐收
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
+  farmer:
+    name: 農夫
+    desc: "獲得{value}% 額外的農業經驗."
+    info: "+{value}% 經驗"
+  scythe_master:
+    name: 鐮刀大師
+    desc: "增加鋤頭{value}% 傷害"
+    info: "+{value}% 鋤頭傷害"
+  geneticist:
+    name: 遺傳學家
+    desc: "從蔬菜增加{value}% 飽和度"
+    info: "+{value} 飽和度"
+  lumberjack:
+    name: 伐木工
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
+  forager:
+    name: 伐木
+    desc: "獲得{value}% 伐木經驗."
+    info: "+{value}% 經驗"
+  axe_master:
+    name: 斧頭大師
+    desc: "增加斧頭{value}% 傷害"
+    info: "+{value}% 斧頭傷害"
+  valor:
+    name: 勇者
+    desc: "手持斧頭時可獲得+{value} 強度"
+    info: "+{value} 強度"
+  shredder:
+    name: 粉碎機
+    desc: "使用斧頭時有{value}% 機率對護甲造成三倍傷害."
+    info: "{value}% 三倍耐久度損壞"
+  lucky_miner:
+    name: 幸運礦工
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
+  miner:
+    name: 礦工
+    desc: "獲得{value}% 挖礦經驗."
+    info: "+{value}% 挖礦經驗"
+  pick_master:
+    name: 挖掘大師
+    desc: "增加{value}% 鎬子造成的傷害"
+    info: "+{value}% 傷害"
+  stamina:
+    name: 耐力
+    desc: "手持鎬子時可獲得+{value} 剛性"
+    info: "+{value} 剛性"
+  hardened_armor:
+    name: 硬化裝甲
+    desc: "有{value}% 機率不會對護甲耐久度造成損耗."
+    info: "{value}% 不會對耐久度造成損耗"
+  lucky_catch:
+    name: 幸運爪子
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
+  fisher:
+    name: 漁夫
+    desc: "獲得{value}% 額外的釣魚經驗"
+    info: "+{value}% 經驗"
+  treasure_hunter:
+    name: 寶藏獵人
+    desc: "有{value}% 機率釣到罕見寶物."
+    info: "{value}% 罕見寶物"
+  grappler:
+    name: 鉤爪
+    desc: "增加{value}% 釣魚速度"
+    info: "+{value}% 釣魚速度"
+  epic_catch:
+    name: 史詩級寶物
+    desc: "有{value}% 機率釣到史詩級寶物."
+    info: "{value}% 史詩級寶物"
+  metal_detector:
+    name: 金屬探測器
+    desc: "有{value}% 機率挖到罕見寶物."
+    info: "{value}% 罕見寶物"
+  excavator:
+    name: 挖掘机
+    desc: "獲得{value}% 額外的挖礦經驗"
+    info: "+{value}% 經驗"
+  spade_master:
+    name: 圓鍬大師
+    desc: "增加{value}% 鏟子造成的傷害"
+    info: "+{value}% 鏟子傷害"
+  bigger_scoop:
+    name: 大杓子
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
+  lucky_spades:
+    name: 幸運黑桃
+    desc: "有{value}% 機率釣到史詩級寶物."
+    info: "{value}% 史詩級寶物"
+  crit_chance:
+    name: 暴擊機率
+    desc: "增加{value}% 暴擊機率."
+    info: "+{value}% 暴擊機率"
+  archer:
+    name: 弓箭手
+    desc: "獲得{value}% 射箭經驗."
+    info: "+{value}% 經驗"
+  bow_master:
+    name: 弓箭大師
+    desc: "增加{value}% 弓箭造成的傷害"
+    info: "+{value}% 弓箭傷害"
+  piercing:
+    name: 穿刺
+    desc: "弓箭有{value}% 機率可以射穿怪物."
+    info: "{value}% 穿刺機率"
+  stun:
+    name: 眩晕
+    desc: "有{value}% 的機率使敵人的移動速度降低20％, 持續2秒."
+    info: "{value}% 暈眩機率"
+  shielding:
+    name: 盾
+    desc: "潛行時減少{value}% 傷害"
+    info: "-{value}%潛行傷害"
+  defender:
+    name: 防禦
+    desc: "獲得{value}% 防禦經驗"
+    info: "+{value}% 經驗"
+  mob_master:
+    name: 怪物大師
+    desc: "減少{value}% 怪物攻擊傷害"
+    info: "-{value}% 怪物攻擊傷害"
+  immunity:
+    name: 抵抗力
+    desc: "{value}% 機率不受敵人攻擊傷害."
+    info: "{value}% 免受傷害"
+  no_debuff:
+    name: 無負面狀態
+    desc: "有{value}% 機率消除傷害性藥水效果"
+    info: "{value}% 無負面狀態"
+  crit_damage:
+    name: 暴擊傷害
+    desc: "增加{value}% 暴擊傷害"
+    info: "+{value}% 暴擊傷害"
+  fighter:
+    name: 戰鬥
+    desc: "獲得{value}% 戰鬥經驗"
+    info: "+{value}% 經驗"
+  sword_master:
+    name: 劍術師
+    desc: "增加{value}% 劍造成的傷害"
+    info: "+{value}% 劍傷害"
+  first_strike:
+    name: 第一擊
+    desc: "增加{value}% 第一擊造成的傷害"
+    info: "+{value}% 第一擊"
+    dealt: "<red>第一擊!"
+  bleed:
+    name: 流血
+    desc: "{value}%使敵人流血 {base_ticks} 個ticks, 每個ticks造成 {value_2} 個傷害."
+    info: "{value}% 機率, 造成 {value_2} 個傷害"
+    enemy_bleeding: "<red>敵人在流血了!"
+    self_bleeding: "<red>你流血了!"
+    stop: "<white>已停止流血"
+  anti_hunger:
+    name: 抗飢餓
+    desc: "{value}% 機率停止飢餓值損耗."
+    info: "{value}% 沒有飢餓值損耗"
+  runner:
+    name: 跑者
+    desc: "獲得{value}%耐力經驗."
+    info: "+{value}% 經驗"
+  golden_heal:
+    name: 黃金治療
+    desc: "加強恢復效果使生命值提升{value}%"
+    info: "+{value}% 恢復效果"
+  recovery:
+    name: 恢復
+    desc: "生命值不足一半時提高自然恢復 {value}%"
+    info: "+{value} 低血量恢復"
+  meal_steal:
+    name: 飢餓竊取
+    desc: "攻擊玩家有{value}%機率竊取1個飢餓值"
+    info: "{value}% 飢餓竊取"
+  light_fall:
+    name: 輕盈
+    desc: "降低 {value}% 摔落傷害"
+    info: "-{value}% 摔落傷害"
+  jumper:
+    name: 跳躍者
+    desc: "獲得{value}% 敏捷經驗"
+    info: "+{value}% 敏捷經驗"
+  sugar_rush:
+    name: 衝刺之糖
+    desc: "提升飛濺速度藥水與跳躍藥水{value}% 的持續時間"
+    info: "{value}% 持續速度"
+  fleeting:
+    name: 迅速
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% 速度"
+    start: "<white>你獲得了短暫的速度提升! <gray>(+{value}% 速度)"
+    end: "<gray>速度提升已失效"
+  thunder_fall:
+    name: 雷暴
+    desc: "在摔落時潛行, 有 {value}%機率對3格範圍的怪物造成{value_2}% 摔落傷害"
+    info: "{value}% 機率, 造成 {value_2} 傷害"
+  alchemist:
+    name: 釀造師
+    desc: "釀造的藥水延長{value}% 持續時間"
+    info: "+{value}% 藥水持續時間"
+    lore: "<green>(+{duration})"
+  brewer:
+    name: 釀造
+    desc: "獲得{value}% 釀造經驗"
+    info: "+{value}% 釀造經驗"
+  splasher:
+    name: 飛濺
+    desc: "飛濺的藥水會使每個受影響的玩家, 獲得{value}%的持續時間"
+    info: "+{value}% 持續時間/玩家"
+  lingering:
+    name: 滯留
+    desc: "滯留藥水自然衰減 {value}% 每個受影響的實體衰減 {value_2}%"
+    info: "-{value}% 自然衰減, -{value_2}% 實體衰減"
+  wise_effect:
+    name: 明智
+    desc: "每個獨特的活性藥水, 可獲得+{value} 智慧"
+    info: "+{value} 智慧/效果"
+  xp_convert:
+    name: 經驗轉換
+    desc: "每獲得 {value} 點技能經驗可以額外獲得 1 點原版的經驗值."
+    info: "1 經驗值/{value} 技能經驗"
+  enchanter:
+    name: 附魔師
+    desc: "獲得額外的 {value}% 附魔經驗"
+    info: "+{value}% 附魔經驗"
+  xp_warrior:
+    name: 經驗戰士
+    desc: "你殺死的怪物有 {value}% 掉落兩倍的經驗。"
+    info: "{value}% 兩倍的打怪經驗"
+  enchanted_strength:
+    name: 魔法力量
+    desc: "手持物品上的附魔能額外讓你獲得 +{value} 力量"
+    info: "{value} 力量/附魔"
+  lucky_table:
+    name: 幸運附魔台
+    desc: "您使用附魔的物品附魔台有 {value}% 的機率升級附魔如果不是最高等級，則等級為 1"
+    info: "{value}% 附魔升級機率"
+  life_essence:
+    name: 生命本質
+    desc: 瞬間恢復藥水能額外回復 {value}% 血量
+    info: "+{value}% 額外回復血量"
+  healer:
+    name: 治癒者
+    desc: 獲得額外的 {value}% 治療經驗
+    info: "+{value}% 治療經驗"
+  life_steal:
+    name: 生命竊取
+    desc: 擊殺的怪物或玩家可以為你回復{value}%的血量.
+    info: "竊取 {value}% 的血量"
+  golden_heart:
+    name: 黄金之心
+    desc: 對吸收之心造成的傷害降低 {value}%
+    info: "-{value}% 黃金之心受到的傷害"
+  revival:
+    name: 重獲生機
+    desc: 重生後獲得 &c+{value} 生命值和 &6+{value_2} 恢復持續 30 秒.
+    info: "+{value} 點血量，+{value_2} 回復效果"
+    message: "<white>你獲得了 30 秒的重生獎勵！ <white>(<red>+{value} 血量, <gold>+{value_2} 回復效果<white>)"
+  disenchanter:
+    name: 去除附魔者
+    desc: 使用切石機分解物品時獲得的經驗值提高 {value}%.
+    info: "+{value}% 切石機經驗"
+  forger:
+    name: 鍛造者
+    desc: 獲得額外的 {value}% 鍛造經驗
+    info: "+{value}% 鍛造經驗"
+  repairing:
+    name: 重鑄
+    desc: 物品使用原材料在鐵砧修理, 可額外恢復 {value}% 的耐久度.
+    info: "+{value}% 鐵砧修復值"
+  anvil_master:
+    name: 鐵砧大師
+    desc: 增加鐵砧的最大維修成本, 以免{value} 經驗值太貴.
+    info: "{value} 最高成本"
+  skill_mender:
+    name: 技能修復者
+    desc: 獲得技能經驗有 {value}% 的機率修復持有的物品或損壞的盔甲, 每 2 個技能經驗增加1點耐久度.
+    info: "{value}% 修復機率"
+acf:
+  core:
+    permission_denied: "很抱歉, 你沒有權限執行這個指令"
+    permission_denied_parameter: "很抱歉, 你沒有權限執行這個指令"
+    error_generic_logged: "<red>發生了一個錯誤, 這個問題已經被記錄, 給你帶來不便非常抱歉."
+    unknown_command: "<red>未知的指令, 請輸入 <yellow>/sk help"
+    invalid_syntax: "<yellow>使用: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>錯誤: {message}"
+    error_performing_command: "<red>很抱歉, 在執行指令的時候產生了一個錯誤."
+    info_message: "{message}"
+    please_specify_one_of: "<red>錯誤: 請指定一個 (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>錯誤: {num} 必須是數字."
+    must_be_min_length: "<red>錯誤: 至少需要 {min} 個字."
+    must_be_max_length: "<red>錯誤: 最多 {max} 個字."
+    please_specify_at_most: "<red>錯誤: 指定的值最大 {max}."
+    please_specify_at_least: "<red>錯誤: 指定的值最小 {min}."
+    not_allowed_on_console: "<red>錯誤: 控制台不能執行這個指令."
+    could_not_find_player: "<red>錯誤: 找不到叫 <yellow>{search} <gray>的玩家"
+    no_command_matched_search: "<red>找不到 <yellow>{search} 指令."
+    help_page_information: "<aqua> - 頁面 <green>{page} <aqua>共 <green>{totalpages} 頁<aqua>(<yellow>{results}<aqua> 結果)."
+    help_no_results: "<aqua>錯誤: 沒有其他結果."
+    help_header: "<yellow>=== <green>{commandprefix}{command} <aqua>說明<yellow> ==="
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_header: "<yellow>=== <green>{commandprefix}{command} <aqua>詳細說明 <yellow> ==="
+    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
+    help_search_header: "<yellow>=== <green>{commandprefix}{command} {search} <aqua>的搜尋結果<yellow> ==="
+  minecraft:
+    invalid_world: "<red>錯誤: 這個世界不存在."
+    you_must_be_holding_item: "<red>錯誤: 你得必須要拿著一個物品."
+    player_is_vanished_confirm: "<yellow>警告: <green>{vanished} <yellow>已消失. 不要覆蓋!\n<yellow>要確認這個操作,請在名稱尾部增加 <green>:confirm.\n<yellow>例如: {vanished}:confirm"
+    username_too_short: "<red>錯誤: 名稱太短, 至少需要3個字."
+    is_not_a_valid_name: "<red>錯誤: <yellow>{name} <red>不是有效的名稱."
+    multiple_players_match: "<red>錯誤: 多個玩家與 <aqua>{search} <yellow>({all})<red> 符合, 請再具體一點."
+    no_player_found_server: "<red>沒有符合 <yellow>{search} <red>的玩家連線這個伺服器."
+    no_player_found_offline: "<red>沒有找到符合 <yellow>{search}<red> 的玩家."
+    no_player_found: "<red>沒有找到符合 <yellow>{search}<red> 的玩家."
+    location_please_specify_world: "<red>錯誤: 請指定世界座標. 例如: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>錯誤: 請指定座標 x, y, z. 例如: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>錯誤: 控制台不能使用相對坐標作為位置."
+commands:
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "<gray>物品已添加{color}{stat} <aqua>{value} <gray>屬性"
+        already_exists: "<yellow>裝備屬性 {color}{stat} <yellow>已經存在! 請先使用 /sk armor modifier remove 刪除"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+      remove:
+        does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
+        removed: "已經從你的物品刪除{color}{stat} <gray>屬性"
+      list:
+        header: "<white>找到的裝備屬性:"
+        entry: "  {color}{stat}<white> - {value}"
+      removeall:
+        removed: "<gray>物品已刪除全部裝備屬性"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
+      list:
+        header: "<white>Armor multipliers found:"
+        entry: "  <aqua>{target}<white> - {value}"
+      removeall:
+        removed: "<gray>All armor multipliers have been removed from your item"
+    requirement:
+      add:
+        added: "已將<dark_aqua>{skill}<gray> <aqua> {level} <gray>的裝備要求添加到你的物品中"
+        already_exists: "<yellow>物品已經具有 <dark_aqua>{skill}<yellow> 裝備要求! 請先刪除<gold>/sk armor requirement remove"
+        lore: "<red>需要 <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>你的物品沒有 <dark_aqua>{skill}<yellow> 裝備要求!"
+        removed: "已經將 <dark_aqua>{skill}<gray> 裝備要求從你的物品中移除"
+      list:
+        header: "<white>找到的裝備要求:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      removeall:
+        removed: "<gray>全部裝備要求已從你的物品刪除"
+      equip: "<yellow>你沒有裝備這個物品的條件!"
+      entry: "<aqua>{skill} {level}<gray>, "
+  backup:
+    load:
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
+    save:
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
+  claimitems:
+    no_items: "<yellow>You have no items to claim"
+  item:
+    give:
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
+    modifier:
+      add:
+        added: "物品已添加{color}{stat} <aqua>{value} 屬性"
+        already_exists: "<yellow>裝備屬性 {color}{stat} <yellow>已經存在! 請先使用 /sk armor modifier remove 刪除"
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+      remove:
+        does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
+        removed: "<gray>已經從你的物品刪除{color}{stat} 屬性"
+      list:
+        header: "<white>找到的物品屬性:"
+        entry: "  {color}{stat}<white> - {value}"
+      removeall:
+        removed: "<gray>你的物品已刪除全部屬性"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
+      list:
+        header: "<white>Item multipliers found:"
+        entry: "  <aqua>{target}<white> - {value}"
+      removeall:
+        removed: "<gray>All item multipliers have been removed from your item"
+    register:
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
+    requirement:
+      add:
+        added: "已將<dark_aqua>{skill}<gray> <aqua>{level}<gray> 的物品要求添加到你的物品中"
+        already_exists: "<yellow>物品已經有 <dark_aqua>{skill}<yellow> 物品要求! 請先刪除 <gold>/sk item requirement remove"
+        lore: "<red>需要 <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>你的物品沒有 <dark_aqua>{skill}<yellow> 物品要求!"
+        removed: "<dark_aqua>{skill}<gray> 物品要求從你的物品中移除"
+      list:
+        header: "<white>找到的物品要求:"
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      removeall:
+        removed: "<gray>全部物品要求已從你的物品刪除"
+      use: "<yellow>你沒有使用這個物品的條件: {requirements}"
+      entry: "<aqua>{skill} {level}<gray>, "
+    unregister:
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
+  lang:
+    set: "<gray>語言設定成 <aqua>{lang}"
+    not_found: "<yellow>這個語言不存在!"
+  mana:
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
+  modifier:
+    add:
+      added: "<gray>已添加玩家<gold>{player}<white>{name} {color}{stat}<aqua>{value}"
+      already_exists: "玩家<gold>{player} 已經有名稱為 {name} 的屬性! 使用<gold>/sk modifier remove {player} {name} 刪除"
+    remove:
+      not_found: "玩家<gold>{player} <yellow>沒有{name} 屬性"
+      removed: "已刪除玩家<gold>{player} <yellow>{name} 屬性"
+    list:
+      all_stats_header: "玩家<gold>{player} <yellow>的屬性狀態:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <gold>{value}"
+      one_stat_header: "<gray>玩家 <gold>{player} 屬性({color}{stat}<gray>) 狀態:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <gold>{value}"
+      players_only: "<yellow>只有玩家才能列出自己的屬性! 請指定一個玩家"
+    removeall:
+      removed_all_stats: "已刪除玩家<gold>{player} <aqua>{num} 個屬性"
+      removed_one_stat: "已刪除玩家<gold>{player}<aqua>{num} 個 {color}{stat} 屬性"
+      players_only: "<yellow>只有玩家才能刪除自己的屬性! 請指定一個玩家"
+  multiplier:
+    global: Global
+    list: "<gold>{player}<white>的經驗值倍數: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
+  profile:
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>你的技能排行</bold>"
+    power: "<yellow>Power <gray>(全部技能): <white>#{rank} 共 {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} 共 {total}"
+  reload: "<green>已重新載入設定!"
+  save:
+    already_saving: "<yellow>資料已經儲存!"
+    mysql_not_enabled: "<yellow>MySQL 沒有在伺服器啟動中起用, 資料保存在檔案中!"
+    saved: "<green>已儲存技能資料!"
+  skill:
+    reset:
+      reset_all: "<gray>將玩家 <gold>{player} <gray>的全部技能設定成等級<aqua>1"
+      reset_skill: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill}<gray>設定成等級<aqua>1"
+    setall:
+      set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
+    setlevel:
+      set: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill} 設定成等級<aqua>{level}"
+    at_least: "<yellow>Level must be at least {level}!"
+  toggle:
+    enabled: "<green>狀態列已啟用"
+    disabled: "<red>狀態列已停用"
+    not_enabled: "<yellow>這個伺服器沒有啟用技能Actionbar!"
+  top:
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    power_header: "<white>--==<aqua><bold>全部技能排行榜</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>全部技能排行榜 </bold><white>( 第{page} 頁)==--"
+    skill_header: "<white>--==<aqua><bold>{skill} 排行榜</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} 排行榜 </bold><white>(第 {page} 頁)==--"
+    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    usage: "<yellow>使用: <green>/sk top <white><頁碼> <gray>或 <green>/sk top <white>[skill] <頁碼>"
+  transfer:
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
+  updateleaderboards:
+    already_updating: "<yellow>排行榜已經更新過了!"
+    updated: "<green>排行榜已更新!"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  xp:
+    add: "<gray>已增加玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
+    set: "<gray>已設定玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
+    remove: "<gray>已刪除玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
+  unknown_skill: "<yellow>未知的技能!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>玩家沒有技能資料!"
+leveler:
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
+  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+menus:
+  common:
+    close: "關閉"
+    level: "等級"
+    progress_to_level: "Progress to Level"
+    max_level: "最大等級"
+    ability_levels: "能力等級"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "法術能力"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
+  skills:
+    skills_title: "你的技能"
+    your_skills: "你的技能"
+    your_skills_desc: "通過執行各種任務來升級技能, 以解鎖寶貴的屬性, 能力!"
+    your_skills_hover: "滑鼠指在技能上取得更多資訊!"
+    your_skills_click: "點擊一項技能可以查看等級進度!"
+    skill_click: "點擊查看等級進度!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
+  level_progression:
+    level_progression_title: "{skill} 等級 - 第 {page} 頁"
+    your_ranking: "你的技能排行"
+    rank_out_of: "<1>你的排名是 {total} 玩家中的第<2>{rank}</2> 位</1>"
+    rank_percent: "<1>你的排行超過 <2>{percent}%</2>的玩家</1>"
+    rewards: "獎勵"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "法術能力解鎖"
+    progress: "進度"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
+  stats:
+    stats_title: 你的統計資料
+    skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
+  unclaimed_items:
+    unclaimed_items_title: "Claim Items"
+    inventory_full: "You do not have enough space in your inventory to claim that item"
+    click_to_claim: "Click to claim!"
+  leaderboard:
+    leaderboard_title: "{skill} Leaderboard"
+  sources:
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+  abilities:
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+mana_abilities:
+  replenish:
+    name: 自動種植
+    desc: "自動種植 {value} 秒. <1>[右鍵點擊啟用]"
+    raise: "<gray>你舉起你的鋤頭"
+    lower: "<gray>你放下你的鋤頭"
+    start: "<gold>自動種植已啟用! <gray>(-{mana} {mana_unit})"
+    end: "<gray>自動種植已消耗完"
+  treecapitator:
+    name: 連鎖砍樹
+    desc: "立即砍掉整棵樹 {value} 秒. <1>[右鍵點擊啟用]"
+    raise: "<gray>你舉起你的斧頭"
+    lower: "<gray>你放下你的斧頭"
+    start: "<gold>連鎖砍樹已啟用! <gray>(-{mana} {mana_unit})"
+    end: "<gray>連鎖砍樹已消耗完"
+  speed_mine:
+    name: 快速挖礦
+    desc: "賦予挖掘加速 {haste_level} {value} 秒. <1>[右鍵點擊啟用]"
+    raise: "<gray>你舉起你的鎬子"
+    lower: "<gray>你放下你的鎬子"
+    start: "<gold>快速挖礦已啟用! <gray>(-{mana} {mana_unit})"
+    end: "<gray>快速挖礦已消耗完"
+  absorption:
+    name: 吸收
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>你舉起你的盾牌"
+    lower: "<gray>你放下你的盾牌"
+    start: "<gold>吸收已啟用! <gray>(-{mana} {mana_unit})"
+    end: "<gray>吸收已消耗完"
+  terraform:
+    name: Terraform
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
+  sharp_hook:
+    name: 釣鉤
+    desc: "使用釣魚竿左鍵點擊時被鉤到的實體造成 {value} 傷害"
+    use: "<gold>使用了锋利釣鉤! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: 箭已上弦
+    desc: "你射出的箭矢傷害會更高，隨著拉弓越大遞增，過程中會消耗魔力。每消耗一點魔力，多造成 {value}% 傷害。 <1>[左鍵弓來切換箭已上弦]"
+    enable: "<gray>箭已上弦已啟用"
+    disable: "<gray>箭已上弦已停用"
+    shoot: "<gold>箭已上弦已使用! <light_purple>+{percent}% 傷害 <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: 電光火石
+    desc: 增加攻擊速度 {value}% {duration} 秒. <1>[右鍵劍攻擊怪物以觸發]
+    raise: "<gray>你已準備好劍"
+    lower: "<gray>你已放下你的劍"
+    start: "<gold>電光火石已啟用! <gray>(-{mana} {mana_unit})"
+    end: "<gray>電光火石已消耗完"
+  not_ready: "<red>能力尚未準備好! <gray>({cooldown}秒)"
+  not_enough_mana: "<yellow>法力值不夠! <gray>(需要{mana} {mana_unit})"
+skills:
+  farming:
+    name: 農業
+    desc: "收割農作物來獲得經驗點數 {xp_unit}"
+  foraging:
+    name: 伐木
+    desc: "砍伐樹木來獲得伐木{xp_unit}"
+  mining:
+    name: 挖礦
+    desc: "挖石頭或礦物來獲得挖礦{xp_unit}"
+  fishing:
+    name: 釣魚
+    desc: "釣魚來獲得釣魚{xp_unit}"
+  excavation:
+    name: 挖掘
+    desc: "用鏟子挖掘來獲取挖掘{xp_unit}"
+  archery:
+    name: 射箭
+    desc: "用弓箭射擊怪物和玩家來獲得射箭{xp_unit}"
+  defense:
+    name: 防禦
+    desc: "承受實體傷害來獲得防禦{xp_unit}"
+  fighting:
+    name: 戰鬥
+    desc: "使用近戰武器與生物戰鬥來獲得戰鬥{xp_unit}"
+  endurance:
+    name: 耐力
+    desc: "走路或跑步來獲得耐力{xp_unit}"
+  agility:
+    name: 敏捷
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+  alchemy:
+    name: 釀造
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+  enchanting:
+    name: 附魔
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+  sorcery:
+    name: 法術
+    desc: "使用使用魔法能力來獲得法術{xp_unit}"
+  healing:
+    name: 治療
+    desc: "喝藥水或使用飛濺藥水來獲得治療{xp_unit}"
+  forging:
+    name: 鍛造
+    desc: "在鐵砧上使用書籍將物品結合來獲得鍛造{xp_unit}"
+sources:
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  damage:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
+  statistic:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  jumping:
+    jump_per_100: Jumping
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
+  mana_ability_use:
+    mana_ability_use: Using Mana Abilities
+  item_consume:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
+  potion_splash:
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+  anvil:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
+stats:
+  strength:
+    name: 強度
+    desc: "強度會增加各種武器的攻擊力"
+  health:
+    name: 健康
+    desc: "健康會增加你的{hp_unit} 數量, 使您在戰鬥中的壽命更長"
+  regeneration:
+    name: 恢復
+    desc: "恢復可以增加恢復生命值和法力值的速度"
+  luck:
+    name: 運氣
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+  wisdom:
+    name: 智慧
+    desc: "智慧可以增加最大法力值, 增加經驗值並減少鐵砧成本"
+  toughness:
+    name: 剛性
+    desc: "剛性增加了敵人攻擊所減少的傷害"
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit"
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run"
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck Attribute
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
+ui:
+  maxed: MAXED
+units:
+  mana: 法力
+  hp: 血量
+  xp: 經驗
+file_version: 31
