@@ -53,6 +53,15 @@ public class ItemListener implements Listener {
     public void onJoin(UserLoadEvent event) {
         Player player = event.getPlayer();
         User user = BukkitUser.getUser(event.getUser());
+
+        // Remove legacy stored item modifiers
+        List<String> toRemove = new ArrayList<>();
+        for (StatModifier modifier : user.getStatModifiers().values()) {
+            if (modifier.name().startsWith("AureliumSkills.Modifier")) {
+                toRemove.add(modifier.name());
+            }
+        }
+        toRemove.forEach(user::removeStatModifier);
         
         ItemStack held = player.getInventory().getItemInMainHand();
         heldItems.put(player.getUniqueId(), held.clone());

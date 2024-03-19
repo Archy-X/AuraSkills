@@ -28,7 +28,7 @@ public class Modifiers {
         for (String key : compound.getKeys()) {
             Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.toLowerCase(Locale.ROOT)));
             if (stat != null) {
-                int value = nbtItem.getInteger(key);
+                double value = compound.getDouble(key);
                 modifiers.add(new StatModifier(key, stat, value));
             }
         }

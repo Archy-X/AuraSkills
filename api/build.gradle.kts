@@ -78,7 +78,7 @@ if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePass
                 }
                 scm {
                     connection.set("scm:git:git://github.com/Archy-X/AuraSkills.git")
-                    developerConnection.set("scm:git:git://github.com/Archy-X/AuraSkills.git");
+                    developerConnection.set("scm:git:git://github.com/Archy-X/AuraSkills.git")
                     url.set("https://github.com/Archy-X/AuraSkills/tree/master")
                 }
             }
