@@ -4,6 +4,7 @@
 # This file defines formats and styles
 # common across all languages
 # -----------------------------------
+
 action_bar:
   idle: "{{action_bar.hp_display}}                 {{action_bar.mana_display}}"
   hp_display: "<red>{hp}/{max_hp}❤"

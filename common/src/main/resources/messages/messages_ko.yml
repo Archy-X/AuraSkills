@@ -1,6 +1,7 @@
 #----------------------------
 #AuraSkills message file
 #----------------------------
+
 abilities:
   bountiful_harvest:
     name: 풍성한 수확

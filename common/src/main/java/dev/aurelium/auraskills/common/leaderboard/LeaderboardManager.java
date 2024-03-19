@@ -118,6 +118,8 @@ public class LeaderboardManager {
 
     public int getSkillRank(Skill skill, UUID id) {
         List<SkillValue> leaderboard = skillLeaderboards.get(skill);
+        if (leaderboard == null) return 0;
+
         for (SkillValue skillValue : leaderboard) {
             if (skillValue.id().equals(id)) {
                 return leaderboard.indexOf(skillValue) + 1;

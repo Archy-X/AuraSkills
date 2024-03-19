@@ -15,8 +15,8 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    compileOnly("org.jetbrains:annotations:24.0.1")
-    compileOnly("org.spigotmc:spigot-api:1.20-R0.1-SNAPSHOT")
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 }
 
 tasks.withType<JavaCompile>() {
@@ -76,26 +76,17 @@ if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePass
                 }
                 developers {
                     developer {
-                        id.set("archy")
-                        name.set("Archy")
-                        email.set("archydevelopment@gmail.com")
-                        url.set("https://github.com/Archy-X")
+                        id.set(project.property("developerId").toString())
+                        name.set(project.property("developerUsername").toString())
+                        email.set(project.property("developerEmail").toString())
+                        url.set(project.property("developerUrl").toString())
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://github.com/Archy-X/AureliumSkills.git")
-                    developerConnection.set("scm:git:git://github.com/Archy-X/AureliumSkills.git");
-                    url.set("https://github.com/Archy-X/AureliumSkills/tree/master")
+                    connection.set("scm:git:git://github.com/Archy-X/AuraSkills.git")
+                    developerConnection.set("scm:git:git://github.com/Archy-X/AuraSkills.git");
+                    url.set("https://github.com/Archy-X/AuraSkills/tree/master")
                 }
-                /*
-                withXml {
-                    val dependenciesNode = asNode().children().find {
-                        it is Node && it.name().toString().contains("dependencies")
-                    } as Node?
-                    asNode().remove(dependenciesNode)
-                }
-
-                 */
             }
 
             from(components["java"])
