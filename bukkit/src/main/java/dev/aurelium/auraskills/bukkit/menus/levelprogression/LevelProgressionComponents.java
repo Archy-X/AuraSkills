@@ -59,7 +59,7 @@ public class LevelProgressionComponents {
             for (SkillReward reward : rewards) {
                 message.append(reward.getMenuMessage(plugin.getUser(player), locale, skill, level));
                 if (reward instanceof MoneyReward) {
-                    totalMoney += ((MoneyReward) reward).getAmount();
+                    totalMoney += ((MoneyReward) reward).getAmount(level);
                 }
             }
             if (totalMoney > 0) {

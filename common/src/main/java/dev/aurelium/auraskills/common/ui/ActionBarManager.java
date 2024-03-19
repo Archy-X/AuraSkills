@@ -62,7 +62,7 @@ public abstract class ActionBarManager {
         var task = new TaskRunnable() {
             @Override
             public void run() {
-                if (!plugin.configBoolean(Option.ACTION_BAR_IDLE)) {
+                if (!plugin.configBoolean(Option.ACTION_BAR_IDLE) || !plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
                     return;
                 }
                 for (User user : plugin.getUserManager().getOnlineUsers()) {
@@ -100,7 +100,7 @@ public abstract class ActionBarManager {
     public void sendXpActionBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
         ActionBarType sendType = maxed ? ActionBarType.MAXED : ActionBarType.XP;
         // Return if the type is disabled in config
-        if (!plugin.configBoolean(sendType.getOption())) {
+        if (!plugin.configBoolean(sendType.getOption()) || !plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
             return;
         }
 

@@ -182,7 +182,7 @@ public class LevelUpMessenger {
         double totalMoney = 0;
         // New rewards
         for (MoneyReward reward : plugin.getRewardManager().getRewardTable(skill).searchRewards(MoneyReward.class, level)) {
-            totalMoney += reward.getAmount();
+            totalMoney += reward.getAmount(level);
         }
         if (totalMoney > 0) {
             NumberFormat nf = new DecimalFormat("#.##");

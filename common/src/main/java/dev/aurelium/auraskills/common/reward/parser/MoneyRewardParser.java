@@ -14,6 +14,9 @@ public class MoneyRewardParser extends RewardParser {
 
     @Override
     public SkillReward parse(Map<?, ?> map) {
-        return new MoneyRewardBuilder(plugin).amount(getDouble(map, "amount")).build();
+        return new MoneyRewardBuilder(plugin)
+                .amount(getDoubleOrDefault(map, "amount", 0.0))
+                .formula(getStringOrDefault(map, "formula", null))
+                .build();
     }
 }
