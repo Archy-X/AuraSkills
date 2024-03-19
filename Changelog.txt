@@ -1,3 +1,12 @@
+Version 2.0.1
+  New Features:
+    - Add formula support in money rewards
+  Bug Fixes:
+    - Fix item modifier NBT conversion breaking items
+    - Fix action_bar.enabled option not fully working
+    - Fix message file headers
+    - Fix rank command error
+
 Version 2.0.0
   New Features:
     - Customizable XP sources
