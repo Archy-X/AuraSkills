@@ -96,15 +96,15 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 XpSource contextSource = originalSource != null ? originalSource.first() : null;
                 Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
                 // Give loot
-                if (selectedLoot == null) {
-                    break;
+                if (selectedLoot == null) { // Continue iterating pools
+                    continue;
                 }
                 if (selectedLoot instanceof ItemLoot itemLoot) {
                     giveFishingItemLoot(player, itemLoot, event, source, skill, cause, table);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
                     giveCommandLoot(player, commandLoot, source, skill);
                 }
-                break;
+                break; // Stop iterating pools
             }
         }
     }

@@ -194,13 +194,13 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         userManager = new BukkitUserManager(this);
         presetManager = new PresetManager(this);
         generateConfigs(); // Generate default config files if missing
-        initializeMenus(); // Generate menu files
         // Handle migration
         MigrationManager migrationManager = new MigrationManager(this);
         migrationManager.attemptConfigMigration();
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
+        initializeMenus(); // Generate menu files
         // Initialize and migrate storage (connect to SQL database if enabled)
         initStorageProvider();
         migrationManager.attemptUserMigration();
@@ -348,7 +348,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void initializeMenus() {
         slate = new Slate(this, new SlateOptions.SlateOptionsBuilder()
-                .loreWrappingWidth(43)
+                .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .build());
         menuHelper = new SlateMenuHelper(slate);
         menuFileManager = new MenuFileManager(this);

@@ -14,7 +14,7 @@ public final class AuraSkillsProvider {
     public static AuraSkillsApi getInstance() {
         AuraSkillsApi instance = AuraSkillsProvider.instance;
         if (instance == null) {
-            throw new IllegalStateException("AureliumSkillsAPI is not initialized");
+            throw new IllegalStateException("AuraSkillsAPI is not initialized");
         }
         return instance;
     }

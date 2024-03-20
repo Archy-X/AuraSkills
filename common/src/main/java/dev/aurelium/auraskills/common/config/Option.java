@@ -103,6 +103,7 @@ public enum Option {
     SOURCE_STATISTIC_GAIN_PERIOD_TICKS("source.statistic.gain_period_ticks", OptionType.INT),
     SOURCE_ENTITY_GIVE_ALCHEMY_ON_POTION_COMBAT("source.entity.give_alchemy_on_potion_combat", OptionType.BOOLEAN),
     // Menu options
+    MENUS_LORE_WRAPPING_WIDTH("menus.lore_wrapping_width", OptionType.INT),
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
     MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY("menus.stats.show_trait_values_directly", OptionType.BOOLEAN),
     LOOT_UPDATE_LOOT_TABLES("loot.update_loot_tables", OptionType.BOOLEAN),
