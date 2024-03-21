@@ -438,6 +438,7 @@ abilities:
     unlock: '{start}+4'
     level_up: 5
     max_level: 0
+    excluded_enchantments: []
   auraskills/lucky_table:
     enabled: true
     base_value: 5.0
@@ -525,4 +526,4 @@ abilities:
     unlock: '{start}+5'
     level_up: 5
     max_level: 0
-file_version: 1
+file_version: 2

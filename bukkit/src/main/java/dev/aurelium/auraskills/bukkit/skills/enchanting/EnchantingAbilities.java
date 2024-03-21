@@ -99,8 +99,14 @@ public class EnchantingAbilities extends AbilityImpl {
 
                         // Apply modifier
                         double strengthPerType = getValue(ability, user);
-                        int numEnchants = item.getEnchantments().size();
-                        StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * numEnchants);
+                        int enchantCount = 0;
+                        for (Enchantment enchantment : item.getEnchantments().keySet()) {
+                            if (ability.optionStringList("excluded_enchantments").contains(enchantment.getKey().getKey())) {
+                                continue;
+                            }
+                            enchantCount++;
+                        }
+                        StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * enchantCount);
                         user.addStatModifier(modifier, false);
                     } else {
                         user.removeStatModifier(MODIFIER_NAME);
