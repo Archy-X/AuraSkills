@@ -34,6 +34,10 @@ public class BukkitStatManager extends StatManager {
     public <T> void reload(User user, T type) {
         if (type instanceof Stat stat) {
             reloadStat(user, stat);
+        } else if (type instanceof Trait trait) {
+            for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
+                reloadStat(user, stat);
+            }
         }
     }
 

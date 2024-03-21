@@ -106,8 +106,10 @@ public class EnchantingAbilities extends AbilityImpl {
                             }
                             enchantCount++;
                         }
-                        StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * enchantCount);
-                        user.addStatModifier(modifier, false);
+                        if (enchantCount > 0) {
+                            StatModifier modifier = new StatModifier(MODIFIER_NAME, Stats.STRENGTH, strengthPerType * enchantCount);
+                            user.addStatModifier(modifier, false);
+                        }
                     } else {
                         user.removeStatModifier(MODIFIER_NAME);
                     }

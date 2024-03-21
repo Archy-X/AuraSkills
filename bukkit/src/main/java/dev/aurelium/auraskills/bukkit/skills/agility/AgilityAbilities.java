@@ -9,8 +9,10 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
+import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -30,6 +32,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class AgilityAbilities extends AbilityImpl {
 
@@ -37,6 +40,7 @@ public class AgilityAbilities extends AbilityImpl {
 
     public AgilityAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LIGHT_FALL, Abilities.JUMPER, Abilities.SUGAR_RUSH, Abilities.FLEETING, Abilities.THUNDER_FALL);
+        startFleetingRemoveTimer();
     }
 
     private void lightFall(EntityDamageEvent event, User user, Player player) {
@@ -172,6 +176,17 @@ public class AgilityAbilities extends AbilityImpl {
         }
     }
 
+    public void startFleetingRemoveTimer() {
+        plugin.getScheduler().timerSync(new TaskRunnable() {
+            @Override
+            public void run() {
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    removeFleeting(player);
+                }
+            }
+        }, 5, 5, TimeUnit.SECONDS);
+    }
+
     public void removeFleeting(Player player) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
@@ -216,6 +231,7 @@ public class AgilityAbilities extends AbilityImpl {
     private void removeFleetingMetadata(Player player) {
         User user = plugin.getUser(player);
 
+        if (user.getTraitModifier(FLEETING_ID) == null) return;
         // Returns if there was no modifier to remove
         if (!user.removeTraitModifier(FLEETING_ID)) {
             return;

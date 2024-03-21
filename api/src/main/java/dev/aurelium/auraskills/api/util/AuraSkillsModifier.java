@@ -24,4 +24,8 @@ public abstract class AuraSkillsModifier<T> {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return name + "," + type + "," + value;
+    }
 }

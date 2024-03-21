@@ -216,7 +216,7 @@ public abstract class User {
         }
         // Add modifiers
         for (TraitModifier modifier : traitModifiers.values()) {
-            if (modifier.trait().equals(trait)) {
+            if (modifier.trait().getId().equals(trait.getId())) {
                 level += modifier.value();
             }
         }
