@@ -1,3 +1,12 @@
+Version 2.0.2
+  New Features:
+    - Add excluded_enchantments option for Enchanted Strength in abilities.yml
+    - Add lore_wrapping_width option in config.yml
+  Bug Fixes:
+    - Fix NPCs being unable to attack mobs
+    - Fix Fleeting not being removed after heal commands
+    - Fix console error when using Vault without an economy plugin
+
 Version 2.0.1
   New Features:
     - Add formula support in money rewards
