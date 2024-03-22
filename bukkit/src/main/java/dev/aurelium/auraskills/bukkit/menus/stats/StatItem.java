@@ -72,6 +72,7 @@ public class StatItem extends AbstractItem implements TemplateItemProvider<Stat>
         ListBuilder builder = new ListBuilder(data.getListData());
 
         for (Trait trait : stat.getTraits()) {
+            if (!trait.isEnabled()) continue;
             BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             if (impl == null) continue;
             builder.append(activeMenu.getFormat("trait_entry"),
