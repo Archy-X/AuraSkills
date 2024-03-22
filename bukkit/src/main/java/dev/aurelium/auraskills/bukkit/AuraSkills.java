@@ -55,6 +55,7 @@ import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
+import dev.aurelium.auraskills.bukkit.util.MetricsUtil;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -225,7 +226,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
         // Enabled bStats
-        new Metrics(this, 21318);
+        Metrics metrics = new Metrics(this, 21318);
 
         // Stuff to be run on the first tick
         scheduler.executeSync(() -> {
@@ -251,6 +252,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             synchronized (plugin) {
                 plugin.notifyAll();
             }
+            // bStats custom charts
+            new MetricsUtil(plugin).registerCustomCharts(metrics);
         });
 
         // Check if NBT API is supported for the version

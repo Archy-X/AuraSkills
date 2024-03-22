@@ -132,7 +132,7 @@ public class SkillLoader {
     private ManaAbility loadManaAbility(Skill skill, ConfigurationNode config) {
         String manaAbilityStr = config.node("mana_ability").getString();
         ManaAbility manaAbility = null;
-        if (manaAbilityStr != null) {
+        if (manaAbilityStr != null && !manaAbilityStr.isEmpty()) {
             try {
                 manaAbility = plugin.getManaAbilityRegistry().get(NamespacedId.fromDefault(manaAbilityStr));
                 createLoadedManaAbility(manaAbility, skill);
