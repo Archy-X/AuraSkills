@@ -17,7 +17,6 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 public class ClickableSkillItem extends AbstractSkillItem {
@@ -30,7 +29,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu, Skill skill) {
         User user = plugin.getUser(player);
 
-        if (player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT))) {
+        if (user.hasSkillPermission(skill)) {
             new LevelProgressionOpener(plugin).open(player, user, skill);
         }
     }

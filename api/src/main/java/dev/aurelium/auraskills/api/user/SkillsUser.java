@@ -245,4 +245,13 @@ public interface SkillsUser {
      */
     Locale getLocale();
 
+    /**
+     * Gets whether the player the permission node to use a skill.
+     * The checked node is the format auraskills.skill.[skillName], which is true by default.
+     *
+     * @param skill the skill to check
+     * @return whether the player has the permission
+     */
+    boolean hasSkillPermission(Skill skill);
+
 }

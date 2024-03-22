@@ -3,12 +3,11 @@ package dev.aurelium.auraskills.api.source;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
-
-import java.util.Locale;
 
 public class LevelerContext {
 
@@ -45,7 +44,8 @@ public class LevelerContext {
     }
 
     public boolean blockPlayer(Player player, Skill skill) {
-        if (!player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT))) {
+        SkillsUser skillsUser = AuraSkillsApi.get().getUser(player.getUniqueId());
+        if (!skillsUser.hasSkillPermission(skill)) {
             return true;
         }
         // Check creative mode disable

@@ -1,13 +1,13 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public abstract class ManaAbilityProvider implements Listener {
@@ -109,7 +108,7 @@ public abstract class ManaAbilityProvider implements Listener {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return true;
         }
-        if (!player.hasPermission("auraskills.skill." + manaAbility.getSkill().name().toLowerCase(Locale.ROOT))) {
+        if (!plugin.getUser(player).hasSkillPermission(manaAbility.getSkill())) {
             return true;
         }
         if (plugin.configBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {

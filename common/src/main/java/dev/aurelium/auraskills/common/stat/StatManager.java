@@ -70,6 +70,7 @@ public abstract class StatManager {
             user.setStatLevel(stat, 0);
         }
         for (Skill skill : plugin.getSkillManager().getSkillValues()) {
+            if (!user.hasSkillPermission(skill)) continue;
             plugin.getRewardManager().getRewardTable(skill).applyStats(user, user.getSkillLevel(skill));
         }
         // Reloads modifiers
@@ -79,7 +80,6 @@ public abstract class StatManager {
         }
         reloadStats(user);
     }
-
 
     private void reloadStats(User user) {
         for (Stat stat : getEnabledStats()) {

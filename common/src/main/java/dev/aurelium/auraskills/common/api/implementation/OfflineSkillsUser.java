@@ -170,4 +170,9 @@ public class OfflineSkillsUser implements SkillsUser {
     public Locale getLocale() {
         return plugin.getDefaultLanguage();
     }
+
+    @Override
+    public boolean hasSkillPermission(Skill skill) {
+        return true;
+    }
 }

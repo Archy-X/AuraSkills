@@ -83,6 +83,13 @@ public class BukkitUser extends User {
     }
 
     @Override
+    public boolean hasSkillPermission(Skill skill) {
+        if (player == null) return true;
+
+        return player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT));
+    }
+
+    @Override
     public void sendMessage(Component component) {
         if (player != null) {
             ((AuraSkills) plugin).getAudiences().player(player).sendMessage(component);

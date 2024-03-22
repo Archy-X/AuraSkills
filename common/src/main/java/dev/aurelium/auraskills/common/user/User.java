@@ -90,6 +90,8 @@ public abstract class User {
 
     public abstract double getPermissionMultiplier(Skill skill);
 
+    public abstract boolean hasSkillPermission(Skill skill);
+
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }

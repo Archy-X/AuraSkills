@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.skills.agility;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -90,8 +91,8 @@ public class AgilityAbilities extends AbilityImpl {
 
         if (failsChecks(player, ability)) return 1.0;
 
-        if (player.hasPermission("auraskills.skill.agility")) {
-            User user = plugin.getUser(player);
+        User user = plugin.getUser(player);
+        if (user.hasSkillPermission(Skills.AGILITY)) {
             if (user.getAbilityLevel(ability) > 0) {
                 return 1 + (getValue(ability, user) / 100);
             }

@@ -5,8 +5,6 @@ import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import java.util.Locale;
-
 public class AbilityContext {
 
     private final AuraSkillsApi api;
@@ -45,7 +43,7 @@ public class AbilityContext {
         if (AuraSkillsBukkit.get().getLocationManager().isPluginDisabled(player.getLocation(), player)) {
             return true;
         }
-        if (!player.hasPermission("auraskills.skill." + ability.getSkill().name().toLowerCase(Locale.ROOT))) {
+        if (!api.getUser(player.getUniqueId()).hasSkillPermission(ability.getSkill())) {
             return true;
         }
         if (api.getMainConfig().isDisabledInCreative()) {

@@ -169,7 +169,7 @@ public class GatheringLuckTraits extends TraitImpl {
         if (player.getGameMode() != GameMode.SURVIVAL) {
             return true;
         }
-        if (!player.hasPermission("auraskills.skill." + skill.name().toLowerCase(Locale.ROOT))) {
+        if (!plugin.getUser(player).hasSkillPermission(skill)) {
             return true;
         }
         return AuraSkillsBukkit.get().getLocationManager().isPluginDisabled(player.getLocation(), player);

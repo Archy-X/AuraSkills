@@ -184,4 +184,9 @@ public class ApiSkillsUser implements SkillsUser {
         return user.getLocale();
     }
 
+    @Override
+    public boolean hasSkillPermission(Skill skill) {
+        return user.hasSkillPermission(skill);
+    }
+
 }
