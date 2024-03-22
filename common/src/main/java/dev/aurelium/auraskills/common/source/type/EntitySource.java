@@ -11,12 +11,14 @@ public class EntitySource extends Source implements EntityXpSource {
     private final String entity;
     private final EntityTriggers[] triggers;
     private final EntityDamagers[] damagers;
+    private final boolean scaleXpWithHealth;
 
-    public EntitySource(AuraSkillsPlugin plugin, SourceValues values, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers) {
+    public EntitySource(AuraSkillsPlugin plugin, SourceValues values, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers, boolean scaleXpWithHealth) {
         super(plugin, values);
         this.entity = entity;
         this.triggers = triggers;
         this.damagers = damagers;
+        this.scaleXpWithHealth = scaleXpWithHealth;
     }
 
     @Override
@@ -37,5 +39,10 @@ public class EntitySource extends Source implements EntityXpSource {
     @Override
     public boolean isVersionValid() {
         return plugin.getPlatformUtil().isValidEntityType(entity);
+    }
+
+    @Override
+    public boolean scaleXpWithHealth() {
+        return scaleXpWithHealth;
     }
 }

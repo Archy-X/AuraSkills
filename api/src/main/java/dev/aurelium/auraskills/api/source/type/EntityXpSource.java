@@ -28,6 +28,14 @@ public interface EntityXpSource extends XpSource {
      */
     EntityDamagers[] getDamagers();
 
+    /**
+     * Whether the XP multiplier for sources using the {@link EntityTriggers#DAMAGE} trigger should
+     * be scaled by the damaged mob's max health.
+     *
+     * @return whether to scale XP by health
+     */
+    boolean scaleXpWithHealth();
+
     enum EntityDamagers {
 
         PLAYER,

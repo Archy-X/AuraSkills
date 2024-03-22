@@ -284,9 +284,8 @@ public class FightingAbilities extends AbilityImpl {
 
         Vector velBefore = player.getVelocity();
         // Disable knockback
-        plugin.getScheduler().scheduleSync(() -> {
-            player.setVelocity(velBefore);
-        }, 50, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().scheduleSync(() -> player.setVelocity(velBefore),
+                50, TimeUnit.MILLISECONDS);
     }
 
     private boolean isFacingCloseEnough(User user, Player player, Entity damager) {

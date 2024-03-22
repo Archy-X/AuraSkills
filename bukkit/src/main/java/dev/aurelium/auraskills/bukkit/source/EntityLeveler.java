@@ -13,6 +13,8 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -103,8 +105,8 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 
-        double damage = Math.min(entity.getHealth(), event.getFinalDamage());
-        plugin.getLevelManager().addEntityXp(user, skill, source, damage * getSpawnerMultiplier(entity, skill) * source.getXp(),
+        double damageMultiplier = getDamageMultiplier(entity, source, event);
+        plugin.getLevelManager().addEntityXp(user, skill, source, damageMultiplier * getSpawnerMultiplier(entity, skill) * source.getXp(),
                 entity, event.getDamager(), event);
     }
 
@@ -129,8 +131,8 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
-        double damage = Math.min(entity.getHealth(), event.getFinalDamage());
-        plugin.getLevelManager().addEntityXp(user, skill, source, damage * getSpawnerMultiplier(entity, skill) * source.getXp(),
+        double damageMultiplier = getDamageMultiplier(entity, source, event);
+        plugin.getLevelManager().addEntityXp(user, skill, source, damageMultiplier * getSpawnerMultiplier(entity, skill) * source.getXp(),
                 entity, player, null);
     }
 
@@ -241,6 +243,18 @@ public class EntityLeveler extends SourceLeveler {
         } else {
             return null;
         }
+    }
+
+    private double getDamageMultiplier(LivingEntity entity, EntityXpSource source, EntityDamageEvent event) {
+        double damageDealt = Math.min(entity.getHealth(), event.getFinalDamage());
+        if (source.scaleXpWithHealth()) {
+            AttributeInstance healthAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (healthAttribute != null) {
+                double maxHealth = healthAttribute.getValue();
+                return damageDealt / maxHealth; // XP gain is damage/maxHealth * sourceXp
+            }
+        }
+        return damageDealt;
     }
 
 }
