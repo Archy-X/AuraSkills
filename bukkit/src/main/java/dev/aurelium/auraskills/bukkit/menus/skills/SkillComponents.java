@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.AbstractComponent;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
@@ -122,8 +123,11 @@ public class SkillComponents {
                         switch (format) {
                             case "duration_entry" ->
                                     builder.append(message, "{duration}", NumberUtil.format1(getDuration(manaAbility, level)));
-                            case "mana_cost_entry", "max_mana_cost_entry" ->
+                            case "mana_cost_entry", "max_mana_cost_entry" -> {
+                                if (plugin.configBoolean(Option.MANA_ENABLED)) {
                                     builder.append(message, "{mana_cost}", NumberUtil.format1(manaAbility.getManaCost(level)));
+                                }
+                            }
                             case "cooldown_entry" ->
                                     builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
                             case "damage_entry", "damage_per_mana_entry", "attack_speed_entry" ->

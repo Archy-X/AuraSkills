@@ -74,6 +74,7 @@ public enum Option {
     LEVELER_SOUND_VOLUME("leveler.sound.volume", OptionType.DOUBLE),
     LEVELER_SOUND_PITCH("leveler.sound.pitch", OptionType.DOUBLE),
     LEVELER_DOUBLE_CHECK_DELAY("leveler.double_check_delay", OptionType.INT),
+    MANA_ENABLED("mana.enabled", OptionType.BOOLEAN),
     // Modifier options
     MODIFIER_ARMOR_EQUIP_BLOCKED_MATERIALS("modifier.armor.equip_blocked_materials", OptionType.LIST),
     MODIFIER_ARMOR_TIMER_ENABLED("modifier.armor.timer.enabled", OptionType.BOOLEAN),

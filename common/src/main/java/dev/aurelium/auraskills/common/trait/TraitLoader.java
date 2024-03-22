@@ -1,8 +1,10 @@
 package dev.aurelium.auraskills.common.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
+import dev.aurelium.auraskills.common.config.Option;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -45,9 +47,20 @@ public class TraitLoader {
         for (Object key : traitNode.childrenMap().keySet()) {
             configMap.put((String) key, traitNode.node(key).raw());
         }
+        applyConfigOverrides(trait, configMap);
 
         TraitOptions traitOptions = new TraitOptions(configMap);
         return new LoadedTrait(trait, traitOptions);
+    }
+
+    private void applyConfigOverrides(Trait trait, Map<String, Object> configMap) {
+        if (plugin.configBoolean(Option.MANA_ENABLED)) {
+            return;
+        }
+        // Disable these traits if mana is disabled
+        if (trait == Traits.MANA_REGEN || trait == Traits.MAX_MANA) {
+            configMap.put("enabled", false);
+        }
     }
 
 }

@@ -1,9 +1,11 @@
 package dev.aurelium.auraskills.common.mana;
 
+import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
+import dev.aurelium.auraskills.common.config.Option;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -48,8 +50,19 @@ public class ManaAbilityLoader {
         for (Object key : abilityNode.childrenMap().keySet()) {
             configMap.put((String) key, abilityNode.node(key).raw());
         }
+        applyConfigOverrides(manaAbility, configMap);
 
         ManaAbilityConfig abilityConfig = new ManaAbilityConfig(configMap);
         return new LoadedManaAbility(manaAbility, skill, abilityConfig);
+    }
+
+    private void applyConfigOverrides(ManaAbility ma, Map<String, Object> configMap) {
+        if (plugin.configBoolean(Option.MANA_ENABLED)) {
+            return;
+        }
+        // Disable these mana abilities if mana is disabled
+        if (ma == ManaAbilities.ABSORPTION || ma == ManaAbilities.CHARGED_SHOT) {
+            configMap.put("enabled", false);
+        }
     }
 }

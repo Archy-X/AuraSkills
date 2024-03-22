@@ -135,6 +135,8 @@ leveler:
     volume: 1.0
     pitch: 0.5
   double_check_delay: 20
+mana:
+  enabled: true
 modifier:
   armor:
     equip_blocked_materials:
