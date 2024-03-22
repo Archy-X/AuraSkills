@@ -6,7 +6,6 @@ import co.aikar.commands.PaperCommandManager;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -18,10 +17,7 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class CommandRegistrar {
 
@@ -40,6 +36,7 @@ public class CommandRegistrar {
         registerContexts(manager);
         registerCompletions(manager);
         registerBaseCommands(manager);
+        registerSkillCommands(manager);
         return manager;
     }
 
@@ -171,21 +168,28 @@ public class CommandRegistrar {
 
     public void registerSkillCommands(PaperCommandManager manager) {
         if (plugin.configBoolean(Option.ENABLE_SKILL_COMMANDS)) {
-            if (Skills.FARMING.isEnabled()) { manager.registerCommand(new SkillCommands.FarmingCommand(plugin)); }
-            if (Skills.FORAGING.isEnabled()) { manager.registerCommand(new SkillCommands.ForagingCommand(plugin)); }
-            if (Skills.MINING.isEnabled()) { manager.registerCommand(new SkillCommands.MiningCommand(plugin)); }
-            if (Skills.FISHING.isEnabled()) { manager.registerCommand(new SkillCommands.FishingCommand(plugin)); }
-            if (Skills.EXCAVATION.isEnabled()) { manager.registerCommand(new SkillCommands.ExcavationCommand(plugin)); }
-            if (Skills.ARCHERY.isEnabled()) { manager.registerCommand(new SkillCommands.ArcheryCommand(plugin)); }
-            if (Skills.DEFENSE.isEnabled()) { manager.registerCommand(new SkillCommands.DefenseCommand(plugin)); }
-            if (Skills.FIGHTING.isEnabled()) { manager.registerCommand(new SkillCommands.FightingCommand(plugin)); }
-            if (Skills.ENDURANCE.isEnabled()) { manager.registerCommand(new SkillCommands.EnduranceCommand(plugin)); }
-            if (Skills.AGILITY.isEnabled()) { manager.registerCommand(new SkillCommands.AgilityCommand(plugin)); }
-            if (Skills.ALCHEMY.isEnabled()) { manager.registerCommand(new SkillCommands.AlchemyCommand(plugin)); }
-            if (Skills.ENCHANTING.isEnabled()) { manager.registerCommand(new SkillCommands.EnchantingCommand(plugin)); }
-            if (Skills.SORCERY.isEnabled()) { manager.registerCommand(new SkillCommands.SorceryCommand(plugin)); }
-            if (Skills.HEALING.isEnabled()) { manager.registerCommand(new SkillCommands.HealingCommand(plugin)); }
-            if (Skills.FORGING.isEnabled()) { manager.registerCommand(new SkillCommands.ForgingCommand(plugin)); }
+            Map<Skill, Boolean> map = plugin.getSkillManager().loadConfigEnabledMap();
+            registerSkillCommand(new SkillCommands.FarmingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.ForagingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.MiningCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.FishingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.ExcavationCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.ArcheryCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.DefenseCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.FightingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.EnduranceCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.AgilityCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.AlchemyCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.EnchantingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.SorceryCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.HealingCommand(plugin), map, manager);
+            registerSkillCommand(new SkillCommands.ForgingCommand(plugin), map, manager);
+        }
+    }
+    
+    private void registerSkillCommand(SkillCommands.SkillCommand command, Map<Skill, Boolean> enabled, PaperCommandManager manager) {
+        if (enabled.getOrDefault(command.skill, false)) {
+            manager.registerCommand(command);
         }
     }
 

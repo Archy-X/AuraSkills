@@ -2,15 +2,20 @@ package dev.aurelium.auraskills.common.skill;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class SkillManager {
@@ -144,6 +149,32 @@ public class SkillManager {
 
     public void addContentDirectory(File file) {
         contentDirectories.add(file);
+    }
+
+    /**
+     * Initiates a one-time load of the skills.yml to check the enabled options for each default skill.
+     * Used to check which skills are enabled during plugin loading before the full skill loading occurs.
+     *
+     * @return a map from skill to whether it is enabled
+     */
+    public Map<Skill, Boolean> loadConfigEnabledMap() {
+        Map<Skill, Boolean> map = new HashMap<>();
+        ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+        try {
+            ConfigurationNode root = loader.loadUserFile(new File(plugin.getPluginFolder(), "skills.yml"));
+            for (Skill skill : Skills.values()) {
+                ConfigurationNode node = root.node("skills", skill.getId().toString(), "options", "enabled");
+                if (node.virtual()) {
+                    map.put(skill, false);
+                } else {
+                    map.put(skill, node.getBoolean(false));
+                }
+            }
+        } catch (IOException e) {
+            plugin.logger().warn("Failed to load skills.yml to check for enabled skills");
+            e.printStackTrace();
+        }
+        return map;
     }
 
 }

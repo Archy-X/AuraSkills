@@ -28,7 +28,7 @@ public class SkillCommands {
             if (skill.isEnabled()) {
                 new LevelProgressionOpener(plugin).open(player, user, skill);
             } else {
-                plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND);
+                player.sendMessage(plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND));
             }
         }
     }

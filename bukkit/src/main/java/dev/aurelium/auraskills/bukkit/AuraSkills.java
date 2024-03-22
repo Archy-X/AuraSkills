@@ -138,7 +138,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private StorageProvider storageProvider;
     private Slate slate;
     private MenuFileManager menuFileManager;
-    private CommandRegistrar commandRegistrar;
     private PaperCommandManager commandManager;
     private BukkitAudiences audiences;
     private BukkitRegionManager regionManager;
@@ -219,7 +218,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         rewardManager = new BukkitRewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
         confirmManager = new ConfirmManager(this);
-        commandRegistrar = new CommandRegistrar(this);
+        CommandRegistrar commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
         leaderboardManager.updateLeaderboards();
@@ -243,7 +242,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             traitManager.registerTraitImplementations();
             registerEvents();
             registerAndLoadMenus();
-            commandRegistrar.registerSkillCommands(commandManager);
             // Call SkillsLoadEvent
             SkillsLoadEvent event = new SkillsLoadEvent(skillManager.getSkillValues());
             Bukkit.getPluginManager().callEvent(event);
