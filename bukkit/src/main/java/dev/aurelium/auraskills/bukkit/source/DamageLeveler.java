@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
+import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
@@ -75,7 +76,13 @@ public class DamageLeveler extends SourceLeveler {
 
         User user = plugin.getUser(player);
 
-        plugin.getLevelManager().addXp(user, skill, source, xp);
+        Entity damager = null;
+        if (event instanceof EntityDamageByEntityEvent entityEvent) {
+            damager = entityEvent.getDamager();
+        }
+
+        plugin.getLevelManager().addDamageXp(user, skill, source, xp,
+                DamageCause.valueOf(event.getCause().name()), damager, event);
     }
 
     private boolean isSelfInflicted(Entity damager, Player player) {

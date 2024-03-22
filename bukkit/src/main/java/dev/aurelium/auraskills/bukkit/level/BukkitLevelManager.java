@@ -1,8 +1,10 @@
 package dev.aurelium.auraskills.bukkit.level;
 
+import dev.aurelium.auraskills.api.event.skill.DamageXpGainEvent;
 import dev.aurelium.auraskills.api.event.skill.EntityXpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.source.*;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -77,6 +79,19 @@ public class BukkitLevelManager extends LevelManager {
         double amountToAdd = amount * calculateMultiplier(user, skill);
 
         EntityXpGainEvent event = new EntityXpGainEvent(BukkitUser.getPlayer(user.toApi()), user.toApi(), skill, source, amountToAdd, attacked, damager, originalEvent);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+
+        addXpRaw(user, skill, event.getAmount());
+    }
+
+    public void addDamageXp(User user, Skill skill, @NotNull XpSource source, double amount,
+                            DamageCause cause, Entity damager, EntityEvent originalEvent) {
+        if (amount == 0) return;
+
+        double amountToAdd = amount * calculateMultiplier(user, skill);
+
+        DamageXpGainEvent event = new DamageXpGainEvent(BukkitUser.getPlayer(user.toApi()), user.toApi(), skill, source, amountToAdd, cause, damager, originalEvent);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
