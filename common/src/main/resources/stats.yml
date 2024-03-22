@@ -119,6 +119,7 @@ traits:
     base: 20
   auraskills/damage_reduction:
     enabled: true
+    formula: -1 * 1.01^(-1 * value) + 1
   auraskills/crit_chance:
     enabled: true
     base: 0
@@ -133,4 +134,4 @@ traits:
   auraskills/double_drop:
     enabled: true
     max_percent: 100
-file_version: 1
+file_version: 2

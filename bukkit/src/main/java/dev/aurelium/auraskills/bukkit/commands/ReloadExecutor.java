@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.commands;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.HologramsHook;
+import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
 import dev.aurelium.auraskills.bukkit.trait.HpTrait;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
@@ -35,6 +36,7 @@ public class ReloadExecutor {
         plugin.getUiProvider().getBossBarManager().loadOptions();
         plugin.getRewardManager().loadRewards();
         plugin.getLootTableManager().loadLootTables();
+        plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class).resetFormula();
         // Load menus
         plugin.getMenuFileManager().generateDefaultFiles();
         plugin.getMenuFileManager().loadMenus();

@@ -476,10 +476,7 @@ public abstract class User {
                 return false;
             }
         }
-        if (statModifiers.size() > 0) {
-            return false;
-        }
-        return true;
+        return statModifiers.isEmpty();
     }
 
     public UserState getState() {
