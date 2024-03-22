@@ -3,11 +3,15 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
+import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityDamagers;
+import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -23,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class EntityLeveler extends SourceLeveler {
 
@@ -38,22 +43,25 @@ public class EntityLeveler extends SourceLeveler {
         if (disabled()) return;
         LivingEntity entity = event.getEntity();
         // Ensure that the entity has a killer
-        if (entity.getKiller() == null) {
-            return;
-        }
-        // Ensure that the killer is an entity
-        if (!(entity.getLastDamageCause() instanceof EntityDamageByEntityEvent damageEvent)) {
-            return;
-        }
-
+        @Nullable
         Player player = entity.getKiller();
+        // Ensure that the killer is an entity
+        Entity damagerEntity;
+        if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent damageEvent) {
+            damagerEntity = damageEvent.getDamager();
+        } else {
+            player = getBleedDamager(entity);
+            damagerEntity = player;
+        }
+        if (player == null) return;
+
         User user = plugin.getUser(player);
 
         // Resolve damager from EntityDamageByEntityEvent
         EntityXpSource.EntityDamagers damager;
-        if (damageEvent.getDamager() instanceof Player) {
+        if (damagerEntity instanceof Player) {
             damager = EntityXpSource.EntityDamagers.PLAYER;
-        } else if (damageEvent.getDamager() instanceof Projectile) {
+        } else if (damagerEntity instanceof Projectile) {
             damager = EntityXpSource.EntityDamagers.PROJECTILE;
         } else {
             return;
@@ -68,7 +76,7 @@ public class EntityLeveler extends SourceLeveler {
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
         plugin.getLevelManager().addEntityXp(user, skill, source, getSpawnerMultiplier(entity, skill) * source.getXp(),
-                entity, damageEvent.getDamager(), event);
+                entity, damagerEntity, event);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -95,8 +103,35 @@ public class EntityLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 
-        plugin.getLevelManager().addEntityXp(user, skill, source, getSpawnerMultiplier(entity, skill) * source.getXp(),
+        double damage = Math.min(entity.getHealth(), event.getFinalDamage());
+        plugin.getLevelManager().addEntityXp(user, skill, source, damage * getSpawnerMultiplier(entity, skill) * source.getXp(),
                 entity, event.getDamager(), event);
+    }
+
+    @EventHandler
+    public void onBleedDamage(EntityDamageEvent event) {
+        if (disabled()) return;
+        if (!(event.getEntity() instanceof LivingEntity entity) || event.getEntity() instanceof ArmorStand) {
+            return;
+        }
+
+        Player player = getBleedDamager(entity);
+        if (player == null) return; // Was not damaged by Bleed
+
+        if (player.hasMetadata("NPC")) return;
+
+        User user = plugin.getUser(player);
+        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, EntityDamagers.PLAYER, EntityTriggers.DAMAGE);
+        if (sourcePair == null) return;
+
+        EntityXpSource source = sourcePair.first();
+        Skill skill = sourcePair.second();
+
+        if (failsChecks(player, entity.getLocation(), skill)) return;
+
+        double damage = Math.min(entity.getHealth(), event.getFinalDamage());
+        plugin.getLevelManager().addEntityXp(user, skill, source, damage * getSpawnerMultiplier(entity, skill) * source.getXp(),
+                entity, player, null);
     }
 
     @Nullable
@@ -190,6 +225,21 @@ public class EntityLeveler extends SourceLeveler {
             return skill.optionDouble("spawner_multiplier", 1.0);
         } else {
             return 1.0;
+        }
+    }
+
+    @Nullable
+    private Player getBleedDamager(Entity entity) {
+        PersistentDataContainer container = entity.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, FightingAbilities.BLEED_DAMAGER_KEY);
+        if (container.has(key)) { // Handle damager from Bleed
+            String uuidStr = container.get(key, PersistentDataType.STRING);
+            if (uuidStr == null) return null;
+
+            UUID uuid = UUID.fromString(uuidStr);
+            return Bukkit.getPlayer(uuid);
+        } else {
+            return null;
         }
     }
 

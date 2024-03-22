@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 public class FightingAbilities extends AbilityImpl {
 
+    public static final String BLEED_DAMAGER_KEY = "bleed_damager";
     private final String PARRY_KEY = "parry_ready";
     private final String PARRY_VECTOR = "parry_vector";
 
@@ -181,7 +182,13 @@ public class FightingAbilities extends AbilityImpl {
                         // Apply bleed
                         double damage = ability.getSecondaryValue(user.getAbilityLevel(ability));
                         double healthBefore = entity.getHealth();
+                        // Mark entity with damager UUID for leveler
+                        NamespacedKey damagerKey = new NamespacedKey(plugin, BLEED_DAMAGER_KEY);
+                        container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
+
                         entity.damage(damage);
+                        // Remove damager data
+                        container.remove(damagerKey);
                         double healthAfter = entity.getHealth();
                         if (healthAfter != healthBefore) { // Only display particles if damage was actually done
                             displayBleedParticles(entity, ability);
@@ -226,6 +233,7 @@ public class FightingAbilities extends AbilityImpl {
         PersistentDataContainer container = event.getPlayer().getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
         container.remove(key);
+        container.remove(new NamespacedKey(plugin, BLEED_DAMAGER_KEY));
     }
 
     @EventHandler

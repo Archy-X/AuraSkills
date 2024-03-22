@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityEvent;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Called when a player gains XP for killing or damaging an entity. By default, this
@@ -16,9 +17,10 @@ public class EntityXpGainEvent extends XpGainEvent {
 
     private final LivingEntity attacked;
     private final Entity damager;
+    @Nullable
     private final EntityEvent originalEvent;
 
-    public EntityXpGainEvent(Player player, SkillsUser user, Skill skill, XpSource source, double amount, LivingEntity attacked, Entity damager, EntityEvent originalEvent) {
+    public EntityXpGainEvent(Player player, SkillsUser user, Skill skill, XpSource source, double amount, LivingEntity attacked, Entity damager, @Nullable EntityEvent originalEvent) {
         super(player, user, skill, source, amount);
         this.attacked = attacked;
         this.damager = damager;
@@ -46,10 +48,11 @@ public class EntityXpGainEvent extends XpGainEvent {
 
     /**
      * Gets the original event that triggered the XP gain. Either EntityDeathEvent or
-     * EntityDamageByEntity event.
+     * EntityDamageByEntity event. Could be null if caused by plugin mechanics like Bleed.
      *
-     * @return the original event object
+     * @return the original event object, or null if no Bukkit event is linked to the XP gain
      */
+    @Nullable
     public EntityEvent getOriginalEvent() {
         return originalEvent;
     }
