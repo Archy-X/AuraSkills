@@ -79,6 +79,8 @@ boss_bar:
     - 'SORCERY BLUE PROGRESS'
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
+  xp_format: '#.#'
+  percent_format: "#.##"
 enable_roman_numerals: false
 damage_holograms:
   enabled: true

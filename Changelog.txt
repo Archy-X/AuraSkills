@@ -6,7 +6,7 @@ Version 2.0.3
     - Add mana.enabled option to more easily disable mana
   Bug Fixes:
     - Fix skills menu migration breaking
-    - Fix permission-blocking skills increasing stat levels
+    - Fix permission-blocked skills increasing stat levels
     - Fix entity sources with damage trigger not scaling XP with damage
     - Fix Bleed not giving XP on entity death/damage
     - Fix disabled traits still showing in stats menu

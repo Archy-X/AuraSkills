@@ -4,7 +4,6 @@ import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
@@ -41,7 +40,8 @@ public class BossBarManager implements Listener {
     private int stayTime;
     private Map<Skill, BossBar.Color> colors;
     private Map<Skill, BossBar.Overlay> overlays;
-    private final NumberFormat nf = new DecimalFormat("#.#");
+    private NumberFormat xpFormat;
+    private NumberFormat percentFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
 
@@ -53,9 +53,22 @@ public class BossBarManager implements Listener {
         this.singleCurrentActions = new HashMap<>();
         this.checkCurrentActions = new HashMap<>();
         this.singleCheckCurrentActions = new HashMap<>();
+        loadNumberFormats();
+    }
+
+    private void loadNumberFormats() {
+        try {
+            this.xpFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_XP_FORMAT));
+            this.percentFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_PERCENT_FORMAT));
+        } catch (IllegalArgumentException e) {
+            this.xpFormat = new DecimalFormat("#.#");
+            this.percentFormat = new DecimalFormat("#.##");
+            plugin.logger().warn("Invalid boss_bar.xp_format or percent_format: " + e.getMessage());
+        }
     }
 
     public void loadOptions() {
+        loadNumberFormats();
         mode = plugin.configString(Option.BOSS_BAR_MODE);
         stayTime = plugin.configInt(Option.BOSS_BAR_STAY_TIME);
         colors = new HashMap<>();
@@ -196,14 +209,14 @@ public class BossBarManager implements Listener {
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
                     "{level_xp}", getLevelXpText(levelXp),
-                    "{percent}", NumberUtil.format2(currentXp / (double) levelXp * 100),
-                    "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained)));
+                    "{percent}", percentFormat.format(currentXp / (double) levelXp * 100),
+                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
         } else {
             bossBarText = setPlaceholders(player, TextUtil.replace(plugin.getMsg(ActionBarMessage.BOSS_BAR_MAXED, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
-                    "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained)));
+                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
         }
         return bossBarText;
     }
@@ -222,7 +235,7 @@ public class BossBarManager implements Listener {
         if (plugin.configBoolean(Option.BOSS_BAR_ROUND_XP)) {
             currentXpText = String.valueOf(Math.round(currentXp));
         } else {
-            currentXpText = nf.format(currentXp);
+            currentXpText = xpFormat.format(currentXp);
         }
         return currentXpText;
     }
