@@ -1,3 +1,19 @@
+Version 2.0.3
+  New Features:
+    - Add formula option to damage_reduction trait
+    - Add scale_xp_with_health entity source option
+      - This is true by default for entity sources with damage trigger
+    - Add mana.enabled option to more easily disable mana
+  Bug Fixes:
+    - Fix skills menu migration breaking
+    - Fix permission-blocking skills increasing stat levels
+    - Fix entity sources with damage trigger not scaling XP with damage
+    - Fix Bleed not giving XP on entity death/damage
+    - Fix disabled traits still showing in stats menu
+    - Fix skill name commands not working
+  API Changes:
+    - Add DamageXpGainEvent
+
 Version 2.0.2
   New Features:
     - Add excluded_enchantments option for Enchanted Strength in abilities.yml
