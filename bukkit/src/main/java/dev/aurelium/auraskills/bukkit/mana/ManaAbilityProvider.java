@@ -98,7 +98,7 @@ public abstract class ManaAbilityProvider implements Listener {
     }
 
     protected boolean isDisabled() {
-        return !manaAbility.getSkill().isEnabled() || !manaAbility.isEnabled();
+        return !manaAbility.isEnabled() || !manaAbility.getSkill().isEnabled();
     }
 
     protected boolean failsChecks(Player player) {
