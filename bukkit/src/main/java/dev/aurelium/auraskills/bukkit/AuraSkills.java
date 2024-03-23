@@ -194,6 +194,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         userManager = new BukkitUserManager(this);
         presetManager = new PresetManager(this);
         generateConfigs(); // Generate default config files if missing
+        generateDefaultMenuFiles();
         // Handle migration
         MigrationManager migrationManager = new MigrationManager(this);
         migrationManager.attemptConfigMigration();
@@ -347,13 +348,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         statLoader.loadStats();
     }
 
+    private void generateDefaultMenuFiles() {
+        menuFileManager = new MenuFileManager(this);
+        menuFileManager.generateDefaultFiles();
+    }
+
     private void initializeMenus() {
         slate = new Slate(this, new SlateOptions.SlateOptionsBuilder()
                 .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .build());
         menuHelper = new SlateMenuHelper(slate);
-        menuFileManager = new MenuFileManager(this);
-        menuFileManager.generateDefaultFiles();
     }
 
     private void registerAndLoadMenus() {
