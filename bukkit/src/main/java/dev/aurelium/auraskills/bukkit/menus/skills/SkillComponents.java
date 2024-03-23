@@ -204,7 +204,7 @@ public class SkillComponents {
             if (menu == null) return "";
 
             int length = (int) menu.getOptions().getOrDefault("bar_length", 10);
-            double progress = currentXp / xpToNext;
+            double progress = Math.min(currentXp / xpToNext, 1.0);
             int currentPos = (int) Math.round(progress * (length - 1));
 
             StringBuilder bar = new StringBuilder();
