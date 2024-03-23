@@ -222,8 +222,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         CommandRegistrar commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         levelManager = new BukkitLevelManager(this);
-        leaderboardManager.updateLeaderboards();
-        leaderboardManager.startLeaderboardUpdater();
         registerPriorityEvents();
         // Enabled bStats
         Metrics metrics = new Metrics(this, 21318);
@@ -246,13 +244,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             // Call SkillsLoadEvent
             SkillsLoadEvent event = new SkillsLoadEvent(skillManager.getSkillValues());
             Bukkit.getPluginManager().callEvent(event);
-            // Tell threads that the plugin has finished loading
-            AuraSkills plugin = getInstance();
-            synchronized (plugin) {
-                plugin.notifyAll();
-            }
+            // Start updating leaderboards
+            leaderboardManager.startLeaderboardUpdater();
             // bStats custom charts
-            new MetricsUtil(plugin).registerCustomCharts(metrics);
+            new MetricsUtil(getInstance()).registerCustomCharts(metrics);
         });
 
         // Check if NBT API is supported for the version

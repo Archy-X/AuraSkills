@@ -31,20 +31,11 @@ public class LeaderboardManager {
             public void run() {
                 updateLeaderboardsSync();
             }
-        }, 5, 5, TimeUnit.MINUTES);
+        }, 10, 5 * 60, TimeUnit.SECONDS);
     }
 
     public synchronized void updateLeaderboards() {
-        plugin.getScheduler().executeAsync(() -> {
-            synchronized (plugin) {
-                try {
-                    plugin.wait(5000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                updateLeaderboardsSync();
-            }
-        });
+        updateLeaderboardsSync();
     }
 
     private void updateLeaderboardsSync() {
