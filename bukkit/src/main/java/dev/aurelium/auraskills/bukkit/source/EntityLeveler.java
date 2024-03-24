@@ -234,7 +234,7 @@ public class EntityLeveler extends SourceLeveler {
     private Player getBleedDamager(Entity entity) {
         PersistentDataContainer container = entity.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, FightingAbilities.BLEED_DAMAGER_KEY);
-        if (container.has(key)) { // Handle damager from Bleed
+        if (container.has(key, PersistentDataType.STRING)) { // Handle damager from Bleed
             String uuidStr = container.get(key, PersistentDataType.STRING);
             if (uuidStr == null) return null;
 
