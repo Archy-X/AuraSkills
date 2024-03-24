@@ -71,7 +71,7 @@ public abstract class User {
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
-        this.mana = Traits.MAX_MANA.optionDouble("base");
+        this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
         this.multipliers = new HashMap<>();
     }
 

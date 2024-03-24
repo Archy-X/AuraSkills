@@ -72,7 +72,8 @@ public class ManaCommand extends BaseCommand {
         // Calculate how much mana to add
         double manaToAdd = amount;
         if (user.getMaxMana() + manaToAdd > user.getMaxMana()) { // If adding mana will go over max mana
-            if (!allowOverMax || !Traits.MAX_MANA.optionBoolean("allow_overflow")) { // Should not go over max mana
+            boolean allowOverflow = Traits.MAX_MANA.isEnabled() && Traits.MAX_MANA.optionBoolean("allow_overflow");
+            if (!allowOverMax || !allowOverflow) { // Should not go over max mana
                 manaToAdd = user.getMaxMana() - user.getMana(); // Set mana to add to difference between max and current
             }
         }
