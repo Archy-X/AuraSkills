@@ -29,7 +29,7 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("com.github.Archy-X:Slate:3f51ba350d")
+    implementation("com.github.Archy-X:Slate:5e3f8cf8f6")
     // implementation(files("../../Slate/build/libs/slate-1.0.0.jar"))
     implementation("org.jetbrains:annotations:24.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
