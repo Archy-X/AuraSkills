@@ -546,7 +546,7 @@ commands:
   no_profile: "<yellow>Il giocatore non ha un'abilità nel profilo."
 leveler:
   level_up: "{skill} Incremeto di Livello"
-  skill_level_up: Skill Level Up
+  skill_level_up: L' abilità ha livellato
   rewards: Ricompense
   ability_unlock: Abilità Sbloccata
   ability_level_up: Level Up Abilità
@@ -564,7 +564,7 @@ menus:
     mana_ability: "Abilità Mana"
     duration: "Durata"
     mana_cost: "Costo Mana"
-    cooldown: "Cooldown"
+    cooldown: "Ricarica"
     damage: "Danno"
     max_mana_cost: "Costo Mana Massimo"
     attack_speed: "Velocità d'Attacco"
@@ -586,7 +586,7 @@ menus:
     your_skills_click: "Clicca su un'abilità per vedere la progressione del livello!"
     skill_click: "Clicca per vedere la progressione del livello!"
     stats: "Statistiche"
-    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_desc: "Guadagna potenziamenti delle statistiche livellando le abilità"
     stats_click: "Clicca per saperne di più o vedere le tue statistiche"
   level_progression:
     level_progression_title: "{skill} Livelli - Pagina {page}"
@@ -599,15 +599,15 @@ menus:
     progress: "In corso"
     leaderboard_click: "Clicca per vedere la classifica {skill}"
     sources: "Fonti XP"
-    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_desc: "Il menu delle fonti mostra tutti i modi in cui puoi guadagnare XP in un'abilità, nonché quanti XP fornisce ciascuna fonte."
     sources_click: "Clicca per vedere le fonti {skill}"
-    abilities: "Abilities"
-    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
-    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
-    abilities_click: "Click to view {skill} abilities"
+    abilities: "Abilità"
+    abilities_desc: "<2>Le abilità</2> <1>sono dei vantaggi passivi che sblocchi e migliori quando livelli le tue abilità.</1>"
+    mana_abilities_desc: "<3>Le abilità mana</3> <1> sono un tipo di capacità che per l'attivazione richiedono un consumo di mana </1>"
+    abilities_click: "Clicca per vedere l'abilità {skill}"
   stats:
     stats_title: Le tue abilità
-    skills: "Skills"
+    skills: "Abilità"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% per +{value} Drop"
