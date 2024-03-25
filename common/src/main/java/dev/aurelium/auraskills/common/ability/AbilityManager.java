@@ -60,7 +60,8 @@ public abstract class AbilityManager {
         List<Ability> skillAbilities = skill.getAbilities();
         List<Ability> abilities = new ArrayList<>();
         for (Ability ability : skillAbilities) {
-            if (level >= ability.getUnlock() && (level - ability.getUnlock()) % ability.getLevelUp() == 0) {
+            int abilityLevel = (level - ability.getUnlock()) / ability.getLevelUp() + 1;
+            if (level >= ability.getUnlock() && (level - ability.getUnlock()) % ability.getLevelUp() == 0 && abilityLevel <= ability.getMaxLevel()) {
                 abilities.add(ability);
             }
         }
