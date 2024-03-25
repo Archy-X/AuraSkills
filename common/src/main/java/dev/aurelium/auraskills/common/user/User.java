@@ -92,6 +92,8 @@ public abstract class User {
 
     public abstract boolean hasSkillPermission(Skill skill);
 
+    public abstract void setCommandLocale(Locale locale);
+
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }
@@ -305,6 +307,7 @@ public abstract class User {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+        setCommandLocale(locale);
     }
 
     public AbilityData getAbilityData(AbstractAbility ability) {

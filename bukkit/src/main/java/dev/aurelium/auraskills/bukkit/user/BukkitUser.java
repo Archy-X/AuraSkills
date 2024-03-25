@@ -4,7 +4,6 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -25,10 +24,12 @@ public class BukkitUser extends User {
 
     @Nullable
     private final Player player;
+    private final AuraSkills plugin;
 
-    public BukkitUser(UUID uuid, @Nullable Player player, AuraSkillsPlugin plugin) {
+    public BukkitUser(UUID uuid, @Nullable Player player, AuraSkills plugin) {
         super(uuid, plugin);
         this.player = player;
+        this.plugin = plugin;
     }
 
     @Nullable
@@ -90,9 +91,16 @@ public class BukkitUser extends User {
     }
 
     @Override
+    public void setCommandLocale(Locale locale) {
+        if (player != null) {
+            plugin.getCommandManager().setPlayerLocale(player, locale);
+        }
+    }
+
+    @Override
     public void sendMessage(Component component) {
         if (player != null) {
-            ((AuraSkills) plugin).getAudiences().player(player).sendMessage(component);
+            plugin.getAudiences().player(player).sendMessage(component);
         }
     }
 
