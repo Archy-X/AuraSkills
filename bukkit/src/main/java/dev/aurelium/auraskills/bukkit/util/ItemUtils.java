@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
@@ -249,17 +248,6 @@ public class ItemUtils {
 			}
 		}
 		return amountRemaining <= 0;
-	}
-
-
-	@Nullable
-	public static ItemStack parseItem(String name) {
-		Material material = Material.getMaterial(name);
-		if (material != null) {
-			return new ItemStack(material);
-		}
-		Optional<XMaterial> materialOptional = XMaterial.matchXMaterial(name);
-		return materialOptional.map(XMaterial::parseItem).orElse(null);
 	}
 
 } 

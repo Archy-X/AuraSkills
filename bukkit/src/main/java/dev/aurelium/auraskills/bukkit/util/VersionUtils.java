@@ -1,18 +1,16 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import com.cryptomorin.xseries.XMaterial;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 public class VersionUtils {
 
-    private static final int MAJOR_VERSION = XMaterial.getVersion();
-    private static final int MINOR_VERSION = getMinorVersion(getVersionString(Bukkit.getVersion()));
+    public static final int MAJOR_VERSION = getMajorVersion(getVersionString(Bukkit.getBukkitVersion()));
+    public static final int MINOR_VERSION = getMinorVersion(getVersionString(Bukkit.getBukkitVersion()));
 
     public static boolean isPigman(EntityType type) {
-        if (XMaterial.getVersion() == 16) {
+        if (MAJOR_VERSION == 16) {
             return type.equals(EntityType.ZOMBIFIED_PIGLIN);
         }
         else {
@@ -21,7 +19,7 @@ public class VersionUtils {
     }
 
     public static boolean isAtLeastVersion(int version) {
-        return XMaterial.getVersion() >= version;
+        return MAJOR_VERSION >= version;
     }
 
     public static boolean isAtLeastVersion(int majorVersionReq, int minorVersionReq) {
@@ -38,10 +36,21 @@ public class VersionUtils {
         if (version != null) {
             int lastDot = version.lastIndexOf('.');
             if (version.indexOf('.') != lastDot) {
-                return NumberUtil.toInt(version.substring(lastDot + 1), 0);
+                return Integer.parseInt(version.substring(lastDot + 1));
             }
         }
-        return 0;
+        throw new IllegalArgumentException("Failed to parse minor version from version string");
+    }
+
+    public static int getMajorVersion(String version) {
+        if (version != null) {
+            int lastDot = version.lastIndexOf(".");
+            int firstDot = version.indexOf(".");
+            if (firstDot != lastDot) {
+                return Integer.parseInt(version.substring(firstDot + 1, lastDot));
+            }
+        }
+        throw new IllegalArgumentException("Failed to parse major version from version string");
     }
 
     public static String getVersionString(@Nullable String version) {

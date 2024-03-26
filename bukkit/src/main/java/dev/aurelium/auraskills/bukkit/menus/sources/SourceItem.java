@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.bukkit.menus.sources;
 import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.TemplateItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
-import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -11,6 +10,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -95,7 +95,7 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
 
     @Override
     public ItemStack onItemModify(ItemStack baseItem, Player player, ActiveMenu activeMenu, XpSource source) {
-        if (baseItem.getType() != XMaterial.GRAY_DYE.parseMaterial()) {
+        if (baseItem.getType() != Material.GRAY_DYE) {
             return baseItem;
         }
         ItemStack item = plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source);

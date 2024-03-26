@@ -1,21 +1,18 @@
 package dev.aurelium.auraskills.bukkit.skills.defense;
 
-import com.cryptomorin.xseries.particles.ParticleDisplay;
-import com.cryptomorin.xseries.particles.XParticle;
-import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
+import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-
-import java.awt.*;
 
 public class Absorption extends ReadiedManaAbility {
 
@@ -65,8 +62,24 @@ public class Absorption extends ReadiedManaAbility {
         // Particle effects and sound
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GUARDIAN_HURT, 1f, 1f);
         if (manaAbility.optionBoolean("enable_particles", true)) {
-            XParticle.circle(1, 1, 1, 20, 0, ParticleDisplay.colored(player.getLocation().add(0, 1, 0), Color.MAGENTA, 1));
+            spawnParticles(player.getWorld(), player.getLocation().add(0, 1, 0));
         }
+    }
+
+    private void spawnParticles(World world, Location center) {
+        double radius = 1;
+        double rate = Math.PI / 20;
+        double limit = Math.PI * 2;
+        int count = 1;
+
+        for (double theta = 0; theta <= limit; theta += rate) {
+            double x = radius * Math.cos(theta);
+            double z = radius * Math.sin(theta);
+
+            Location location = center.clone().add(x, 0, z);
+            world.spawnParticle(Particle.REDSTONE, location, count, new DustOptions(Color.fromRGB(255, 0, 255), 1));
+        }
+
     }
 
 }

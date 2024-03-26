@@ -5,7 +5,6 @@ import com.archyx.slate.menu.ActiveMenu;
 import com.archyx.slate.position.FixedPosition;
 import com.archyx.slate.position.GroupPosition;
 import com.archyx.slate.position.PositionProvider;
-import com.cryptomorin.xseries.XMaterial;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -140,20 +139,13 @@ public class ConfigurateItemParser {
         return plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key));
     }
 
-    @SuppressWarnings("deprecation")
     private void parseDurability(ConfigurationNode section, ItemStack item) {
         ItemMeta meta = getMeta(item);
         int durability = section.node("durability").getInt();
-        if (XMaterial.isNewVersion()) {
-            if (meta instanceof Damageable damageable) {
-                short maxDurability = item.getType().getMaxDurability();
-                damageable.setDamage(Math.max(maxDurability - durability, maxDurability));
-                item.setItemMeta(meta);
-            }
-        } else {
-            // For old versions
+        if (meta instanceof Damageable damageable) {
             short maxDurability = item.getType().getMaxDurability();
-            item.setDurability((short) Math.max(maxDurability - durability, maxDurability));
+            damageable.setDamage(Math.max(maxDurability - durability, maxDurability));
+            item.setItemMeta(meta);
         }
     }
 
@@ -350,12 +342,7 @@ public class ConfigurateItemParser {
 
     @Nullable
     protected Material parseMaterial(String name) {
-        Material material = Material.getMaterial(name);
-        if (material != null) {
-            return material;
-        }
-        Optional<XMaterial> materialOptional = XMaterial.matchXMaterial(name);
-        return materialOptional.map(XMaterial::parseMaterial).orElse(null);
+        return Material.getMaterial(name);
     }
 
     private void parseSkullMeta(ItemStack item, ItemMeta meta, ConfigurationNode section) {
@@ -376,7 +363,7 @@ public class ConfigurateItemParser {
         if (url != null) { // From Mojang URL
             SkullCreator.itemWithUrl(item, url);
         }
-        if (XMaterial.getVersion() >= 14) { // Persistent data container requires 1.14+
+        if (VersionUtils.isAtLeastVersion(14)) { // Persistent data container requires 1.14+
             String placeholder = section.node("placeholder_uuid").getString();
             if (placeholder != null) {
                 PersistentDataContainer container = meta.getPersistentDataContainer();

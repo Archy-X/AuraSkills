@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.util;
 
 import com.archyx.slate.util.TextUtil;
-import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -13,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
-import java.util.Optional;
 
 public class BukkitPlatformUtil implements PlatformUtil {
 
@@ -67,11 +65,6 @@ public class BukkitPlatformUtil implements PlatformUtil {
 
     @Nullable
     private Material parseMaterial(String name) {
-        Material material = Material.getMaterial(name);
-        if (material != null) {
-            return material;
-        }
-        Optional<XMaterial> materialOptional = XMaterial.matchXMaterial(name);
-        return materialOptional.map(XMaterial::parseMaterial).orElse(null);
+        return Material.getMaterial(name);
     }
 }

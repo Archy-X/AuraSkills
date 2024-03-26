@@ -1,7 +1,5 @@
 package dev.aurelium.auraskills.bukkit.region;
 
-import com.cryptomorin.xseries.XBlock;
-import com.cryptomorin.xseries.XMaterial;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -107,8 +105,8 @@ public class RegionBlockListener implements Listener {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         regionManager.removePlacedBlock(block);
-        checkTallPlant(block, 0, XBlock::isSugarCane);
-        checkTallPlant(block, 0, mat -> mat == XMaterial.BAMBOO.parseMaterial());
+        checkTallPlant(block, 0, mat -> mat == Material.SUGAR_CANE);
+        checkTallPlant(block, 0, mat -> mat == Material.BAMBOO);
         checkTallPlant(block, 0, mat -> mat == Material.CACTUS);
         checkSupportBelow(block);
         checkSupportSide(block);
