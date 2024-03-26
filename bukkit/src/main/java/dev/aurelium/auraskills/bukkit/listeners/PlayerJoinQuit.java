@@ -78,7 +78,7 @@ public class PlayerJoinQuit implements Listener {
     }
 
     private void detectUserLanguage(User user, Player player) {
-        if (!plugin.configBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE)) {
+        if (!plugin.configBoolean(Option.TRY_DETECT_CLIENT_LANGUAGE) || user.hasLocale()) {
             return;
         }
 
