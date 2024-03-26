@@ -49,6 +49,11 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
     }
 
     @Override
+    public boolean persist() {
+        return true;
+    }
+
+    @Override
     public String onPlaceholderRequest(Player player, String identifier) {
         // Check placeholders that don't need a player first
         if (identifier.startsWith("lb_")) {
