@@ -29,11 +29,11 @@ dependencies {
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("com.github.Archy-X:XSeries:887fe61174")
     implementation("org.bstats:bstats-bukkit:3.0.0")
-    implementation("com.github.Archy-X:Slate:5e3f8cf8f6")
+    implementation("com.github.Archy-X:Slate:d7b4d7ad31")
     // implementation(files("../../Slate/build/libs/slate-1.0.0.jar"))
-    implementation("org.jetbrains:annotations:24.1.0")
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.2")
+    compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
@@ -60,6 +60,8 @@ tasks.withType<ShadowJar> {
     relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
     relocate("net.kyori", "dev.aurelium.auraskills.kyori")
     relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
+
+    exclude("acf-*.properties")
 
     finalizedBy("copyJar")
 }

@@ -13,10 +13,11 @@ dependencies {
     api("net.kyori:adventure-api:4.15.0")
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.16.0")
-    api("net.kyori:adventure-text-serializer-gson:4.16.0")
-    api("com.github.Archy-X:Polyglot:d6debe617a")
-    api("com.ezylang:EvalEx:3.0.4")
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    api("com.github.Archy-X:Polyglot:7f56b6fd04")
+    api("com.ezylang:EvalEx:3.1.1")
+    implementation("com.zaxxer:HikariCP:5.1.0") {
+        exclude("org.slf4j", "slf4j-api")
+    }
     implementation("org.atteo:evo-inflector:1.3")
     implementation("com.github.Querz:NBT:6.1")
     compileOnly("com.google.guava:guava:32.1.3-jre")
