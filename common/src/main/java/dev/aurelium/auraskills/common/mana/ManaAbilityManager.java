@@ -59,7 +59,10 @@ public abstract class ManaAbilityManager {
         ManaAbility manaAbility = skill.getManaAbility();
         if (manaAbility != null) {
             int manaAbilityLevel = (level - manaAbility.getUnlock()) / manaAbility.getLevelUp() + 1;
-            if (level >= manaAbility.getUnlock() && (level - manaAbility.getUnlock()) % manaAbility.getLevelUp() == 0 && manaAbilityLevel <= manaAbility.getMaxLevel()) {
+            if (manaAbility.getMaxLevel() > 0 && manaAbilityLevel > manaAbility.getMaxLevel()) {
+                return null;
+            }
+            if (level >= manaAbility.getUnlock() && (level - manaAbility.getUnlock()) % manaAbility.getLevelUp() == 0) {
                 return manaAbility;
             }
         }
