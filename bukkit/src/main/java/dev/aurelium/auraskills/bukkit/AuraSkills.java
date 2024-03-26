@@ -246,7 +246,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             SkillsLoadEvent event = new SkillsLoadEvent(skillManager.getSkillValues());
             Bukkit.getPluginManager().callEvent(event);
             // Start updating leaderboards
-            leaderboardManager.startLeaderboardUpdater();
+            leaderboardManager.updateLeaderboards(); // Immediately update leaderboards
+            leaderboardManager.startLeaderboardUpdater(); // 5 minute interval
             // bStats custom charts
             new MetricsUtil(getInstance()).registerCustomCharts(metrics);
         });

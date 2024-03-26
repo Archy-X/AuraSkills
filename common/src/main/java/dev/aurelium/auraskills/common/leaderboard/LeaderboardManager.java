@@ -31,10 +31,10 @@ public class LeaderboardManager {
             public void run() {
                 updateLeaderboardsSync();
             }
-        }, 10, 5 * 60, TimeUnit.SECONDS);
+        }, 5 * 60, 5 * 60, TimeUnit.SECONDS);
     }
 
-    public synchronized void updateLeaderboards() {
+    public void updateLeaderboards() {
         updateLeaderboardsSync();
     }
 
