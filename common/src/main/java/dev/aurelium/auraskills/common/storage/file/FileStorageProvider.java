@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.storage.file;
 
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -8,6 +9,7 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.SkillLevelMaps;
@@ -149,8 +151,14 @@ public class FileStorageProvider extends StorageProvider {
             NamespacedId abilityId = NamespacedId.fromString(abilityName.toString());
             AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(abilityId);
 
-            abilityNode.childrenMap().forEach((key, value) ->
-                    user.getAbilityData(ability).setData((String) key, value.raw()));
+            abilityNode.childrenMap().forEach((key, value) -> {
+                String keyStr = String.valueOf(key);
+                if (keyStr.equals("cooldown") && ability instanceof ManaAbility manaAbility) {
+                    user.getManaAbilityData(manaAbility).setCooldown(value.getInt());
+                } else {
+                    user.getAbilityData(ability).setData((String) key, value.raw());
+                }
+            });
         });
     }
 
@@ -293,6 +301,14 @@ public class FileStorageProvider extends StorageProvider {
             for (Map.Entry<String, Object> entry : user.getAbilityData(ability).getDataMap().entrySet()) {
                 abilityNode.node(entry.getKey()).set(entry.getValue());
             }
+        }
+        // Save mana ability cooldowns
+        for (ManaAbilityData data : user.getManaAbilityDataMap().values()) {
+            if (data.getCooldown() <= 0) {
+                continue;
+            }
+            ConfigurationNode abilityNode = abilityDataNode.node(data.getManaAbility().getId().toString());
+            abilityNode.node("cooldown").set(data.getCooldown());
         }
 
         // Apply unclaimed items

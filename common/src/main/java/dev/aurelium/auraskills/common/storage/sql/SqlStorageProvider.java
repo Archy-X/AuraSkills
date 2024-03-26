@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.storage.sql;
 
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -11,6 +12,7 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -190,25 +192,35 @@ public class SqlStorageProvider extends StorageProvider {
                     String keyName = resultSet.getString("key_name");
                     String value = resultSet.getString("value");
 
-                    Object parsed = value;
-                    if (value.equals("true")) {
-                        parsed = true;
-                    } else if (value.equals("false")) {
-                        parsed = false;
-                    } else {
-                        try {
-                            parsed = Integer.parseInt(value);
-                        } catch (NumberFormatException e) {
-                            try {
-                                parsed = Double.parseDouble(value);
-                            } catch (NumberFormatException ignored) {}
-                        }
-                    }
+                    Object parsed = castValue(value);
 
-                    user.getAbilityData(ability).setData(keyName, parsed);
+                    if (keyName.equals("cooldown") && ability instanceof ManaAbility manaAbility) {
+                        user.getManaAbilityData(manaAbility).setCooldown(NumberUtil.toInt(value));
+                    } else {
+                        user.getAbilityData(ability).setData(keyName, parsed);
+                    }
                 }
             }
         }
+    }
+
+    @NotNull
+    private Object castValue(String value) {
+        Object parsed = value;
+        if (value.equals("true")) {
+            parsed = true;
+        } else if (value.equals("false")) {
+            parsed = false;
+        } else {
+            try {
+                parsed = Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                try {
+                    parsed = Double.parseDouble(value);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return parsed;
     }
 
     private List<KeyIntPair> loadUnclaimedItems(Connection connection, int userId) throws SQLException {
@@ -383,7 +395,7 @@ public class SqlStorageProvider extends StorageProvider {
         // Save key values
         saveStatModifiers(connection, userId, user.getStatModifiers());
         saveTraitModifiers(connection, userId, user.getTraitModifiers());
-        saveAbilityData(connection, userId, user.getAbilityDataMap());
+        saveAbilityData(connection, userId, user.getAbilityDataMap(), user.getManaAbilityDataMap());
         saveUnclaimedItems(connection, userId, user.getUnclaimedItems());
         saveActionBar(connection, userId, user);
     }
@@ -434,7 +446,7 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private void saveAbilityData(Connection connection, int userId, Map<AbstractAbility, AbilityData> abilityDataMap) throws SQLException {
+    private void saveAbilityData(Connection connection, int userId, Map<AbstractAbility, AbilityData> abilityDataMap, Map<ManaAbility, ManaAbilityData> manaAbilityDataMap) throws SQLException {
         if (abilityDataMap.isEmpty()) {
             return;
         }
@@ -451,6 +463,16 @@ public class SqlStorageProvider extends StorageProvider {
                     statement.setString(6, String.valueOf(dataEntry.getValue()));
                     statement.executeUpdate();
                 }
+            }
+            for (ManaAbilityData data : manaAbilityDataMap.values()) {
+                if (data.getCooldown() <= 0) continue;
+                
+                String categoryId = data.getManaAbility().getId().toString();
+                statement.setString(3, categoryId);
+                statement.setString(4, "cooldown");
+                statement.setString(5, String.valueOf(data.getCooldown()));
+                statement.setString(6, String.valueOf(data.getCooldown()));
+                statement.executeUpdate();
             }
         }
     }

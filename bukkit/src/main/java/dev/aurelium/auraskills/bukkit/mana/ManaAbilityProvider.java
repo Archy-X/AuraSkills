@@ -12,7 +12,10 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
@@ -48,6 +51,13 @@ public abstract class ManaAbilityProvider implements Listener {
         return input;
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        // Stop active mana ability when logging out
+        stop(player);
+    }
+
     protected boolean checkActivation(Player player) {
         User user = plugin.getUser(player);
 
@@ -77,14 +87,21 @@ public abstract class ManaAbilityProvider implements Listener {
 
         if (duration != 0) {
             //Schedules stop
-            plugin.getScheduler().scheduleSync(() -> stop(player, user, data), duration * 50L, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> stop(player), duration * 50L, TimeUnit.MILLISECONDS);
         } else {
-            stop(player, user, data);
+            stop(player);
         }
         return true;
     }
 
-    protected void stop(Player player, User user, ManaAbilityData data) {
+    protected void stop(Player player) {
+        // Ignore if offline
+        if (!plugin.getUserManager().hasUser(player.getUniqueId())) return;
+
+        User user = plugin.getUser(player);
+        ManaAbilityData data = user.getManaAbilityData(manaAbility);
+
+        if (!data.isActivated()) return;
         data.setActivated(false);
         data.setReady(false);
 

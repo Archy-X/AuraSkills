@@ -50,9 +50,9 @@ public class ChargedShot extends ManaAbilityProvider {
     }
 
     @Override
-    public void onStop(Player player, User playerData) {
-        playerData.getMetadata().remove("charged_shot_projectile");
-        playerData.getMetadata().remove("charged_shot_force");
+    public void onStop(Player player, User user) {
+        user.getMetadata().remove("charged_shot_projectile");
+        user.getMetadata().remove("charged_shot_force");
     }
 
     @EventHandler
@@ -75,7 +75,7 @@ public class ChargedShot extends ManaAbilityProvider {
 
             Locale locale = user.getLocale();
             AbilityData abilityData = user.getAbilityData(manaAbility);
-            if (abilityData.getInt("cooldown") == 0) {
+            if (abilityData.getInt("toggle_cooldown") == 0) {
                 if (!abilityData.getBoolean("enabled")) { // Toggle on
                     abilityData.setData("enabled", true);
                     plugin.getAbilityManager().sendMessage(player, plugin.getMsg(ManaAbilityMessage.CHARGED_SHOT_ENABLE, locale));
@@ -83,7 +83,7 @@ public class ChargedShot extends ManaAbilityProvider {
                     abilityData.setData("enabled", false);
                     plugin.getAbilityManager().sendMessage(player, plugin.getMsg(ManaAbilityMessage.CHARGED_SHOT_DISABLE, locale));
                 }
-                abilityData.setData("cooldown", 8);
+                abilityData.setData("toggle_cooldown", 8);
             }
         }
     }
@@ -94,9 +94,9 @@ public class ChargedShot extends ManaAbilityProvider {
             public void run() {
                 for (User user : plugin.getUserManager().getOnlineUsers()) {
                     AbilityData abilityData = user.getAbilityData(manaAbility);
-                    int cooldown = abilityData.getInt("cooldown");
+                    int cooldown = abilityData.getInt("toggle_cooldown");
                     if (cooldown != 0) {
-                        abilityData.setData("cooldown", cooldown - 1);
+                        abilityData.setData("toggle_cooldown", cooldown - 1);
                     }
                 }
             }
