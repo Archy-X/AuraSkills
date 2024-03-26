@@ -33,8 +33,8 @@ import java.util.*;
 public abstract class MessageProvider implements PolyglotProvider {
 
     private final AuraSkillsPlugin plugin;
-    private final Polyglot polyglot;
-    private final MessageManager manager;
+    protected final Polyglot polyglot;
+    protected final MessageManager manager;
     @Nullable
     private Locale defaultLanguage; // Lazy loaded by getDefaultLanguage
     private final Map<LocalizedKey, Component> componentCache = new HashMap<>();

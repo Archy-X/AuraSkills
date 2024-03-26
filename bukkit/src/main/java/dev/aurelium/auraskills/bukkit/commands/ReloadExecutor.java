@@ -25,6 +25,7 @@ public class ReloadExecutor {
         Locale locale = plugin.getLocale(sender);
         // Load messages
         plugin.getMessageProvider().loadMessages();
+        plugin.getMessageProvider().setACFMessages(plugin.getCommandManager());
         // Load config.yml file
         plugin.config().loadOptions();
         plugin.getMessageProvider().loadDefaultLanguageOption();

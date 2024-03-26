@@ -221,6 +221,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         confirmManager = new ConfirmManager(this);
         CommandRegistrar commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
+        messageProvider.setACFMessages(commandManager);
         levelManager = new BukkitLevelManager(this);
         registerPriorityEvents();
         // Enabled bStats
