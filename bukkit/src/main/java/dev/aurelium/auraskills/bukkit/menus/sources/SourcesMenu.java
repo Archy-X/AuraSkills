@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus.sources;
 
 import com.archyx.slate.menu.ActiveMenu;
+import com.archyx.slate.menu.ConfigurableMenu;
 import com.archyx.slate.menu.MenuProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -14,6 +15,10 @@ import java.util.Locale;
 import java.util.Map;
 
 public class SourcesMenu extends AbstractMenu implements MenuProvider {
+
+    public static final int DEF_ITEMS_PER_PAGE = 28;
+    public static final String DEF_SOURCE_START = "1,1";
+    public static final String DEF_SOURCE_END = "4,8";
 
     public SourcesMenu(AuraSkills plugin) {
         super(plugin);
@@ -43,9 +48,17 @@ public class SourcesMenu extends AbstractMenu implements MenuProvider {
     public Map<String, Object> getDefaultProperties(ActiveMenu activeMenu) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("skill", activeMenu.getProperty("skill"));
-        properties.put("items_per_page", 28);
+        properties.put("items_per_page", getSourcesItemsPerPage());
         properties.put("sort_type", SortType.ASCENDING);
         properties.put("previous_menu", "level_progression");
         return properties;
+    }
+
+    private int getSourcesItemsPerPage() {
+        ConfigurableMenu menu = plugin.getMenuManager().getMenu("sources");
+        if (menu != null) {
+            return (int) menu.getOptions().getOrDefault("items_per_page", DEF_ITEMS_PER_PAGE);
+        }
+        return DEF_ITEMS_PER_PAGE;
     }
 }

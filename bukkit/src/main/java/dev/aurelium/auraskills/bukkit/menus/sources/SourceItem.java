@@ -85,12 +85,24 @@ public class SourceItem extends AbstractItem implements TemplateItemProvider<XpS
         int index = sources.indexOf(source);
         if (index != -1) {
             // Convert index of source into position on menu
-            int row = 1 + index / 7;
-            int column = 1 + index % 7;
+            SlotPos start = parsePos(activeMenu.getOption(String.class, "source_start", SourcesMenu.DEF_SOURCE_START));
+            SlotPos end = parsePos(activeMenu.getOption(String.class, "source_end", SourcesMenu.DEF_SOURCE_END));
+            int numRows = end.getRow() - start.getRow();
+            int numCols = end.getColumn() - start.getColumn();
+            int row = Math.min(start.getRow() + index / numCols, start.getRow() + numRows);
+            int column = start.getColumn() + index % numCols;
             return SlotPos.of(row, column);
         } else {
             return null;
         }
+    }
+
+    private SlotPos parsePos(String input) {
+        String[] split = input.split(",");
+        if (split.length == 2) {
+            return SlotPos.of(NumberUtil.toInt(split[0]), NumberUtil.toInt(split[1]));
+        }
+        return SlotPos.of(0, 0);
     }
 
     @Override

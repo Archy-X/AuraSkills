@@ -68,6 +68,11 @@ public class MenuRegistrar {
                 "start_level", 1,
                 "track", SkillLevelItem.getDefaultTrack());
         manager.registerDefaultOptions("level_progression", lpOptions);
+        Map<String, Object> sourcesOptions = Map.of(
+                "source_start", SourcesMenu.DEF_SOURCE_START,
+                "source_end", SourcesMenu.DEF_SOURCE_END,
+                "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE);
+        manager.registerDefaultOptions("sources", sourcesOptions);
         // Global items
         manager.registerSingleItem("back", () -> new BackItem(plugin));
         manager.registerSingleItem("close", () -> new CloseItem(plugin));
