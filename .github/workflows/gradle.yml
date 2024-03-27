@@ -22,9 +22,5 @@ jobs:
           arguments: build
       - uses: actions/upload-artifact@v3
         with:
-          name: AureliumSkills
-          path: build/libs/AureliumSkills-**.jar
-      - uses: actions/upload-artifact@v3
-        with:
           name: AuraSkills
           path: build/libs/AuraSkills-**.jar

@@ -1,3 +1,23 @@
+Version 2.0.4
+  New Features:
+    - Add xp_format and percent_format boss bar options
+    - Add options to sources menu to change source template area
+  Changes:
+    - Reduce jar size by removing unnecessary libraries
+    - Update it and ru messages (regen required to get changes)
+  Bug Fixes:
+    - Fix mana ability cooldowns not being saved when re-logging
+    - Fix placeholders not working after PlaceholderAPI reload
+    - Fix NoSuchMethodError on older versions
+    - Fix long delay in leaderboard updating on startup
+    - Fix acf section of messages file not applying
+    - Fix abilities showing in menus and messages above max_level
+    - Fix trait max_mana is not loaded error
+    - Fix mana ability is not loaded error
+    - Fix formatting not working in menu titles
+    - Fix stack overflow when opening skills menu with too much XP
+    - Fix mana command help not showing parameter names
+
 Version 2.0.3
   New Features:
     - Add formula option to damage_reduction trait

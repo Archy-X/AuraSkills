@@ -53,9 +53,9 @@ body:
       label: Agreements
       description: Before submitting, please agree to the following.
       options:
-        - label: I am running the latest version of Aurelium Skills
+        - label: I am running the latest version of AuraSkills
           required: true
-        - label: I am not using an unsupported server software (https://wiki.aurelium.dev/skills/other/incompatibilities)
+        - label: I am not using an unsupported server software (https://wiki.aurelium.dev/auraskills/incompatibilities)
           required: true
-        - label: My version of Minecraft is supported by Aurelium Skills
+        - label: My version of Minecraft is supported by AuraSkills
           required: true
