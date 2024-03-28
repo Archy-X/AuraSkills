@@ -101,6 +101,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
@@ -264,7 +265,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public void onLoad() {
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
-            if (WorldGuardPlugin.inst().getDescription().getVersion().contains("7.0")) {
+            if (WorldGuardPlugin.inst().getDescription().getVersion().startsWith("7.")) {
                 worldGuardFlags = new WorldGuardFlags(this);
                 worldGuardFlags.register();
             }
@@ -442,6 +443,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return apiBukkit;
     }
 
+    @Nullable
     public WorldGuardFlags getWorldGuardFlags() {
         return worldGuardFlags;
     }

@@ -91,13 +91,19 @@ public class WorldGuardHook extends Hook {
     }
 
     private boolean blockedByFlag(Location location, Player player, FlagKey flagKey) {
-        StateFlag flag = plugin.getWorldGuardFlags().getStateFlag(flagKey.toString());
+        WorldGuardFlags flags = plugin.getWorldGuardFlags();
+        if (flags == null) return false;
+
+        StateFlag flag = flags.getStateFlag(flagKey.toString());
         return queryFlagState(location, player, flag);
     }
 
     private boolean blockedBySkillFlag(Location location, Player player, Skill skill) {
+        WorldGuardFlags flags = plugin.getWorldGuardFlags();
+        if (flags == null) return false;
+
         String flagKey = "xp-gain-" + TextUtil.replace(skill.name().toLowerCase(Locale.ROOT), "_", "-");
-        StateFlag flag = plugin.getWorldGuardFlags().getStateFlag(flagKey);
+        StateFlag flag = flags.getStateFlag(flagKey);
         return queryFlagState(location, player, flag);
     }
 
