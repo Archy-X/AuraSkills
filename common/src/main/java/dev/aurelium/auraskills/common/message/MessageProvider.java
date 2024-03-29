@@ -96,23 +96,39 @@ public abstract class MessageProvider implements PolyglotProvider {
     }
 
     public String getSkillDisplayName(Skill skill, Locale locale) {
+        return get(getSkillDisplayNameKey(skill), locale);
+    }
+
+    public MessageKey getSkillDisplayNameKey(Skill skill) {
         String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
-        return get(MessageKey.of("skills." + key + ".name"), locale);
+        return MessageKey.of("skills." + key + ".name");
     }
 
     public String getSkillDescription(Skill skill, Locale locale) {
+        return get(getSkillDescriptionKey(skill), locale);
+    }
+
+    public MessageKey getSkillDescriptionKey(Skill skill) {
         String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
-        return get(MessageKey.of("skills." + key + ".desc"), locale);
+        return MessageKey.of("skills." + key + ".desc");
     }
 
     public String getStatDisplayName(Stat stat, Locale locale) {
+        return get(getStatDisplayNameKey(stat), locale);
+    }
+
+    public MessageKey getStatDisplayNameKey(Stat stat) {
         String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
-        return get(MessageKey.of("stats." + key + ".name"), locale);
+        return MessageKey.of("stats." + key + ".name");
     }
 
     public String getStatDescription(Stat stat, Locale locale) {
+        return get(getStatDescriptionKey(stat), locale);
+    }
+
+    public MessageKey getStatDescriptionKey(Stat stat) {
         String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
-        return get(MessageKey.of("stats." + key + ".desc"), locale);
+        return MessageKey.of("stats." + key + ".desc");
     }
 
     public String getStatColor(Stat stat, Locale locale) {

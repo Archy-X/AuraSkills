@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
+import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
@@ -32,13 +33,14 @@ public abstract class AbstractSkillItem extends AbstractItem implements Template
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         int skillLevel = user.getSkillLevel(skill);
+        MessageProvider msg = plugin.getMessageProvider();
 
         switch (placeholder) {
             case "skill" -> {
-                return skill.getDisplayName(locale);
+                return msg.getRaw(msg.getSkillDisplayNameKey(skill), locale);
             }
             case "desc" -> {
-                return skill.getDescription(locale);
+                return msg.getRaw(msg.getSkillDescriptionKey(skill), locale);
             }
             case "level" -> {
                 return RomanNumber.toRoman(skillLevel, plugin);
