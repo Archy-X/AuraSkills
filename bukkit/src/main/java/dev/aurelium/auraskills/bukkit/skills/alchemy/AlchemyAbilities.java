@@ -128,10 +128,10 @@ public class AlchemyAbilities extends AbilityImpl {
         container.set(DURATION_BONUS_KEY, PersistentDataType.INTEGER, durationBonus);
         // Add lore
         if (Abilities.ALCHEMIST.optionBoolean("add_item_lore", true)) {
-            List<String> lore = new ArrayList<>();
-            lore.add(TextUtil.replace(plugin.getMsg(AbilityMessage.ALCHEMIST_LORE, locale)
-                    , "{duration}", PotionUtil.formatDuration(durationBonus)
-                    , "{value}", NumberUtil.format1((multiplier - 1) * 100)));
+            List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+            lore.add(TextUtil.replace(plugin.getMsg(AbilityMessage.ALCHEMIST_LORE, locale),
+                    "{duration}", PotionUtil.formatDuration(durationBonus),
+                    "{value}", NumberUtil.format1((multiplier - 1) * 100)));
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -154,6 +154,7 @@ public class AlchemyAbilities extends AbilityImpl {
         if (item.getType() != Material.POTION || !(item.getItemMeta() instanceof PotionMeta meta)) return;
 
         int durationBonus = item.getItemMeta().getPersistentDataContainer().getOrDefault(DURATION_BONUS_KEY, PersistentDataType.INTEGER, 0);
+        if (durationBonus <= 0) return;
 
         PotionData potionData = meta.getBasePotionData();
         PotionType potionType = potionData.getType();
@@ -187,6 +188,10 @@ public class AlchemyAbilities extends AbilityImpl {
                     PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 3));
                 }
             }
+        }
+        // Apply bonus for custom effects
+        for (PotionEffect effect : meta.getCustomEffects()) {
+            PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), effect.getDuration() + durationBonus, effect.getAmplifier()));
         }
     }
 
