@@ -15,7 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
@@ -62,7 +62,8 @@ public class LightningBlade extends ReadiedManaAbility {
         //If player used sword
         if (!isHoldingMaterial(player)) return;
         if (!(event.getEntity() instanceof LivingEntity)) return;
-        if (event.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) return; // Ignore sweeping attacks
+        DamageCause cause = event.getCause();
+        if (cause == DamageCause.ENTITY_SWEEP_ATTACK || cause == DamageCause.THORNS) return; // Ignore sweeping attacks
         // Checks if already activated
         User user = plugin.getUser(player);
         if (isActivated(user)) {
