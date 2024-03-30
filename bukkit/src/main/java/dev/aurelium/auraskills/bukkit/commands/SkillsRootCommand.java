@@ -10,9 +10,10 @@ import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBTCompoundList;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.UnclaimedItemsMenu;
-import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
+import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
 import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
@@ -20,7 +21,6 @@ import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -405,12 +405,12 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("sources")
 	@CommandPermission("auraskills.command.sources")
 	@CommandCompletion("@skills @sort_types")
-	public void onSources(Player player, Skill skill, @Optional SorterItem.SortType sortType) {
+	public void onSources(Player player, Skill skill, @Optional SortType sortType) {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("skill", skill);
 		properties.put("items_per_page", 28);
 		if (sortType == null) { // Use ASCENDING as default
-			sortType = SorterItem.SortType.ASCENDING;
+			sortType = SortType.ASCENDING;
 		}
 		properties.put("sort_type", sortType);
 		plugin.getMenuManager().openMenu(player, "sources", properties);

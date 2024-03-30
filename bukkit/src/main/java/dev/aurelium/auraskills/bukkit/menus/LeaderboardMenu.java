@@ -3,10 +3,8 @@ package dev.aurelium.auraskills.bukkit.menus;
 import com.archyx.slate.builder.MenuBuilder;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.levelprogression.LevelProgressionOpener;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -17,13 +15,17 @@ import java.util.stream.IntStream;
 
 public class LeaderboardMenu {
 
-    public void build(AuraSkills plugin, MenuBuilder menu) {
+    private final AuraSkills plugin;
+
+    public LeaderboardMenu(AuraSkills plugin) {
+        this.plugin = plugin;
+    }
+
+    public void build(MenuBuilder menu) {
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(plugin.getLocale(p.player())));
 
-        menu.item("back", item -> {
-            item.replace("menu_name", p -> TextUtil.capitalizeWord(TextUtil.replace((String) p.menu().getProperty("previous_menu"), "_", " ")));
-            item.onClick(c -> new LevelProgressionOpener(plugin).open(c.player(), (Skill) c.menu().getProperty("skill")));
-        });
+        var globalItems = new GlobalItems(plugin);
+        globalItems.back(menu);
 
         menu.template("leaderboard_player", Integer.class, template -> {
             LeaderboardManager lb = plugin.getLeaderboardManager();

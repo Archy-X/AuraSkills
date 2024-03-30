@@ -10,8 +10,12 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -44,6 +48,11 @@ public class SourcesMenu {
                 "items_per_page", getItemsPerPage(),
                 "sort_type", SortType.ASCENDING,
                 "previous_menu", "level_progression"));
+
+        var globalItems = new GlobalItems(plugin);
+        globalItems.back(menu);
+        globalItems.previousPage(menu);
+        globalItems.nextPage(menu);
 
         menu.item("sorter", item -> {
             item.replace("sort_types", this::getSortedTypesLore);
@@ -109,12 +118,38 @@ public class SourcesMenu {
                 }
                 filteredSources.sort(((SortType) activeMenu.getProperty("sort_type")).getComparator(plugin, plugin.getLocale(m.player())));
                 // Gets a sublist of the sources displayed based on the current page
-                int toIndex = Math.max((page + 1) * itemsPerPage, filteredSources.size());
+                int toIndex = Math.min((page + 1) * itemsPerPage, filteredSources.size());
                 List<XpSource> shownSources = filteredSources.subList(page * itemsPerPage, toIndex);
                 activeMenu.setProperty("sources", shownSources); // Set sorted sources property for easy access in other methods
                 return new HashSet<>(shownSources);
             });
+
+            template.modify(t -> {
+                if (t.item().getType() != Material.GRAY_DYE) return t.item();
+                ItemStack item = plugin.getItemRegistry().getSourceMenuItems().getMenuItem(t.value());
+                if (item == null) {
+                    plugin.logger().warn("Item of source " + t.value().getId() + " not found");
+                }
+                return item;
+            });
         });
+
+        menu.component("multiplied_xp", XpSource.class, component -> {
+            component.replace("source_xp", p -> {
+                double multiplier = getMultiplier(p.player(), (Skill) p.menu().getProperty("skill"));
+                String unitName = p.value().getUnitName(plugin.getLocale(p.player()));
+                return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
+                        "{xp}", NumberUtil.format2(p.value().getXp() * multiplier),
+                        "{unit}", unitName);
+            });
+            component.shouldShow(t -> getMultiplier(t.player(), (Skill) t.menu().getProperty("skill")) > 1.0);
+        });
+    }
+
+    private double getMultiplier(Player player, Skill skill) {
+        User user = plugin.getUser(player);
+        double permissionMultiplier = 1 + plugin.getLevelManager().getPermissionMultiplier(user, skill);
+        return plugin.getLevelManager().getAbilityMultiplier(user, skill) * permissionMultiplier;
     }
 
     private int getItemsPerPage() {
@@ -173,16 +208,12 @@ public class SourcesMenu {
         REVERSE_ALPHABETICAL;
 
         public SourceComparator getComparator(AuraSkills plugin, Locale locale) {
-            switch (this) {
-                case DESCENDING:
-                    return new SourceComparator.Descending(plugin);
-                case ALPHABETICAL:
-                    return new SourceComparator.Alphabetical(plugin, locale);
-                case REVERSE_ALPHABETICAL:
-                    return new SourceComparator.ReverseAlphabetical(plugin, locale);
-                default:
-                    return new SourceComparator.Ascending(plugin);
-            }
+            return switch (this) {
+                case DESCENDING -> new SourceComparator.Descending(plugin);
+                case ALPHABETICAL -> new SourceComparator.Alphabetical(plugin, locale);
+                case REVERSE_ALPHABETICAL -> new SourceComparator.ReverseAlphabetical(plugin, locale);
+                default -> new SourceComparator.Ascending(plugin);
+            };
         }
 
     }
