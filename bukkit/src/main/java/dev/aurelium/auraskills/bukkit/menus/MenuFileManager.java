@@ -24,7 +24,7 @@ public class MenuFileManager {
 
     public void loadMenus() {
         int menusLoaded = 0;
-        for (String menuName : plugin.getMenuManager().getMenuProviderNames()) {
+        for (String menuName : plugin.getMenuManager().getMenuNames()) {
             try {
                 File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
                 if (file.exists()) {

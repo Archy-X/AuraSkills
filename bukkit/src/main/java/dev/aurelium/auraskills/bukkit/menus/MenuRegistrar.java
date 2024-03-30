@@ -14,8 +14,6 @@ import dev.aurelium.auraskills.bukkit.item.ItemRegistryMenuProvider;
 import dev.aurelium.auraskills.bukkit.menus.abilities.*;
 import dev.aurelium.auraskills.bukkit.menus.common.*;
 import dev.aurelium.auraskills.bukkit.menus.contexts.*;
-import dev.aurelium.auraskills.bukkit.menus.leaderboard.LeaderboardMenu;
-import dev.aurelium.auraskills.bukkit.menus.leaderboard.LeaderboardPlayerItem;
 import dev.aurelium.auraskills.bukkit.menus.levelprogression.*;
 import dev.aurelium.auraskills.bukkit.menus.skills.*;
 import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
@@ -26,7 +24,7 @@ import dev.aurelium.auraskills.bukkit.menus.stats.SkullItem;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatItem;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatsComponents;
 import dev.aurelium.auraskills.bukkit.menus.stats.StatsMenu;
-import dev.aurelium.auraskills.common.source.Source;
+import dev.aurelium.auraskills.common.util.text.Replacer;
 
 import java.util.Map;
 
@@ -34,28 +32,29 @@ public class MenuRegistrar {
 
     private final AuraSkills plugin;
     private final Slate slate;
+    private final PlaceholderHelper placeholderHelper;
 
     public MenuRegistrar(AuraSkills plugin) {
         this.plugin = plugin;
         this.slate = plugin.getSlate();
+        this.placeholderHelper = new PlaceholderHelper(plugin);
     }
 
     public void register() {
         ContextManager contextManager = slate.getContextManager();
         // Register contexts
-        contextManager.registerContext("Skill", Skill.class, new SkillContext(plugin));
-        contextManager.registerContext("Stat", Stat.class, new StatContext(plugin));
-        contextManager.registerContext("Source", XpSource.class, new SourceContext(plugin));
-        contextManager.registerContext("SortType", SorterItem.SortType.class, new SortTypeContext());
-        contextManager.registerContext("Ability", Ability.class, new AbilityContext(plugin));
-        contextManager.registerContext("ManaAbility", ManaAbility.class, new ManaAbilityContext(plugin));
+        contextManager.registerContext("Skill", new SkillContext(plugin));
+        contextManager.registerContext("Stat", new StatContext(plugin));
+        contextManager.registerContext("Source", new SourceContext(plugin));
+        contextManager.registerContext("SortType", new SortTypeContext());
+        contextManager.registerContext("Ability", new AbilityContext(plugin));
+        contextManager.registerContext("ManaAbility", new ManaAbilityContext(plugin));
 
         MenuManager manager = plugin.getMenuManager();
         // Register menus
         manager.registerMenuProvider("skills", new SkillsMenu(plugin));
         manager.registerMenuProvider("stats", new StatsMenu(plugin));
         manager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
-        manager.registerMenuProvider("leaderboard", new LeaderboardMenu(plugin));
         manager.registerMenuProvider("sources", new SourcesMenu(plugin));
         manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
         // Register default options
@@ -117,14 +116,10 @@ public class MenuRegistrar {
             providerManager.registerComponent("max_level", () -> new SkillComponents.MaxLevel(plugin));
         }
 
-        ProviderManager leaderboard = manager.getProviderManager("leaderboard");
-        leaderboard.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
-        leaderboard.registerTemplateItem("leaderboard_player", Integer.class, () -> new LeaderboardPlayerItem(plugin));
-
         ProviderManager sources = manager.getProviderManager("sources");
         sources.registerSingleItem("sorter", () -> new SorterItem(plugin));
         sources.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
-        sources.registerTemplateItem("source", Source.class, () -> new SourceItem(plugin));
+        sources.registerTemplateItem("source", XpSource.class, () -> new SourceItem(plugin));
         sources.registerComponent("multiplied_xp", () -> new SourcesComponents.MultipliedXp(plugin));
 
         ProviderManager abilities = manager.getProviderManager("abilities");
@@ -137,5 +132,16 @@ public class MenuRegistrar {
         abilities.registerComponent("your_level_maxed", () -> new AbilitiesComponents.YourLevelMaxed(plugin));
         abilities.registerComponent("unlocked_desc", () -> new AbilitiesComponents.UnlockedDesc(plugin));
         abilities.registerComponent("unlocked_desc_maxed", () -> new AbilitiesComponents.UnlockedDescMaxed(plugin));
+        buildMenus();
+    }
+
+    private void buildMenus() {
+        slate.setGlobalOptions(options -> {
+            options.replacer(c -> {
+                // Returns null if not a menu message
+                return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
+            });
+        });
+        slate.buildMenu("leaderboard", menu -> new LeaderboardMenu().build(plugin, menu));
     }
 }

@@ -30,7 +30,7 @@ public class ClickableSkillItem extends AbstractSkillItem {
         User user = plugin.getUser(player);
 
         if (user.hasSkillPermission(skill)) {
-            new LevelProgressionOpener(plugin).open(player, user, skill);
+            new LevelProgressionOpener(plugin).open(player, skill);
         }
     }
 

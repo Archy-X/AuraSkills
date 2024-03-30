@@ -30,6 +30,6 @@ public class SourcesItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        plugin.getMenuManager().openMenu(player, "sources", plugin.getMenuManager().getDefaultProperties("sources", activeMenu), 0);
+        plugin.getMenuManager().openMenu(player, "sources", plugin.getMenuManager().getDefaultProperties("sources", player, activeMenu), 0);
     }
 }

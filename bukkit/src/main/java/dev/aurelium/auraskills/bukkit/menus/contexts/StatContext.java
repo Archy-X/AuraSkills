@@ -14,6 +14,11 @@ public class StatContext implements ContextProvider<Stat> {
         this.plugin = plugin;
     }
 
+    @Override
+    public Class<Stat> getType() {
+        return Stat.class;
+    }
+
     @Nullable
     @Override
     public Stat parse(String menuName, String input) {

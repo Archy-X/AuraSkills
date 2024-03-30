@@ -5,6 +5,7 @@ import com.archyx.slate.item.provider.PlaceholderData;
 import com.archyx.slate.item.provider.SingleItemProvider;
 import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.SourceComparator;
 import dev.aurelium.auraskills.bukkit.menus.common.AbstractItem;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.util.text.TextUtil;

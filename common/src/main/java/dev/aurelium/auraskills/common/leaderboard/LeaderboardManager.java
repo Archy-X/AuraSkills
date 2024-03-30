@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -77,6 +78,15 @@ public class LeaderboardManager {
         int from = (Math.max(page, 1) - 1) * numPerPage;
         int to = from + numPerPage;
         return leaderboard.subList(Math.min(from, leaderboard.size()), Math.min(to, leaderboard.size()));
+    }
+
+    @Nullable
+    public SkillValue getSkillValue(Skill skill, int place) {
+        List<SkillValue> values = getLeaderboard(skill, place, 1);
+        if (!values.isEmpty()) {
+            return values.get(0);
+        }
+        return null;
     }
 
     public List<SkillValue> getPowerLeaderboard() {

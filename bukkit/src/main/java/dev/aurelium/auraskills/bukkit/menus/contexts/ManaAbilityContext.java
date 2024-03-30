@@ -15,6 +15,11 @@ public class ManaAbilityContext implements ContextProvider<ManaAbility> {
     }
 
     @Override
+    public Class<ManaAbility> getType() {
+        return ManaAbility.class;
+    }
+
+    @Override
     @Nullable
     public ManaAbility parse(String menuName, String input) {
         ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(NamespacedId.fromDefault(input));

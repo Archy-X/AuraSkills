@@ -16,6 +16,11 @@ public class SourceContext implements ContextProvider<XpSource> {
     }
 
     @Override
+    public Class<XpSource> getType() {
+        return XpSource.class;
+    }
+
+    @Override
     @Nullable
     public XpSource parse(String menuName, String input) {
         String[] split = input.split(" ");

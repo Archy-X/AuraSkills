@@ -31,7 +31,7 @@ public class AbilitiesItem extends AbstractItem implements SingleItemProvider {
 
     @Override
     public void onClick(Player player, InventoryClickEvent event, ItemStack item, SlotPos pos, ActiveMenu activeMenu) {
-        plugin.getMenuManager().openMenu(player, "abilities", plugin.getMenuManager().getDefaultProperties("abilities", activeMenu));
+        plugin.getMenuManager().openMenu(player, "abilities", plugin.getMenuManager().getDefaultProperties("abilities", player, activeMenu));
     }
 
     @Override

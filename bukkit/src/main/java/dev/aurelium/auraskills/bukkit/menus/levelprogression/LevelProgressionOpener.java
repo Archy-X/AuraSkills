@@ -17,7 +17,8 @@ public class LevelProgressionOpener {
         this.plugin = plugin;
     }
 
-    public void open(Player player, User user, Skill skill) {
+    public void open(Player player, Skill skill) {
+        User user = plugin.getUser(player);
         // Get items per page from options, default to 24
         int itemsPerPage = 24;
         int startLevel = 1;

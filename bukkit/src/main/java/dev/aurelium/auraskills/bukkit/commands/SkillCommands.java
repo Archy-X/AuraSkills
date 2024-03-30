@@ -24,9 +24,9 @@ public class SkillCommands {
             this.skill = skill;
         }
         
-        protected void openMenu(Player player, User user) {
+        protected void openMenu(Player player) {
             if (skill.isEnabled()) {
-                new LevelProgressionOpener(plugin).open(player, user, skill);
+                new LevelProgressionOpener(plugin).open(player, skill);
             } else {
                 player.sendMessage(plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND));
             }
@@ -43,7 +43,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("foraging")
@@ -56,7 +56,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("mining")
@@ -69,7 +69,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("fishing")
@@ -82,7 +82,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("excavation")
@@ -95,7 +95,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("archery")
@@ -108,7 +108,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("defense")
@@ -121,7 +121,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("fighting")
@@ -134,7 +134,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("endurance")
@@ -147,7 +147,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("agility")
@@ -160,7 +160,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("alchemy")
@@ -173,7 +173,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("enchanting")
@@ -186,7 +186,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("sorcery")
@@ -199,7 +199,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("healing")
@@ -212,7 +212,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
     @CommandAlias("forging")
@@ -225,7 +225,7 @@ public class SkillCommands {
         @Default
         public void onCommand(Player player) {
             User user = plugin.getUser(player);
-            openMenu(player, user);
+            openMenu(player);
         }
     }
 }
