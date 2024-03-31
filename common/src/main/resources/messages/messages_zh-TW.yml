@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -19,6 +19,10 @@ abilities:
     name: 遺傳學家
     desc: "從蔬菜增加{value}% 飽和度"
     info: "+{value} 飽和度"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: 伐木工
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -99,10 +103,10 @@ abilities:
     name: 幸運黑桃
     desc: "有{value}% 機率釣到史詩級寶物."
     info: "{value}% 史詩級寶物"
-  crit_chance:
-    name: 暴擊機率
-    desc: "增加{value}% 暴擊機率."
-    info: "+{value}% 暴擊機率"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: 弓箭手
     desc: "獲得{value}% 射箭經驗."
@@ -139,10 +143,11 @@ abilities:
     name: 無負面狀態
     desc: "有{value}% 機率消除傷害性藥水效果"
     info: "{value}% 無負面狀態"
-  crit_damage:
-    name: 暴擊傷害
-    desc: "增加{value}% 暴擊傷害"
-    info: "+{value}% 暴擊傷害"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: 戰鬥
     desc: "獲得{value}% 戰鬥經驗"
@@ -502,9 +507,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL 沒有在伺服器啟動中起用, 資料保存在檔案中!"
     saved: "<green>已儲存技能資料!"
   skill:
-    reset:
-      reset_all: "<gray>將玩家 <gold>{player} <gray>的全部技能設定成等級<aqua>1"
-      reset_skill: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill}<gray>設定成等級<aqua>1"
     setall:
       set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
     setlevel:
