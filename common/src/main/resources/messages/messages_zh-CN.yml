@@ -214,7 +214,6 @@ abilities:
     name: 炼金术士
     desc: "制作的药水持续时间延长 {value}%"
     info: "+{value}% 药水持续时间"
-    lore: "<green>(+{duration})"
   brewer:
     name: 酿造专精
     desc: "获得额外的 {value}% 酿造熟练度"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>指令用法: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>错误: {message}"
     error_performing_command: "<red>抱歉, 执行命令时出现错误。"
-    info_message: "{message}"
     please_specify_one_of: "<red>错误: 请指定一个 (<yellow>{valid}<red>)"
     must_be_a_number: "<red>错误: {num} 必须是一个数字。"
     must_be_min_length: "<red>错误: 字符长度至少为 {min} 。"
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - 当前为第 <green>{page}<aqua>/<green>{totalpages} <aqua>页 (<aqua>找到 <yellow>{results} <aqua>个结果)"
     help_no_results: "<aqua>错误: 没有更多结果。"
     help_header: "<yellow>=== <green>{commandprefix}{command} <aqua>的有关帮助列表 <yellow>==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <green>{commandprefix}{command} <aqua>的有关详细帮助列表 <yellow>==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <green>{commandprefix}{command} {search} <aqua>搜索结果<yellow> ==="
   minecraft:
     invalid_world: "<red>错误: 不存在所指定的世界。"
@@ -339,14 +334,11 @@ commands:
       add:
         added: "<gray>属性 {color}{stat} <gray>的 <aqua>{value} <gray>增强属性已添加至你的物品"
         already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>你的物品没有属性 {color}{stat}!"
         removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
       list:
         header: "<white>已有的属性列表:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>成功清除了物品上的所有属性"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<gray>装备时属性增强 {target} <gray>已从你的物品中移除"
       list:
         header: "<white>已有的装备时生效属性列表:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>成功清除了物品上的所有装备时生效属性"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
       list:
         header: "<white>已存在的条件限制:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>所有条件限制已从你的物品上移除"
       equip: "<yellow>你没有达到使用此物品的要求: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>加载备份将还原当前所有玩家的所有技能数据. 此操作一经确认无法撤消. 你可以在加载新备份前保存当前数据为备份. 再次输入命令以确认此操作"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "<aqua>{value} <gray>级的 {color}{stat} <gray>属性已添加至你的物品"
         already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>你的物品没有属性 {color}{stat} <yellow>!"
         removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
       list:
         header: "<white>已添加的物品属性:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>成功清除了物品上的所有属性"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>物品翻倍已从你的物品上移除"
       list:
         header: "<white>已添加的物品翻倍属性:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>成功清除了物品上的所有持有时生效属性"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
       list:
         header: "<white>已存在的条件限制:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>所有条件限制已从你的物品上移除"
       use: "<yellow>你没有达到使用此物品的要求: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>id 为 {key} 的物品未被注册"
       not_registered: "<yellow> 没有注册为 id {key} 的物品"
@@ -517,15 +500,12 @@ commands:
     disabled: "<red>技能状态显示栏已关闭"
     not_enabled: "<yellow>此服务器未启用技能状态栏!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>技能综合排行榜 </bold><white>(第 {page} 页)==--"
     skill_header: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>(第 {page} 页)==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>技能综合排行榜</bold><white>(第 {page} 页)==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>提示: <green>/sk top <white><page> <gray> 或 <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>成功将玩家数据从 <gray>{from} <green>转移到 <gray>{to}"
