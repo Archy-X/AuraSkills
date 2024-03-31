@@ -5,6 +5,9 @@
 # common across all languages
 # -----------------------------------
 
+abilities:
+  alchemist:
+    lore: "<green>(+{duration})"
 action_bar:
   idle: "{{action_bar.hp_display}}                 {{action_bar.mana_display}}"
   hp_display: "<red>{hp}/{max_hp}❤"
@@ -14,13 +17,51 @@ action_bar:
   ability: "{message}"
   boss_bar_xp: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%)"
   boss_bar_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})"
+acf:
+  core:
+    info_message: "{message}"
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
 commands:
+  armor:
+    modifier:
+      add:
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+      list:
+        entry: "  {color}{stat}<white> - {value}"
+    multiplier:
+      list:
+        entry: "  <aqua>{target}<white> - {value}"
+    requirement:
+      list:
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      entry: "<aqua>{skill} {level}<gray>, "
+  item:
+    modifier:
+      add:
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+      list:
+        entry: "  {color}{stat}<white> - {value}"
+    multiplier:
+      list:
+        entry: "  <aqua>{target}<white> - {value}"
+    requirement:
+      list:
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      entry: "<aqua>{skill} {level}<gray>, "
   preset:
     load:
       appended_entry: "<aqua>(+) <white>{file}"
       merged_entry: "<yellow>(*) <white>{file}"
       replaced_entry: "<red>(±) <white>{file}"
       deleted_entry: "<dark_red>(-) <white>{file}"
+  top:
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
 leveler_format:
   title: "<green>{{leveler.level_up}}"
   subtitle: "<gold>{old} ➜ {new}"
