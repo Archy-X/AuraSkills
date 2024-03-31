@@ -4,844 +4,844 @@
 
 abilities:
   bountiful_harvest:
-    name: Vụ mùa bội thu
-    desc: "+{value} May mắn trồng trọt, giúp tăng cơ hội nhận thêm vật phẩm khi thu hoạch."
-    info: "+{value} May mắn trồng trọt"
+    name: Bountiful Harvest
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
-    name: Nông dân
-    desc: "Nhận thêm {value}% XP Thu hoạch."
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
     info: "+{value}% XP"
   scythe_master:
-    name: Bậc thầy lưỡi hái
-    desc: "Tăng {value}% sát thương của cuốc."
-    info: "+{value}% ST Cuốc"
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
   geneticist:
-    name: Nhà di truyền học
-    desc: "Tăng độ no nê thêm {value} khi sử dụng đồ ăn từ thực vật."
-    info: "+{value} Độ no nê"
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
   growth_aura:
-    name: Hào quang tăng trưởng
-    desc: "Nông sản đang mọc trong phạm vi {radius} khối xung quanh bạn sẽ phát triển nhanh hơn {value}%."
-    info: "+{value}% Khả năng phát triển"
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: Lumberjack
-    desc: "+{value} May mắn chặt gỗ, giúp tăng cơ hội nhận thêm vật phẩm khi chặt gỗ."
-    info: "+{value} May mắn chặt gỗ"
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
-    name: Người hái lượm
-    desc: "Nhận thêm {value}% XP Chặt gỗ."
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
     info: "+{value}% XP"
   axe_master:
-    name: Bậc thầy múa rìu
-    desc: "Tăng {value}% sát thương của rìu"
-    info: "+{value}% ST Rìu"
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
   valor:
-    name: Dũng cảm
-    desc: "+{value} Sức mạnh khi cầm rìu."
-    info: "+{value} Sức mạnh"
+    name: Valor
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
   shredder:
-    name: Xé vụn
-    desc: "Có {value}% cơ hội gây mất ba lần độ bền với rìu."
-    info: "{value}% 3x Làm mất độ bền"
+    name: Shredder
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
   lucky_miner:
     name: Lucky Miner
-    desc: "+{value} May mắn đào mỏ, giúp tăng cơ hội nhận thêm vật phẩm khi đào quặng."
-    info: "+{value} May mắn đào mỏ"
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
-    name: Thợ mỏ
-    desc: "Nhận thêm {value}% XP Khai thác."
+    name: Miner
+    desc: "Earn {value}% more Mining XP."
     info: "+{value}% XP"
   pick_master:
-    name: Bậc thầy cuốc chim
-    desc: "Tăng {value}% sát thương từ cúp."
-    info: "+{value}% ST Cúp"
+    name: Pick Master
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
   stamina:
-    name: Thể lực
-    desc: "+{value} Điểm bền bỉ khi cầm cúp."
-    info: "+{value} Điểm bền bỉ"
+    name: Stamina
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
   hardened_armor:
-    name: Giáp cứng
-    desc: "Có {value}% cơ hội không bị giảm độ bền của giáp khi nhận sát thương."
-    info: "{value}% Không giảm độ bền"
+    name: Hardened Armor
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
   lucky_catch:
-    name: Đánh bắt bội thu
-    desc: "+{value} May mắn câu cá, giúp tăng cơ hội nhận thêm vật phẩm khi câu cá."
-    info: "+{value} May mắn câu cá"
+    name: Lucky Catch
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
-    name: Ngư dân
-    desc: "Nhận thêm {value}% XP Câu cá."
+    name: Fisher
+    desc: "Earn {value}% more Fishing XP."
     info: "+{value}% XP"
   treasure_hunter:
-    name: Thợ săn kho báu
-    desc: "{value}% cơ hội tìm được vật phẩm quý hiếm khi câu cá."
-    info: "+{value}% Rơi đồ hiếm"
+    name: Treasure Hunter
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
   grappler:
     name: Grappler
-    desc: "Móc thực thể bằng cần câu nhanh hơn {value}%."
-    info: "+{value}% Tốc độ móc"
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
   epic_catch:
-    name: Trúng số
-    desc: "Thêm {value}% cơ hội để tìm được đồ cực hiếm từ câu cá."
-    info: "+{value}% Rơi đồ cực hiếm"
+    name: Epic Catch
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
   metal_detector:
-    name: Máy dò kim loại
-    desc: "{value}% cơ hội cao hơn để tìm được vật phẩm quý hiếm khi đào bằng xẻng."
-    info: "+{value}% Rơi đồ hiếm"
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
   excavator:
-    name: Máy xúc chính hiệu
-    desc: "Nhận thêm {value}% XP Đào bới."
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
     info: "+{value}% XP"
   spade_master:
-    name: Đào mộ
-    desc: "Tăng {value}% sát thương từ xẻng."
-    info: "+{value}% ST Xẻng"
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
   bigger_scoop:
-    name: Xúc lớn
-    desc: "+{value} May mắn đào bới, giúp tăng cơ hội nhận thêm vật phẩm khi đào bới bằng xẻng."
-    info: "+{value}% May mắn đào bới"
+    name: Bigger Scoop
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
-    name: Cây xẻng may mắn
-    desc: "{value}% cơ hội cao hơn để tìm được vật phẩm cực hiếm khi đào bới bằng xẻng."
-    info: "+{value}% Rơi đồ cực hiếm"
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
   retrieval:
-    name: Bồi thường
-    desc: "Mũi tên bạn bắn trượt sẽ được rút lại sau {time} giây trong phạm vi {value} khối."
-    info: "Khoảng cách {value}"
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
-    name: Cung thủ
-    desc: "Nhận thêm {value}% XP Cung thủ."
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
     info: "+{value}% XP"
   bow_master:
-    name: Cung thủ lão làng
-    desc: "Tăng {value}% sát thương từ cung."
-    info: "+{value}% ST Cung"
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
   piercing:
-    name: Xuyên thủng
-    desc: "Có {value}% cơ hội để mũi tên xuyên qua quái vật."
-    info: "{value}% Xuyên thủng"
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
   stun:
-    name: Choáng
-    desc: "{value}% tỉ lệ giảm tốc độ di chuyển của kẻ địch đi 20% trong 2 giây."
-    info: "{value}% Cơ hội làm chậm"
+    name: Stun
+    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    info: "{value}% Stun Chance"
   shielding:
-    name: Lá chắn
-    desc: "Giảm {value}% sát thương nhận vào trong khi đi rón rén."
-    info: "-{value}% Sát thương nhận vào khi rón rén"
+    name: Shielding
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
   defender:
-    name: Thủ hộ
-    desc: "Nhận thêm {value}% XP Phòng thủ."
+    name: Defender
+    desc: "Earn {value}% more Defense XP."
     info: "+{value}% XP"
   mob_master:
-    name: Thợ săn quái vật
-    desc: "Giảm {value}% sát thương từ quái."
-    info: "-{value}% Sát thương từ quái"
+    name: Mob Master
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
   immunity:
-    name: Miễn nhiễm
-    desc: "Có {value}% cơ hội né đòn đánh của kẻ thù."
-    info: "{value}% Miễn ST"
+    name: Immunity
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
   no_debuff:
     name: No Debuff
-    desc: "Có {value}% cơ hội mất đi những hiệu ứng xấu trên người."
-    info: "{value}% Xóa hiệu ứng xấu"
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
   parry:
-    name: Phản kích
-    desc: "Khi vung kiếm trượt trong vòng {time} giây trước khi nhận sát thương sẽ giảm {value}% sát thương nhận vào và không bị bật lùi."
-    info: "Giảm {value}% ST nhận"
-    parried: "<red>Đã đỡ đòn"
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
-    name: Đấu sĩ
-    desc: "Nhận thêm {value}% XP Chiến đấu."
+    name: Fighter
+    desc: "Earn {value}% more Fighting XP."
     info: "+{value}% XP"
   sword_master:
-    name: Kiếm sư
-    desc: "Tăng {value}% sát thương từ kiếm."
-    info: "+{value}% Sát thương từ kiếm"
+    name: Sword Master
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
   first_strike:
-    name: Đòn phủ đầu
-    desc: "Tăng {value}% sát thương trong lần đánh đầu."
-    info: "+{value}% ST phát đầu"
-    dealt: "<red>Đã ra đòn phủ đầu!"
+    name: First Strike
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
   bleed:
-    name: Xuất huyết
-    desc: "Có {value}% khả năng làm cho kẻ địch xuất huyết trong {base_ticks} nhịp, mỗi nhịp gây {value_2} ST. Cộng thêm {added_ticks} nhịp cho kẻ địch đang xuất huyết."
-    info: "{value}% Khả năng gây xuất huyết, {value_2} ST"
-    enemy_bleeding: "<red>Kẻ địch xuất huyết!"
-    self_bleeding: "<red>Bạn đang xuất huyết!"
-    stop: "<white>Đã cầm máu"
+    name: Bleed
+    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
   anti_hunger:
-    name: No nê
-    desc: "Có {value}% khả năng dừng quá trình đói."
-    info: "{value}% Không bị đói"
+    name: Anti Hunger
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
   runner:
     name: Runner
-    desc: "Nhận thêm {value}% XP Bền bỉ."
+    desc: "Earn {value}% more Endurance XP."
     info: "+{value}% XP"
   golden_heal:
     name: Golden Heal
-    desc: "Tăng {value}% hiệu ứng hồi phục."
-    info: "+{value}% Hiệu ứng hồi máu"
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
   recovery:
-    name: Hồi phục
-    desc: "Tăng {value}% khả năng hồi phục tự nhiên khi HP dưới 50%."
-    info: "+{value}% Hồi máu dưới 50%"
+    name: Recovery
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
   meal_steal:
-    name: Háu ăn
-    desc: "Có {value}% cơ hội cướp đi 1 điểm thức ăn khi tấn công một người chơi."
-    info: "{value}% Cướp điểm thức ăn"
+    name: Meal Steal
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
   light_fall:
-    name: Tựa như lông
-    desc: "Giảm {value}% ST rơi."
-    info: "-{value}% ST rơi"
+    name: Light Fall
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
   jumper:
-    name: Nhảy cao
-    desc: "Nhận thêm {value}% XP Nhanh nhẹn."
+    name: Jumper
+    desc: "Earn {value}% more Agility XP."
     info: "+{value}% XP"
   sugar_rush:
-    name: Nạp đường
-    desc: "Thuốc chạy nhanh và nhảy cao kéo dài lâu hơn {value}%."
-    info: "{value}% Kéo dài hiệu ứng"
+    name: Sugar Rush
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
   fleeting:
-    name: Gió lướt
-    desc: "Nhận thêm {value}% Tốc độ khi máu dưới 20%."
-    info: "+{value}% Tốc độ"
-    start: "<white>Bạn đã được tăng tốc độ di chuyển! <gray>(+{value}% Tốc độ)"
-    end: "<gray>Tăng tốc độ di chuyển đã hết"
+    name: Fleeting
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
-    name: Chấn động
-    desc: "Khi ấn Shift trong lúc rơi, bạn có {value}% khả năng gây ra {value_2}% ST từ cú rơi cho quái vật trong phạm vi 3 khối."
-    info: "{value}% Tỉ lệ, {value_2}% Sát thương"
+    name: Thunder Fall
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
+    info: "{value}% Chance, {value_2}% Damage"
   alchemist:
-    name: Dược sĩ
-    desc: "Thuốc bạn chế sẽ có thời gian kéo dài thêm {value}%."
-    info: "+{value}% Thời gian của thuốc"
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
   brewer:
-    name: Người pha chế
-    desc: "Nhận thêm {value}% XP Điều chế."
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
     info: "+{value}% XP"
   splasher:
-    name: Bắn tùm lum
-    desc: "Lọ thuốc bạn ném được tăng {value}% thời lượng cho mỗi người chơi chịu phải."
-    info: "+{value}% Thời lượng/Người chơi"
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
   lingering:
-    name: Kéo dài
-    desc: "Thuốc kéo biến mất chậm hơn {value}% trong tự nhiên và biến mất {value_2}% ít hơn cho mỗi thực thể bị ảnh hưởng."
-    info: "-{value}% Tự nhiên, -{value_2}% Phân rã của thực thể"
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
   wise_effect:
-    name: Sáng suốt
-    desc: "Nhận {value} Trí khôn với mỗi loại hiệu ứng riêng biệt."
-    info: "+{value} Trí khôn/Hiệu ứng"
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
   xp_convert:
-    name: Chuyển hoá XP
-    desc: "Nhận 1 điểm thanh kinh nghiệm cho mỗi {value} XP kĩ năng đạt được."
-    info: "1 Kinh nghiệm/{value} XP Kĩ năng"
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
   enchanter:
-    name: Phù phép
-    desc: "Nhận thêm {value}% XP Phù phép."
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
     info: "+{value}% XP"
   xp_warrior:
-    name: Chiến binh dày dặn
-    desc: "Quái bạn giết có {value}% cơ hội rớt x2 kinh nghiệm."
-    info: "{value}% x2 Kinh nghiệm giết quái"
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
+    info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: Chơi đồ
-    desc: "Nhận {value} Sức mạnh cho mỗi phù phép của món bạn cầm trên tay."
-    info: "{value} Sức mạnh/Phù phép"
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
   lucky_table:
-    name: Bàn may mắn
-    desc: "Vật phẩm bạn phù phép bằng bàn phù phép có {value}% cơ hội thăng 1 cấp độ nếu chưa đạt cấp độ tối đa."
-    info: "{value}% Cơ hội nâng cấp cường hóa"
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
   life_essence:
-    name: Sức sống
-    desc: Thuốc hồi máu tức thì hồi thêm {value}% HP.
-    info: "+{value}% Hồi máu tức thì"
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
   healer:
     name: Healer
-    desc: Nhận thêm {value}% XP Hồi máu.
+    desc: Earn {value}% more Healing XP.
     info: "+{value}% XP"
   life_steal:
     name: Life Steal
-    desc: Hồi {value}% HP tối đa của con quái hay người chơi mà bạn giết.
-    info: "Cướp {value}% HP tối đa"
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
   golden_heart:
-    name: Trái tim Vàng
-    desc: Sát thương ảnh hưởng đến tim vàng được giảm {value}%
-    info: "-{value}% Sát thương đến tim vàng"
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
   revival:
-    name: Hồi sinh
-    desc: Nhận +{value} HP và +{value_2} Hồi phục trong 30 giây sau khi hồi sinh.
-    info: "+{value} HP, +{value_2} Hồi HP"
-    message: "<white>Bạn nhận được đặc quyền hồi sinh trong 30 giây! <white>(<red>+{value} Máu, <gold>+{value_2} Hồi phục<white>)"
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   disenchanter:
-    name: Người giải phép
-    desc: Tăng {value}% XP nhận được khi sử dụng bàn mài để tách phù phép.
-    info: "+{value}% XP từ bàn mài"
+    name: Disenchanter
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
+    info: "+{value}% Grindstone EXP"
   forger:
-    name: Thợ rèn
-    desc: Nhận thêm {value}% XP Thợ rèn.
+    name: Forger
+    desc: Earn {value}% more Forging XP.
     info: "+{value}% XP"
   repairing:
-    name: Sửa chữa
-    desc: Hồi thêm {value}% độ bền cho vật phẩm khi dùng vật liệu thô để sửa bằng đe.
-    info: "+{value}% Độ bền"
+    name: Repairing
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
   anvil_master:
-    name: Bậc thầy đe
-    desc: Tăng chi phí sửa chữa tối đa của đe trước khi nó quá đắt thành {value} XP.
-    info: "{value} XP tối đa"
+    name: Anvil Master
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
   skill_mender:
-    name: Sửa chữa
-    desc: Có {value}% khả năng giúp hồi 1 Độ bền/2 XP Kĩ năng cho vật phẩm đang cầm hoặc giáp đang trang bị có phù phép Sửa chữa.
-    info: "{value}% Cơ hội sửa chữa"
+    name: Skill Mender
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
 acf:
   core:
-    permission_denied: "<red>Xin lỗi, nhưng bạn không có quyền để sử dụng lệnh này."
-    permission_denied_parameter: "<red>Xin lỗi, nhưng bạn không có quyền để sử dụng lệnh này."
-    error_generic_logged: "<red>Có lỗi xảy ra. Vui lòng kiểm tra file log. Xin lỗi vì bất tiện."
-    unknown_command: "<red>Lệnh không khả dụng, vui lòng nhập <yellow>/sk help <red> để được trợ giúp"
-    invalid_syntax: "<yellow>Cách dùng: <yellow>{command} <green>{syntax}"
-    error_prefix: "<red>Lỗi: {message}"
-    error_performing_command: "<red> Đã xảy ra lỗi khi bạn dùng câu lệnh này."
-    please_specify_one_of: "<red>Lỗi: Hãy cụ thể hóa một trong những cái (<yellow>{valid}<red>)"
-    must_be_a_number: "<red>Lỗi: {num} phải là một số."
-    must_be_min_length: "<red>Lỗi: Cần ít nhất {min} kí tự."
-    must_be_max_length: "<red>Lỗi: Nhiều nhất là {max} kí tự."
-    please_specify_at_most: "<red>Lỗi: Vui lòng chỉ định một giá trị tối đa {max}."
-    please_specify_at_least: "<red>Lỗi: Vui lòng chỉ định một giá trị tối thiểu {min}."
-    not_allowed_on_console: "<red>Lỗi: Không thể thực thi lệnh này trong bảng điều khiển."
-    could_not_find_player: "<red>Lỗi: Không thể tìm thấy người chơi có tên: <yellow>{search}"
-    no_command_matched_search: "<red>Không lệnh khả dụng với <yellow>{search}."
-    help_page_information: "<aqua> - Hiển thị trang <green>{page}<aqua>trên <green>{totalpages}<aqua>(<yellow>{results}<aqua> kết quả)."
-    help_no_results: "<aqua>Lỗi: Không có kết quả."
-    help_header: "<yellow>=== <aqua>Hiển thị trợ giúp cho <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_header: "<yellow>=== <aqua>Hiện thị trợ giúp cụ thể cho <green>{commandprefix}{command}<yellow> ==="
-    help_search_header: "<yellow>=== <aqua>Kết quả tìm kiếm cho <green>{commandprefix}{command} {search}<yellow> ==="
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: "<red>Lỗi: Thế giới này không tồn tại."
-    you_must_be_holding_item: "<red>Lỗi: Bạn phải cầm một vật phẩm trên tay."
-    player_is_vanished_confirm: "<yellow>Cảnh báo: <green>{vanished} <yellow>đã vào chế độ ngoại tuyến. Đừng cố gắng liên hệ với họ\n<yellow>Để xác nhận hãy ấn <green>:confirm <yellow>evào cuối tên của bạn.\n<yellow> dụ: {vanished}:confirm"
-    username_too_short: "<red>Lỗi: Tên quá ngắn, cần ít nhất 3 kí tự."
-    is_not_a_valid_name: "<red>Lỗi: <yellow>{name} <red>không phải là một tên hợp lệ."
-    multiple_players_match: "<red>Lỗi: Quá nhiều người chơi phù hợp <aqua>{search} <yellow>({all})<red>, vui lòng chi tiết hơn."
-    no_player_found_server: "<red>Không người chơi phù hợp với <yellow>{search} <red>đang kết nối với máy chủ."
-    no_player_found_offline: "<red>Không người chơi phù hợp <yellow>{search}<red> có thể được tìm thấy."
-    no_player_found: "<red>Không người chơi phù hợp với <yellow>{search}<red> có thể được tìm thấy."
-    location_please_specify_world: "<red>Lỗi: Vui lòng đưa ra thế giới cụ thể. Ví dụ: <yellow>world:x,y,z."
-    location_please_specify_xyz: "<red>Lỗi: Vui lòng nhập tọa độ x, y, và z. Ví dụ: <yellow>world:x,y,z."
-    location_console_not_relative: "<red>Lỗi: Bảng điều khiển có thể xác định không chính xác tọa độ của người chơi."
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
 commands:
-  prefix: "<dark_gray>[<aqua>Khả năng<dark_gray>]<reset> "
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp độ <aqua>{value} <gray>đã được thêm vào vật phẩm của bạn"
-        already_exists: "<yellow>Nâng cấp cho giáp với chỉ số {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat} <yellow>!"
-        removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Đã tìm thấy nâng cấp của giáp:"
+        header: "<white>Armor modifiers found:"
       removeall:
-        removed: "<gray>Tất cả nâng cấp đã được gỡ"
+        removed: "<gray>All armor modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
-        already_exists: "<yellow>Chỉ số cộng thêm <aqua>{target} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor multiplier remove"
-        skill_lore: "<gray>Khi mặc: <aqua>+{value}% XP {skill}"
-        skill_lore_subtract: "<gray>Khi mặc: <aqua>-{value}% XP {skill}"
-        global_lore: "<gray>Khi mặc: <blue>+{value}% XP Khả năng"
-        global_lore_subtract: "<gray>Khi mặc: <blue>-{value}% XP Khả năng"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
-        removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ khỏi giáp của bạn"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
-        header: "<white>Chỉ số giáp cộng thêm đã được tìm thấy:"
+        header: "<white>Armor multipliers found:"
       removeall:
-        removed: "<gray>Tất cả chỉ số giáp cộng thêm đã được gỡ"
+        removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
       add:
-        added: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
-        already_exists: "<yellow>Vật phẩm đã có yêu cầu giáp <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk armor requirement remove"
-        lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu giáp <dark_aqua>{skill}<yellow>!"
-        removed: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>đã được gỡ"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
       list:
-        header: "<white>Yêu cầu giáp đã được tìm thấy:"
+        header: "<white>Armor requirements found:"
       removeall:
-        removed: "<gray>Tất cả yêu cầu giáp đã được gỡ"
-      equip: "<yellow>Bạn không đủ điều kiện để trang bị vật phẩm này: {requirements}"
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
   backup:
     load:
-      confirm: "<red>Việc áp dụng sao lưu bây giờ sẽ trả lại toàn bộ dữ liêu về Kĩ năng của người chơi dựa vào bản sao lưu đó. Điều này gây ảnh hưởng vĩnh viễn và không thể quay trở lại. Bạn có thể lưu một bản sao lưu ngay bây giờ nếu cần. Nhập lại lệnh để xác nhận áp dụng sao lưu."
-      loading: "<white>Đang áp dụng sao lưu..."
-      loaded: "<green>Đã áp dụng sao lưu"
-      error: "<red>Lỗi khi áp dụng sao lưu: {error}"
-      must_be_yaml: "<yellow>Phải là một tệp .yml !"
-      file_not_found: "<yellow>Bản sao lưu cho tệp này không có trong thư mục sao lưu!"
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
     save:
-      saving: "<white>Đang lưu sao lưu..."
-      saved: "<white>Đã sao lưu dữ liệu {type} dưới dạng {file}"
-      error: "<red>Lỗi khi sao lưu dữ liệu {type}! Xem lỗi trên bảng điều khiển/các dòng dưới để xem chi tiết"
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
   claimitems:
-    no_items: "<yellow>Bạn không có vật phẩm để nhận"
+    no_items: "<yellow>You have no items to claim"
   item:
     give:
-      sender: "<white>Đã đưa <aqua>{amount}x {key} <white>cho {player}"
-      receiver: "<white>Bạn đã nhận <aqua>{amount}x {key}"
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
     modifier:
       add:
-        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp <aqua>{value} <gray>đã được thêm"
-        already_exists: "<yellow>Nâng cấp với chỉ số của {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk item modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat}<yellow>!"
-        removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Nâng cấp vật phẩm đã được tìm thấy:"
+        header: "<white>Item modifiers found:"
       removeall:
-        removed: "<gray>Tất cả nâng cấp đã được gỡ"
+        removed: "<gray>All item modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
-        already_exists: "<yellow>Chỉ số cộng thêm <aqua>{target} <yellow>đã có trên vật phẩm của bạn! Hãy gỡ nó trước với lệnh /sk item multiplier remove"
-        skill_lore: "<gray>Khi cầm: <aqua>+{value}% XP {skill}"
-        skill_lore_subtract: "<gray>Khi cầm: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>Khi cầm: <blue>+{value}% XP Kĩ năng"
-        global_lore_subtract: "<gray>Khi cầm: <blue>-{value}% XP Kĩ năng"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
-        removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
-        header: "<white>Chỉ số cộng thêm đã được tìm thấy:"
+        header: "<white>Item multipliers found:"
       removeall:
-        removed: "<gray>Toàn bộ chỉ số cộng thêm đã được gỡ khỏi vật phẩm của bạn"
+        removed: "<gray>All item multipliers have been removed from your item"
     register:
-      registered: "<white>Đã đăng kí vật phẩm đang cầm thành chìa khoá {key}"
-      already_registered: "<yellow>Đã có vật phẩm được đăng kí thành chìa khoá <white>{key}<yellow>, dùng lệnh <white>/skills item unregister <yellow>để huỷ nó trước"
-      no_spaces: "<yellow>Tên chìa khoá không được có khoảng cách!"
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
     requirement:
       add:
-        added: "<gray>Yêu cầu <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
-        already_exists: "<yellow>Vật phẩm đã có yêu cầu <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk item requirement remove"
-        lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu <dark_aqua>{skill}<yellow>!"
-        removed: "<gray>Yêu cầu <dark_aqua>{skill} <gray>đã được gỡ"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
       list:
-        header: "<white>Yêu cầu vật phẩm được tìm thấy:"
+        header: "<white>Item requirements found:"
       removeall:
-        removed: "<gray>Tất cả các yêu cầu về vật phẩm đã được gỡ khỏi vật phẩm của bạn"
-      use: "<yellow>Bạn không đủ điều kiện để dùng vật phẩm này: {requirements}"
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
     unregister:
-      unregistered: "<white>Đã huỷ đăng kí vật phẩm có chìa khoá {key}"
-      not_registered: "<yellow>Không có vật phẩm đăng kí thành chìa khoá {key}"
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
   lang:
-    set: "<gray>Ngôn ngữ đã đặt thành <aqua>{lang}"
-    not_found: "<yellow>Không tìm thấy ngôn ngữ này!"
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
   mana:
-    display: "<white>{mana_unit} của bạn: <aqua>{current}/{max}"
-    display_other: "<white>{mana_unit} của {player}: <aqua>{current}/{max}"
-    add: "<gray>Đã thêm <aqua>{amount} {mana_unit} <gray>cho <gold>{player}"
-    remove: "<gray>Đã xóa bỏ <aqua>{amount} {mana_unit} <gray>từ <gold>{player}"
-    set: "<gray>Đã đặt <gold>{player} <gray> thành <aqua>{amount} {mana_unit}"
-    at_least_zero: "<yellow>{mana_unit} tối thiểu là 0!"
-    console_specify_player: "<yellow>Bảng điều khiển phải chỉ định một người chơi!"
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
   modifier:
     add:
-      added: "<gray>Nâng cấp {color}{stat} <gray>cấp <aqua>{value} <gray>tên <white>{name} <gray>đã được thêm cho <gold>{player}"
-      already_exists: "<yellow>Nâng cấp tên {name} đã tồn tại trên <gold>{player}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk modifier remove {player} {name}"
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: "<yellow>Nâng cấp {name} không được tìm thấy ở <gold>{player}"
-      removed: "<gray>Đã gỡ nâng cấp <white>{name} <gray>khỏi <gold>{player}"
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
     list:
-      all_stats_header: "<gray>Nâng cấp chỉ số của <gold>{player}:"
-      all_stats_entry: "  <white>{name} - {color}{stat} <white>Cấp <gold>{value}"
-      one_stat_header: "<gray>Nâng cấp chỉ số ({color}{stat}<gray>) của <gold>{player}:"
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
-      players_only: "<yellow>Chỉ có thể liệt kê nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
     removeall:
-      removed_all_stats: "<gray> Đã xóa <aqua>{num} nâng cấp <gray>của <gold>{player}"
-      removed_one_stat: "<gray>Đã xóa <aqua>{num} <gray>nâng cấp {color}{stat} <gray>của <gold>{player}"
-      players_only: "<yellow>Chỉ có thể xóa nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
   multiplier:
-    global: Tổng quát
-    list: "<white>XP thưởng thêm cho người chơi <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
-    skill_entry: "<aqua>{skill} <white> XP thưởng: <aqua>{multiplier}x / +{percent}%"
-    players_only: "<yellow>Chỉ người chơi mới có thể liệt kê danh sách XP thưởng! Hãy nhập tên một người chơi cụ thể!"
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   preset:
     load:
-      confirm: "<red>Tải thiết lập trước sẽ ghi đè lên thiết lập hiện tại! Những tệp sau đây sẽ bị ảnh hưởng <gray>(<aqua>Đã thêm<gray>, <yellow>Đã gộp<gray>, <red>Đã thay thế<gray>, <dark_red>Đã xóa<gray>):{entries} <red> Hành động này sẽ không thể trở lại như cũ, hãy sao lưu thủ công những tệp quan trọng. Nhập lại lệnh để xác nhận."
-      loaded: Đã tải thành công thiết lập trước "{name}", hãy khởi động lại máy chủ.
-      created: Tệp đã tạo
-      modified: Tệp đã chỉnh sửa
-      replaced: Tệp đã thay thế
-      deleted: Tệp đã xóa
-      skipped: Tệp bị bỏ qua
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
-    skills: "Khả năng cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Khả năng:{skill_entries}"
-    skill_entry: "\n<dark_aqua>{skill}<gray>- Cấp độ: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Chỉ số cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Chỉ số: {stat_entries}"
-    stat_entry: "\n<dark_aqua>{stat} <gray>- Tổng cấp độ: <white>{total_level}<gray>, Cấp độ cơ bản: <white>{base_level}<gray>, Cấp độ chỉnh sửa: <white>{modified_level}"
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Xếp hạng Khả năng của bạn"
-    power: "<yellow>Sức mạnh <gray>(Tất cả Khả năng): <white>#{rank} trên {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} trên {total}"
-  reload: "<green>Đã tải lại thiết lập!"
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: "<yellow>Dữ liệu đã được lưu!"
-    mysql_not_enabled: "<yellow>MySQL không được kích hoạt khi khởi động máy chủ, thay vào đó hãy lưu vào một tệp!"
-    saved: "<green>Dữ liệu về Khả năng đã được lưu lại!"
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
   skill:
     setall:
-      set: "<gray>Tất cả Khả năng đã được thành cấp <aqua>{level} <gray>cho người chơi <gold>{player}"
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:
-      set: "<gray>Khả năng <aqua>{skill} <gray>của người chơi <gold>{player} đã được đặt thành cấp độ <aqua>{level} <gray>"
-    at_least: "<yellow>Cấp độ tối thiểu là {level}!"
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
+    at_least: "<yellow>Level must be at least {level}!"
   toggle:
-    enabled: "<green>Thanh Kĩ năng của bạn đã được bật"
-    disabled: "<red>Thanh Kĩ năng của bạn đã được tắt"
-    not_enabled: "<yellow>Thanh Kĩ năng không được bật trong máy chủ này!"
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
-    power_header: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>==--"
-    power_header_page: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>(Trang{page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>(Trang {page})==--"
-    average_header: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>==--"
-    average_header_page: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>(Trang {page})==--"
-    usage: "<yellow>Cách dùng: <green>/sk top <white><page> <gray>hoặc <green>/sk top <white>[skill] <page>"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>Chuyển đổi dữ liệu người chơi từ <gray>{from} <green>to <gray>{to} thành công"
-    error: "<red>Có lỗi xảy ra khi chuyển dữ liệu người chơi. Xem lỗi trong bảng điều khiển."
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
-    already_updating: "<yellow>Bảng xếp hạng đã đang được cập nhật!"
-    updated: "<green>Đã cập nhật bảng xếp hạng!"
-  version: "<white>Bạn đang dùng Aurelium Skills phiên bản <aqua>{current_version}<white>. Phiên bản mới nhất là <aqua>{latest_version}"
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
-    add: "<gray>Đã thêm <aqua>{amount} XP {skill}<gray> cho <gray>{player}"
-    set: "<gray> Đã đặt XP <aqua>{skill} <gray>cho người chơi <gray>{player} <gray>thành {amount}"
-    remove: "<gray>Đã xóa bỏ <aqua>{amount} {skill} <gray>XP từ người chơi <gold>{player}"
-  unknown_skill: "<yellow>Khả năng không khả dụng!"
-  unknown_stat: "<yellow>Chỉ số không khả dụng!"
-  no_profile: "<yellow>Người chơi không có hồ sơ Khả năng. Hãy thử thoát ra và vào lại hoặc khởi động lại máy chủ."
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
-  level_up: "Lên cấp Khả năng {skill}"
-  skill_level_up: Lên cấp Khả năng
-  rewards: Thưởng
-  ability_unlock: Kĩ năng bị động
-  ability_level_up: Lên cấp Kĩ năng bị động
-  mana_ability_unlock: Kĩ năng ma pháp
-  mana_ability_level_up: Lên cắp Kĩ năng Ma pháp
-  unclaimed_item: "<red>Bạn có vật phẩm chưa nhận do kho đồ đã đầy, dùng <yellow>/skills claimitems <red>để nhận"
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
+  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
 menus:
   common:
-    close: "Đóng"
-    level: "Cấp độ"
-    progress_to_level: "Tiến trình lên cấp"
-    max_level: "CẤP ĐỘ TỐI ĐA"
-    ability_levels: "Cấp độ Kĩ năng"
-    stats_leveled: "Chỉ số nhận được"
-    mana_ability: "Kĩ năng Ma pháp"
-    duration: "Kéo dài"
-    mana_cost: "Yêu cầu Mana"
-    cooldown: "Hồi chiêu"
-    damage: "Sát thương"
-    max_mana_cost: "Yêu cầu Mana tối đa"
-    attack_speed: "Tốc độ đánh"
-    back: "Trở lại"
-    back_click: "Trở về menu {menu_name}"
-    unlocked: "ĐÃ MỞ KHÓA"
-    in_progress: "ĐANG THỰC HIỆN"
-    locked: "ĐÃ KHÓA"
-    your_level: "Cấp độ của bạn"
-    next_page: "Trang kế"
-    next_page_click: "Nhấn để qua trang tiếp theo"
-    previous_page: "Trang trước"
-    previous_page_click: "Nhấn để trở lại trang trước"
+    close: "Close"
+    level: "Level"
+    progress_to_level: "Progress to Level"
+    max_level: "MAX LEVEL"
+    ability_levels: "Ability Levels"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "Mana Ability"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
   skills:
-    skills_title: "Khả năng của bạn"
-    your_skills: "Khả năng của bạn"
-    your_skills_desc: "Thăng cấp Khả năng bằng cách thực hiện các nhiệm vụ khác nhau để mở khóa chỉ số, Kĩ năng và hơn thế nữa!"
-    your_skills_hover: "Di chuột qua một Khả năng để xem thêm!"
-    your_skills_click: "Nhấn vào một Khả năng để xem tiến trình!"
-    skill_click: "Nhấn để xem tiến trình thăng cấp!"
-    stats: "Chỉ số"
-    stats_desc: "Tăng Chỉ số khi thăng cấp Khả năng"
-    stats_click: "Nhấn để xem Chỉ số của bạn"
+    skills_title: "Your Skills"
+    your_skills: "Your Skills"
+    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
+    your_skills_hover: "Hover over a Skill for more information!"
+    your_skills_click: "Click on a Skill to view level progression!"
+    skill_click: "Click to view Level Progression!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
   level_progression:
-    level_progression_title: "Cấp độ của {skill} - Trang {page}"
-    your_ranking: "Xếp hạng Khả năng của bạn"
-    rank_out_of: "<1>Bạn đứng thứ <2>{rank}</2> trong tổng số {total} người chơi</1>"
-    rank_percent: "<1>Bạn ở trong top <2>{percent}%</2> trong tổng số người chơi</1>"
-    rewards: "Thưởng"
-    ability_unlock: "[Mở khóa Kĩ năng bị động]"
-    mana_ability_unlock: "[Mở khóa Kĩ năng ma pháp]"
-    progress: "Tiến trình"
-    leaderboard_click: "Nhấn để xem bảng xếp hạng cho Khả năng {skill}"
-    sources: "Nguồn XP"
-    sources_desc: "Menu Nguồn XP cho biết các cách để nhận XP Kĩ năng, cũng như lượng XP nhận được của mỗi nguồn."
-    sources_click: "Nhấn để xem nguồn XP cho Khả năng {skill}"
-    abilities: "Kĩ năng"
-    abilities_desc: "<2>Kĩ năng bị động</2> <1>có thể được mở khóa và thăng cấp khi bạn thăng cấp Kĩ năng.</1>"
-    mana_abilities_desc: "<3>Kĩ năng Ma pháp</3> <1>là một dạng Kĩ năng đặc biệt, có thể được kích hoạt chủ động và tiêu tốn Mana.</1>"
-    abilities_click: "Nhấn để xem Kĩ năng của {skill}"
+    level_progression_title: "{skill} Levels - Page {page}"
+    your_ranking: "Your Skill Ranking"
+    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
+    rewards: "Rewards"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Progress"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
   stats:
-    stats_title: Chỉ số của bạn
-    skills: "Khả năng"
-    added_drop: "+{value} Rơi"
-    added_drops: "+{value} Rơi"
-    chance_drop: "{chance}% cho +{value} Rơi"
-    chance_drops: "{chance}% cho +{value} Rơi"
+    stats_title: Your Stats
+    skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
-    unclaimed_items_title: "Nhận vật phẩm"
-    inventory_full: "Bạn không đủ chỗ trống trong kho đồ để nhận vật phẩm này"
-    click_to_claim: "Nhấp để nhận!"
+    unclaimed_items_title: "Claim Items"
+    inventory_full: "You do not have enough space in your inventory to claim that item"
+    click_to_claim: "Click to claim!"
   leaderboard:
-    leaderboard_title: "Bảng xếp hạng {skill}"
+    leaderboard_title: "{skill} Leaderboard"
   sources:
-    sources_title: "Nguồn XP cho {skill}"
-    sorter: "Phân loại nguồn XP"
-    descending: "Cao tới Thấp"
-    ascending: "Thấp tới Cao"
-    alphabetical: "Tên (A-Z)"
-    reverse_alphabetical: "Tên (Z-A)"
-    sort_click: "Ấn để đổi kiểu phân loại"
-    multiplied_xp: "Thưởng {xp_unit}"
-    multiplied_desc: "Đây là lượng XP thực tế bạn nhận được dựa trên XP Thưởng"
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
   abilities:
-    abilities_title: "Kĩ năng của {skill}"
-    description: "Mô tả"
-    unlocked_at: "<1>Mở khóa khi đạt <2>{skill} {level}"
-    next_upgrade_at: "<1>Nâng cấp tiếp theo ở <2>{skill}{level}"
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
-    name: Tái tạo
-    desc: "Tự động trồng lại cây trồng trong {value} giây. <1>[Chuột phải vào cuốc và và phá cây trồng để kích hoạt]"
-    raise: "<gray>Bạn đã giơ cuốc lên"
-    lower: "<gray>Bạn đã hạ cuốc xuống"
-    start: "<gold>Đã kích hoạt Tái tạo! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Tái tạo kết thúc"
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
   treecapitator:
-    name: Đốn hạ
-    desc: "Đốn ngã cả cây ngay lập tức trong {value} giây. <1>[Chuột phải vào rìu và chặt gỗ để kích hoạt]"
-    raise: "<gray>Bạn đã giơ rìu lên"
-    lower: "<gray>Bạn đã hạ rìu xuống"
-    start: "<gold>Đã kích hoạt Đốn hạ! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Đốn hạ kết thúc"
+    name: Treecapitator
+    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
   speed_mine:
-    name: Đào nhanh
-    desc: "Cung cấp hiệu ứng Đào nhanh {haste_level} trong {value} giây. <1>[Chuột phải vào cúp và đào khối để kích hoạt]"
-    raise: "<gray>Bạn đã giơ cúp lên"
-    lower: "<gray>Bạn đã hạ cúp xuống"
-    start: "<gold>Đã kích hoạt Đào nhanh! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Đào nhanh kết thúc"
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
   absorption:
-    name: Hấp thụ
-    desc: "Sát thương nhận vào sẽ giảm Mana bằng 2 lần ST nhận vào thay vì mất HP trong {value} giây. Mana sẽ không hồi lại trong khi Hấp thụ được kích hoạt. <1>[Chuột trái vào khiên và nhận ST để kích hoạt]"
-    raise: "<gray>Bạn đã giơ khiên lên"
-    lower: "<gray>Bạn đã hạ khiên xuống"
-    start: "<gold>Đã kích hoạt Hấp thụ! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Hấp thụ kết thúc"
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
   terraform:
     name: Terraform
-    desc: "Các khối tương tự kết nối với nhau trong bán kính {radius} khối sẽ bị phá ngay lập tức theo chiều ngang khi đào trong {value} giây. <1>[Chuột phải vào xẻng và đào khối để kích hoạt]"
-    raise: "<gray>Bạn đã giơ xẻng lên"
-    lower: "<gray>Bạn đã hạ xẻng xuống"
-    start: "<gold>Đã kích hoạt Terraform! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Terraform kết thúc"
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
   sharp_hook:
-    name: Móc câu sắc lẹm
-    desc: "Gây thêm {value} ST khi đánh vào một thực thể bị móc bởi cần câu"
-    use: "<gold>Đã kích hoạt Móc câu sắc lẻm! <gray>(-{mana} {mana_unit})"
+    name: Sharp Hook
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
   charged_shot:
-    name: Siêu tên
-    desc: "Mũi tên bắn ra sẽ gây thêm sát thương dựa trên lực kéo cung và làm tiêu tốn Mana. Gây thêm {value}% ST trên mỗi Mana. <1>[Chuột trái vào cung để bật/tắt Siêu tên]"
-    enable: "<gray>Đã bật Siêu tên"
-    disable: "<gray>Đã tắt Siêu tên"
-    shoot: "<gold>Đã dùng Siêu tên! <light_purple>+{percent}% ST <gray>(-{mana} {mana_unit})"
+    name: Charged Shot
+    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
-    name: Kiếm sét
-    desc: Tăng thêm {value}% tốc độ đánh trong {duration} giây. <1>[Chuột phải vào kiếm và tấn công để kích hoạt]
-    raise: "<gray>Bạn giương kiếm lên"
-    lower: "<gray>Bạn đã xuống kiếm"
-    start: "<gold>Đã kích hoạt Kiếm sét! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Kiếm sét kết thúc"
-  not_ready: "<red>Kĩ năng chưa hồi! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Không đủ Mana! <gray>(Cần {mana} {mana_unit})"
+    name: Lightning Blade
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
+    raise: "<gray>You ready your sword"
+    lower: "<gray>You lower your sword"
+    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade has worn off"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
-    name: Thu hoạch
-    desc: "Thu hoạch cây trồng để nhận {xp_unit} Thu hoạch"
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
   foraging:
-    name: Chặt gỗ
-    desc: "Chặt cây để nhận {xp_unit} Chặt gỗ"
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
   mining:
-    name: Khai thác
-    desc: "Khai thác đá và quặng để nhận {xp_unit} Khai thác"
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
   fishing:
-    name: Câu cá
-    desc: "Bắt cá để nhận {xp_unit} Câu cá"
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
   excavation:
-    name: Đào bới
-    desc: "Đào bằng xẻng để nhận {xp_unit} Đào bới"
+    name: Excavation
+    desc: "Dig with a shovel to earn Excavation {xp_unit}"
   archery:
-    name: Cung thủ
-    desc: "Bắn các con quái vật và người chơi bằng cung để nhận {xp_unit} Cung thủ"
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
   defense:
-    name: Phòng thủ
-    desc: "Nhận ST từ thực thể để nhận {xp_unit} Phòng thủ"
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
   fighting:
-    name: Chiến đấu
-    desc: "Đánh các con quái với vũ khí cận chiến để nhận {xp_unit} Chiến đấu"
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
   endurance:
-    name: Bền bỉ
-    desc: "Đi bộ và chạy để nhận {xp_unit} Bền bỉ"
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
   agility:
-    name: Nhanh nhẹn
-    desc: "Di chuyển xung quanh và nhận ST rơi để nhận {xp_unit} Nhanh nhẹn"
+    name: Agility
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
-    name: Điều chế
-    desc: "Nấu và dùng thuốc hiệu ứng để nhận {xp_unit} Điều chế"
+    name: Alchemy
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
-    name: Phù phép
-    desc: "Phù phép, kết hợp và mài vật phẩm để nhận {xp_unit} Phù phép"
+    name: Enchanting
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
-    name: Ma thuật
-    desc: "Dùng Kĩ năng Ma pháp để nhận {xp_unit} Ma thuật"
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
   healing:
-    name: Chữa trị
-    desc: "Uống hoặc quăng thuốc hiệu ứng để nhận {xp_unit} Chữa trị"
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
   forging:
-    name: Rèn đúc
-    desc: "Hợp nhất hoặc áp dụng sách vào trang bị bằng đe để nhận {xp_unit} Rèn đúc"
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
   fishing:
-    cod: Cá tuyết
-    salmon: Cá hồi
-    tropical_fish: Cá nhiệt đới
-    pufferfish: Cá nóc
-    treasure: Báu vật
-    junk: Vật phẩm rác
-    rare: Vật phẩm hiếm
-    epic: Vật phẩm cực hiếm
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
   damage:
-    mob_damage: ST từ quái
-    player_damage: ST từ người chơi
-    fall_damage: Nhận ST rơi
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
   statistic:
-    walk_per_meter: Đi bộ
-    sprint_per_meter: Chạy nhanh
-    swim_per_meter: Bơi lội
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
   jumping:
-    jump_per_100: Nhảy
+    jump_per_100: Jumping
   brewing:
-    awkward: Nấu thuốc kì lạ
-    regular: Nấu thuốc thường
-    extended: Nấu thuốc cộng thêm thời gian
-    upgraded: Nấu thuốc được nâng cấp
-    splash: Nấu thuốc quăng được
-    lingering: Nấu thuốc kéo dài
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
   enchanting:
-    weapon_per_level: Phù phép vũ khí
-    armor_per_level: Phù phép giáp
-    tool_per_level: Phù phép trang bị
-    book_per_level: Phù phép sách
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
   mana_ability_use:
-    mana_ability_use: Dùng Kĩ năng Ma pháp
+    mana_ability_use: Using Mana Abilities
   item_consume:
-    drink_regular: Uống thuốc thường
-    drink_extended: Uống thuốc cộng thêm thời gian
-    drink_upgraded: Uống thuốc được nâng cấp
-    golden_apple: Ăn Táo vàng
-    enchanted_golden_apple: Ăn Táo vàng được phù phép
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
   potion_splash:
-    splash_regular: Quăng thuốc thường
-    splash_extended: Quăng thuốc cộng thêm thời gian
-    splash_upgraded: Quăng thuốc được nâng cấp
-    lingering_regular: Dùng thuốc kéo dài
-    lingering_extended: Dùng thuốc kéo dài cộng thêm thời gian
-    lingering_upgraded: Dùng thuốc kéo dài được nâng cấp
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
   anvil:
-    combine_books_per_level: Kết hợp sách phù phép
-    combine_weapon_per_level: Kết hợp Vũ khí với Sách
-    combine_armor_per_level: Kết hợp Giáp với Sách
-    combine_tool_per_level: Kết hợp Công cụ với Sách
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
   grindstone:
-    grindstone_per_level: Giải phù phép bằng Bàn đá mài
+    grindstone_per_level: Disenchant Item with Grindstone
   units:
-    damage: Sát thương
-    meter: Mét
-    100_jumps: Nhảy 100
-    mana: Mana đã dùng
-    combine_level: Phí XP dùng đe
-    grindstone_level: Cấp độ phù phép trên vật phẩm
-    enchant_level: Cấp độ Phù phép được nhận
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
-    name: Sức mạnh
-    desc: "Sức mạnh tăng sát thương tấn công của bạn với các loại vũ khí khác nhau."
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
   health:
-    name: Máu
-    desc: "Máu giúp tăng lượng {hp_unit} bạn có, cho bạn khả năng sống sót lâu hơn trong giao tranh."
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
-    name: Hồi phục
-    desc: "Hồi phục giúp tăng khả năng hồi máu và năng lượng."
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
-    name: May mắn
-    desc: "May mắn tăng khả năng nhận thêm vật phẩm từ khối ở các Kĩ năng thu thập."
+    name: Luck
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
-    name: Trí khôn
-    desc: "Trí khôn tăng năng lượng tối đa của bạn, tăng số kinh nghiệm bạn nhận được, và giảm giá khi sử dụng đe."
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
-    name: Bền bỉ
-    desc: "Bền bỉ giảm lượng sát thương nhận vào khi bị tấn công."
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
-    name: Tỉ lệ chí mạng
-    desc: "Tỉ lệ chí mạng là xác suất gây ra một đòn chí mạng."
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
-    name: Sát thương chí mạng
-    desc: "Sát thương chí mạng là lượng sát thương theo phần trăm được tăng thêm khi gây ra 1 đòn chí mạng."
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
-    name: Tốc độ
-    desc: "Tốc độ tăng tốc độ di chuyển khi đi bộ và chạy nhanh."
+    name: Speed
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
-    name: Sát thương
+    name: Attack Damage
   hp:
     name: HP
   saturation_regen:
-    name: Hồi độ no nê
+    name: Saturation Regen
   hunger_regen:
-    name: Hồi độ đói
+    name: Hunger Regen
   mana_regen:
-    name: Hồi phục Mana
+    name: Mana Regen
   luck:
-    name: Chỉ số may mắn
+    name: Luck Attribute
   double_drop:
-    name: x2 Rơi
+    name: Double Drop
   experience_bonus:
-    name: XP thưởng
+    name: Experience Bonus
   anvil_discount:
-    name: Giảm giá dùng đe
+    name: Anvil Discount
   max_mana:
-    name: Mana tối đa
+    name: Max Mana
   damage_reduction:
-    name: Giảm sát thương
+    name: Damage Reduction
   crit_chance:
-    name: Tỉ lệ chí mạng
+    name: Crit Chance
   crit_damage:
-    name: Sát thương chí mạng
+    name: Crit Damage
   movement_speed:
-    name: Tốc độ di chuyển
+    name: Movement Speed
   farming_luck:
-    name: May mắn thu hoạch
+    name: Farming Luck
   foraging_luck:
-    name: May mắn chặt gỗ
+    name: Foraging Luck
   mining_luck:
-    name: May mắn đào mỏ
+    name: Mining Luck
   excavation_luck:
-    name: May mắn đào bới
+    name: Excavation Luck
   fishing_luck:
-    name: May mắn câu cá
+    name: Fishing Luck
 ui:
-  maxed: TỐI ĐA
+  maxed: MAXED
 units:
   mana: Mana
   hp: HP
