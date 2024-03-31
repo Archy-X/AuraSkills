@@ -2,7 +2,7 @@ commit_message: '[ci skip]'
 export_languages:
   - cs
   - de
-  - Spanish
+  - 'es'
   - fr
   - id
   - it
