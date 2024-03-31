@@ -1,3 +1,10 @@
 files:
   - source: /common/src/main/resources/messages/messages_en.yml
     translation: /common/src/main/resources/messages/messages_%two_letters_code%.yml
+    excluded_target_languages:
+      - lt
+      - lv
+      - no
+      - sv
+      - th
+      - tr
