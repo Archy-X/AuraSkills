@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -507,9 +507,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL tidak Active, simpan file setidaknya!"
     saved: "<green>Data skill tersimpan!"
   skill:
-    reset:
-      reset_all: "<gray>Semua skill direset ke level <aqua>1 <gray>untuk pemain <gold>{player}"
-      reset_skill: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>1 <gray>untuk pemain <gold>{player}"
     setall:
       set: "<gray>Semua level skill diatur ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
     setlevel:
