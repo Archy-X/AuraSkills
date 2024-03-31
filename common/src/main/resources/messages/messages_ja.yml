@@ -4,145 +4,145 @@
 
 abilities:
   bountiful_harvest:
-    name: 豊穣の収穫
+    name: Bountiful Harvest
     desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
     info: "+{value} Farming Luck"
   farmer:
-    name: 農夫
-    desc: "農業経験値を{value}%増やす。"
-    info: "+{value}% 経験値"
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
+    info: "+{value}% XP"
   scythe_master:
-    name: 鎌の達人
-    desc: "クワから与えられるダメージを{value}%増やす。"
-    info: "+{value}% クワダメージ"
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
   geneticist:
-    name: 遺伝子学者
-    desc: "植物ベースの食品から得られる満腹度を{value}増やす。"
-    info: "+{value} 満腹度"
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
   growth_aura:
     name: Growth Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
     info: "+{value}% Growth"
   lumberjack:
-    name: 伐採工
+    name: Lumberjack
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
     info: "+{value} Foraging Luck"
   forager:
-    name: 採集家
-    desc: "採集経験値を{value}%増やす。"
-    info: "+{value}% 経験値"
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
+    info: "+{value}% XP"
   axe_master:
-    name: 斧の達人
-    desc: "斧から与えられるダメージを{value}%増やす。"
-    info: "+{value}% 斧ダメージ"
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
   valor:
     name: Valor
-    desc: "斧を持っている間、+{value}のStrengthを付与します"
-    info: "+{value}のStrength"
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
   shredder:
     name: Shredder
-    desc: "斧で攻撃時、{value}%の確率で3倍の耐久度ダメージを与えます。"
-    info: "{value}%の3倍の耐久度ダメージ"
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
   lucky_miner:
     name: Lucky Miner
     desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
     info: "+{value} Mining Luck"
   miner:
     name: Miner
-    desc: "採掘経験値を{value}%増やします。"
-    info: "+{value}%の経験値"
+    desc: "Earn {value}% more Mining XP."
+    info: "+{value}% XP"
   pick_master:
     name: Pick Master
-    desc: "ピッケルで{value}%の追加ダメージを与えます。"
-    info: "+{value}%のピッケルダメージ"
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
   stamina:
     name: Stamina
-    desc: "ピッケルを持っている間、+{value}のToughnessを付与します。"
-    info: "+{value}のToughness"
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
   hardened_armor:
     name: Hardened Armor
-    desc: "装備の耐久度ダメージを{value}%無効化します。"
-    info: "{value}%の耐久度ダメージ無効化"
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
   lucky_catch:
     name: Lucky Catch
     desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
     info: "+{value} Fishing Luck"
   fisher:
     name: Fisher
-    desc: "釣りで{value}%の追加経験値を得ます。"
-    info: "+{value}%の経験値"
+    desc: "Earn {value}% more Fishing XP."
+    info: "+{value}% XP"
   treasure_hunter:
     name: Treasure Hunter
-    desc: "釣りでレアなアイテムを獲得する確率が{value}%増加します。"
-    info: "+{value}%のレアなアイテム"
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
   grappler:
     name: Grappler
-    desc: "鉤縄でエンティティを{value}%速く引き寄せます。"
-    info: "+{value}%の鉤縄速度"
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
   epic_catch:
     name: Epic Catch
-    desc: "釣りでエピックなアイテムを獲得する確率が{value}%増加します。"
-    info: "+{value}%のエピックなアイテム"
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
   metal_detector:
-    name: メタルディテクター
-    desc: "採掘時に、{value}%の追加レアドロップの取得確率が上がる。"
-    info: "+{value}% レアドロップ"
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
   excavator:
-    name: 採掘マスター
-    desc: "採掘時の経験値が{value}%増加する。"
-    info: "+{value}% 経験値"
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
+    info: "+{value}% XP"
   spade_master:
-    name: シャベルマスター
-    desc: "シャベルで与えるダメージが{value}%増加する。"
-    info: "+{value}% シャベルダメージ"
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
   bigger_scoop:
-    name: 大型スコップ
+    name: Bigger Scoop
     desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
     info: "+{value}% Excavation Luck"
   lucky_spades:
-    name: 幸運のシャベル
-    desc: "採掘時に{value}%の追加エピックドロップの取得確率が上がる。"
-    info: "+{value}% エピックドロップ"
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
   retrieval:
     name: Retrieval
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Distance"
   archer:
-    name: アーチャー
-    desc: "射撃時の経験値が{value}%増加する。"
-    info: "+{value}% 経験値"
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
+    info: "+{value}% XP"
   bow_master:
-    name: 弓マスター
-    desc: "弓で与えるダメージが{value}%増加する。"
-    info: "+{value}% 弓ダメージ"
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
   piercing:
-    name: ピアシング
-    desc: "矢が敵を貫通する確率が{value}%になる。"
-    info: "{value}% 貫通確率"
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
   stun:
-    name: スタン
-    desc: "敵の移動速度を2秒間20%低下させる確率が{value}%になる。"
-    info: "{value}% スタン確率"
+    name: Stun
+    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    info: "{value}% Stun Chance"
   shielding:
     name: Shielding
-    desc: "しゃがんでいる間に受けるダメージを{value}%軽減する"
-    info: "-{value}% 軽減されたダメージ(しゃがむ)"
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
   defender:
     name: Defender
-    desc: "防御経験値が{value}%アップする"
-    info: "+{value}% 経験値"
+    desc: "Earn {value}% more Defense XP."
+    info: "+{value}% XP"
   mob_master:
     name: Mob Master
-    desc: "敵モブから受けるダメージを{value}%軽減する"
-    info: "-{value}% モブダメージ"
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
   immunity:
     name: Immunity
-    desc: "敵の攻撃を完全に無効化する確率が{value}%"
-    info: "{value}% 無効化"
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
   no_debuff:
     name: No Debuff
-    desc: "有害なポーション効果を適用されない確率が{value}%"
-    info: "{value}% デバフ無効"
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
   parry:
     name: Parry
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
@@ -150,322 +150,322 @@ abilities:
     parried: "<red>Attack parried"
   fighter:
     name: Fighter
-    desc: "戦闘において{value}%多くの経験値を獲得"
-    info: "+{value}% 経験値"
+    desc: "Earn {value}% more Fighting XP."
+    info: "+{value}% XP"
   sword_master:
     name: Sword Master
-    desc: "剣で{value}%ダメージ増加"
-    info: "+{value}% 剣ダメージ"
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
   first_strike:
     name: First Strike
-    desc: "最初の攻撃で{value}%ダメージ増加"
-    info: "+{value}% 最初の攻撃ダメージ"
-    dealt: "<red>最初の攻撃が命中！"
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
   bleed:
     name: Bleed
     desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
-    info: "{value}% 確率, {value_2} ダメージ"
-    enemy_bleeding: "<red>敵が出血しています！"
-    self_bleeding: "<red>あなたが出血しています！"
-    stop: "<white>出血が止まりました。"
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
   anti_hunger:
     name: Anti Hunger
-    desc: "空腹度の低下を{value}%抑制する。"
-    info: "{value}% 空腹度低下防止"
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
   runner:
     name: Runner
-    desc: "エンデュランス経験値を{value}%獲得する。"
+    desc: "Earn {value}% more Endurance XP."
     info: "+{value}% XP"
   golden_heal:
     name: Golden Heal
-    desc: "回復効果による体力回復を{value}%増加させる。"
-    info: "+{value}% 回復効果"
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
   recovery:
     name: Recovery
-    desc: "半分以下の体力の時に、自然回復量が{value}%増加する。"
-    info: "+{value}% 低体力回復増加"
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
   meal_steal:
     name: Meal Steal
-    desc: "プレイヤーを攻撃した時に、{value}%の確率で1の空腹度を盗む。"
-    info: "{value}% 空腹度盗む"
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
   light_fall:
     name: Light Fall
-    desc: "落下ダメージを{value}%減少する。"
-    info: "-{value}% 落下ダメージ"
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
   jumper:
     name: Jumper
-    desc: "アジリティ経験値を{value}%獲得する。"
+    desc: "Earn {value}% more Agility XP."
     info: "+{value}% XP"
   sugar_rush:
     name: Sugar Rush
-    desc: "消費したスピード・ジャンプブーストのポーション効果の持続時間が{value}%延長される。"
-    info: "{value}% 持続時間延長"
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
   fleeting:
     name: Fleeting
-    desc: "体力が20%以下になると、移動速度が+{value}%になる。"
-    info: "+{value}% 移動速度"
-    start: "<white>移動速度が一時的に上昇しました！ <gray>(+{value}% 移動速度)"
-    end: "<gray>一時的な移動速度上昇効果が切れました。"
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
     name: Thunder Fall
     desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
-    info: "{value}% の確率で、{value_2}% のダメージを与える。"
+    info: "{value}% Chance, {value_2}% Damage"
   alchemist:
-    name: アルケミスト
-    desc: "ブルーしたポーションの効果時間が{value}%増加します。"
-    info: "+{value}% 効果時間"
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
   brewer:
-    name: 醸造家
-    desc: "アルケミーXPを{value}%獲得します。"
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
     info: "+{value}% XP"
   splasher:
-    name: スプラッシャー
-    desc: "スプラッシュポーションは、影響を受けるプレイヤーごとに{value}%効果時間が長くなります。"
-    info: "+{value}%/プレイヤー 効果時間"
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
   lingering:
-    name: リンガリング
-    desc: "リンガリングポーションの腐敗が{value}%遅くなり、影響を受けるエンティティごとに{value_2}%減少します。"
-    info: "-{value}% 自然腐敗, -{value_2}% エンティティ腐敗"
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
   wise_effect:
-    name: ワイズエフェクト
-    desc: "アクティブな一意のポーションエフェクトごとに{value}の知識を獲得します。"
-    info: "+{value}/エフェクト 知識"
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
   xp_convert:
-    name: XPコンバート
-    desc: "{value}スキルXPごとに1つのMinecraft経験値を獲得します。"
-    info: "1 EXP/{value}スキルXP"
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
   enchanter:
-    name: エンチャンター
-    desc: "エンチャントXPを{value}%獲得します。"
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
     info: "+{value}% XP"
   xp_warrior:
-    name: XPウォリアー
-    desc: "倒したMobが{value}%の確率で2倍の経験値を落とします。"
-    info: "{value}% 2倍のMob XP"
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
+    info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: エンチャント強化
-    desc: "所持しているアイテムの一意のエンチャントごとに{value}の力を獲得します。"
-    info: "{value}/エンチャント 強さ"
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
   lucky_table:
-    name: ラッキーテーブル
-    desc: "エンチャントテーブルを使用してエンチャントをする場合、最大レベルではない場合、{value}%の確率で<エンチャントレベルが1つ上昇します。"
-    info: "{value}% エンチャント上昇確率"
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
   life_essence:
-    name: 生命のエッセンス
-    desc: インスタントヘルスのポーション効果が{value}%強化されます。
-    info: "+{value}% インスタントヘルス"
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
   healer:
-    name: ヒーラー
-    desc: ヒーリングスキルの経験値が{value}%増加します。
-    info: "+{value}% 経験値"
+    name: Healer
+    desc: Earn {value}% more Healing XP.
+    info: "+{value}% XP"
   life_steal:
-    name: ライフスティール
-    desc: 倒したホストileモブやプレイヤーの最大HPの{value}%を回復します。
-    info: "{value}% HPスティール"
+    name: Life Steal
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
   golden_heart:
-    name: 黄金の心臓
-    desc: 吸収ハートに受けるダメージが{value}%軽減されます。
-    info: "-{value}% 吸収ダメージ"
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
   revival:
-    name: 復活
-    desc: リスポーン後、30秒間、+{value}ヘルスと+{value_2}再生効果を獲得します。
-    info: "+{value} ヘルス, +{value_2} 再生効果"
-    message: "<white>復活ボーナスを30秒間獲得しました！ <white>(<red>+{value}ヘルス, <gold>+{value_2}再生効果<white>)"
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   disenchanter:
     name: Disenchanter
-    desc: 砥石を使ってアイテムを解体すると{value}% もの経験値を獲得できます。
-    info: "+{value}% 砥石経験値"
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
+    info: "+{value}% Grindstone EXP"
   forger:
     name: Forger
-    desc: 鍛冶のスキル経験値を{value}% も獲得できます。
-    info: "+{value}% 経験値"
+    desc: Earn {value}% more Forging XP.
+    info: "+{value}% XP"
   repairing:
     name: Repairing
-    desc: アイテムを金床で修復する際に元の素材を使うと {value}% 耐久力が回復します。
-    info: "+{value}% 金床修復"
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
   anvil_master:
     name: Anvil Master
-    desc: 修復に必要な経験値が{value} 以上になる前に使える金床の上限が増えます。
-    info: "最大{value}コスト"
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
   skill_mender:
     name: Skill Mender
-    desc: スキルの経験値を獲得する際に{value}% の確率で、持ち物の「修繕」エンチャントを持ったアイテムを修復できます。(1スキルXPにつき耐久力が1回復)
-    info: "{value}% 修復確率"
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
 acf:
   core:
-    permission_denied: "<red>申し訳ありませんが、このコマンドを実行する権限がありません。"
-    permission_denied_parameter: "<red>申し訳ありませんが、このコマンドを実行する権限がありません。"
-    error_generic_logged: "<red>エラーが発生しました。この問題はログに記録されました。ご不便をおかけして申し訳ありません。"
-    unknown_command: "<red>不明なコマンドです。<yellow>/sk help<red>を入力してください。"
-    invalid_syntax: "<yellow>使用法：<yellow>{command} <green>{syntax}"
-    error_prefix: "<red>エラー：{message}"
-    error_performing_command: "<red>申し訳ありませんが、このコマンドを実行中にエラーが発生しました。"
-    please_specify_one_of: "<red>エラー：次のいずれかを指定してください（<yellow>{valid}<red>）"
-    must_be_a_number: "<red>エラー：{num}は数字でなければなりません。"
-    must_be_min_length: "<red>エラー：{min}文字以上である必要があります。"
-    must_be_max_length: "<red>エラー：{max}文字以下である必要があります。"
-    please_specify_at_most: "<red>エラー：値を{max}以下で指定してください。"
-    please_specify_at_least: "<red>エラー：値を{min}以上で指定してください。"
-    not_allowed_on_console: "<red>エラー：コンソールではこのコマンドを実行できません。"
-    could_not_find_player: "<red>エラー：プレイヤーが見つかりませんでした：<yellow>{search}"
-    no_command_matched_search: "<red>\"{search}\"に一致するコマンドはありません。"
-    help_page_information: "<aqua> - ページ <green>{page} <aqua>/ <green>{totalpages} <aqua>（<yellow>{results}<aqua>件の結果を表示中）。"
-    help_no_results: "<aqua>エラー：これ以上の結果はありません。"
-    help_header: "<yellow>=== <aqua>{commandprefix}{command}のヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_header: "<yellow>=== <aqua>{commandprefix}{command}の詳細なヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
-    help_search_header: "<yellow>=== <aqua>{commandprefix}{command} {search} の検索結果 ==="
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: "<red>エラー：そのワールドは存在しません。"
-    you_must_be_holding_item: "<red>エラー：メインハンドにアイテムを持っている必要があります。"
-    player_is_vanished_confirm: "<yellow>警告：<green>{vanished} <yellow>は姿を隠しています。そのことを知られないようにしてください！\n<yellow>確認する場合は、彼らの名前の最後に<green>:confirm <yellow>を追加してください。\n<yellow>例：{vanished}:confirm"
-    username_too_short: "<red>エラー：ユーザー名が短すぎます。最低でも3文字必要です。"
-    is_not_a_valid_name: "<red>エラー：<yellow>{name} <red>は有効なユーザー名ではありません。"
-    multiple_players_match: "<red>エラー：<aqua>{search} <yellow>({all})<red> に複数のプレイヤーが該当しました。より具体的に指定してください。"
-    no_player_found_server: "<red>このサーバーには、<yellow>{search} <red>に一致するプレイヤーはいませんでした。"
-    no_player_found_offline: "<red>プレイヤー名 <yellow>{search}<red> に一致するプレイヤーは見つかりませんでした。"
-    no_player_found: "<red>プレイヤー名 <yellow>{search}<red> に一致するプレイヤーは見つかりませんでした。"
-    location_please_specify_world: "<red>エラー：ワールドを指定してください。例：<yellow>world:x,y,z。"
-    location_please_specify_xyz: "<red>エラー：座標x、y、zを指定してください。例：<yellow>world:x,y,z。"
-    location_console_not_relative: "<red>エラー：コンソールは、座標を相対的に使用できません。"
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
 commands:
-  prefix: "<dark_gray>[<aqua>スキル<dark_gray>]<reset> "
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>モディファイヤがレベル<aqua>{value} <gray>でアイテムに追加されました"
-        already_exists: "<yellow>{color}{stat} <yellow>のモディファイヤは既にアイテムに存在しています！まずは/sk armor modifier removeで削除してください"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
       remove:
-        does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>のモディファイヤはありません！"
-        removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>見つかったアーマーモディファイヤー:"
+        header: "<white>Armor modifiers found:"
       removeall:
-        removed: "<gray>アイテムから全てのアーマーモディファイヤーが削除されました"
+        removed: "<gray>All armor modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
-        already_exists: "<yellow>すでに <aqua>{target} <yellow>のアーマーマルチプライヤーがアイテムに存在します！ /sk armor multiplier remove コマンドで先に削除してください"
-        skill_lore: "<gray>装備時：<aqua>+{value}% {skill} 経験値"
-        skill_lore_subtract: "<gray>装備時：<aqua>-{value}% {skill} 経験値"
-        global_lore: "<gray>装備時：<blue>+{value}% 全スキル経験値"
-        global_lore_subtract: "<gray>装備時：<blue>-{value}% 全スキル経験値"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>アイテムに <aqua>{target} <yellow>のアーマーマルチプライヤーが存在しません！"
-        removed: "<aqua>{target} <gray>のアーマーマルチプライヤーがアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
-        header: "<white>以下のアーマーマルチプライヤーが見つかりました："
+        header: "<white>Armor multipliers found:"
       removeall:
-        removed: "<gray>すべてのアーマーマルチプライヤーがアイテムから削除されました"
+        removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray>のアーマー要件がレベル <aqua>{level} <gray>でアイテムに追加されました"
-        already_exists: "<yellow>アイテムにすでに <dark_aqua>{skill}<yellow> のアーマー要件が存在します！<gold>/sk armor requirement remove <yellow>commandで先に削除してください"
-        lore: "<red>要件：<dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>アイテムに <dark_aqua>{skill}<yellow> のアーマー要件が存在しません！"
-        removed: "<dark_aqua>{skill}<gray>のアーマー要件がアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
       list:
-        header: "<white>以下のアーマー要件が見つかりました："
+        header: "<white>Armor requirements found:"
       removeall:
-        removed: "<gray>すべてのアーマー要件がアイテムから削除されました"
-      equip: "<yellow>このアイテムを装備するための要件を満たしていません：{requirements}"
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
   backup:
     load:
-      confirm: "<red>バックアップを読み込むと、プレイヤーのすべてのスキルデータが元に戻ります。この操作は元に戻すことができません。バックアップを読み込む前にバックアップを保存することをお勧めします。このアクションを確認するには、もう一度コマンドを入力してください"
-      loading: "<white>バックアップを読み込んでいます..."
-      loaded: "<green>バックアップを正常に読み込みました"
-      error: "<red>バックアップの読み込み中にエラーが発生しました: {error}"
-      must_be_yaml: "<yellow>ファイルは.yml形式でなければなりません！"
-      file_not_found: "<yellow>バックアップフォルダにこのファイル名のバックアップが存在しません！"
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
     save:
-      saving: "<white>バックアップを保存しています..."
-      saved: "<white>{type}データを{file}としてバックアップしました"
-      error: "<red>{type}データのバックアップ中にエラーが発生しました！詳細については、コンソール/下記のエラーを確認してください"
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
   claimitems:
-    no_items: "<yellow>受け取るアイテムがありません"
+    no_items: "<yellow>You have no items to claim"
   item:
     give:
-      sender: "<white>{player}に<aqua>{amount}個の{key}を与えました"
-      receiver: "<white>{amount}個の{key}が与えられました"
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
     modifier:
       add:
-        added: "<gray>{value}レベルの{color}{stat} <gray>モディファイヤがアイテムに追加されました"
-        already_exists: "<yellow>アイテムにはすでに{color}{stat} <yellow>スタッツを持つモディファイヤが存在しています！/sk item modifier removeで削除してください"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
       remove:
-        does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>モディファイヤが存在しません！"
-        removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>以下のアイテムモディファイヤが見つかりました："
+        header: "<white>Item modifiers found:"
       removeall:
-        removed: "<gray>すべてのアイテムモディファイヤがアイテムから削除されました"
+        removed: "<gray>All item modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
-        already_exists: "<yellow>すでに <aqua>{target} <gray>のマルチプライヤーがアイテムに追加されています！削除するには /sk item multiplier remove を使用してください"
-        skill_lore: "<gray>手に持っていると: <aqua>+{value}% {skill} 経験値"
-        skill_lore_subtract: "<gray>手に持っていると: <aqua>-{value}% {skill} 経験値"
-        global_lore: "<gray>手に持っていると: <blue>+{value}% 全スキルの経験値"
-        global_lore_subtract: "<gray>手に持っていると: <blue>-{value}% 全スキルの経験値"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>アイテムに <aqua>{target} <gray>のマルチプライヤーはありません！"
-        removed: "<aqua>{target} <gray>のマルチプライヤーがアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
-        header: "<white>以下のアイテムマルチプライヤーが見つかりました:"
+        header: "<white>Item multipliers found:"
       removeall:
-        removed: "<gray>アイテムからすべてのマルチプライヤーが削除されました"
+        removed: "<gray>All item multipliers have been removed from your item"
     register:
-      registered: "<white>アイテムをキー {key} に登録しました"
-      already_registered: "<yellow>すでにキー <white>{key}<yellow>に登録されているアイテムがあります。最初にそれを解除するには <white>/skills item unregister <yellow>を使用してください"
-      no_spaces: "<yellow>アイテムキーには空白を含めることはできません！"
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
     requirement:
       add:
-        added: "<gray>アイテムに <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件が追加されました"
-        already_exists: "<yellow>アイテムにはすでに <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件があります！最初に <gold>/sk item requirement remove <yellow>を使用して削除してください"
-        lore: "<red>必要スキル: <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>アイテムには <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件はありません！"
-        removed: "<dark_aqua>{skill}<gray>のアイテム要件がアイテムから削除されました"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
       list:
-        header: "<white>以下のアイテム要件が見つかりました:"
+        header: "<white>Item requirements found:"
       removeall:
-        removed: "<gray>すべてのアイテム要件がアイテムから削除されました"
-      use: "<yellow>このアイテムを使用するための要件を満たしていません：{requirements}"
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
     unregister:
-      unregistered: "<white>キーが{key}のアイテムが登録解除されました"
-      not_registered: "<yellow>キーが{key}のアイテムは登録されていません"
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
   lang:
-    set: "<gray>言語が<aqua>{lang}<gray>に設定されました"
-    not_found: "<yellow>言語が見つかりません！"
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
   mana:
-    display: "<white>あなたの{mana_unit}: <aqua>{current}/{max}"
-    display_other: "<white>{player}の{mana_unit}: <aqua>{current}/{max}"
-    add: "<gold>{player}<gray>に<aqua>{amount} {mana_unit}<gray>を追加しました"
-    remove: "<gold>{player}<gray>から<aqua>{amount} {mana_unit}<gray>を削除しました"
-    set: "<gold>{player}<gray>を<aqua>{amount} {mana_unit}<gray>に設定しました"
-    at_least_zero: "<yellow>{mana_unit}は0以上でなければなりません！"
-    console_specify_player: "<yellow>コンソールはプレイヤーを指定する必要があります！"
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
   modifier:
     add:
-      added: "<gold>{player}<gray>に{name} <gray>({color}{stat}<gray>レベル<aqua>{value}<gray>)のモディファイヤを追加しました"
-      already_exists: "<yellow>{player}にすでに名前が{name}のモディファイヤが存在しています！削除するには<gold>/sk modifier remove {player} {name}<yellow>を使用してください"
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: "<yellow>{player}の{name}モディファイヤが見つかりませんでした"
-      removed: "<gold>{player}<gray>から{name}のモディファイヤを削除しました"
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
     list:
-      all_stats_header: "<gold>{player}のステータスモディファイヤ:"
-      all_stats_entry: "  <white>{name} - {color}{stat} <white>レベル<gold>{value}"
-      one_stat_header: "<gold>{player}の{color}{stat}<gray>ステータスモディファイヤ:"
-      one_stat_entry: "  <white>{name} - {color}{stat} <white>レベル<gold>{value}"
-      players_only: "<yellow>プレイヤーのみ自分のモディファイヤをリストできます！プレイヤーを指定してください"
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
     removeall:
-      removed_all_stats: "<gold>{player}<gray>から<aqua>{num}<gray>個のステータスモディファイヤを削除しました"
-      removed_one_stat: "<gold>{player}<gray>から<aqua>{num}個の{color}{stat}<gray>ステータスモディファイヤを削除しました"
-      players_only: "<yellow>プレイヤーのみ自分のモディファイヤを削除できます！プレイヤーを指定してください"
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
   multiplier:
-    global: グローバル
-    list: "<gold>{player}<white>のグローバルXP乗数: <aqua>{multiplier}x / +{percent}%"
-    skill_entry: "<aqua>{skill} <white>XP乗数: <aqua>{multiplier}x / +{percent}%"
-    players_only: "<yellow>プレイヤーのみ自分の乗数を表示できます。プレイヤー名を指定してください！"
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
@@ -476,51 +476,51 @@ commands:
       deleted: Deleted files
       skipped: Skipped files
   profile:
-    skills: "Aurelium Skillsのプロフィール: <gold>{name}:<gray>UUID: <white>{uuid}<gray>スキル:{skill_entries}"
-    skill_entry: " <dark_aqua>{skill} <gray>- レベル: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Aurelium Skillsの統計プロフィール: <gold>{name}:<gray>UUID: <white>{uuid}<gray>統計情報:{stat_entries}"
-    stat_entry: " <dark_aqua>{stat} <gray>- 総レベル: <white>{total_level}<gray>, 基本レベル: <white>{base_level}<gray>, 変更されたレベル: <white>{modified_level}"
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>あなたのスキルランキング</bold>"
-    power: "<yellow>パワー <gray>(全スキル): <white>#{rank} / {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} / {total}"
-  reload: "<green>設定をリロードしました！"
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: "<yellow>データは既に保存されています！"
-    mysql_not_enabled: "<yellow>MySQLがサーバーの起動時に有効にされていません。ファイルに保存します！"
-    saved: "<green>スキルデータが保存されました！"
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
   skill:
     setall:
-      set: "<gold>{player}のすべてのスキルがレベル{level}に設定されました"
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:
-      set: "<gold>{player}の{skill}スキルがレベル{level}に設定されました"
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
     at_least: "<yellow>Level must be at least {level}!"
   toggle:
-    enabled: "<green>スキルアクションバーが有効になりました"
-    disabled: "<red>スキルアクションバーが無効になりました"
-    not_enabled: "<yellow>このサーバーではスキルアクションバーが有効になっていません！"
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
-    power_header: "<white>--==<aqua><bold>全スキルリーダーボード</bold><white>==--"
-    power_header_page: "<white>--==<aqua><bold>全スキルリーダーボード </bold><white>(ページ{page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill}リーダーボード</bold><white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill}リーダーボード </bold><white>(ページ{page})==--"
-    average_header: "<white>--==<aqua><bold>スキル平均リーダーボード</bold><white>==--"
-    average_header_page: "<white>--==<aqua><bold>スキル平均リーダーボード </bold><white>(ページ{page})==--"
-    usage: "<yellow>使い方: <green>/sk top <white><ページ> <gray>または <green>/sk top <white>[skill] <ページ>"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>プレイヤーデータを <gray>{from} <green>から <gray>{to} <green>に正常に移動しました"
-    error: "<red>プレイヤーデータの移動中にエラーが発生しました。コンソールを確認してください。"
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
-    already_updating: "<yellow>リーダーボードはすでに更新中です！"
-    updated: "<green>リーダーボードが更新されました！"
-  version: "<white>Aurelium Skillsのバージョンは<aqua>{current_version}<white>です。最新バージョンは<aqua>{latest_version}<white>です"
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
-    add: "<gray>プレイヤー<gray>{player}<aqua>{amount}{skill}<gray>XPが追加されました"
-    set: "<gray>プレイヤー<gray>{player}<aqua>{skill}<gray>XPが{amount}に設定されました"
-    remove: "<gray>プレイヤー<gold>{player}<aqua>{amount}{skill}<gray>XPが削除されました"
-  unknown_skill: "<yellow>未知のスキルです！"
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
   unknown_stat: "<yellow>Unknown stat!"
-  no_profile: "<yellow>プレイヤーにスキルプロファイルがありません。ゲームから抜けて、再度入り直すか、サーバーを再起動してください。"
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} Level Up"
   skill_level_up: Skill Level Up
@@ -612,115 +612,115 @@ menus:
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
-    name: 再生
-    desc: "{value} 秒間、作物を自動的に再植します。<1>[クワを右クリックして、作物を壊すとアクティブになります]"
-    raise: "<gray>クワを持ち上げます"
-    lower: "<gray>クワを下げます"
-    start: "<gold>再生をアクティブにしました！<gray>(-{mana} {mana_unit})"
-    end: "<gray>再生が切れました"
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
   treecapitator:
-    name: トゥリーキャピテーター
-    desc: "{value} 秒間、木を一瞬で壊します。<1>[斧を右クリックして、原木を壊すとアクティブになります]"
-    raise: "<gray>斧を持ち上げます"
-    lower: "<gray>斧を下げます"
-    start: "<gold>トゥリーキャピテーターをアクティブにしました！<gray>(-{mana} {mana_unit})"
-    end: "<gray>トゥリーキャピテーターが切れました"
+    name: Treecapitator
+    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
   speed_mine:
-    name: スピードマイン
-    desc: "{value} 秒間、採掘速度がHaste {haste_level}に上昇します。<1>[ツルハシを右クリックして、ブロックを壊すとアクティブになります]"
-    raise: "<gray>ツルハシを持ち上げます"
-    lower: "<gray>ツルハシを下げます"
-    start: "<gold>スピードマインをアクティブにしました！<gray>(-{mana} {mana_unit})"
-    end: "<gray>スピードマインが切れました"
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
   absorption:
-    name: アブソープション
-    desc: "{value} 秒間、受けるダメージが、Minecraftのダメージの2倍分、体力ではなくマナを減少させます。アブソープションがアクティブの間は、マナは回復しません。<1>[盾を左クリックして、ダメージを受けるとアクティブになります]"
-    raise: "<gray>盾を持ち上げます"
-    lower: "<gray>盾を下げます"
-    start: "<gold>アブソープションをアクティブにしました！<gray>(-{mana} {mana_unit})"
-    end: "<gray>アブソープションが切れました"
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
   terraform:
     name: Terraform
     desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
-    raise: "<gray>シャベルを上げました"
-    lower: "<gray>シャベルを下げました"
-    start: "<gold>テラフォームをアクティブ化しました！ <gray>(-{mana} {mana_unit})"
-    end: "<gray>テラフォームが終了しました"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
   sharp_hook:
     name: Sharp Hook
-    desc: "釣竿を左クリックすると、フックされたエンティティに{value}ダメージを与えます。"
-    use: "<gold>シャープフックを使用しました！ <gray>(-{mana} {mana_unit})"
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
   charged_shot:
     name: Charged Shot
-    desc: "弓を引くと、消費したマナに応じて矢のダメージが{value}%増加します。<1>[弓を左クリックしてチャージドショットモードを切り替えます]"
-    enable: "<gray>チャージドショットモードを有効にしました"
-    disable: "<gray>チャージドショットモードを無効にしました"
-    shoot: "<gold>チャージドショットを使用しました！ <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
     name: Lightning Blade
-    desc: 攻撃速度が{value}%増加し、{duration}秒間持続します。<1>[剣を右クリックしてモブを攻撃することでアクティブ化]
-    raise: "<gray>剣を構えました"
-    lower: "<gray>剣を下げました"
-    start: "<gold>ライトニングブレードをアクティブ化しました！ <gray>(-{mana} {mana_unit})"
-    end: "<gray>ライトニングブレードが終了しました"
-  not_ready: "<red>能力はまだ使用できません！ <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>マナが足りません！ <gray>({mana} {mana_unit} 必要です)"
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
+    raise: "<gray>You ready your sword"
+    lower: "<gray>You lower your sword"
+    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade has worn off"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
-    name: 農耕
-    desc: "作物を収穫して農耕 {xp_unit} を獲得します"
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
   foraging:
-    name: 伐採
-    desc: "木を切って伐採 {xp_unit} を獲得します"
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
   mining:
-    name: 採掘
-    desc: "岩石や鉱石を採掘して採掘 {xp_unit} を獲得します"
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
   fishing:
-    name: 釣り
-    desc: "魚を釣って釣り {xp_unit} を獲得します"
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
   excavation:
-    name: 掘削
-    desc: "シャベルで掘ることで掘削 {xp_unit} を獲得します"
+    name: Excavation
+    desc: "Dig with a shovel to earn Excavation {xp_unit}"
   archery:
-    name: 射撃
-    desc: "弓でエンティティを撃って射撃 {xp_unit} を獲得します"
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
   defense:
-    name: 防御
-    desc: "エンティティからダメージを受けて防御 {xp_unit} を獲得します"
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
   fighting:
-    name: 戦闘
-    desc: "近接武器でエンティティと戦って戦闘 {xp_unit} を獲得します"
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
   endurance:
-    name: スタミナ
-    desc: "歩いたり走ったりしてスタミナ {xp_unit} を獲得します"
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
   agility:
-    name: 敏捷性
+    name: Agility
     desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
-    name: 錬金術
+    name: Alchemy
     desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
-    name: エンチャント
+    name: Enchanting
     desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
-    name: ソーサリー
-    desc: "マナアビリティを使用してソーサリー {xp_unit} を獲得しよう"
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
   healing:
-    name: ヒーリング
-    desc: "ポーションを飲んだり、投げたりしてヒーリング {xp_unit} を獲得しよう"
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
   forging:
-    name: フォージング
-    desc: "本やアイテムを合成して、金床での作業でフォージング {xp_unit} を獲得しよう"
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
   fishing:
-    cod: 鱈魚
-    salmon: 鮭魚
-    tropical_fish: 熱帶魚
-    pufferfish: 河豚
-    treasure: 財宝アイテム
-    junk: ジャンクアイテム
-    rare: レアな戦利品
-    epic: エピックな戦利品
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
   damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -766,41 +766,41 @@ sources:
   grindstone:
     grindstone_per_level: Disenchant Item with Grindstone
   units:
-    damage: ダメージ
-    meter: メートル
-    100_jumps: 100回のジャンプ
-    mana: 消費マナ
-    combine_level: 金床で必要な経験値
-    grindstone_level: アイテムのエンチャントレベル
-    enchant_level: 受け取るエンチャントのレベル
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
-    name: 強さ
-    desc: "強さは、様々な武器での攻撃力を向上させます"
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
   health:
-    name: 体力
-    desc: "体力は、{hp_unit}の量を増やし、戦闘中に長持ちできます"
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
-    name: 回復力
-    desc: "回復力は、体力とマナの回復速度を上げます"
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
-    name: 幸運
+    name: Luck
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
-    name: 知恵
-    desc: "知恵は、最大マナを増やし、経験値の獲得を増やし、金床で必要な経験値を減らします"
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
-    name: 耐久力
-    desc: "耐久力は、敵の攻撃から受けるダメージを減らします"
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage
@@ -843,7 +843,7 @@ traits:
 ui:
   maxed: MAXED
 units:
-  mana: マナ
-  hp: 体力
-  xp: 経験値
+  mana: Mana
+  hp: HP
+  xp: XP
 file_version: 32
