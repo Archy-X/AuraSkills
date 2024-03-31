@@ -214,7 +214,6 @@ abilities:
     name: 연금술사
     desc: "지속시간이 {value}% 더 긴 물약을 만듭니다."
     info: "+{value}% 물약 지속시간"
-    lore: "<green>(+{duration})"
   brewer:
     name: 양조자
     desc: "연급술 경험치가 {value}% 증가합니다"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>사용: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>오류: {message}"
     error_performing_command: "<red>죄송합니다. 이 명령을 수행하는 동안 오류가 발생했습니다."
-    info_message: "{message}"
     please_specify_one_of: "<red>오류: (<yellow>{valid}<red>) 중 하나를 지정하십시오."
     must_be_a_number: "<red>오류: {num} 은(는) 숫자여야 합니다."
     must_be_min_length: "<red>오류: 최소 {min} 보다 길어야 합니다."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - 페이지 표시 <green>{page} <aqua>중 <green>{totalpages} <aqua>(<yellow>{results}<aqua> 찾음)."
     help_no_results: "<aqua>오류: 더 이상 찾을 수 없습니다."
     help_header: "<yellow>=== <aqua>도움말 표시 <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>자세한 도움말 표시 <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>검색 결과 대상 <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>오류: 해당 세계는 존재하지 않습니다."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat}가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
         already_exists: "<yellow>방어구에 {color}{stat} 이(가) 이미 존재합니다. <gold>/sk armor modifier remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>아이템에 {color}{stat} <yellow>이(가) 없습니다!"
         removed: "{color}{stat} <gray>이(가) 아이템에서 제거되었습니다."
       list:
         header: "<white>방어구 효과 찾음:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>아이템에서 모든 방어구 효과가 제거되었습니다."
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "&{target}& 배율이 방어구에서 제거되었습니다."
       list:
         header: "<white>방어구 배율 찾음:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>모든 방어구 배율이 아이템에서 제거되었습니다."
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<gray>필요량 <dark_aqua>{skill}이(가) 아이템에서 제거되었습니다."
       list:
         header: "<white>방어구 제한 찾음:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>아이템에서 모든 방어구 제한이 제거되었습니다."
       equip: "<yellow>{requirements}을(를) 장착하기 위한 요구 조건을 충족하지 않습니다."
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>백업을 불러오면 사용자의 모든 스킬 데이터가 복구됩니다. 이 작업은 영구적이므로 취소할 수 없습니다. 백업을 로드하기 전에 저장할 수도 있습니다. 이 작업을 진행하려면 명령어를 다시 입력하십시오."
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
         already_exists: "<yellow>{color}{stat} <yellow>효과가 아이템에 이미 존재합니다. /sk item modifier remove 명령어로 제거 후 재시도하십시오."
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>아이템에 {color}{stat} <yellow>효과가 없습니다!"
         removed: "{color}{stat} <gray>효과가 아이템에서 제거되었습니다."
       list:
         header: "<white>아이템 효과 찾음:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>모든 효과가 아이템에서 제거되었습니다."
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target}<gray> 배율이 아이템에서 제거되었습니다."
       list:
         header: "<white>아이템 효과 찾음:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>모든 배율이 아이템에서 제거되었습니다."
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> 제한이 아이템에서 제거되었습니다."
       list:
         header: "<white>아이템 제한 찾음:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>모든 제한이 아이템에서 제거되었습니다."
       use: "<yellow>{requirements} 을(를) 사용하기 위한 요구 조건을 충족하지 않습니다."
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>{key} 등록 해제되었습니다."
       not_registered: "<yellow>{key}로 등록되어 있는 아이템이 없습니다."
@@ -517,15 +500,12 @@ commands:
     disabled: "<red>스킬 액션 표시줄이 비활성화되었습니다."
     not_enabled: "<yellow>이 서버에서 스킬 액션 표시줄이 사용 불가능합니다!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>==--"
     power_header_page: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} 순위</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} 순위 </bold><white>(Page {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>==--"
     average_header_page: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>(Page {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>사용: <green>/sk top <white><page> <gray>나 <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
