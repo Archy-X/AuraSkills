@@ -1,12 +1,12 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
     name: Goede oogst
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Geeft +{value} Oogst Geluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Oogst Geluk"
   farmer:
     name: Boer
     desc: "Verdien {value}% meer landbouw XP."
@@ -16,17 +16,17 @@ abilities:
     desc: "Verhoogt schade van schoffels met {value}%."
     info: "+{value}% schoffel schade"
   geneticist:
-    name: Geneticist
+    name: Geneticus
     desc: "Verhoogt het verzadigingspunt van plantaardig voedsel met {value}."
     info: "+{value} Verzadiging"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Groeiaura
+    desc: "Gewassen met groeistadia binnen {radius} blokken van jou groeien {value} % sneller."
+    info: "+ {value} % Groei"
   lumberjack:
     name: Houthakker
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Grants + {value} Geluk bij het Voedselzoeken, waardoor de kans op extra drops toeneemt."
+    info: "+ {value} Voedsel Verzamelen"
   forager:
     name: Verzamelaar
     desc: "Verdien {value}% meer landbouw XP."
@@ -44,15 +44,15 @@ abilities:
     desc: "{value}% kans op drievoudige duurzaamheid schade met bijlen."
     info: "{value}% 3x Duurzaamheid Schade"
   lucky_miner:
-    name: Lucky Miner
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    name: Gelukkige Mijnwerker
+    desc: "Geeft +{value} Mijngeluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Mijngeluk"
   miner:
-    name: Miner
+    name: Mijnwerker
     desc: "Verdien {value}% meer mijnbouw XP."
     info: "+{value}% XP"
   pick_master:
-    name: Pick Master
+    name: Houweel meester
     desc: "Breng {value}% meer schade toe met pickaxe."
     info: "+{value}% Pickaxe schade"
   stamina:
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% Geen Duurzaamheid Verlies"
   lucky_catch:
     name: Geluk vangst
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Geeft + {value} Vis geluk, wat de kans op extra drops verhoogt."
+    info: "+{value} Vis geluk"
   fisher:
     name: Visser
     desc: "Verdien {value}% meer vissen XP."
@@ -97,8 +97,8 @@ abilities:
     info: "+{value}% schep schade"
   bigger_scoop:
     name: Grotere Scoop
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Geeft + {value} Graaf Geluk, wat de kans op extra drops verhoogt."
+    info: "+{value}% Graaf geluk"
   lucky_spades:
     name: Lucky Spades
     desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
@@ -214,7 +214,6 @@ abilities:
     name: Alchemist
     desc: "Drankjes die je brouwt, hebben een {value}% meer duur."
     info: "+{value}% Drankduur"
-    lore: "<green>(+{duration})"
   brewer:
     name: Brouwer
     desc: "Verdien {value}% meer Alchemie XP."
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Gebruik: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Error: {message}"
     error_performing_command: "<red>Het spijt me, maar er is een fout opgetreden bij het uitvoeren van deze opdracht."
-    info_message: "{message}"
     please_specify_one_of: "<red>fout: Specificeer één van (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Error: {num} moet een getal zijn."
     must_be_min_length: "<red>Fout: Moet minstens {min} tekens lang zijn."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Pagina <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> resultaten)."
     help_no_results: "<aqua>Error: Geen resultaten meer."
     help_header: "<yellow>=== Hulp weergeven voor <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Toont gedetailleerde hulp voor <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Zoek resultaten voor <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>fout: Die wereld bestaat niet."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
         already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier is verwijderd van je item"
       list:
         header: "<white>Armor modifiers gevonden:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Alle armor modifiers zijn verwijderd van je voorwerp"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>armor vermenigvuldiger is verwijderd uit je item"
       list:
         header: "<white>Armor vermenigvuldigers gevonden:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Alle harnasvermenigvuldigers zijn verwijderd uit je item"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> harnaseis is verwijderd uit je artikel"
       list:
         header: "<white>Armor vereisten gevonden:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Alle harnas vereisten zijn verwijderd uit je voorwerp"
       equip: "<yellow>Je voldoet niet aan de vereisten om dit voorwerp uit te rusten: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Het laden van een back-up zal alle vaardigheidsgegevens van spelers herstellen. Deze actie is permanent en kan niet ongedaan worden gemaakt. Je wilt misschien een back-up opslaan voordat je deze laadt. Typ de opdracht opnieuw om deze actie te bevestigen"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
         already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier is verwijderd van je item"
       list:
         header: "<white>Item wijzigers gevonden:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Alle item modifiers zijn verwijderd uit je item"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>item vermenigvuldiger is verwijderd uit je item"
       list:
         header: "<white>Item multipliers gevonden:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Alle item vermenigvuldigers zijn verwijderd uit je item"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> artikelvereiste is verwijderd van uw artikel"
       list:
         header: "<white>Item vereisten gevonden:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Alle item vereisten zijn verwijderd uit je artikel"
       use: "<yellow>Je voldoet niet aan de vereisten om dit item te gebruiken: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Ongeregistreerd item met sleutel {key}"
       not_registered: "<yellow>Er is geen item geregistreerd met sleutel {key}"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL was niet ingeschakeld bij het opstarten van de server, in plaats daarvan het opslaan naar bestand!"
     saved: "<green>Skill gegevens opgeslagen!"
   skill:
-    reset:
-      reset_all: "<gray>Alle vaardigheden zijn ingesteld op niveau <aqua>1 <gray>voor speler <gold>{player}"
-      reset_skill: "<gray>Vaardigheid &{skill} <gray>ingesteld op niveau <aqua>1 <gray>voor speler <gold>{player}"
     setall:
       set: "<gray>Alle vaardigheden ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>Jouw vaardigheidsactiebalk is uitgeschakeld"
     not_enabled: "<yellow>Skills actiebalk is niet ingeschakeld op deze server!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord </bold><white>(Pagina {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Scorebord</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} Scorebord </bold><white>(Pagina {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Skill Gemiddeld Scorebord</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Gemiddelde Scorebord </bold><white>(Pagina {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Gebruik: <green>/sk top <white><page> <gray>of <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Succesvol spelersgegevens overgedragen van <gray>{from} <green>to <gray>{to}"

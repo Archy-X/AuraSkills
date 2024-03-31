@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: Dược sĩ
     desc: "Thuốc bạn chế sẽ có thời gian kéo dài thêm {value}%."
     info: "+{value}% Thời gian của thuốc"
-    lore: "<green>(+{duration})"
   brewer:
     name: Người pha chế
     desc: "Nhận thêm {value}% XP Điều chế."
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Cách dùng: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Lỗi: {message}"
     error_performing_command: "<red> Đã xảy ra lỗi khi bạn dùng câu lệnh này."
-    info_message: "{message}"
     please_specify_one_of: "<red>Lỗi: Hãy cụ thể hóa một trong những cái (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Lỗi: {num} phải là một số."
     must_be_min_length: "<red>Lỗi: Cần ít nhất {min} kí tự."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Hiển thị trang <green>{page}<aqua>trên <green>{totalpages}<aqua>(<yellow>{results}<aqua> kết quả)."
     help_no_results: "<aqua>Lỗi: Không có kết quả."
     help_header: "<yellow>=== <aqua>Hiển thị trợ giúp cho <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Hiện thị trợ giúp cụ thể cho <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Kết quả tìm kiếm cho <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Lỗi: Thế giới này không tồn tại."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "<gray>Nâng cấp {color}{stat} <gray>với cấp độ <aqua>{value} <gray>đã được thêm vào vật phẩm của bạn"
         already_exists: "<yellow>Nâng cấp cho giáp với chỉ số {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat} <yellow>!"
         removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
       list:
         header: "<white>Đã tìm thấy nâng cấp của giáp:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ khỏi giáp của bạn"
       list:
         header: "<white>Chỉ số giáp cộng thêm đã được tìm thấy:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Tất cả chỉ số giáp cộng thêm đã được gỡ"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>đã được gỡ"
       list:
         header: "<white>Yêu cầu giáp đã được tìm thấy:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Tất cả yêu cầu giáp đã được gỡ"
       equip: "<yellow>Bạn không đủ điều kiện để trang bị vật phẩm này: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Việc áp dụng sao lưu bây giờ sẽ trả lại toàn bộ dữ liêu về Kĩ năng của người chơi dựa vào bản sao lưu đó. Điều này gây ảnh hưởng vĩnh viễn và không thể quay trở lại. Bạn có thể lưu một bản sao lưu ngay bây giờ nếu cần. Nhập lại lệnh để xác nhận áp dụng sao lưu."
@@ -402,14 +391,11 @@ commands:
       add:
         added: "<gray>Nâng cấp {color}{stat} <gray>với cấp <aqua>{value} <gray>đã được thêm"
         already_exists: "<yellow>Nâng cấp với chỉ số của {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat}<yellow>!"
         removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
       list:
         header: "<white>Nâng cấp vật phẩm đã được tìm thấy:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ"
       list:
         header: "<white>Chỉ số cộng thêm đã được tìm thấy:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Toàn bộ chỉ số cộng thêm đã được gỡ khỏi vật phẩm của bạn"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<gray>Yêu cầu <dark_aqua>{skill} <gray>đã được gỡ"
       list:
         header: "<white>Yêu cầu vật phẩm được tìm thấy:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Tất cả các yêu cầu về vật phẩm đã được gỡ khỏi vật phẩm của bạn"
       use: "<yellow>Bạn không đủ điều kiện để dùng vật phẩm này: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Đã huỷ đăng kí vật phẩm có chìa khoá {key}"
       not_registered: "<yellow>Không có vật phẩm đăng kí thành chìa khoá {key}"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL không được kích hoạt khi khởi động máy chủ, thay vào đó hãy lưu vào một tệp!"
     saved: "<green>Dữ liệu về Khả năng đã được lưu lại!"
   skill:
-    reset:
-      reset_all: "<gray>Tất cả Khả năng đã được đặt thành cấp <aqua>1 <gray>cho người chơi <gold>{player}"
-      reset_skill: "<gray>Khả năng <aqua>{skill} <gray>của người chơi <gold>{player} đã được đặt thành cấp <aqua>1 <gray>"
     setall:
       set: "<gray>Tất cả Khả năng đã được thành cấp <aqua>{level} <gray>cho người chơi <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>Thanh Kĩ năng của bạn đã được tắt"
     not_enabled: "<yellow>Thanh Kĩ năng không được bật trong máy chủ này!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>(Trang{page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>(Trang {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>(Trang {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Cách dùng: <green>/sk top <white><page> <gray>hoặc <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Chuyển đổi dữ liệu người chơi từ <gray>{from} <green>to <gray>{to} thành công"

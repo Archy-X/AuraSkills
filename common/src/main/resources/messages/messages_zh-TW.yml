@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -19,6 +19,10 @@ abilities:
     name: 遺傳學家
     desc: "從蔬菜增加{value}% 飽和度"
     info: "+{value} 飽和度"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
     name: 伐木工
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
@@ -99,10 +103,10 @@ abilities:
     name: 幸運黑桃
     desc: "有{value}% 機率釣到史詩級寶物."
     info: "{value}% 史詩級寶物"
-  crit_chance:
-    name: 暴擊機率
-    desc: "增加{value}% 暴擊機率."
-    info: "+{value}% 暴擊機率"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
     name: 弓箭手
     desc: "獲得{value}% 射箭經驗."
@@ -139,10 +143,11 @@ abilities:
     name: 無負面狀態
     desc: "有{value}% 機率消除傷害性藥水效果"
     info: "{value}% 無負面狀態"
-  crit_damage:
-    name: 暴擊傷害
-    desc: "增加{value}% 暴擊傷害"
-    info: "+{value}% 暴擊傷害"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
     name: 戰鬥
     desc: "獲得{value}% 戰鬥經驗"
@@ -209,7 +214,6 @@ abilities:
     name: 釀造師
     desc: "釀造的藥水延長{value}% 持續時間"
     info: "+{value}% 藥水持續時間"
-    lore: "<green>(+{duration})"
   brewer:
     name: 釀造
     desc: "獲得{value}% 釀造經驗"
@@ -296,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>使用: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>錯誤: {message}"
     error_performing_command: "<red>很抱歉, 在執行指令的時候產生了一個錯誤."
-    info_message: "{message}"
     please_specify_one_of: "<red>錯誤: 請指定一個 (<yellow>{valid}<red>)"
     must_be_a_number: "<red>錯誤: {num} 必須是數字."
     must_be_min_length: "<red>錯誤: 至少需要 {min} 個字."
@@ -309,10 +312,7 @@ acf:
     help_page_information: "<aqua> - 頁面 <green>{page} <aqua>共 <green>{totalpages} 頁<aqua>(<yellow>{results}<aqua> 結果)."
     help_no_results: "<aqua>錯誤: 沒有其他結果."
     help_header: "<yellow>=== <green>{commandprefix}{command} <aqua>說明<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <green>{commandprefix}{command} <aqua>詳細說明 <yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <green>{commandprefix}{command} {search} <aqua>的搜尋結果<yellow> ==="
   minecraft:
     invalid_world: "<red>錯誤: 這個世界不存在."
@@ -334,14 +334,11 @@ commands:
       add:
         added: "<gray>物品已添加{color}{stat} <aqua>{value} <gray>屬性"
         already_exists: "<yellow>裝備屬性 {color}{stat} <yellow>已經存在! 請先使用 /sk armor modifier remove 刪除"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
         removed: "已經從你的物品刪除{color}{stat} <gray>屬性"
       list:
         header: "<white>找到的裝備屬性:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>物品已刪除全部裝備屬性"
     multiplier:
@@ -357,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
         header: "<white>Armor multipliers found:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
@@ -370,11 +366,9 @@ commands:
         removed: "已經將 <dark_aqua>{skill}<gray> 裝備要求從你的物品中移除"
       list:
         header: "<white>找到的裝備要求:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>全部裝備要求已從你的物品刪除"
       equip: "<yellow>你沒有裝備這個物品的條件!"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
@@ -397,14 +391,11 @@ commands:
       add:
         added: "物品已添加{color}{stat} <aqua>{value} 屬性"
         already_exists: "<yellow>裝備屬性 {color}{stat} <yellow>已經存在! 請先使用 /sk armor modifier remove 刪除"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
         removed: "<gray>已經從你的物品刪除{color}{stat} 屬性"
       list:
         header: "<white>找到的物品屬性:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>你的物品已刪除全部屬性"
     multiplier:
@@ -420,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
         header: "<white>Item multipliers found:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>All item multipliers have been removed from your item"
     register:
@@ -437,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> 物品要求從你的物品中移除"
       list:
         header: "<white>找到的物品要求:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>全部物品要求已從你的物品刪除"
       use: "<yellow>你沒有使用這個物品的條件: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
@@ -502,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL 沒有在伺服器啟動中起用, 資料保存在檔案中!"
     saved: "<green>已儲存技能資料!"
   skill:
-    reset:
-      reset_all: "<gray>將玩家 <gold>{player} <gray>的全部技能設定成等級<aqua>1"
-      reset_skill: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill}<gray>設定成等級<aqua>1"
     setall:
       set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
     setlevel:
@@ -515,15 +500,12 @@ commands:
     disabled: "<red>狀態列已停用"
     not_enabled: "<yellow>這個伺服器沒有啟用技能Actionbar!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>全部技能排行榜</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>全部技能排行榜 </bold><white>( 第{page} 頁)==--"
     skill_header: "<white>--==<aqua><bold>{skill} 排行榜</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} 排行榜 </bold><white>(第 {page} 頁)==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>使用: <green>/sk top <white><頁碼> <gray>或 <green>/sk top <white>[skill] <頁碼>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"

@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: アルケミスト
     desc: "ブルーしたポーションの効果時間が{value}%増加します。"
     info: "+{value}% 効果時間"
-    lore: "<green>(+{duration})"
   brewer:
     name: 醸造家
     desc: "アルケミーXPを{value}%獲得します。"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>使用法：<yellow>{command} <green>{syntax}"
     error_prefix: "<red>エラー：{message}"
     error_performing_command: "<red>申し訳ありませんが、このコマンドを実行中にエラーが発生しました。"
-    info_message: "{message}"
     please_specify_one_of: "<red>エラー：次のいずれかを指定してください（<yellow>{valid}<red>）"
     must_be_a_number: "<red>エラー：{num}は数字でなければなりません。"
     must_be_min_length: "<red>エラー：{min}文字以上である必要があります。"
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - ページ <green>{page} <aqua>/ <green>{totalpages} <aqua>（<yellow>{results}<aqua>件の結果を表示中）。"
     help_no_results: "<aqua>エラー：これ以上の結果はありません。"
     help_header: "<yellow>=== <aqua>{commandprefix}{command}のヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>{commandprefix}{command}の詳細なヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>{commandprefix}{command} {search} の検索結果 ==="
   minecraft:
     invalid_world: "<red>エラー：そのワールドは存在しません。"
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>モディファイヤがレベル<aqua>{value} <gray>でアイテムに追加されました"
         already_exists: "<yellow>{color}{stat} <yellow>のモディファイヤは既にアイテムに存在しています！まずは/sk armor modifier removeで削除してください"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>のモディファイヤはありません！"
         removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
       list:
         header: "<white>見つかったアーマーモディファイヤー:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>アイテムから全てのアーマーモディファイヤーが削除されました"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>のアーマーマルチプライヤーがアイテムから削除されました"
       list:
         header: "<white>以下のアーマーマルチプライヤーが見つかりました："
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>すべてのアーマーマルチプライヤーがアイテムから削除されました"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray>のアーマー要件がアイテムから削除されました"
       list:
         header: "<white>以下のアーマー要件が見つかりました："
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>すべてのアーマー要件がアイテムから削除されました"
       equip: "<yellow>このアイテムを装備するための要件を満たしていません：{requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>バックアップを読み込むと、プレイヤーのすべてのスキルデータが元に戻ります。この操作は元に戻すことができません。バックアップを読み込む前にバックアップを保存することをお勧めします。このアクションを確認するには、もう一度コマンドを入力してください"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "<gray>{value}レベルの{color}{stat} <gray>モディファイヤがアイテムに追加されました"
         already_exists: "<yellow>アイテムにはすでに{color}{stat} <yellow>スタッツを持つモディファイヤが存在しています！/sk item modifier removeで削除してください"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>モディファイヤが存在しません！"
         removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
       list:
         header: "<white>以下のアイテムモディファイヤが見つかりました："
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>すべてのアイテムモディファイヤがアイテムから削除されました"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>のマルチプライヤーがアイテムから削除されました"
       list:
         header: "<white>以下のアイテムマルチプライヤーが見つかりました:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>アイテムからすべてのマルチプライヤーが削除されました"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray>のアイテム要件がアイテムから削除されました"
       list:
         header: "<white>以下のアイテム要件が見つかりました:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>すべてのアイテム要件がアイテムから削除されました"
       use: "<yellow>このアイテムを使用するための要件を満たしていません：{requirements}"
-      entry: "<aqua>{skill} {level}<gray>、"
     unregister:
       unregistered: "<white>キーが{key}のアイテムが登録解除されました"
       not_registered: "<yellow>キーが{key}のアイテムは登録されていません"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQLがサーバーの起動時に有効にされていません。ファイルに保存します！"
     saved: "<green>スキルデータが保存されました！"
   skill:
-    reset:
-      reset_all: "<gold>{player}のすべてのスキルがレベル1にリセットされました"
-      reset_skill: "<gold>{player}の{skill}スキルがレベル1にリセットされました"
     setall:
       set: "<gold>{player}のすべてのスキルがレベル{level}に設定されました"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>スキルアクションバーが無効になりました"
     not_enabled: "<yellow>このサーバーではスキルアクションバーが有効になっていません！"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>全スキルリーダーボード</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>全スキルリーダーボード </bold><white>(ページ{page})==--"
     skill_header: "<white>--==<aqua><bold>{skill}リーダーボード</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill}リーダーボード </bold><white>(ページ{page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>スキル平均リーダーボード</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>スキル平均リーダーボード </bold><white>(ページ{page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>使い方: <green>/sk top <white><ページ> <gray>または <green>/sk top <white>[skill] <ページ>"
   transfer:
     success: "<green>プレイヤーデータを <gray>{from} <green>から <gray>{to} <green>に正常に移動しました"
