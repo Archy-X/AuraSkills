@@ -4,846 +4,846 @@
 
 abilities:
   bountiful_harvest:
-    name: Обильный урожай
-    desc: "Получите +{value} Фермерской Удачи, которая повышает шанс на дополнительный дроп."
-    info: "+{value} Фермерской Удачи"
+    name: Bountiful Harvest
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
   farmer:
-    name: Фермер
-    desc: "Заработайте на {value}% больше опыта в сельском хозяйстве."
-    info: "+{value}% ОПЫТ"
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
+    info: "+{value}% XP"
   scythe_master:
-    name: Мастер косы
-    desc: "Увеличивает урон от мотыги на {value}%."
-    info: "+{value}% урона мотыги"
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
   geneticist:
-    name: Генетик
-    desc: "Увеличивает насыщение от растительных продуктов на {value}."
-    info: "+{value} Насыщенность"
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
   growth_aura:
-    name: Аура взращивания
-    desc: "Посадки на стадии роста в радиусе {radius} блоков от вас растут на {value}% быстрее."
-    info: "+{value}% роста"
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
   lumberjack:
-    name: Лесоруб
-    desc: "Получите +{value} Удачи Лесоруба, которая повышает шанс на дополнительный дроп."
-    info: "+{value} Удачи Лесоруба"
+    name: Lumberjack
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
   forager:
-    name: Лесник
-    desc: "Заработайте на {value}% больше XP."
-    info: "+{value}% ОПЫТ"
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
+    info: "+{value}% XP"
   axe_master:
-    name: Мастер топора
-    desc: "Увеличивает урон от топоров на {value}%"
-    info: "+{value}% Урон топором"
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
   valor:
-    name: Доблестый
-    desc: "Даёт+{value} силы при ношение топора."
-    info: "+{value} Сила"
+    name: Valor
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
   shredder:
-    name: Измельчитель
-    desc: "{value}% шанс нанести тройное повреждение прочности топорами."
-    info: "{value}% 3x Повреждение прочности"
+    name: Shredder
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
   lucky_miner:
-    name: Удачливый шахтер
-    desc: "Получите +{value} Шахтёрской удачи, которая повышает шанс на дополнительный дроп."
-    info: "+{value} Шахтерской Удачи"
+    name: Lucky Miner
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
   miner:
-    name: Шахтер
-    desc: "Заработайте на {value}% больше XP в горном деле."
-    info: "+{value}% ОПЫТ"
+    name: Miner
+    desc: "Earn {value}% more Mining XP."
+    info: "+{value}% XP"
   pick_master:
-    name: Мастер сбора
-    desc: "Нанесете на {value}% больше урона киркой."
-    info: "+{value}% Урон от кирки"
+    name: Pick Master
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
   stamina:
-    name: Выносливый
-    desc: "Даёт +{value} к выносливости, когда держит кирку."
-    info: "+{value} Стойкость"
+    name: Stamina
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
   hardened_armor:
-    name: Закаленная броня
-    desc: "{value}% шанс свести на нет прочность повреждений брони."
-    info: "{value}% Нет потери прочности"
+    name: Hardened Armor
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
   lucky_catch:
-    name: Удачный улов
-    desc: "Получите +{value} Рыболовной Удачи, которая повышает шанс на дополнительный дроп."
-    info: "+{value} Рыболовной Удачи"
+    name: Lucky Catch
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
   fisher:
-    name: Рыбачок
-    desc: "Получишь на {value}% XP больше."
+    name: Fisher
+    desc: "Earn {value}% more Fishing XP."
     info: "+{value}% XP"
   treasure_hunter:
-    name: Охотник за сокровищами
-    desc: "{value}% выше шанс получить редкую добычу на рыбалке."
-    info: "+{value}% Редкая добыча"
+    name: Treasure Hunter
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
   grappler:
-    name: Ловец
-    desc: "Подцепить улов на {value}% быстрее."
-    info: "+{value}% Скорость крючка"
+    name: Grappler
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
   epic_catch:
-    name: Эпический улов
-    desc: "{value}% добавлен дополнительный шанс получить грандиозную добычу от рыбалки."
-    info: "+{value}% Эпическая добыча"
+    name: Epic Catch
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
   metal_detector:
-    name: Металлоискатель
-    desc: "{value}% добавлен шанс получить редкую добычу при копании."
-    info: "+{value}% Редкая добыча"
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
   excavator:
-    name: Экскаватор
-    desc: "Получишь на {value}% XP больше."
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
     info: "+{value}% XP"
   spade_master:
-    name: Мастер лопаты
-    desc: "Нанесете на {value} больше урона лопатами."
-    info: "+{value}% урон лопаты"
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
   bigger_scoop:
-    name: Большой совок
-    desc: "Получите +{value} Удачи Сельхоза, которая повышает шанс на дополнительный дроп."
-    info: "+{value}% Удачи Сельхоза"
+    name: Bigger Scoop
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
   lucky_spades:
-    name: Счастливая лопата
-    desc: "{value}% добавил шанс получить грандиозную добычу при копании."
-    info: "+{value}% Эпическая добыча"
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
   retrieval:
-    name: Подбирание
-    desc: "Стрелы, которые пролетели мимо мгновенно возвращаются через {time} секунд в пределах {value} блоков."
-    info: "Расстояние {value}"
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
   archer:
-    name: Робингуд
-    desc: "Получишь на {value}% XP больше."
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
     info: "+{value}% XP"
   bow_master:
-    name: Мастер лука
-    desc: "Нанесете на {value}% больше урона луками."
-    info: "+{value}% Урон от лука"
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
   piercing:
-    name: Пронзительный
-    desc: "{value}% шанса для стрел на пробитие мобов."
-    info: "{value}% Шанс пронзить"
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
   stun:
-    name: Оглушить
-    desc: "{value}% шанс снизить скорость передвижения противника на 20% на 2 секунды."
-    info: "{value}% Шанс оглушения"
+    name: Stun
+    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    info: "{value}% Stun Chance"
   shielding:
-    name: Стальная стена
-    desc: "Уменьшить входящий урон на {value}% при подкрадывание."
-    info: "-{value}% Входящего урона при подкрадывание"
+    name: Shielding
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
   defender:
-    name: Защитник
-    desc: "Получишь на {value}% XP больше."
+    name: Defender
+    desc: "Earn {value}% more Defense XP."
     info: "+{value}% XP"
   mob_master:
-    name: Мастер мобов
-    desc: "Уменьшает входящий урон от мобов на {value}%"
-    info: "-{value}% урон от мобов"
+    name: Mob Master
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
   immunity:
-    name: Иммунитет
-    desc: "{value}% шанс полностью свести на нет атаку противника."
-    info: "{value}% Иммунитета"
+    name: Immunity
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
   no_debuff:
-    name: Без дебаффа
-    desc: "{value}% шанс нейтрализовать вредный эффект зелья от применения."
-    info: "{value}% Без дебаффа"
+    name: No Debuff
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
   parry:
-    name: Парирование
-    desc: "Встречный удар мечом за {time} секунд до удара соперника снижает урон на {value}% и поглощает отбрасывание."
-    info: "{value}% Уменьшение урона"
-    parried: "<red>Атака парирована"
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
   fighter:
-    name: Истребитель
-    desc: "Получишь на {value}% XP Больше."
+    name: Fighter
+    desc: "Earn {value}% more Fighting XP."
     info: "+{value}% XP"
   sword_master:
-    name: Мастер меча
-    desc: "Нанесете на {value}% больше урона мечами."
-    info: "+{value}% Урон от меча"
+    name: Sword Master
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
   first_strike:
-    name: Первый удар
-    desc: "Наносит на {value}% больше урона при первом попадании."
-    info: "+{value}% Урон от первого удара"
-    dealt: "<red>Первый удар нанесен!"
+    name: First Strike
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
   bleed:
-    name: Кровоточить
-    desc: "{value}% шанс нанести кровотечение противнику каждые {base_ticks} тика, нанося {value_2} урона за каждый тик. {added_ticks} тиков добавляется к врагам с кровотечением."
-    info: "{value}% Шанса, {value_2} Урона"
-    enemy_bleeding: "<red>Вражеское кровотечение!"
-    self_bleeding: "<red>У тебя кровотечение!"
-    stop: "<white>Кровотечение остановилось"
+    name: Bleed
+    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
   anti_hunger:
-    name: Против голода
-    desc: "{value}% шанс остановить голод."
-    info: "{value}% Нет потери голода"
+    name: Anti Hunger
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
   runner:
-    name: Бегун
-    desc: "Получишь на {value} XP больше."
+    name: Runner
+    desc: "Earn {value}% more Endurance XP."
     info: "+{value}% XP"
   golden_heal:
-    name: Золотое исцеление
-    desc: "Увеличивает эффект регенерации здоровья на {value}%"
-    info: "+{value}% Регенерация эффекта"
+    name: Golden Heal
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
   recovery:
-    name: Регенерация эффекта
-    desc: "Увеличивает естественную регенерацию, когда имеет менее половины здоровья на {value}%"
-    info: "+{value}% Низкая регенерация HP"
+    name: Recovery
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
   meal_steal:
-    name: Кража еды
-    desc: "{value}% шанс украсть 1 очко голода при атаке игрока."
-    info: "{value}% Голодная кража"
+    name: Meal Steal
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
   light_fall:
-    name: Легкое падение
-    desc: "Уменьшает весь урон от падения на {value}%"
-    info: "-{value}% Повреждение при падении"
+    name: Light Fall
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
   jumper:
-    name: Прыгун
-    desc: "Получишь на {value}% XP больше."
+    name: Jumper
+    desc: "Earn {value}% more Agility XP."
     info: "+{value}% XP"
   sugar_rush:
-    name: Сахарная лихорадка
-    desc: "Израсходованная и разбросанная скорость и ускорение прыжка зелий действуют на {value}% дольше."
-    info: "{value}% Более длинная скорость"
+    name: Sugar Rush
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
   fleeting:
-    name: Мимолетный
-    desc: "Прирост +{value}% скорости передвижения при уровне здоровья ниже 20%."
-    info: "+{value}% Скорость"
-    start: "<white>Вы получили мгновенный прирост скорости! <gray>(+{value}% Скорости)"
-    end: "<gray>Мимолетный прирост скорости закончился"
+    name: Fleeting
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
-    name: Гром Падение
-    desc: "Когда вы крадетесь во время падения, у вас есть {value}% шанса нанести {value_2}% ожидаемого урона от падения по мобам в радиусе 3 блоков."
-    info: "{value}% Шанса, {value_2}% Урона"
+    name: Thunder Fall
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
+    info: "{value}% Chance, {value_2}% Damage"
   alchemist:
-    name: Алхимик
-    desc: "Зелья, которые вы варите, имеют на {value}% больше продолжительность действия."
-    info: "+{value}% Срок действия зелья"
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
   brewer:
-    name: Пивовар
-    desc: "Получишь на {value}% XP больше."
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
     info: "+{value}% XP"
   splasher:
-    name: Сплешер
-    desc: "Зелья, которые вы выплескиваете, увеличивают на {value}% долше продолжительность для каждого затронутого игрока."
-    info: "+{value}% Продолжительность / Игрок"
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
   lingering:
-    name: Затяжной
-    desc: "Затяжные зелья естественным образом разлагаются на {value}% медленнее и на {value_2}% меньше на каждую пораженную сущность."
-    info: "-{value}% Естественный, -{value_2}% Распад сущности"
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
   wise_effect:
-    name: Мудрый эффект
-    desc: "Получите {value} мудрости за каждый активный уникальный эффект зелья."
-    info: "+{value} Мудрость/Эффект"
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
   xp_convert:
-    name: Конвертировать XP
-    desc: "Зарабатывайте 1 опыт Minecraft за каждые {value} XP, которые вы получаете."
-    info: "1 EXP/{value} Опыт навыков"
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
   enchanter:
-    name: Чародей
-    desc: "Получишь на {value}% XP больше."
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
     info: "+{value}% XP"
   xp_warrior:
-    name: XP Воин
-    desc: "У убитых вами мобов есть {value}% шанс выдать двойной опыт."
-    info: "{value}% 2x XP"
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
+    info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: Зачарованная сила
-    desc: "Получите {value} силы за каждое уникальное зачарование на предмете."
-    info: "{value} Сила/Чары"
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
   lucky_table:
-    name: Счастливый стол
-    desc: "Предметы, которые вы зачаровываете с помощью таблицы чар имееют {value}% шанс повысить уровень чар на 1, если не на максимальный уровень."
-    info: "{value}% Шанс улучшения для чар"
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
   life_essence:
-    name: Сущность Жизни
-    desc: Мгновенные зелья здоровья исцеляют на {value}% больше.
-    info: "+{value}% Мгновенное здоровье"
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
   healer:
-    name: Целитель
-    desc: Получишь на {value}% XP больше.
+    name: Healer
+    desc: Earn {value}% more Healing XP.
     info: "+{value}% XP"
   life_steal:
-    name: Кража жизни
-    desc: Исцелить {value}% от максимального запаса здоровья враждебных мобов и убитых вами игроков.
-    info: "Украсть {value}% HP"
+    name: Life Steal
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
   golden_heart:
-    name: Золотое сердце
-    desc: Урон, нанесенный вашим поглощенным сердцам уменьшен на {value}%
-    info: "-{value}% Поглощение УРОНА"
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
   revival:
-    name: Возрождение
-    desc: Получите +{value} Здоровье и +{value_2} Регенерацию на 30 секунд после возрождения.
-    info: "+{value} Здоровье, +{value_2} Регенерация"
-    message: "<white>Вы получили бонус к возрождению на 30 секунд! <white>(<red>+{value} Здоровье, <gold>+{value_2} Регенерация<white>)"
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   disenchanter:
-    name: Разочарователь
-    desc: Получите на {value}% больше опыта, распыляя предметы с помощью точильного камня.
-    info: "+{value}% Точильный камень EXP"
+    name: Disenchanter
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
+    info: "+{value}% Grindstone EXP"
   forger:
-    name: Фальсификатор
-    desc: Получите {value}% XP больше.
+    name: Forger
+    desc: Earn {value}% more Forging XP.
     info: "+{value}% XP"
   repairing:
-    name: Ремонт
-    desc: Ремонт предметов с использованием сырья из которого он сделан добавляеет {value}% прочности.
-    info: "+{value}% Ремонт наковальни"
+    name: Repairing
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
   anvil_master:
-    name: Мастер наковальни
-    desc: Увеличивает максимальную стоимость ремонта наковальни пока она не станет слишком дорогой до {value} опыта.
-    info: "{value} Макс. Стоимость"
+    name: Anvil Master
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
   skill_mender:
-    name: Мастер восстановления
-    desc: Получение опыта навыков дает {value}% шанс отремонтировать удерживаемый предмет или изношенную часть брони с помощью чар лечения на 1 прочность за каждые 2 опыта навыков.
-    info: "{value}% Исправить шанс"
+    name: Skill Mender
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
 acf:
   core:
-    permission_denied: "<red>Извините, но у вас нет разрешения на выполнение этой команды."
-    permission_denied_parameter: "<red>Извините, но у вас нет разрешения на выполнение этой команды."
-    error_generic_logged: "<red>Произошла ошибка. Эта проблема была зарегистрирована. Извините за причиненные неудобства."
-    unknown_command: "<red>Неизвестная команда, введите <yellow>/sk help"
-    invalid_syntax: "<yellow>Используйте: <yellow>{command} <green>{syntax}"
-    error_prefix: "<red>Ошибка: {message}"
-    error_performing_command: "<red>Извините, но при выполнении этой команды произошла ошибка."
-    please_specify_one_of: "<red>Ошибка: Укажите одно из (<yellow>{valid}<red>)"
-    must_be_a_number: "<red>Ошибка: {num} должен быть числом."
-    must_be_min_length: "<red>Ошибка: Должно быть не менее {min}."
-    must_be_max_length: "<red>Ошибка: Должно быть не более {max}."
-    please_specify_at_most: "<red>Ошибка: Укажите значение не более {max}."
-    please_specify_at_least: "<red>Ошибка: Укажите значение не менее {min}."
-    not_allowed_on_console: "<red>Ошибка: Консоль может не выполнять эту команду."
-    could_not_find_player: "<red>Ошибка: Не удалось найти игрока по названию: <yellow>{search}"
-    no_command_matched_search: "<red>Ни одна команда не найдена <yellow>{search}."
-    help_page_information: "<aqua> - Показаны страницы <green>{page} <aqua>из <green>{totalpages} <aqua>(<yellow>{results}<aqua> результатов)."
-    help_no_results: "<aqua>Ошибка: Больше нет результатов."
-    help_header: "<yellow>=== <aqua>Отображение справки для <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_header: "<yellow>=== <aqua>Показана подробная справка для <green>{commandprefix}{command}<yellow> ==="
-    help_search_header: "<yellow>=== <aqua>Результаты поиска для <green>{commandprefix}{command} {search}<yellow> ==="
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: "<red>Ошибка: Этого мира не существует."
-    you_must_be_holding_item: "<red>Ошибка: Вы должны держать предмет в основной руке."
-    player_is_vanished_confirm: "<yellow>Внимание: <green>{vanished} <yellow>исчез. Не разрушайте их прикрытие!\n<yellow>Чтобы подтвердить свое действие, добавьте <green>:confirm <yellow>подтверждение в конце их имени.\n<yellow>Ex: {vanished}:confirm"
-    username_too_short: "<red>Ошибка: Имя пользователя слишком короткое, должно содержать не менее трех символов."
-    is_not_a_valid_name: "<red>Ошибка: <yellow>{name} <red>не действительное имя пользователя."
-    multiple_players_match: "<red>Ошибка: Совпадение нескольких игроков <aqua>{search} <yellow>({all})<red>, просьба уточнить."
-    no_player_found_server: "<red>Не один игрок не подключен <yellow>{search} <red>к этому серверу."
-    no_player_found_offline: "<red>Соответствующий игрок <yellow>{search}<red> не найден."
-    no_player_found: "<red>Соответствующий игрок <yellow>{search}<red> не найден."
-    location_please_specify_world: "<red>Ошибка: Укажите мир. Пример: <yellow>world:x,y,z."
-    location_please_specify_xyz: "<red>Ошибка: Укажите координаты x, y, и z. Пример: <yellow>world:x,y,z."
-    location_console_not_relative: "<red>Ошибка: Консоль не может использовать относительные координаты для определения местоположения."
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
 commands:
-  prefix: "<dark_gray>[<aqua>Навыки<dark_gray>] "
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему элементу"
-        already_exists: "<yellow>Модификатор брони со статистикой {color}{stat} <yellow>уже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
       remove:
-        does_not_exist: "<yellow>Ваш товар не имеет {color}{stat} <yellow>и модификатора!"
-        removed: "{color}{stat} <gray>модификатор был удален из вашего предмета"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Найдены модификаторы брони:"
+        header: "<white>Armor modifiers found:"
       removeall:
-        removed: "<gray>Все модификаторы брони были удалены с вашего предмета"
+        removed: "<gray>All armor modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>Модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему предмету"
-        already_exists: "<yellow>Модификатор брони со статистикой <aqua>{target} <yellow>уже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor multiplier remove"
-        skill_lore: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
-        global_lore: "<gray>Когда надето: <blue>+{value}% опыта"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
-        removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
-        header: "<white>Найдены модификаторы предметов:"
+        header: "<white>Armor multipliers found:"
       removeall:
-        removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
+        removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> Требование брони с уровнем <aqua>{level}<gray> было добавлено к вашему предмету"
-        already_exists: "<yellow>Предмет уже требует <dark_aqua>{skill}<yellow> брони! Сначала удалите его с помощью <gold>/sk armor requirement remove"
-        lore: "<red>Требует <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>У вашего предмета нет <dark_aqua>{skill}<yellow> требований к броне!"
-        removed: "<dark_aqua>{skill}<gray> требование брони было снято с вашего предмета"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
       list:
-        header: "<white>Найдены требования к броне:"
+        header: "<white>Armor requirements found:"
       removeall:
-        removed: "<gray>С вашего предмета удалены все требования к броне"
-      equip: "<yellow>Вы не соответствуете требованиям для экипировки этого предмета: {requirements}"
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
   backup:
     load:
-      confirm: "<red>Загрузка резервной копии вернет все данные о навыках игроков. Это действие окончательно и не может быть отменено. Вы можете создать резервную копию перед загрузкой. Введите команду еще раз, чтобы подтвердить это действие"
-      loading: "<white>Загрузка резервной копии..."
-      loaded: "<green>Резервная копия успешно загружена"
-      error: "<red>Ошибка при загрузке резервной копии: {error}"
-      must_be_yaml: "<yellow>Файл должен быть в формате .yml!"
-      file_not_found: "<yellow>Резервная копия этого файла не существует в папке резервных копий!"
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
     save:
-      saving: "<white>Сохранение резервной копии..."
-      saved: "<white>Резервное копирование {type} данных как {file}"
-      error: "<red>Ошибка резервного копирования данных {type}! Смотрите ошибки в консоли / ниже для подробностей"
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
   claimitems:
-    no_items: "<yellow>У вас нет элементов для сбора"
+    no_items: "<yellow>You have no items to claim"
   item:
     give:
-      sender: "<white>Выдано <aqua>{amount}x {key} <white>игроку {player}"
-      receiver: "<white>Вам дали <aqua>{amount}x {key}"
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
     modifier:
       add:
-        added: "{color}{stat} <gray>модификатор с уровнем <aqua>{value} <gray>был добавлен в ваш товар"
-        already_exists: "<yellow>Модификатор предмета со статистикой {color}{stat} <yellow>уже есть на вашей броне! Сначала удалите его с помощью /sk item modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
       remove:
-        does_not_exist: "<yellow>У вашего товара нет {color}{stat} <yellow>модификатора!"
-        removed: "{color}{stat} <gray>модификатор был удален из вашего предмета"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Найдены модификаторы предметов:"
+        header: "<white>Item modifiers found:"
       removeall:
-        removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
+        removed: "<gray>All item modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>Модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему предмету"
-        already_exists: "<yellow>Модификатор предмета со статистикой <aqua>{target} <yellow>уже есть на вашей броне! Сначала удалите его с помощью /sk item modifier remove"
-        skill_lore: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
-        global_lore: "<gray>Когда в руке: <blue>+{value}% опыта"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
-        removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
-        header: "<white>Найдены модификаторы предметов:"
+        header: "<white>Item multipliers found:"
       removeall:
-        removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
+        removed: "<gray>All item multipliers have been removed from your item"
     register:
-      registered: "<white>Зарегистрирован элемент на ключ {key}"
-      already_registered: "<yellow>Уже есть элемент, зарегистрированный для ключа <white>{key}<yellow>, используйте <white>/skills item unregister <yellow>сначала"
-      no_spaces: "<yellow>Ключ элемента не может содержать пробелов!"
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> требование к предмету с уровнем <aqua>{level}<gray> было добавлено к вашему предмету"
-        already_exists: "<yellow>У предмета уже есть <dark_aqua>{skill}<yellow> требование! Сначала удалите его с помощью <gold>/sk item requirement remove"
-        lore: "<red>Требует <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Ваш товар не соответствует требованиям <dark_aqua>{skill}<yellow>!"
-        removed: "<dark_aqua>{skill}<gray> требование элемента было удалено из вашего элемента"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
       list:
-        header: "<white>Найдены требования к предмету:"
+        header: "<white>Item requirements found:"
       removeall:
-        removed: "<gray>Все требования к предмету были удалены из вашего предмета"
-      use: "<yellow>Вы не соответствуете требованиям для использования этого предмета: {requirements}"
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
     unregister:
-      unregistered: "<white>Незарегистрированный элемент с ключом {key}"
-      not_registered: "<yellow>Нет элемента с ключом {key}"
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
   lang:
-    set: "<gray>Язык установлен на <aqua>{lang}"
-    not_found: "<yellow>Язык не найден!"
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
   mana:
-    display: "<white>Ваш {mana_unit}: <aqua>{current}/{max}"
-    display_other: "<white>{mana_unit} из {player}: <aqua>{current}/{max}"
-    add: "<gray>Добавлен <aqua>{amount} {mana_unit} <gray>для <gold>{player}"
-    remove: "<gray>Удалено <aqua>{amount} {mana_unit} <gray>от <gold>{player}"
-    set: "<gray>Установить <gold>{player} <gray>на <aqua>{amount} {mana_unit}"
-    at_least_zero: "<yellow>{mana_unit}должно быть не меньше нуля!"
-    console_specify_player: "<yellow>В консоли должен быть указан игрок!"
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
   modifier:
     add:
-      added: "{color}{stat} <gray>уровень скилла <aqua>{value} <gray>с именем <white>{name} <gray>добавлено игроку <gold>{player}"
-      already_exists: "<yellow>Модификатор с именем {name} уже существует на <gold>{player}<yellow>! Удалите его с помощью <gold>/sk modifier remove {player} {name}"
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: "<yellow>Модификатор {name} не найден для игрока <gold>{player}"
-      removed: "<gray>Модификатор <white>{name} <gray>удален с игрока <gold>{player}"
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
     list:
-      all_stats_header: "<gray>Модификаторы характеристик для игрока <gold>{player}:"
-      all_stats_entry: "  <white>{name} - {color}{stat} <white>Уровень <gold>{value}"
-      one_stat_header: "<gray>Модификаторы характеристик ({color}{stat}<gray>) для игрока <gold>{player}:"
-      one_stat_entry: "  <white>{name} - {color}{stat} <white>Уровень <gold>{value}"
-      players_only: "<yellow>Только игроки могут указывать свои собственные модификаторы! Попробуйте указать игрока"
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
     removeall:
-      removed_all_stats: "<gray>Удалены <aqua>{num} <gray>модификаторы характеристик у игрока <gold>{player}"
-      removed_one_stat: "<gray>Удалены <aqua>{num} {color}{stat} <gray>модификаторы от игрока <gold>{player}"
-      players_only: "<yellow>Только игроки могут удалять свои собственные модификаторы! Попробуйте указать игрока"
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
   multiplier:
-    global: Общее
-    list: "<white>Множитель опыта для <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
-    skill_entry: "<aqua> множитель{skill} <white>X: <aqua>{multiplier}x / +{percent}%"
-    players_only: "<yellow>Только игроки могут указывать свой множитель! Укажите игрока!"
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
       loaded: Successfully loaded preset {name}, restart the server now.
-      created: Созданные файлы
-      modified: Измененные файлы
-      replaced: Заменённые файлы
-      deleted: Удаленные файлы
-      skipped: Пропущенные файлы
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
   profile:
-    skills: "Профиль навыков Aurelium для <gold>{name}:\n<gray>UID: <white>{uuid}\n<gray>Навыки:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Уровень: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Профиль статистики навыков Aurelium для <gold>{name}:\n<gray>UID: <white>{uuid}\n<gray>Статистика:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Общий уровень: <white>{total_level}<gray>, Базовый уровень: <white>{base_level}<gray>, Изменённый уровень: <white>{modified_level}"
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Ваш рейтинг навыков"
-    power: "<yellow>Мощность <gray>(Все навыки): <white>#{rank} из {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} из {total}"
-  reload: "<green>Конфиг перезагружен!"
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: "<yellow>Данные уже сохраняются!"
-    mysql_not_enabled: "<yellow>MySQL не был включен при запуске сервера, вместо этого сохранялось в файл!"
-    saved: "<green>Данные о навыках сохранены!"
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
   skill:
     setall:
-      set: "<gray>Все навыки установлены на уровень <aqua>{level} <gray>для игрока <gold>{player}"
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:
-      set: "<gray>Навыки <aqua>{skill} <gray>установлены на уровень <aqua>{level} <gray>для игрока <gold>{player}"
-    at_least: "<yellow>Уровень должен быть не менее {level}!"
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
+    at_least: "<yellow>Level must be at least {level}!"
   toggle:
-    enabled: "<green>Панель действий ваших навыков была включена"
-    disabled: "<red>Панель действий ваших навыков отключена"
-    not_enabled: "<yellow>Панель действий навыков не активирована на этом сервере!"
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
-    power_header: "<white>--==<aqua><bold>Таблица лидеров всех навыков</bold><white>==--"
-    power_header_page: "<white>--==<aqua><bold>Таблица лидеров всех навыков </bold><white>(Страница {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Таблица лидеров</bold><white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Таблица лидеров </bold><white>(Страница {page})==--"
-    average_header: "<white>--==<aqua><bold>Таблица средних навыков</bold><white>==--"
-    average_header_page: "<white>--==<aqua><bold>Таблица средних навыков </bold><white>(Страница {page})==--"
-    usage: "<yellow>Используйте: <green>/sk top <white><page> <gray>из <green>/sk top <white>[skill] <page>"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>Успешно перенесенные данные игрока из <gray>{from} <green>в <gray>{to}"
-    error: "<red>Произошла ошибка при передаче данных игрока. Проверьте консоль на наличие ошибок."
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
-    already_updating: "<yellow>Таблица лидеров уже обновляется!"
-    updated: "<green>Таблица лидеров обновлена!"
-  version: "<white>Вы используете версию Aurelium Skills <aqua>{current_version}<white>. Последняя версия <aqua>{latest_version}"
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
-    add: "<gray>Добавлены <aqua>{amount} {skill} <gray>XP игроку <gray>{player}"
-    set: "<gray>Установить <aqua>{skill} <gray>XP для игрока <gray>{player} <gray>на {amount}"
-    remove: "<gray>Удалить <aqua>{amount} {skill} <gray>XP у игрока <gold>{player}"
-  unknown_skill: "<yellow>Неизвестный навык!"
-  unknown_stat: "<yellow>Неизвестная статистика!"
-  no_profile: "<yellow>Игрок не имеет профиля навыков. Пожалуйста, попробуйте переподключиться к игре или перезапустить сервер."
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
-  level_up: "{skill} уровень повышен"
-  skill_level_up: Уровень скилла повышен
-  rewards: Награды
-  ability_unlock: Способность разблокирована
-  ability_level_up: Способность повышена
-  mana_ability_unlock: Мана способность разблокирована
-  mana_ability_level_up: Уровень мана способности повышен
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
 menus:
   common:
-    close: "Закрыть"
-    level: "Уровень"
-    progress_to_level: "Прогресс уровня"
-    max_level: "МАКСИМАЛЬНЫЙ УРОВЕНЬ"
-    ability_levels: "Уровни способностей"
-    stats_leveled: "Повышаемые статистики"
-    mana_ability: "Мана способность"
-    duration: "Длительность"
-    mana_cost: "Цена маны"
-    cooldown: "Перезарядка"
-    damage: "Урон"
-    max_mana_cost: "Максимальная цена маны"
-    attack_speed: "Скорость атаки"
-    back: "Вернуться обратно"
-    back_click: "Вернуть в {menu_name} меню"
-    unlocked: "РАЗБЛОКИРОВАНО"
-    in_progress: "В ПРОГРЕССЕ"
-    locked: "ЗАКРЫТО"
-    your_level: "Ваш уровень"
-    next_page: "Следующая страница"
-    next_page_click: "Нажмите чтобы перейти к следующей странице"
-    previous_page: "Предыдущая страница"
-    previous_page_click: "Нажмите чтобы перейти к предыдущей странице"
+    close: "Close"
+    level: "Level"
+    progress_to_level: "Progress to Level"
+    max_level: "MAX LEVEL"
+    ability_levels: "Ability Levels"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "Mana Ability"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
   skills:
-    skills_title: "Ваши навыки"
-    your_skills: "Ваши навыки"
-    your_skills_desc: "Улучшайте навыки, выполняя различные задания, чтобы улучшить характеристики, возможности и т. д!"
-    your_skills_hover: "Наведите курсор на навык для получения дополнительной информации!"
-    your_skills_click: "Нажмите на навык, чтобы просмотреть прогресс уровня!"
-    skill_click: "Нажмите, чтобы просмотреть прогресс уровня!"
-    stats: "Статистика"
-    stats_desc: "Зарабатывайте очки статистики, повышая уровень навыков"
-    stats_click: "Нажмите, чтобы узнать больше или просмотреть свою статистику"
+    skills_title: "Your Skills"
+    your_skills: "Your Skills"
+    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
+    your_skills_hover: "Hover over a Skill for more information!"
+    your_skills_click: "Click on a Skill to view level progression!"
+    skill_click: "Click to view Level Progression!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
   level_progression:
-    level_progression_title: "{skill} Уровни - Страница {page}"
-    your_ranking: "Ваш ранг скилла"
-    rank_out_of: "<1>Вы на <2>{rank}</2> месте среди {total} игроков</1>"
-    rank_percent: "<1>Вы в топе <2>{percent}%</2> игроков</1>"
-    rewards: "Награды"
-    ability_unlock: "Способность разблокирована"
-    mana_ability_unlock: "Мана способность разблокирована"
-    progress: "Прогресс"
-    leaderboard_click: "Нажмите чтобы посмотреть топ {skill}"
-    sources: "XP источники"
-    sources_desc: "В меню источников показаны все способы, которыми вы можете заработать опыт в навыке, а также количество опыта, которое дает каждый источник."
-    sources_click: "Нажмите чтобы увидеть источники {skill}"
-    abilities: "Способности"
-    abilities_desc: "<2>Способности</2> <1> это пассивные перки, которые вы открываете и улучшаете по мере повышения уровня навыков.</1>"
-    mana_abilities_desc: "<3>Мана способности</3> <1> это специальный тип способности, который активируется и тратит ману.</1>"
-    abilities_click: "Нажмите чтобы увидеть {skill} способности"
+    level_progression_title: "{skill} Levels - Page {page}"
+    your_ranking: "Your Skill Ranking"
+    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
+    rewards: "Rewards"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Progress"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
   stats:
-    stats_title: Ваша статистика
-    skills: "Навыки"
-    added_drop: "+{value} выпадение"
-    added_drops: "+{value} выпадений"
-    chance_drop: "{chance}% для +{value} выпадения"
-    chance_drops: "{chance}% для +{value} выпадений"
+    stats_title: Your Stats
+    skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
-    unclaimed_items_title: "Подобрать предметы"
-    inventory_full: "У вас недостаточно места в вашем инвентаре чтобы подобрать вещи"
-    click_to_claim: "Нажмите чтобы собрать!"
+    unclaimed_items_title: "Claim Items"
+    inventory_full: "You do not have enough space in your inventory to claim that item"
+    click_to_claim: "Click to claim!"
   leaderboard:
-    leaderboard_title: "{skill} таблица лидеров"
+    leaderboard_title: "{skill} Leaderboard"
   sources:
-    sources_title: "{skill} XP источники"
-    sorter: "Сортировать XP источники"
-    descending: "Высший к низшему"
-    ascending: "Низший к высшему"
-    alphabetical: "Имя (А-Z)"
-    reverse_alphabetical: "Имя (Z-A)"
-    sort_click: "Нажмите, чтобы выбрать тип сортировки"
-    multiplied_xp: "Множитель {xp_unit}"
-    multiplied_desc: "Это количество опыта, которое вы фактически заработаете, исходя из вашего текущего множителя опыта"
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
   abilities:
-    abilities_title: "{skill} способности"
-    description: "Описание"
-    unlocked_at: "<1>Разблокирован <2>{skill} {level}"
-    next_upgrade_at: "<1>Следующее улучшение на <2>{skill} {level}"
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
-    name: Комбайнер
-    desc: "Автоматически пересаживает посевы {value} секунд. <1>[Щелкните ПКМ мотыгой и сломайте посев, чтобы активировать]"
-    raise: "<gray>Вы поднимаете мотыгу"
-    lower: "<gray>Вы опускаете мотыгу"
-    start: "<gold>Пополнение активировано! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Пополнение закончилось"
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
   treecapitator:
-    name: Древовидный
-    desc: "Мгновенно ломает деревья целиком в течении {value} секунд. <1>[Щелкните ПКМ по топору и сломайте дерево, чтобы активировать]"
-    raise: "<gray>Вы поднимаете топор"
-    lower: "<gray>Вы опускаете топор"
-    start: "<gold>Древовидный активирован! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Древовидный отключен"
+    name: Treecapitator
+    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
   speed_mine:
-    name: Быстрый Рудокоп
-    desc: "Дает Спешку {haste_level} с {value} секундами. <1>[Щелкните правой кнопкой мыши с киркой и копайте блоки]"
-    raise: "<gray>Вы поднимаете кирку"
-    lower: "<gray>Вы опускаете кирку"
-    start: "<gold>Быстрый Рудокоп активирован! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Быстрый Рудокоп отключен"
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
   absorption:
-    name: Поглощатель
-    desc: "Поступающий урон уменьшит ману на 2x вместо вашего здоровья в течение {value} секунд. Мана не будет восстанавливаться, пока активна абсорбция. <1>[Щелкните ЛКМ по щиту и получите урон, чтобы активировать]"
-    raise: "<gray>Вы поднимаете свой щит"
-    lower: "<gray>Вы опускаете свой щит"
-    start: "<gold>Поглощение активировано! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Поглощение закончилось"
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
   terraform:
-    name: Терраформация
-    desc: "При копании, в радиусе {radius} блок ломаются соседние блоки по горизонтали на {value} секунд. <1> [Правая кнопка мыши и копать блок чтобы активировать] "
-    raise: "<gray>Вы поднимаете лопату"
-    lower: "<gray>Вы опускаете лопату"
-    start: "<gold>Терроформация активированна! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Терроформация выключена"
+    name: Terraform
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
   sharp_hook:
-    name: Острый крюк
-    desc: "Нанести {value} урон зацепившемуся объекту щелкнув левой кнопкой мыши удочкой"
-    use: "<gold>Используемый острый крючок! <gray>(-{mana} {mana_unit})"
+    name: Sharp Hook
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
   charged_shot:
-    name: Заряженный выстрел
-    desc: "Стрелы, которые вы стреляете, нанесут больше урона в зависимости от того, насколько далеко был отведен лук, потребляя при этом ману. Наносит на {value}% больше урона за потребленную ману. <1>[Щелкните ЛКМ по луку, чтобы переключить режим заряженного выстрела]"
-    enable: "<gray>Режим заряженного выстрела теперь включен"
-    disable: "<gray>Режим заряженного выстрела отключен"
-    shoot: "<gold>Используется заряженный выстрел! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+    name: Charged Shot
+    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
-    name: Световой меч
-    desc: Увеличивает скорость атаки на {value}% в течение {duration} секунд. <1>[ПКМ и удар по мобу для активации]
-    raise: "<gray>Вы готовы к мечу"
-    lower: "<gray>Вы опускаете меч"
-    start: "<gold>Световое лезвие активно! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Световое лезвие стерлось"
-  not_ready: "<red>Способность не готова! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Недостаточно маны! <gray>({mana} {mana_unit} required)"
+    name: Lightning Blade
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
+    raise: "<gray>You ready your sword"
+    lower: "<gray>You lower your sword"
+    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade has worn off"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
-    name: Фермер
-    desc: "Собирайте урожай, чтобы заработать {xp_unit}"
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
   foraging:
-    name: Лесоруб
-    desc: "Рубите деревья, чтобы заработать {xp_unit}"
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
   mining:
-    name: Шахтер
-    desc: "Добывайте камень и руды, чтобы заработать {xp_unit}"
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
   fishing:
-    name: Рыбак
-    desc: "Ловите рыбу, чтобы заработать {xp_unit}"
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
   excavation:
-    name: Сельхоз
-    desc: "Копайте лопатой, чтобы заработать {xp_unit}"
+    name: Excavation
+    desc: "Dig with a shovel to earn Excavation {xp_unit}"
   archery:
-    name: Лучник
-    desc: "Стреляйте в мобов и игроков из лука, чтобы заработать {xp_unit}"
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
   defense:
-    name: Защитник
-    desc: "Получайте урон от сущностей, чтобы заработать {xp_unit}"
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
   fighting:
-    name: Борец
-    desc: "Сражайтесь с мобами холодным оружием, чтобы заработать {xp_unit}"
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
   endurance:
-    name: Выносливость
-    desc: "Ходите и бегайте, чтобы заработать {xp_unit}"
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
   agility:
-    name: Ловкость
-    desc: "Передвигайтесь и получайте урон при падении, чтобы заработать Ловкость {xp_unit}"
+    name: Agility
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
-    name: Алхимия
-    desc: "Варите и бросайте зелья, чтобы заработать алхимию {xp_unit}"
+    name: Alchemy
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
-    name: Зачарователь
-    desc: "Зачаровывайте, комбинируйте предметы, используйте точильный камень, чтобы заработать очки Зачарования {xp_unit}"
+    name: Enchanting
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
-    name: Колдовство
-    desc: "Используйте мановые способности, чтобы заработать {xp_unit}"
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
   healing:
-    name: Целитель
-    desc: "Пейте и взрывайте зелья, чтобы заработать {xp_unit}"
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
   forging:
-    name: Ковка
-    desc: "Объединяйте и применяйте книги на наковальне, чтобы заработать {xp_unit}"
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
   fishing:
-    cod: Треска
-    salmon: Лосось
-    tropical_fish: Тропическая рыба
-    pufferfish: Иглобрюх
-    treasure: Сокровища
-    junk: Хлам
-    rare: Редкий дроп
-    epic: Эпический дроп
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
   damage:
-    mob_damage: Урон от мобов
-    player_damage: Урон от игроков
-    fall_damage: Получение урона от падения
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
   statistic:
-    walk_per_meter: Ходьба
-    sprint_per_meter: Бег
-    swim_per_meter: Плавание
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
   jumping:
-    jump_per_100: Прыгание
+    jump_per_100: Jumping
   brewing:
-    awkward: Сварить неловкое зелье
-    regular: Сварить обычное зелье
-    extended: Сварить зелье длительного действия
-    upgraded: Сварить улучшенное зелье
-    splash: Сварить взрывающееся зелье
-    lingering: Сварить затяжное зелье
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
   enchanting:
-    weapon_per_level: Зачаровать оружие
-    armor_per_level: Зачаровать броню
-    tool_per_level: Зачаровать инструмент
-    book_per_level: Зачаровать книгу
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
   mana_ability_use:
-    mana_ability_use: Использование мана способности
+    mana_ability_use: Using Mana Abilities
   item_consume:
-    drink_regular: Выпить обычное зелье
-    drink_extended: Выпить зелье длительного действия
-    drink_upgraded: Выпить улучшенное зелье
-    golden_apple: Съесть золотое яблоко
-    enchanted_golden_apple: Съесть зачарованное золотое яблоко
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
   potion_splash:
-    splash_regular: Бросить обычное зелье
-    splash_extended: Бросить зелье длительного действия
-    splash_upgraded: Бросить улучшенное зелье
-    lingering_regular: Использовать обычное затяжное зелье
-    lingering_extended: Использовать затяжное зелье длительного действия
-    lingering_upgraded: Использовать улучшенное затяжное зелье
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
   anvil:
-    combine_books_per_level: Совместить книги зачарования
-    combine_weapon_per_level: Совместить оружие с книгой зачарования
-    combine_armor_per_level: Совместить броню с книгой зачарования
-    combine_tool_per_level: Совместить инструмент с книгой зачарования
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
   grindstone:
-    grindstone_per_level: Снять зачарования в точильном камне
+    grindstone_per_level: Disenchant Item with Grindstone
   units:
-    damage: Урон
-    meter: Метр
-    100_jumps: 100 прыжков
-    mana: Потребляемая мана
-    combine_level: Цена опыта наковальни
-    grindstone_level: Уровень зачарования предмета
-    enchant_level: Уровень полученного зачарования
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
-    name: Сила
-    desc: "Сила увеличивает урон от атаки с помощью различного оружия."
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
   health:
-    name: Здоровье
-    desc: "Здоровье увеличивает количество имеющихся у вас {hp_unit}."
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
-    name: Регенерация
-    desc: "Регенерация увеличивает скорость восстановления здоровья и маны."
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
-    name: Удача
-    desc: "Удача увеличивает вероятность выпадения дополнительных блоков при получении навыков."
+    name: Luck
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
-    name: Мудрость
-    desc: "Мудрость увеличивает ваш максимальный запас маны увеличивает получаемый опыт и снижает затраты на наковальню."
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
-    name: Стойкость
-    desc: "Стойкость увеличивает урон, уменьшаемый от атак противника."
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
-    name: Критический шанс
-    desc: "Критический шанс - это ваши шансы нанести критический удар."
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
-    name: Критический урон
-    desc: "Критический урон - это процентное увеличение урона при нанесении критического удара."
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
-    name: Скорость
-    desc: "Скорость повышает скорость ходьбы и бега."
+    name: Speed
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
-    name: Урон атаки
+    name: Attack Damage
   hp:
     name: HP
   saturation_regen:
-    name: Восстановление насыщения
+    name: Saturation Regen
   hunger_regen:
-    name: Восстановление голода
+    name: Hunger Regen
   mana_regen:
-    name: Восстановление маны
+    name: Mana Regen
   luck:
-    name: Характеристики удачи
+    name: Luck Attribute
   double_drop:
-    name: Двойное выпадение
+    name: Double Drop
   experience_bonus:
-    name: Бонус опыта
+    name: Experience Bonus
   anvil_discount:
-    name: Уменьшение стоимости в наковальне
+    name: Anvil Discount
   max_mana:
-    name: Максимальная мана
+    name: Max Mana
   damage_reduction:
-    name: Уменьшение урона
+    name: Damage Reduction
   crit_chance:
-    name: Критический шанс
+    name: Crit Chance
   crit_damage:
-    name: Критический урон
+    name: Crit Damage
   movement_speed:
-    name: Скорость движения
+    name: Movement Speed
   farming_luck:
-    name: Фермерская удача
+    name: Farming Luck
   foraging_luck:
-    name: Удача лесоруба
+    name: Foraging Luck
   mining_luck:
-    name: Шахтерская удача
+    name: Mining Luck
   excavation_luck:
-    name: Сельхозная удача
+    name: Excavation Luck
   fishing_luck:
-    name: Рыболовная удача
+    name: Fishing Luck
 ui:
-  maxed: МАКСИМАЛЬНЫЙ
+  maxed: MAXED
 units:
-  mana: МАНЫ
-  hp: ЖИЗНЕЙ
-  xp: ОПЫТ
+  mana: Mana
+  hp: HP
+  xp: XP
 file_version: 32
