@@ -776,31 +776,31 @@ sources:
 stats:
   strength:
     name: 強さ
-    desc: "Strength increases your attack damage with various different weapons."
+    desc: "強さは、様々な武器での攻撃力を向上させます"
   health:
     name: 体力
-    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
+    desc: "体力は、{hp_unit}の量を増やし、戦闘中に長持ちできます"
   regeneration:
     name: 回復力
-    desc: "Regeneration increases how fast you recover both health and mana."
+    desc: "回復力は、体力とマナの回復速度を上げます"
   luck:
     name: 幸運
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: 知恵
-    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
+    desc: "知恵は、最大マナを増やし、経験値の獲得を増やし、金床で必要な経験値を減らします"
   toughness:
     name: 耐久力
-    desc: "Toughness increases the amount of damage reduced from enemy attacks."
+    desc: "耐久力は、敵の攻撃から受けるダメージを減らします"
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit."
+    desc: "Crit Chance is your odds to deal a critical hit"
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    desc: "Speed increases how fast you can walk and run"
 traits:
   attack_damage:
     name: Attack Damage
