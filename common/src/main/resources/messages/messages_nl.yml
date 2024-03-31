@@ -5,8 +5,8 @@
 abilities:
   bountiful_harvest:
     name: Goede oogst
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Geeft +{value} Oogst Geluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Oogst Geluk"
   farmer:
     name: Boer
     desc: "Verdien {value}% meer landbouw XP."
@@ -16,17 +16,17 @@ abilities:
     desc: "Verhoogt schade van schoffels met {value}%."
     info: "+{value}% schoffel schade"
   geneticist:
-    name: Geneticist
+    name: Geneticus
     desc: "Verhoogt het verzadigingspunt van plantaardig voedsel met {value}."
     info: "+{value} Verzadiging"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Groeiaura
+    desc: "Gewassen met groeistadia binnen {radius} blokken van jou groeien {value} % sneller."
+    info: "+ {value} % Groei"
   lumberjack:
     name: Houthakker
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Grants + {value} Geluk bij het Voedselzoeken, waardoor de kans op extra drops toeneemt."
+    info: "+ {value} Voedsel Verzamelen"
   forager:
     name: Verzamelaar
     desc: "Verdien {value}% meer landbouw XP."
@@ -44,15 +44,15 @@ abilities:
     desc: "{value}% kans op drievoudige duurzaamheid schade met bijlen."
     info: "{value}% 3x Duurzaamheid Schade"
   lucky_miner:
-    name: Lucky Miner
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    name: Gelukkige Mijnwerker
+    desc: "Geeft +{value} Mijngeluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Mijngeluk"
   miner:
-    name: Miner
+    name: Mijnwerker
     desc: "Verdien {value}% meer mijnbouw XP."
     info: "+{value}% XP"
   pick_master:
-    name: Pick Master
+    name: Houweel meester
     desc: "Breng {value}% meer schade toe met pickaxe."
     info: "+{value}% Pickaxe schade"
   stamina:
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% Geen Duurzaamheid Verlies"
   lucky_catch:
     name: Geluk vangst
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Geeft + {value} Vis geluk, wat de kans op extra drops verhoogt."
+    info: "+{value} Vis geluk"
   fisher:
     name: Visser
     desc: "Verdien {value}% meer vissen XP."
@@ -97,8 +97,8 @@ abilities:
     info: "+{value}% schep schade"
   bigger_scoop:
     name: Grotere Scoop
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Geeft + {value} Graaf Geluk, wat de kans op extra drops verhoogt."
+    info: "+{value}% Graaf geluk"
   lucky_spades:
     name: Lucky Spades
     desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
