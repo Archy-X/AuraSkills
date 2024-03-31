@@ -4,468 +4,468 @@
 
 abilities:
   bountiful_harvest:
-    name: Щедрий Врожай
+    name: Bountiful Harvest
     desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
     info: "+{value} Farming Luck"
   farmer:
-    name: Фермер
-    desc: "Заробляйте на {value}% більше досвіду для сільського господарства."
-    info: "+{value}% ДОСВІДУ"
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
+    info: "+{value}% XP"
   scythe_master:
-    name: Майстер коси
-    desc: "Збільшення шкоди від тяпки на {value}%."
-    info: "+{value}% Шкоди для мотики"
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
   geneticist:
-    name: Генетик
-    desc: "Збільшує кількість насиченості від продуктів на основі рослин на {value}."
-    info: "+{value} Насиченість"
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
   growth_aura:
     name: Growth Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
     info: "+{value}% Growth"
   lumberjack:
-    name: Лісоруб
+    name: Lumberjack
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
     info: "+{value} Foraging Luck"
   forager:
-    name: Збирач
-    desc: "Отримання на {value}% більше XP від вирубування."
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
     info: "+{value}% XP"
   axe_master:
-    name: Володіння сокирою
-    desc: "Збільшення шкоди від сокири на {value}%"
-    info: "+{value}% Шкоди від сокири"
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
   valor:
-    name: Відвага
-    desc: "Надає +{value} сили під час утримання сокири."
-    info: "+{value} Сили"
+    name: Valor
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
   shredder:
-    name: Подрібнювач
-    desc: "{value}% шанс отримати потрійну міцність пошкодження сокирами."
-    info: "{value}% Без втрат міцності"
+    name: Shredder
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
   lucky_miner:
-    name: Вдача шахтаря
+    name: Lucky Miner
     desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
     info: "+{value} Mining Luck"
   miner:
-    name: Шахтарь
-    desc: "Отримати {value}% більше XP Завдяки копанню."
+    name: Miner
+    desc: "Earn {value}% more Mining XP."
     info: "+{value}% XP"
   pick_master:
-    name: Майстер кайла
-    desc: "Наносьте {value}% більше шкоди від кайла."
-    info: "+{value}% Шкоди від кайла"
+    name: Pick Master
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
   stamina:
-    name: Витривалість
-    desc: "Додає +{value} міцності під час тримає кирку."
-    info: "+{value} Міцність"
+    name: Stamina
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
   hardened_armor:
-    name: Загартована броня
-    desc: "{value}% Шанс не втратити міцність від пошкодження броні."
-    info: "{value}% Без втрат міцності"
+    name: Hardened Armor
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
   lucky_catch:
-    name: Щасливий улов
+    name: Lucky Catch
     desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
     info: "+{value} Fishing Luck"
   fisher:
-    name: Рибак
-    desc: "Отримати {value}% більше XP Завдяки риболовству."
+    name: Fisher
+    desc: "Earn {value}% more Fishing XP."
     info: "+{value}% XP"
   treasure_hunter:
-    name: Мисливець за скарбами
-    desc: "{value}% Більший шанс отримати рідкісний лут від рибальства."
-    info: "+{value}% Рідкісного луту"
+    name: Treasure Hunter
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
   grappler:
-    name: Захоплювач
-    desc: "Схоплювати істот на {value}% швидше."
-    info: "+{value}% Швидкість схоплювання"
+    name: Grappler
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
   epic_catch:
-    name: Виловити щось епічне
-    desc: "{value}% додано шанс отримати епічний лут від риболовлі."
-    info: "+{value}% Епічного луту"
+    name: Epic Catch
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
   metal_detector:
-    name: Металошукач
-    desc: "{value}% додано шанс отримати рідкісний лут від копання."
-    info: "+{value}% Рідкісного луту"
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
   excavator:
-    name: Екскаватор
-    desc: "Отримати {value}% більше XP Завдяки викопуванню."
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
     info: "+{value}% XP"
   spade_master:
-    name: Майстер лопати
-    desc: "Наносьте {value}% більше шкоди від лопати."
-    info: "+{value}% Шкоди для лопати"
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
   bigger_scoop:
-    name: Великий скуп
+    name: Bigger Scoop
     desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
     info: "+{value}% Excavation Luck"
   lucky_spades:
-    name: Вдачлива піка
-    desc: "{value}% Більший шанс отримати рідкісний лут від викопування."
-    info: "+{value}% Епічного луту"
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
   retrieval:
     name: Retrieval
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Distance"
   archer:
-    name: Лучник
-    desc: "Отримати {value}% більше XP Завдяки луку."
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
     info: "+{value}% XP"
   bow_master:
-    name: Майстер луку
-    desc: "Наносьте {value}% більше шкоди від лука."
-    info: "+{value}% Шкоди для луку"
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
   piercing:
-    name: Бронебійність
-    desc: "{value}% шанс що стріла пронизувати мобов."
-    info: "{value}% шанс бронебійності"
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
   stun:
-    name: Стан
-    desc: "{value}% шанс зменшити ворожий швидкість руху на 20% на 2 секунди."
-    info: "{value}% шанс стану"
+    name: Stun
+    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    info: "{value}% Stun Chance"
   shielding:
-    name: Шилдінг
-    desc: "Зменшує отримування шкоди на {value}% під час підкрадання."
-    info: "-{value}% Вхідної шкоди під час підкрадання"
+    name: Shielding
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
   defender:
-    name: Захисник
-    desc: "Заробляй на {value}% більше XP під час шахисту."
+    name: Defender
+    desc: "Earn {value}% more Defense XP."
     info: "+{value}% XP"
   mob_master:
-    name: Майстер мобів
-    desc: "Зменшує вхідну шкоду від мобів на {value}%"
-    info: "-{value}% Шкоди від мобів"
+    name: Mob Master
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
   immunity:
-    name: Невразливість
-    desc: "{value}% шанс повністю заблокувати ворожу атаку."
-    info: "{value}% Імунітету"
+    name: Immunity
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
   no_debuff:
-    name: Скажи Ні! дебафу
-    desc: "{value}% шанс заперечити шкідливе ефект зілля від застосування."
-    info: "{value}% Не отримати дебаф"
+    name: No Debuff
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
   parry:
     name: Parry
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
     info: "{value}% Dmg Reduction"
     parried: "<red>Attack parried"
   fighter:
-    name: Боєць
-    desc: "Отримати {value}% більше XP Завдяки Мечу."
+    name: Fighter
+    desc: "Earn {value}% more Fighting XP."
     info: "+{value}% XP"
   sword_master:
-    name: Мастер меча
-    desc: "Наносьте {value}% більше шкоди від меча."
-    info: "+{value}% Шкоди для меча"
+    name: Sword Master
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
   first_strike:
-    name: Перший страйк
-    desc: "Наносьте {value}% більше шкоди під час першого удару."
-    info: "+{value}% шкоди від першого удару"
-    dealt: "<red>Завдано першого страйку!"
+    name: First Strike
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
   bleed:
-    name: Кровотеча
+    name: Bleed
     desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
-    info: "{value}% шанс, {value_2} Шкоди"
-    enemy_bleeding: "<red>У ворога кровотеча!"
-    self_bleeding: "<red>У тебе кровотеча!"
-    stop: "<white>кровотеча закінчилась"
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
   anti_hunger:
-    name: Анті голод
-    desc: "{value}% шанс зупинити втрату голоду."
-    info: "{value}% Без Втрати Голоду"
+    name: Anti Hunger
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
   runner:
-    name: Бігун
-    desc: "Отримувати {value}% більше XP від Витривалості."
+    name: Runner
+    desc: "Earn {value}% more Endurance XP."
     info: "+{value}% XP"
   golden_heal:
-    name: Золоте здоров"я
-    desc: "Підвищити ефект регенерації Здоров\"я на {value}%"
-    info: "+{value}% Ефект регенерації"
+    name: Golden Heal
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
   recovery:
-    name: Відновлення
-    desc: "Збільшує природну регенерацію коли і менше половини здоров’я на {value}%"
-    info: "+{value}% регенерації ХП коли його мало"
+    name: Recovery
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
   meal_steal:
-    name: Крадіжка голоду
-    desc: "{value}% шанс вкрасти 1 очко голоду під час атаки гравця."
-    info: "{value}% Крадіжка Голоду"
+    name: Meal Steal
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
   light_fall:
-    name: Легке падіння
-    desc: "Зменшує пошкодження від падіння на {value}%"
-    info: "-{value}% пошкодження від падіння"
+    name: Light Fall
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
   jumper:
-    name: Стрибун
-    desc: "Заробляй на {value}% більше XP для спритності."
+    name: Jumper
+    desc: "Earn {value}% more Agility XP."
     info: "+{value}% XP"
   sugar_rush:
-    name: Цукрова лихоманка
-    desc: "Споживані й розпилення швидкості стрибка зілля триватиме на {value}% довше."
-    info: "{value}% Більша швидкість"
+    name: Sugar Rush
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
   fleeting:
-    name: Блискавичний
-    desc: "Посилення +{value}% швидкість руху, коли нижче 20% здоров'я."
-    info: "+{value}% Швидкість"
-    start: "<white>Ви отримали швидкоплинне підвищення швидкості! <gray>(+{value}% Speed)"
-    end: "<gray>Швидкочасне підвищення швидкості закінчилося"
+    name: Fleeting
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
-    name: Падіння грому
-    desc: "При підкрадуванні під час падіння, у вас є шанс {value}% завдати {value_2}% шкоди падіння, які отримують моби в радіусі 3 блоки."
-    info: "{value}% шанс, {value_2} Шкоди"
+    name: Thunder Fall
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
+    info: "{value}% Chance, {value_2}% Damage"
   alchemist:
-    name: Алхімік
-    desc: "Зілля, що ви приготуєте, будуть діяти на {value}% довше."
-    info: "+{value}% Тривалість зілля"
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
   brewer:
-    name: Пивовар
-    desc: "Заробляй на {value} більше ХР для Алхімії."
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
     info: "+{value}% XP"
   splasher:
-    name: Сплешер
-    desc: "Зілля, які ви розспилите на {value}% довше тривалість для кожного гравця."
-    info: "+{value}% Тривалість/Гравець"
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
   lingering:
-    name: Електрохарчування
-    desc: "Тримання зір природно розкладається на {value}% повільніше та розпадання на {value_2}% менше за постраждалу."
-    info: "-{value}% Природного, -{value_2}% розпаду сутності"
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
   wise_effect:
-    name: Ефект Мудреця
-    desc: "Збільшення мудрості {value} для кожного унікального ефекту зілля."
-    info: "+{value} Мусити/Ефект"
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
   xp_convert:
-    name: Конвертор досвіду
-    desc: "Заробляйте 1 Minecraft можливість для кожних {value} майстерності XP, яку ви отримаєте."
-    info: "1 EXP/{value} XP до всіх скілів"
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
   enchanter:
-    name: Заклинач
-    desc: "Отримати {value}% більше XP під час чарування."
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
     info: "+{value}% XP"
   xp_warrior:
-    name: Досвід воїна
-    desc: "Моб, якого ти вбив має {value}% шанс на подвоєння дропу."
-    info: "{value}% 2x Моб XP"
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
+    info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: Зачарована сила
-    desc: "Отримайте {value} Сили для кожного унікального зачарування предмета."
-    info: "{value} Силу/Зачарування"
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
   lucky_table:
-    name: Щасливий стіл
-    desc: "Зачарування предметів, використовуючи зачарування таблиці має шанс {value} на покращення зачарування рівня на 1, якщо не максимально високий рівень."
-    info: "{value}% Шанс Покращення Зачарування"
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
   life_essence:
-    name: Життєва есенція
-    desc: Миттєве зілля Здоров"я лікує на {value}% більше.
-    info: "+{value}% миттєвого здоров’я"
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
   healer:
-    name: Зцілення
-    desc: Отримання на {value}% більше XP від Зцілення.
+    name: Healer
+    desc: Earn {value}% more Healing XP.
     info: "+{value}% XP"
   life_steal:
-    name: Крадіжка життя
-    desc: Лікувати {value}% від максимального ОЗ ворожих мобів та гравців, яких ви вбили.
-    info: "Краде {value}% HP"
+    name: Life Steal
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
   golden_heart:
-    name: Золоте Серце
-    desc: Пошкодження виконане для поглинання сердець зменшено на {value}%
-    info: "-{value}% поглинання шкоди"
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
   revival:
-    name: Відновлення життєвих сил
-    desc: Отримано +{value} Здоров’я і +{value_2} Відновлення на 30 секунд після відродження.
-    info: "+{value} Здоров\"я +{value_2} Регенерації"
-    message: "<white>Ви отримали бонус відродження на 30 секунд! <white>(<red>+{value} Здоров’я <gold>+{value_2} Відродження)"
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   disenchanter:
-    name: Розчавильник
-    desc: Отримайте на {value}% більше досвіду при вилученні предметів за допомогою редстоуну.
+    name: Disenchanter
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
     info: "+{value}% Grindstone EXP"
   forger:
-    name: Кувальник
-    desc: Отримання на {value}% більше XP під час роботи з кувадлом.
+    name: Forger
+    desc: Earn {value}% more Forging XP.
     info: "+{value}% XP"
   repairing:
-    name: Ремонт
-    desc: Ремонт предметів на ковадлі, використовуючи сирову матеріалу, який був виготовлений з ремонту {value}% тривалого часу.
-    info: "+{value}% Ремонт ковадла"
+    name: Repairing
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
   anvil_master:
-    name: Майстер ковадла
-    desc: Збільшує максимальну вартість ремонту диявола до того, як він занадто дорогий, для {value} вражень.
-    info: "{value} Максимальна вартість"
+    name: Anvil Master
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
   skill_mender:
-    name: Точність навичок
-    desc: Здобування вміння XP має шанс {value}% відновити майстерності чи одяг обладунку з шматком вдягнутого холоду зачарування 1 довговічність на запас навички.
-    info: "{value}% шанс точності"
+    name: Skill Mender
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
 acf:
   core:
-    permission_denied: "<red>I пробачте, але у вас немає дозволу на цю команду."
-    permission_denied_parameter: "<red>пробачте, але у вас немає дозволу на цю команду."
-    error_generic_logged: "<red>Виникла помилка. Ця проблема була записана. Вибачте за незручності."
-    unknown_command: "<red>Невідома команда, будь ласка, введіть <yellow>/sk help"
-    invalid_syntax: "<yellow>Використання: <yellow>{command} <green>{syntax}"
-    error_prefix: "<red>Помилка: {message}"
-    error_performing_command: "<red>Вибачте мені, але при виконанні цієї команди сталася помилка."
-    please_specify_one_of: "<red>Помилка: Будь ласка, вкажіть одне з (<yellow>{valid}<red>)"
-    must_be_a_number: "<red>Помилка: {num} має бути числом."
-    must_be_min_length: "<red>помилка: має бути принаймні {min} символ(-и,-ів)."
-    must_be_max_length: "<red>Помилка: Повинно містити не більше {max} символів."
-    please_specify_at_most: "<red>Помилка: Будь ласка, зазначте значення не більше {max}."
-    please_specify_at_least: "<red>Помилка: Будь ласка, вкажіть значення принаймні {min}."
-    not_allowed_on_console: "<red>Помилка: консоль не може виконувати цю команду."
-    could_not_find_player: "<red>Помилка: Не вдалося знайти гравця по імені: <yellow>{search}"
-    no_command_matched_search: "<red>Жодної команди не відповідає <yellow>{search}."
-    help_page_information: "<aqua> - відображення сторінки <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua>результатів для перегляду)."
-    help_no_results: "<aqua>Помилка: більше немає результатів."
-    help_header: "<yellow>=== <aqua>Showing довідка для <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_header: "<yellow>=== <aqua>Showing детальна допомога для <green>{commandprefix}{command}<yellow> ==="
-    help_search_header: "<yellow>=== <aqua>Результати пошуку для <green>{commandprefix}{command} {search}<yellow> ==="
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: "<red>Помилка: такого світу не існує."
-    you_must_be_holding_item: "<red>Помилка: ви повинні тримати предмет у головній руці."
-    player_is_vanished_confirm: "<yellow>Попередження: &{vanished} <yellow>is зникнуто. Не підірвати обкладинку!\n<yellow>Для підтвердження вашої дії додайте <green>: Підтвердіть <yellow>to end свого імені.\n<yellow>Ex: {vanished}:confirm"
-    username_too_short: "<red>Помилка: Ім'я користувача занадто коротке, воно повинне складатися хоча б з трьох символів."
-    is_not_a_valid_name: "<red>Помилка: <yellow>{name} <red>не є правильним ім'ям користувача."
-    multiple_players_match: "<red>Помилка: відповідність декількох гравців <aqua>{search} <yellow>({all})<red>, будь ласка, будьте більш конкретні."
-    no_player_found_server: "<red>Немає гравця, який відповідає <yellow>{search} <red>is під'єднано до цього сервера."
-    no_player_found_offline: "<red>Немає гравця, який відповідає <yellow>{search}<red>, може бути знайдений."
-    no_player_found: "<red>Немає гравця, який відповідає <yellow>{search}<red>, може бути знайдений."
-    location_please_specify_world: "<red>Помилка: Будь ласка, вкажіть світ. Приклад: <yellow>world:x,y,z."
-    location_please_specify_xyz: "<red>Помилка: Вкажіть координати x, y та z. Приклад: <yellow>world:x,y,z."
-    location_console_not_relative: "<red>Помилка: консоль не може використовувати відносні координати для розташування."
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
-        already_exists: "<yellow>An модифікатор броні з характеристиками {color}{stat} <yellow>Вже існує на вашому обладунку! Спочатку його видалили з модифікатором зброї /sk armor"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
       remove:
-        does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
-        removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>модефікатор броні знайдено:"
+        header: "<white>Armor modifiers found:"
       removeall:
-        removed: "<gray>Усі модифікатори броні були видалені з Вашого елементу"
+        removed: "<gray>All armor modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
-        already_exists: "<yellow>Мультиплікатор броні з цільовою <aqua>{target} <yellow>Вже є на вашому обладунку! Видаліть його спочатку з видалом мультиплікатором зброї /sk armor"
-        skill_lore: "<gray>Під час зношення: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>Під час зношення: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>Коли зношені: <blue>+{value}% Вміння XP"
-        global_lore_subtract: "<gray>Коли зношені: <blue>-{value}% Вміння XP"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow> Твої редмети не мають <aqua>{target} <yellow>мультипрайер броні!"
-        removed: "<aqua>{target} <gray>броня було видалено з вашого предмету"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
-        header: "<white>знайдено мультиплікатори:"
+        header: "<white>Armor multipliers found:"
       removeall:
-        removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
+        removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> вимога броні з рівнем <aqua>{level}<gray> була додана до вашого товару"
-        already_exists: "<yellow>Item вже має <dark_aqua>{skill}<yellow> вимог до броні! Видаліть її спочатку з <gold>/sk вимог до видалення"
-        lore: "<red>Потребує <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Ваш предмет не має <dark_aqua>{skill}<yellow> броня необхідності!"
-        removed: "<dark_aqua>{skill}<gray> потрбована броня була видалена з ваших предметів"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
       list:
-        header: "<white>Вимоги до броні знайдено:"
+        header: "<white>Armor requirements found:"
       removeall:
-        removed: "<gray>Усі вимоги броні були видалені з вашого предмету"
-      equip: "<yellow>Ви не відповідаєте вимогам, щоб обладнати цей предмет: {requirements}"
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
   backup:
     load:
-      confirm: "<red>Завантаження резервної копії призведе до повернення всіх даних навичок гравців. Ця дія є постійною і не може бути скасована. Можливо вам слід зберегти резервну копію перед завантаженням іншу. Введіть команду ще раз, щоб підтвердити цю дію"
-      loading: "<white>Завантаження резервної копії..."
-      loaded: "<green>Успішно завантажено резервну копію"
-      error: "<red>Помилка завантаження резервного копіювання: {error}"
-      must_be_yaml: "<yellow>Файл повинен бути .yml файлом!"
-      file_not_found: "<yellow>A резервна копія цього імені файлу не існує в папці резервних копій!"
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
     save:
-      saving: "<white>Збереження резервної копії..."
-      saved: "<white>Резервовано {type} даних як {file}"
-      error: "<red>Помилка при створенні даних {type}! Дивіться помилку в консолі/нижче для деталей"
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
   claimitems:
-    no_items: "<yellow>У вас немає предметів для видачі"
+    no_items: "<yellow>You have no items to claim"
   item:
     give:
       sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
-      receiver: "<white>Вам надано <aqua>{amount}x {key}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
     modifier:
       add:
-        added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
-        already_exists: "<yellow>The modifier з характеристиками {color}{stat} <yellow>already існує на вашому обладунку! Спочатку видаліть його з модифікатором елементів/sk"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
       remove:
-        does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
-        removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>предмет модифікатори знайдено:"
+        header: "<white>Item modifiers found:"
       removeall:
-        removed: "<gray>Усі модифікатори елементу були видалені з Вашого елементу"
+        removed: "<gray>All item modifiers have been removed from your item"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
-        already_exists: "<yellow>Мультиплікатор товару з цільовою <aqua>{target} <yellow>already в предметі! Видаліть його спочатку з мультиплікатором предметів /sk"
-        skill_lore: "<gray>Коли активно: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>Коли активно: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>Коли активно: <blue>+{value}% Skill XP"
-        global_lore_subtract: "<gray>Коли активно: <blue>-{value}% Skill XP"
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>Ваш елемент не має <aqua>{target} <yellow>item множник!"
-        removed: "<aqua>{target} <gray>предмет було видалено з вашого предмету"
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
-        header: "<white>знайдено мультиплікатори:"
+        header: "<white>Item multipliers found:"
       removeall:
-        removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
+        removed: "<gray>All item multipliers have been removed from your item"
     register:
-      registered: "<white>реєстрований утримуваний елемент до ключа {key}"
+      registered: "<white>Registered held item to key {key}"
       already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
-      no_spaces: "<yellow>Item key не може містити пробілів!"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> вимога предмету з рівнем <aqua>{level}<gray> була додана до вашого товару"
-        already_exists: "<yellow>Item вже має <dark_aqua>{skill}<yellow> вимог до предмета! Видаліть її спочатку з <gold>/sk вимог до видалення"
-        lore: "<red>Потребує <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Ваш предмет не має <dark_aqua>{skill}<yellow> предмет необхідності!"
-        removed: "<dark_aqua>{skill}<gray> потрбований предмет була видалена з ваших предметів"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
       list:
-        header: "<white>предметні вимоги знайдено:"
+        header: "<white>Item requirements found:"
       removeall:
-        removed: "<gray>Усі вимоги до товару були видалені з вашого елемента"
-      use: "<yellow>Ви не відповідаєте вимогам, щоб використовувати цей предмет: {requirements}"
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
     unregister:
-      unregistered: "<white>Незареєстрований елемент з ключем {key}"
-      not_registered: "<yellow>Елемент не зареєстровано з ключем {key}"
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
   lang:
-    set: "<gray>Мова встановлена на <aqua>{lang}"
-    not_found: "<yellow>Мова не знайдена!"
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
   mana:
-    display: "<white>Ваша {mana_unit}: <aqua>{current}/{max}"
-    display_other: "<white>{mana_unit} з {player}: <aqua>{current}/{max}"
-    add: "<gray> Додано <aqua>{amount} {mana_unit} <gray>для гравця <gold>{player}"
-    remove: "<gray> видалено <aqua>{amount} {mana_unit} <gray>від гравця <gold>{player}"
-    set: "<gray>Встановити гравця <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
-    at_least_zero: "<yellow>{mana_unit} має бути мінімум нуль!"
-    console_specify_player: "<yellow>Консоль повинна вказати гравця!"
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
   modifier:
     add:
-      added: "{color}{stat} <gray>модифікатор рівня <aqua>{value} <gray>з іменем <white>{name} <gray>додано до гравця <gold>{player}"
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: "<yellow>Модифікатор {name} не знайдений для гравця <gold>{player}"
-      removed: "<gray>Модифікатор <white>{name} <gray>видалено від гравця <gold>{player}"
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
     list:
-      all_stats_header: "<gray>Стат модифікатори для гравця <gold>{player}:"
-      all_stats_entry: "  <white>{name} — {color}{stat} <white>Рівень <gold>{value}"
-      one_stat_header: "<gray>Модифікатори характеристик ({color}{stat}<gray>) для гравця <gold>{player}:"
-      one_stat_entry: "  <white>{name} — {color}{stat} <white>Рівень <gold>{value}"
-      players_only: "<yellow>Тільки гравці можуть відображати свої власні модифікатори! Спробуйте вказати гравця"
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
     removeall:
-      removed_all_stats: "<gray>Видалено модифікаторів <aqua>{num} <gray>stat з гравця <gold>{player}"
-      removed_one_stat: "<gray>Видалено <aqua>{num} {color}{stat} <gray>модифікаторів з гравця <gold>{player}"
-      players_only: "<yellow>Тільки гравці можуть видаляти свої модифікатори! Спробуйте вказати гравця"
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
   multiplier:
-    global: Глобальний
-    list: "<white>Глобальний XP множник для <gold>{player}<white>: <aqua>{multiplier}x / +{percent}"
-    skill_entry: "<aqua>{skill} <white>XP множник: <aqua>{multiplier}x / +{percent}%"
-    players_only: "<yellow>Тільки гравці можуть скласти свій власний мультиплікатор! Вкажіть гравця!"
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
@@ -476,51 +476,51 @@ commands:
       deleted: Deleted files
       skipped: Skipped files
   profile:
-    skills: "Профіль виснаження для <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Вміння:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Рівень: <white>{level}<gray>, ХР: <white>{xp}"
-    stats: "Профіль виснаження для <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Вміння:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Загальний рівень: <white>{total_level}<gray>, Рівень основи: <white>{base_level}<gray>, Модифікований рівень: <white>{modified_level}"
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Ваші Рейтинг Вмінь"
-    power: "<yellow>Power <gray>(Усі навички): <white>#{rank} з {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} з {total}"
-  reload: "<green>Конфігурацію перезавантажено!"
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: "<yellow>Data вже збережено!"
-    mysql_not_enabled: "<yellow>MySQL не було увімкнено під час запуску сервера, замість цього збереження файлу!"
-    saved: "<green>Дані вмінь збережені!"
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
   skill:
     setall:
-      set: "<gray> всі вміння поставлені на рівень <aqua>{level} <gray>для гравця <gold>{player}"
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:
-      set: "<gray>Вміння <aqua>{skill} <gray>встановити в <aqua>{level} <gray>для гравця <gold>{player}"
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
     at_least: "<yellow>Level must be at least {level}!"
   toggle:
-    enabled: "<green>Бар ваших вмінь було увімкнено"
-    disabled: "<red>Бар ваших вмінь було вимкнено"
-    not_enabled: "<yellow>бар дій з навичками не ввімкнена на цьому сервері!"
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
-    power_header: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>==--"
-    power_header_page: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>(Page {page})==--"
-    skill_header: "<white>--==<aqua><bold>{skill} Лідератора</bold><white>==--"
-    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard </bold><white>(Page {page})==--"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
     average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
     usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>Успішно переміщено дані гравця з <gray>{from} <green>to <gray>{to}"
-    error: "<red>Помилка при передачі даних програвача. Перевірте консоль на наявність помилок."
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
-    already_updating: "<yellow>Leaderboard вже оновлено!"
-    updated: "<green>Дошку Лідера оновлено!"
-  version: "<white>Ви знаходитесь на версії з навичками Aurelium <aqua>{current_version}<white>. Остання версія <aqua>{latest_version}"
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
-    add: "<gray> Додано <aqua>{amount} {skill} <gray>ХРдля гравця <gray>{player}"
-    set: "<gray>Set <aqua>{skill} <gray>XP для гравця <gray>{player} <gray>to {amount}"
-    remove: "\"<gray>Видалено{amount} {skill} <gray>XP з гравця <gold>{player}\"1"
-  unknown_skill: "<yellow>Невідома навичка!"
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
   unknown_stat: "<yellow>Unknown stat!"
-  no_profile: "<yellow>У гравця немає профілю навичок. Будь ласка, спробуйте ще раз під'єднатися до гри або перезавантажте сервер."
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} Level Up"
   skill_level_up: Skill Level Up
@@ -612,115 +612,115 @@ menus:
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
-    name: Поповнення
-    desc: "Засадити рослини автоматично на {value} секунд. <1>[Права кнопка миші вихоплює і мувати обрізання]"
-    raise: "<gray>Ти підняв мотику"
-    lower: "<gray>Ти опустив мотику"
-    start: "<gold>Поповнення активоване! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Поповнення виснажено"
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
   treecapitator:
-    name: Лісоруб
-    desc: "Зруби цілі дерева на {value} секунд. <1>[Правий клік по осі переносити журнал]"
-    raise: "<gray>Ти підняв Сокиру"
-    lower: "<gray>Ти опустив сокиру"
-    start: "<gold>Здібність лісоруб активована! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Здібність Лісоруб закінчилась"
+    name: Treecapitator
+    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
   speed_mine:
-    name: Швидкісне копання
-    desc: "Дає ефект квапливості {haste_level} на {value} секунд <1>[Right click pickaxe and mine block to activate]"
-    raise: "<gray>Ти підняв Кайло"
-    lower: "<gray>Ти опустив кайло"
-    start: "<gold>Швидкісне копання Активоване! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Ефект Швидкісного копання закінчився"
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
   absorption:
-    name: Поглинання
-    desc: "Вхідна шкода зменшує шкоду від людини на 2 x Minecraft замість вашої здоров'я на {value} секунд. Mana не буде відновлювати доки поглинання активне. <1>[Лівий щит зліва і заподіяти шкоду для активації]"
-    raise: "<gray>Ти підняв щит"
-    lower: "<gray>Ти опустив щит"
-    start: "<gold>Поглинання Активоване! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Ефект поглинання закінчився"
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
   terraform:
-    name: Тераформування
+    name: Terraform
     desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
-    raise: "<gray>Ти підняв лопату"
-    lower: "<gray>Ти опустив лопату"
-    start: "<gold>Тераформування активоване! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Ефект тераформування закінчився"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
   sharp_hook:
-    name: Гострий гачок
-    desc: "Завдати {value} пошкоджень закріпленому об\"єкту коли лівий клік з риболовлею"
-    use: "<gold>Використаний гострий Гачок! <gray>(-{mana} {mana_unit})"
+    name: Sharp Hook
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
   charged_shot:
-    name: Заряджений постріл
-    desc: "Стріли як ти вистрелиш завдають більше шкоди на основі того, наскільки лук був відтягнутий назад, споживаючи ману в процесі. На {value}% більше шкоди за спожиту ману. <1>[Клацніть лівою кнопкою миші лук для перемикання режиму зарядженого пострілу]"
-    enable: "<gray>Заряджений постріл активований"
-    disable: "<gray>Заряджений постріл деактивований"
-    shoot: "<gold>Використовуєтся Заряджений постріл! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+    name: Charged Shot
+    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
-    name: Блискавичний меч
-    desc: Збільшує швидкість атаки на {value}% на {duration} секунд. <1>[Клацніть правою кнопкою миші та атака мобів, щоб активуватися]
-    raise: "<gray>Ви готові ваш меч"
-    lower: "<gray>Ти опустив свій меч"
-    start: "<gold>Здібність Блискавичний меч активована! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Ефект Блискавичний меч закінчився"
-  not_ready: "<red>Здатність не готова! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Не вистачає мана! <gray>( потрібно{mana} {mana_unit})"
+    name: Lightning Blade
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
+    raise: "<gray>You ready your sword"
+    lower: "<gray>You lower your sword"
+    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade has worn off"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
-    name: Фермерство
-    desc: "Збирай врожай для прокачки уміння Фермерства{xp_unit}"
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
   foraging:
-    name: Лісорубство
-    desc: "Вирубуйте дерево для підвищення уміння Лісорубства {xp_unit}"
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
   mining:
-    name: Володіння кайлом
-    desc: "Зломайте камінь або руди для прокачки уміння Володіння кайлом{xp_unit}"
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
   fishing:
-    name: Рибальська справа
-    desc: "Ловіть рибу для підвищення уміння рибальської справи {xp_unit}"
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
   excavation:
-    name: Викопування
-    desc: "Копай лопатою для прокачки уміння Викопування{xp_unit}"
+    name: Excavation
+    desc: "Dig with a shovel to earn Excavation {xp_unit}"
   archery:
-    name: Володіння луком
-    desc: "Стріляти мобів та гравців з луком Щоб заробити володіння луком {xp_unit}"
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
   defense:
-    name: Захист
-    desc: "Отримуй урон щоб прокачати уміння Захисту {xp_unit}"
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
   fighting:
-    name: Бій
-    desc: "Бийдесь з мобами зброєю ближнього бою щоб заробляти Бій {xp_unit}"
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
   endurance:
-    name: Витривалість
-    desc: "Гуляйте та бігайте для покращення уміння Витривалості{xp_unit}"
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
   agility:
-    name: Спритність
+    name: Agility
     desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
-    name: Алхімія
+    name: Alchemy
     desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
-    name: Зачарування
+    name: Enchanting
     desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
-    name: Чаклунство
-    desc: "Використовуйте мана здібності, щоб покращити Чаклунство {xp_unit}"
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
   healing:
-    name: Лікування
-    desc: "Випивайте та застосовуйте вибухові зілля для прокачки уміння Лікування {xp_unit}"
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
   forging:
-    name: Ковальська справа
-    desc: "Комбінувати і застосовувати книги для заробити Кування {xp_unit}"
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
   fishing:
-    cod: Тріска
-    salmon: Лосось
-    tropical_fish: Тропічна риба
-    pufferfish: Риба-фугу
-    treasure: Предмети зі Скарбами
-    junk: Непотріб
-    rare: Рідкісний лут
-    epic: Епічний лут
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
   damage:
     mob_damage: Damage from Mobs
     player_damage: Damage from Players
@@ -766,32 +766,32 @@ sources:
   grindstone:
     grindstone_per_level: Disenchant Item with Grindstone
   units:
-    damage: Шкода
-    meter: Метр
-    100_jumps: 100 стрибків
-    mana: Споживання мани
-    combine_level: Вартість ковадла XP
-    grindstone_level: Рівень зачарування на предмет
-    enchant_level: Отримано рівень зачарування
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
 stats:
   strength:
-    name: Сила
-    desc: "Сили збільшує пошкодження від атаки з різною зброєю."
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
   health:
-    name: Здоров"я
-    desc: "Здоров\"я збільшує вашу кількість {hp_unit} мати, дозволяючи вам тривати довше бої."
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
-    name: Регенерація
-    desc: "Регенерація збільшує відновлення життя та мани."
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
-    name: Удача
+    name: Luck
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
-    name: Мудрість
-    desc: "Мудрість збільшує ваш максимальний запас мани й отримуваний досвід, також знижує витрати на ковадло."
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
-    name: Витривалість
-    desc: "Стійкість зменшує шкоду від атак противника."
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
     name: Crit Chance
     desc: "Crit Chance is your odds to deal a critical hit."
@@ -831,7 +831,7 @@ traits:
   movement_speed:
     name: Movement Speed
   farming_luck:
-    name: Вдача фермерства
+    name: Farming Luck
   foraging_luck:
     name: Foraging Luck
   mining_luck:
@@ -843,7 +843,7 @@ traits:
 ui:
   maxed: MAXED
 units:
-  mana: Мана
+  mana: Mana
   hp: HP
   xp: XP
 file_version: 32
