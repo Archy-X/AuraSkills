@@ -4,343 +4,343 @@
 
 abilities:
   bountiful_harvest:
-    name: Panen Melimpah
+    name: Bountiful Harvest
     desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
     info: "+{value} Farming Luck"
   farmer:
-    name: Petani
-    desc: "Mendapatkan tambahan {value}% EXP skill petani."
-    info: "+{value}% EXP"
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
+    info: "+{value}% XP"
   scythe_master:
-    name: Master Sabit
-    desc: "Meningkatkan {value}% Kerusakan yang disebabka olehn sabit."
-    info: "+{value}% Kerusakan"
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
   geneticist:
-    name: Ahli Genetika
-    desc: "Meningkatkan Kekenyangan yang didapat dari tanaman yang dimakan sebanyak {value}."
-    info: "+{value} Kekenyangan"
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
   growth_aura:
     name: Growth Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
     info: "+{value}% Growth"
   lumberjack:
-    name: Penebang
+    name: Lumberjack
     desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
     info: "+{value} Foraging Luck"
   forager:
-    name: Penjelajah
-    desc: "Mendapatkan tambahan {value}% EXP skill penebang."
-    info: "+{value}% EXP"
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
+    info: "+{value}% XP"
   axe_master:
-    name: Ahli Kapak
-    desc: "Meningkatkan {value}% Kerusakan yang disebabkan oleh kapak"
-    info: "+{value}% Kerusakan"
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
   valor:
-    name: Kewiraan
-    desc: "Mendpatkan tambahan +{value} Kekuatan ketika sedang memegang kapak."
-    info: "+{value} Kekuatan"
+    name: Valor
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
   shredder:
-    name: Penghancur
-    desc: "{value}% kesempatan untuk menghasilkan kerusakan sebanyak 3x lipat dengan kapak."
-    info: "{value}% 3x lipat kerusakan"
+    name: Shredder
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
   lucky_miner:
-    name: Penambang Beruntung
+    name: Lucky Miner
     desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
     info: "+{value} Mining Luck"
   miner:
-    name: Penambang
-    desc: "Mendapatkan tambahan {value}% EXP skill menambang."
-    info: "+{value}% EXP"
+    name: Miner
+    desc: "Earn {value}% more Mining XP."
+    info: "+{value}% XP"
   pick_master:
-    name: Ahli Beliung
-    desc: "Meningkatkan {value}% Kerusakan yang disebabkan oleh beliung."
-    info: "+{value}% Kerusakan"
+    name: Pick Master
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
   stamina:
     name: Stamina
-    desc: "Meningkatkan +{value} Ketahanan ketika memegang beliung."
-    info: "+{value} Ketahanan"
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
   hardened_armor:
-    name: Armor Yang Keras
-    desc: "{value}% kesempatan untuk tidak memeberi kerusakan kepada armor."
-    info: "{value}% Tidak ada kerusakan"
+    name: Hardened Armor
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
   lucky_catch:
-    name: Tangkapan Beruntung
+    name: Lucky Catch
     desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
     info: "+{value} Fishing Luck"
   fisher:
-    name: Nelayan
-    desc: "Mendapatkan tambahan {value}% EXP skill nelayan."
-    info: "+{value}% EXP"
+    name: Fisher
+    desc: "Earn {value}% more Fishing XP."
+    info: "+{value}% XP"
   treasure_hunter:
-    name: Pemburu Harta Karun
-    desc: "{value}% kesempatan mendapatkan barang langka dari memancing."
-    info: "{value}% Barang langka"
+    name: Treasure Hunter
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
   grappler:
-    name: Penangkap
-    desc: "Menarik tali pancingan {value}% lebih cepat."
-    info: "+{value}% Tangkapan cepat"
+    name: Grappler
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
   epic_catch:
-    name: Tangkapan Epik
-    desc: "{value}% kesempatan mendapatkan barang sangat langka dari memancing."
-    info: "{value}% Barang sangat langka"
+    name: Epic Catch
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
   metal_detector:
-    name: Pendeteksi Besi
-    desc: "{value}% kesempatan mendapatkan barang langka dari menggali."
-    info: "{value}% Barang Langka"
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
   excavator:
-    name: Penggali
-    desc: "Mendapatkan tambahan {value}% EXP skill penggali."
-    info: "+{value}% EXP"
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
+    info: "+{value}% XP"
   spade_master:
-    name: Ahli Sekop
-    desc: "Meningkatkan {value}% Kerusakan yang disebabkan oleh sekop."
-    info: "+{value}% Kerusakan"
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
   bigger_scoop:
-    name: Sekop Raksasa
+    name: Bigger Scoop
     desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
     info: "+{value}% Excavation Luck"
   lucky_spades:
-    name: Sekop Keberuntungan
-    desc: "{value}% kesempatan mendapatkan barang sangat langka dari menggali."
-    info: "{value}% Barang sangat langka"
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
   retrieval:
     name: Retrieval
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Distance"
   archer:
-    name: Pemanah
-    desc: "Mendapatkan {value}% EXP lebih banyak untuk skill pemanah."
-    info: "+{value}% EXP"
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
+    info: "+{value}% XP"
   bow_master:
-    name: Pemanah Terlatih
-    desc: "Memberikan {value}% kerusakan lebih banyak dengan busur."
-    info: "+{value}% Kerusakan"
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
   piercing:
-    name: Tajam
-    desc: "{value}% kesempatan anak panah untuk menembus mobs."
-    info: "{value}% Tembus"
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
   stun:
     name: Stun
-    desc: "{value}% kesempatan untuk membuat kecepatan lawan menurun sebanyak 20% untuk 2 detik."
-    info: "{value}% Kesempatan"
+    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    info: "{value}% Stun Chance"
   shielding:
-    name: Perisai
-    desc: "Mengurangi penerimaan kerusakan sebanyak {value}% ketika sedang menyelinap."
-    info: "-{value}% Kerusakan saat menyelinap"
+    name: Shielding
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
   defender:
-    name: Pertahanan
-    desc: "Mendapatkan {value}% EXP lebih banyak untuk skill pertahanan."
-    info: "+{value}% EXP"
+    name: Defender
+    desc: "Earn {value}% more Defense XP."
+    info: "+{value}% XP"
   mob_master:
-    name: Master Mob
-    desc: "Mengurangi penerimaan kerusakan dari mobs sebanyak {value}%"
-    info: "-{value}% Kerusakan mob"
+    name: Mob Master
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
   immunity:
-    name: Ketahanan
-    desc: "{value}% kesempatan tidak menerima kerusakan dari serangan musuh."
-    info: "{value}% Kebal"
+    name: Immunity
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
   no_debuff:
-    name: Anti Efek Buruk
-    desc: "{value}% kesempatan untuk tidak menerima efek yang merugikan dari ramuan."
-    info: "{value}% Tidak ada efek buruk"
+    name: No Debuff
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
   parry:
     name: Parry
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
     info: "{value}% Dmg Reduction"
     parried: "<red>Attack parried"
   fighter:
-    name: Petinju
-    desc: "Mendapatkan {value}% EXP lebih banyak untuk skill meninju."
-    info: "+{value}% EXP"
+    name: Fighter
+    desc: "Earn {value}% more Fighting XP."
+    info: "+{value}% XP"
   sword_master:
-    name: Ahli Pedang
-    desc: "Memberikan {value}% kerusakan tambahan dengan pedang."
-    info: "+{value}% Kerusakan"
+    name: Sword Master
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
   first_strike:
-    name: Serangan Pertama
-    desc: "Memberikan {value}% kerusakan tambahan untuk serangan pertama."
-    info: "+{value}% Kerusakan"
-    dealt: "<red>Serangan pertama diluncurkan!"
+    name: First Strike
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
   bleed:
-    name: Pendarahan
+    name: Bleed
     desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
-    info: "{value}% Kesempatan, {value_2} Kerusakan"
-    enemy_bleeding: "<red>Musuh Berdarah!"
-    self_bleeding: "<red>Awas Kamu berdarah!"
-    stop: "<white>Pendarahan Selesai"
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
   anti_hunger:
-    name: Tidak Lapar
-    desc: "{value}% kesempatan untuk tidak merasakan lapar."
-    info: "{value}% Kesempatan"
+    name: Anti Hunger
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
   runner:
-    name: Atlet Lari
-    desc: "Memberikan {value} EXP lebih banyak untuk skill petualang."
-    info: "+{value}% EXP"
+    name: Runner
+    desc: "Earn {value}% more Endurance XP."
+    info: "+{value}% XP"
   golden_heal:
-    name: Pemulihan Emas
-    desc: "Meningkatan regenerasi yang didapat sebanyak {value}%"
-    info: "+{value}% Regenerasi Tambahan"
+    name: Golden Heal
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
   recovery:
-    name: Membalikkan
-    desc: "Meningkatkan regenerasi alami ketika darah dibawah 50% sebanyak {value}%"
-    info: "+{value}% Regenerasi ketika darah rendah"
+    name: Recovery
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
   meal_steal:
-    name: Pencuri makanan
-    desc: "{value}% kesempatan mencuri 1 poin kekenyangan ketika menyerang pemain."
-    info: "{value}% Mencuri Makanan"
+    name: Meal Steal
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
   light_fall:
-    name: Cahaya Jatuh
-    desc: "Mengurangi kerusakan dari terjatuh sebanyak {value}%"
-    info: "-{value}% Kerusakan"
+    name: Light Fall
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
   jumper:
-    name: Peloncat
-    desc: "Meningkatkan {value}% EXP yang diterima untuk skill kelincahan."
-    info: "+{value}% EXP"
+    name: Jumper
+    desc: "Earn {value}% more Agility XP."
+    info: "+{value}% XP"
   sugar_rush:
-    name: Pelari Yang Manis
-    desc: "Meningkatkan durasi ramuan kecepatan dan loncatan selama {value}% lebih lama."
-    info: "{value}% Durasi Tambahan"
+    name: Sugar Rush
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
   fleeting:
-    name: Sekilas
-    desc: "Mendapatkan +{value}% kecepatan berlari ketika darah dibawah 20%."
-    info: "+{value}% Kecepatan"
-    start: "<white>Kamu telah mendapatkan sepatu secepat kilat! <gray>(+{value}% Speed)"
-    end: "<gray>Sepatu kilat dinonaktifkan"
+    name: Fleeting
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
   thunder_fall:
-    name: Petir Yang Jatuh
-    desc: "Ketika menyelinap saat jatuh, memiliki {value}% kesempatan untuk memberikan {value_2}% kerusakan ke mobs dalam radius 3 block."
-    info: "{value}% Kesempatan, {value_2}% Kerusakan"
+    name: Thunder Fall
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
+    info: "{value}% Chance, {value_2}% Damage"
   alchemist:
-    name: Alkimia
-    desc: "Ramuan yang kamu racik memiliki {value}% durasi lebih lama."
-    info: "+{value}% Durasi Ramuan"
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
   brewer:
-    name: Peracik
-    desc: "Meningkatkan {value}% EXP yang ditierima untuk skill alkimia."
-    info: "+{value}% EXP"
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
+    info: "+{value}% XP"
   splasher:
-    name: Pemercik
-    desc: "Ramuan yang dipercikan memiliki durasi {value}% lebih lama durasi untuk setiap manusia berbeda."
-    info: "+{value}% Durasi"
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
   lingering:
-    name: Efek yang lama
-    desc: "Ramua yang dilemparkan memiliki waktu {value}% lebih lama dan menperlama {value_2}% durasi entitas."
-    info: "-{value}% Alami, -{value_2}% durasi entitas"
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
   wise_effect:
-    name: Kepintaran
-    desc: "Memberikan {value} Kepintaran untuk setiap efek aktif dari ramuan."
-    info: "+{value} Kepintaran/Efek"
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
   xp_convert:
-    name: Transfer EXO
-    desc: "Mendapatkan 1 XP Minecraft untum setiapp {value} EXP skill yang kamu dapatkan."
-    info: "1 XP/{value} Skill EXP"
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
   enchanter:
-    name: Ahli Sihir
-    desc: "Mendapatkan {value}% EXP tambahan untuk skill Ahli Sihir."
-    info: "+{value}% EXP"
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
+    info: "+{value}% XP"
   xp_warrior:
-    name: Prajurit EXP
-    desc: "Mobs yang kamu bunuh punya {value}% kesempatan untuk memberikan XP ganda."
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
     info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: Kekuatan Ahli Sihir
-    desc: "Mendapatkan {value} Kekuatan untuk setiap sihir unik yang berada di item."
-    info: "{value} Kekuatan/Sihir"
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
   lucky_table:
-    name: Meja Keberuntungan
-    desc: "Items yang kamu enchant menggunakan meja sihir memiliki {value}% kesempatan untuk meningkatkan level sihir sebanyak 1. Tidak dapat melebihi level maksimal."
-    info: "{value}% Kesempatan Sihir ditingkatkan"
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
   life_essence:
-    name: Esensi Kehidupan
-    desc: Ramuan HP instan {value}% lebih efektif.
-    info: "+{value}% HP Instan"
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
   healer:
-    name: Penyembuh
-    desc: Mendapatkan {value}% lebih Healing EXP.
-    info: "+{value}% EXP"
+    name: Healer
+    desc: Earn {value}% more Healing XP.
+    info: "+{value}% XP"
   life_steal:
-    name: Pencuri HP
-    desc: Menyembuhkan {value}% HP dari MAX HP mobs jahat dan pemain yang kamu bunuh.
-    info: "Mencuri {value}% HP"
+    name: Life Steal
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
   golden_heart:
-    name: Hati Emas
-    desc: Kerusakan yang diterima HP Emas dikurangi sebanyak {value}%
-    info: "-{value}% Kerusakan ke HP Emas"
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
   revival:
-    name: Pembangkitan
-    desc: Mendapatkan +{value} HP dan +{value_2} Regenerasi untuk 30 detik setelah respawn.
-    info: "+{value} HP, +{value_2} Regenerasi"
-    message: "<white>Kamu mendapatkan bonus pembangkitan selama 30 detik! <white>(<red>+{value} HP, <gold>+{value_2} Regenerasi<white>)"
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
   disenchanter:
-    name: Penghilangan Sihir
-    desc: Mendapatkan {value}% XP tambahan ketika menghilangkan sihir di items saat mengunakan grindstone.
-    info: "+{value}% Grindstone XP"
+    name: Disenchanter
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
+    info: "+{value}% Grindstone EXP"
   forger:
-    name: Penempa
-    desc: Mendapatkan tambahan {value}% EXP skill Penempa.
-    info: "+{value}% EXP"
+    name: Forger
+    desc: Earn {value}% more Forging XP.
+    info: "+{value}% XP"
   repairing:
-    name: Memperbaiki
-    desc: Memperbaiki items di anvil menggunakan material dasar dari item {value}% durabilitas tambahan.
-    info: "+{value}% Perbaikan di Anvil"
+    name: Repairing
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
   anvil_master:
-    name: Ahli Anvil
-    desc: Meningkatkan kapasitas XP di anvil sebelum XP terlalu mahal menjadi {value} XP.
-    info: "{value} Kapasitas Maximal"
+    name: Anvil Master
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
   skill_mender:
-    name: Skill Perbaikan
-    desc: Mendapatkan EXP skill memiliki kesempatan {value}% untuk memperbaiki durabilitas armor atau item yang dipegang dengan syarat memiliki sihir mending. Memperbaiki sebanyak 1 durabiliats untuk setiap 2 EXP skill.
-    info: "{value}% Kesempatan"
+    name: Skill Mender
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
 acf:
   core:
-    permission_denied: "<red>Maaf, tapi anda tidak punya hak untuk melakukan ini."
-    permission_denied_parameter: "<red>Maaf, tapi anda tidak punya hak untuk melakukan perintah ini."
-    error_generic_logged: "<red>Telah terjadi kesalahan, maaf untuk ketidaknyamanannya."
-    unknown_command: "<red>Perintah tak dikenal, mohon ketik <yellow>/sk help"
-    invalid_syntax: "<yellow>Penggunaan: <yellow>{command} <green>{syntax}"
-    error_prefix: "<red>Kesalahan: {message}"
-    error_performing_command: "<red>Terjadi kesalahan saat melakukan perintah ini."
-    please_specify_one_of: "<red>Kesalahan: Mohon spesifikasikan (<yellow>{valid}<red>)"
-    must_be_a_number: "<red>Kesalahan: {num} haruslah angka."
-    must_be_min_length: "<red>Kesalahan: Setidaknya harus {min} huruf/angka."
-    must_be_max_length: "<red>Kesalahan: Paling banyak harus {max} huruf/angka."
-    please_specify_at_most: "<red>Kesalahan: Mohon Ketikkan jumlah yang paling banyak {max}."
-    please_specify_at_least: "<red>Kesalahan: Mohon Ketikkan jumlah yang paling sedikit {min}."
-    not_allowed_on_console: "<red>Kesalahan: Konsol tidak bisa menjalankan perintah ini."
-    could_not_find_player: "<red>Kesalahan: Tidak bisa menemukan nama pemain: <yellow>{search}"
-    no_command_matched_search: "<red>Tidak ada perintah yang cocok <yellow>{search}."
-    help_page_information: "<aqua> - Halaman <green>{page} <aqua>dari <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
-    help_no_results: "<aqua>Kesalahan: Tidak ada hasil."
-    help_header: "<yellow>=== <aqua>Menunjukkan bantuan perintah <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_header: "<yellow>=== <aqua>Menunjukkan bantuan yang detail untuk perintah <green>{commandprefix}{command}<yellow> ==="
-    help_search_header: "<yellow>=== <aqua>Hasil pencarian untuk <green>{commandprefix}{command} {search}<yellow> ==="
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
-    invalid_world: "<red>Kesalahan: Dunia ini tidak ada."
-    you_must_be_holding_item: "<red>Kesalahan: Kamu harus memegang benda ditanganmu."
-    player_is_vanished_confirm: "<yellow>Peringatan: <green>{vanished} <yellow>sedang menyamar. Jangan buka kedok dia!\n<yellow>Untuk mengkorfimasi tindakan anda tambahkan <green>:confirm <yellow>diakhir nama dia.\n<yellow>Contoh: {vanished}:confirm"
-    username_too_short: "<red>Kesalahan: Nama terlalu pendek, setidaknya harus 3 huruf."
-    is_not_a_valid_name: "<red>Kesalahan: <yellow>{name} <red>bukanlah nama yang valid."
-    multiple_players_match: "<red>Kesalahan: Pemain dengan nama yang sama dideteksi <aqua>{search} <yellow>({all})<red>, mohon untuk lebih spesifik."
-    no_player_found_server: "<red>Tidak ada pemain yang cocok <yellow>{search} <red>yang sedang ada di server ini."
-    no_player_found_offline: "<red>Tidak ada pemain yang cocok <yellow>{search}<red> yang bisa ditemukan."
-    no_player_found: "<red>Tidak ada pemain yang cocok <yellow>{search}<red> ditemukan."
-    location_please_specify_world: "<red>Kesalahan: Mohon untuk spesifikan dunia. Contoh: <yellow>dunia:x,y,z."
-    location_please_specify_xyz: "<red>Kesalahan: Mohon untuk spesifikan kordinat x, y, and z. Contoh: <yellow>dunia:x,y,z."
-    location_console_not_relative: "<red>Kesalahan: Konsol tidak bisa menggunakan kordinat yang relatif."
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
 commands:
-  prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
-        already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
       remove:
-        does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}"
-        removed: "{color}{stat} <gray>modifikasi telah di hapus"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Modifikasi yang ditemukan:"
+        header: "<white>Armor modifiers found:"
       removeall:
-        removed: "<gray>semua modifikasi telah di hapus"
+        removed: "<gray>All armor modifiers have been removed from your item"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -358,17 +358,17 @@ commands:
         removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> Armor requirement with level <aqua>{level}<gray> telah ditambahkan ke itemmu"
-        already_exists: "<yellow>Item telah memiliki persyaratan memiliki <dark_aqua>{skill}<yellow>! Hapus terlebih dahulu dengan <gold>/sk armor requirement remove"
-        lore: "<red>Membutuhkan <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Item kamu tidak memiliki persyaratan armor, <dark_aqua>{skill}<yellow> dibutuhkan!"
-        removed: "<dark_aqua>{skill} <gray>persyaratan armor telah di hapus"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
       list:
-        header: "<white>Persyaratan armor ditemukan:"
+        header: "<white>Armor requirements found:"
       removeall:
-        removed: "<gray>semua persyaratan armor telah di hapus"
-      equip: "<yellow>Kamu tidak memenuhi persyaratan untuk memakai item ini: {requirements}"
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
   backup:
     load:
       confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
@@ -389,15 +389,15 @@ commands:
       receiver: "<white>You were given <aqua>{amount}x {key}"
     modifier:
       add:
-        added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
-        already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
       remove:
-        does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}!"
-        removed: "{color}{stat} <gray>modifikasi telah di hapus"
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
       list:
-        header: "<white>Modifikasi yang ditemukan:"
+        header: "<white>Item modifiers found:"
       removeall:
-        removed: "<gray>semua modifikasi telah di hapus"
+        removed: "<gray>All item modifiers have been removed from your item"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -419,53 +419,53 @@ commands:
       no_spaces: "<yellow>Item key cannot contain spaces!"
     requirement:
       add:
-        added: "<dark_aqua>{skill}<gray> Persyaratan armor dengan level <aqua>{level}<gray> telah ditambahkan ke itemmu"
-        already_exists: "<yellow>Item telah memiliki persyaratan memiliki <dark_aqua>{skill}<yellow>! Hapus terlebih dahulu dengan <gold>/sk qrmor requirement remove"
-        lore: "<red>Membutuhkan <dark_aqua>{skill} {level}"
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
       remove:
-        does_not_exist: "<yellow>Item kamu tidak memiliki persyaratan armor, <dark_aqua>{skill}<yellow> dibutuhkan!"
-        removed: "<dark_aqua>{skill}<gray> persyaratan armor telah di hapus dari itemmu"
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
       list:
-        header: "<white>Persyaratan armor ditemukan:"
+        header: "<white>Item requirements found:"
       removeall:
-        removed: "<gray>semua persyaratan armor telah di hapus"
-      use: "<yellow>Kamu tidak memenuhi persyaratan untuk menggunakan item ini: {requirements}"
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
   lang:
-    set: "<gray>Bahasa disetel ke <aqua>{lang}"
-    not_found: "<yellow>Bahasa tidak ditemukan!"
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
   mana:
-    display: "<white>Kamu {mana_unit}: <aqua>{current}/{max}"
-    display_other: "<white>{mana_unit} dari {player}: <aqua>{current}/{max}"
-    add: "<gray>Menambahkan <aqua>{amount} {mana_unit} <gray>ke pemain <gold>{player}"
-    remove: "<gray>Menghilangkan <aqua>{amount} {mana_unit} <gray>dari pemain <gold>{player}"
-    set: "<gray>Menyetel <gold>{player} <gray>ke <aqua>{amount} {mana_unit}"
-    at_least_zero: "<yellow>{mana_unit} setidaknya harus 0!"
-    console_specify_player: "<yellow>Console harus mengspesifikasikan pemain!"
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
   modifier:
     add:
-      added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray> dan nama <white>{name} <gray>berhasil ditambhkan ke pemain <gold>{player}"
-      already_exists: "<yellow>modifikasi dengan nama {name} sudah ada di pemain ini <gold>{player}<yellow>! hapus dengan <gold>/sk modifier remove {player} {name}"
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
     remove:
-      not_found: "<yellow>Modifikasi {name} etidak ditemukan di pemain <gold>{player}"
-      removed: "<gray>Modikasi <white>{name} <gray>berhasil dihapus dari pemain <gold>{player}"
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
     list:
-      all_stats_header: "<gray>Modifikasi statistik <gold>{player}:"
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
-      one_stat_header: "<gray>Modifikasi statistik ({color}{stat}<gray>) untuk pemain <gold>{player}:"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
-      players_only: "<yellow>Hanya pemain yang bisa melihat daftar modifikasi pemain! Coba spesifikan pemain"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
     removeall:
-      removed_all_stats: "<gray>Menghapus <aqua>{num} <gray>modifikasi untuk pemain <gold>{player}"
-      removed_one_stat: "<gray>Menghapus <aqua>{num} {color}{stat} <gray>modifikasi untuk pemain <gold>{player}"
-      players_only: "<yellow>Hanya pemain yang bisa menghapus modifikasi pemain! Coba spesifikan pemain"
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
   multiplier:
     global: Global
-    list: "<white>Pengganda EXP untuk pemain <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
-    players_only: "<yellow>Hanya pemain yang bisa melihat pengganda Exp! Spesifikasikan pemain!"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
@@ -481,44 +481,44 @@ commands:
     stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
     stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
   rank:
-    header: "<aqua><bold>Peringkat Skill Kamu"
+    header: "<aqua><bold>Your Skill Rankings"
     power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
-  reload: "<green>Config dimuat ulang!"
+  reload: "<green>Config reloaded!"
   save:
-    already_saving: "<yellow>Data sudah tersimpan!"
-    mysql_not_enabled: "<yellow>MySQL tidak Active, simpan file setidaknya!"
-    saved: "<green>Data skill tersimpan!"
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
   skill:
     setall:
-      set: "<gray>Semua level skill diatur ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:
-      set: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
     at_least: "<yellow>Level must be at least {level}!"
   toggle:
-    enabled: "<green>Mengaktifkan Actionbar"
-    disabled: "<red>Menonaktifkan Actionbar"
-    not_enabled: "<yellow>Actionbar skill dilarang di server ini!"
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
   top:
-    power_header: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>==--"
-    power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>(Halaman {page})==--"
-    skill_header: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>==--"
-    skill_header_page: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>(Halaman {page})==--"
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
     average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
-    usage: "<yellow>Perintah: <green>/sk top <white><page> <gray>atau <green>/sk top <white>[skill] <page>"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
     error: "<red>There was an error transferring player data. Check console for errors."
   updateleaderboards:
-    already_updating: "<yellow>Papan Peringkat Sudah diperbarui!"
-    updated: "<green>Papan peringkat diperbarui!"
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
   version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
-    add: "<gray>Menambahkan <aqua>{amount} {skill} <gray>EXP untuk pemain <gray>{player}"
-    set: "<gray>Menyetel <aqua>{skill} <gray>EXP untuk pemain <gray>{player} <gray>ke {amount}"
-    remove: "<gray>Menghapus <aqua>{amount} {skill} <gray>EXP dari pemain <gold>{player}"
-  unknown_skill: "<yellow>Skill tidak ditemukan!"
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
@@ -612,50 +612,50 @@ menus:
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
-    name: Penanaman Kembali
-    desc: "Otomatis menanam kembali tanaman untuk {value} detik. <1>[Click kanan hoe dan hancurkan tanaman]"
-    raise: "<gray>Kamu mengaktifkan sabitmu"
-    lower: "<gray>Kamu menonaktifkan sabitmu"
-    start: "<gold>Penanaman Kembali Active! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Durasi Penanaman Kembali Sudah Selesai"
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
   treecapitator:
     name: Treecapitator
     desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
-    raise: "<gray>Kamu mengaktifkan kapakmu"
-    lower: "<gray>Kamu menonaktifkan kapakmu"
-    start: "<gold>Treecapitator Active! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Durasi Treecapitator Sudah Selesai"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
   speed_mine:
-    name: Penggali Cepat
-    desc: "Memberikan efek haste {haste_level} untuk {value} detik. <1>[Click kana beliung dan hancurkan block]"
-    raise: "<gray>Kamu mengatifkan beliungmu"
-    lower: "<gray>Kamu menonaktifkan beliungmu"
-    start: "<gold>Menggali Cepat Active! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Durasi Menggali Cepat Sudah Selesai"
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
   absorption:
-    name: Kekebalan
-    desc: "Serangan berikutnya yang diterima akan mengurangi sihir sebanyak 2x dari kerusakan Minecraft daripada mengurangi HP selama {value} detik. Sihir tidak akan meregenerasi saat Kekebalan active. <1>[Click kiri perisai dan terima kerusakan untuk active]"
-    raise: "<gray>Kamu mengaktifkan perisaimu"
-    lower: "<gray>Kamu menonaktifkan perisaimu"
-    start: "<gold>Kekebalan Active! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Durasi Kekebalan Sudah Selesai"
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
   terraform:
     name: Terraform
     desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
-    raise: "<gray>Kamu mengatifkan sekopmu"
-    lower: "<gray>Kamu menonaktifkan sekopmu"
-    start: "<gold>Terraform Active! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Terraform dinonaktifkan"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
   sharp_hook:
-    name: Kail Tajam
-    desc: "Menghasilkan {value} kerusakan ke entitiy yang ditarik ketika Left-Click kail pancing"
-    use: "<gold>Menggunakan Kail Tajam! <gray>(-{mana} {mana_unit})"
+    name: Sharp Hook
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
   charged_shot:
-    name: Tembakan bermuatan
+    name: Charged Shot
     desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
-    enable: "<gray>Tembakaan bermuatan aktif"
-    disable: "<gray>Tembakan bermuatan nonaktif"
-    shoot: "<gold>Tembakan bermuatan dipakai! <light_purple>+{percent}% Kerusakan <gray>(-{mana} {mana_unit})"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
   lightning_blade:
     name: Lightning Blade
     desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
@@ -663,54 +663,54 @@ mana_abilities:
     lower: "<gray>You lower your sword"
     start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
     end: "<gray>Lightning Blade has worn off"
-  not_ready: "<red>Kemampuan sedang cooldown! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Sihir tidak cukup! <gray>({mana} {mana_unit} required)"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
 skills:
   farming:
-    name: Petani
-    desc: "Panen tanaman untuk mendapatkan skill Petani {xp_unit}"
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
   foraging:
-    name: Penebang
-    desc: "Tebang pohon untuk mendapatkan skill Penebang {xp_unit}"
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
   mining:
-    name: Penambang
-    desc: "Galilah batu dan mineral untuk mendapatkan skill Penambang {xp_unit}"
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
   fishing:
-    name: Nelayan
-    desc: "Tangkap ikan untuk mendapatkan skill Nelayan {xp_unit}"
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
   excavation:
-    name: Penggali
+    name: Excavation
     desc: "Dig with a shovel to earn Excavation {xp_unit}"
   archery:
-    name: Pemanah
-    desc: "Tembak mobs dengan busu untuk mendaptakan earn skill Pemanah {xp_unit}"
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
   defense:
-    name: Pertahanan
-    desc: "Terima kerusakan dari mobs untuk meningkatkan Pertahan {xp_unit}"
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
   fighting:
-    name: Petarung
-    desc: "Bertarung dengan mobs menggunakan senjata jarak dekat untuk skill Petarung {xp_unit}"
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
   endurance:
-    name: Petualang
-    desc: "Berjalan dan Berlarilah untuk meningkatkan skill Petualang {xp_unit}"
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
   agility:
-    name: Kelincahan
+    name: Agility
     desc: "Move around and take fall damage to earn Agility {xp_unit}"
   alchemy:
-    name: Alkemi
+    name: Alchemy
     desc: "Brew and splash potions to earn Alchemy {xp_unit}"
   enchanting:
-    name: Sihir
+    name: Enchanting
     desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
   sorcery:
-    name: Penyihir
-    desc: "Gunakan sihir untuk mendapatkan {xp_unit} EXP Sorcery"
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
   healing:
-    name: Penyembuh
-    desc: "Minum dan percikan ramuan penyembuhan untuk menigkatkan skill Penyembuh {xp_unit}"
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
   forging:
-    name: Penempa
-    desc: "Gabungkan buku sihir untu meningkatkan skill Penempa {xp_unit}"
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
 sources:
   fishing:
     cod: Cod
@@ -775,23 +775,23 @@ sources:
     enchant_level: Level of Enchant Received
 stats:
   strength:
-    name: Kekuatan
-    desc: "Meningkatkan kerusakan yang diberikan menggunakan senjata yang bervariasi."
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
   health:
-    name: Darah
-    desc: "Meningkatkan darah yang kamu{hp_unit} miliki, membuatmu bertahan lebih lama di pertarungan."
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
-    name: Pemulihan
-    desc: "Meningkatkan kecepatan beregenerasi memulihkan darah dan sihir."
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
-    name: Keberuntungan
+    name: Luck
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
-    name: Kepintaran
-    desc: "Kepintaran meningkatkan kapasitas sihirmu, menigkatkan pengalaman yang didapatkan, dan mengurangi baharan untuk anvil."
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
-    name: Ketahanan
-    desc: "Meningkatkan pengurangan kerusakan yang diterima dari musuh."
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
     name: Crit Chance
     desc: "Crit Chance is your odds to deal a critical hit."
@@ -843,7 +843,7 @@ traits:
 ui:
   maxed: MAXED
 units:
-  mana: Sihir
-  hp: Darah
+  mana: Mana
+  hp: HP
   xp: XP
 file_version: 32
