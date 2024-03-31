@@ -214,7 +214,6 @@ abilities:
     name: Алхімік
     desc: "Зілля, що ви приготуєте, будуть діяти на {value}% довше."
     info: "+{value}% Тривалість зілля"
-    lore: "<green>(+{duration})"
   brewer:
     name: Пивовар
     desc: "Заробляй на {value} більше ХР для Алхімії."
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Використання: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Помилка: {message}"
     error_performing_command: "<red>Вибачте мені, але при виконанні цієї команди сталася помилка."
-    info_message: "{message}"
     please_specify_one_of: "<red>Помилка: Будь ласка, вкажіть одне з (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Помилка: {num} має бути числом."
     must_be_min_length: "<red>помилка: має бути принаймні {min} символ(-и,-ів)."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - відображення сторінки <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua>результатів для перегляду)."
     help_no_results: "<aqua>Помилка: більше немає результатів."
     help_header: "<yellow>=== <aqua>Showing довідка для <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Showing детальна допомога для <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Результати пошуку для <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Помилка: такого світу не існує."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
         already_exists: "<yellow>An модифікатор броні з характеристиками {color}{stat} <yellow>Вже існує на вашому обладунку! Спочатку його видалили з модифікатором зброї /sk armor"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
       list:
         header: "<white>модефікатор броні знайдено:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Усі модифікатори броні були видалені з Вашого елементу"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>броня було видалено з вашого предмету"
       list:
         header: "<white>знайдено мультиплікатори:"
-        entry: "  <aqua>{target}<white> – {value}"
       removeall:
         removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> потрбована броня була видалена з ваших предметів"
       list:
         header: "<white>Вимоги до броні знайдено:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Усі вимоги броні були видалені з вашого предмету"
       equip: "<yellow>Ви не відповідаєте вимогам, щоб обладнати цей предмет: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Завантаження резервної копії призведе до повернення всіх даних навичок гравців. Ця дія є постійною і не може бути скасована. Можливо вам слід зберегти резервну копію перед завантаженням іншу. Введіть команду ще раз, щоб підтвердити цю дію"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
         already_exists: "<yellow>The modifier з характеристиками {color}{stat} <yellow>already існує на вашому обладунку! Спочатку видаліть його з модифікатором елементів/sk"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
       list:
         header: "<white>предмет модифікатори знайдено:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Усі модифікатори елементу були видалені з Вашого елементу"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>предмет було видалено з вашого предмету"
       list:
         header: "<white>знайдено мультиплікатори:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> потрбований предмет була видалена з ваших предметів"
       list:
         header: "<white>предметні вимоги знайдено:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Усі вимоги до товару були видалені з вашого елемента"
       use: "<yellow>Ви не відповідаєте вимогам, щоб використовувати цей предмет: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Незареєстрований елемент з ключем {key}"
       not_registered: "<yellow>Елемент не зареєстровано з ключем {key}"
@@ -517,15 +500,12 @@ commands:
     disabled: "<red>Бар ваших вмінь було вимкнено"
     not_enabled: "<yellow>бар дій з навичками не ввімкнена на цьому сервері!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Лідератора</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard </bold><white>(Page {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Успішно переміщено дані гравця з <gray>{from} <green>to <gray>{to}"
