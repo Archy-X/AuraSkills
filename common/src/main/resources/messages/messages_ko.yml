@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -507,9 +507,6 @@ commands:
     mysql_not_enabled: "<yellow>서버 시작 시 MySQL이 활성화되어있지 않아 로컬 플러그인 폴더에 저장되었습니다!"
     saved: "<green>스킬 데이터가 저장되었습니다!"
   skill:
-    reset:
-      reset_all: "<gray>사용자 <gold>{player} <gray>의 모든 스킬 레벨이 <aqua>1 <gray>으로 초기화되었습니다."
-      reset_skill: "<gray>사용자 <gold>{player} <gray>의 <aqua>{skill} 스킬 레벨이 <aqua>1 <gray>으로 설정되었습니다."
     setall:
       set: "<gray>사용자 <gold>{player} <gray>의 모든 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
     setlevel:
