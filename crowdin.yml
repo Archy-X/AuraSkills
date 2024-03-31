@@ -4,7 +4,7 @@ files:
     excluded_target_languages:
       - lt
       - lv
-      - no
+      - 'no'
       - sv
       - th
       - tr
