@@ -5,8 +5,8 @@
 abilities:
   bountiful_harvest:
     name: Panen Melimpah
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Mendapatkan +{value} Keberuntungan bertani, yang akan meningkatkan kemungkinan untuk mendapatkan lebih banyak."
+    info: "+{value} Keberuntungan Bertani"
   farmer:
     name: Petani
     desc: "Mendapatkan tambahan {value}% EXP skill petani."
@@ -22,11 +22,11 @@ abilities:
   growth_aura:
     name: Growth Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    info: "+{value}% Pertumbuhan"
   lumberjack:
     name: Penebang
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Mendapatkan +{value} Keberuntungan Penebang Pohon, yang akan meningkatkan kemungkinan untuk mendapatkan lebih banyak."
+    info: "+{value} Keberuntungan Penebang Pohon"
   forager:
     name: Penjelajah
     desc: "Mendapatkan tambahan {value}% EXP skill penebang."
@@ -45,8 +45,8 @@ abilities:
     info: "{value}% 3x lipat kerusakan"
   lucky_miner:
     name: Penambang Beruntung
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Mendapatkan +{value} Keberuntungan Menambang, yang akan meningkatkan kemungkinan untuk mendapatkan lebih banyak."
+    info: "+{value} Keberuntungan Menambang"
   miner:
     name: Penambang
     desc: "Mendapatkan tambahan {value}% EXP skill menambang."
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% Tidak ada kerusakan"
   lucky_catch:
     name: Tangkapan Beruntung
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Mendapatkan +{value} Keberuntungan Memancing, yang akan meningkatkan kemungkinan untuk mendapatkan lebih banyak."
+    info: "+{value} Keberuntungan Memancing"
   fisher:
     name: Nelayan
     desc: "Mendapatkan tambahan {value}% EXP skill nelayan."
@@ -97,8 +97,8 @@ abilities:
     info: "+{value}% Kerusakan"
   bigger_scoop:
     name: Sekop Raksasa
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Mendapatkan +{value} Keberuntungan Menggali, yang akan meningkatkan kemungkinan untuk mendapatkan lebih banyak."
+    info: "+{value}% Keberuntungan Menggali"
   lucky_spades:
     name: Sekop Keberuntungan
     desc: "{value}% kesempatan mendapatkan barang sangat langka dari menggali."
@@ -106,7 +106,7 @@ abilities:
   retrieval:
     name: Retrieval
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    info: "{value} Jarak"
   archer:
     name: Pemanah
     desc: "Mendapatkan {value}% EXP lebih banyak untuk skill pemanah."
@@ -146,7 +146,7 @@ abilities:
   parry:
     name: Parry
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
+    info: "{value}% Pengurangan Kerusakan"
     parried: "<red>Attack parried"
   fighter:
     name: Petinju
