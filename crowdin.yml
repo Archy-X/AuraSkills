@@ -1,4 +1,4 @@
-commit_message: "[ci skip]"
+commit_message: '[ci skip]'
 export_languages:
   - cs
   - de
