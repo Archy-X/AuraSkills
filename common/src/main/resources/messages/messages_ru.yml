@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: Алхимик
     desc: "Зелья, которые вы варите, имеют на {value}% больше продолжительность действия."
     info: "+{value}% Срок действия зелья"
-    lore: "<green> ({duration})"
   brewer:
     name: Пивовар
     desc: "Получишь на {value}% XP больше."
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Используйте: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Ошибка: {message}"
     error_performing_command: "<red>Извините, но при выполнении этой команды произошла ошибка."
-    info_message: "{message}"
     please_specify_one_of: "<red>Ошибка: Укажите одно из (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Ошибка: {num} должен быть числом."
     must_be_min_length: "<red>Ошибка: Должно быть не менее {min}."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Показаны страницы <green>{page} <aqua>из <green>{totalpages} <aqua>(<yellow>{results}<aqua> результатов)."
     help_no_results: "<aqua>Ошибка: Больше нет результатов."
     help_header: "<yellow>=== <aqua>Отображение справки для <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Показана подробная справка для <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Результаты поиска для <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Ошибка: Этого мира не существует."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему элементу"
         already_exists: "<yellow>Модификатор брони со статистикой {color}{stat} <yellow>уже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}+{value}"
       remove:
         does_not_exist: "<yellow>Ваш товар не имеет {color}{stat} <yellow>и модификатора!"
         removed: "{color}{stat} <gray>модификатор был удален из вашего предмета"
       list:
         header: "<white>Найдены модификаторы брони:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Все модификаторы брони были удалены с вашего предмета"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
       list:
         header: "<white>Найдены модификаторы предметов:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> требование брони было снято с вашего предмета"
       list:
         header: "<white>Найдены требования к броне:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>С вашего предмета удалены все требования к броне"
       equip: "<yellow>Вы не соответствуете требованиям для экипировки этого предмета: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Загрузка резервной копии вернет все данные о навыках игроков. Это действие окончательно и не может быть отменено. Вы можете создать резервную копию перед загрузкой. Введите команду еще раз, чтобы подтвердить это действие"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>модификатор с уровнем <aqua>{value} <gray>был добавлен в ваш товар"
         already_exists: "<yellow>Модификатор предмета со статистикой {color}{stat} <yellow>уже есть на вашей броне! Сначала удалите его с помощью /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}+{value}"
       remove:
         does_not_exist: "<yellow>У вашего товара нет {color}{stat} <yellow>модификатора!"
         removed: "{color}{stat} <gray>модификатор был удален из вашего предмета"
       list:
         header: "<white>Найдены модификаторы предметов:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
       list:
         header: "<white>Найдены модификаторы предметов:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> требование элемента было удалено из вашего элемента"
       list:
         header: "<white>Найдены требования к предмету:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Все требования к предмету были удалены из вашего предмета"
       use: "<yellow>Вы не соответствуете требованиям для использования этого предмета: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Незарегистрированный элемент с ключом {key}"
       not_registered: "<yellow>Нет элемента с ключом {key}"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL не был включен при запуске сервера, вместо этого сохранялось в файл!"
     saved: "<green>Данные о навыках сохранены!"
   skill:
-    reset:
-      reset_all: "<gray>Все навыки установлены на уровне <aqua>1 <gray>для игрока <gold>{player}"
-      reset_skill: "<gray>Навык <aqua>{skill} <gray>установлен на уровень <aqua>1 <gray>для игрока <gold>{player}"
     setall:
       set: "<gray>Все навыки установлены на уровень <aqua>{level} <gray>для игрока <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>Панель действий ваших навыков отключена"
     not_enabled: "<yellow>Панель действий навыков не активирована на этом сервере!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Таблица лидеров всех навыков</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Таблица лидеров всех навыков </bold><white>(Страница {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Таблица лидеров</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} Таблица лидеров </bold><white>(Страница {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Таблица средних навыков</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Таблица средних навыков </bold><white>(Страница {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Используйте: <green>/sk top <white><page> <gray>из <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Успешно перенесенные данные игрока из <gray>{from} <green>в <gray>{to}"
