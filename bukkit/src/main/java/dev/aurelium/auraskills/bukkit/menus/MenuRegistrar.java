@@ -47,7 +47,7 @@ public class MenuRegistrar {
 
         MenuManager manager = plugin.getMenuManager();
         // Register menus
-        manager.registerMenuProvider("skills", new SkillsMenu(plugin));
+        // manager.registerMenuProvider("skills", new SkillsMenu(plugin));
         manager.registerMenuProvider("stats", new StatsMenu(plugin));
         manager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
         manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
@@ -75,10 +75,12 @@ public class MenuRegistrar {
         manager.getGlobalProviderManager().registerKeyedItemProvider(new ItemRegistryMenuProvider(plugin.getItemRegistry()));
 
         // Register menu specific items and templates
+        /*
         ProviderManager skills = manager.getProviderManager("skills");
         skills.registerSingleItem("your_skills", () -> new YourSkillsItem(plugin));
         skills.registerSingleItem("stats", () -> new StatsItem(plugin));
         skills.registerTemplateItem("skill", Skill.class, () -> new ClickableSkillItem(plugin));
+         */
 
         ProviderManager stats = manager.getProviderManager("stats");
         stats.registerSingleItem("skull", () -> new SkullItem(plugin));
@@ -102,7 +104,7 @@ public class MenuRegistrar {
         levelProgression.registerComponent("rewards", () -> new LevelProgressionComponents.Rewards(plugin));
 
         // Register components for the skill item in skills and level progression menu
-        for (ProviderManager providerManager : new ProviderManager[] {skills, levelProgression}) {
+        for (ProviderManager providerManager : new ProviderManager[] {levelProgression}) {
             providerManager.registerComponent("stats_leveled", () -> new SkillComponents.StatsLeveled(plugin));
             providerManager.registerComponent("ability_levels", () -> new SkillComponents.AbilityLevels(plugin));
             providerManager.registerComponent("mana_ability_info", () -> new SkillComponents.ManaAbilityInfo(plugin));
@@ -124,12 +126,12 @@ public class MenuRegistrar {
     }
 
     private void buildMenus() {
-        slate.setGlobalOptions(options -> {
-            options.replacer(c -> {
-                // Returns null if not a menu message
-                return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
-            });
-        });
+        slate.setGlobalOptions(options -> options.replacer(c -> {
+            // Returns null if not a menu message
+            return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
+        }));
+
+        slate.buildMenu("skills", menu -> new SkillsMenu(plugin).build(menu));
         slate.buildMenu("leaderboard", menu -> new LeaderboardMenu(plugin).build(menu));
         slate.buildMenu("sources", menu -> new SourcesMenu(plugin).build(menu));
     }

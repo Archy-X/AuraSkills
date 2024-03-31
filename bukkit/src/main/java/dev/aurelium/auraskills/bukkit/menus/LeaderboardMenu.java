@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.menus;
 import com.archyx.slate.builder.MenuBuilder;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import org.bukkit.Bukkit;

@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.menus;
+package dev.aurelium.auraskills.bukkit.menus.shared;
 
 import com.archyx.slate.builder.MenuBuilder;
 import com.archyx.slate.menu.ActiveMenu;
@@ -40,6 +40,10 @@ public class GlobalItems {
             });
             item.modify(i -> i.menu().getCurrentPage() == (i.menu().getTotalPages() - 1) ? null : i.item());
         });
+    }
+
+    public void close(MenuBuilder menu) {
+        menu.item("close", item -> item.onClick(c -> c.player().closeInventory()));
     }
 
 }
