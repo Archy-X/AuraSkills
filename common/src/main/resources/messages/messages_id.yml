@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: Alkimia
     desc: "Ramuan yang kamu racik memiliki {value}% durasi lebih lama."
     info: "+{value}% Durasi Ramuan"
-    lore: "<green>(+{duration})"
   brewer:
     name: Peracik
     desc: "Meningkatkan {value}% EXP yang ditierima untuk skill alkimia."
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Penggunaan: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Kesalahan: {message}"
     error_performing_command: "<red>Terjadi kesalahan saat melakukan perintah ini."
-    info_message: "{message}"
     please_specify_one_of: "<red>Kesalahan: Mohon spesifikasikan (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Kesalahan: {num} haruslah angka."
     must_be_min_length: "<red>Kesalahan: Setidaknya harus {min} huruf/angka."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Halaman <green>{page} <aqua>dari <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
     help_no_results: "<aqua>Kesalahan: Tidak ada hasil."
     help_header: "<yellow>=== <aqua>Menunjukkan bantuan perintah <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Menunjukkan bantuan yang detail untuk perintah <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Hasil pencarian untuk <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Kesalahan: Dunia ini tidak ada."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
         already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
       list:
         header: "<white>Modifikasi yang ditemukan:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
       list:
         header: "<white>Armor multipliers found:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>All armor multipliers have been removed from your item"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill} <gray>persyaratan armor telah di hapus"
       list:
         header: "<white>Persyaratan armor ditemukan:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>semua persyaratan armor telah di hapus"
       equip: "<yellow>Kamu tidak memenuhi persyaratan untuk memakai item ini: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
         already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}!"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
       list:
         header: "<white>Modifikasi yang ditemukan:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>item multiplier was removed from your item"
       list:
         header: "<white>Item multipliers found:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>All item multipliers have been removed from your item"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> persyaratan armor telah di hapus dari itemmu"
       list:
         header: "<white>Persyaratan armor ditemukan:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>semua persyaratan armor telah di hapus"
       use: "<yellow>Kamu tidak memenuhi persyaratan untuk menggunakan item ini: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL tidak Active, simpan file setidaknya!"
     saved: "<green>Data skill tersimpan!"
   skill:
-    reset:
-      reset_all: "<gray>Semua skill direset ke level <aqua>1 <gray>untuk pemain <gold>{player}"
-      reset_skill: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>1 <gray>untuk pemain <gold>{player}"
     setall:
       set: "<gray>Semua level skill diatur ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>Menonaktifkan Actionbar"
     not_enabled: "<yellow>Actionbar skill dilarang di server ini!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>(Halaman {page})==--"
     skill_header: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>(Halaman {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Perintah: <green>/sk top <white><page> <gray>atau <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
