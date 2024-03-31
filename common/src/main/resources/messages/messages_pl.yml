@@ -214,7 +214,6 @@ abilities:
     name: Alchemik
     desc: "Mikstury, które warzysz mają o {value}% więcej czasu trwania."
     info: "+{value}% Czasu Trwania"
-    lore: "<green>(+{duration})"
   brewer:
     name: Mistrz Warzenia
     desc: "Zdobywaj {value}% więcej XP Alchemii"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Użycie: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Błąd: {message}"
     error_performing_command: "<red>Przepraszam, ale wystąpił błąd podczas wykonywania tej komendy."
-    info_message: "{message}"
     please_specify_one_of: "<red>Błąd: Proszę podać jeden z (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Błąd: {num} musi być liczbą."
     must_be_min_length: "<red>Błąd: Musi być co najmniej {min} znaków."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Wyświetlanie strony <green>{page} <aqua>z <green>{totalpages} <aqua>(<yellow>{results}<aqua> wyników)."
     help_no_results: "<aqua>Błąd: Nie ma więcej wyników."
     help_header: "<yellow>=== <aqua>Wyświetlanie pomocy dla <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Wyświetlanie szczegółowej pomocy dla <green>{commandprefix}{command}<yellow> =="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Wyniki wyszukiwania dla <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Błąd: Ten świat nie istnieje."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
         already_exists: "<yellow>Modyfikator zbroi ze satystyką {color}{stat} <yellow>już istnieje na twojej zbroi! Usuń go najpierw za pomocą modyfikatora zbroi /sk"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z Twojego przedmiotu"
       list:
         header: "<white>Znaleziono modyfikatory pancerza:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Wszystkie modyfikatory zbroi zostały usunięte z twojego przedmiotu"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<gray>Mnożnik zbroi <aqua>{target} <gray>został usunięty z twojego przedmiotu"
       list:
         header: "<white>Znalezione mnożniki zbroi:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Wszystkie mnożniki zbroi zostały usunięte z twojego przedmiotu"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<gray>Wymóg zbroi <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
       list:
         header: "<white>Znaleziono wymagania zbroi:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Wszystkie wymagania zbroi zostały usunięte z twojego przedmiotu"
       equip: "<yellow>Nie spełniasz wymagań do wyposażenia tego przedmiotu: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Ładowanie kopii zapasowej przywróci wszystkie dane o umiejętnościach graczy. Ta akcja jest permanentna i nie może zostać cofnięta. Możesz zapisać kopię zapasową przed załadowaniem. Wpisz polecenie ponownie, aby potwierdzić tę czynność"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
         already_exists: "<yellow>Modyfikator przedmiotu ze satystyką {color}{stat} <yellow>już istnieje! Usuń go najpierw za pomocą komendy /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z twojego przedmiotu"
       list:
         header: "<white>Znaleziono modyfikatory przedmiotu:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<gray>Mnożnik przedmiotu <aqua>{target} <gray>został usunięty z twojego przedmiotu"
       list:
         header: "<white>Znalezione mnożniki przedmiotów:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Wszystkie mnożniki przedmiotów zostały usunięte z Twojego przedmiotu"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<gray>Wymóg przedmiotu <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
       list:
         header: "<white>Znaleziono wymagania przedmiotu:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu"
       use: "<yellow>Nie spełniasz wymagań do użycia tego przedmiotu: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Odrejestrowano przedmiot z kluczem {key}"
       not_registered: "<yellow>Nie ma przedmiotu zarejestrowanego z kluczem {key}"
@@ -517,15 +500,12 @@ commands:
     disabled: "<red>Twój pasek umiejętności został wyłączony"
     not_enabled: "<yellow>Pasek umiejętności nie jest włączony na serwerze!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności </bold><white>(Strona {page})==--"
     skill_header: "<white>--==<aqua><bold>Tabela {skill}</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>Tabela {skill} </bold><gray>(Strona {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Średni Ranking Umiejętności</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Średni Ranking Umiejętności </bold><white>(Strona {page})=--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Użycie: <green>/sk top <white><page> <gray>lub <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Pomyślnie przeniesiono dane gracza z <gray>{from} <green>do <gray>{to}"
