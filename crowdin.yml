@@ -1,4 +1,5 @@
 commit_message: '[ci skip]'
+preserve_hierarchy: true
 export_languages:
   - cs
   - de
@@ -19,3 +20,4 @@ export_languages:
 files:
   - source: /common/src/main/resources/messages/messages_en.yml
     translation: /common/src/main/resources/messages/messages_%two_letters_code%.yml
+    dest: /%file_name%.yml
