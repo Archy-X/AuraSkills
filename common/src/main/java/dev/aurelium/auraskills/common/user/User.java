@@ -146,13 +146,15 @@ public abstract class User {
         }
     }
 
-    public void resetSkill(Skill skill) {
+    public int resetSkill(Skill skill) {
         int oldLevel = getSkillLevel(skill);
-        setSkillLevel(skill, 1);
+        int startLevel = plugin.config().getStartLevel();
+        setSkillLevel(skill, startLevel);
         setSkillXp(skill, 0);
         plugin.getStatManager().updateStats(this);
         plugin.getRewardManager().updatePermissions(this);
-        plugin.getRewardManager().applyRevertCommands(this, skill, oldLevel, 1);
+        plugin.getRewardManager().applyRevertCommands(this, skill, oldLevel, startLevel);
+        return startLevel;
     }
 
     public double getStatLevel(Stat stat) {

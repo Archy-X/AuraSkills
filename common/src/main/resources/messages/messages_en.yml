@@ -507,9 +507,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
     saved: "<green>Skill data saved!"
   skill:
-    reset:
-      reset_all: "<gray>All Skills set to level <aqua>1 <gray>for player <gold>{player}"
-      reset_skill: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>1 <gray>for player <gold>{player}"
     setall:
       set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
     setlevel:

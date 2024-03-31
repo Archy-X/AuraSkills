@@ -93,26 +93,29 @@ public class SkillCommand extends BaseCommand {
     @Subcommand("reset")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.skill.reset")
-    @Description("Resets all skills or a specific skill to level 1 for a player.")
+    @Description("Resets all skills or a specific skill to the starting level for a player.")
     public void onSkillReset(CommandSender sender, @Flags("other") Player player, @Optional Skill skill) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         if (skill != null) {
             if (skill.isEnabled()) {
-                user.resetSkill(skill);
+                int level = user.resetSkill(skill);
                 // Reload items and armor to check for newly met requirements
                 this.plugin.getModifierManager().reloadPlayer(player);
-                sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_RESET_RESET_SKILL, locale)
+                sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_SETLEVEL_SET, locale)
                         .replace("{skill}", skill.getDisplayName(locale))
+                        .replace("{level}", String.valueOf(level))
                         .replace("{player}", player.getName()));
             } else {
                 sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));
             }
         } else {
+            int level = plugin.config().getStartLevel();
             for (Skill s : plugin.getSkillRegistry().getValues()) {
-                user.resetSkill(s);
+                level = user.resetSkill(s);
             }
-            sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_RESET_RESET_ALL, locale)
+            sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.SKILL_SETALL_SET, locale)
+                    .replace("{level}", String.valueOf(level))
                     .replace("{player}", player.getName()));
         }
     }
