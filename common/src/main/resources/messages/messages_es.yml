@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: Alquimista
     desc: "Las pociones que preparas tienen un {value}% más de duración."
     info: "+{value}% Duración de Poción"
-    lore: "<green>(+{duration})"
   brewer:
     name: Cervecero
     desc: "Gana un {value}% más de XP de Alquimia"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Intenta con: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Error: {message}"
     error_performing_command: "<red>Lo siento, se ha producido un error al ejecutar el comando."
-    info_message: "{message}"
     please_specify_one_of: "<red>Error: Por favor especifica uno de (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Error: {num} no es un número válido."
     must_be_min_length: "<red>Error: Debe tener al menos {min} caracteres."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Mostrando la página <green>{page} <aqua>de <green>{totalpages} <aqua>(<yellow>{results}<aqua> resultados)."
     help_no_results: "<aqua>Error: No hay más resultados."
     help_header: "<yellow>=== <aqua>Mostrando ayuda para <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator}{description}"
     help_detailed_header: "<yellow>=== <aqua>Mostrando ayuda detallada para <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator}{description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Resultados de la búsqueda <green>{commandprefix}{command} {search}<yellow> ==="
   minecraft:
     invalid_world: "<red>Error: Este mundo no existe."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "<gray>Modificador de {color}{stat} <gray>con nivel <aqua>{value} <gray>ha sido añadido a tu objeto"
         already_exists: "<yellow>¡Ya existe un modificador de armadura con la estadística {color}{stat}<yellow>! Quítalo con /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>¡Tu objeto no tiene un modificador para {color}{stat}<yellow>!"
         removed: "<gray>Modificador de {color}{stat} <gray>fue eliminado de tu objeto"
       list:
         header: "<white>Modificadores de armadura encontrados:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Todos los modificadores de armadura fueron removidos de tu objeto"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<gray>El multiplicador de armadura <aqua>{target} <gray>fue removido de tu objeto"
       list:
         header: "<white>Multiplicadores de armadura encontrados:"
-        entry: " <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Todos los multiplicadores de armadura fueron removidos de tu objeto"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> requerimientos de armadura fueron eliminados de tu objeto"
       list:
         header: "<white>Requisitos de armadura encontrados:"
-        entry: " <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Todos los requerimientos de armadura han sido removidos"
       equip: "<yellow>No cumples los requisitos para usar este objeto: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Cargando la copia de seguridad que revertirá todos los datos de los jugadores. Esta acción es permanente y no se puede deshacer. Puede que quieras guardar una copia de seguridad antes de cargar una. Escribe el comando nuevamente para confirmar esta acción"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "<gray>Modificador de {color}{stat} <gray>con nivel <aqua>{value} <gray>ha sido añadido a tu objeto"
         already_exists: "<yellow>¡Ya existe un modificador de objeto con la estadística {color}{stat}<yellow>! Quítalo con /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>¡Tu objeto no tiene un modificador de {color}{stat}<yellow>!"
         removed: "<gray>Modificador de {color}{stat} <gray>fue eliminado de tu objeto"
       list:
         header: "<white>Modificadores de Objetos encontrados:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Todos los modificadores fueron removidos de tu objeto"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<gray>El multiplicador de objeto <aqua>{target} <gray>fue removido de tu objeto"
       list:
         header: "<white>Modificadores de objeto encontrados:"
-        entry: " <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Todos los multiplicadores fueron removidos de tu objeto"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> elementos requeridos fueron eliminados de tu objeto"
       list:
         header: "<white>Requisitos encontrados:"
-        entry: " <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Todos los requerimientos han sido removidos de tu objeto"
       use: "<yellow>No cumples con los requisitos para usar este objeto: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>El objeto con la clave {key} ha sido desregistrado"
       not_registered: "<white>Ningún objeto con la clave {key} ha sido registrado"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL no se ha activado al iniciar el servidor, ¡guardando el archivo en su lugar!"
     saved: "<green>¡Datos de habilidades guardados!"
   skill:
-    reset:
-      reset_all: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>1 <gray>para <gold>{player}"
-      reset_skill: "<gray>Habilidad <aqua>{skill} <gray>establecida al nivel <aqua>1 <gray>para <gold>{player}"
     setall:
       set: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>{level} <gray>para <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>La barra de acción de tus habilidades ha sido desactivada"
     not_enabled: "<yellow>¡La barra de acción de habilidades no esta habilitada en este servidor!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Clasificación de todas las Habilidades</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Clasificación de todas las Habilidades</bold><white>(Página {page})==--"
     skill_header: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>Tabla de Clasificación de {skill}</bold><white> (Página {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     average_header: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Clasificación de Promedio de Habilidades </bold><white>(Página {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Intenta con: <green>/sk top <white><page> <gray>o <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Transferencia exitosa de datos del jugador de <gray>{from} <green>a <gray>{to}"
