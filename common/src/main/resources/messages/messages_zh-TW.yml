@@ -776,31 +776,31 @@ sources:
 stats:
   strength:
     name: 強度
-    desc: "強度會增加各種武器的攻擊力"
+    desc: "Strength increases your attack damage with various different weapons."
   health:
     name: 健康
-    desc: "健康會增加你的{hp_unit} 數量, 使您在戰鬥中的壽命更長"
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
   regeneration:
     name: 恢復
-    desc: "恢復可以增加恢復生命值和法力值的速度"
+    desc: "Regeneration increases how fast you recover both health and mana."
   luck:
     name: 運氣
     desc: "Luck increases the chance of extra drops from blocks in gathering skills."
   wisdom:
     name: 智慧
-    desc: "智慧可以增加最大法力值, 增加經驗值並減少鐵砧成本"
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
   toughness:
     name: 剛性
-    desc: "剛性增加了敵人攻擊所減少的傷害"
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
   crit_chance:
     name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit"
+    desc: "Crit Chance is your odds to deal a critical hit."
   crit_damage:
     name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run"
+    desc: "Speed increases how fast you can walk and run."
 traits:
   attack_damage:
     name: Attack Damage
