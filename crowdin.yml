@@ -1,5 +1,20 @@
+export_languages:
+  - cs
+  - de
+  - es
+  - fr
+  - id
+  - it
+  - ja
+  - ko
+  - nl
+  - pl
+  - pt-BR
+  - ru
+  - uk
+  - vi
+  - zh-CN
+  - zh-TW
 files:
   - source: /common/src/main/resources/messages/messages_en.yml
     translation: /common/src/main/resources/messages/messages_%two_letters_code%.yml
-    skip_untranslated_files: true
-    skip_untranslated_strings: true
