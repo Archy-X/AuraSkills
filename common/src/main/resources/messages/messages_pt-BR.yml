@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -507,9 +507,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL não foi habilitado na inicialização do servidor, salvar em vez disso!"
     saved: "<green>Dados de habilidade salvos!"
   skill:
-    reset:
-      reset_all: "<gray>Todas as Habilidades definidas para nível <aqua>1 <gray>para jogador <gold>{player}"
-      reset_skill: "<gray>Habilidade <aqua>{skill} <gray>definida para nível <aqua>1 <gray>para o jogador <gold>{player}"
     setall:
       set: "<gray>Todas as habilidades definidas para o nível <aqua>{level} <gray>para o jogador <gold>{player}"
     setlevel:
