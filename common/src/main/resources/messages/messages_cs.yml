@@ -1,6 +1,6 @@
-#----------------------------
-#AuraSkills message file
-#----------------------------
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
 
 abilities:
   bountiful_harvest:
@@ -214,7 +214,6 @@ abilities:
     name: Alchymista
     desc: "Lektvary které uvaříš budou trvat o {value}% déle."
     info: "+{value}% Trvání Lektvarů"
-    lore: "<green>(+{duration})"
   brewer:
     name: Vařič
     desc: "Získej o {value}% více XP k Alchymii"
@@ -301,7 +300,6 @@ acf:
     invalid_syntax: "<yellow>Použi: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Error: {message}"
     error_performing_command: "<red>Omlouvám se, ale při provádění tohoto příkazu došlo k chybě."
-    info_message: "{message}"
     please_specify_one_of: "<red>Chyba: Zadej jednu z (<yellow>{valid}<red>)"
     must_be_a_number: "<red>Chyba: {num} musí být číslo."
     must_be_min_length: "<red>Chyba: musí mít alespoň {min} znaků."
@@ -314,10 +312,7 @@ acf:
     help_page_information: "<aqua> - Zobrazí se stránka <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> výsledků)."
     help_no_results: "<aqua>Chyba: Žádné další výsledky."
     help_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
-    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
     help_detailed_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
-    help_detailed_command_format: "<aqua>{command}{parameters} <green>{separator} <yellow>{description}"
-    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
     help_search_header: "<yellow>=== <aqua>Zobrazení nápovědy pro <green>{commandprefix}{command}<yellow> ==="
   minecraft:
     invalid_world: "<red>Chyba: Tento svět neexistuje."
@@ -339,14 +334,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvémů itemů"
         already_exists: "<yellow>Modifikátor brnění se staty {color}{stat} &již existuje na tvém brnění! Odstraníš to pomocí with /sk armor modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "<yellow>Tvůj item nemá a {color}{stat} <yellow>modifikátorů!"
         removed: "{color}{stat} <gray>modifikátor byl z tvého itemů odstraněn"
       list:
         header: "<white>Nalezené modifikátory brnění:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Z tvého itemů byly odstraněny všechny modifikátory brnění"
     multiplier:
@@ -362,7 +354,6 @@ commands:
         removed: "<aqua>{target} <gray>multiplikátor brnění byl z tvého předmětu odstraněn"
       list:
         header: "<white>Nalezené multiplikátory brnění:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Z tvého předmětu byly odstraněny všechny multiplikátory brnění"
     requirement:
@@ -375,11 +366,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> Z tvého předmětu byl odstraněn požadavek na brnění"
       list:
         header: "<white>Nalezené požadavky na zbroj:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Z tvého předmětu byly odstraněny všechny požadavky na brnění"
       equip: "<yellow>Nesplňuješ požadavky na vybavení tohoto itemu: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
   backup:
     load:
       confirm: "<red>Načtením zálohy se vrátí všechna data dovedností hráčů. Tato akce je trvalá a nelze ji vrátit zpět. Před načtením zálohy můžeš chtít uložit. Chceš tuto akci potvrdit, zadej příkaz znovu"
@@ -402,14 +391,11 @@ commands:
       add:
         added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvému itemu"
         already_exists: "<yellow>Modifikátor itemů se statem {color}{stat} <yellow>již existuje tvém brnění! Nejprv to musíš odstranit pomocí /sk item modifier remove"
-        lore: "<gray>{stat}: {color}+{value}"
-        lore_subtract: "<gray>{stat}: {color}-{value}"
       remove:
         does_not_exist: "&Tvůj item nemá {color}{stat} <yellow>modifikátor!"
         removed: "{color}{stat} <gray>modifikátor byl z tvého itemu odstraněn"
       list:
         header: "<white>Nalezená modifikace pro item:"
-        entry: "  {color}{stat}<white> - {value}"
       removeall:
         removed: "<gray>Z tvého itemu byly odstraněny všechny modifikace na itemu"
     multiplier:
@@ -425,7 +411,6 @@ commands:
         removed: "<aqua>{target} <gray>multiplikátor itemů byl z tvého itemů byl odstraněn"
       list:
         header: "<white>Nalezené multiplikátory pro itemy:"
-        entry: "  <aqua>{target}<white> - {value}"
       removeall:
         removed: "<gray>Všechny multiplikátory položek byly z tvého itemů odstraněny"
     register:
@@ -442,11 +427,9 @@ commands:
         removed: "<dark_aqua>{skill}<gray> požadavek na položku byl z tvoji položky odstraněn"
       list:
         header: "<white>Nalezené požadavky na položku:"
-        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
       removeall:
         removed: "<gray>Z tvoji položky byly odstraněny všechny požadavky na položku"
       use: "<yellow>Nesplňuješ požadavky pro použití této položky: {requirements}"
-      entry: "<aqua>{skill} {level}<gray>, "
     unregister:
       unregistered: "<white>Neregistrovaná položka s klíčem {key}"
       not_registered: "<yellow>S klíčem není registrována žádná položka {key}"
@@ -507,9 +490,6 @@ commands:
     mysql_not_enabled: "<yellow>MySQL nebyl povolen při spuštění serveru, místo toho se ukládá do souboru!"
     saved: "<green>Dovednostni data ulozena!"
   skill:
-    reset:
-      reset_all: "<gray>Všechny dovednosti nastavená na level <aqua>1 <gray>pro hráče <gold>{player}"
-      reset_skill: "<gray>Dovednost <aqua>{skill} <gray>nastavena na úroveň <aqua>1 <gray>pro hráče <gold>{player}"
     setall:
       set: "<gray>Všechny dovednosti nastavené na level <aqua>{level} <gray>pro hráče <gold>{player}"
     setlevel:
@@ -520,15 +500,12 @@ commands:
     disabled: "<red>Panel akcí tvých dovedností byl deaktivován"
     not_enabled: "<yellow>Panel akcí dovedností není na tomto serveru povolen!"
   top:
-    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     power_header: "<white>--==<aqua><bold>Žebříček všech dovedností</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Žebříček všech dovedností </bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Žebříček<white>==--"
     skill_header_page: "<white>--==<aqua><bold>{skill} Žebříček </bold><white>(Page {page})==--"
-    skill_entry: "<white>{rank}. <aqua>{player} </bold><white>- {level}"
     average_header: "<white>--==<aqua><bold>Průměrný žebříček dovedností</bold><white>==--"
     average_header_page: "<white>--==<aqua><bold>Průměrný žebříček dovedností </bold><white>(Page {page})==--"
-    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
     usage: "<yellow>Použij: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
