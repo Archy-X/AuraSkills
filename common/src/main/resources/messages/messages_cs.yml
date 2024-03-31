@@ -470,7 +470,7 @@ commands:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
       loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
+      created: Vytvořené soubory
       modified: Modified files
       replaced: Replaced files
       deleted: Deleted files
@@ -800,7 +800,7 @@ stats:
     desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
   speed:
     name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    desc: "Speed increases how fast you can walk and run"
 traits:
   attack_damage:
     name: Attack Damage
