@@ -165,6 +165,7 @@ public class ArcheryAbilities extends AbilityImpl {
         // Ignore if an entity was hit
         if (event.getHitBlock() == null || event.getHitEntity() != null) return;
         if (!(event.getEntity() instanceof AbstractArrow arrow)) return;
+        if (event.getEntity() instanceof Trident) return;
         if (arrow.getPickupStatus() != PickupStatus.ALLOWED) return;
         if (!(arrow.getShooter() instanceof Player player)) return;
 
