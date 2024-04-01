@@ -189,6 +189,9 @@ public class BukkitItemRegistry implements ItemRegistry {
             return true;
         }
         if (filterMeta.customModelData() != Integer.MIN_VALUE) {
+            if (!itemMeta.hasCustomModelData()) {
+                return false;
+            }
             if (itemMeta.getCustomModelData() != filterMeta.customModelData()) {
                 return false;
             }
