@@ -188,11 +188,16 @@ public class BukkitItemRegistry implements ItemRegistry {
         if (itemMeta == null) {
             return true;
         }
-        if (filterMeta.customModelData() != Integer.MIN_VALUE) {
+        if (filterMeta.hasCustomModelData()) {
             if (!itemMeta.hasCustomModelData()) {
                 return false;
             }
             if (itemMeta.getCustomModelData() != filterMeta.customModelData()) {
+                return false;
+            }
+        } else {
+            // When filter says it shouldn't have custom model data but the item does
+            if (itemMeta.hasCustomModelData()) {
                 return false;
             }
         }

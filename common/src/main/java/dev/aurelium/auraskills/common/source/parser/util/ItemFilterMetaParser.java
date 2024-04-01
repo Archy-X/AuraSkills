@@ -23,9 +23,13 @@ public class ItemFilterMetaParser implements UtilityParser<ItemFilterMeta> {
         } else {
             potionData = null;
         }
+        boolean hasCustomModelData = source.node("has_custom_model_data").getBoolean(false);
+        if (!source.node("custom_model_data").virtual()) {
+            hasCustomModelData = true;
+        }
         int customModelData = source.node("custom_model_data").getInt(Integer.MIN_VALUE);
 
-        return new SourceItemMeta(displayName, lore, potionData, customModelData);
+        return new SourceItemMeta(displayName, lore, potionData, hasCustomModelData, customModelData);
     }
 
 }
