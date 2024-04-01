@@ -23,8 +23,9 @@ public class ItemFilterMetaParser implements UtilityParser<ItemFilterMeta> {
         } else {
             potionData = null;
         }
+        int customModelData = source.node("custom_model_data").getInt(Integer.MIN_VALUE);
 
-        return new SourceItemMeta(displayName, lore, potionData);
+        return new SourceItemMeta(displayName, lore, potionData, customModelData);
     }
 
 }

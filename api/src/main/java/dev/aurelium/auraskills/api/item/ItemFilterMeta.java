@@ -15,4 +15,7 @@ public interface ItemFilterMeta {
     @Nullable
     PotionData potionData();
 
+    // Returns Integer.MIN_VALUE if not defined
+    int customModelData();
+
 }
