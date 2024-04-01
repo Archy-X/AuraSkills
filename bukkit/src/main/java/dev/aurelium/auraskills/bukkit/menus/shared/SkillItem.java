@@ -43,10 +43,10 @@ public class SkillItem {
      */
     public void baseSkillItem(TemplateBuilder<Skill> template) {
         MessageProvider msg = plugin.getMessageProvider();
-        template.replace("skill", p -> msg.getRaw(msg.getSkillDisplayNameKey(p.value()), plugin.getLocale(p.player())));
-        template.replace("desc", p -> msg.getRaw(msg.getSkillDescriptionKey(p.value()), plugin.getLocale(p.player())));
+        template.replace("skill", p -> msg.getRaw(msg.getSkillDisplayNameKey(p.value()), p.locale()));
+        template.replace("desc", p -> msg.getRaw(msg.getSkillDescriptionKey(p.value()), p.locale()));
         template.replace("level", p -> RomanNumber.toRoman(plugin.getUser(p.player()).getSkillLevel(p.value()), plugin));
-        template.replace("skill_click", p -> plugin.getMsg(MenuMessage.SKILL_CLICK, plugin.getLocale(p.player())));
+        template.replace("skill_click", p -> plugin.getMsg(MenuMessage.SKILL_CLICK, p.locale()));
 
         template.modify(t -> {
             if (!t.value().isEnabled()) return null;
@@ -81,7 +81,7 @@ public class SkillItem {
             component.replace("entries", p -> {
                 String entry = p.menu().getFormat("stat_leveled_entry");
                 var builder = new ListBuilder(p.data().getListData());
-                Locale locale = plugin.getLocale(p.player());
+                Locale locale = p.locale();
 
                 for (Stat stat : plugin.getRewardManager().getRewardTable(p.value()).getStatsLeveled()) {
                     builder.append(entry, "{color}", stat.getColor(locale), "{stat}", stat.getDisplayName(locale));
@@ -95,7 +95,7 @@ public class SkillItem {
     public void abilityLevels(MenuBuilder menu) {
         menu.component("ability_levels", Skill.class, component -> {
             component.replace("entries", p -> {
-                Locale locale = plugin.getLocale(p.player());
+                Locale locale = p.locale();
                 var builder = new ListBuilder(p.data().getListData());
 
                 for (Ability ability : p.value().getAbilities()) {
@@ -119,7 +119,7 @@ public class SkillItem {
         menu.component("mana_ability_info", Skill.class, component -> {
             component.replace("name", p -> {
                 ManaAbility manaAbility = p.value().getManaAbility();
-                return manaAbility != null ? manaAbility.getDisplayName(plugin.getLocale(p.player())) : null;
+                return manaAbility != null ? manaAbility.getDisplayName(p.locale()) : null;
             });
             component.replace("level", p -> {
                 ManaAbility manaAbility = p.value().getManaAbility();

@@ -18,7 +18,16 @@ public class GlobalItems {
     public void back(MenuBuilder menu) {
         menu.item("back", item -> {
             item.replace("menu_name", p -> TextUtil.capitalizeWord(TextUtil.replace((String) p.menu().getProperty("previous_menu"), "_", " ")));
+            item.onClick(c -> plugin.getMenuManager().openMenu(c.player(), (String) c.menu().getProperty("previous_menu")));
+            item.modify(i -> i.menu().getProperty("previous_menu") == null ? null : i.item());
+        });
+    }
+
+    public void backToLevelProgression(MenuBuilder menu) {
+        menu.item("back", item -> {
+            item.replace("menu_name", p -> TextUtil.capitalizeWord(TextUtil.replace((String) p.menu().getProperty("previous_menu"), "_", " ")));
             item.onClick(c -> new LevelProgressionOpener(plugin).open(c.player(), (Skill) c.menu().getProperty("skill")));
+            item.modify(i -> i.menu().getProperty("previous_menu") == null ? null : i.item());
         });
     }
 

@@ -21,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class BukkitManaAbilityManager extends ManaAbilityManager {
@@ -80,8 +79,9 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
                 , "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
     }
 
-    public String getBaseDescription(ManaAbility manaAbility, Locale locale, User user) {
-        String desc = manaAbility.getDescription(locale);
+    @Override
+    public String getBaseDescription(ManaAbility manaAbility, User user) {
+        String desc = manaAbility.getDescription(user.getLocale());
         ManaAbilityProvider provider = plugin.getManaAbilityManager().getProvider(manaAbility);
         if (provider != null) {
             desc = provider.replaceDescPlaceholders(desc, user);

@@ -4,21 +4,16 @@ import com.archyx.slate.Slate;
 import com.archyx.slate.context.ContextManager;
 import com.archyx.slate.item.provider.ProviderManager;
 import com.archyx.slate.menu.MenuManager;
-import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.ItemRegistryMenuProvider;
-import dev.aurelium.auraskills.bukkit.menus.abilities.*;
-import dev.aurelium.auraskills.bukkit.menus.common.*;
+import dev.aurelium.auraskills.bukkit.menus.common.BackItem;
+import dev.aurelium.auraskills.bukkit.menus.common.CloseItem;
+import dev.aurelium.auraskills.bukkit.menus.common.NextPageItem;
+import dev.aurelium.auraskills.bukkit.menus.common.PreviousPageItem;
 import dev.aurelium.auraskills.bukkit.menus.contexts.*;
 import dev.aurelium.auraskills.bukkit.menus.levelprogression.*;
-import dev.aurelium.auraskills.bukkit.menus.skills.*;
-import dev.aurelium.auraskills.bukkit.menus.stats.SkullItem;
-import dev.aurelium.auraskills.bukkit.menus.stats.StatItem;
-import dev.aurelium.auraskills.bukkit.menus.stats.StatsComponents;
-import dev.aurelium.auraskills.bukkit.menus.stats.StatsMenu;
+import dev.aurelium.auraskills.bukkit.menus.skills.SkillComponents;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 
 import java.util.Map;
@@ -47,10 +42,7 @@ public class MenuRegistrar {
 
         MenuManager manager = plugin.getMenuManager();
         // Register menus
-        // manager.registerMenuProvider("skills", new SkillsMenu(plugin));
-        manager.registerMenuProvider("stats", new StatsMenu(plugin));
         manager.registerMenuProvider("level_progression", new LevelProgressionMenu(plugin));
-        manager.registerMenuProvider("abilities", new AbilitiesMenu(plugin));
         // Register default options
         Map<String, Object> skillsOptions = Map.of("bar_length", 20);
         manager.registerDefaultOptions("skills", skillsOptions);
@@ -75,18 +67,6 @@ public class MenuRegistrar {
         manager.getGlobalProviderManager().registerKeyedItemProvider(new ItemRegistryMenuProvider(plugin.getItemRegistry()));
 
         // Register menu specific items and templates
-        /*
-        ProviderManager skills = manager.getProviderManager("skills");
-        skills.registerSingleItem("your_skills", () -> new YourSkillsItem(plugin));
-        skills.registerSingleItem("stats", () -> new StatsItem(plugin));
-        skills.registerTemplateItem("skill", Skill.class, () -> new ClickableSkillItem(plugin));
-         */
-
-        ProviderManager stats = manager.getProviderManager("stats");
-        stats.registerSingleItem("skull", () -> new SkullItem(plugin));
-        stats.registerTemplateItem("stat", Stat.class, () -> new StatItem(plugin));
-        stats.registerComponent("leveled_by", () -> new StatsComponents.LeveledBy(plugin));
-
         ProviderManager levelProgression = manager.getProviderManager("level_progression");
         levelProgression.registerSingleItem("next_page", () -> new NextPageItem(plugin));
         levelProgression.registerSingleItem("previous_page", () -> new PreviousPageItem(plugin));
@@ -111,28 +91,22 @@ public class MenuRegistrar {
             providerManager.registerComponent("progress", () -> new SkillComponents.Progress(plugin));
             providerManager.registerComponent("max_level", () -> new SkillComponents.MaxLevel(plugin));
         }
-
-        ProviderManager abilities = manager.getProviderManager("abilities");
-        abilities.registerSingleItem("back", () -> new BackToLevelProgressionItem(plugin));
-        abilities.registerTemplateItem("locked_ability", Ability.class, () -> new LockedAbilityItem(plugin));
-        abilities.registerTemplateItem("locked_mana_ability", ManaAbility.class, () -> new LockedManaAbilityItem(plugin));
-        abilities.registerTemplateItem("unlocked_ability", Ability.class, () -> new UnlockedAbilityItem(plugin));
-        abilities.registerTemplateItem("unlocked_mana_ability", ManaAbility.class, () -> new UnlockedManaAbilityItem(plugin));
-        abilities.registerComponent("your_level", () -> new AbilitiesComponents.YourLevel(plugin));
-        abilities.registerComponent("your_level_maxed", () -> new AbilitiesComponents.YourLevelMaxed(plugin));
-        abilities.registerComponent("unlocked_desc", () -> new AbilitiesComponents.UnlockedDesc(plugin));
-        abilities.registerComponent("unlocked_desc_maxed", () -> new AbilitiesComponents.UnlockedDescMaxed(plugin));
         buildMenus();
     }
 
     private void buildMenus() {
-        slate.setGlobalOptions(options -> options.replacer(c -> {
-            // Returns null if not a menu message
-            return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
-        }));
+        slate.setGlobalOptions(options -> {
+            options.replacer(c -> {
+                // Returns null if not a menu message
+                return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
+            });
+            options.localeProvider(plugin::getLocale);
+        });
 
         slate.buildMenu("skills", menu -> new SkillsMenu(plugin).build(menu));
+        slate.buildMenu("stats", menu -> new StatsMenu(plugin).build(menu));
         slate.buildMenu("leaderboard", menu -> new LeaderboardMenu(plugin).build(menu));
         slate.buildMenu("sources", menu -> new SourcesMenu(plugin).build(menu));
+        slate.buildMenu("abilities", menu -> new AbilitiesMenu(plugin).build(menu));
     }
 }

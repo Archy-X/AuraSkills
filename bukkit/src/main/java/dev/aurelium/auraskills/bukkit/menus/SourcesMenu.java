@@ -35,7 +35,7 @@ public class SourcesMenu {
     public void build(MenuBuilder menu) {
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(plugin.getLocale(p.player())));
+        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
 
         menu.pages(m -> {
             var skill = (Skill) m.menu().getProperty("skill");
@@ -51,7 +51,7 @@ public class SourcesMenu {
                 "previous_menu", "level_progression"));
 
         var globalItems = new GlobalItems(plugin);
-        globalItems.back(menu);
+        globalItems.backToLevelProgression(menu);
         globalItems.previousPage(menu);
         globalItems.nextPage(menu);
 
@@ -83,10 +83,10 @@ public class SourcesMenu {
         });
 
         menu.template("source", XpSource.class, template -> {
-            template.replace("source_name", p -> p.value().getDisplayName(plugin.getLocale(p.player())));
+            template.replace("source_name", p -> p.value().getDisplayName(p.locale()));
             template.replace("source_xp", p -> {
                 XpSource source = p.value();
-                String unitName = source.getUnitName(plugin.getLocale(p.player()));
+                String unitName = source.getUnitName(p.locale());
                 return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
                         "{xp}", NumberUtil.format2(source.getXp()),
                         "{unit}", unitName);
@@ -117,7 +117,7 @@ public class SourcesMenu {
                     if (source.getXp() == 0.0 || plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source) == null) continue;
                     filteredSources.add(source);
                 }
-                filteredSources.sort(((SortType) activeMenu.getProperty("sort_type")).getComparator(plugin, plugin.getLocale(m.player())));
+                filteredSources.sort(((SortType) activeMenu.getProperty("sort_type")).getComparator(plugin, m.locale()));
                 // Gets a sublist of the sources displayed based on the current page
                 int toIndex = Math.min((page + 1) * itemsPerPage, filteredSources.size());
                 List<XpSource> shownSources = filteredSources.subList(page * itemsPerPage, toIndex);
@@ -138,7 +138,7 @@ public class SourcesMenu {
         menu.component("multiplied_xp", XpSource.class, component -> {
             component.replace("source_xp", p -> {
                 double multiplier = getMultiplier(p.player(), (Skill) p.menu().getProperty("skill"));
-                String unitName = p.value().getUnitName(plugin.getLocale(p.player()));
+                String unitName = p.value().getUnitName(p.locale());
                 return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
                         "{xp}", NumberUtil.format2(p.value().getXp() * multiplier),
                         "{unit}", unitName);
@@ -162,13 +162,12 @@ public class SourcesMenu {
     }
 
     private String getSortedTypesLore(PlaceholderInfo info) {
-        Locale locale = plugin.getLocale(info.player());
         ListBuilder builder = new ListBuilder(info.data().getListData());
 
         SortType selected = (SortType) info.menu().getProperty("sort_type");
         for (SortType sortType : SortType.values()) {
             String typeString = TextUtil.replace(info.menu().getFormat("sort_type_entry"), "{type_name}",
-                    plugin.getMsg(MenuMessage.valueOf(sortType.toString()), locale));
+                    plugin.getMsg(MenuMessage.valueOf(sortType.toString()), info.locale()));
             if (selected == sortType) {
                 typeString = TextUtil.replace(typeString, "{selected}", info.menu().getFormat("selected"));
             } else {

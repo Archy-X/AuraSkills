@@ -24,7 +24,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class BukkitAbilityManager extends AbilityManager {
@@ -88,8 +87,8 @@ public class BukkitAbilityManager extends AbilityManager {
     }
 
     @Override
-    public String getBaseDescription(Ability ability, Locale locale, User user) {
-        String desc = ability.getDescription(locale);
+    public String getBaseDescription(Ability ability, User user) {
+        String desc = ability.getDescription(user.getLocale());
         AbilityImpl impl = plugin.getAbilityManager().getAbilityImpl(ability);
         if (impl != null) {
             desc = impl.replaceDescPlaceholders(desc, ability, user);

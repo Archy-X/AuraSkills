@@ -89,6 +89,6 @@ public abstract class AbilityManager {
         return abilityMap.containsKey(ability);
     }
 
-    public abstract String getBaseDescription(Ability ability, Locale locale, User user);
+    public abstract String getBaseDescription(Ability ability, User user);
 
 }
