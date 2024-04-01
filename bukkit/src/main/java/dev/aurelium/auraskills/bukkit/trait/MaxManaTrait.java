@@ -14,7 +14,7 @@ public class MaxManaTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        return 20;
+        return trait.optionDouble("base", 20);
     }
 
     @Override
