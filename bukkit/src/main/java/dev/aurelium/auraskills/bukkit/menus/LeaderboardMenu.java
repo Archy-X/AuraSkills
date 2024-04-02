@@ -26,7 +26,7 @@ public class LeaderboardMenu {
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
 
         var globalItems = new GlobalItems(plugin);
-        globalItems.backToLevelProgression(menu);
+        menu.item("back", globalItems::backToLevelProgression);
 
         menu.template("leaderboard_player", Integer.class, template -> {
             LeaderboardManager lb = plugin.getLeaderboardManager();

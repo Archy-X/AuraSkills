@@ -5,9 +5,9 @@ import com.archyx.slate.position.PositionProvider;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.levelprogression.LevelProgressionOpener;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
+import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -28,7 +28,7 @@ public class SkillsMenu {
 
     public void build(MenuBuilder menu) {
         var globalItems = new GlobalItems(plugin);
-        globalItems.close(menu); // Close item
+        menu.item("close", globalItems::close); // Close item
 
         var skillItem = new SkillItem(plugin);
         skillItem.buildComponents(menu);

@@ -35,7 +35,7 @@ import dev.aurelium.auraskills.bukkit.loot.handler.MobLootHandler;
 import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
-import dev.aurelium.auraskills.bukkit.menus.SlateMenuHelper;
+import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;

@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.menus.levelprogression;
+package dev.aurelium.auraskills.bukkit.menus.util;
 
 import com.archyx.slate.menu.ConfigurableMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -35,7 +35,7 @@ public class LevelProgressionOpener {
         plugin.getMenuManager().openMenu(player, "level_progression", properties, page);
     }
 
-    protected int getPage(Skill skill, User user, int itemsPerPage, int startLevel) {
+    private int getPage(Skill skill, User user, int itemsPerPage, int startLevel) {
         int page = (user.getSkillLevel(skill) - startLevel + 1) / itemsPerPage;
         int maxLevelPage = (skill.getMaxLevel() - startLevel) / itemsPerPage;
         if (page > maxLevelPage) {

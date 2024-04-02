@@ -28,7 +28,7 @@ dependencies {
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("com.github.Archy-X:Slate:1cd20ddf4b")
+    implementation("com.github.Archy-X:Slate:f3fae6a85b")
     // implementation(files("../../Slate/build/libs/Slate-1.0.0.jar"))
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.2")

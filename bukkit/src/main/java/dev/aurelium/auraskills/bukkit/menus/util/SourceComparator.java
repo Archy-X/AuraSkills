@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.menus;
+package dev.aurelium.auraskills.bukkit.menus.util;
 
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;

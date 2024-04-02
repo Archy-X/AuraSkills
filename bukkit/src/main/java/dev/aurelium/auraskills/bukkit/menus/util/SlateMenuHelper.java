@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.menus;
+package dev.aurelium.auraskills.bukkit.menus.util;
 
 import com.archyx.slate.Slate;
 import com.archyx.slate.menu.ConfigurableMenu;

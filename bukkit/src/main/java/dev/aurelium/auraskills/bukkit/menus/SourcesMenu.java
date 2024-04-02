@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
+import dev.aurelium.auraskills.bukkit.menus.util.SourceComparator;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -51,9 +52,9 @@ public class SourcesMenu {
                 "previous_menu", "level_progression"));
 
         var globalItems = new GlobalItems(plugin);
-        globalItems.backToLevelProgression(menu);
-        globalItems.previousPage(menu);
-        globalItems.nextPage(menu);
+        menu.item("back", globalItems::backToLevelProgression);
+        menu.item("previous_page", globalItems::previousPage);
+        menu.item("next_page", globalItems::nextPage);
 
         menu.item("sorter", item -> {
             item.replace("sort_types", this::getSortedTypesLore);

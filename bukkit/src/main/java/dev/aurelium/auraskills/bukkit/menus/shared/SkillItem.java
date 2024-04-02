@@ -12,7 +12,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.PlaceholderHelper;
+import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageProvider;
@@ -179,9 +179,8 @@ public class SkillItem {
     }
 
     public void maxLevel(MenuBuilder menu) {
-        menu.component("max_level", Skill.class, component -> {
-            component.shouldShow(t -> t.value().getMaxLevel() == plugin.getUser(t.player()).getSkillLevel(t.value()));
-        });
+        menu.component("max_level", Skill.class, component ->
+                component.shouldShow(t -> t.value().getMaxLevel() == plugin.getUser(t.player()).getSkillLevel(t.value())));
     }
 
     public static String getBar(AuraSkills plugin, double currentXp, double xpToNext) {

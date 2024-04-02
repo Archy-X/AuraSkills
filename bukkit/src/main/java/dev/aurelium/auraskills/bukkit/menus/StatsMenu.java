@@ -35,7 +35,7 @@ public class StatsMenu {
 
     public void build(MenuBuilder menu) {
         var globalItems = new GlobalItems(plugin);
-        globalItems.back(menu);
+        menu.item("back", globalItems::back);
 
         menu.item("skull", item -> {
             item.replace("player", p -> p.player().getName());

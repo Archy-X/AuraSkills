@@ -8,8 +8,7 @@ import co.aikar.commands.annotation.Default;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.levelprogression.LevelProgressionOpener;
-import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
 import org.bukkit.entity.Player;
 
 public class SkillCommands {
@@ -42,7 +41,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -55,7 +53,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -68,7 +65,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -81,7 +77,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -94,7 +89,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -107,7 +101,6 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -120,7 +113,6 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -133,7 +125,6 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -146,7 +137,6 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -159,7 +149,6 @@ public class SkillCommands {
         
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -172,7 +161,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -185,7 +173,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -198,7 +185,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -211,7 +197,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
@@ -224,7 +209,6 @@ public class SkillCommands {
 
         @Default
         public void onCommand(Player player) {
-            User user = plugin.getUser(player);
             openMenu(player);
         }
     }
