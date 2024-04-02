@@ -278,16 +278,16 @@ public class SkillsRootCommand extends BaseCommand {
 		double multiplier = plugin.getLevelManager().getPermissionMultiplier(user, null);
 		sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.MULTIPLIER_LIST, locale),
 				"{player}", target.getName(),
-				"{multiplier}", NumberUtil.format2(multiplier),
-				"{percent}", NumberUtil.format2((multiplier - 1) * 100)));
+				"{multiplier}", NumberUtil.format2(1 + multiplier),
+				"{percent}", NumberUtil.format2(multiplier * 100)));
 		// Send skill specific multipliers if different from global
 		for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
 			double skillMultiplier = plugin.getLevelManager().getPermissionMultiplier(user, skill);
 			if (skillMultiplier != multiplier) {
 				sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.MULTIPLIER_SKILL_ENTRY, locale),
 						"{skill}", skill.getDisplayName(locale),
-						"{multiplier}", NumberUtil.format2(skillMultiplier),
-						"{percent}", NumberUtil.format2((skillMultiplier - 1) * 100)));
+						"{multiplier}", NumberUtil.format2(1 + skillMultiplier),
+						"{percent}", NumberUtil.format2(skillMultiplier * 100)));
 			}
 		}
 	}
