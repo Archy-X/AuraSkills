@@ -43,7 +43,7 @@ public class StatsMenu {
                 User user = plugin.getUser(p.player());
                 Locale locale = user.getLocale();
                 // Handle each stat entry
-                ListBuilder builder = new ListBuilder(p.data().getListData());
+                ListBuilder builder = new ListBuilder(p.data().listData());
 
                 for (Stat stat : plugin.getStatManager().getEnabledStats()) {
                     String entry = p.menu().getFormat("player_stat_entry");
@@ -111,7 +111,7 @@ public class StatsMenu {
         menu.component("leveled_by", Stat.class, component -> {
             component.replace("skills", p -> {
                 Locale locale = p.locale();
-                ListBuilder builder = new ListBuilder(p.data().getListData());
+                ListBuilder builder = new ListBuilder(p.data().listData());
 
                 List<Skill> skillsLeveledBy = plugin.getRewardManager().getSkillsLeveledBy(p.value());
                 skillsLeveledBy.forEach(s -> builder.append(s.getDisplayName(locale)));
@@ -126,7 +126,7 @@ public class StatsMenu {
         Stat stat = info.value();
         User user = plugin.getUser(info.player());
         Locale locale = user.getLocale();
-        ListBuilder builder = new ListBuilder(info.data().getListData());
+        ListBuilder builder = new ListBuilder(info.data().listData());
 
         for (Trait trait : stat.getTraits()) {
             if (!trait.isEnabled()) continue;

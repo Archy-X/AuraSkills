@@ -299,7 +299,7 @@ public class LevelProgressionMenu {
     }
 
     private Ability leveledUpAbility(ComponentPlaceholderInfo<Integer> p) {
-        return getLeveledUp((Skill) p.menu().getProperty("skill"), p.value()).get(p.component().getInstance());
+        return getLeveledUp((Skill) p.menu().getProperty("skill"), p.value()).get(p.component().instance());
     }
 
     private List<Ability> getLeveledUp(Skill skill, int level) {
@@ -307,7 +307,7 @@ public class LevelProgressionMenu {
     }
 
     private Ability unlockedAbility(ComponentPlaceholderInfo<Integer> p) {
-        return getUnlocked((Skill) p.menu().getProperty("skill"), p.value()).get(p.component().getInstance());
+        return getUnlocked((Skill) p.menu().getProperty("skill"), p.value()).get(p.component().instance());
     }
 
     private List<Ability> getUnlocked(Skill skill, int level) {

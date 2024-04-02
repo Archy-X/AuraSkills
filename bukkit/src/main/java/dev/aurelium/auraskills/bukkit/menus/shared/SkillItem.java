@@ -80,7 +80,7 @@ public class SkillItem {
         menu.component("stats_leveled", Skill.class, component -> {
             component.replace("entries", p -> {
                 String entry = p.menu().getFormat("stat_leveled_entry");
-                var builder = new ListBuilder(p.data().getListData());
+                var builder = new ListBuilder(p.data().listData());
                 Locale locale = p.locale();
 
                 for (Stat stat : plugin.getRewardManager().getRewardTable(p.value()).getStatsLeveled()) {
@@ -96,7 +96,7 @@ public class SkillItem {
         menu.component("ability_levels", Skill.class, component -> {
             component.replace("entries", p -> {
                 Locale locale = p.locale();
-                var builder = new ListBuilder(p.data().getListData());
+                var builder = new ListBuilder(p.data().listData());
 
                 for (Ability ability : p.value().getAbilities()) {
                     if (!ability.isEnabled()) continue;
@@ -130,7 +130,7 @@ public class SkillItem {
                 ManaAbility manaAbility = p.value().getManaAbility();
                 if (manaAbility == null) return null;
 
-                var builder = new ListBuilder(p.data().getListData());
+                var builder = new ListBuilder(p.data().listData());
                 int level = plugin.getUser(p.player()).getManaAbilityLevel(manaAbility);
                 for (String format : getFormatEntries(manaAbility)) {
                     String message = helper.replaceMenuMessages(p.menu().getFormat(format), p.player(), p.menu(), new Replacer());

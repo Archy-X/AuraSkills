@@ -163,7 +163,7 @@ public class SourcesMenu {
     }
 
     private String getSortedTypesLore(PlaceholderInfo info) {
-        ListBuilder builder = new ListBuilder(info.data().getListData());
+        ListBuilder builder = new ListBuilder(info.data().listData());
 
         SortType selected = (SortType) info.menu().getProperty("sort_type");
         for (SortType sortType : SortType.values()) {
