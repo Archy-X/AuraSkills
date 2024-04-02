@@ -51,6 +51,7 @@ public abstract class MessagedReward extends SkillReward {
             message = hooks.getHook(PlaceholderHook.class).setPlaceholders(user, message);
         }
         message = TextUtil.replaceNonEscaped(message, "&", "§");
+        message = TextUtil.replace(message, "\\n", "\n");
         return message;
     }
 
