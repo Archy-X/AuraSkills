@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.storage;
 
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
@@ -24,6 +25,8 @@ public abstract class StorageProvider {
 
     public void load(UUID uuid) throws Exception {
         User user = loadRaw(uuid);
+        fixInvalidData(user);
+
         plugin.getUserManager().addUser(user);
 
         // Update stats
@@ -84,6 +87,16 @@ public abstract class StorageProvider {
             }
         };
         plugin.getScheduler().timerAsync(task, interval * 50, interval * 50, TimeUnit.MILLISECONDS);
+    }
+
+    private void fixInvalidData(User user) {
+        // Ensure users are at least the start level
+        int startLevel = plugin.config().getStartLevel();
+        for (Skill skill : user.getSkillLevelMap().keySet()) {
+            if (user.getSkillLevel(skill) < startLevel) {
+                user.setSkillLevel(skill, startLevel);
+            }
+        }
     }
 
 }
