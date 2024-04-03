@@ -4,7 +4,7 @@ import com.archyx.slate.builder.MenuBuilder;
 import com.archyx.slate.info.PlaceholderInfo;
 import com.archyx.slate.item.provider.ListBuilder;
 import com.archyx.slate.menu.ActiveMenu;
-import com.archyx.slate.menu.ConfigurableMenu;
+import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -34,6 +34,11 @@ public class SourcesMenu {
     }
 
     public void build(MenuBuilder menu) {
+        menu.defaultOptions(Map.of(
+                "source_start", SourcesMenu.DEF_SOURCE_START,
+                "source_end", SourcesMenu.DEF_SOURCE_END,
+                "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE));
+
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
@@ -155,9 +160,9 @@ public class SourcesMenu {
     }
 
     private int getItemsPerPage() {
-        ConfigurableMenu menu = plugin.getMenuManager().getMenu("sources");
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("sources");
         if (menu != null) {
-            return (int) menu.getOptions().getOrDefault("items_per_page", DEF_ITEMS_PER_PAGE);
+            return (int) menu.options().getOrDefault("items_per_page", DEF_ITEMS_PER_PAGE);
         }
         return DEF_ITEMS_PER_PAGE;
     }

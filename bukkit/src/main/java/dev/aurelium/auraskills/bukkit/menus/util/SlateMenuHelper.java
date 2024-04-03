@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus.util;
 
 import com.archyx.slate.Slate;
-import com.archyx.slate.menu.ConfigurableMenu;
+import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.common.menu.MenuHelper;
 
 public class SlateMenuHelper implements MenuHelper {
@@ -14,9 +14,9 @@ public class SlateMenuHelper implements MenuHelper {
 
     @Override
     public String getFormat(String menuName, String formatName) {
-        ConfigurableMenu menu = slate.getMenuManager().getMenu(menuName);
+        LoadedMenu menu = slate.getLoadedMenu(menuName);
         if (menu != null) {
-            return menu.getFormats().getOrDefault(formatName, formatName);
+            return menu.formats().getOrDefault(formatName, formatName);
         } else {
             return formatName;
         }

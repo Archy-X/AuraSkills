@@ -50,7 +50,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
 	public void onSkills(Player player) {
 		if (plugin.getUserManager().hasUser(player.getUniqueId())) {
-			plugin.getMenuManager().openMenu(player, "skills");
+			plugin.getSlate().openMenu(player, "skills");
 		} else {
 			player.sendMessage(plugin.getMsg(CommandMessage.NO_PROFILE, plugin.getDefaultLanguage()));
 		}
@@ -413,7 +413,7 @@ public class SkillsRootCommand extends BaseCommand {
 			sortType = SortType.ASCENDING;
 		}
 		properties.put("sort_type", sortType);
-		plugin.getMenuManager().openMenu(player, "sources", properties);
+		plugin.getSlate().openMenu(player, "sources", properties);
 	}
 
 	@Subcommand("transfer")

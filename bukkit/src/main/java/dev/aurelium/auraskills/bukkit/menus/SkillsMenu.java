@@ -27,6 +27,8 @@ public class SkillsMenu {
     }
 
     public void build(MenuBuilder menu) {
+        menu.defaultOptions(Map.of("bar_length", 20));
+
         var globalItems = new GlobalItems(plugin);
         menu.item("close", globalItems::close); // Close item
 
@@ -35,7 +37,7 @@ public class SkillsMenu {
 
         menu.item("your_skills", item -> item.replace("player", p -> p.player().getName()));
         menu.item("stats", item -> {
-            item.onClick(c -> plugin.getMenuManager().openMenu(c.player(), "stats", Map.of("previous_menu", "skills")));
+            item.onClick(c -> plugin.getSlate().openMenu(c.player(), "stats", Map.of("previous_menu", "skills")));
             item.modify(i -> {
                 if (i.item().getItemMeta() instanceof SkullMeta meta) {
                     meta.setOwningPlayer(Bukkit.getOfflinePlayer(i.player().getUniqueId()));

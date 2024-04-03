@@ -21,7 +21,7 @@ public class StatsCommand extends BaseCommand {
 	@CommandPermission("auraskills.command.stats")
 	@Description("Opens the Stats menu where you can see current stat levels and descriptions.")
 	public void onStats(Player player) {
-		plugin.getMenuManager().openMenu(player, "stats");
+		plugin.getSlate().openMenu(player, "stats");
 	}
 	
 }

@@ -17,7 +17,7 @@ public class GlobalItems {
 
     public void back(ItemBuilder item) {
         item.replace("menu_name", p -> TextUtil.capitalizeWord(TextUtil.replace((String) p.menu().getProperty("previous_menu"), "_", " ")));
-        item.onClick(c -> plugin.getMenuManager().openMenu(c.player(), (String) c.menu().getProperty("previous_menu")));
+        item.onClick(c -> plugin.getSlate().openMenu(c.player(), (String) c.menu().getProperty("previous_menu")));
         item.modify(i -> i.menu().getProperty("previous_menu") == null ? null : i.item());
     }
 
@@ -30,7 +30,7 @@ public class GlobalItems {
     public void previousPage(ItemBuilder item) {
         item.onClick(c -> {
             ActiveMenu activeMenu = c.menu();
-            plugin.getMenuManager().openMenu(c.player(), activeMenu.getName(), activeMenu.getProperties(), activeMenu.getCurrentPage() - 1);
+            plugin.getSlate().openMenu(c.player(), activeMenu.getName(), activeMenu.getProperties(), activeMenu.getCurrentPage() - 1);
         });
         item.modify(i -> i.menu().getCurrentPage() == 0 ? null : i.item());
     }
@@ -38,7 +38,7 @@ public class GlobalItems {
     public void nextPage(ItemBuilder item) {
         item.onClick(c -> {
             ActiveMenu activeMenu = c.menu();
-            plugin.getMenuManager().openMenu(c.player(), activeMenu.getName(), activeMenu.getProperties(), activeMenu.getCurrentPage() + 1);
+            plugin.getSlate().openMenu(c.player(), activeMenu.getName(), activeMenu.getProperties(), activeMenu.getCurrentPage() + 1);
         });
         item.modify(i -> i.menu().getCurrentPage() == (i.menu().getTotalPages() - 1) ? null : i.item());
     }

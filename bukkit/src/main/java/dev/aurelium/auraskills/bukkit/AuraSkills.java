@@ -3,8 +3,7 @@ package dev.aurelium.auraskills.bukkit;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.slate.Slate;
-import com.archyx.slate.menu.MenuManager;
-import com.archyx.slate.option.SlateOptions;
+import com.archyx.slate.option.SlateOptionsBuilder;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
@@ -23,6 +22,7 @@ import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
+import dev.aurelium.auraskills.bukkit.item.ItemRegistryMenuProvider;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -352,7 +352,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     private void initializeMenus() {
-        slate = new Slate(this, new SlateOptions.SlateOptionsBuilder()
+        slate = new Slate(this, new SlateOptionsBuilder()
+                .keyedItemProvider(new ItemRegistryMenuProvider(itemRegistry))
+                .mainDirectory(new File(getDataFolder(), "menus"))
                 .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .build());
         menuHelper = new SlateMenuHelper(slate);
@@ -401,10 +403,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public MenuFileManager getMenuFileManager() {
         return menuFileManager;
-    }
-
-    public MenuManager getMenuManager() {
-        return slate.getMenuManager();
     }
 
     public PaperCommandManager getCommandManager() {

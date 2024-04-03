@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.menus.shared;
 import com.archyx.slate.builder.MenuBuilder;
 import com.archyx.slate.builder.TemplateBuilder;
 import com.archyx.slate.item.provider.ListBuilder;
-import com.archyx.slate.menu.ConfigurableMenu;
+import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -184,21 +184,21 @@ public class SkillItem {
     }
 
     public static String getBar(AuraSkills plugin, double currentXp, double xpToNext) {
-        ConfigurableMenu menu = plugin.getMenuManager().getMenu("skills");
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("skills");
         if (menu == null) return "";
 
-        int length = (int) menu.getOptions().getOrDefault("bar_length", 10);
+        int length = (int) menu.options().getOrDefault("bar_length", 10);
         double progress = Math.min(currentXp / xpToNext, 1.0);
         int currentPos = (int) Math.round(progress * (length - 1));
 
         StringBuilder bar = new StringBuilder();
         // Completed portion
-        String completed = menu.getFormats().getOrDefault("bar_completed", "<green>■");
+        String completed = menu.formats().getOrDefault("bar_completed", "<green>■");
         bar.append(completed.repeat(Math.max(0, currentPos)));
         // Current
-        bar.append(menu.getFormats().getOrDefault("bar_current", "<yellow>■"));
+        bar.append(menu.formats().getOrDefault("bar_current", "<yellow>■"));
         // Remaining
-        String remaining = menu.getFormats().getOrDefault("bar_remaining", "<gray>■");
+        String remaining = menu.formats().getOrDefault("bar_remaining", "<gray>■");
         bar.append(remaining.repeat(Math.max(0, length - currentPos - 1)));
         return bar.toString();
     }

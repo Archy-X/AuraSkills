@@ -2,7 +2,7 @@ package dev.aurelium.auraskills.bukkit.menus.shared;
 
 import com.archyx.slate.info.TemplateInfo;
 import com.archyx.slate.menu.ActiveMenu;
-import com.archyx.slate.menu.ConfigurableMenu;
+import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
@@ -19,9 +19,9 @@ public class SkillLevelItem {
     public SkillLevelItem(AuraSkills plugin) {
         this.track = getDefaultTrack();
         // Load track option
-        ConfigurableMenu menu = plugin.getMenuManager().getMenu("level_progression");
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("level_progression");
         if (menu != null) {
-            Object trackObj = menu.getOptions().get("track");
+            Object trackObj = menu.options().get("track");
             if (trackObj != null) {
                 this.track.clear();
                 this.track.addAll(DataUtil.castIntegerList(trackObj));

@@ -1,9 +1,11 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
+import com.archyx.slate.builder.BuiltMenu;
 import com.archyx.slate.builder.MenuBuilder;
 import com.archyx.slate.info.ComponentPlaceholderInfo;
+import com.archyx.slate.info.MenuInfo;
 import com.archyx.slate.info.TemplatePlaceholderInfo;
-import com.archyx.slate.menu.ConfigurableMenu;
+import com.archyx.slate.menu.LoadedMenu;
 import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -22,6 +24,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class LevelProgressionMenu {
@@ -33,15 +36,22 @@ public class LevelProgressionMenu {
     }
 
     public void build(MenuBuilder menu) {
+        menu.defaultOptions(Map.of(
+                "use_level_as_amount", false,
+                "over_max_stack_amount", 1,
+                "items_per_page", 24,
+                "start_level", 1,
+                "track", SkillLevelItem.getDefaultTrack()));
+
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
         menu.replaceTitle("page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
 
         menu.pages(m -> {
             var skill = (Skill) m.menu().getProperty("skill");
             int itemsPerPage = 24;
-            ConfigurableMenu levelProgressionMenu = plugin.getSlate().getMenuManager().getMenu("level_progression");
+            LoadedMenu levelProgressionMenu = plugin.getSlate().getLoadedMenu("level_progression");
             if (levelProgressionMenu != null) {
-                Object itemsPerPageObj = levelProgressionMenu.getOptions().get("items_per_page");
+                Object itemsPerPageObj = levelProgressionMenu.options().get("items_per_page");
                 if (itemsPerPageObj != null) {
                     itemsPerPage = (int) itemsPerPageObj;
                 }
@@ -77,22 +87,28 @@ public class LevelProgressionMenu {
             item.onClick(c -> {
                 var properties = c.menu().getProperties(); // Retain current properties
                 properties.put("previous_menu", "level_progression");
-                plugin.getMenuManager().openMenu(c.player(), "leaderboard", properties);
+                plugin.getSlate().openMenu(c.player(), "leaderboard", properties);
             });
         });
 
         menu.item("sources", item -> {
             item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
 
-            item.onClick(c -> plugin.getMenuManager().openMenu(c.player(), "sources",
-                    plugin.getMenuManager().getDefaultProperties("sources", c.player(), c.menu()), 0));
+            item.onClick(c -> {
+                BuiltMenu sourcesMenu = plugin.getSlate().getBuiltMenu("sources");
+                MenuInfo info = new MenuInfo(plugin.getSlate(), c.player(), c.menu());
+                plugin.getSlate().openMenu(c.player(), "sources", sourcesMenu.propertyProvider().get(info));
+            });
         });
 
         menu.item("abilities", item -> {
             item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
 
-            item.onClick(c -> plugin.getMenuManager().openMenu(c.player(), "abilities",
-                    plugin.getMenuManager().getDefaultProperties("abilities", c.player(), c.menu())));
+            item.onClick(c -> {
+                BuiltMenu abilitiesMenu = plugin.getSlate().getBuiltMenu("abilities");
+                MenuInfo info = new MenuInfo(plugin.getSlate(), c.player(), c.menu());
+                plugin.getSlate().openMenu(c.player(), "abilities", abilitiesMenu.propertyProvider().get(info));
+            });
 
             item.modify(i -> {
                 var skill = (Skill) i.menu().getProperty("skill");
