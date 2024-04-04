@@ -23,24 +23,7 @@ public class MenuFileManager {
     }
 
     public void loadMenus() {
-        int menusLoaded = 0;
-        for (String menuName : plugin.getMenuManager().getMenuProviderNames()) {
-            try {
-                File file = new File(plugin.getDataFolder() + "/menus", menuName + ".yml");
-                if (file.exists()) {
-                    try {
-                        plugin.getMenuManager().loadMenu(file);
-                        menusLoaded++;
-                    } catch (Exception e) {
-                        plugin.getLogger().warning("Error loading menu " + menuName);
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                plugin.getLogger().severe("Error loading menu " + menuName);
-                e.printStackTrace();
-            }
-        }
+        int menusLoaded = plugin.getSlate().loadMenus();
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");
     }
 }

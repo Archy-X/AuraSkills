@@ -15,6 +15,11 @@ public class AbilityContext implements ContextProvider<Ability> {
     }
 
     @Override
+    public Class<Ability> getType() {
+        return Ability.class;
+    }
+
+    @Override
     @Nullable
     public Ability parse(String menuName, String input) {
         Ability ability = plugin.getAbilityRegistry().getOrNull(NamespacedId.fromDefault(input));

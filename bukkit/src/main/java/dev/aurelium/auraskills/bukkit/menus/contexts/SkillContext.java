@@ -14,6 +14,11 @@ public class SkillContext implements ContextProvider<Skill> {
         this.plugin = plugin;
     }
 
+    @Override
+    public Class<Skill> getType() {
+        return Skill.class;
+    }
+
     @Nullable
     @Override
     public Skill parse(String menuName, String input) {

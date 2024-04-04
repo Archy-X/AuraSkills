@@ -9,7 +9,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.sources.SorterItem;
+import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -142,9 +142,9 @@ public class CommandRegistrar {
             return keys;
         });
         completions.registerAsyncCompletion("sort_types", c -> {
-            SorterItem.SortType[] sortTypes = SorterItem.SortType.values();
+            SortType[] sortTypes = SortType.values();
             List<String> typeNames = new ArrayList<>();
-            for (SorterItem.SortType sortType : sortTypes) {
+            for (SortType sortType : sortTypes) {
                 typeNames.add(sortType.toString().toLowerCase(Locale.ROOT));
             }
             return typeNames;

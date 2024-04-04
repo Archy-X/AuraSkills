@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
-import com.archyx.slate.menu.ConfigurableMenu;
 import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
@@ -15,6 +14,7 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
@@ -38,9 +38,11 @@ import java.util.Set;
 public class GatheringLuckTraits extends TraitImpl {
 
     private final Random random = new Random();
+    private final SlateMenuHelper menuHelper;
 
     GatheringLuckTraits(AuraSkills plugin) {
         super(plugin, Traits.FARMING_LUCK, Traits.FORAGING_LUCK, Traits.MINING_LUCK, Traits.FISHING_LUCK, Traits.EXCAVATION_LUCK);
+        this.menuHelper = new SlateMenuHelper(plugin.getSlate());
     }
 
     @Override
@@ -112,26 +114,19 @@ public class GatheringLuckTraits extends TraitImpl {
         double chance = value - guaranteed * 100;
         String desc;
         if (guaranteed >= 1 && chance > 0) { // ({added}, {chance})
-            desc = TextUtil.replace(getMenuFormat("luck_trait_desc_both"),
+            desc = TextUtil.replace(menuHelper.getFormat("stats", "luck_trait_desc_both"),
                     "{added}", getAddedMsg(guaranteed, locale),
                     "{chance}", getChanceMsg(chance, guaranteed, locale));
         } else if (guaranteed >= 1 && chance == 0) { // ({added})
-            desc = TextUtil.replace(getMenuFormat("luck_trait_desc_added"),
+            desc = TextUtil.replace(menuHelper.getFormat("stats", "luck_trait_desc_added"),
                     "{added}", getAddedMsg(guaranteed, locale));
         } else if (chance > 0) {
-            desc = TextUtil.replace(getMenuFormat("luck_trait_desc_chance"),
+            desc = TextUtil.replace(menuHelper.getFormat("stats", "luck_trait_desc_chance"),
                     "{chance}", getChanceMsg(chance, guaranteed, locale));
         } else {
             desc = "";
         }
         return NumberUtil.format1(value) + desc;
-    }
-
-    private String getMenuFormat(String key) {
-        ConfigurableMenu menu = plugin.getMenuManager().getMenu("stats");
-        if (menu == null) return key;
-
-        return menu.getFormats().getOrDefault(key, key);
     }
 
     private String getAddedMsg(int guaranteed, Locale locale) {

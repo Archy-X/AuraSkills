@@ -75,6 +75,6 @@ public abstract class ManaAbilityManager {
 
     public abstract void sendNotEnoughManaMessage(User user, double manaCost);
 
-    public abstract String getBaseDescription(ManaAbility manaAbility, Locale locale, User user);
+    public abstract String getBaseDescription(ManaAbility manaAbility, User user);
 
 }

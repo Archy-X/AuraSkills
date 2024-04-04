@@ -7,12 +7,17 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.jetbrains.annotations.Nullable;
 
-public class SourceContext implements ContextProvider<XpSource> {
+public class XpSourceContext implements ContextProvider<XpSource> {
 
     private final AuraSkills plugin;
 
-    public SourceContext(AuraSkills plugin) {
+    public XpSourceContext(AuraSkills plugin) {
         this.plugin = plugin;
+    }
+
+    @Override
+    public Class<XpSource> getType() {
+        return XpSource.class;
     }
 
     @Override
