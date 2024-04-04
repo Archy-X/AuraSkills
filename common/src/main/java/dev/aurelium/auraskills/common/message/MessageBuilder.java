@@ -123,10 +123,18 @@ public class MessageBuilder {
      * @return The MessageBuilder
      */
     public MessageBuilder message(MessageKey key, String... rep) {
+        return message(key, false, rep);
+    }
+
+    public MessageBuilder rawMessage(MessageKey key, String... rep) {
+        return message(key, true, rep);
+    }
+
+    public MessageBuilder message(MessageKey key, boolean raw, String... rep) {
         if (locale == null) {
             throw new IllegalStateException("Cannot add message because locale is null");
         }
-        String message = plugin.getMsg(key, locale);
+        String message = raw ? plugin.getMessageProvider().getRaw(key, locale) : plugin.getMsg(key, locale);
         // Ensure replacements is even
         if (rep.length % 2 != 0) {
             throw new IllegalArgumentException("Replacements must be even");

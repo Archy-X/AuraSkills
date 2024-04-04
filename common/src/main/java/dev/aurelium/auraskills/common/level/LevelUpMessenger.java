@@ -55,13 +55,13 @@ public class LevelUpMessenger {
 
     public void sendTitle() {
         String title = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerFormat.TITLE,
+                .rawMessage(LevelerFormat.TITLE,
                         "skill", skill.getDisplayName(locale),
                         "old", RomanNumber.toRoman(level - 1, plugin),
                         "new", RomanNumber.toRoman(level, plugin))
                 .toString();
         String subtitle = MessageBuilder.create(plugin).locale(locale)
-                .message(LevelerFormat.SUBTITLE,
+                .rawMessage(LevelerFormat.SUBTITLE,
                         "skill", skill.getDisplayName(locale),
                         "old", RomanNumber.toRoman(level - 1, plugin),
                         "new", RomanNumber.toRoman(level, plugin))
