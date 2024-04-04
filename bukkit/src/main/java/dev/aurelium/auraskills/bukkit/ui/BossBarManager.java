@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
+import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.util.math.BigNumber;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
@@ -203,8 +204,9 @@ public class BossBarManager implements Listener {
     private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, Locale locale) {
         String bossBarText;
         String currentXpText = getCurrentXpText(currentXp);
+        MessageProvider provider = plugin.getMessageProvider();
         if (!maxed) {
-            bossBarText = setPlaceholders(player, TextUtil.replace(plugin.getMsg(ActionBarMessage.BOSS_BAR_XP, locale),
+            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_XP, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
@@ -212,7 +214,7 @@ public class BossBarManager implements Listener {
                     "{percent}", percentFormat.format(currentXp / (double) levelXp * 100),
                     "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
         } else {
-            bossBarText = setPlaceholders(player, TextUtil.replace(plugin.getMsg(ActionBarMessage.BOSS_BAR_MAXED, locale),
+            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_MAXED, locale),
                     "{skill}", skill.getDisplayName(locale),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
