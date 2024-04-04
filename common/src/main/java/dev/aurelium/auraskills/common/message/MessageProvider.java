@@ -138,7 +138,7 @@ public abstract class MessageProvider implements PolyglotProvider {
 
     public String getStatSymbol(Stat stat, Locale locale) {
         String key = stat instanceof Stats ? stat.getId().getKey() : stat.getId().toString();
-        return get(MessageKey.of("stats." + key + ".symbol"), locale);
+        return getRaw(MessageKey.of("stats." + key + ".symbol"), locale);
     }
 
     public String getAbilityDisplayName(Ability ability, Locale locale) {
