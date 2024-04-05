@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.util.SourceComparator;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.data.DataUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Material;
@@ -26,18 +27,35 @@ public class SourcesMenu {
     public static final int DEF_ITEMS_PER_PAGE = 28;
     public static final String DEF_SOURCE_START = "1,1";
     public static final String DEF_SOURCE_END = "4,8";
+    private final List<Integer> track;
 
     private final AuraSkills plugin;
 
     public SourcesMenu(AuraSkills plugin) {
         this.plugin = plugin;
+        this.track = new ArrayList<>();
+    }
+
+    private void initTrack() {
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("sources");
+        if (menu != null) {
+            Object trackObj = menu.options().get("track");
+            if (trackObj != null) {
+                this.track.clear();
+                this.track.addAll(DataUtil.castIntegerList(trackObj));
+            }
+        }
     }
 
     public void build(MenuBuilder menu) {
+        menu.onOpen(m -> initTrack());
+
         menu.defaultOptions(Map.of(
                 "source_start", SourcesMenu.DEF_SOURCE_START,
                 "source_end", SourcesMenu.DEF_SOURCE_END,
-                "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE));
+                "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE,
+                "use_track", false,
+                "track", new int[0]));
 
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
@@ -101,14 +119,22 @@ public class SourcesMenu {
             template.slotPos(t -> {
                 int index = getSortedSources(t.menu()).indexOf(t.value());
                 if (index != -1) {
-                    // Convert index of source into position on menu
-                    SlotPos start = parsePos(t.menu().getOption(String.class, "source_start", DEF_SOURCE_START));
-                    SlotPos end = parsePos(t.menu().getOption(String.class, "source_end", DEF_SOURCE_END));
-                    int numRows = end.getRow() - start.getRow();
-                    int numCols = end.getColumn() - start.getColumn();
-                    int row = Math.min(start.getRow() + index / numCols, start.getRow() + numRows);
-                    int column = start.getColumn() + index % numCols;
-                    return SlotPos.of(row, column);
+                    boolean useTrack = t.menu().getOption(Boolean.class, "use_track", false);
+                    if (useTrack) {
+                        if (index < track.size()) {
+                            int pos = track.get(index);
+                            return SlotPos.of(pos / 9, pos % 9);
+                        }
+                    } else {
+                        // Convert index of source into position on menu
+                        SlotPos start = parsePos(t.menu().getOption(String.class, "source_start", DEF_SOURCE_START));
+                        SlotPos end = parsePos(t.menu().getOption(String.class, "source_end", DEF_SOURCE_END));
+                        int numRows = end.getRow() - start.getRow();
+                        int numCols = end.getColumn() - start.getColumn();
+                        int row = Math.min(start.getRow() + index / numCols, start.getRow() + numRows);
+                        int column = start.getColumn() + index % numCols;
+                        return SlotPos.of(row, column);
+                    }
                 }
                 return null;
             });
