@@ -2,6 +2,31 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.0.5
+
+### New Features
+- Add track and use_track options to sources menu
+  - Used to rearrange the source items in any way rather than just a rectangle
+- Add custom_model_data option to source item filter meta
+  - To use, add it to a custom XP source item filter section for filtering a specific model data
+
+### Changes
+- Update messages and move identical messages across languages to global.yml
+
+### Bug Fixes
+- Fix Regions API errors
+- Fix hex colors not working in titles and boss bar
+- Fix trailing color codes not working in stat symbols
+- Fix user skill levels being below start_level when increased
+- Fix multiplier command displaying incorrect values
+- Fix newlines not working in reward chat messages
+- Fix Retrieval detecting tridents as arrows
+- Fix skill reset command not using config start_level
+- Fix Lightning Blade being activated by thorns
+- Fix Alchemist replacing lore and not working for custom effects
+- Fix hex colors not working in skill messages
+- Fix errors with WorldGuard 7.1
+
 ## 2.0.4
 
 ### New Features
