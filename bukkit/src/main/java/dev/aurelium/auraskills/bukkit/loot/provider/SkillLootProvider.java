@@ -17,10 +17,14 @@ public abstract class SkillLootProvider {
         this.handler = handler;
     }
 
-    public abstract double getChance(LootPool pool, User user);
-
     public abstract LootDropEvent.Cause getCause(LootPool pool);
 
-    public abstract boolean isApplicable(LootPool pool, XpSource source);
+    public double getChance(LootPool pool, User user) {
+        return handler.getCommonChance(pool, user);
+    }
+
+    public boolean isApplicable(LootPool pool, XpSource source) {
+        return true;
+    }
 
 }

@@ -144,23 +144,89 @@ public class LootDropEvent extends Event implements Cancellable {
     public enum Cause {
 
         /**
-         *
+         * Caused by the Treasure Hunter ability, configured as the "rare" Fishing loot table.
          */
         TREASURE_HUNTER,
+
+        /**
+         * Caused by the Epic Catch ability, configured as the "epic" Fishing loot table.
+         */
         EPIC_CATCH,
+
+        /**
+         * Caused by the Metal Detector ability, configured as the "rare" Excavation loot table.
+         */
         METAL_DETECTOR,
+
+        /**
+         * Caused by the Lucky Spades ability, configured as the "epic" Excavation loot table/
+         */
         LUCKY_SPADES,
+
+        /**
+         * Caused by the Double Drop trait, which doesn't occur by default unless the trait is
+         * explicitly added to a stat.
+         */
         LUCK_DOUBLE_DROP,
+
+        /**
+         * Caused by a custom Fishing loot table that is not named "rare" or "epic".
+         */
         FISHING_OTHER_LOOT,
+
+        /**
+         * Caused by a custom Excavation loot table that is not named "rare" or "epic".
+         */
         EXCAVATION_OTHER_LOOT,
+
+        /**
+         * Caused by a custom Mining loot table.
+         */
         MINING_OTHER_LOOT,
+
+        /**
+         * Caused by a custom Foraging loot table.
+         */
         FORAGING_OTHER_LOOT,
+
+        /**
+         * Caused by a custom Farming loot table.
+         */
+        FARMING_OTHER_LOOT,
+
+        /**
+         * Caused is unknown.
+         */
         UNKNOWN,
+
+        /**
+         * Caused by a mob loot table.
+         */
         MOB_LOOT_TABLE,
+
+        /**
+         * Caused by the Farming Luck trait, which includes the Bountiful Harvest ability.
+         */
         FARMING_LUCK,
+
+        /**
+         * Caused by the Foraging Luck trait, which includes the Lumberjack ability.
+         */
         FORAGING_LUCK,
+
+        /**
+         * Caused by the Mining Luck trait, which includes the Lucky Miner ability.
+         */
         MINING_LUCK,
+
+        /**
+         * Caused by the Fishing Luck trait, which includes the Lucky Catch ability.
+         */
         FISHING_LUCK,
+
+        /**
+         * Caused by the Excavation luck trait, which includes the Bigger Scoop ability.
+         */
         EXCAVATION_LUCK
 
     }

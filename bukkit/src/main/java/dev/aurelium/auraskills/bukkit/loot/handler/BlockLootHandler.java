@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -42,6 +43,24 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
     private void registerLootProviders() {
         lootProviders.put(Skills.EXCAVATION, new ExcavationLootProvider(plugin, this));
+        lootProviders.put(Skills.MINING, new SkillLootProvider(plugin, this) {
+            @Override
+            public Cause getCause(LootPool pool) {
+                return Cause.MINING_OTHER_LOOT;
+            }
+        });
+        lootProviders.put(Skills.FORAGING, new SkillLootProvider(plugin, this) {
+            @Override
+            public Cause getCause(LootPool pool) {
+                return Cause.FORAGING_OTHER_LOOT;
+            }
+        });
+        lootProviders.put(Skills.FARMING, new SkillLootProvider(plugin, this) {
+            @Override
+            public Cause getCause(LootPool pool) {
+                return Cause.FARMING_OTHER_LOOT;
+            }
+        });
     }
 
     public Pair<BlockXpSource, Skill> getSource(Block block) {
