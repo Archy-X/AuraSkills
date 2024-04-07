@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.excavation;
 
+import dev.aurelium.auraskills.api.event.mana.TerraformBlockBreakEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
@@ -21,7 +22,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
 
@@ -118,14 +118,6 @@ public class Terraform extends ReadiedManaAbility {
             block.breakNaturally(player.getInventory().getItemInMainHand());
         }
         block.removeMetadata("AureliumSkills-Terraform", plugin);
-    }
-
-    public static class TerraformBlockBreakEvent extends BlockBreakEvent {
-
-        public TerraformBlockBreakEvent(@NotNull Block theBlock, @NotNull Player player) {
-            super(theBlock, player);
-        }
-
     }
 
 }
