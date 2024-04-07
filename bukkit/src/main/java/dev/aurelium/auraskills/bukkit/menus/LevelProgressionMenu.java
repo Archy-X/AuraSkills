@@ -133,6 +133,8 @@ public class LevelProgressionMenu {
 
         var levelItem = new SkillLevelItem(plugin);
 
+        menu.onOpen(m -> levelItem.loadTrack()); // Load track option
+
         menu.template("unlocked", Integer.class, template -> {
             template.replace("level", p -> String.valueOf(p.value()));
 

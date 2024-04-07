@@ -14,19 +14,12 @@ import java.util.List;
 
 public class SkillLevelItem {
 
+    private final AuraSkills plugin;
     private final List<Integer> track;
 
     public SkillLevelItem(AuraSkills plugin) {
+        this.plugin = plugin;
         this.track = getDefaultTrack();
-        // Load track option
-        LoadedMenu menu = plugin.getSlate().getLoadedMenu("level_progression");
-        if (menu != null) {
-            Object trackObj = menu.options().get("track");
-            if (trackObj != null) {
-                this.track.clear();
-                this.track.addAll(DataUtil.castIntegerList(trackObj));
-            }
-        }
     }
 
     public static List<Integer> getDefaultTrack() {
@@ -37,6 +30,17 @@ public class SkillLevelItem {
         track.add(42); track.add(33); track.add(24); track.add(15); track.add(16);
         track.add(17); track.add(26); track.add(35); track.add(44);
         return track;
+    }
+
+    public void loadTrack() {
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("level_progression");
+        if (menu != null) {
+            Object trackObj = menu.options().get("track");
+            if (trackObj != null) {
+                this.track.clear();
+                this.track.addAll(DataUtil.castIntegerList(trackObj));
+            }
+        }
     }
 
     public SlotPos slotPos(TemplateInfo<Integer> info) {
