@@ -468,7 +468,7 @@ commands:
     players_only: "<yellow>Только игроки могут указывать свой множитель! Укажите игрока!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      confirm: "<red>Загрузка пресета переопределит ваши файлы настроек! На следующие файлы будут затронуты <gray>(<aqua>Добавлено<gray>, <yellow>Объединены<gray>, <red>Заменены<gray>, <dark_red>Удалено<gray>): {entries} <red>Это действие не может быть отменено, необходимо резервное копирование файлов вручную. Введите команду еще раз для подтверждения."
       loaded: Предустановка {name} успешно загружена, перезапустите сервер сейчас.
       created: Созданные файлы
       modified: Измененные файлы
