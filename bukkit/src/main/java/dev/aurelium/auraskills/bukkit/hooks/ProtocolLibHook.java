@@ -88,6 +88,8 @@ public class ProtocolLibHook extends Hook {
         manager.addPacketListener(new PacketAdapter(skillsPlugin, ListenerPriority.MONITOR, PacketType.Play.Server.SET_ACTION_BAR_TEXT) {
             @Override
             public void onPacketSending(PacketEvent event) {
+                if (event.isPlayerTemporary()) return;
+
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
                 if (packet.getMeta("AuraSkills").isPresent()) return; // Ignore Aurelium Skills action bars
@@ -101,6 +103,8 @@ public class ProtocolLibHook extends Hook {
         manager.addPacketListener(new PacketAdapter(skillsPlugin, ListenerPriority.MONITOR, PacketType.Play.Server.SYSTEM_CHAT) {
             @Override
             public void onPacketSending(PacketEvent event) {
+                if (event.isPlayerTemporary()) return;
+
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
                 if (packet.getMeta("AuraSkills").isPresent()) return;
@@ -121,6 +125,8 @@ public class ProtocolLibHook extends Hook {
         manager.addPacketListener(new PacketAdapter(skillsPlugin, ListenerPriority.MONITOR, PacketType.Play.Server.TITLE) {
             @Override
             public void onPacketSending(PacketEvent event) {
+                if (event.isPlayerTemporary()) return;
+
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
                 // Make sure the title packet is for the action bar
@@ -137,6 +143,8 @@ public class ProtocolLibHook extends Hook {
         manager.addPacketListener(new PacketAdapter(skillsPlugin, ListenerPriority.MONITOR, PacketType.Play.Server.CHAT) {
             @Override
             public void onPacketSending(PacketEvent event) {
+                if (event.isPlayerTemporary()) return;
+
                 Player player = event.getPlayer();
                 PacketContainer packet = event.getPacket();
                 // Make sure the chat packet is for the action bar
