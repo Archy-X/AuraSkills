@@ -60,6 +60,10 @@ public class Terraform extends ReadiedManaAbility {
         if (block.hasMetadata("block-ignore")) { // Compatibility fix
             return;
         }
+        // AdvancedEnchantments compatibility fix
+        if (block.hasMetadata("blockbreakevent-ignore")) {
+            return;
+        }
         if (!block.hasMetadata("AureliumSkills-Terraform") && event.getClass() == BlockBreakEvent.class) {
             applyTerraform(player, plugin.getUser(player), block);
         }
