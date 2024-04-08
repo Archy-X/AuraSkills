@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +21,7 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -132,6 +134,17 @@ public class RegionBlockListener implements Listener {
             }
         }
         regionManager.removePlacedBlock(lastBlock);
+    }
+
+    @EventHandler
+    public void onStructureGrow(StructureGrowEvent event) {
+        int growY = event.getLocation().getBlockY();
+        for (BlockState state : event.getBlocks()) {
+            // Only remove placed blocks at same y level as sapling
+            if (state.getLocation().getY() != growY) continue;
+
+            regionManager.removePlacedBlock(state.getBlock());
+        }
     }
 
     private void checkTallPlant(Block block, int num, Predicate<Material> isMaterial) {

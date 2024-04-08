@@ -60,7 +60,7 @@ public class BukkitRegionManager extends RegionManager {
         chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
     }
 
-    public void removePlacedBlock(Block block) {;
+    public void removePlacedBlock(Block block) {
         Region region = getRegionFromBlock(block);
         if (region != null) {
             byte regionChunkX = (byte) (block.getChunk().getX() - region.getX() * 32);
