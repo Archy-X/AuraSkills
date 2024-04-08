@@ -7,8 +7,10 @@ import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.XpSourceParser;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Optional;
 
 public interface NamespacedRegistry {
 
@@ -74,8 +76,25 @@ public interface NamespacedRegistry {
     /**
      * Sets the content directory from which configuration files are loaded for this namespace.
      *
-     * @param file the content directory
+     * @param contentDirectory the content directory
      */
-    void setContentDirectory(File file);
+    void setContentDirectory(File contentDirectory);
+
+    /**
+     * Gets the directory where menus are loaded for this namespace. Menu files with the
+     * same name as the main plugin are merged together.
+     *
+     * @return the menu directory as an optional
+     */
+    @NotNull
+    Optional<File> getMenuDirectory();
+
+    /**
+     * Sets the directory where menus are loaded for this namespace. Menu files with the
+     * same name as the main plugin are merged together.
+     *
+     * @param menuDirectory the directory
+     */
+    void setMenuDirectory(File menuDirectory);
 
 }

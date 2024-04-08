@@ -1,11 +1,15 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
 import com.archyx.slate.Slate;
+import com.archyx.slate.builder.MenuBuilder;
 import com.archyx.slate.context.ContextManager;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.api.implementation.ApiMenuManager;
 import dev.aurelium.auraskills.bukkit.menus.contexts.*;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.common.util.text.Replacer;
+
+import java.util.function.Consumer;
 
 public class MenuRegistrar {
 
@@ -42,11 +46,24 @@ public class MenuRegistrar {
             options.localeProvider(plugin::getLocale);
         });
 
-        slate.buildMenu("skills", menu -> new SkillsMenu(plugin).build(menu));
-        slate.buildMenu("stats", menu -> new StatsMenu(plugin).build(menu));
-        slate.buildMenu("level_progression", menu -> new LevelProgressionMenu(plugin).build(menu));
-        slate.buildMenu("leaderboard", menu -> new LeaderboardMenu(plugin).build(menu));
-        slate.buildMenu("sources", menu -> new SourcesMenu(plugin).build(menu));
-        slate.buildMenu("abilities", menu -> new AbilitiesMenu(plugin).build(menu));
+        buildMenu("skills", menu -> new SkillsMenu(plugin).build(menu));
+        buildMenu("stats", menu -> new StatsMenu(plugin).build(menu));
+        buildMenu("level_progression", menu -> new LevelProgressionMenu(plugin).build(menu));
+        buildMenu("leaderboard", menu -> new LeaderboardMenu(plugin).build(menu));
+        buildMenu("sources", menu -> new SourcesMenu(plugin).build(menu));
+        buildMenu("abilities", menu -> new AbilitiesMenu(plugin).build(menu));
+
+        for (String nonDefault : ((ApiMenuManager) plugin.getApiBukkit().getMenuManager()).getNonDefaultMenuNames()) {
+            buildMenu(nonDefault, menu -> {}); // Empty consumer passed since custom builder is applied in buildMenu
+        }
     }
+
+    private void buildMenu(String name, Consumer<MenuBuilder> builder) {
+        slate.buildMenu(name, menu -> {
+            builder.accept(menu);
+            // Apply external menu builders
+            ((ApiMenuManager) plugin.getApiBukkit().getMenuManager()).applyBuilder(name, menu);
+        });
+    }
+
 }

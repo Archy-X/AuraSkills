@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api;
 
 import dev.aurelium.auraskills.api.item.ItemManager;
+import dev.aurelium.auraskills.api.menu.MenuManager;
 import dev.aurelium.auraskills.api.region.LocationManager;
 import dev.aurelium.auraskills.api.region.Regions;
 
@@ -26,6 +27,13 @@ public interface AuraSkillsBukkit {
      * @return the location manager
      */
     LocationManager getLocationManager();
+
+    /**
+     * Gets the menu manager for creating and extending menus.
+     *
+     * @return the menu manager
+     */
+    MenuManager getMenuManager();
 
     /**
      * Gets the instance of the {@link AuraSkillsBukkit} API,

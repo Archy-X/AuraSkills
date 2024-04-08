@@ -99,4 +99,8 @@ public class ApiAuraSkills implements AuraSkillsApi {
         return mainConfig;
     }
 
+    public Map<String, NamespacedRegistry> getNamespacedRegistryMap() {
+        return namespacedRegistryMap;
+    }
+
 }

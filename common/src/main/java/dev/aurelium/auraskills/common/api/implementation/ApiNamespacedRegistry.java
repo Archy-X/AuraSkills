@@ -11,15 +11,20 @@ import dev.aurelium.auraskills.api.source.XpSourceParser;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.Optional;
 
 public class ApiNamespacedRegistry implements NamespacedRegistry {
 
     private final String namespace;
     private final AuraSkillsPlugin plugin;
     private File contentDirectory;
+    @Nullable
+    private File menuDirectory;
 
     public ApiNamespacedRegistry(AuraSkillsPlugin plugin, String namespace, File contentDirectory) {
         this.plugin = plugin;
@@ -76,8 +81,19 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     }
 
     @Override
-    public void setContentDirectory(File file) {
-        this.contentDirectory = file;
+    public void setContentDirectory(File contentDirectory) {
+        this.contentDirectory = contentDirectory;
+    }
+
+    @Override
+    @NotNull
+    public Optional<File> getMenuDirectory() {
+        return Optional.ofNullable(menuDirectory);
+    }
+
+    @Override
+    public void setMenuDirectory(@Nullable File menuDirectory) {
+        this.menuDirectory = menuDirectory;
     }
 
     private void validateNamespace(NamespaceIdentified identified) {

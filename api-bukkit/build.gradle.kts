@@ -1,30 +1,43 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.net.URI
 
 plugins {
     `java-library`
+    id("com.github.johnrengelman.shadow") version "7.1.2"
     `maven-publish`
     signing
 }
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    }
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://jitpack.io")
 }
 
 dependencies {
     api(project(":api"))
+    api("com.github.Archy-X:Slate:682ec092e6") {
+        exclude("org.yaml", "snakeyaml")
+        exclude("org.spongepowered", "configurate-yaml")
+    }
+    // api(files("../../Slate/build/libs/Slate-1.0.0.jar"))
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 }
 
-tasks.withType<JavaCompile>() {
+tasks.withType<ShadowJar> {
+    relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
+}
+
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
 }
 
 tasks {
+    build {
+        dependsOn(shadowJar)
+    }
     javadoc {
         title = "AuraSkills API Bukkit (${project.version})"
         source = sourceSets.main.get().allSource + project(":api").sourceSets.main.get().allSource
