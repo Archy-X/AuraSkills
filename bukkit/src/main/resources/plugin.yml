@@ -87,6 +87,8 @@ permissions:
         default: op
     auraskills.command.storage:
         default: op
+    auraskills.command.openmenu:
+        default: op
     auraskills.multiplier:
         default: false
     auraskills.skill.farming:

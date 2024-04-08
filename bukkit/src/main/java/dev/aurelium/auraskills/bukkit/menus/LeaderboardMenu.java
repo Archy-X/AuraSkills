@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
@@ -10,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -24,6 +26,10 @@ public class LeaderboardMenu {
 
     public void build(MenuBuilder menu) {
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+
+        menu.properties(m -> Map.of(
+                "skill", m.menu().getProperty("skill", Skills.FARMING),
+                "previous_menu", "level_progression"));
 
         var globalItems = new GlobalItems(plugin);
         menu.item("back", globalItems::backToLevelProgression);

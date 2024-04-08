@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
@@ -33,7 +34,8 @@ public class AbilitiesMenu {
 
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
 
-        menu.properties(m -> Map.of("skill", m.menu().getProperty("skill"),
+        menu.properties(m -> Map.of(
+                "skill", m.menu().getProperty("skill", Skills.FARMING),
                 "previous_menu", "level_progression"));
 
         menu.template("locked_ability", Ability.class, template -> {

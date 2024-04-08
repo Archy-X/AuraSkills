@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
@@ -45,6 +46,18 @@ public class LevelProgressionMenu {
 
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
         menu.replaceTitle("page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
+
+        menu.properties(m -> {
+            int itemsPerPage = 24;
+            LoadedMenu loadedMenu = plugin.getSlate().getLoadedMenu("level_progression");
+            if (loadedMenu != null) {
+                itemsPerPage = (int) loadedMenu.options().getOrDefault("items_per_page", 24);
+            }
+            return Map.of(
+                    "skill", m.menu().getProperty("skill", Skills.FARMING),
+                    "items_per_page", itemsPerPage,
+                    "previous_menu", "skills");
+        });
 
         menu.pages(m -> {
             var skill = (Skill) m.menu().getProperty("skill");

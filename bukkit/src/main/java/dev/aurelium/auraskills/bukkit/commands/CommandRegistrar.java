@@ -77,6 +77,24 @@ public class CommandRegistrar {
                 throw new InvalidCommandArgument(input + "is not a valid UUID!");
             }
         });
+        contexts.registerContext(JsonArg.class, c -> {
+            if (c.getArgs().isEmpty()) return null;
+
+            var sb = new StringBuilder();
+            int toAppend = 0;
+            // Get the number of arguments part of JSON string
+            for (String arg : c.getArgs()) {
+                toAppend++;
+                // Stop once JSON object terminator is reached
+                if (arg.endsWith("}")) {
+                    break;
+                }
+            }
+            for (int i = 0; i < toAppend; i++) {
+                sb.append(c.popFirstArg());
+            }
+            return new JsonArg(sb.toString());
+        });
     }
 
     private String getSkillName(Skill skill) {
@@ -149,6 +167,7 @@ public class CommandRegistrar {
             }
             return typeNames;
         });
+        completions.registerAsyncCompletion("menu_names", c -> plugin.getSlate().getLoadedMenus().keySet());
     }
 
     private void registerBaseCommands(PaperCommandManager manager) {
@@ -164,6 +183,7 @@ public class CommandRegistrar {
         manager.registerCommand(new XpCommand(plugin));
         manager.registerCommand(new PresetCommand(plugin));
         manager.registerCommand(new StorageCommand(plugin));
+        manager.registerCommand(new OpenMenuCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {
