@@ -138,7 +138,11 @@ public class RegionBlockListener implements Listener {
 
     @EventHandler
     public void onStructureGrow(StructureGrowEvent event) {
-        for(BlockState state : event.getBlocks()) {
+        int growY = event.getLocation().getBlockY();
+        for (BlockState state : event.getBlocks()) {
+            // Only remove placed blocks at same y level as sapling
+            if (state.getLocation().getY() != growY) continue;
+
             regionManager.removePlacedBlock(state.getBlock());
         }
     }
