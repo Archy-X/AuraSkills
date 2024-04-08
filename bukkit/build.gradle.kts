@@ -25,7 +25,6 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation(project(":api-bukkit"))
-    implementation("dev.dbassett:skullcreator:3.0.1")
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.12.2")
     implementation("org.bstats:bstats-bukkit:3.0.2")
@@ -42,6 +41,7 @@ dependencies {
     compileOnly("net.luckperms:api:5.4")
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
     compileOnly("com.github.Slimefun:Slimefun4:RC-32")
+    compileOnly("com.mojang:authlib:1.5.25")
 }
 
 tasks.withType<ShadowJar> {

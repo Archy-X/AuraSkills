@@ -15,7 +15,6 @@ import dev.aurelium.slate.menu.ActiveMenu;
 import dev.aurelium.slate.position.FixedPosition;
 import dev.aurelium.slate.position.GroupPosition;
 import dev.aurelium.slate.position.PositionProvider;
-import dev.dbassett.skullcreator.SkullCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
