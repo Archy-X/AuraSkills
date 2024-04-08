@@ -3,11 +3,11 @@ package dev.aurelium.auraskills.bukkit.message;
 import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
-import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.type.ACFCoreMessage;
 import dev.aurelium.auraskills.common.message.type.ACFMinecraftMessage;
+import dev.aurelium.slate.text.TextFormatter;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 

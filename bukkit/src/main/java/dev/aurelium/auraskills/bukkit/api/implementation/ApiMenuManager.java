@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.api.implementation;
 
-import com.archyx.slate.builder.MenuBuilder;
 import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.menu.MenuManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
+import dev.aurelium.slate.builder.MenuBuilder;
 
 import java.util.HashMap;
 import java.util.HashSet;

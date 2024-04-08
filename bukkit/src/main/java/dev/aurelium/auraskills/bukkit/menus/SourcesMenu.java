@@ -1,10 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.info.PlaceholderInfo;
-import com.archyx.slate.item.provider.ListBuilder;
-import com.archyx.slate.menu.ActiveMenu;
-import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -15,7 +10,12 @@ import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import fr.minuskube.inv.content.SlotPos;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.info.PlaceholderInfo;
+import dev.aurelium.slate.inv.content.SlotPos;
+import dev.aurelium.slate.item.provider.ListBuilder;
+import dev.aurelium.slate.menu.ActiveMenu;
+import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

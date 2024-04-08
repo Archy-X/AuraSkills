@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.bukkit.menus.util;
 
-import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.UnitMessage;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.menu.ActiveMenu;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -50,7 +50,7 @@ public class PlaceholderHelper {
     }
 
     public String replaceMenuMessages(String source, Player player, ActiveMenu activeMenu, Replacer replacer) {
-        String[] placeholders = com.archyx.slate.util.TextUtil.substringsBetween(source, "{", "}");
+        String[] placeholders = dev.aurelium.slate.util.TextUtil.substringsBetween(source, "{", "}");
         if (placeholders == null) return source;
 
         for (String placeholder : placeholders) {

@@ -1,9 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus.shared;
 
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.builder.TemplateBuilder;
-import com.archyx.slate.item.provider.ListBuilder;
-import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -21,6 +17,10 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.builder.TemplateBuilder;
+import dev.aurelium.slate.item.provider.ListBuilder;
+import dev.aurelium.slate.menu.LoadedMenu;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.List;

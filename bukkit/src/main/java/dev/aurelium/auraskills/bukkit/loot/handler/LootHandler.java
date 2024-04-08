@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -23,6 +22,7 @@ import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.text.TextFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

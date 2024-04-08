@@ -1,10 +1,5 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import com.archyx.slate.context.ContextGroup;
-import com.archyx.slate.menu.ActiveMenu;
-import com.archyx.slate.position.FixedPosition;
-import com.archyx.slate.position.GroupPosition;
-import com.archyx.slate.position.PositionProvider;
 import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
@@ -14,8 +9,13 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.data.Validate;
+import dev.aurelium.slate.context.ContextGroup;
+import dev.aurelium.slate.inv.content.SlotPos;
+import dev.aurelium.slate.menu.ActiveMenu;
+import dev.aurelium.slate.position.FixedPosition;
+import dev.aurelium.slate.position.GroupPosition;
+import dev.aurelium.slate.position.PositionProvider;
 import dev.dbassett.skullcreator.SkullCreator;
-import fr.minuskube.inv.content.SlotPos;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

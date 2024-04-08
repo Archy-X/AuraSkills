@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import com.archyx.slate.util.TextUtil;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.ParsingException;

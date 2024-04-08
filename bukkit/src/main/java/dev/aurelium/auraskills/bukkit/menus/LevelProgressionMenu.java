@@ -1,11 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.slate.builder.BuiltMenu;
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.info.ComponentPlaceholderInfo;
-import com.archyx.slate.info.MenuInfo;
-import com.archyx.slate.info.TemplatePlaceholderInfo;
-import com.archyx.slate.menu.LoadedMenu;
 import com.google.common.collect.ImmutableList;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -20,6 +14,12 @@ import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.builder.BuiltMenu;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.info.ComponentPlaceholderInfo;
+import dev.aurelium.slate.info.MenuInfo;
+import dev.aurelium.slate.info.TemplatePlaceholderInfo;
+import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;

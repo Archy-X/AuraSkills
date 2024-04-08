@@ -1,12 +1,12 @@
 package dev.aurelium.auraskills.bukkit.menus.shared;
 
-import com.archyx.slate.info.TemplateInfo;
-import com.archyx.slate.menu.ActiveMenu;
-import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
-import fr.minuskube.inv.content.SlotPos;
+import dev.aurelium.slate.info.TemplateInfo;
+import dev.aurelium.slate.inv.content.SlotPos;
+import dev.aurelium.slate.menu.ActiveMenu;
+import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;

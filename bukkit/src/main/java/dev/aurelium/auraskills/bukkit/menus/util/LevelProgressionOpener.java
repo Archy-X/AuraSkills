@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.menus.util;
 
-import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

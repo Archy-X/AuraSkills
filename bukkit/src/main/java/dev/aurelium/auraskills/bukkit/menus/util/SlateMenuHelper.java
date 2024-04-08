@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.menus.util;
 
-import com.archyx.slate.Slate;
-import com.archyx.slate.menu.LoadedMenu;
 import dev.aurelium.auraskills.common.menu.MenuHelper;
+import dev.aurelium.slate.Slate;
+import dev.aurelium.slate.menu.LoadedMenu;
 
 public class SlateMenuHelper implements MenuHelper {
 

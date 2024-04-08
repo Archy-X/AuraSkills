@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.menus.contexts;
 
-import com.archyx.slate.context.ContextProvider;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 
 public class StatContext implements ContextProvider<Stat> {

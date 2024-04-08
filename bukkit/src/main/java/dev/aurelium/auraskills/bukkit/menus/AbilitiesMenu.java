@@ -1,7 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.function.TemplateSlot;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -15,7 +13,9 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import fr.minuskube.inv.content.SlotPos;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.function.TemplateSlot;
+import dev.aurelium.slate.inv.content.SlotPos;
 
 import java.util.*;
 

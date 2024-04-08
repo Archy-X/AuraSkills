@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus.contexts;
 
-import com.archyx.slate.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
+import dev.aurelium.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;

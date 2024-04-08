@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.item;
 
-import com.archyx.slate.item.provider.KeyedItemProvider;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.slate.item.provider.KeyedItemProvider;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,13 +1,13 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.slate.Slate;
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.context.ContextManager;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.api.implementation.ApiMenuManager;
 import dev.aurelium.auraskills.bukkit.menus.contexts.*;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.common.util.text.Replacer;
+import dev.aurelium.slate.Slate;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.context.ContextManager;
 
 import java.util.function.Consumer;
 

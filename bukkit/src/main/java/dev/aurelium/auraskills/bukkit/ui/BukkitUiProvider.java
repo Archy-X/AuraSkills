@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.ui;
 
-import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.ProtocolLibHook;
@@ -8,6 +7,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.slate.text.TextFormatter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.Title.Times;

@@ -1,9 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.archyx.slate.builder.MenuBuilder;
-import com.archyx.slate.info.TemplatePlaceholderInfo;
-import com.archyx.slate.item.provider.ListBuilder;
-import com.archyx.slate.position.PositionProvider;
 import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.CustomStat;
@@ -16,6 +12,10 @@ import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.info.TemplatePlaceholderInfo;
+import dev.aurelium.slate.item.provider.ListBuilder;
+import dev.aurelium.slate.position.PositionProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.spongepowered.configurate.ConfigurationNode;

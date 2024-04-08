@@ -10,6 +10,7 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://github.com/deanveloper/SkullCreator/raw/mvn-repo")
     maven("https://repo.aikar.co/content/groups/aikar/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -49,11 +50,9 @@ tasks.withType<ShadowJar> {
 
     relocate("co.aikar.commands", "dev.aurelium.auraskills.acf")
     relocate("co.aikar.locales", "dev.aurelium.auraskills.locales")
-    relocate("fr.minuskube.inv", "dev.aurelium.auraskills.inv")
     relocate("de.tr7zw.changeme.nbtapi", "dev.aurelium.auraskills.nbtapi")
     relocate("org.bstats", "dev.aurelium.auraskills.bstats")
     relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
-    relocate("com.archyx.slate", "dev.aurelium.auraskills.slate")
     relocate("net.kyori", "dev.aurelium.auraskills.kyori")
     relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
 

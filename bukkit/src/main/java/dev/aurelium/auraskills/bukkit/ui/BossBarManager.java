@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.ui;
 
-import com.archyx.slate.text.TextFormatter;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -12,6 +11,7 @@ import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.util.math.BigNumber;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.text.TextFormatter;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;

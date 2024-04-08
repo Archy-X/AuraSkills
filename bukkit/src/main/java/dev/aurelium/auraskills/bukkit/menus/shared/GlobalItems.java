@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.bukkit.menus.shared;
 
-import com.archyx.slate.builder.ItemBuilder;
-import com.archyx.slate.menu.ActiveMenu;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.slate.builder.ItemBuilder;
+import dev.aurelium.slate.menu.ActiveMenu;
 
 public class GlobalItems {
 

@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.api.menu;
 
-import com.archyx.slate.builder.MenuBuilder;
+import dev.aurelium.slate.builder.MenuBuilder;
 
 import java.util.function.Consumer;
 
