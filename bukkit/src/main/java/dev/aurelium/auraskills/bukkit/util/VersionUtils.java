@@ -37,6 +37,8 @@ public class VersionUtils {
             int lastDot = version.lastIndexOf('.');
             if (version.indexOf('.') != lastDot) {
                 return Integer.parseInt(version.substring(lastDot + 1));
+            } else {
+                return 0;
             }
         }
         throw new IllegalArgumentException("Failed to parse minor version from version string");
@@ -48,6 +50,8 @@ public class VersionUtils {
             int firstDot = version.indexOf(".");
             if (firstDot != lastDot) {
                 return Integer.parseInt(version.substring(firstDot + 1, lastDot));
+            } else {
+                return Integer.parseInt(version.substring(firstDot + 1));
             }
         }
         throw new IllegalArgumentException("Failed to parse major version from version string");
