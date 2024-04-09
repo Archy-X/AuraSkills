@@ -4,7 +4,7 @@ import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.message.recipient.CommandIssuerRecipient;
-import dev.aurelium.auraskills.common.message.recipient.PlayerDataRecipient;
+import dev.aurelium.auraskills.common.message.recipient.UserRecipient;
 import dev.aurelium.auraskills.common.message.recipient.Recipient;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
@@ -53,7 +53,7 @@ public class MessageBuilder {
      */
     public void send(User user) {
         validateComponent();
-        new PlayerDataRecipient(user).sendMessage(component);
+        new UserRecipient(user).sendMessage(component);
     }
 
     /**

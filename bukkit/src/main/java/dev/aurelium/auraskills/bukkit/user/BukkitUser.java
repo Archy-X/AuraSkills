@@ -99,6 +99,10 @@ public class BukkitUser extends User {
 
     @Override
     public void sendMessage(Component component) {
+        // Don't send empty messages
+        if (plugin.getMessageProvider().componentToString(component).isEmpty()) {
+            return;
+        }
         if (player != null) {
             plugin.getAudiences().player(player).sendMessage(component);
         }
