@@ -169,7 +169,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             }
         }
 
-        //Gets ability levels
+        // Gets ability levels
         for (Ability ability : plugin.getAbilityRegistry().getValues()) {
             if (identifier.equals(ability.name().toLowerCase(Locale.ROOT))) {
                 User user = plugin.getUser(player);
@@ -178,7 +178,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 User user = plugin.getUser(player);
                 return String.valueOf(ability.getValue(user.getAbilityLevel(ability)));
             } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value_2")) {
-                if(ability.hasSecondaryValue()) {
+                if (ability.hasSecondaryValue()) {
                     User user = plugin.getUser(player);
                     return String.valueOf(ability.getSecondaryValue(user.getAbilityLevel(ability)));
                 }
