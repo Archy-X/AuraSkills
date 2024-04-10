@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
+import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -168,6 +169,22 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             }
         }
 
+        //Gets ability levels
+        for (Ability ability : plugin.getAbilityRegistry().getValues()) {
+            if (identifier.equals(ability.name().toLowerCase(Locale.ROOT))) {
+                User user = plugin.getUser(player);
+                return String.valueOf(user.getAbilityLevel(ability));
+            } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value")) {
+                User user = plugin.getUser(player);
+                return String.valueOf(ability.getValue(user.getAbilityLevel(ability)));
+            } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value_2")) {
+                if(ability.hasSecondaryValue()) {
+                    User user = plugin.getUser(player);
+                    return String.valueOf(ability.getSecondaryValue(user.getAbilityLevel(ability)));
+                }
+            }
+        }
+
         if (identifier.equals("rank")) {
             return String.valueOf(plugin.getLeaderboardManager().getPowerRank(player.getUniqueId()));
         }
@@ -323,4 +340,49 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
         return "";
     }
 
+    @Override
+    public @NotNull List<String> getPlaceholders() {
+        return List.of(
+                "%auraskills_power%",
+                "%auraskills_[skill]%",
+                "%auraskills_[skill]_roman%",
+                "%auraskills_[stat]%",
+                "%auraskills_[stat]_int%",
+                "%auraskills_[ability]%",
+                "%auraskills_[ability]_value%",
+                "%auraskills_[ability]_value_2%",
+                "%auraskills_average%",
+                "%auraskills_average_int%",
+                "%auraskills_average_1%",
+                "%auraskills_hp%",
+                "%auraskills_hp_1%",
+                "%auraskills_hp_2%",
+                "%auraskills_hp_max%",
+                "%auraskills_hp_percent%",
+                "%auraskills_mana%",
+                "%auraskills_mana_int%",
+                "%auraskills_mana_max%",
+                "%auraskills_mana_max_int%",
+                "%auraskills_lb_power_[place]%",
+                "%auraskills_lb_power_[place]_name%",
+                "%auraskills_lb_power_[place]_value%",
+                "%auraskills_lb_[skill]_[place]_name%",
+                "%auraskills_lb_[skill]_[place]_value%",
+                "%auraskills_rank",
+                "%auraskills_rank_[skill]",
+                "%auraskills_xp_required_formatted_[skill]%",
+                "%auraskills_xp_required_[skill]%",
+                "%auraskills_xp_progress_int_[skill]%",
+                "%auraskills_xp_progress_1_[skill]%",
+                "%auraskills_xp_progress_[skill]%",
+                "%auraskills_xp_int_[skill]%",
+                "%auraskills_xp_formatted_[skill]%",
+                "%auraskills_xp_[skill]%",
+                "%auraskills_multiplier%",
+                "%auraskills_multiplier_[skill]%",
+                "%auraskills_multiplier_percent%",
+                "%auraskills_multiplier_percent_[skill]%",
+                "%auraskills_actionbar_status%"
+        );
+    }
 }
