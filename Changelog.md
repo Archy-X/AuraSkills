@@ -2,6 +2,43 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.0.6
+
+### New Features
+- Add support for custom menus
+  - Create a new file in the menus folder to create a custom menu
+  - Follows the same format as existing menus, though templates and components will not work
+  - Supports PlaceholderAPI and click actions like existing menus
+- Add openmenu command
+  - Syntax: `/skills openmenu <menuName> [player] [properties] [page]`
+  - If player is not specified, the menu opens for the sender
+  - The properties argument is a JSON string required to open some menus
+    - For example, `{"skill":"Skill:mining"}` should be passed when opening the level_progression, abilities, sources, and leaderboard menu
+  - The page argument starts at 0 for the first page
+  - Requires the auraskills.command.openmenu permission (defaults to op)
+- Add ability placeholders
+  - `%auraskills_[ability]%` gets the ability level
+  - `%auraskills_[ability]_value%` gets the ability value
+  - `%auraskills_[ability]_value_2%` gets the secondary value of the ability if there is one
+  - Replace `[ability]` with the default English name of an ability in lowercase
+  - AuraSkills placeholders will now show in the tab completion of /papi parse
+
+### Bug Fixes
+- Disable level up chat message for empty string
+- Fix Minecraft version parsing error on initial releases like 1.20
+- Placed saplings that grow into logs will now give XP
+- Fix track option not working in level_progression menu
+- Fix LootDropEvent Cause being unknown for some loot tables
+- Fix ProtocolLib error with Geyser players
+- Fix Terraform crash with AdvancedEnchantments
+
+### API Changes
+- Add MenuManager API to extend existing and create custom menus
+  - Accessible with AuraSkillsBukkit#getMenuManager
+  - Can be used to define behavior for custom items and templates in default or custom menus
+  - Add NamespacedRegistry#setMenuDirectory for loading external menu files, which are automatically merged with default menu files before being loaded
+- Make TerraformBlockBreakEvent accessible in the API
+
 ## 2.0.5
 
 ### New Features
