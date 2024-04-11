@@ -87,6 +87,12 @@ tasks.withType<JavaCompile> {
     options.forkOptions.executable = "javac"
 }
 
+tasks.processResources {
+    filesMatching("plugin.yml") {
+        expand("projectVersion" to project.version)
+    }
+}
+
 idea {
     module {
         isDownloadSources = true
