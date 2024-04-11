@@ -84,12 +84,22 @@ public enum Skills implements Skill {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return provider.getDisplayName(this, locale);
+        return provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return provider.getDisplayName(this, locale, formatted);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return provider.getDescription(this, locale);
+        return provider.getDescription(this, locale, true);
+    }
+
+    @Override
+    public String getDescription(Locale locale, boolean formatted) {
+        return provider.getDescription(this, locale, formatted);
     }
 
     @Override

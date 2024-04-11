@@ -95,20 +95,28 @@ public abstract class MessageProvider implements PolyglotProvider {
         return manager.get(locale, convertKey(key));
     }
 
-    public String getSkillDisplayName(Skill skill, Locale locale) {
-        return get(getSkillDisplayNameKey(skill), locale);
+    public String getSkillDisplayName(Skill skill, Locale locale, boolean formatted) {
+        if (formatted) {
+            return get(getSkillDisplayNameKey(skill), locale);
+        } else {
+            return getRaw(getSkillDisplayNameKey(skill), locale);
+        }
     }
 
-    public MessageKey getSkillDisplayNameKey(Skill skill) {
+    private MessageKey getSkillDisplayNameKey(Skill skill) {
         String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
         return MessageKey.of("skills." + key + ".name");
     }
 
-    public String getSkillDescription(Skill skill, Locale locale) {
-        return get(getSkillDescriptionKey(skill), locale);
+    public String getSkillDescription(Skill skill, Locale locale, boolean formatted) {
+        if (formatted) {
+            return get(getSkillDescriptionKey(skill), locale);
+        } else {
+            return getRaw(getSkillDescriptionKey(skill), locale);
+        }
     }
 
-    public MessageKey getSkillDescriptionKey(Skill skill) {
+    private MessageKey getSkillDescriptionKey(Skill skill) {
         String key = skill instanceof Skills ? skill.getId().getKey() : skill.getId().toString();
         return MessageKey.of("skills." + key + ".desc");
     }

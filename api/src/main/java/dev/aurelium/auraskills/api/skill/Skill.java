@@ -72,12 +72,30 @@ public interface Skill extends Optioned, NamespaceIdentified {
     String getDisplayName(Locale locale);
 
     /**
+     * Gets the skill display name as defined in the locale's messages file.
+     *
+     * @param locale the locale to get the display name in
+     * @param formatted if false, formatting will not be applied and will return a raw string
+     * @return the display name in the specified locale or in a fallback language
+     */
+    String getDisplayName(Locale locale, boolean formatted);
+
+    /**
      * Gets the skill description as defined in the locale's messages file.
      *
      * @param locale the locale to get the description in
      * @return the description in the specified locale or in a fallback language
      */
     String getDescription(Locale locale);
+
+    /**
+     * Gets the skill description as defined in the locale's messages file.
+     *
+     * @param locale the locale to get the description in
+     * @param formatted if false, formatting will not be applied and will return a raw string
+     * @return the description in the specified locale or in a fallback language
+     */
+    String getDescription(Locale locale, boolean formatted);
 
     /**
      * Gets a fully uppercase String of the skill name without the namespace

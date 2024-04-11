@@ -11,7 +11,6 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
@@ -42,9 +41,8 @@ public class SkillItem {
      * @param template the TemplateBuilder
      */
     public void baseSkillItem(TemplateBuilder<Skill> template) {
-        MessageProvider msg = plugin.getMessageProvider();
-        template.replace("skill", p -> msg.getRaw(msg.getSkillDisplayNameKey(p.value()), p.locale()));
-        template.replace("desc", p -> msg.getRaw(msg.getSkillDescriptionKey(p.value()), p.locale()));
+        template.replace("skill", p -> p.value().getDisplayName(p.locale(), false));
+        template.replace("desc", p -> p.value().getDescription(p.locale(), false));
         template.replace("level", p -> RomanNumber.toRoman(plugin.getUser(p.player()).getSkillLevel(p.value()), plugin));
         template.replace("skill_click", p -> plugin.getMsg(MenuMessage.SKILL_CLICK, p.locale()));
 

@@ -25,8 +25,8 @@ public interface SkillProvider extends OptionedProvider<Skill> {
 
     int getMaxLevel(Skill skill);
 
-    String getDisplayName(Skill skill, Locale locale);
+    String getDisplayName(Skill skill, Locale locale, boolean formatted);
 
-    String getDescription(Skill skill, Locale locale);
+    String getDescription(Skill skill, Locale locale, boolean formatted);
 
 }

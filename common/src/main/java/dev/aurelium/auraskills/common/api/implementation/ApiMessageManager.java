@@ -24,12 +24,12 @@ public class ApiMessageManager implements MessageManager {
 
     @Override
     public String getSkillDisplayName(Skill skill, Locale locale) {
-        return plugin.getMessageProvider().getSkillDisplayName(skill, locale);
+        return plugin.getMessageProvider().getSkillDisplayName(skill, locale, true);
     }
 
     @Override
     public String getSkillDescription(Skill skill, Locale locale) {
-        return plugin.getMessageProvider().getSkillDescription(skill, locale);
+        return plugin.getMessageProvider().getSkillDescription(skill, locale, true);
     }
 
     @Override

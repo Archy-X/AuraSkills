@@ -57,13 +57,13 @@ public class SkillSupplier implements SkillProvider {
     }
 
     @Override
-    public String getDisplayName(Skill skill, Locale locale) {
-        return messageProvider.getSkillDisplayName(skill, locale);
+    public String getDisplayName(Skill skill, Locale locale, boolean formatted) {
+        return messageProvider.getSkillDisplayName(skill, locale, formatted);
     }
 
     @Override
-    public String getDescription(Skill skill, Locale locale) {
-        return messageProvider.getSkillDescription(skill, locale);
+    public String getDescription(Skill skill, Locale locale, boolean formatted) {
+        return messageProvider.getSkillDescription(skill, locale, formatted);
     }
 
     @Override
