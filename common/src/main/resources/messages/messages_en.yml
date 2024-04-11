@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Leaderboard is already updating!"
     updated: "<green>Leaderboard updated!"
-  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
     add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
     set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"

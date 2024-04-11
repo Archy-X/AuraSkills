@@ -17,6 +17,7 @@ export_languages:
   - vi
   - zh-CN
   - zh-TW
+  - tr
 files:
   - source: /common/src/main/resources/messages/messages_en.yml
     translation: /common/src/main/resources/messages/messages_%two_letters_code%.yml
