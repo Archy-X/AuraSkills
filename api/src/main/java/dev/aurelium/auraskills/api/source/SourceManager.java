@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 
 public interface SourceManager {
 
@@ -28,5 +29,8 @@ public interface SourceManager {
      */
     @Nullable
     <T extends XpSource> SkillSource<T> getSingleSourceOfType(Class<T> typeClass);
+
+    @Nullable
+    String getUnitName(XpSource source, Locale locale);
 
 }

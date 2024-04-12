@@ -42,7 +42,7 @@ public class CustomSource implements XpSource {
 
     @Override
     public @Nullable String getUnitName(Locale locale) {
-        return null;
+        return values.getApi().getSourceManager().getUnitName(this, locale);
     }
 
     @Override
@@ -53,5 +53,9 @@ public class CustomSource implements XpSource {
     @Override
     public double getXp() {
         return values.getXp();
+    }
+
+    public SourceValues getValues() {
+        return values;
     }
 }

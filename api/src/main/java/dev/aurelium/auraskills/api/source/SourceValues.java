@@ -12,13 +12,17 @@ public class SourceValues {
     private final double xp;
     @Nullable
     private final String displayName;
+    @Nullable
+    private final String unitName;
 
-    public SourceValues(AuraSkillsApi api, SourceType type, NamespacedId id, double xp, @Nullable String displayName) {
+    public SourceValues(AuraSkillsApi api, SourceType type, NamespacedId id, double xp,
+                        @Nullable String displayName, @Nullable String unitName) {
         this.api = api;
         this.type = type;
         this.id = id;
         this.xp = xp;
         this.displayName = displayName;
+        this.unitName = unitName;
     }
 
     public AuraSkillsApi getApi() {
@@ -33,7 +37,6 @@ public class SourceValues {
         return id;
     }
 
-
     public double getXp() {
         return xp;
     }
@@ -41,5 +44,10 @@ public class SourceValues {
     @Nullable
     public String getDisplayName() {
         return displayName;
+    }
+
+    @Nullable
+    public String getUnitName() {
+        return unitName;
     }
 }
