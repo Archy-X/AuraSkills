@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Le classement est déjà en train d'etre mis à jour!"
     updated: "<green>Classement mis à jour!"
-  version: "<white>Vous êtes sur la version <aqua>{current_version}<white> d'Aurelium Skills. La dernière version est <aqua>{latest_version}"
+  version: "<white>Vous êtes sur la version <aqua>{current_version}<white> d'AuraSkills. La dernière version est <aqua>{latest_version}"
   xp:
     add: "<aqua>{amount} <gray>XP de <aqua>{skill} ont été ajoutée au joueur {player}"
     set: "<gray>XP de <aqua>{skill} <gray>pour le joueur {player} <gray>défini sur {amount}"
