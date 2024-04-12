@@ -91,14 +91,14 @@ public class BossBarManager implements Listener {
                     color = BossBar.Color.valueOf(splitEntry[1].toUpperCase(Locale.ROOT));
                 }
                 catch (IllegalArgumentException e) {
-                    plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarColor");
+                    plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[1] + " is not a valid BarColor");
                 }
                 if (splitEntry.length > 2) {
                     try {
                         overlay = BossBar.Overlay.valueOf(splitEntry[2].toUpperCase(Locale.ROOT));
                     }
                     catch (IllegalArgumentException e) {
-                        plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[0] + " is not a valid BarStyle");
+                        plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[2] + " is not a valid BarStyle");
                     }
                 }
             }

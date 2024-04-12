@@ -65,7 +65,7 @@ public class DoubleDropTrait extends TraitImpl {
         if (!event.isDropItems()) {
             return;
         }
-        if (!player.getGameMode().equals(GameMode.SURVIVAL)) {
+        if (player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
         if (plugin.getRegionManager().isPlacedBlock(block)) return;

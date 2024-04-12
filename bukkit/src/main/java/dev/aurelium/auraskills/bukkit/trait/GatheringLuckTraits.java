@@ -161,7 +161,7 @@ public class GatheringLuckTraits extends TraitImpl {
     }
 
     private boolean failsChecks(Player player, Skill skill) {
-        if (player.getGameMode() != GameMode.SURVIVAL) {
+        if (player.getGameMode() == GameMode.CREATIVE) {
             return true;
         }
         if (!plugin.getUser(player).hasSkillPermission(skill)) {

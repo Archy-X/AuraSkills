@@ -231,7 +231,7 @@ public abstract class LootHandler {
     }
 
     protected boolean failsChecks(Player player, Location location) {
-        if (player.getGameMode() != GameMode.SURVIVAL) { // Only drop loot in survival mode
+        if (player.getGameMode() == GameMode.CREATIVE) { // Only drop loot in survival mode
             return true;
         }
 

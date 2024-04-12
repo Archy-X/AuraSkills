@@ -48,8 +48,8 @@ public class StatSupplier implements StatProvider {
     }
 
     @Override
-    public String getDescription(Stat stat, Locale locale) {
-        return messageProvider.getStatDescription(stat, locale);
+    public String getDescription(Stat stat, Locale locale, boolean formatted) {
+        return messageProvider.getStatDescription(stat, locale, formatted);
     }
 
     @Override

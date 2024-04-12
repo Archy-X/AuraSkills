@@ -53,6 +53,15 @@ public interface Stat extends Optioned, NamespaceIdentified {
     String getDescription(Locale locale);
 
     /**
+     * Gets the stat description as defined in the locale's messages file.
+     *
+     * @param locale the locale to get the description in
+     * @param formatted whether to apply formatting to the description
+     * @return the description in the specified locale or in a fallback language
+     */
+    String getDescription(Locale locale, boolean formatted);
+
+    /**
      * Gets the stat color as defined in the messages file.
      *
      * @param locale the locale to get the color in

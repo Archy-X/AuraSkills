@@ -130,8 +130,12 @@ public abstract class MessageProvider implements PolyglotProvider {
         return MessageKey.of("stats." + key + ".name");
     }
 
-    public String getStatDescription(Stat stat, Locale locale) {
-        return get(getStatDescriptionKey(stat), locale);
+    public String getStatDescription(Stat stat, Locale locale, boolean formatted) {
+        if (formatted) {
+            return get(getStatDescriptionKey(stat), locale);
+        } else {
+            return getRaw(getStatDescriptionKey(stat), locale);
+        }
     }
 
     public MessageKey getStatDescriptionKey(Stat stat) {

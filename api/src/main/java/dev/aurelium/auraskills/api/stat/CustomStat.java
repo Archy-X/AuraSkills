@@ -64,7 +64,12 @@ public class CustomStat implements Stat {
 
     @Override
     public String getDescription(Locale locale) {
-        return defined.description != null ? defined.description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, true);
+    }
+
+    @Override
+    public String getDescription(Locale locale, boolean formatted) {
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, formatted);
     }
 
     @Override

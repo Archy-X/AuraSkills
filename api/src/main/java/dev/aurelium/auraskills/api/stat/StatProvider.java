@@ -16,7 +16,7 @@ public interface StatProvider extends OptionedProvider<Stat> {
 
     String getDisplayName(Stat stat, Locale locale);
 
-    String getDescription(Stat stat, Locale locale);
+    String getDescription(Stat stat, Locale locale, boolean formatted);
 
     String getColor(Stat stat, Locale locale);
 
