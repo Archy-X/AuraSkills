@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Žebříček se již aktualizuje!"
     updated: "<green>Žebříček aktualizován!"
-  version: "<white>Jsi na verzi dovednosti Aurelium <aqua>{current_version}<white>. Nejnovejsi verye Aurelium <aqua>{latest_version}"
+  version: "<white>Jsi na verzi dovednosti AuraSkills <aqua>{current_version}<white>. Nejnovejsi verye AuraSkills <aqua>{latest_version}"
   xp:
     add: "<gray>Přidáno <aqua>{amount} {skill} <gray>XP k hráči <gray>{player}"
     set: "<gray>Nastavit <aqua>{skill} <gray>XP pro hráče <gray>{player} <gray>to {amount}"
