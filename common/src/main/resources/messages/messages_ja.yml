@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>リーダーボードはすでに更新中です！"
     updated: "<green>リーダーボードが更新されました！"
-  version: "<white>Aurelium Skillsのバージョンは<aqua>{current_version}<white>です。最新バージョンは<aqua>{latest_version}<white>です"
+  version: "<white>AuraSkillsのバージョンは<aqua>{current_version}<white>です。最新バージョンは<aqua>{latest_version}<white>です"
   xp:
     add: "<gray>プレイヤー<gray>{player}<aqua>{amount}{skill}<gray>XPが追加されました"
     set: "<gray>プレイヤー<gray>{player}<aqua>{skill}<gray>XPが{amount}に設定されました"
