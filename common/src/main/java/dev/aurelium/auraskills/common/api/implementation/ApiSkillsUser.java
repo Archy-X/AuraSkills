@@ -4,6 +4,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -49,6 +50,11 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
         plugin.getLevelManager().addXp(user, skill, null, amountToAdd);
+    }
+
+    @Override
+    public void addSkillXp(Skill skill, double amountToAdd, XpSource source) {
+        plugin.getLevelManager().addXp(user, skill, source, amountToAdd);
     }
 
     @Override

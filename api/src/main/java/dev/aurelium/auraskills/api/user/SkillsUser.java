@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.api.user;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -48,6 +49,16 @@ public interface SkillsUser {
      * @param amountToAdd the amount of XP to add
      */
     void addSkillXp(Skill skill, double amountToAdd);
+
+    /**
+     * Adds XP to a skill as if earned in game with a specific XP source. The final amount of XP
+     * added to the player may be modified by abilities and multipliers.
+     *
+     * @param skill the skill to add XP to
+     * @param amountToAdd the amount of XP to add
+     * @param source the source of the XP
+     */
+    void addSkillXp(Skill skill, double amountToAdd, XpSource source);
 
     /**
      * Adds an exact amount of XP to a skill, bypassing in-game abilities and multipliers.

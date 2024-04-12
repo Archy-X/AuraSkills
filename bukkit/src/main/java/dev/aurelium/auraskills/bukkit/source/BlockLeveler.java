@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -9,7 +10,6 @@ import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.trait.GatheringLuckTraits;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -21,7 +21,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -41,13 +43,13 @@ public class BlockLeveler extends SourceLeveler {
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
 
-        Pair<BlockXpSource, Skill> sourcePair = getSource(event.getBlock(), BlockXpSource.BlockTriggers.BREAK);
-        if (sourcePair == null) {
+        SkillSource<BlockXpSource> skillSource = getSource(event.getBlock(), BlockXpSource.BlockTriggers.BREAK);
+        if (skillSource == null) {
             return;
         }
 
-        BlockXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        BlockXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
 
@@ -77,13 +79,13 @@ public class BlockLeveler extends SourceLeveler {
         Block block = event.getClickedBlock();
         if (block == null) return;
 
-        Pair<BlockXpSource, Skill> sourcePair = getSource(block, BlockXpSource.BlockTriggers.INTERACT);
-        if (sourcePair == null) {
+        SkillSource<BlockXpSource> skillSource = getSource(block, BlockXpSource.BlockTriggers.INTERACT);
+        if (skillSource == null) {
             return;
         }
 
-        BlockXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        BlockXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, block.getLocation(), skill)) return;
 
@@ -119,19 +121,19 @@ public class BlockLeveler extends SourceLeveler {
     }
 
     public boolean isDifferentSource(Block block, BlockXpSource source, BlockXpSource.BlockTriggers trigger) {
-        var sourcePair = getSource(block, trigger);
-        if (sourcePair == null) {
+        var skillSource = getSource(block, trigger);
+        if (skillSource == null) {
             return true;
         }
-        return !sourcePair.first().equals(source);
+        return !skillSource.source().equals(source);
     }
 
     @Nullable
-    public Pair<BlockXpSource, Skill> getSource(Block block, BlockXpSource.BlockTriggers trigger) {
-        Map<BlockXpSource, Skill> sources = plugin.getSkillManager().getSourcesOfType(BlockXpSource.class);
+    public SkillSource<BlockXpSource> getSource(Block block, BlockXpSource.BlockTriggers trigger) {
+        List<SkillSource<BlockXpSource>> sources = plugin.getSkillManager().getSourcesOfType(BlockXpSource.class);
         sources = filterByTrigger(sources, trigger);
-        for (Map.Entry<BlockXpSource, Skill> entry : sources.entrySet()) {
-            BlockXpSource source = entry.getKey();
+        for (SkillSource<BlockXpSource> entry : sources) {
+            BlockXpSource source = entry.source();
 
             // Check block type (material)
             boolean blockMatches = false;
@@ -153,7 +155,7 @@ public class BlockLeveler extends SourceLeveler {
                 }
             }
 
-            return Pair.fromEntry(entry);
+            return entry;
         }
         return null;
     }
@@ -185,15 +187,14 @@ public class BlockLeveler extends SourceLeveler {
         return false;
     }
 
-    private Map<BlockXpSource, Skill> filterByTrigger(Map<BlockXpSource, Skill> sources, BlockXpSource.BlockTriggers trigger) {
-        Map<BlockXpSource, Skill> filtered = new HashMap<>();
-        for (Map.Entry<BlockXpSource, Skill> entry : sources.entrySet()) {
-            BlockXpSource source = entry.getKey();
-            Skill skill = entry.getValue();
+    private List<SkillSource<BlockXpSource>> filterByTrigger(List<SkillSource<BlockXpSource>> sources, BlockXpSource.BlockTriggers trigger) {
+        List<SkillSource<BlockXpSource>> filtered = new ArrayList<>();
+        for (SkillSource<BlockXpSource> entry : sources) {
+            BlockXpSource source = entry.source();
             // Check if trigger matches any of the source triggers
             for (BlockXpSource.BlockTriggers sourceTrigger : source.getTriggers()) {
                 if (sourceTrigger == trigger) {
-                    filtered.put(source, skill);
+                    filtered.add(entry);
                     break;
                 }
             }

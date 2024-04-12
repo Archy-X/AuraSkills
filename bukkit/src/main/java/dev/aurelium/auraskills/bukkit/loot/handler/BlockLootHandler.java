@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -19,7 +20,6 @@ import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,7 +63,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
         });
     }
 
-    public Pair<BlockXpSource, Skill> getSource(Block block) {
+    public SkillSource<BlockXpSource> getSource(Block block) {
         return plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
     }
 
@@ -77,8 +77,8 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         if (originalSource == null) return;
 
-        BlockXpSource source = originalSource.first();
-        Skill skill = originalSource.second();
+        BlockXpSource source = originalSource.source();
+        Skill skill = originalSource.skill();
 
         // Check block replace
         if (plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED) && plugin.getRegionManager().isPlacedBlock(block)) {

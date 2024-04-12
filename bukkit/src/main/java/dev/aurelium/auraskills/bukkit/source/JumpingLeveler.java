@@ -58,11 +58,11 @@ public class JumpingLeveler extends SourceLeveler {
         if (player.isOnGround() || Double.compare(player.getVelocity().getY(), jumpVelocity) != 0) {
             return;
         }
-        var sourcePair = plugin.getSkillManager().getSingleSourceOfType(JumpingXpSource.class);
-        if (sourcePair == null) return;
+        var skillSource = plugin.getSkillManager().getSingleSourceOfType(JumpingXpSource.class);
+        if (skillSource == null) return;
 
-        JumpingXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        JumpingXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (player.hasMetadata("skillsJumps")) {
             player.setMetadata("skillsJumps", new FixedMetadataValue(plugin, player.getMetadata("skillsJumps").get(0).asInt() + 1));

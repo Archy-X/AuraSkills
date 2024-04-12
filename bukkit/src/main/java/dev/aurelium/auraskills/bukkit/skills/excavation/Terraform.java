@@ -71,10 +71,10 @@ public class Terraform extends ReadiedManaAbility {
 
     private void applyTerraform(Player player, User user, Block block) {
         // Check if block is applicable to ability
-        var sourcePair = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
-        if (sourcePair == null) return;
+        var skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        if (skillSource == null) return;
 
-        XpSource source = sourcePair.first();
+        XpSource source = skillSource.source();
 
         if (!plugin.getSkillManager().hasTag(source, SourceTag.TERRAFORM_APPLICABLE)) return;
         // Apply if activated

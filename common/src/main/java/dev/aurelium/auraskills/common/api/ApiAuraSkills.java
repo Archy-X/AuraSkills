@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
+import dev.aurelium.auraskills.api.source.SourceManager;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -30,6 +31,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
     private final Handlers handlers;
     private final MainConfig mainConfig;
     private final GlobalRegistry globalRegistry;
+    private final SourceManager sourceManager;
 
     public ApiAuraSkills(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -40,6 +42,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.handlers = new ApiHandlers(plugin);
         this.mainConfig = new ApiMainConfig(plugin);
         this.globalRegistry = new ApiGlobalRegistry(plugin);
+        this.sourceManager = new ApiSourceManager(plugin);
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -97,6 +100,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
     @Override
     public MainConfig getMainConfig() {
         return mainConfig;
+    }
+
+    @Override
+    public SourceManager getSourceManager() {
+        return sourceManager;
     }
 
     public Map<String, NamespacedRegistry> getNamespacedRegistryMap() {

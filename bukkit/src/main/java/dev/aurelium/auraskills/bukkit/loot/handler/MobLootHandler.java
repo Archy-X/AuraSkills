@@ -16,7 +16,6 @@ import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,14 +53,14 @@ public class MobLootHandler extends LootHandler implements Listener {
         if (table == null) return;
 
         EntityLeveler leveler = plugin.getLevelManager().getLeveler(EntityLeveler.class);
-        var sourcePair = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
-        if (sourcePair == null) { // Check if the entity source is using damage trigger instead
-            sourcePair = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
+        var skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
+        if (skillSource == null) { // Check if the entity source is using damage trigger instead
+            skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
         }
 
         Skill skill = Skills.FIGHTING;
-        if (sourcePair != null) {
-            skill = sourcePair.second();
+        if (skillSource != null) {
+            skill = skillSource.skill();
         }
 
         for (LootPool pool : table.getPools()) {

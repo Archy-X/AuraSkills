@@ -3,12 +3,12 @@ package dev.aurelium.auraskills.common.skill;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.SourceTag;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -82,16 +82,17 @@ public class SkillManager {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends XpSource> Map<T, Skill> getSourcesOfType(Class<T> typeClass) {
-        Map<T, Skill> map = new HashMap<>();
+    @NotNull
+    public <T extends XpSource> List<SkillSource<T>> getSourcesOfType(Class<T> typeClass) {
+        var list = new ArrayList<SkillSource<T>>();
         for (Skill skill : getEnabledSkills()) {
             for (XpSource source : skill.getSources()) {
                 if (typeClass.isAssignableFrom(source.getClass())) {
-                    map.put((T) source, skill);
+                    list.add(new SkillSource<>((T) source, skill));
                 }
             }
         }
-        return map;
+        return list;
     }
 
     /**
@@ -124,10 +125,11 @@ public class SkillManager {
     }
 
     @Nullable
-    public <T extends XpSource> Pair<T, Skill> getSingleSourceOfType(Class<T> typeClass) {
+    public <T extends XpSource> SkillSource<T> getSingleSourceOfType(Class<T> typeClass) {
         var sources = plugin.getSkillManager().getSourcesOfType(typeClass);
-        var opt = sources.entrySet().stream().findFirst();
-        return opt.map(entry -> new Pair<>(entry.getKey(), entry.getValue())).orElse(null);
+        if (sources.isEmpty()) return null;
+
+        return sources.get(0);
     }
 
     public void registerSourceTag(SourceTag tag, List<XpSource> sources) {

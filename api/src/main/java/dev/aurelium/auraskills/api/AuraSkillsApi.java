@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.registry.GlobalRegistry;
 import dev.aurelium.auraskills.api.registry.Handlers;
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.XpRequirements;
+import dev.aurelium.auraskills.api.source.SourceManager;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.api.user.UserManager;
 import org.jetbrains.annotations.Nullable;
@@ -90,6 +91,13 @@ public interface AuraSkillsApi {
      * @return the main config provider
      */
     MainConfig getMainConfig();
+
+    /**
+     * Gets the {@link SourceManager}, which can be used to get sources of a type.
+     *
+     * @return the source manager
+     */
+    SourceManager getSourceManager();
 
     /**
      * Gets the instance of the {@link AuraSkillsApi},

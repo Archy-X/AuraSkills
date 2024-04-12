@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -44,6 +45,11 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public void addSkillXp(Skill skill, double amountToAdd) {
 
+    }
+
+    @Override
+    public void addSkillXp(Skill skill, double amountToAdd, XpSource source) {
+        
     }
 
     @Override

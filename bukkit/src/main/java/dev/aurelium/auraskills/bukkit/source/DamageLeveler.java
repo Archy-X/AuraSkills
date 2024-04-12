@@ -2,20 +2,18 @@ package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
-
-import java.util.Map;
 
 public class DamageLeveler extends SourceLeveler {
 
@@ -33,11 +31,11 @@ public class DamageLeveler extends SourceLeveler {
 
         if (player.hasMetadata("NPC")) return;
 
-        var sourcePair = getSource(event);
-        if (sourcePair == null) return;
+        var skillSource = getSource(event);
+        if (skillSource == null) return;
 
-        DamageXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        DamageXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         // Disregard self inflected damage
         if (event instanceof EntityDamageByEntityEvent entityEvent) {
@@ -96,10 +94,10 @@ public class DamageLeveler extends SourceLeveler {
         return false;
     }
 
-    private Pair<DamageXpSource, Skill> getSource(EntityDamageEvent event) {
+    private SkillSource<DamageXpSource> getSource(EntityDamageEvent event) {
         var sources = plugin.getSkillManager().getSourcesOfType(DamageXpSource.class);
-        for (Map.Entry<DamageXpSource, Skill> entry : sources.entrySet()) {
-            DamageXpSource source = entry.getKey();
+        for (SkillSource<DamageXpSource> entry : sources) {
+            DamageXpSource source = entry.source();
             // Check if causes match
             DamageXpSource.DamageCause[] causes = source.getCauses();
             if (causes != null) {
@@ -138,7 +136,7 @@ public class DamageLeveler extends SourceLeveler {
                     continue;
                 }
             }
-            return Pair.fromEntry(entry);
+            return entry;
         }
         return null;
     }

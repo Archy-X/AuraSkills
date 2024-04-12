@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityDamagers;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
@@ -26,10 +27,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EntityLeveler extends SourceLeveler {
 
@@ -69,11 +67,11 @@ public class EntityLeveler extends SourceLeveler {
             return;
         }
 
-        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
-        if (sourcePair == null) return;
+        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
+        if (skillSource == null) return;
 
-        EntityXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        EntityXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
@@ -97,11 +95,11 @@ public class EntityLeveler extends SourceLeveler {
         EntityXpSource.EntityDamagers damager = damagerPair.second();
 
         // Get matching source with damage trigger
-        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
-        if (sourcePair == null) return;
+        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
+        if (skillSource == null) return;
 
-        EntityXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        EntityXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, entity.getLocation(), skill)) return;
 
@@ -123,11 +121,11 @@ public class EntityLeveler extends SourceLeveler {
         if (player.hasMetadata("NPC")) return;
 
         User user = plugin.getUser(player);
-        Pair<EntityXpSource, Skill> sourcePair = getSource(entity, EntityDamagers.PLAYER, EntityTriggers.DAMAGE);
-        if (sourcePair == null) return;
+        SkillSource<EntityXpSource> skillSource = getSource(entity, EntityDamagers.PLAYER, EntityTriggers.DAMAGE);
+        if (skillSource == null) return;
 
-        EntityXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        EntityXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(player, entity.getLocation(), skill)) return;
 
@@ -159,13 +157,12 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @Nullable
-    public Pair<EntityXpSource, Skill> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
-        Map<EntityXpSource, Skill> sources = plugin.getSkillManager().getSourcesOfType(EntityXpSource.class);
+    public SkillSource<EntityXpSource> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
+        var sources = plugin.getSkillManager().getSourcesOfType(EntityXpSource.class);
         sources = filterByTrigger(sources, trigger);
 
-        for (Map.Entry<EntityXpSource, Skill> entry : sources.entrySet()) {
-            EntityXpSource source = entry.getKey();
-            Skill skill = entry.getValue();
+        for (SkillSource<EntityXpSource> entry : sources) {
+            EntityXpSource source = entry.source();
 
             // Discard if entity type does not match
             String entityName = plugin.getPlatformUtil().convertEntityName(source.getEntity().toLowerCase(Locale.ROOT));
@@ -175,28 +172,27 @@ public class EntityLeveler extends SourceLeveler {
 
             // Give Alchemy XP if potion is thrown with option give_xp_on_potion_combat
             if (eventDamager == EntityXpSource.EntityDamagers.THROWN_POTION) {
-                return new Pair<>(source, Skills.ALCHEMY);
+                return new SkillSource<>(source, Skills.ALCHEMY);
             }
 
             // Return if damager matches
             for (EntityXpSource.EntityDamagers sourceDamager : source.getDamagers()) {
                 if (sourceDamager == eventDamager) {
-                    return new Pair<>(source, skill);
+                    return entry;
                 }
             }
         }
         return null;
     }
 
-    private Map<EntityXpSource, Skill> filterByTrigger(Map<EntityXpSource, Skill> sources, EntityXpSource.EntityTriggers trigger) {
-        Map<EntityXpSource, Skill> filtered = new HashMap<>();
-        for (Map.Entry<EntityXpSource, Skill> entry : sources.entrySet()) {
-            EntityXpSource source = entry.getKey();
-            Skill skill = entry.getValue();
+    private List<SkillSource<EntityXpSource>> filterByTrigger(List<SkillSource<EntityXpSource>> sources, EntityXpSource.EntityTriggers trigger) {
+        List<SkillSource<EntityXpSource>> filtered = new ArrayList<>();
+        for (SkillSource<EntityXpSource> entry : sources) {
+            EntityXpSource source = entry.source();
             // Check if trigger matches any of the source triggers
             for (EntityXpSource.EntityTriggers sourceTrigger : source.getTriggers()) {
                 if (sourceTrigger == trigger) {
-                    filtered.put(source, skill);
+                    filtered.add(entry);
                     break;
                 }
             }

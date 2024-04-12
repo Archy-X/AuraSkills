@@ -59,10 +59,10 @@ public class SpeedMine extends ReadiedManaAbility {
 
         if (failsChecks(player)) return;
 
-        var sourcePair = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
-        if (sourcePair == null) return;
+        var skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        if (skillSource == null) return;
 
-        BlockXpSource source = sourcePair.first();
+        BlockXpSource source = skillSource.source();
         if (source == null) return;
 
         if (plugin.getSkillManager().hasTag(source, SourceTag.SPEED_MINE_APPLICABLE) && isHoldingMaterial(player)) {

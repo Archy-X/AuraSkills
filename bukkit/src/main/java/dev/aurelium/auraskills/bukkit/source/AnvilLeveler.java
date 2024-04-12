@@ -4,11 +4,11 @@ import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,8 +19,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
+import org.jetbrains.annotations.Nullable;
 
 public class AnvilLeveler extends SourceLeveler {
 
@@ -51,11 +50,11 @@ public class AnvilLeveler extends SourceLeveler {
         ItemStack rightItem = inventory.getItem(1);
         if (leftItem == null || rightItem == null) return;
 
-        Pair<AnvilXpSource, Skill> sourcePair = getSource(leftItem, rightItem);
-        if (sourcePair == null) return;
+        SkillSource<AnvilXpSource> skillSource = getSource(leftItem, rightItem);
+        if (skillSource == null) return;
 
-        AnvilXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        AnvilXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         Location location = inventory.getLocation() != null ? inventory.getLocation() : player.getLocation();
 
@@ -84,14 +83,14 @@ public class AnvilLeveler extends SourceLeveler {
         return multiplier;
     }
 
-
-    private Pair<AnvilXpSource, Skill> getSource(ItemStack leftItem, ItemStack rightItem) {
-        Map<AnvilXpSource, Skill> sources = plugin.getSkillManager().getSourcesOfType(AnvilXpSource.class);
-
-        for (Map.Entry<AnvilXpSource, Skill> entry : sources.entrySet()) {
-            AnvilXpSource source = entry.getKey();
-            if (plugin.getItemRegistry().passesFilter(leftItem, source.getLeftItem()) && plugin.getItemRegistry().passesFilter(rightItem, source.getRightItem())) {
-                return Pair.fromEntry(entry);
+    @Nullable
+    private SkillSource<AnvilXpSource> getSource(ItemStack leftItem, ItemStack rightItem) {
+        for (SkillSource<AnvilXpSource> entry : plugin.getSkillManager().getSourcesOfType(AnvilXpSource.class)) {
+            AnvilXpSource source = entry.source();
+            boolean leftMatches = plugin.getItemRegistry().passesFilter(leftItem, source.getLeftItem());
+            boolean rightMatches = plugin.getItemRegistry().passesFilter(rightItem, source.getRightItem());
+            if (leftMatches && rightMatches) {
+                return entry;
             }
         }
         return null;

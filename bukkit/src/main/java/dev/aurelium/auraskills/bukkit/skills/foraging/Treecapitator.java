@@ -73,20 +73,20 @@ public class Treecapitator extends ReadiedManaAbility {
             User user = plugin.getUser(player);
 
             if (isActivated(user)) {
-                breakTree(player, user, block);
+                breakTree(user, block);
                 return;
             }
             if (isHoldingMaterial(player) && checkActivation(player)) {
-                breakTree(player, user, block);
+                breakTree(user, block);
             }
         }
     }
 
-    public void breakTree(Player player, User user, Block block) {
-        breakBlock(player, user, block, new TreecapitatorTree(plugin, block));
+    public void breakTree(User user, Block block) {
+        breakBlock(user, block, new TreecapitatorTree(plugin, block));
     }
 
-    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree) {
+    private void breakBlock(User user, Block block, TreecapitatorTree tree) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
             return;
         }
@@ -110,16 +110,16 @@ public class Treecapitator extends ReadiedManaAbility {
                 return;
             }
             // Break the next blocks
-            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
         }
     }
 
     @Nullable
     private BlockXpSource getSource(Block block) {
-        var sourcePair = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        var skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(block, BlockXpSource.BlockTriggers.BREAK);
 
-        if (sourcePair != null) {
-            return sourcePair.first();
+        if (skillSource != null) {
+            return skillSource.source();
         }
         return null;
     }
@@ -170,9 +170,9 @@ public class Treecapitator extends ReadiedManaAbility {
         }
 
         private void setMaxBlocks() {
-            var sourcePair = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(originalBlock, BlockXpSource.BlockTriggers.BREAK);
+            var skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(originalBlock, BlockXpSource.BlockTriggers.BREAK);
 
-            XpSource source = sourcePair != null ? sourcePair.first() : null;
+            XpSource source = skillSource != null ? skillSource.source() : null;
 
             String matName = originalBlock.getType().toString();
             if (source == null && matName.contains("STRIPPED")) {

@@ -1,10 +1,10 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.PotionSplashXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
@@ -13,8 +13,6 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 public class PotionSplashLeveler extends SourceLeveler {
 
@@ -46,11 +44,11 @@ public class PotionSplashLeveler extends SourceLeveler {
 
         ItemStack item = potion.getItem();
 
-        var sourcePair = getSource(item);
-        if (sourcePair == null) return;
+        var skillSource = getSource(item);
+        if (skillSource == null) return;
 
-        PotionSplashXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        PotionSplashXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, potion.getLocation(), skill)) return;
 
@@ -58,10 +56,10 @@ public class PotionSplashLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<PotionSplashXpSource, Skill> getSource(ItemStack item) {
-        for (Map.Entry<PotionSplashXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(PotionSplashXpSource.class).entrySet()) {
-            if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem())) { // Return source that passes item filter
-                return Pair.fromEntry(entry);
+    private SkillSource<PotionSplashXpSource> getSource(ItemStack item) {
+        for (SkillSource<PotionSplashXpSource> entry : plugin.getSkillManager().getSourcesOfType(PotionSplashXpSource.class)) {
+            if (plugin.getItemRegistry().passesFilter(item, entry.source().getItem())) { // Return source that passes item filter
+                return entry;
             }
         }
         return null;

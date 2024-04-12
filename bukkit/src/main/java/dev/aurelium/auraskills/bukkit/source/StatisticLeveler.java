@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.bukkit.source;
 
-import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.StatisticXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
@@ -46,15 +46,16 @@ public class StatisticLeveler extends SourceLeveler {
         User user = plugin.getUser(player);
 
         var sources = plugin.getSkillManager().getSourcesOfType(StatisticXpSource.class);
-        for (Map.Entry<StatisticXpSource, Skill> entry : sources.entrySet()) {
-            if (failsChecks(player, player.getLocation(), entry.getValue())) return;
+        for (SkillSource<StatisticXpSource> entry : sources) {
+            if (failsChecks(player, player.getLocation(), entry.skill())) return;
 
-            StatisticXpSource source = entry.getKey();
+            StatisticXpSource source = entry.source();
             try {
                 Statistic statistic = Statistic.valueOf(source.getStatistic().toUpperCase(Locale.ROOT));
 
                 // Get the last tracked statistic value and add current value if missing
-                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).computeIfAbsent(source, s -> player.getStatistic(statistic));
+                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>())
+                        .computeIfAbsent(source, s -> player.getStatistic(statistic));
 
                 int change = player.getStatistic(statistic) - lastValue;
 
@@ -64,7 +65,7 @@ public class StatisticLeveler extends SourceLeveler {
 
                 double xpToAdd = change * source.getMultiplier() * source.getXp();
 
-                plugin.getLevelManager().addXp(user, entry.getValue(), source, xpToAdd);
+                plugin.getLevelManager().addXp(user, entry.skill(), source, xpToAdd);
                 // Update tracker with current value
                 tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).put(source, player.getStatistic(statistic));
             } catch (IllegalArgumentException ignored) {}

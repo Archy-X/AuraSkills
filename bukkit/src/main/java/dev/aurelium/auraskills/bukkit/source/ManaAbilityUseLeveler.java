@@ -3,15 +3,13 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.ManaAbilityUseXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 public class ManaAbilityUseLeveler extends SourceLeveler {
 
@@ -23,11 +21,11 @@ public class ManaAbilityUseLeveler extends SourceLeveler {
     public void onManaAbilityActivate(ManaAbilityActivateEvent event) {
         Player player = event.getPlayer();
 
-        var sourcePair = getSource(event.getManaAbility());
-        if (sourcePair == null) return;
+        var skillSource = getSource(event.getManaAbility());
+        if (skillSource == null) return;
 
-        ManaAbilityUseXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        ManaAbilityUseXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
@@ -35,17 +33,16 @@ public class ManaAbilityUseLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<ManaAbilityUseXpSource, Skill> getSource(ManaAbility manaAbility) {
-        for (Map.Entry<ManaAbilityUseXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(ManaAbilityUseXpSource.class).entrySet()) {
-            var source = entry.getKey();
-            ManaAbility[] manaAbilities = source.getManaAbilities();
+    private SkillSource<ManaAbilityUseXpSource> getSource(ManaAbility manaAbility) {
+        for (SkillSource<ManaAbilityUseXpSource> entry : plugin.getSkillManager().getSourcesOfType(ManaAbilityUseXpSource.class)) {
+            ManaAbility[] manaAbilities = entry.source().getManaAbilities();
             if (manaAbilities == null) { // Source with no mana abilities specified always matches
-                return Pair.fromEntry(entry);
+                return entry;
             }
 
             for (ManaAbility search : manaAbilities) {
                 if (manaAbility.equals(search)) {
-                    return Pair.fromEntry(entry);
+                    return entry;
                 }
             }
         }

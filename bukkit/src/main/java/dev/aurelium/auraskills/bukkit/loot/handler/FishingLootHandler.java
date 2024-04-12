@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -27,7 +28,6 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.Random;
 
 public class FishingLootHandler extends LootHandler implements Listener {
@@ -59,7 +59,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
         var originalSource = plugin.getLevelManager().getLeveler(FishingLeveler.class).getSource(originalItem);
 
-        Skill skill = originalSource != null ? originalSource.second() : Skills.FISHING;
+        Skill skill = originalSource != null ? originalSource.skill() : Skills.FISHING;
 
         LootTable table = plugin.getLootTableManager().getLootTable(skill);
         if (table == null) return;
@@ -82,7 +82,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 source = getSourceWithLootPool("epic", skill);
                 cause = LootDropEvent.Cause.EPIC_CATCH;
             } else if (originalSource != null) {
-                source = originalSource.first();
+                source = originalSource.source();
             }
 
             if (source == null) continue;
@@ -93,7 +93,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
-                XpSource contextSource = originalSource != null ? originalSource.first() : null;
+                XpSource contextSource = originalSource != null ? originalSource.source() : null;
                 Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
                 // Give loot
                 if (selectedLoot == null) { // Continue iterating pools
@@ -111,14 +111,14 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
     @Nullable
     private FishingXpSource getSourceWithLootPool(String lootPool, Skill skill) {
-        for (Map.Entry<FishingXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(FishingXpSource.class).entrySet()) {
-            if (!entry.getValue().equals(skill)) continue;
+        for (SkillSource<FishingXpSource> entry : plugin.getSkillManager().getSourcesOfType(FishingXpSource.class)) {
+            if (!entry.skill().equals(skill)) continue;
 
-            String candidate = entry.getKey().getItem().lootPool();
+            String candidate = entry.source().getItem().lootPool();
             if (candidate == null) continue;
 
             if (lootPool.equals(candidate)) {
-                return entry.getKey();
+                return entry.source();
             }
         }
         return null;

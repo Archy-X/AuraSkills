@@ -1,13 +1,13 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.BrewingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.region.BukkitBlock;
 import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -47,11 +47,11 @@ public class BrewingLeveler extends SourceLeveler {
         ItemStack ingredient = event.getContents().getIngredient();
         if (ingredient == null) return;
 
-        Pair<BrewingXpSource, Skill> sourcePair = getSource(ingredient);
-        if (sourcePair == null) return;
+        SkillSource<BrewingXpSource> skillSource = getSource(ingredient);
+        if (skillSource == null) return;
 
-        BrewingXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        BrewingXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (source.getTrigger() == BrewingXpSource.BrewTriggers.TAKEOUT) {
             checkBrewedSlots(event);
@@ -107,17 +107,17 @@ public class BrewingLeveler extends SourceLeveler {
         List<ItemStack> ingredients = brewingSlot.getIngredients();
         if (ingredients.isEmpty()) return;
 
-        List<Pair<BrewingXpSource, Skill>> sources = getSources(ingredients);
+        List<SkillSource<BrewingXpSource>> sources = getSources(ingredients);
         Map<Skill, Double> totalXpMap = new HashMap<>();
 
         brewingSlot.setBrewed(false); // Set data to false
         brewingSlot.resetIngredients();
 
-        for (Pair<BrewingXpSource, Skill> sourcePair : sources) {
-            if (sourcePair == null) return;
+        for (SkillSource<BrewingXpSource> skillSource : sources) {
+            if (skillSource == null) return;
 
-            BrewingXpSource source = sourcePair.first();
-            Skill skill = sourcePair.second();
+            BrewingXpSource source = skillSource.source();
+            Skill skill = skillSource.skill();
 
             if (failsChecks(event, player, location, skill)) return;
 
@@ -128,7 +128,7 @@ public class BrewingLeveler extends SourceLeveler {
         User user = plugin.getUser(player);
         for (Skill skill : totalXpMap.keySet()) {
             // Add all xp from brews in that slot
-            plugin.getLevelManager().addXp(user, skill, sources.get(0).first(), totalXpMap.getOrDefault(skill, 0.0));
+            plugin.getLevelManager().addXp(user, skill, sources.get(0).source(), totalXpMap.getOrDefault(skill, 0.0));
         }
     }
 
@@ -216,18 +216,16 @@ public class BrewingLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<BrewingXpSource, Skill> getSource(ItemStack item) {
-        var sources = plugin.getSkillManager().getSourcesOfType(BrewingXpSource.class);
-        for (Map.Entry<BrewingXpSource, Skill> entry : sources.entrySet()) {
-            BrewingXpSource source = entry.getKey();
-            if (plugin.getItemRegistry().passesFilter(item, source.getIngredients())) {
-                return Pair.fromEntry(entry);
+    private SkillSource<BrewingXpSource> getSource(ItemStack item) {
+        for (SkillSource<BrewingXpSource> entry : plugin.getSkillManager().getSourcesOfType(BrewingXpSource.class)) {
+            if (plugin.getItemRegistry().passesFilter(item, entry.source().getIngredients())) {
+                return entry;
             }
         }
         return null;
     }
 
-    private List<Pair<BrewingXpSource, Skill>> getSources(List<ItemStack> items) {
+    private List<SkillSource<BrewingXpSource>> getSources(List<ItemStack> items) {
         return items.stream().map(this::getSource).collect(Collectors.toList());
     }
 

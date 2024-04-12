@@ -1,19 +1,17 @@
 package dev.aurelium.auraskills.bukkit.source;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.EnchantingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Map;
 
 public class EnchantingLeveler extends SourceLeveler {
 
@@ -27,11 +25,11 @@ public class EnchantingLeveler extends SourceLeveler {
 
         Player player = event.getEnchanter();
 
-        var sourcePair = getSource(event.getItem());
-        if (sourcePair == null) return;
+        var skillSource = getSource(event.getItem());
+        if (skillSource == null) return;
 
-        EnchantingXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        EnchantingXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         if (failsChecks(event, player, event.getEnchantBlock().getLocation(), skill)) return;
 
@@ -53,10 +51,10 @@ public class EnchantingLeveler extends SourceLeveler {
     }
 
     @Nullable
-    private Pair<EnchantingXpSource, Skill> getSource(ItemStack item) {
-        for (Map.Entry<EnchantingXpSource, Skill> entry : plugin.getSkillManager().getSourcesOfType(EnchantingXpSource.class).entrySet()) {
-            if (plugin.getItemRegistry().passesFilter(item, entry.getKey().getItem())) { // Return source that passes item filter
-                return Pair.fromEntry(entry);
+    private SkillSource<EnchantingXpSource> getSource(ItemStack item) {
+        for (SkillSource<EnchantingXpSource> entry : plugin.getSkillManager().getSourcesOfType(EnchantingXpSource.class)) {
+            if (plugin.getItemRegistry().passesFilter(item, entry.source().getItem())) { // Return source that passes item filter
+                return entry;
             }
         }
         return null;

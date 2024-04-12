@@ -41,11 +41,11 @@ public class GrindstoneLeveler extends SourceLeveler {
 
         if (event.getSlotType() != InventoryType.SlotType.RESULT) return;
 
-        var sourcePair = plugin.getSkillManager().getSingleSourceOfType(GrindstoneXpSource.class);
-        if (sourcePair == null) return;
+        var skillSource = plugin.getSkillManager().getSingleSourceOfType(GrindstoneXpSource.class);
+        if (skillSource == null) return;
 
-        GrindstoneXpSource source = sourcePair.first();
-        Skill skill = sourcePair.second();
+        GrindstoneXpSource source = skillSource.source();
+        Skill skill = skillSource.skill();
 
         Location location = inventory.getLocation() != null ? inventory.getLocation() : player.getLocation();
 

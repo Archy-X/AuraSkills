@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.bukkit.region;
 
-import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.bukkit.util.BlockFaceUtil;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -55,13 +54,13 @@ public class RegionBlockListener implements Listener {
 
         Block block = event.getBlock();
 
-        Pair<BlockXpSource, Skill> sourcePair = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
 
-        if (sourcePair == null) { // Not a source
+        if (skillSource == null) { // Not a source
             return;
         }
 
-        BlockXpSource source = sourcePair.first();
+        BlockXpSource source = skillSource.source();
 
         if (!source.checkReplace()) { // Check source option
             return;
@@ -162,8 +161,8 @@ public class RegionBlockListener implements Listener {
     private void checkSupportBelow(Block block) {
         // Check if the block above requires support
         Block above = block.getRelative(BlockFace.UP);
-        Pair<BlockXpSource, Skill> sourcePair = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
-        BlockXpSource source = sourcePair == null ? null : sourcePair.first();
+        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        BlockXpSource source = skillSource == null ? null : skillSource.source();
         if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.BELOW) && regionManager.isPlacedBlock(above)) {
             new BukkitRunnable() {
                 @Override
@@ -181,8 +180,8 @@ public class RegionBlockListener implements Listener {
         // Check each side
         for (BlockFace face : BlockFaceUtil.getBlockSides()) {
             Block checkedBlock = block.getRelative(face);
-            Pair<BlockXpSource, Skill> sourcePair = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
-            BlockXpSource source = sourcePair == null ? null : sourcePair.first();
+            SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+            BlockXpSource source = skillSource == null ? null : skillSource.source();
             if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.SIDE) && regionManager.isPlacedBlock(checkedBlock)) {
                 new BukkitRunnable() {
                     @Override
