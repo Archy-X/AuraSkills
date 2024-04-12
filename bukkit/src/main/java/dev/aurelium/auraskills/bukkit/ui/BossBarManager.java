@@ -207,7 +207,7 @@ public class BossBarManager implements Listener {
         MessageProvider provider = plugin.getMessageProvider();
         if (!maxed) {
             bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_XP, locale),
-                    "{skill}", skill.getDisplayName(locale),
+                    "{skill}", skill.getDisplayName(locale, false),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
                     "{level_xp}", getLevelXpText(levelXp),
@@ -215,7 +215,7 @@ public class BossBarManager implements Listener {
                     "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
         } else {
             bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_MAXED, locale),
-                    "{skill}", skill.getDisplayName(locale),
+                    "{skill}", skill.getDisplayName(locale, false),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
                     "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));

@@ -205,7 +205,7 @@ public class AbilitiesMenu {
     private TemplateSlot<Ability> abilitySlotPos(String itemName) {
         return t -> {
             Skill skill = (Skill) t.menu().getProperty("skill");
-            Object obj =  t.menu().getItemOption(itemName, "slots");
+            Object obj = t.menu().getItemOption(itemName, "slots");
             if (obj instanceof List<?>) {
                 List<String> slots = DataUtil.castStringList(obj);
                 // Get the index of the ability
