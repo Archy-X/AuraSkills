@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>排行榜已經更新過了!"
     updated: "<green>排行榜已更新!"
-  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
     add: "<gray>已增加玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
     set: "<gray>已設定玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
