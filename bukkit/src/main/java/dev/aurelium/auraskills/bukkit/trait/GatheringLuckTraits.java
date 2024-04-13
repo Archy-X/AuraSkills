@@ -72,7 +72,7 @@ public class GatheringLuckTraits extends TraitImpl {
 
             Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
-            boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+            boolean toInventory = plugin.getLootTableManager().toInventory(player.getInventory().getItemInMainHand());
             Cause cause = getCause(skill);
             LootDropEvent event = new LootDropEvent(player, user.toApi(), droppedItem, location, cause, toInventory);
             Bukkit.getPluginManager().callEvent(event);

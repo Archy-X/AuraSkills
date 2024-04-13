@@ -159,10 +159,10 @@ requirement:
     prevent_weapon_use: true
     prevent_block_place: true
     prevent_interact: true
-    global:
+    global: []
   armor:
     prevent_armor_equip: true
-    global:
+    global: []
 critical:
   enabled:
     sword: true
@@ -189,6 +189,7 @@ menus:
     show_trait_values_directly: true
 loot:
   update_loot_tables: true
+  directly_to_inventory: false
 check_for_updates: true
 automatic_backups:
   enabled: true

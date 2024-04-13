@@ -5,11 +5,13 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContextProvider;
+import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
@@ -165,6 +167,13 @@ public class LootTableManager {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+
+	public boolean toInventory(ItemStack held) {
+		if (ItemUtils.hasTelekinesis(held)) {
+			return true;
+		}
+		return plugin.configBoolean(Option.LOOT_DIRECTLY_TO_INVENTORY);
 	}
 
 }

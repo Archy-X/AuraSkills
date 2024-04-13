@@ -110,6 +110,7 @@ public enum Option {
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
     MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY("menus.stats.show_trait_values_directly", OptionType.BOOLEAN),
     LOOT_UPDATE_LOOT_TABLES("loot.update_loot_tables", OptionType.BOOLEAN),
+    LOOT_DIRECTLY_TO_INVENTORY("loot.directly_to_inventory", OptionType.BOOLEAN),
     CHECK_FOR_UPDATES("check_for_updates", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_ENABLED("automatic_backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic_backups.minimum_interval_hours", OptionType.DOUBLE),

@@ -88,7 +88,7 @@ public abstract class LootHandler {
     }
 
     private void giveDropItemLoot(Player player, Location location, LootDropEvent.Cause cause, ItemStack drop) {
-        boolean toInventory = ItemUtils.hasTelekinesis(player.getInventory().getItemInMainHand());
+        boolean toInventory = plugin.getLootTableManager().toInventory(player.getInventory().getItemInMainHand());
 
         LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause, toInventory);
         Bukkit.getPluginManager().callEvent(dropEvent);
