@@ -17,19 +17,19 @@ abilities:
     info: "+{value}% Çapa Hasarı"
   geneticist:
     name: Genetikçi
-    desc: "Bitki gıdalarında doygunluk kazanımını {value} artırır."
+    desc: "Sebze ve meyvelerde doygunluğu {value} arttırır."
     info: "+{value} Doygunluk"
   growth_aura:
     name: Büyüme Çehresi
-    desc: "Sizden {radius} blok uzaklık içindeki büyüme aşamalı bitkiler {value}% daha hızlı büyür."
+    desc: "Sizden {radius} blok uzaklık içindeki büyüme bitkiler {value}% daha hızlı büyür."
     info: "+{value}% Büyüme"
   lumberjack:
     name: Oduncu
     desc: "Ekstra ürün şansını arttıran +{value} Toplama Şansı verir."
     info: "+{value} Toplama Şansı"
   forager:
-    name: Toplayıcı
-    desc: "{value}% daha fazla Toplama XP'si kazanın."
+    name: Toplayıcılık
+    desc: "{value}% daha fazla Toplayıcılık XP'si kazanın."
     info: "{value}% XP"
   axe_master:
     name: Balta Ustası
@@ -57,7 +57,7 @@ abilities:
     info: "+{value}% Kazma Hasarı"
   stamina:
     name: Direnç
-    desc: "Kazma tutarken +{value} & Sertlik verir."
+    desc: "Kazma tutarken +{value} Dayanıklılık verir."
     info: "+{value} Sertlik"
   hardened_armor:
     name: Sertleştirilmiş Zırh
@@ -77,36 +77,36 @@ abilities:
     info: "+{value}% Nadir Ganimet"
   grappler:
     name: Kıskaç
-    desc: "Entitiy Tutma Hızı {value}% artışı."
+    desc: "Mob Tutma Hızı {value}% artışı."
     info: "+{value}% Kanca Hızı"
   epic_catch:
-    name: Epik Yakalama
-    desc: "{value}% Balık avında & Epik ganimet alma şansı."
-    info: "+{value}% Epik Ganimet"
+    name: Destansı Ganimet
+    desc: "{value}% Balık avında destansı ganimet alma şansı."
+    info: "+{value}% Destansı Ganimet"
   metal_detector:
-    name: Metal Dedektör
+    name: Metal Dedektörü
     desc: "{value}% Kazıdan Nadir ganimet düşme şansı eklendi."
     info: "+{value}% Nadir Ganimet"
   excavator:
     name: Ekskavatör
-    desc: "Daha Fazla {value}% kazı XP kazanın."
+    desc: "Daha Fazla {value}% Ekskavatör XP kazanın."
     info: "{value}% XP"
   spade_master:
     name: Kürek Ustası
     desc: "Küreklerle {value}% daha fazla hasar verin."
     info: "+{value}% Kürek Hasarı"
   bigger_scoop:
-    name: Daha Büyük Kürek
+    name: Büyük Kürek
     desc: "Ekstra ürün şansını arttıran +{value} kazı Şansı verir."
     info: "+{value}% Kazı Şansı"
   lucky_spades:
     name: Şanslı Kürek
-    desc: "Kazıdan % {value} epik eşya çıkarma şansı."
-    info: "+{value}% Epik Ganimet"
+    desc: "Kazıdan % {value} destansı eşya çıkarma şansı."
+    info: "+{value}% Destansı Ganimet"
   retrieval:
     name: Geri alma
     desc: "Kaçırdığınız oklar {value} blok uzaklığa kadar {time} sonra anında geri gelicektir."
-    info: "{value} uzaklık"
+    info: "{value} Uzaklık"
   archer:
     name: Okçu
     desc: "Daha fazla {value}% Okçuluk XP'si kazanın."
@@ -114,7 +114,7 @@ abilities:
   bow_master:
     name: Yay Ustası
     desc: "Yay ile {value}% daha fazla hasar vurun."
-    info: "+{value}% Yay hasarı"
+    info: "+{value}% Yay Hasarı"
   piercing:
     name: Delme
     desc: "Okların yaratıkları delme şansı {value}%."
@@ -122,11 +122,11 @@ abilities:
   stun:
     name: Sersemletme
     desc: "Düşmanı 2 Saniye boyunca %20 yavaşlatma şansı {value}%"
-    info: "{value}% Sersemletmek şansı"
+    info: "{value}% Sersemletme Şansı"
   shielding:
     name: Koruyucu
-    desc: "Gelen Hasarı Azaltır {value}%& Eğilirken."
-    info: "Eğilirken gelen hasar -{value}%"
+    desc: "Gelen Hasarı Eğilirken {value}% Azaltır."
+    info: "Eğilirken Gelen Hasar -{value}%"
   defender:
     name: Savunmacı
     desc: "Daha Fazla Savunma Xp si Kazan {value}%."
@@ -134,11 +134,11 @@ abilities:
   mob_master:
     name: Canavar ustası
     desc: "Moblardan Gelen Hasarı Azaltır {value}%"
-    info: "-{value}% mob Hasarı"
+    info: "-{value}% Mob Hasarı"
   immunity:
     name: Bağışıklık
     desc: "{value}% şansla düşman saldırısını tamamen iptal eder."
-    info: "{value}% Bağışık"
+    info: "{value}% Bağışıklık"
   no_debuff:
     name: Olumsuz Etki Direnci
     desc: "Zararlı iksir etkilerini engelleme şansı {value}%."
@@ -147,7 +147,7 @@ abilities:
     name: Savuştur
     desc: "Vurulmadan önce {time} saniye içinde bir kılıç darbesini kaçırmak, hasarı {value}% azaltır ve geri tepmeyi iptal eder."
     info: "{value}% hasar azaltma"
-    parried: "<red>saldırı savuşturma"
+    parried: "<red>Saldırı Savuşturma"
   fighter:
     name: Savaşçı
     desc: "Daha fazla {value}% Savaşçı Xp si kazanın."
@@ -163,7 +163,7 @@ abilities:
     dealt: "<red>İlk Saldırı!"
   bleed:
     name: Kanama
-    desc: "Düşmanın {base_ticks} kanamasını sağlamak için {value}% şans, her kene başına {value_2} hasar verir. {added_ticks} kene zaten kanamakta olan düşmanlara eklenir."
+    desc: "Düşmanın {base_ticks} kanamasını sağlamak için {value}% şans, her tick başına {value_2} hasar verir. {added_ticks} tick zaten kanamakta olan düşmanlara eklenir."
     info: "{value}% Şans, {value_2} Hasar"
     enemy_bleeding: "<red>Düşman Kanaması!"
     self_bleeding: "<red>Kanıyorsun!"
@@ -171,7 +171,7 @@ abilities:
   anti_hunger:
     name: Acıkmama
     desc: "{value}% açlık kaybını durdurma şansı."
-    info: "{value}% daha az acıkma"
+    info: "{value}% Daha Az Acıkma"
   runner:
     name: Koşucu
     desc: "%{value} Daha fazla dayanıklılık XP si kazanın."
@@ -179,7 +179,7 @@ abilities:
   golden_heal:
     name: Altın Kalp
     desc: "Rejenerasyon etkisi sağlık kazanımını arttırır. {value}%"
-    info: "+{value}% Can Yenilenmesi efekti"
+    info: "+{value}% Can Yenilenmesi Efekti"
   recovery:
     name: İyileşme
     desc: "Canın Yarıdan Az kalınca {value}% Doğal Can Yenilenmesini Arttırır"
@@ -193,7 +193,7 @@ abilities:
     desc: "Düşme Hasarını {value}% azaltır"
     info: "-{value}% Düşme Hasarı"
   jumper:
-    name: Zıplamacı
+    name: Zıplama
     desc: "{value}% Daha Fazla Çeviklik Kazanma."
     info: "{value}% XP"
   sugar_rush:
@@ -201,7 +201,7 @@ abilities:
     desc: "Tüketilen ve patlayan hız ve sıçrama artırma iksirleri {value}% daha uzun süre dayanır."
     info: "{value}% Daha fazla Hız"
   fleeting:
-    name: Kısa Süreli
+    name: Adrenalin
     desc: "Sağlık 20%'nin Altındayken +{value}% Haraket Hızı Kazan."
     info: "+{value}% Hız"
     start: "<white>Kısa süreli bir hız artışı kazandınız! <gray>(+{value}% Hız)"
@@ -212,7 +212,7 @@ abilities:
     info: "{value}% Şans,{value_2}% Hasar"
   alchemist:
     name: Simyacı
-    desc: "Hazırladığınız İksirler {value}% Daha Uzun Olur Süresi."
+    desc: "Hazırladığınız İksirler {value}% Daha Uzun Süresi Olur."
     info: "+{value}% İksir Süresi"
   brewer:
     name: İksirci
@@ -224,8 +224,8 @@ abilities:
     info: "+{value}% Süre/Oyuncu"
   lingering:
     name: Kalıcı
-    desc: "Kalıcı İksirler Doğal Olarak {value}% Azalır.& Daha Yavaş Ve Etkilenen Varlık başına {value_2}% Daha Az Azalır."
-    info: "-{value}% Doğal, -{value_2}% Varlık Çürümei"
+    desc: "Kalıcı İksirler Doğal Olarak {value}% Azalır.Daha Yavaş Ve Etkilenen Varlık başına {value_2}% Daha Az Azalır."
+    info: "-{value}% Doğal, -{value_2}% Varlık Çürümesi"
   wise_effect:
     name: Bilge Etkisi
     desc: "Her benzersiz aktif iksir etkisi için {value} Bilgelik kazanın."
@@ -233,22 +233,22 @@ abilities:
   xp_convert:
     name: XP Dönüştürme
     desc: "Kazandığınız her {value} beceri XP'si için 1 Minecraft deneyimi kazanın."
-    info: "1 EXP/ {value} yetenek XP'si"
+    info: "1 EXP/ {value} Yetenek XP'si"
   enchanter:
     name: Büyücü
-    desc: "{value}% daha fazla büyüleme XP'si kazanın."
+    desc: "{value}% daha fazla Büyücü XP'si kazanın."
     info: "{value}% XP"
   xp_warrior:
     name: XP Savaşçısı
     desc: "Öldürdüğünüz canlılar {value}% olasılıkla 2 kat Xp düşürür."
     info: "{value}% 2x Mob XP"
   enchanted_strength:
-    name: Büyülü güç
-    desc: "Sahip olunan eşya üzerindeki her benzersiz efsun için {value} Güç kazanılır."
+    name: Büyülü Güç
+    desc: "Sahip olunan eşya üzerindeki her benzersiz büyü için {value} Güç kazanılır."
     info: "{value} Büyü/Kuvvet"
   lucky_table:
     name: Şanslı Masa
-    desc: "Büyü tablosunu kullanarak büyülediğiniz öğelerin, maksimum seviye değilse büyü seviyesini 1 yükseltme şansı {value}% 'dir."
+    desc: "Büyü masasını kullanarak büyülediğiniz öğelerin, maksimum seviye değilse büyü seviyesini 1 yükseltme şansı {value}% 'dir."
     info: "{value}% Büyü Yükseltme Şansı"
   life_essence:
     name: Yaşam Özü
@@ -272,8 +272,8 @@ abilities:
     info: "+{value} Sağlık, +{value_2} Yenilenme"
     message: "<white>30 saniye boyunca bir canlanma bonusu kazandınız! <white>(<red>+{value} Sağlık, <gold>+{value_2} Yenilenme<white>)"
   disenchanter:
-    name: Büyü Bozan
-    desc: Bileme taşı kullanarak eşyaların büyüsünü & bozarken {value}% daha fazla deneyim kazanın.
+    name: Bileyici
+    desc: Bileme taşı kullanarak eşyaların büyüsünü bozarken {value}% daha fazla deneyim kazanın.
     info: "+{value}% Bileme Taşı EXP"
   forger:
     name: Demirci
@@ -293,10 +293,10 @@ abilities:
     info: "{value}% Şansı Düzelt"
 acf:
   core:
-    permission_denied: "<red>Üzgünüm, ama bu komutu yerine getirme izniniz yok."
-    permission_denied_parameter: "<red>Üzgünüm, ama bu komutu yerine getirme izniniz yok."
-    error_generic_logged: "<red>Bir hata oluştu. Bu sorun günlüğe kaydedildi. Rahatsızlıktan dolayı özür dilerim."
-    unknown_command: "<red>Bilinmeyen Komut, lütfen yazın <yellow>/sk help"
+    permission_denied: "<red>Bu komutu kullanabilmek için yetkiniz yok."
+    permission_denied_parameter: "<red>Bu komutu kullanabilmek için yetkiniz yok."
+    error_generic_logged: "<red>Bir hata oluştu. Bu sorun günlüğe kaydedildi. Rahatsızlıktan dolayı özür dileriz."
+    unknown_command: "<red>Bilinmeyen Komut, lütfen <yellow>/sk help yazınız."
     invalid_syntax: "<yellow>Kullanım: <yellow>{command} <green>{syntax}"
     error_prefix: "<red>Hata: {message}"
     error_performing_command: "<red>Üzgünüm ama bu komutu yerine getirirken bir hata oluştu."
@@ -306,7 +306,7 @@ acf:
     must_be_max_length: "<red>Hata: En fazla {max} karakter uzunluğunda olmalıdır."
     please_specify_at_most: "<red>Hata: Lütfen en fazla bir değer belirtin {max}."
     please_specify_at_least: "<red>Hata: Lütfen en azından bir değer belirtin {min}."
-    not_allowed_on_console: "<red>Hata: Konsol bu komutu yürütmeyebilir."
+    not_allowed_on_console: "<red>Hata: Konsol bu komutu yürütemez."
     could_not_find_player: "<red>Hata: İsme göre bir oyuncu bulunamadı: <yellow>{search}"
     no_command_matched_search: "<red>Hiçbir komut eşleşmedi <yellow>{search}."
     help_page_information: "<aqua> - Sayfa gösteriliyor <green>{page} <aqua> <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
@@ -626,12 +626,12 @@ mana_abilities:
     start: "<gold>Treecapitator etkinleştirildi! <gray>(-{mana} {mana_unit})"
     end: "<gray>Treecapitator etkisi geçti"
   speed_mine:
-    name: Hız Madeni
+    name: Hızlı Kazım
     desc: "{value} saniye boyunca {haste_level} Hız verir. <1>[Etkinleştirmek için kazmaya ve maden bloğuna sağ tıklayın]"
     raise: "<gray>Kazmanı hazırlıyorsun"
     lower: "<gray>Kazmanı indiriyorsun"
-    start: "<gold>Hız Madeni etkinleştirildi! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Hız Madeni etkisi geçti"
+    start: "<gold>Hızlı Kazım etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Hızlı Kazım etkisi geçti"
   absorption:
     name: Emilim
     desc: "Gelen hasar, {value} saniye boyunca sağlığınız yerine mananızı 2 kat Minecraft hasarı kadar azaltır. Absorption aktifken mana yenilenmez. <1>[Kalkana sol tıklayın ve etkinleştirmek için hasar alın]"
@@ -664,23 +664,23 @@ mana_abilities:
     start: "<gold>Yıldırım Kılıcı etkinleştirildi! <gray>(-{mana} {mana_unit})"
     end: "<gray>Yıldırım Kılıcı'nın etkisi geçti"
   not_ready: "<red>Yetenek hazır değil! <gray>({cooldown}s)"
-  not_enough_mana: "<yellow>Yeterli MANA yok! <gray>({mana} {mana_unit} required)"
+  not_enough_mana: "<yellow>Yeterli MANA yok! <gray>({mana} {mana_unit} gerekli)"
 skills:
   farming:
     name: Çiftçilik
-    desc: "Çiftçilik kazanmak için mahsulleri hasat edin {xp_unit}"
+    desc: "Çiftçilik kazanmak için mahsülleri hasat edin {xp_unit}"
   foraging:
     name: Toplayıcılık
-    desc: "Toplayıcılık kazanmak için ağaç kesmek {xp_unit}"
+    desc: "Toplayıcılık kazanmak için ağaç kesin {xp_unit}"
   mining:
     name: Madencilik
-    desc: "Madencilik kazanmak için taş ve cevher çıkarma {xp_unit}"
+    desc: "Madencilik kazanmak için madencilik yapın {xp_unit}"
   fishing:
     name: Balıkçılık
     desc: "Balıkçılık kazanmak için balık yakalayın {xp_unit}"
   excavation:
-    name: Kazı Çalışmaları
-    desc: "Kazı kazanmak için kürekle kazın {xp_unit}"
+    name: Ekskavatör
+    desc: "Ekskavatör kazanmak için kürekle kazım yapın {xp_unit}"
   archery:
     name: Okçuluk
     desc: "Okçuluk kazanmak için canavarları ve oyuncuları yay ile vurun {xp_unit}"
@@ -698,10 +698,10 @@ skills:
     desc: "Çeviklik kazanmak için etrafta dolaşın ve düşme hasarı alın {xp_unit}"
   alchemy:
     name: Simya
-    desc: "Simya kazanmak için iksirleri demleyin ve sıçratın {xp_unit}"
+    desc: "Simya kazanmak için iksirleri üretin ve kullanın {xp_unit}"
   enchanting:
     name: Büyüleyici
-    desc: "Büyüleme, birleştirme ve öğütme taşları Büyüleme kazandırır {xp_unit}"
+    desc: "Büyüleme, birleştirme ve bileme taşları Büyüleme kazandırır {xp_unit}"
   sorcery:
     name: Büyücülük
     desc: "Büyücülük kazanmak için mana yeteneklerini kullanın {xp_unit}"
@@ -713,12 +713,12 @@ skills:
     desc: "Demircilik kazanmak için kitapları bir örste birleştirin ve uygulayın {xp_unit}"
 sources:
   fishing:
-    cod: Cod
+    cod: Morina
     salmon: Somon
     tropical_fish: Tropikal Balık
     pufferfish: Kirpi Balığı
     treasure: Hazine Eşyaları
-    junk: Önemsiz Eşyalar
+    junk: Çöp Eşyalar
     rare: Nadir Ganimet
     epic: Destansı Ganimet
   damage:
@@ -726,43 +726,43 @@ sources:
     player_damage: Oyunculardan Kaynaklanan Hasar
     fall_damage: Düşme Hasarı Alma
   statistic:
-    walk_per_meter: Yürümek
-    sprint_per_meter: Sprint
+    walk_per_meter: Yürüme
+    sprint_per_meter: Koşma
     swim_per_meter: Yüzme
   jumping:
-    jump_per_100: Atlama
+    jump_per_100: Zıplama
   brewing:
-    awkward: Garip İksir Demlemek
-    regular: Düzenli İksir Demleme
-    extended: Uzatılmış Süre İksiri Demleme
-    upgraded: Yükseltilmiş İksir Demle
-    splash: Demleme Sıçrama İksiri
-    lingering: Kalıcı İksir Demle
+    awkward: Garip İksir Üret
+    regular: Sıradan İksir Üret
+    extended: Uzatılmış Süreli İksir Üret
+    upgraded: Güçlü İksir Üret
+    splash: Patlayıcı İksir Üret
+    lingering: Kalıcı İksir Üret
   enchanting:
     weapon_per_level: Silah Büyüsü
-    armor_per_level: Büyü Zırhı
-    tool_per_level: Büyü Aracı
+    armor_per_level: Zırh Büyüsü
+    tool_per_level: Eşya Büyüsü
     book_per_level: Büyü Kitabı
   mana_ability_use:
     mana_ability_use: Mana Yeteneklerini Kullanma
   item_consume:
-    drink_regular: Düzenli İksir İç
-    drink_extended: Uzatılmış Süre İksiri İç
-    drink_upgraded: Yükseltilmiş İksir İç
+    drink_regular: Sıradan İksir İç
+    drink_extended: Uzatılmış Süreli İksiri İç
+    drink_upgraded: Güçlendirilmiş İksir İç
     golden_apple: Altın Elma Tüketin
     enchanted_golden_apple: Büyülü Altın Elma Tüketin
   potion_splash:
-    splash_regular: Sıçrama Düzenli İksir
-    splash_extended: Sıçrama Uzatılmış Süre İksiri
-    splash_upgraded: Sıçrama Yükseltilmiş İksir
-    lingering_regular: Düzenli Kalıcı İksir Kullanın
+    splash_regular: Patlayıcı Sıradan İksir
+    splash_extended: Patlayıcı Uzun Süreli İksir
+    splash_upgraded: Patlayıcı Güçlendirilmiş İksir
+    lingering_regular: Sıradan Kalıcı İksir Kullan
     lingering_extended: Uzun Süreli Oyalanma İksiri Kullan
-    lingering_upgraded: Yükseltilmiş Kalıcı İksir Kullan
+    lingering_upgraded: Güçlendirilmiş Kalıcı İksir Kullan
   anvil:
     combine_books_per_level: Büyülü Kitapları Birleştirin
     combine_weapon_per_level: Silahı Kitapla Birleştirin
     combine_armor_per_level: Zırhı Kitapla Birleştirin
-    combine_tool_per_level: Aracı Kitapla Birleştirin
+    combine_tool_per_level: Araçları Kitapla Birleştirin
   grindstone:
     grindstone_per_level: Öğütme Taşı ile Büyü Bozma
   units:
@@ -807,17 +807,17 @@ traits:
   hp:
     name: HP
   saturation_regen:
-    name: Doygunluk Yenileme
+    name: Doygunluk Yenilemesi
   hunger_regen:
     name: Açlık Yenilemesi
   mana_regen:
-    name: Mana Yenilemes
+    name: Mana Yenilemesi
   luck:
     name: Şans Özelliği
   double_drop:
     name: Çift Düşüş
   experience_bonus:
-    name: Deneyim Bonusu
+    name: XP Bonusu
   anvil_discount:
     name: Örs İndirimi
   max_mana:
@@ -833,7 +833,7 @@ traits:
   farming_luck:
     name: Çiftçilik Şansı
   foraging_luck:
-    name: Yem Bulma Şansı
+    name: Toplayıcılık Şansı
   mining_luck:
     name: Madencilik Şansı
   excavation_luck:
