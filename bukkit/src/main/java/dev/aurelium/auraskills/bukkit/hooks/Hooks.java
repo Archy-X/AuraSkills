@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
+import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.MythicMobsHook;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.LuckPermsHook;
 
@@ -13,7 +14,8 @@ public enum Hooks {
     SLIMEFUN(SlimefunHook.class, "Slimefun"),
     TOWNY(TownyHook.class, "Towny"),
     VAULT(VaultHook.class, "Vault"),
-    WORLD_GUARD(WorldGuardHook.class, "WorldGuard");
+    WORLD_GUARD(WorldGuardHook.class, "WorldGuard"),
+    MYTHIC_MOBS(MythicMobsHook.class, "MythicMobs");
 
     private final Class<? extends Hook> hookClass;
     private final String pluginName;

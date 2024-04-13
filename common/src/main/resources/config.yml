@@ -44,6 +44,10 @@ hooks:
       - 'Example'
     blocked_check_replace_regions:
       - 'Example'
+  MythicMobs:
+    enabled: true
+    handle-fighting-abilities: true
+    handle-damage-reduction: true
 action_bar:
   enabled: true
   idle: true
