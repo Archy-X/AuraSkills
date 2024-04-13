@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Lider tablosu zaten güncelleniyor!"
     updated: "<green>Lider tablosu güncellendi!"
-  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>Kullandığın AuraSkills sürümü <aqua>{current_version}<white>. Son sürüm <aqua>{latest_version}"
   xp:
     add: "<gray>Oyuncuya <aqua>{amount} {skill} <gray>XP eklendi <gray>{player}"
     set: "<gray>Oyuncu <gray>{player} için <aqua>{skill} <gray>XP ayarlayın <gray> {amount}"
