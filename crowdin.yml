@@ -1,4 +1,7 @@
-commit_message: 'Crowdin: Update %language% messages [ci skip]'
+commit_message: |-
+  Crowdin: Update %language% messages
+  
+  [ci skip]
 append_commit_message: false
 preserve_hierarchy: true
 export_languages:
