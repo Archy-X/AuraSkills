@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Leaderboard вже оновлено!"
     updated: "<green>Дошку Лідера оновлено!"
-  version: "<white>Ви знаходитесь на версії з навичками Aurelium <aqua>{current_version}<white>. Остання версія <aqua>{latest_version}"
+  version: "<white>Ви знаходитесь на версії з навичками AuraSkills <aqua>{current_version}<white>. Остання версія <aqua>{latest_version}"
   xp:
     add: "<gray> Додано <aqua>{amount} {skill} <gray>ХРдля гравця <gray>{player}"
     set: "<gray>Set <aqua>{skill} <gray>XP для гравця <gray>{player} <gray>to {amount}"

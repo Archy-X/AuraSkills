@@ -106,7 +106,7 @@ abilities:
   retrieval:
     name: Retrieval
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    info: "{value} Afstand"
   archer:
     name: Boogschutter
     desc: "Verdien {value}% meer Boogschutters XP."
@@ -437,7 +437,7 @@ commands:
     set: "<gray>Taal ingesteld op <aqua>{lang}"
     not_found: "<yellow>Taal niet gevonden!"
   mana:
-    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display: "<white>Jouw {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} van {player}: <aqua>{current}/{max}"
     add: "<gray>Toegevoegd <aqua>{amount} {mana_unit} <gray>aan speler <gold>{player}"
     remove: "<gray>Verwijderd <aqua>{amount} {mana_unit} <gray>van speler <gold>{player}"

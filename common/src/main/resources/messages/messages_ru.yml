@@ -348,7 +348,7 @@ commands:
         skill_lore: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         global_lore: "<gray>Когда надето: <blue>+{value}% опыта"
-        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+        global_lore_subtract: "<gray>Когда надето: <blue>-{value}% опыта"
       remove:
         does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
@@ -405,7 +405,7 @@ commands:
         skill_lore: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         global_lore: "<gray>Когда в руке: <blue>+{value}% опыта"
-        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
+        global_lore_subtract: "<gray>Когда надето: <blue>-{value}% опыта умения"
       remove:
         does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
@@ -468,8 +468,8 @@ commands:
     players_only: "<yellow>Только игроки могут указывать свой множитель! Укажите игрока!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
+      confirm: "<red>Загрузка пресета переопределит ваши файлы настроек! На следующие файлы будут затронуты <gray>(<aqua>Добавлено<gray>, <yellow>Объединены<gray>, <red>Заменены<gray>, <dark_red>Удалено<gray>): {entries} <red>Это действие не может быть отменено, необходимо резервное копирование файлов вручную. Введите команду еще раз для подтверждения."
+      loaded: Предустановка {name} успешно загружена, перезапустите сервер сейчас.
       created: Созданные файлы
       modified: Измененные файлы
       replaced: Заменённые файлы
@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Таблица лидеров уже обновляется!"
     updated: "<green>Таблица лидеров обновлена!"
-  version: "<white>Вы используете версию Aurelium Skills <aqua>{current_version}<white>. Последняя версия <aqua>{latest_version}"
+  version: "<white>Вы используете версию AuraSkills <aqua>{current_version}<white>. Последняя версия <aqua>{latest_version}"
   xp:
     add: "<gray>Добавлены <aqua>{amount} {skill} <gray>XP игроку <gray>{player}"
     set: "<gray>Установить <aqua>{skill} <gray>XP для игрока <gray>{player} <gray>на {amount}"
@@ -529,7 +529,7 @@ leveler:
   ability_level_up: Способность повышена
   mana_ability_unlock: Мана способность разблокирована
   mana_ability_level_up: Уровень мана способности повышен
-  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  unclaimed_item: "<red>У вас есть не собранные предметы, потому что ваш инвентарь был заполнен, используйте <yellow>/skills claimitems <red>для их получения"
 menus:
   common:
     close: "Закрыть"

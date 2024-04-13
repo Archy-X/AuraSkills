@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>排行榜正在更新!"
     updated: "<green>排行榜更新成功!"
-  version: "您正在使用 Aurelium Skills版本 <aqua>{current_version}<white>. 最新版本是 <aqua>{latest_version}"
+  version: "您正在使用 AuraSkills版本 <aqua>{current_version}<white>. 最新版本是 <aqua>{latest_version}"
   xp:
     add: "<gray>成功为玩家 <gold>{player} <gray>添加了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
     set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"

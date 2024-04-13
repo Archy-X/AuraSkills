@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>O Placar de Liderança está atualizando!"
     updated: "<green>Classificação atualizada!"
-  version: "<white>Você está usando Aurelium Skills na versão <aqua>{current_version}<white>. A última versão é <aqua>{latest_version}"
+  version: "<white>Você está usando AuraSkills na versão <aqua>{current_version}<white>. A última versão é <aqua>{latest_version}"
   xp:
     add: "<gray>Adicionado <aqua>{amount} {skill} <gray>XP ao jogador <gray>{player}"
     set: "<gray>Definido <aqua>{skill} <gray>XP do jogador <gray>{player} <gray>para {amount}"

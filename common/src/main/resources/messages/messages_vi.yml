@@ -513,7 +513,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Bảng xếp hạng đã đang được cập nhật!"
     updated: "<green>Đã cập nhật bảng xếp hạng!"
-  version: "<white>Bạn đang dùng Aurelium Skills phiên bản <aqua>{current_version}<white>. Phiên bản mới nhất là <aqua>{latest_version}"
+  version: "<white>Bạn đang dùng AuraSkills phiên bản <aqua>{current_version}<white>. Phiên bản mới nhất là <aqua>{latest_version}"
   xp:
     add: "<gray>Đã thêm <aqua>{amount} XP {skill}<gray> cho <gray>{player}"
     set: "<gray> Đã đặt XP <aqua>{skill} <gray>cho người chơi <gray>{player} <gray>thành {amount}"
