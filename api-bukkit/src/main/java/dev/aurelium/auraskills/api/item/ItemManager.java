@@ -116,4 +116,15 @@ public interface ItemManager {
      */
     ItemStack removeRequirement(ItemStack item, ModifierType type, Skill skill);
 
+    /**
+     * Test whether a given ItemStack passes a source {@link ItemFilter}.
+     * Used to implement the leveler of a {@link dev.aurelium.auraskills.api.source.CustomSource} with an
+     * {@link ItemFilter} field.
+     *
+     * @param item the item to test
+     * @param filter the filter to test with
+     * @return whether the item passes the filter
+     */
+    boolean passesFilter(ItemStack item, ItemFilter filter);
+
 }

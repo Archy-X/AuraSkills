@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Multiplier;
@@ -87,5 +88,10 @@ public class ApiItemManager implements ItemManager {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         skillsItem.removeRequirement(type, skill);
         return skillsItem.getItem();
+    }
+
+    @Override
+    public boolean passesFilter(ItemStack item, ItemFilter filter) {
+        return plugin.getItemRegistry().passesFilter(item, filter);
     }
 }
