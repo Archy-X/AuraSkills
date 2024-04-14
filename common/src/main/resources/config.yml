@@ -46,8 +46,8 @@ hooks:
       - 'Example'
   MythicMobs:
     enabled: true
-    handle-fighting-abilities: true
-    handle-damage-reduction: true
+    handle_fighting_abilities: true
+    handle_damage_reduction: true
 action_bar:
   enabled: true
   idle: true
