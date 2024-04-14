@@ -25,6 +25,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.function.Function;
+
 public class DamageListener implements Listener {
 
     private final AuraSkills plugin;
@@ -67,40 +69,10 @@ public class DamageListener implements Listener {
 
         DamageType damageType = getDamageType(event, player);
 
-        double additive = 0.0;
-        // Applies attack damage trait
-        var attackDamage = plugin.getTraitManager().getTraitImpl(AttackDamageTrait.class);
-        DamageModifier strengthMod = attackDamage.strength(user, damageType);
-        additive += applyModifier(event, strengthMod);
+        // Applies the attack damage trait and all tool/weapon master abilities
+        double additive = applyAttackDamageAndMaster(plugin, user, player, damageType, mod -> applyModifier(event, mod));
 
-        // Apply master abilities
         var abManager = plugin.getAbilityManager();
-        switch (damageType) {
-            case SWORD -> {
-                DamageModifier mod = abManager.getAbilityImpl(FightingAbilities.class).swordMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-            case BOW -> {
-                DamageModifier mod = abManager.getAbilityImpl(ArcheryAbilities.class).bowMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-            case HOE -> {
-                DamageModifier mod = abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-            case AXE -> {
-                DamageModifier mod = abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-            case PICKAXE -> {
-                DamageModifier mod = abManager.getAbilityImpl(MiningAbilities.class).pickMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-            case SHOVEL -> {
-                DamageModifier mod = abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(player, user);
-                additive += applyModifier(event, mod);
-            }
-        }
 
         // Apply First Strike
         if (damageType == DamageType.SWORD) {
@@ -191,6 +163,44 @@ public class DamageListener implements Listener {
             }
         }
         return player;
+    }
+
+    public double applyAttackDamageAndMaster(AuraSkills plugin, User user, Player player, DamageType damageType, Function<DamageModifier, Double> applier) {
+        double additive = 0.0;
+        // Applies attack damage trait
+        var attackDamage = plugin.getTraitManager().getTraitImpl(AttackDamageTrait.class);
+        DamageModifier strengthMod = attackDamage.strength(user, damageType);
+        additive += applier.apply(strengthMod);
+
+        // Apply master abilities
+        var abManager = plugin.getAbilityManager();
+        switch (damageType) {
+            case SWORD -> {
+                DamageModifier mod = abManager.getAbilityImpl(FightingAbilities.class).swordMaster(player, user);
+                additive += applier.apply(mod);
+            }
+            case BOW -> {
+                DamageModifier mod = abManager.getAbilityImpl(ArcheryAbilities.class).bowMaster(player, user);
+                additive += applier.apply(mod);
+            }
+            case HOE -> {
+                DamageModifier mod = abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(player, user);
+                additive += applier.apply(mod);
+            }
+            case AXE -> {
+                DamageModifier mod = abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(player, user);
+                additive += applier.apply(mod);
+            }
+            case PICKAXE -> {
+                DamageModifier mod = abManager.getAbilityImpl(MiningAbilities.class).pickMaster(player, user);
+                additive += applier.apply(mod);
+            }
+            case SHOVEL -> {
+                DamageModifier mod = abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(player, user);
+                additive += applier.apply(mod);
+            }
+        }
+        return additive;
     }
 
     // Returns the value if ADD_COMBINED

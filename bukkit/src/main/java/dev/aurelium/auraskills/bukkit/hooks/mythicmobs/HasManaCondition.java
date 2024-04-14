@@ -9,6 +9,7 @@ import io.lumine.mythic.core.utils.annotations.MythicCondition;
 
 @MythicCondition(name = "hasMana")
 public class HasManaCondition implements ICasterCondition {
+
     private final AuraSkills plugin;
     private final double requiredMana;
 

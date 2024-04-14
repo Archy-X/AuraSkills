@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 
 @MythicMechanic(name = "giveSkillXP")
 public class GiveSkillXpMechanic implements ITargetedEntitySkill {
+
     private final AuraSkills plugin;
     private final PlaceholderDouble xp;
     private final Skill skill;
@@ -35,7 +36,6 @@ public class GiveSkillXpMechanic implements ITargetedEntitySkill {
 
         Bukkit.getScheduler().runTask(plugin,
                 () -> plugin.getLevelManager().addXp(user, skill, null, xp.get(data)));
-
 
         return SkillResult.SUCCESS;
     }
