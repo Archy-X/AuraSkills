@@ -11,6 +11,7 @@ import io.lumine.mythic.api.skills.placeholders.PlaceholderDouble;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.events.MythicMechanicLoadEvent;
 import io.lumine.mythic.core.utils.annotations.MythicMechanic;
+import org.bukkit.Bukkit;
 
 @MythicMechanic(name = "giveSkillXP")
 public class GiveSkillXpMechanic implements ITargetedEntitySkill {
@@ -32,7 +33,9 @@ public class GiveSkillXpMechanic implements ITargetedEntitySkill {
         var player = BukkitAdapter.adapt(target.asPlayer());
         var user = plugin.getUser(player);
 
-        plugin.getLevelManager().addXp(user, skill, null, xp.get(data));
+        Bukkit.getScheduler().runTask(plugin,
+                () -> plugin.getLevelManager().addXp(user, skill, null, xp.get(data)));
+
 
         return SkillResult.SUCCESS;
     }
