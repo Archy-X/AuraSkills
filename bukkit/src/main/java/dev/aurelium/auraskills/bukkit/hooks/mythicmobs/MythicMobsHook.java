@@ -18,6 +18,7 @@ import dev.aurelium.auraskills.common.modifier.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.mechanics.DamageType;
 import io.lumine.mythic.bukkit.BukkitAdapter;
+import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.bukkit.events.MythicConditionLoadEvent;
 import io.lumine.mythic.bukkit.events.MythicDamageEvent;
 import io.lumine.mythic.bukkit.events.MythicMechanicLoadEvent;
@@ -151,6 +152,11 @@ public class MythicMobsHook extends Hook implements Listener {
                 event.setDamage(fakeEvent.getDamage());
             }
         }
+    }
+
+    public boolean shouldPreventEntityXp(Entity entity) {
+        if(!getConfig().node("prevent_regular_xp").getBoolean()) return false;
+        return MythicBukkit.inst().getMobManager().isMythicMob(entity);
     }
 
     @EventHandler

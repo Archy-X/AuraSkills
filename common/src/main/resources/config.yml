@@ -48,6 +48,7 @@ hooks:
     enabled: true
     handle_fighting_abilities: true
     handle_damage_reduction: true
+    prevent_regular_xp: false
 action_bar:
   enabled: true
   idle: true
