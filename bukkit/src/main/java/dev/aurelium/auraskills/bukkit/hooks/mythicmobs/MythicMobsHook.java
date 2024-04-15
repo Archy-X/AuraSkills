@@ -64,10 +64,10 @@ public class MythicMobsHook extends Hook implements Listener {
                 BukkitAdapter.adapt(attacker), BukkitAdapter.adapt(target), getDamageType(attacker),
                 event.getDamageMetadata().getDamageCause(), event.getDamage(), "mythicmobs");
 
-        if (result.second()) {
+        if (result.cancel()) {
             event.setCancelled(true);
         } else {
-            event.setDamage(result.first());
+            event.setDamage(result.damage());
         }
     }
 

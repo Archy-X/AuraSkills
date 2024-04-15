@@ -24,7 +24,7 @@ public class DamageHandler {
         this.criticalHandler = new CriticalHandler(plugin);
     }
 
-    public Pair<Double, Boolean> handleDamage(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, double damage, String source) {
+    public DamageResult handleDamage(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, double damage, String source) {
         var damageMeta = new DamageMeta(attacker, target, damageType, damageCause, damage, source);
         var additive = 0.0D;
 
@@ -32,7 +32,7 @@ public class DamageHandler {
         Bukkit.getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
-            return new Pair<>(damage, true);
+            return new DamageResult(damage, true);
         }
 
         for (var modifier : damageMeta.getAttackModifiers()) {
@@ -53,7 +53,7 @@ public class DamageHandler {
 
         var finalDamage = damageMeta.getDamage() * (1 + additive);
 
-        return new Pair<>(finalDamage, false);
+        return new DamageResult(finalDamage, false);
     }
 
 

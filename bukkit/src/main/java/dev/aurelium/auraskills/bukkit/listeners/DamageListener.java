@@ -56,10 +56,10 @@ public class DamageListener implements Listener {
                 event.getDamager(), event.getEntity(), getDamageType(event, player),
                 event.getCause(), event.getDamage(), "vanilla");
 
-        if (result.second()) {
+        if (result.cancel()) {
             event.setCancelled(true);
         } else {
-            event.setDamage(result.first());
+            event.setDamage(result.damage());
         }
     }
 
