@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.skills.archery;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -52,11 +53,11 @@ public class ArcheryAbilities extends AbilityImpl {
 
     @EventHandler(ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
-        var meta = event.getDamageMeta();
-        var attacker = meta.getAttackerAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player attacker = meta.getAttackerAsPlayer();
 
         if (attacker != null) {
-            var user = plugin.getUser(attacker);
+            User user = plugin.getUser(attacker);
             if (meta.getDamageType() == DamageType.BOW) {
                 meta.addAttackModifier(bowMaster(attacker, user));
             }

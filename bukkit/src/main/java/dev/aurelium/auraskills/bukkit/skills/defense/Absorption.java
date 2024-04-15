@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.defense;
 
 import dev.aurelium.auraskills.api.damage.DamageMeta;
-import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -15,7 +14,6 @@ import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Absorption extends ReadiedManaAbility {
 
@@ -47,13 +45,11 @@ public class Absorption extends ReadiedManaAbility {
 
     @EventHandler(ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
-        // TODO: shouldn't this trigger with the final damage?
-        // right know the order and execution are the same as it was before
-        var meta = event.getDamageMeta();
-        var target = meta.getTargetAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player target = meta.getTargetAsPlayer();
 
         if (target != null) {
-            var user = plugin.getUser(target);
+            User user = plugin.getUser(target);
 
             if (user.getAbilityData(manaAbility).getBoolean("activated") && isActivated(user)) {
                 handleAbsorbedHit(event, target, user);

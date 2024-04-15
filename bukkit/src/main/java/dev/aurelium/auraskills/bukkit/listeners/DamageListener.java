@@ -19,7 +19,7 @@ public class DamageListener implements Listener {
 
     public DamageListener(AuraSkills plugin) {
         this.plugin = plugin;
-        this.damageHandler = new DamageHandler(plugin);
+        this.damageHandler = new DamageHandler();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -47,7 +47,7 @@ public class DamageListener implements Listener {
             if (target.hasMetadata("NPC")) return;
         }
 
-        if(player == null && !(event.getEntity() instanceof Player)) {
+        if (player == null && !(event.getEntity() instanceof Player)) {
             // We have nothing to do here
             return;
         }

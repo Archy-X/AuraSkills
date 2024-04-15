@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.archery;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -139,8 +140,8 @@ public class ChargedShot extends ManaAbilityProvider {
 
     @EventHandler(ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
-        var meta = event.getDamageMeta();
-        var attacker = meta.getAttackerAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player attacker = meta.getAttackerAsPlayer();
 
         if (attacker != null && meta.getDamageType() == DamageType.BOW) {
             meta.addAttackModifier(applyChargedShot(attacker));

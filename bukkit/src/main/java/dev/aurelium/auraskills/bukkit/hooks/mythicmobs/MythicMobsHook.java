@@ -13,6 +13,7 @@ import io.lumine.mythic.bukkit.events.MythicDamageEvent;
 import io.lumine.mythic.bukkit.events.MythicMechanicLoadEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class MythicMobsHook extends Hook implements Listener {
     public MythicMobsHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
         this.plugin = plugin;
-        this.damageHandler = new DamageHandler(plugin);
+        this.damageHandler = new DamageHandler();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -39,12 +40,12 @@ public class MythicMobsHook extends Hook implements Listener {
             return;
         }
 
-        var attacker = event.getCaster().getEntity();
-        var target = event.getTarget();
+        AbstractEntity attacker = event.getCaster().getEntity();
+        AbstractEntity target = event.getTarget();
 
 
         if (attacker.isPlayer()) {
-            var player = BukkitAdapter.adapt(attacker.asPlayer());
+            Player player = BukkitAdapter.adapt(attacker.asPlayer());
             if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                 return;
             }
@@ -53,7 +54,7 @@ public class MythicMobsHook extends Hook implements Listener {
         }
 
         if (target.isPlayer()) {
-            var player = BukkitAdapter.adapt(target.asPlayer());
+            Player player = BukkitAdapter.adapt(target.asPlayer());
             if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                 return;
             }

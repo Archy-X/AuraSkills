@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api.damage;
 
 public class DamageModifier {
+
     private final double value;
     private final Operation operation;
 

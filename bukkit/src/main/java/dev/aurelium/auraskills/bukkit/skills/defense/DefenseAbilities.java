@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.bukkit.skills.defense;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
-import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
@@ -39,8 +38,6 @@ public class DefenseAbilities extends AbilityImpl {
 
         double damageReduction = 1 - (getValue(ability, user) / 100);
 
-        // meta.setDamage(meta.getDamage() * damageReduction);
-        // TODO: ask Archy if this is okay instead of the above one
         return new DamageModifier(damageReduction - 1, DamageModifier.Operation.MULTIPLY);
     }
 
@@ -57,8 +54,6 @@ public class DefenseAbilities extends AbilityImpl {
 
             double damageReduction = 1 - (getValue(ability, user) / 100);
 
-            // event.setDamage(event.getDamage() * damageReduction);
-            // TODO: ask Archy if this is okay instead of the above one
             return new DamageModifier(damageReduction - 1, DamageModifier.Operation.MULTIPLY);
         }
 
@@ -121,9 +116,7 @@ public class DefenseAbilities extends AbilityImpl {
         if (item.getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
             double chance = getValue(ability, user) / 100;
             if (rand.nextDouble() < chance) {
-                plugin.getScheduler().scheduleSync(() -> {
-                    player.setFireTicks(0);
-                }, 50, TimeUnit.MILLISECONDS);
+                plugin.getScheduler().scheduleSync(() -> player.setFireTicks(0), 50, TimeUnit.MILLISECONDS);
             }
         }
     }

@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.hooks.mythicmobs;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.user.User;
 import io.lumine.mythic.api.adapters.AbstractEntity;
 import io.lumine.mythic.api.skills.ITargetedEntitySkill;
 import io.lumine.mythic.api.skills.SkillMetadata;
@@ -24,7 +25,7 @@ public class TakeManaMechanic implements ITargetedEntitySkill {
     public SkillResult castAtEntity(SkillMetadata data, AbstractEntity target) {
         if (!data.getCaster().getEntity().isPlayer()) return SkillResult.CONDITION_FAILED;
 
-        var user = plugin.getUser(BukkitAdapter.adapt(data.getCaster().getEntity().asPlayer()));
+        User user = plugin.getUser(BukkitAdapter.adapt(data.getCaster().getEntity().asPlayer()));
 
         if (user.getMana() < manaToTake) return SkillResult.CONDITION_FAILED;
 

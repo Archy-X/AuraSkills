@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Traits;
@@ -24,11 +25,11 @@ public class CriticalHandler implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
-        var meta = event.getDamageMeta();
-        var attacker = meta.getAttackerAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player attacker = meta.getAttackerAsPlayer();
 
         if (attacker != null) {
-            var user = plugin.getUser(attacker);
+            User user = plugin.getUser(attacker);
             if (meta.getDamageType() == DamageType.BOW) {
                 meta.addAttackModifier(getCrit(attacker, user));
             }

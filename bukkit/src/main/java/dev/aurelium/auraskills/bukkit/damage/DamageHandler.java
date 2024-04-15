@@ -1,26 +1,19 @@
 package dev.aurelium.auraskills.bukkit.damage;
 
 import dev.aurelium.auraskills.api.damage.DamageMeta;
-import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
-
 public class DamageHandler {
-    private final AuraSkills plugin;
-
-    public DamageHandler(AuraSkills plugin) {
-        this.plugin = plugin;
-    }
 
     public DamageResult handleDamage(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, double damage, String source) {
         var damageMeta = new DamageMeta(attacker, target, damageType, damageCause, damage, source);
-        var additive = 0.0D;
+        double additive = 0.0;
 
         var event = new DamageEvent(damageMeta);
         Bukkit.getPluginManager().callEvent(event);
@@ -29,19 +22,18 @@ public class DamageHandler {
             return new DamageResult(damage, true);
         }
 
-        for (var modifier : damageMeta.getAttackModifiers()) {
+        for (DamageModifier modifier : damageMeta.getAttackModifiers()) {
             additive += applyModifier(damageMeta, modifier);
         }
 
-        for (var modifier : damageMeta.getDefenseModifiers()) {
+        for (DamageModifier modifier : damageMeta.getDefenseModifiers()) {
             additive += applyModifier(damageMeta, modifier);
         }
 
-        var finalDamage = damageMeta.getDamage() * (1 + additive);
+        double finalDamage = damageMeta.getDamage() * (1 + additive);
 
         return new DamageResult(finalDamage, false);
     }
-
 
     private double applyModifier(DamageMeta damageMeta, DamageModifier modifier) {
         switch (modifier.operation()) {
