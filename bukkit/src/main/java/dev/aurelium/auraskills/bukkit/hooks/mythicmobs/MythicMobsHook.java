@@ -88,9 +88,8 @@ public class MythicMobsHook extends Hook implements Listener {
 
     public boolean shouldPreventEntityXp(Entity entity) {
         if (!getConfig().node("prevent_regular_xp").getBoolean()) return false;
-        try (MythicBukkit mythicBukkit = MythicBukkit.inst()) {
-            return mythicBukkit.getMobManager().isMythicMob(entity);
-        }
+        // Do not care about that this is terminable... It's a lie in this context
+        return MythicBukkit.inst().getMobManager().isMythicMob(entity);
     }
 
     @EventHandler
