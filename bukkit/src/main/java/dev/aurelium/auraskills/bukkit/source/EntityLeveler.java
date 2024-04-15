@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.SkillSource;
+import dev.aurelium.auraskills.api.source.type.DamageXpSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityDamagers;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
@@ -22,6 +23,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -47,11 +49,14 @@ public class EntityLeveler extends SourceLeveler {
         Player player = entity.getKiller();
         // Ensure that the killer is an entity
         Entity damagerEntity;
+        DamageCause damageCause;
         if (entity.getLastDamageCause() instanceof EntityDamageByEntityEvent damageEvent) {
             damagerEntity = damageEvent.getDamager();
+            damageCause = damageEvent.getCause();
         } else {
             player = getBleedDamager(entity);
             damagerEntity = player;
+            damageCause = DamageCause.CUSTOM;
         }
         if (player == null) return;
 
@@ -67,7 +72,7 @@ public class EntityLeveler extends SourceLeveler {
             return;
         }
 
-        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
+        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH, damageCause);
         if (skillSource == null) return;
 
         EntityXpSource source = skillSource.source();
@@ -95,7 +100,7 @@ public class EntityLeveler extends SourceLeveler {
         EntityXpSource.EntityDamagers damager = damagerPair.second();
 
         // Get matching source with damage trigger
-        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
+        SkillSource<EntityXpSource> skillSource = getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE, event.getCause());
         if (skillSource == null) return;
 
         EntityXpSource source = skillSource.source();
@@ -121,7 +126,7 @@ public class EntityLeveler extends SourceLeveler {
         if (player.hasMetadata("NPC")) return;
 
         User user = plugin.getUser(player);
-        SkillSource<EntityXpSource> skillSource = getSource(entity, EntityDamagers.PLAYER, EntityTriggers.DAMAGE);
+        SkillSource<EntityXpSource> skillSource = getSource(entity, EntityDamagers.PLAYER, EntityTriggers.DAMAGE, DamageCause.CUSTOM);
         if (skillSource == null) return;
 
         EntityXpSource source = skillSource.source();
@@ -157,7 +162,7 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @Nullable
-    public SkillSource<EntityXpSource> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger) {
+    public SkillSource<EntityXpSource> getSource(LivingEntity entity, EntityXpSource.EntityDamagers eventDamager, EntityXpSource.EntityTriggers trigger, DamageCause damageCause) {
         var sources = plugin.getSkillManager().getSourcesOfType(EntityXpSource.class);
         sources = filterByTrigger(sources, trigger);
 
@@ -168,6 +173,35 @@ public class EntityLeveler extends SourceLeveler {
             String entityName = plugin.getPlatformUtil().convertEntityName(source.getEntity().toLowerCase(Locale.ROOT));
             if (!entityName.toUpperCase(Locale.ROOT).equals(entity.getType().toString())) {
                 continue;
+            }
+
+            // Check if causes match
+            DamageXpSource.DamageCause[] causes = source.getCauses();
+            if (causes != null) {
+                boolean matchingCause = false;
+                for (DamageXpSource.DamageCause cause : causes) {
+                    if (cause.toString().equals(damageCause.toString())) {
+                        matchingCause = true;
+                        break;
+                    }
+                }
+                if (!matchingCause) {
+                    continue;
+                }
+            }
+            // Check excluded causes
+            DamageXpSource.DamageCause[] excludedCauses = source.getExcludedCauses();
+            if (excludedCauses != null) {
+                boolean matchingCause = false;
+                for (DamageXpSource.DamageCause cause : excludedCauses) {
+                    if (cause.toString().equals(damageCause.toString())) {
+                        matchingCause = true;
+                        break;
+                    }
+                }
+                if (matchingCause) {
+                    continue;
+                }
             }
 
             // Give Alchemy XP if potion is thrown with option give_xp_on_potion_combat

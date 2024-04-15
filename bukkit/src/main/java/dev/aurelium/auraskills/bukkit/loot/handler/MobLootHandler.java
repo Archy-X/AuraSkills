@@ -21,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,10 +53,12 @@ public class MobLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootTableManager().getLootTable(NamespacedId.fromDefault("mob"));
         if (table == null) return;
 
+        DamageCause damageCause = getCause(event.getEntity().getLastDamageCause());
+
         EntityLeveler leveler = plugin.getLevelManager().getLeveler(EntityLeveler.class);
-        var skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH);
+        var skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DEATH, damageCause);
         if (skillSource == null) { // Check if the entity source is using damage trigger instead
-            skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE);
+            skillSource = leveler.getSource(entity, damager, EntityXpSource.EntityTriggers.DAMAGE, damageCause);
         }
 
         Skill skill = Skills.FIGHTING;
@@ -124,6 +127,13 @@ public class MobLootHandler extends LootHandler implements Listener {
             }
         }
         return null;
+    }
+
+    private DamageCause getCause(EntityDamageEvent event) {
+        if (event instanceof EntityDamageByEntityEvent entityEvent) {
+            return entityEvent.getCause();
+        }
+        return DamageCause.CUSTOM;
     }
 
 }

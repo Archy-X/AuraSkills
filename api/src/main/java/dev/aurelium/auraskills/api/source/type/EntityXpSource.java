@@ -1,7 +1,9 @@
 package dev.aurelium.auraskills.api.source.type;
 
 import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface EntityXpSource extends XpSource {
 
@@ -35,6 +37,22 @@ public interface EntityXpSource extends XpSource {
      * @return whether to scale XP by health
      */
     boolean scaleXpWithHealth();
+
+    /**
+     * Gets the valid damage causes of the source.
+     *
+     * @return The damage causes. If there are no damage causes set (all damage causes valid), it will return null.
+     */
+    @Nullable
+    DamageCause[] getCauses();
+
+    /**
+     * Gets the excluded damage causes of the source.
+     *
+     * @return The excluded damage causes, or null if there are none set.
+     */
+    @Nullable
+    DamageCause[] getExcludedCauses();
 
     enum EntityDamagers {
 
