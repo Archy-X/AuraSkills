@@ -32,11 +32,7 @@ public class DamageMeta {
         this.source = source;
     }
 
-    public void setDamage(double damage) {
-        this.damage = damage;
-    }
-
-    public double getDamage() {
+    public double getBaseDamage() {
         return damage;
     }
 

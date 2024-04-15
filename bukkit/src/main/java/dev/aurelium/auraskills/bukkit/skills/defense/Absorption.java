@@ -13,6 +13,7 @@ import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 
 public class Absorption extends ReadiedManaAbility {
@@ -43,7 +44,7 @@ public class Absorption extends ReadiedManaAbility {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
         DamageMeta meta = event.getDamageMeta();
         Player target = meta.getTargetAsPlayer();
@@ -61,7 +62,7 @@ public class Absorption extends ReadiedManaAbility {
 
     private void handleAbsorbedHit(DamageEvent event, Player player, User user) {
         // Decrease mana and cancel event
-        double mana = user.getMana() - event.getDamageMeta().getDamage() * 2;
+        double mana = user.getMana() - event.getModifiedAttackDamage() * 2;
         if (mana <= 0) {
             return;
         }
