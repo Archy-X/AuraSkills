@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
@@ -28,11 +29,11 @@ public class AttackDamageTrait extends TraitImpl {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
         // LOW to make sure it runs before ability modifiers
-        var meta = event.getDamageMeta();
-        var player = meta.getAttackerAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player player = meta.getAttackerAsPlayer();
 
         if (player != null) {
-            var user = plugin.getUser(player);
+            User user = plugin.getUser(player);
             Trait trait = Traits.ATTACK_DAMAGE;
             if (!trait.isEnabled()) return;
 

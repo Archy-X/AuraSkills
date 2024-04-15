@@ -7,7 +7,6 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityDamagers;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.hooks.Hooks;
 import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.MythicMobsHook;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
 import dev.aurelium.auraskills.common.config.Option;
@@ -29,7 +28,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class EntityLeveler extends SourceLeveler {
 
@@ -45,11 +47,7 @@ public class EntityLeveler extends SourceLeveler {
         if (disabled()) return;
         LivingEntity entity = event.getEntity();
 
-        if(plugin.getHookManager().isRegistered(MythicMobsHook.class)) {
-            if(plugin.getHookManager().getHook(MythicMobsHook.class).shouldPreventEntityXp(entity)) {
-                return;
-            }
-        }
+        if (preventMythicXp(entity)) return;
 
         // Ensure that the entity has a killer
         @Nullable
@@ -95,11 +93,7 @@ public class EntityLeveler extends SourceLeveler {
             return;
         }
 
-        if(plugin.getHookManager().isRegistered(MythicMobsHook.class)) {
-            if(plugin.getHookManager().getHook(MythicMobsHook.class).shouldPreventEntityXp(entity)) {
-                return;
-            }
-        }
+        if (preventMythicXp(entity)) return;
 
         // Get the player who damaged the entity and the damager type
         Pair<Player, EntityXpSource.EntityDamagers> damagerPair = resolveDamager(event.getDamager(), event.getCause());
@@ -131,11 +125,7 @@ public class EntityLeveler extends SourceLeveler {
             return;
         }
 
-        if(plugin.getHookManager().isRegistered(MythicMobsHook.class)) {
-            if(plugin.getHookManager().getHook(MythicMobsHook.class).shouldPreventEntityXp(entity)) {
-                return;
-            }
-        }
+        if (preventMythicXp(entity)) return;
 
         Player player = getBleedDamager(entity);
         if (player == null) return; // Was not damaged by Bleed
@@ -205,6 +195,13 @@ public class EntityLeveler extends SourceLeveler {
             }
         }
         return null;
+    }
+
+    private boolean preventMythicXp(LivingEntity entity) {
+        if (plugin.getHookManager().isRegistered(MythicMobsHook.class)) {
+            return plugin.getHookManager().getHook(MythicMobsHook.class).shouldPreventEntityXp(entity);
+        }
+        return false;
     }
 
     private List<SkillSource<EntityXpSource>> filterByTrigger(List<SkillSource<EntityXpSource>> sources, EntityXpSource.EntityTriggers trigger) {
