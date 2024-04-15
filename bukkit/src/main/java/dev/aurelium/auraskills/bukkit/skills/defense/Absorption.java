@@ -50,7 +50,7 @@ public class Absorption extends ReadiedManaAbility {
         // TODO: shouldn't this trigger with the final damage?
         // right know the order and execution are the same as it was before
         var meta = event.getDamageMeta();
-        var target = meta.getAttackerAsPlayer();
+        var target = meta.getTargetAsPlayer();
 
         if (target != null) {
             var user = plugin.getUser(target);

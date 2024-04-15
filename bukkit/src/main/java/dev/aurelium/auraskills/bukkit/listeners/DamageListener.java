@@ -47,6 +47,11 @@ public class DamageListener implements Listener {
             if (target.hasMetadata("NPC")) return;
         }
 
+        if(player == null && !(event.getEntity() instanceof Player)) {
+            // We have nothing to do here
+            return;
+        }
+
         var result = damageHandler.handleDamage(
                 event.getDamager(), event.getEntity(), getDamageType(event, player),
                 event.getCause(), event.getDamage(), "vanilla");
@@ -60,6 +65,7 @@ public class DamageListener implements Listener {
 
     @SuppressWarnings("deprecation")
     private DamageType getDamageType(EntityDamageByEntityEvent event, Player player) {
+        if (player == null) return DamageType.OTHER;
         if (event.getDamager() instanceof Arrow || event.getDamager() instanceof SpectralArrow || event.getDamager() instanceof TippedArrow) {
             return DamageType.BOW;
         }
