@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.CritChanceTrait;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,11 +29,10 @@ public class CriticalHandler implements Listener {
         DamageMeta meta = event.getDamageMeta();
         Player attacker = meta.getAttackerAsPlayer();
 
-        if (attacker != null) {
+        if (attacker != null &&
+                plugin.configBoolean(Option.valueOf("CRITICAL_ENABLED_" + event.getDamageMeta().getDamageType().name()))) {
             User user = plugin.getUser(attacker);
-            if (meta.getDamageType() == DamageType.BOW) {
-                meta.addAttackModifier(getCrit(attacker, user));
-            }
+            meta.addAttackModifier(getCrit(attacker, user));
         }
     }
 
