@@ -22,6 +22,7 @@ import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.item.ItemRegistryMenuProvider;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
+import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
@@ -381,6 +382,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new DamageListener(this), this);
+        pm.registerEvents(new CriticalHandler(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);
         pm.registerEvents(new MobLootHandler(this), this);

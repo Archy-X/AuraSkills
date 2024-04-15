@@ -1,16 +1,20 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.CritChanceTrait;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.concurrent.TimeUnit;
 
-public class CriticalHandler {
+public class CriticalHandler implements Listener {
 
     private final AuraSkills plugin;
 
@@ -18,7 +22,20 @@ public class CriticalHandler {
         this.plugin = plugin;
     }
 
-    public DamageModifier getCrit(Player player, User user) {
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null) {
+            var user = plugin.getUser(attacker);
+            if (meta.getDamageType() == DamageType.BOW) {
+                meta.addAttackModifier(getCrit(attacker, user));
+            }
+        }
+    }
+
+    private DamageModifier getCrit(Player player, User user) {
         if (!isCrit(user)) {
             return DamageModifier.none();
         }
