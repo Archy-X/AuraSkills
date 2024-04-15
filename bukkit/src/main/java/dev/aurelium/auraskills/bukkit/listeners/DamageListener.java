@@ -1,21 +1,8 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.skills.archery.ArcheryAbilities;
-import dev.aurelium.auraskills.bukkit.skills.archery.ChargedShot;
-import dev.aurelium.auraskills.bukkit.skills.defense.Absorption;
-import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
-import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationAbilities;
-import dev.aurelium.auraskills.bukkit.skills.farming.FarmingAbilities;
-import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
-import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
-import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
-import dev.aurelium.auraskills.bukkit.trait.AttackDamageTrait;
-import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
-import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
-import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.mechanics.DamageType;
+import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
+import dev.aurelium.auraskills.api.damage.DamageType;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -25,16 +12,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Function;
-
 public class DamageListener implements Listener {
 
     private final AuraSkills plugin;
-    private final CriticalHandler criticalHandler;
+    private final DamageHandler damageHandler;
 
     public DamageListener(AuraSkills plugin) {
         this.plugin = plugin;
-        this.criticalHandler = new CriticalHandler(plugin);
+        this.damageHandler = new DamageHandler(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -47,81 +32,30 @@ public class DamageListener implements Listener {
         // Gets the player who dealt damage
         Player player = getDamager(event.getDamager());
         if (player != null) {
-            handleDamage(event, player);
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+                return;
+            }
+            if (player.hasMetadata("NPC")) return;
+            if (event.getCause() == EntityDamageEvent.DamageCause.THORNS) return;
         }
 
         // Handles being damaged
-        if (event.getEntity() instanceof Player) {
-            handleBeingDamaged(event, (Player) event.getEntity());
-        }
-    }
-
-    private void handleDamage(EntityDamageByEntityEvent event, Player player) {
-        // Check disabled world
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            return;
-        }
-        if (player.hasMetadata("NPC")) return;
-
-        if (event.getCause() == EntityDamageEvent.DamageCause.THORNS) return;
-        // Gets player skill
-        User user = plugin.getUser(player);
-
-        DamageType damageType = getDamageType(event, player);
-
-        // Applies the attack damage trait and all tool/weapon master abilities
-        double additive = applyAttackDamageAndMaster(plugin, user, player, damageType, mod -> applyModifier(event, mod));
-
-        var abManager = plugin.getAbilityManager();
-
-        // Apply First Strike
-        if (damageType == DamageType.SWORD) {
-            DamageModifier mod = abManager.getAbilityImpl(FightingAbilities.class).firstStrike(user, player);
-            additive += applyModifier(event, mod);
+        if (event.getEntity() instanceof Player target) {
+            if (plugin.getWorldManager().isInDisabledWorld(target.getLocation())) {
+                return;
+            }
+            if (target.hasMetadata("NPC")) return;
         }
 
-        // Apply critical
-        if (plugin.configBoolean(Option.valueOf("CRITICAL_ENABLED_" + damageType.name()))) {
-            DamageModifier mod = criticalHandler.getCrit(player, user);
-            additive += applyModifier(event, mod);
+        var result = damageHandler.handleDamage(
+                event.getDamager(), event.getEntity(), getDamageType(event, player),
+                event.getCause(), event.getDamage(), "vanilla");
+
+        if (result.second()) {
+            event.setCancelled(true);
+        } else {
+            event.setDamage(result.first());
         }
-
-        // Charged shot
-        if (damageType == DamageType.BOW) {
-            DamageModifier mod = plugin.getManaAbilityManager().getProvider(ChargedShot.class).applyChargedShot(event);
-            additive += applyModifier(event, mod);
-        }
-
-        // Apply additive (ADD_COMBINED) operation
-        event.setDamage(event.getDamage() * (1 + additive));
-    }
-
-    private void handleBeingDamaged(EntityDamageByEntityEvent event, Player player) {
-        // Check disabled world
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            return;
-        }
-        User user = plugin.getUser(player);
-
-        // Handles absorption
-        plugin.getManaAbilityManager().getProvider(Absorption.class).handleAbsorption(event, player, user);
-        if (event.isCancelled()) return;
-
-        // Handles parry
-        FightingAbilities fightingAbilities = plugin.getAbilityManager().getAbilityImpl(FightingAbilities.class);
-        fightingAbilities.handleParry(event, player, user);
-
-        // Handles damage reduction trait
-        var damageReduction = plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class);
-        damageReduction.onDamage(event, user);
-
-        DefenseAbilities defenseAbilities = plugin.getAbilityManager().getAbilityImpl(DefenseAbilities.class);
-
-        // Handles mob master
-        defenseAbilities.mobMaster(event, user, player);
-
-        // Handles shielding
-        defenseAbilities.shielding(event, user, player);
     }
 
     @SuppressWarnings("deprecation")
@@ -163,58 +97,5 @@ public class DamageListener implements Listener {
             }
         }
         return player;
-    }
-
-    public double applyAttackDamageAndMaster(AuraSkills plugin, User user, Player player, DamageType damageType, Function<DamageModifier, Double> applier) {
-        double additive = 0.0;
-        // Applies attack damage trait
-        var attackDamage = plugin.getTraitManager().getTraitImpl(AttackDamageTrait.class);
-        DamageModifier strengthMod = attackDamage.strength(user, damageType);
-        additive += applier.apply(strengthMod);
-
-        // Apply master abilities
-        var abManager = plugin.getAbilityManager();
-        switch (damageType) {
-            case SWORD -> {
-                DamageModifier mod = abManager.getAbilityImpl(FightingAbilities.class).swordMaster(player, user);
-                additive += applier.apply(mod);
-            }
-            case BOW -> {
-                DamageModifier mod = abManager.getAbilityImpl(ArcheryAbilities.class).bowMaster(player, user);
-                additive += applier.apply(mod);
-            }
-            case HOE -> {
-                DamageModifier mod = abManager.getAbilityImpl(FarmingAbilities.class).scytheMaster(player, user);
-                additive += applier.apply(mod);
-            }
-            case AXE -> {
-                DamageModifier mod = abManager.getAbilityImpl(ForagingAbilities.class).axeMaster(player, user);
-                additive += applier.apply(mod);
-            }
-            case PICKAXE -> {
-                DamageModifier mod = abManager.getAbilityImpl(MiningAbilities.class).pickMaster(player, user);
-                additive += applier.apply(mod);
-            }
-            case SHOVEL -> {
-                DamageModifier mod = abManager.getAbilityImpl(ExcavationAbilities.class).spadeMaster(player, user);
-                additive += applier.apply(mod);
-            }
-        }
-        return additive;
-    }
-
-    // Returns the value if ADD_COMBINED
-    private double applyModifier(EntityDamageByEntityEvent event, DamageModifier modifier) {
-        switch (modifier.operation()) {
-            case MULTIPLY -> {
-                double multiplier = 1.0 + modifier.value();
-                event.setDamage(event.getDamage() * multiplier);
-            }
-            case ADD_BASE -> event.setDamage(event.getDamage() + modifier.value());
-            case ADD_COMBINED -> {
-                return modifier.value();
-            }
-        }
-        return 0.0;
     }
 }

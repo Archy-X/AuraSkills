@@ -37,20 +37,20 @@ public class BukkitAbilityManager extends AbilityManager {
     }
 
     public void registerAbilityImplementations() {
-        registerAbilityImpl(new FarmingAbilities(plugin));
-        registerAbilityImpl(new ForagingAbilities(plugin));
-        registerAbilityImpl(new MiningAbilities(plugin));
         registerAbilityImpl(new FishingAbilities(plugin));
-        registerAbilityImpl(new ExcavationAbilities(plugin));
-        registerAbilityImpl(new ArcheryAbilities(plugin));
-        registerAbilityImpl(new DefenseAbilities(plugin));
-        registerAbilityImpl(new FightingAbilities(plugin));
         registerAbilityImpl(new EnduranceAbilities(plugin));
         registerAbilityImpl(new AgilityAbilities(plugin));
         registerAbilityImpl(new AlchemyAbilities(plugin));
         registerAbilityImpl(new EnchantingAbilities(plugin));
         registerAbilityImpl(new HealingAbilities(plugin));
         registerAbilityImpl(new ForgingAbilities(plugin));
+        registerAbilityImpl(new FightingAbilities(plugin));
+        registerAbilityImpl(new ArcheryAbilities(plugin));
+        registerAbilityImpl(new FarmingAbilities(plugin));
+        registerAbilityImpl(new ForagingAbilities(plugin));
+        registerAbilityImpl(new MiningAbilities(plugin));
+        registerAbilityImpl(new ExcavationAbilities(plugin));
+        registerAbilityImpl(new DefenseAbilities(plugin));
     }
 
     public void registerAbilityImpl(AbilityImpl abilityImpl) {

@@ -1,17 +1,11 @@
 package dev.aurelium.auraskills.bukkit.hooks.mythicmobs;
 
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
-import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
-import dev.aurelium.auraskills.bukkit.skills.defense.DefenseAbilities;
-import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
-import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
-import dev.aurelium.auraskills.bukkit.util.VersionUtils;
-import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
 import dev.aurelium.auraskills.common.hooks.Hook;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
-import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.mechanics.DamageType;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import io.lumine.mythic.api.adapters.AbstractEntity;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.bukkit.events.MythicConditionLoadEvent;
@@ -19,110 +13,81 @@ import io.lumine.mythic.bukkit.events.MythicDamageEvent;
 import io.lumine.mythic.bukkit.events.MythicMechanicLoadEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.spongepowered.configurate.ConfigurationNode;
-
-import java.lang.reflect.Constructor;
 
 public class MythicMobsHook extends Hook implements Listener {
 
     private final AuraSkills plugin;
-    private final CriticalHandler criticalHandler;
-    private final DamageListener damageListener;
+    private final DamageHandler damageHandler;
 
     public MythicMobsHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
         this.plugin = plugin;
-        this.criticalHandler = new CriticalHandler(plugin);
-        // Create instance to reuse methods, do not register events in here
-        this.damageListener = new DamageListener(plugin);
+        this.damageHandler = new DamageHandler(plugin);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onMythicSkillDamage(MythicDamageEvent event) {
         // This is always some sort of skill/mechanic damage.
 
-        if (!getConfig().node("handle_fighting_abilities").getBoolean() &&
+        if (!getConfig().node("handle_damage_increase").getBoolean() &&
                 !getConfig().node("handle_damage_reduction").getBoolean()) {
             return;
         }
 
-        var damager = event.getCaster().getEntity();
+        var attacker = event.getCaster().getEntity();
         var target = event.getTarget();
-        var fakeEvent = createDamageEvent(damager.getBukkitEntity(), target.getBukkitEntity(), event.getDamageMetadata().getDamageCause(), event.getDamage());
 
-        // If the damager is a player, server probably has MythicCrucible addon, that let you use
-        // mechanics/skills on weapons.
-        if (damager.isPlayer() && getConfig().node("handle_fighting_abilities").getBoolean()) {
-            var player = BukkitAdapter.adapt(damager.asPlayer());
-            if (player.hasMetadata("NPC")) return;
-            if (event.getDamageMetadata().getDamageCause() == EntityDamageEvent.DamageCause.THORNS) return;
 
-            User user = plugin.getUser(player);
-
-            DamageType damageType = getDamageType(player);
-
-            double additive = damageListener.applyAttackDamageAndMaster(plugin, user, player, damageType, mod -> applyModifier(event, mod));
-
-            // First strike is impossible to activate here
-
-            // Apply critical
-            if (plugin.configBoolean(Option.valueOf("CRITICAL_ENABLED_" + damageType.name()))) {
-                DamageModifier mod = criticalHandler.getCrit(player, user);
-                additive += applyModifier(event, mod);
-            }
-
-            // Charged shot is probably impossible to activate here, or it is probably impossible to make it work
-            // as it supposed to
-
-            // Apply additive (ADD_COMBINED) operation
-            fakeEvent.setDamage(event.getDamage() * (1 + additive));
-            event.setDamage(event.getDamage() * (1 + additive));
-        }
-
-        // Handles being damaged
-        if (target.isPlayer()) {
-            var playerTarget = BukkitAdapter.adapt(target.asPlayer());
-            if (plugin.getWorldManager().isDisabledWorld(playerTarget.getWorld().getName())) {
+        if (attacker.isPlayer()) {
+            var player = BukkitAdapter.adapt(attacker.asPlayer());
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
                 return;
             }
+            if (player.hasMetadata("NPC")) return;
+            if (event.getDamageMetadata().getDamageCause() == EntityDamageEvent.DamageCause.THORNS) return;
+        }
 
-            User user = plugin.getUser(playerTarget);
-
-            // we don't need to handle absorption, since it cancels the entire event ahead of time
-
-            // Handles parry
-            if (getConfig().node("handle_fighting_abilities").getBoolean()) {
-                FightingAbilities fightingAbilities = plugin.getAbilityManager().getAbilityImpl(FightingAbilities.class);
-                fightingAbilities.handleParry(fakeEvent, playerTarget, user);
-                event.setDamage(fakeEvent.getDamage());
+        if (target.isPlayer()) {
+            var player = BukkitAdapter.adapt(target.asPlayer());
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+                return;
             }
+            if (target.hasMetadata("NPC")) return;
+        }
 
-            if (getConfig().node("handle_damage_reduction").getBoolean()) {
-                // Handles damage reduction trait
-                var damageReduction = plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class);
-                damageReduction.onDamage(fakeEvent, user);
+        var result = damageHandler.handleDamage(
+                BukkitAdapter.adapt(attacker), BukkitAdapter.adapt(target), getDamageType(attacker),
+                event.getDamageMetadata().getDamageCause(), event.getDamage(), "mythicmobs");
 
-                DefenseAbilities defenseAbilities = plugin.getAbilityManager().getAbilityImpl(DefenseAbilities.class);
+        if (result.second()) {
+            event.setCancelled(true);
+        } else {
+            event.setDamage(result.first());
+        }
+    }
 
-                // Handles mob master
-                defenseAbilities.mobMaster(fakeEvent, user, playerTarget);
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        if (!event.getDamageMeta().getSource().equals("mythicmobs")) {
+            return;
+        }
 
-                // Handles shielding
-                defenseAbilities.shielding(fakeEvent, user, playerTarget);
+        if (!getConfig().node("handle_damage_increase").getBoolean()) {
+            event.getDamageMeta().clearAttackModifiers();
+        }
 
-                event.setDamage(fakeEvent.getDamage());
-            }
+        if (!getConfig().node("handle_damage_reduction").getBoolean()) {
+            event.getDamageMeta().clearDefenseModifiers();
         }
     }
 
     public boolean shouldPreventEntityXp(Entity entity) {
-        if(!getConfig().node("prevent_regular_xp").getBoolean()) return false;
+        if (!getConfig().node("prevent_regular_xp").getBoolean()) return false;
         try (MythicBukkit mythicBukkit = MythicBukkit.inst()) {
             return mythicBukkit.getMobManager().isMythicMob(entity);
         }
@@ -144,48 +109,12 @@ public class MythicMobsHook extends Hook implements Listener {
         }
     }
 
-    private double applyModifier(MythicDamageEvent event, DamageModifier modifier) {
-        switch (modifier.operation()) {
-            case ADD_BASE -> event.setDamage(event.getDamage() + modifier.value());
-            case MULTIPLY -> {
-                double multiplier = 1.0 + modifier.value();
-                event.setDamage(event.getDamage() * multiplier);
-            }
-            case ADD_COMBINED -> {
-                return modifier.value();
-            }
-        }
-        return 0.0;
-    }
-
     @Override
     public Class<? extends Hook> getTypeClass() {
         return MythicMobsHook.class;
     }
 
-    @SuppressWarnings("all")
-    public EntityDamageByEntityEvent createDamageEvent(Entity damager, Entity damaged, EntityDamageEvent.DamageCause cause, double damage) {
-        // This constructor only exists in 1.20.4+ but damageSource builder is experimental API
-        // Right now it works with a simple null
-        if (VersionUtils.isAtLeastVersion(20, 4)) {
-            return new EntityDamageByEntityEvent(damager, damaged, cause, null, damage);
-        }
-
-        // This constructor is marked for removal. Use reflection to prevent future issues in code.
-        // This way we can support older version than 1.20.4
-        try {
-            Class<?> clazz = Class.forName("org.bukkit.event.entity.EntityDamageByEntityEvent");
-            Constructor<?> constructor = clazz.getConstructor(Entity.class, Entity.class, EntityDamageEvent.DamageCause.class, double.class);
-            Object eventInstance = constructor.newInstance(damager, damaged, cause, damage);
-
-            return (EntityDamageByEntityEvent) eventInstance;
-        } catch (Exception e) {
-            plugin.logger().warn("MythicMobs hook tried to create an EntityDamageByEntityEvent with a constructor that is not supported in this server version. Please report this.");
-        }
-        return null;
-    }
-
-    private DamageType getDamageType(Player player) {
+    private DamageType getDamageType(AbstractEntity attacker) {
         /*
         With MythicDamageEvent we don't know if a projectile/trident is involved but
         for the most part it doesn't really matter. Only thing that matters if what item was
@@ -193,7 +122,14 @@ public class MythicMobsHook extends Hook implements Listener {
         There can be edge cases if someone puts a damage mechanic on the armor for example
         with the ~onDamaged trigger, although this is unlikely.
          */
-        Material material = player.getInventory().getItemInMainHand().getType();
+        Material material;
+
+        if (attacker.isPlayer()) {
+            material = BukkitAdapter.adapt(attacker.asPlayer()).getInventory().getItemInMainHand().getType();
+        } else {
+            return DamageType.OTHER;
+        }
+
         if (material.name().contains("SWORD")) {
             return DamageType.SWORD;
         } else if (material.name().contains("_AXE")) {

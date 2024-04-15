@@ -2,11 +2,13 @@ package dev.aurelium.auraskills.bukkit.skills.archery;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
@@ -38,7 +40,7 @@ public class ArcheryAbilities extends AbilityImpl {
         super(plugin, Abilities.RETRIEVAL, Abilities.ARCHER, Abilities.BOW_MASTER, Abilities.PIERCING, Abilities.STUN);
     }
 
-    public DamageModifier bowMaster(Player player, User user) {
+    private DamageModifier bowMaster(Player player, User user) {
         var ability = Abilities.BOW_MASTER;
 
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
@@ -46,6 +48,19 @@ public class ArcheryAbilities extends AbilityImpl {
         if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
         return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null) {
+            var user = plugin.getUser(attacker);
+            if (meta.getDamageType() == DamageType.BOW) {
+                meta.addAttackModifier(bowMaster(attacker, user));
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

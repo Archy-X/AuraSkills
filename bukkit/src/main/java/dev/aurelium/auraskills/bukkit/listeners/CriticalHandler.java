@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.trait.CritChanceTrait;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;

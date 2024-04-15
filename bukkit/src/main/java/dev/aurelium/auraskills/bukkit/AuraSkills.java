@@ -238,9 +238,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             rewardManager.loadRewards(); // Requires skills loaded
             lootTableManager.loadLootTables(); // Requires skills registered
             // Register default content
+            traitManager.registerTraitImplementations();
             abilityManager.registerAbilityImplementations();
             manaAbilityManager.registerProviders();
-            traitManager.registerTraitImplementations();
             registerEvents();
             registerAndLoadMenus();
             // Call SkillsLoadEvent

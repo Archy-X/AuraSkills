@@ -1,6 +1,10 @@
 package dev.aurelium.auraskills.bukkit.skills.defense;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.user.User;
@@ -22,34 +26,43 @@ public class DefenseAbilities extends AbilityImpl {
         super(plugin, Abilities.SHIELDING, Abilities.DEFENDER, Abilities.MOB_MASTER, Abilities.IMMUNITY, Abilities.NO_DEBUFF);
     }
 
-    public void shielding(EntityDamageByEntityEvent event, User user, Player player) {
+    public DamageModifier shielding(User user, Player player) {
         var ability = Abilities.SHIELDING;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (failsChecks(player, ability)) return DamageModifier.none();
 
-        if (!player.isSneaking()) return;
+        if (!player.isSneaking()) return DamageModifier.none();
 
-        if (user.getAbilityLevel(ability) <= 0) return;
+        if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
         double damageReduction = 1 - (getValue(ability, user) / 100);
-        event.setDamage(event.getDamage() * damageReduction);
+
+        // meta.setDamage(meta.getDamage() * damageReduction);
+        // TODO: ask Archy if this is okay instead of the above one
+        return new DamageModifier(damageReduction, DamageModifier.Operation.MULTIPLY);
     }
 
-    public void mobMaster(EntityDamageByEntityEvent event, User user, Player player) {
+    public DamageModifier mobMaster(DamageMeta meta, User user, Player player) {
         var ability = Abilities.MOB_MASTER;
 
-        if (isDisabled(ability)) return;
+        if (isDisabled(ability)) return DamageModifier.none();
 
-        if (failsChecks(player, ability)) return;
+        if (failsChecks(player, ability)) return DamageModifier.none();
 
-        if (event.getDamager() instanceof LivingEntity && !(event.getDamager() instanceof Player)) {
-            if (user.getAbilityLevel(ability) <= 0) return;
+        // TODO: Shouldn't this affect projectile damage from skeletons/ghasts etc?
+        if (meta.getAttacker() instanceof LivingEntity && !(meta.getAttacker() instanceof Player)) {
+            if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
             double damageReduction = 1 - (getValue(ability, user) / 100);
-            event.setDamage(event.getDamage() * damageReduction);
+
+            // event.setDamage(event.getDamage() * damageReduction);
+            // TODO: ask Archy if this is okay instead of the above one
+            return new DamageModifier(damageReduction, DamageModifier.Operation.MULTIPLY);
         }
+
+        return DamageModifier.none();
     }
 
     public void immunity(EntityDamageByEntityEvent event, User user, Player player) {
@@ -128,6 +141,18 @@ public class DefenseAbilities extends AbilityImpl {
         }
 
         immunity(event, user, player);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var target = meta.getTargetAsPlayer();
+
+        if (target != null) {
+            var user = plugin.getUser(target);
+            meta.addDefenseModifier(mobMaster(meta, user, target));
+            meta.addDefenseModifier(shielding(user, target));
+        }
     }
 
 }

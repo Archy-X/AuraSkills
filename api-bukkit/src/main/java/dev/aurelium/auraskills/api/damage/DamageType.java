@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.common.util.mechanics;
+package dev.aurelium.auraskills.api.damage;
 
 public enum DamageType {
 

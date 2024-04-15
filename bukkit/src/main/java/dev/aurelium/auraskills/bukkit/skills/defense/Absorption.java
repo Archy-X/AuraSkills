@@ -1,5 +1,8 @@
 package dev.aurelium.auraskills.bukkit.skills.defense;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -42,17 +45,22 @@ public class Absorption extends ReadiedManaAbility {
         }
     }
 
-    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, User user) {
-        if (user.getAbilityData(manaAbility).getBoolean("activated") && isActivated(user)) {
-            handleAbsorbedHit(event, player, user);
-        } else if (checkActivation(player)) {
-            handleAbsorbedHit(event, player, user);
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        // TODO: shouldn't this trigger with the final damage?
+        // right know the order and execution are the same as it was before
+        var meta = event.getDamageMeta();
+        var target = meta.getAttackerAsPlayer();
+
+        if (target != null) {
+            var user = plugin.getUser(target);
+            handleAbsorbedHit(event, target, user);
         }
     }
 
-    private void handleAbsorbedHit(EntityDamageByEntityEvent event, Player player, User user) {
+    private void handleAbsorbedHit(DamageEvent event, Player player, User user) {
         // Decrease mana and cancel event
-        double mana = user.getMana() - event.getDamage() * 2;
+        double mana = user.getMana() - event.getDamageMeta().getDamage() * 2;
         if (mana <= 0) {
             return;
         }
