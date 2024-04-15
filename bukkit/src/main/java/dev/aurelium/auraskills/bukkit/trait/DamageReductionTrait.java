@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
+import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -13,7 +14,6 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -40,15 +40,13 @@ public class DamageReductionTrait extends TraitImpl {
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
         // LOW to make sure it runs before ability modifiers
-        var meta = event.getDamageMeta();
-        var player = meta.getTargetAsPlayer();
+        DamageMeta meta = event.getDamageMeta();
+        Player player = meta.getTargetAsPlayer();
 
         if (player != null) {
-            var user = plugin.getUser(player);
+            User user = plugin.getUser(player);
             double reduction = user.getEffectiveTraitLevel(Traits.DAMAGE_REDUCTION);
 
-            // event.setDamage(event.getDamage() * (1 - getReductionValue(reduction)));
-            // TODO: ask Archy if this is okay if we use a modifier here instead of setting the damage directly
             meta.addDefenseModifier(
                     new DamageModifier((1 - getReductionValue(reduction)) - 1, DamageModifier.Operation.MULTIPLY));
         }

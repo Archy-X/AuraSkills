@@ -122,7 +122,6 @@ public class ConfigurateLoader {
         // Save if the number of config values in embedded is greater than user file
         int embeddedCount = countChildren(embedded);
         int userCount = countChildren(user);
-        plugin.logger().info("Embedded count: " + embeddedCount + ", User count: " + userCount);
         if (embeddedCount > userCount) {
             FileUtil.saveYamlFile(file, merged);
             String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();

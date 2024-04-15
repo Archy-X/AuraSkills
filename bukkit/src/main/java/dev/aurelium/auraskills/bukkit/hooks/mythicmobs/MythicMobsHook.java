@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.hooks.mythicmobs;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
+import dev.aurelium.auraskills.bukkit.damage.DamageResult;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import io.lumine.mythic.api.adapters.AbstractEntity;
@@ -43,7 +44,6 @@ public class MythicMobsHook extends Hook implements Listener {
         AbstractEntity attacker = event.getCaster().getEntity();
         AbstractEntity target = event.getTarget();
 
-
         if (attacker.isPlayer()) {
             Player player = BukkitAdapter.adapt(attacker.asPlayer());
             if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
@@ -61,7 +61,7 @@ public class MythicMobsHook extends Hook implements Listener {
             if (target.hasMetadata("NPC")) return;
         }
 
-        var result = damageHandler.handleDamage(
+        DamageResult result = damageHandler.handleDamage(
                 BukkitAdapter.adapt(attacker), BukkitAdapter.adapt(target), getDamageType(attacker),
                 event.getDamageMetadata().getDamageCause(), event.getDamage(), "mythicmobs");
 

@@ -297,7 +297,6 @@ public class FightingAbilities extends AbilityImpl {
 
         double value = getValue(ability, user);
 
-
         plugin.getUiProvider().sendActionBar(user, plugin.getMsg(AbilityMessage.PARRY_PARRIED, user.getLocale()));
         plugin.getUiProvider().getActionBarManager().setPaused(user, 1500, TimeUnit.MILLISECONDS);
         if (ability.optionBoolean("enable_sound")) {
@@ -309,8 +308,6 @@ public class FightingAbilities extends AbilityImpl {
         plugin.getScheduler().scheduleSync(() -> player.setVelocity(velBefore),
                 50, TimeUnit.MILLISECONDS);
 
-        // event.setDamage(event.getDamage() * (1 - value / 100));
-        // TODO: ask Archy if this is okay instead of the above one
         return new DamageModifier((1 - value / 100) - 1, DamageModifier.Operation.MULTIPLY);
     }
 

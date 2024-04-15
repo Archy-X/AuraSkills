@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.listeners;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
 import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.bukkit.damage.DamageResult;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -52,7 +53,7 @@ public class DamageListener implements Listener {
             return;
         }
 
-        var result = damageHandler.handleDamage(
+        DamageResult result = damageHandler.handleDamage(
                 event.getDamager(), event.getEntity(), getDamageType(event, player),
                 event.getCause(), event.getDamage(), "vanilla");
 
