@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.bukkit.skills.defense;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -11,8 +13,8 @@ import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Absorption extends ReadiedManaAbility {
 
@@ -42,17 +44,25 @@ public class Absorption extends ReadiedManaAbility {
         }
     }
 
-    public void handleAbsorption(EntityDamageByEntityEvent event, Player player, User user) {
-        if (user.getAbilityData(manaAbility).getBoolean("activated") && isActivated(user)) {
-            handleAbsorbedHit(event, player, user);
-        } else if (checkActivation(player)) {
-            handleAbsorbedHit(event, player, user);
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        DamageMeta meta = event.getDamageMeta();
+        Player target = meta.getTargetAsPlayer();
+
+        if (target != null) {
+            User user = plugin.getUser(target);
+
+            if (user.getAbilityData(manaAbility).getBoolean("activated") && isActivated(user)) {
+                handleAbsorbedHit(event, target, user);
+            } else if (checkActivation(target)) {
+                handleAbsorbedHit(event, target, user);
+            }
         }
     }
 
-    private void handleAbsorbedHit(EntityDamageByEntityEvent event, Player player, User user) {
+    private void handleAbsorbedHit(DamageEvent event, Player player, User user) {
         // Decrease mana and cancel event
-        double mana = user.getMana() - event.getDamage() * 2;
+        double mana = user.getMana() - event.getModifiedAttackDamage() * 2;
         if (mana <= 0) {
             return;
         }

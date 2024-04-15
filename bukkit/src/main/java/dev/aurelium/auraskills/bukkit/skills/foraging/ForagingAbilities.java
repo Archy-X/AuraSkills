@@ -1,12 +1,14 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,7 +24,7 @@ public class ForagingAbilities extends AbilityImpl {
         super(plugin, Abilities.LUMBERJACK, Abilities.FORAGER, Abilities.AXE_MASTER, Abilities.SHREDDER, Abilities.VALOR);
     }
 
-    public DamageModifier axeMaster(Player player, User user) {
+    private DamageModifier axeMaster(Player player, User user) {
         var ability = Abilities.AXE_MASTER;
 
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
@@ -30,6 +32,19 @@ public class ForagingAbilities extends AbilityImpl {
         if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
         return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null) {
+            if (meta.getDamageType() == DamageType.AXE) {
+                var user = plugin.getUser(attacker);
+                meta.addAttackModifier(axeMaster(attacker, user));
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)

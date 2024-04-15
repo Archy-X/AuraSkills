@@ -1,13 +1,15 @@
 package dev.aurelium.auraskills.bukkit.skills.mining;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,7 +41,7 @@ public class MiningAbilities extends AbilityImpl {
         return false;
     }
 
-    public DamageModifier pickMaster(Player player, User user) {
+    private DamageModifier pickMaster(Player player, User user) {
         var ability = Abilities.PICK_MASTER;
 
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
@@ -47,6 +49,19 @@ public class MiningAbilities extends AbilityImpl {
         if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
 
         return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null) {
+            if (meta.getDamageType() == DamageType.PICKAXE) {
+                var user = plugin.getUser(attacker);
+                meta.addAttackModifier(pickMaster(attacker, user));
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH)

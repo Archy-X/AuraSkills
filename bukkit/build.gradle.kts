@@ -20,6 +20,7 @@ repositories {
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.maven.apache.org/maven2/")
+    maven("https://mvn.lumine.io/repository/maven-public/")
 }
 
 dependencies {
@@ -42,6 +43,7 @@ dependencies {
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
+    compileOnly("io.lumine:Mythic-Dist:5.6.1")
 }
 
 tasks.withType<ShadowJar> {

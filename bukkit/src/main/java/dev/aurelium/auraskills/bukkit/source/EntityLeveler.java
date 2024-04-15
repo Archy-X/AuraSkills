@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityDamagers;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.MythicMobsHook;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceTypes;
@@ -29,7 +30,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 public class EntityLeveler extends SourceLeveler {
 
@@ -44,6 +48,9 @@ public class EntityLeveler extends SourceLeveler {
     public void onEntityDeath(EntityDeathEvent event) {
         if (disabled()) return;
         LivingEntity entity = event.getEntity();
+
+        if (preventMythicXp(entity)) return;
+
         // Ensure that the entity has a killer
         @Nullable
         Player player = entity.getKiller();
@@ -90,6 +97,9 @@ public class EntityLeveler extends SourceLeveler {
         if (!(event.getEntity() instanceof LivingEntity entity) || event.getEntity() instanceof ArmorStand) {
             return;
         }
+
+        if (preventMythicXp(entity)) return;
+
         // Get the player who damaged the entity and the damager type
         Pair<Player, EntityXpSource.EntityDamagers> damagerPair = resolveDamager(event.getDamager(), event.getCause());
         if (damagerPair == null) return;
@@ -119,6 +129,8 @@ public class EntityLeveler extends SourceLeveler {
         if (!(event.getEntity() instanceof LivingEntity entity) || event.getEntity() instanceof ArmorStand) {
             return;
         }
+
+        if (preventMythicXp(entity)) return;
 
         Player player = getBleedDamager(entity);
         if (player == null) return; // Was not damaged by Bleed
@@ -217,6 +229,13 @@ public class EntityLeveler extends SourceLeveler {
             }
         }
         return null;
+    }
+
+    private boolean preventMythicXp(LivingEntity entity) {
+        if (plugin.getHookManager().isRegistered(MythicMobsHook.class)) {
+            return plugin.getHookManager().getHook(MythicMobsHook.class).shouldPreventEntityXp(entity);
+        }
+        return false;
     }
 
     private List<SkillSource<EntityXpSource>> filterByTrigger(List<SkillSource<EntityXpSource>> sources, EntityXpSource.EntityTriggers trigger) {

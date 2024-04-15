@@ -1,12 +1,15 @@
 package dev.aurelium.auraskills.bukkit.skills.archery;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -17,7 +20,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -136,11 +138,21 @@ public class ChargedShot extends ManaAbilityProvider {
         }
     }
 
-    public DamageModifier applyChargedShot(EntityDamageByEntityEvent event) {
-        if (!event.getDamager().hasMetadata("ChargedShotMultiplier")) {
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        DamageMeta meta = event.getDamageMeta();
+        Player attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null && meta.getDamageType() == DamageType.BOW) {
+            meta.addAttackModifier(applyChargedShot(attacker));
+        }
+    }
+
+    private DamageModifier applyChargedShot(Entity attacker) {
+        if (!attacker.hasMetadata("ChargedShotMultiplier")) {
             return DamageModifier.none();
         }
-        double multiplier = event.getDamager().getMetadata("ChargedShotMultiplier").get(0).asDouble();
+        double multiplier = attacker.getMetadata("ChargedShotMultiplier").get(0).asDouble();
         return new DamageModifier(multiplier - 1.0, DamageModifier.Operation.ADD_COMBINED);
     }
 

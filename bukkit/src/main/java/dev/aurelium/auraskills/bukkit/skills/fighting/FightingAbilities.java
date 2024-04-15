@@ -2,12 +2,14 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -55,7 +57,7 @@ public class FightingAbilities extends AbilityImpl {
         return input;
     }
 
-    public DamageModifier swordMaster(Player player, User user) {
+    private DamageModifier swordMaster(Player player, User user) {
         var ability = Abilities.SWORD_MASTER;
 
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
@@ -65,16 +67,16 @@ public class FightingAbilities extends AbilityImpl {
         return new DamageModifier(getValue(ability, user) / 100, DamageModifier.Operation.ADD_COMBINED);
     }
 
-    public DamageModifier firstStrike(User user, Player player) {
+    private DamageModifier firstStrike(User user, Player player) {
         var ability = Abilities.FIRST_STRIKE;
-        
+
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
 
         // Player is on cooldown
         if (player.hasMetadata("AureliumSkills-FirstStrike")) return DamageModifier.none();
-        
+
         if (user.getAbilityLevel(ability) <= 0) return DamageModifier.none();
-        
+
         Locale locale = user.getLocale();
 
         if (ability.optionBoolean("enable_message", true)) {
@@ -118,9 +120,28 @@ public class FightingAbilities extends AbilityImpl {
         // If player used sword
         if (player.getInventory().getItemInMainHand().getType().name().toUpperCase(Locale.ROOT).contains("SWORD")) {
             User user = plugin.getUser(player);
-  
+
             if (event.getEntity() instanceof LivingEntity) {
                 checkBleed(event, user, (LivingEntity) event.getEntity(), ability);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+        var target = meta.getTargetAsPlayer();
+
+        if (attacker != null) {
+            if (meta.getDamageType() == DamageType.SWORD) {
+                var user = plugin.getUser(attacker);
+                meta.addAttackModifier(swordMaster(attacker, user));
+                meta.addAttackModifier(firstStrike(user, attacker));
+            }
+            if (target != null) {
+                var user = plugin.getUser(target);
+                meta.addDefenseModifier(handleParry(event, target, user));
             }
         }
     }
@@ -263,18 +284,18 @@ public class FightingAbilities extends AbilityImpl {
         scheduleUnready(user);
     }
 
-    public void handleParry(EntityDamageByEntityEvent event, Player player, User user) {
+    public DamageModifier handleParry(DamageEvent event, Player player, User user) {
         var ability = Abilities.PARRY;
-        if (failsChecks(player, ability)) return;
+        if (failsChecks(player, ability)) return DamageModifier.none();
         // Return if not parry ready
-        if (!user.metadataBoolean(PARRY_KEY)) return;
+        if (!user.metadataBoolean(PARRY_KEY)) return DamageModifier.none();
 
-        if (!isFacingCloseEnough(user, player, event.getDamager())) {
-            return;
+        if (event.getDamageMeta().getAttacker() != null &&
+                !isFacingCloseEnough(user, player, event.getDamageMeta().getAttacker())) {
+            return DamageModifier.none();
         }
 
         double value = getValue(ability, user);
-        event.setDamage(event.getDamage() * (1 - value / 100));
 
         plugin.getUiProvider().sendActionBar(user, plugin.getMsg(AbilityMessage.PARRY_PARRIED, user.getLocale()));
         plugin.getUiProvider().getActionBarManager().setPaused(user, 1500, TimeUnit.MILLISECONDS);
@@ -286,6 +307,8 @@ public class FightingAbilities extends AbilityImpl {
         // Disable knockback
         plugin.getScheduler().scheduleSync(() -> player.setVelocity(velBefore),
                 50, TimeUnit.MILLISECONDS);
+
+        return new DamageModifier((1 - value / 100) - 1, DamageModifier.Operation.MULTIPLY);
     }
 
     private boolean isFacingCloseEnough(User user, Player player, Entity damager) {

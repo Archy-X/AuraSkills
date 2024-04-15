@@ -1,13 +1,17 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.mechanics.DamageType;
+import dev.aurelium.auraskills.api.damage.DamageType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 
 import java.util.Locale;
 
@@ -22,16 +26,27 @@ public class AttackDamageTrait extends TraitImpl {
         return 0;
     }
 
-    public DamageModifier strength(User user, DamageType damageType) {
-        Trait trait = Traits.ATTACK_DAMAGE;
-        if (!trait.isEnabled()) return DamageModifier.none();
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        // LOW to make sure it runs before ability modifiers
+        DamageMeta meta = event.getDamageMeta();
+        Player player = meta.getAttackerAsPlayer();
 
-        if (damageType == DamageType.HAND && !trait.optionBoolean("hand_damage")) {
-            return DamageModifier.none();
-        } else if (damageType == DamageType.BOW && !trait.optionBoolean("bow_damage")) {
-            return DamageModifier.none();
+        if (player != null) {
+            User user = plugin.getUser(player);
+            Trait trait = Traits.ATTACK_DAMAGE;
+            if (!trait.isEnabled()) return;
+
+            if (meta.getDamageType() == DamageType.HAND && !trait.optionBoolean("hand_damage")) {
+                return;
+            }
+
+            if (meta.getDamageType() == DamageType.BOW && !trait.optionBoolean("bow_damage")) {
+                return;
+            }
+
+            meta.addAttackModifier(applyStrength(user));
         }
-        return applyStrength(user);
     }
 
     @Override

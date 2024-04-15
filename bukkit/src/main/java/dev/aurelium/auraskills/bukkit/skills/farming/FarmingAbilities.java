@@ -2,9 +2,11 @@ package dev.aurelium.auraskills.bukkit.skills.farming;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageType;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.common.modifier.DamageModifier;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
@@ -57,7 +59,7 @@ public class FarmingAbilities extends AbilityImpl {
                 || mat.equals(Material.POISONOUS_POTATO);
     }
 
-    public DamageModifier scytheMaster(Player player, User user) {
+    private DamageModifier scytheMaster(Player player, User user) {
         var ability = Abilities.SCYTHE_MASTER;
 
         if (isDisabled(ability) || failsChecks(player, ability)) return DamageModifier.none();
@@ -73,6 +75,19 @@ public class FarmingAbilities extends AbilityImpl {
             return TextUtil.replace(input, "{radius}", String.valueOf(ability.optionInt("radius", 30)));
         }
         return input;
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        var meta = event.getDamageMeta();
+        var attacker = meta.getAttackerAsPlayer();
+
+        if (attacker != null) {
+            if (meta.getDamageType() == DamageType.HOE) {
+                var user = plugin.getUser(attacker);
+                meta.addAttackModifier(scytheMaster(attacker, user));
+            }
+        }
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)

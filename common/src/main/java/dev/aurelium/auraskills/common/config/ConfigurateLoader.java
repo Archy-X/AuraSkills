@@ -122,7 +122,7 @@ public class ConfigurateLoader {
         // Save if the number of config values in embedded is greater than user file
         int embeddedCount = countChildren(embedded);
         int userCount = countChildren(user);
-        if (countChildren(embedded) > countChildren(user)) {
+        if (embeddedCount > userCount) {
             FileUtil.saveYamlFile(file, merged);
             String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();
             int updated = embeddedCount - userCount;
@@ -130,8 +130,7 @@ public class ConfigurateLoader {
         }
     }
 
-
-    private int countChildren(ConfigurationNode root) {
+    public int countChildren(ConfigurationNode root) {
         int count = 0;
         Stack<ConfigurationNode> stack = new Stack<>();
         stack.addAll(root.childrenMap().values());

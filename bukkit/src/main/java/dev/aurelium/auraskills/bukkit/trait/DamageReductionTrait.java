@@ -3,13 +3,17 @@ package dev.aurelium.auraskills.bukkit.trait;
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
+import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
+import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -33,9 +37,19 @@ public class DamageReductionTrait extends TraitImpl {
         return NumberUtil.format1(getReductionValue(value) * 100) + "%";
     }
 
-    public void onDamage(EntityDamageByEntityEvent event, User user) {
-        double reduction = user.getEffectiveTraitLevel(Traits.DAMAGE_REDUCTION);
-        event.setDamage(event.getDamage() * (1 - getReductionValue(reduction)));
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void damageListener(DamageEvent event) {
+        // LOW to make sure it runs before ability modifiers
+        DamageMeta meta = event.getDamageMeta();
+        Player player = meta.getTargetAsPlayer();
+
+        if (player != null) {
+            User user = plugin.getUser(player);
+            double reduction = user.getEffectiveTraitLevel(Traits.DAMAGE_REDUCTION);
+
+            meta.addDefenseModifier(
+                    new DamageModifier((1 - getReductionValue(reduction)) - 1, DamageModifier.Operation.MULTIPLY));
+        }
     }
 
     public void resetFormula() {
