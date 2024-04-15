@@ -311,7 +311,7 @@ public class FightingAbilities extends AbilityImpl {
 
         // event.setDamage(event.getDamage() * (1 - value / 100));
         // TODO: ask Archy if this is okay instead of the above one
-        return new DamageModifier((1 - value / 100), DamageModifier.Operation.MULTIPLY);
+        return new DamageModifier((1 - value / 100) - 1, DamageModifier.Operation.MULTIPLY);
     }
 
     private boolean isFacingCloseEnough(User user, Player player, Entity damager) {

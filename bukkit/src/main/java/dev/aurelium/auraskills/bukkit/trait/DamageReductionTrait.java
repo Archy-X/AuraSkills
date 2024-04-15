@@ -50,7 +50,7 @@ public class DamageReductionTrait extends TraitImpl {
             // event.setDamage(event.getDamage() * (1 - getReductionValue(reduction)));
             // TODO: ask Archy if this is okay if we use a modifier here instead of setting the damage directly
             meta.addDefenseModifier(
-                    new DamageModifier((1 - getReductionValue(reduction)), DamageModifier.Operation.MULTIPLY));
+                    new DamageModifier((1 - getReductionValue(reduction)) - 1, DamageModifier.Operation.MULTIPLY));
         }
     }
 

@@ -41,7 +41,7 @@ public class DefenseAbilities extends AbilityImpl {
 
         // meta.setDamage(meta.getDamage() * damageReduction);
         // TODO: ask Archy if this is okay instead of the above one
-        return new DamageModifier(damageReduction, DamageModifier.Operation.MULTIPLY);
+        return new DamageModifier(damageReduction - 1, DamageModifier.Operation.MULTIPLY);
     }
 
     public DamageModifier mobMaster(DamageMeta meta, User user, Player player) {
@@ -59,7 +59,7 @@ public class DefenseAbilities extends AbilityImpl {
 
             // event.setDamage(event.getDamage() * damageReduction);
             // TODO: ask Archy if this is okay instead of the above one
-            return new DamageModifier(damageReduction, DamageModifier.Operation.MULTIPLY);
+            return new DamageModifier(damageReduction - 1, DamageModifier.Operation.MULTIPLY);
         }
 
         return DamageModifier.none();
