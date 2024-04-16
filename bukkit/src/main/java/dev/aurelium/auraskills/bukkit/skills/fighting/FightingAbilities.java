@@ -208,6 +208,8 @@ public class FightingAbilities extends AbilityImpl {
                         container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
 
                         entity.damage(damage);
+                        // Disable invulnerable frames
+                        entity.setNoDamageTicks(0);
                         // Remove damager data
                         container.remove(damagerKey);
                         double healthAfter = entity.getHealth();
