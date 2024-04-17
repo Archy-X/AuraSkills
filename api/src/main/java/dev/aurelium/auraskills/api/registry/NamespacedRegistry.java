@@ -81,7 +81,7 @@ public interface NamespacedRegistry {
     void setContentDirectory(File contentDirectory);
 
     /**
-     * Gets the directory where menus are loaded for this namespace. Menu files with the
+     * Gets the directory where menus are loaded from for this namespace. Menu files with the
      * same name as the main plugin are merged together.
      *
      * @return the menu directory as an optional
@@ -96,5 +96,24 @@ public interface NamespacedRegistry {
      * @param menuDirectory the directory
      */
     void setMenuDirectory(File menuDirectory);
+
+    /**
+     * Gets the directory where loot tables are loaded from for this namespace. Loot tables
+     * loaded from the directory are fully separate from default loot tables and must be
+     * accessed from {@link dev.aurelium.auraskills.api.loot.LootManager} and implemented.
+     *
+     * @return the loot directory as an optional
+     */
+    @NotNull
+    Optional<File> getLootDirectory();
+
+    /**
+     * Sets the loot directory where loot tables are loaded for this namespace. Loot tables
+     * are loaded fully separate from default loot tables and must be access from
+     * {@link dev.aurelium.auraskills.api.loot.LootManager} after skills have loaded to be implemented.
+     *
+     * @param lootDirectory the loot directory
+     */
+    void setLootDirectory(File lootDirectory);
 
 }

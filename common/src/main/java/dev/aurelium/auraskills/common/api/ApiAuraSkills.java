@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.api;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.config.MainConfig;
+import dev.aurelium.auraskills.api.loot.LootManager;
 import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.registry.GlobalRegistry;
 import dev.aurelium.auraskills.api.registry.Handlers;
@@ -105,6 +106,11 @@ public class ApiAuraSkills implements AuraSkillsApi {
     @Override
     public SourceManager getSourceManager() {
         return sourceManager;
+    }
+
+    @Override
+    public LootManager getLootManager() {
+        return plugin.getApiProvider().getLootManager();
     }
 
     public Map<String, NamespacedRegistry> getNamespacedRegistryMap() {

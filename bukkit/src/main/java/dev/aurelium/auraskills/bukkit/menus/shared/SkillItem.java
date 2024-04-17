@@ -105,7 +105,9 @@ public class SkillItem {
                             "{level}", RomanNumber.toRoman(level, plugin),
                             "{info}", TextUtil.replace(ability.getInfo(locale),
                                     "{value}", NumberUtil.format2(ability.getValue(level)),
-                                    "{value_2}", NumberUtil.format2(ability.getSecondaryValue(level))));
+                                    "{value_2}", NumberUtil.format2(ability.getSecondaryValue(level)),
+                                    "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, level),
+                                    "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(ability, level)));
                 }
                 return builder.build();
             });

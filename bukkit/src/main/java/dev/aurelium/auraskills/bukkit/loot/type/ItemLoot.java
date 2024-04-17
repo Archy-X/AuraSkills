@@ -1,11 +1,8 @@
 package dev.aurelium.auraskills.bukkit.loot.type;
 
-import dev.aurelium.auraskills.bukkit.loot.Loot;
-import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
+import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootValues;
 import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
-
-import java.util.Map;
-import java.util.Set;
 
 public class ItemLoot extends Loot {
 
@@ -13,9 +10,8 @@ public class ItemLoot extends Loot {
     protected int minAmount;
     protected int maxAmount;
 
-    public ItemLoot(int weight, String message, Map<String, Set<LootContext>> contexts, Map<String, Object> options,
-                    ItemSupplier item, int minAmount, int maxAmount) {
-        super(weight, message, contexts, options);
+    public ItemLoot(LootValues values, ItemSupplier item, int minAmount, int maxAmount) {
+        super(values);
         this.item = item;
         this.minAmount = minAmount;
         this.maxAmount = maxAmount;

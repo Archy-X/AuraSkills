@@ -6,10 +6,10 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.Loot;
-import dev.aurelium.auraskills.bukkit.loot.LootPool;
-import dev.aurelium.auraskills.bukkit.loot.LootTable;
-import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
+import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootPool;
+import dev.aurelium.auraskills.api.loot.LootTable;
+import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
@@ -97,7 +97,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
     private boolean isPoolUnobtainable(LootPool pool, EntityType entityType) {
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getContexts().getOrDefault("mobs", new HashSet<>());
+            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("mobs", new HashSet<>());
             // Loot will be reachable if it has no contexts
             if (contexts.isEmpty()) {
                 return false;

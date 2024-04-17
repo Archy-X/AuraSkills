@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.loot.context;
+package dev.aurelium.auraskills.api.loot;
 
 public interface LootContext {
 

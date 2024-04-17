@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.loot.provider;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.LootPool;
+import dev.aurelium.auraskills.api.loot.LootPool;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
 import dev.aurelium.auraskills.common.user.User;
 

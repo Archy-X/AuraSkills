@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.context;
 
+import dev.aurelium.auraskills.api.loot.LootContext;
 import org.bukkit.entity.EntityType;
 
 import java.util.Locale;

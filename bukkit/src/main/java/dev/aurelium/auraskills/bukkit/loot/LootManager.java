@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
+import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
@@ -15,6 +16,7 @@ public class LootManager {
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
     private final List<CustomItemParser> customItemParsers;
+    private final Map<String, LootParser> customLootParsers;
 
     public LootManager(AuraSkills plugin) {
         this.plugin = plugin;
@@ -23,6 +25,7 @@ public class LootManager {
         this.lootOptionKeys = new HashSet<>();
         this.poolOptionKeys = new HashSet<>();
         this.customItemParsers = new ArrayList<>();
+        this.customLootParsers = new HashMap<>();
     }
 
     public AuraSkills getPlugin() {
@@ -78,4 +81,11 @@ public class LootManager {
         customItemParsers.add(customItemParser);
     }
 
+    public Map<String, LootParser> getCustomLootParsers() {
+        return customLootParsers;
+    }
+
+    public void registerCustomLootParser(String name, LootParser parser) {
+        customLootParsers.put(name, parser);
+    }
 }

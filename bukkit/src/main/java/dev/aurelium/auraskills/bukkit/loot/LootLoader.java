@@ -1,7 +1,10 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
+import dev.aurelium.auraskills.api.loot.*;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.loot.parser.CommandLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.ItemLootParser;
+import dev.aurelium.auraskills.bukkit.loot.parser.LootParsingContextImpl;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.util.data.Parser;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -17,7 +20,7 @@ public class LootLoader extends Parser {
         this.manager = manager;
     }
 
-    public LootTable loadLootTable(File file, ConfigurationNode config) {
+    public LootTable loadLootTable(NamespacedId id, File file, ConfigurationNode config) {
         // Parse loot table type, default to block
         String typeString = config.node("type").getString();
         LootTableType type = LootTableType.BLOCK;
@@ -53,6 +56,7 @@ public class LootLoader extends Parser {
                 try {
                     String lootType = lootNode.node("type").getString("");
                     // Item loot
+                    LootParsingContext context = new LootParsingContextImpl(manager);
                     if (lootType.equalsIgnoreCase("item")) {
                         // Ignore loot if below the ignore_below major version
                         int ignoreBelow = lootNode.node("ignore_below").getInt(-1);
@@ -61,13 +65,19 @@ public class LootLoader extends Parser {
                             continue;
                         }
 
-                        loot = new ItemLootParser(manager).parse(lootNode);
+                        loot = new ItemLootParser(manager).parse(context, lootNode);
                     }
                     // Command loot
                     else if (lootType.equalsIgnoreCase("command")) {
-                        loot = new CommandLootParser(manager).parse(lootNode);
+                        loot = new CommandLootParser().parse(context, lootNode);
                     } else {
-                        throw new IllegalArgumentException("Unknown loot type: " + lootType);
+                        // Parse custom loot registered from API
+                        LootParser customParser = manager.getCustomLootParsers().get(lootType);
+                        if (customParser == null) {
+                            throw new IllegalArgumentException("Unknown loot type: " + lootType);
+                        }
+
+                        loot = customParser.parse(context, lootNode);
                     }
                 } catch (Exception e) {
                     manager.getPlugin().getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
@@ -85,9 +95,7 @@ public class LootLoader extends Parser {
         // Sort pools by selection priority
         pools.sort((pool1, pool2) -> pool2.getSelectionPriority() - pool1.getSelectionPriority());
         // Create table
-        String fileName = file.getName();
-        String tableName = fileName.substring(0, fileName.lastIndexOf("."));
-        return new LootTable(tableName, UUID.randomUUID(), type, pools);
+        return new LootTable(id, UUID.randomUUID(), type, pools);
     }
 
 }

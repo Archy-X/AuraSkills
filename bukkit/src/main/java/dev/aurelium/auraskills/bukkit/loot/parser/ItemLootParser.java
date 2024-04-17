@@ -1,12 +1,14 @@
 package dev.aurelium.auraskills.bukkit.loot.parser;
 
-import dev.aurelium.auraskills.bukkit.loot.Loot;
+import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootParser;
+import dev.aurelium.auraskills.api.loot.LootParsingContext;
 import dev.aurelium.auraskills.bukkit.loot.LootManager;
-import dev.aurelium.auraskills.bukkit.loot.builder.ItemLootBuilder;
 import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantEntry;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantList;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
+import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import org.apache.commons.lang.math.NumberUtils;
@@ -16,19 +18,19 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
 
-public class ItemLootParser extends LootParser {
+public class ItemLootParser implements LootParser {
 
+    private final LootManager manager;
     private final ConfigurateItemParser itemParser;
 
     public ItemLootParser(LootManager manager) {
-        super(manager);
+        this.manager = manager;
         this.itemParser = new ConfigurateItemParser(manager.getPlugin());
     }
 
     @Override
-    public Loot parse(ConfigurationNode config) throws SerializationException {
+    public Loot parse(LootParsingContext context, ConfigurationNode config) throws SerializationException {
         ItemSupplier item = null;
-        // Check if any custom parsers should be used
         for (CustomItemParser parser : manager.getCustomItemParsers()) {
             if (parser.shouldUseParser(config)) {
                 item = new ItemSupplier(parser.parseCustomItem(config), null);
@@ -41,16 +43,9 @@ public class ItemLootParser extends LootParser {
         }
         Validate.notNull(item, "Failed to parse item");
 
-        int[] amount = parseAmount(config);
+        int[] amounts = parseAmount(config);
 
-        return new ItemLootBuilder().item(item)
-                .minAmount(amount[0])
-                .maxAmount(amount[1])
-                .message(parseMessage(config))
-                .weight(parseWeight(config))
-                .contexts(parseContexts(config))
-                .options(parseOptions(config))
-                .build();
+        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1]);
     }
 
     private ItemSupplier parseItem(ConfigurationNode config) throws SerializationException {

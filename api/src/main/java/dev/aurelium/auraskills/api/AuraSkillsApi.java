@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api;
 
 import dev.aurelium.auraskills.api.config.MainConfig;
+import dev.aurelium.auraskills.api.loot.LootManager;
 import dev.aurelium.auraskills.api.message.MessageManager;
 import dev.aurelium.auraskills.api.registry.GlobalRegistry;
 import dev.aurelium.auraskills.api.registry.Handlers;
@@ -98,6 +99,14 @@ public interface AuraSkillsApi {
      * @return the source manager
      */
     SourceManager getSourceManager();
+
+    /**
+     * Gets the loot manager for registering custom loot types and getting information
+     * on loaded loot tables.
+     *
+     * @return the loot manager
+     */
+    LootManager getLootManager();
 
     /**
      * Gets the instance of the {@link AuraSkillsApi},

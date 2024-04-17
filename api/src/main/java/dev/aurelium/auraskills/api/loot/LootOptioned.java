@@ -1,14 +1,14 @@
-package dev.aurelium.auraskills.bukkit.loot.util;
+package dev.aurelium.auraskills.api.loot;
 
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class OptionsProvider {
+public class LootOptioned {
 
     protected final Map<String, Object> options;
 
-    public OptionsProvider(Map<String, Object> options) {
+    public LootOptioned(Map<String, Object> options) {
         this.options = options;
     }
 

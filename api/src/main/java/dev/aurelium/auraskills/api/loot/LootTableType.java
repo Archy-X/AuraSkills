@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.loot;
+package dev.aurelium.auraskills.api.loot;
 
 public enum LootTableType {
 

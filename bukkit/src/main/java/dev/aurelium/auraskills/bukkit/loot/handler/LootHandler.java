@@ -8,10 +8,10 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
-import dev.aurelium.auraskills.bukkit.loot.Loot;
-import dev.aurelium.auraskills.bukkit.loot.LootPool;
-import dev.aurelium.auraskills.bukkit.loot.LootTable;
-import dev.aurelium.auraskills.bukkit.loot.context.LootContext;
+import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootPool;
+import dev.aurelium.auraskills.api.loot.LootTable;
+import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
@@ -123,7 +123,7 @@ public abstract class LootHandler {
         // Add applicable loot to list for selection
         for (Loot loot : pool.getLoot()) {
             if (providedContext instanceof SourceContext sourceContext) {
-                Set<LootContext> lootContexts = loot.getContexts().get("sources");
+                Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists
                 if (lootContexts != null && sourceContext.source() != null) {
                     for (LootContext context : lootContexts) { // Go through LootContext and cast to Source
@@ -138,7 +138,7 @@ public abstract class LootHandler {
                     lootList.add(loot);
                 }
             } else if (providedContext instanceof MobContext mobContext) {
-                Set<LootContext> lootContexts = loot.getContexts().get("mobs");
+                Set<LootContext> lootContexts = loot.getValues().getContexts().get("mobs");
                 if (lootContexts != null && mobContext.entityType() != null) {
                     for (LootContext context : lootContexts) {
                         if (context instanceof MobContext mobLootContext) {
@@ -156,7 +156,7 @@ public abstract class LootHandler {
         // Loot selected based on weight
         int totalWeight = 0;
         for (Loot loot : lootList) {
-            totalWeight += loot.getWeight();
+            totalWeight += loot.getValues().getWeight();
         }
         if (totalWeight == 0) { // Don't attempt selection if no loot entries are applicable
             return null;
@@ -165,18 +165,18 @@ public abstract class LootHandler {
         int currentWeight = 0;
         Loot selectedLoot = null;
         for (Loot loot : lootList) {
-            if (selected >= currentWeight && selected < currentWeight + loot.getWeight()) {
+            if (selected >= currentWeight && selected < currentWeight + loot.getValues().getWeight()) {
                 selectedLoot = loot;
                 break;
             }
-            currentWeight += loot.getWeight();
+            currentWeight += loot.getValues().getWeight();
         }
         return selectedLoot;
     }
 
     private void giveXp(Player player, Loot loot, @Nullable XpSource source, Skill skill) {
         User user = plugin.getUser(player);
-        Object xpObj = loot.getOptions().get("xp");
+        Object xpObj = loot.getValues().getOptions().get("xp");
 
         double xp;
         if (xpObj instanceof Integer) {
@@ -198,7 +198,7 @@ public abstract class LootHandler {
     }
 
     private void attemptSendMessage(Player player, Loot loot) {
-        String message = loot.getMessage();
+        String message = loot.getValues().getMessage();
         if (message == null || message.isEmpty()) {
             return;
         }
@@ -245,7 +245,7 @@ public abstract class LootHandler {
 
     protected boolean isPoolUnobtainable(LootPool pool, XpSource source) {
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getContexts().getOrDefault("sources", new HashSet<>());
+            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("sources", new HashSet<>());
             // Loot will be reachable if it has no contexts
             if (contexts.isEmpty()) {
                 return false;

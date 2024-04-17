@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
@@ -90,5 +91,13 @@ public abstract class AbilityManager {
     }
 
     public abstract String getBaseDescription(Ability ability, User user);
+
+    public String getChanceValue(Ability ability, int level) {
+        return NumberUtil.format1(ability.getValue(level) - (Math.floor(ability.getValue(level) / 100) * 100));
+    }
+
+    public String getGuaranteedValue(Ability ability, int level) {
+       return String.valueOf((int) ability.getValue(level) / 100);
+    }
 
 }

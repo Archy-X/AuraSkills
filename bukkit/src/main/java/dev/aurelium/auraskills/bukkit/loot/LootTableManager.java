@@ -1,11 +1,15 @@
 package dev.aurelium.auraskills.bukkit.loot;
 
+import dev.aurelium.auraskills.api.loot.LootPool;
+import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContextProvider;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
+import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,14 +31,12 @@ public class LootTableManager {
 
 	private final AuraSkills plugin;
 	private final LootManager lootManager;
-	private final Map<Skill, LootTable> skillLootTables;
-	private final Map<NamespacedId, LootTable> otherLootTables;
+	private final Map<NamespacedId, LootTable> lootTables;
 	
 	public LootTableManager(AuraSkills plugin) {
 		this.plugin = plugin;
 		this.lootManager = new LootManager(plugin);
-		this.skillLootTables = new HashMap<>();
-		this.otherLootTables = new HashMap<>();
+		this.lootTables = new HashMap<>();
 		initLootManager();
 	}
 
@@ -46,14 +48,18 @@ public class LootTableManager {
 		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
 	}
 
+	public LootManager getLootManager() {
+		return lootManager;
+	}
+
 	@Nullable
 	public LootTable getLootTable(Skill skill) {
-		return skillLootTables.get(skill);
+		return lootTables.get(skill.getId());
 	}
 
 	@Nullable
 	public LootTable getLootTable(NamespacedId id) {
-		return otherLootTables.get(id);
+		return lootTables.get(id);
 	}
 
 	public void generateDefaultLootTables() {
@@ -78,7 +84,7 @@ public class LootTableManager {
 		}
 		if (!lootDirectory.isDirectory()) return;
 
-		skillLootTables.clear();
+		lootTables.clear();
 		File[] files = lootDirectory.listFiles();
 		if (files == null) return;
 		for (File lootTableFile : files) {
@@ -102,17 +108,13 @@ public class LootTableManager {
 					}
 				}
 				// Load corresponding loot table type
-				LootTable lootTable = lootManager.getLootLoader().loadLootTable(lootTableFile, config);
+				String fileName = lootTableFile.getName().replace(".yml", "");
+				NamespacedId id = NamespacedId.fromDefault(fileName);
+
+				LootTable lootTable = lootManager.getLootLoader().loadLootTable(id, lootTableFile, config);
 				if (lootTable == null) continue;
 
-				// Parse skill from file name
-				String fileName = lootTableFile.getName().replace(".yml", "");
-				Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(fileName));
-				if (skill != null) {
-					skillLootTables.put(skill, lootTable);
-				} else {
-					otherLootTables.put(NamespacedId.fromDefault(fileName), lootTable);
-				}
+				lootTables.put(id, lootTable);
 
 				if (embedded != null) {
 					loader.saveConfigIfUpdated(lootTableFile, embedded, user, config);
@@ -121,18 +123,13 @@ public class LootTableManager {
 				e.printStackTrace();
 			}
 		}
+		// Load loot tables registered from the API
+		loadCustomLootTables();
 		// Send info message
 		int tablesLoaded = 0;
 		int poolsLoaded = 0;
 		int lootLoaded = 0;
-		for (LootTable table : skillLootTables.values()) {
-			for (LootPool pool : table.getPools()) {
-				poolsLoaded++;
-				lootLoaded += pool.getLoot().size();
-			}
-			tablesLoaded++;
-		}
-		for (LootTable table : otherLootTables.values()) {
+		for (LootTable table : lootTables.values()) {
 			for (LootPool pool : table.getPools()) {
 				poolsLoaded++;
 				lootLoaded += pool.getLoot().size();
@@ -140,6 +137,39 @@ public class LootTableManager {
 			tablesLoaded++;
 		}
 		plugin.getLogger().info("Loaded " + lootLoaded + " loot entries in " + poolsLoaded + " pools and " + tablesLoaded + " tables");
+	}
+
+	private void loadCustomLootTables() {
+		var api = (ApiAuraSkills) plugin.getApi();
+		for (NamespacedRegistry registry : api.getNamespacedRegistryMap().values()) {
+			registry.getLootDirectory().ifPresent(dir -> loadExternalLootDir(dir, registry));
+		}
+	}
+
+	private void loadExternalLootDir(File dir, NamespacedRegistry registry) {
+		File[] files = dir.listFiles();
+		if (files == null) return;
+
+		for (File lootTableFile : files) {
+			if (!lootTableFile.isFile() || !lootTableFile.getName().endsWith(".yml")) {
+				continue;
+			}
+			ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+			try {
+				// Load user file
+				ConfigurationNode config = loader.loadUserFile(lootTableFile);
+
+				String fileName = lootTableFile.getName().replace(".yml", "");
+				NamespacedId id = NamespacedId.of(registry.getNamespace(), fileName);
+
+				LootTable lootTable = lootManager.getLootLoader().loadLootTable(id, lootTableFile, config);
+				if (lootTable == null) continue;
+
+				lootTables.put(id, lootTable);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void matchConfig(FileConfiguration config, File file) {

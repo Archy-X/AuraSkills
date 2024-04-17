@@ -229,7 +229,9 @@ public class LevelProgressionMenu {
                 Ability ability = unlockedAbility(p);
                 return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player())),
                         "{value}", NumberUtil.format1(ability.getValue(1)),
-                        "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)));
+                        "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)),
+                        "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, 1),
+                        "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(ability, 1));
             });
 
             component.shouldShow(t -> !getUnlocked((Skill) t.menu().getProperty("skill"), t.value()).isEmpty());
@@ -244,10 +246,12 @@ public class LevelProgressionMenu {
             });
             component.replace("desc", p -> {
                 Ability ability = leveledUpAbility(p);
-                int abilityLevel = ((p.value() - ability.getUnlock()) / ability.getLevelUp()) + 1;
+                int level = ((p.value() - ability.getUnlock()) / ability.getLevelUp()) + 1;
                 return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player())),
-                        "{value}", NumberUtil.format1(ability.getValue(abilityLevel)),
-                        "{value_2}", NumberUtil.format1(ability.getSecondaryValue(abilityLevel)));
+                        "{value}", NumberUtil.format1(ability.getValue(level)),
+                        "{value_2}", NumberUtil.format1(ability.getSecondaryValue(level)),
+                        "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, level),
+                        "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(ability, level));
             });
             component.replace("level", p -> {
                 Ability ability = leveledUpAbility(p);

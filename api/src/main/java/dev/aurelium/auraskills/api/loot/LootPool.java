@@ -1,11 +1,9 @@
-package dev.aurelium.auraskills.bukkit.loot;
-
-import dev.aurelium.auraskills.bukkit.loot.util.OptionsProvider;
+package dev.aurelium.auraskills.api.loot;
 
 import java.util.List;
 import java.util.Map;
 
-public class LootPool extends OptionsProvider {
+public class LootPool extends LootOptioned {
 
     private final String name;
     private final List<Loot> loot;

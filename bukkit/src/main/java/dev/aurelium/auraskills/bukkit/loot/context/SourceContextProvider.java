@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.context;
 
+import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;

@@ -42,7 +42,9 @@ public class AbilitiesMenu {
             template.replace("name", p -> p.value().getDisplayName(p.locale()));
             template.replace("desc", p -> TextUtil.replace(plugin.getAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player())),
                     "{value}", NumberUtil.format1(p.value().getValue(1)),
-                    "{value_2}", NumberUtil.format1(p.value().getSecondaryValue(1))));
+                    "{value_2}", NumberUtil.format1(p.value().getSecondaryValue(1)),
+                    "{chance_value}", plugin.getAbilityManager().getChanceValue(p.value(), 1),
+                    "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(p.value(), 1)));
             template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
             template.replace("level", p -> RomanNumber.toRoman(p.value().getUnlock(), plugin));
 
@@ -140,7 +142,9 @@ public class AbilitiesMenu {
                     String desc = plugin.getAbilityManager().getBaseDescription(ability, user);
                     return TextUtil.replace(desc,
                             "{value}", AbilityUtil.getUpgradeValue(ability, level, format),
-                            "{value_2}", AbilityUtil.getUpgradeValue2(ability, level, format));
+                            "{value_2}", AbilityUtil.getUpgradeValue2(ability, level, format),
+                            "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, level),
+                            "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(ability, level));
                 } else if (p.value() instanceof ManaAbility manaAbility) {
                     int level = user.getManaAbilityLevel(manaAbility);
                     String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, user);

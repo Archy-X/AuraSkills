@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
+import dev.aurelium.auraskills.common.api.implementation.ApiProvider;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.config.preset.PresetManager;
@@ -103,6 +104,8 @@ public interface AuraSkillsPlugin {
     PresetManager getPresetManager();
 
     PlatformUtil getPlatformUtil();
+
+    ApiProvider getApiProvider();
 
     // Message convenience methods
 

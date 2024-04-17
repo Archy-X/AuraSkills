@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.loot.item.enchant;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.api.loot.LootTable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;

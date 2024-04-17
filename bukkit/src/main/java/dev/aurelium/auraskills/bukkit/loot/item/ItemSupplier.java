@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.loot.item;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.LootTable;
+import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;

@@ -25,6 +25,8 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     private File contentDirectory;
     @Nullable
     private File menuDirectory;
+    @Nullable
+    private File lootDirectory;
 
     public ApiNamespacedRegistry(AuraSkillsPlugin plugin, String namespace, File contentDirectory) {
         this.plugin = plugin;
@@ -94,6 +96,16 @@ public class ApiNamespacedRegistry implements NamespacedRegistry {
     @Override
     public void setMenuDirectory(@Nullable File menuDirectory) {
         this.menuDirectory = menuDirectory;
+    }
+
+    @Override
+    public @NotNull Optional<File> getLootDirectory() {
+        return Optional.ofNullable(lootDirectory);
+    }
+
+    @Override
+    public void setLootDirectory(@Nullable File lootDirectory) {
+        this.lootDirectory = lootDirectory;
     }
 
     private void validateNamespace(NamespaceIdentified identified) {

@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
+import dev.aurelium.auraskills.bukkit.api.implementation.BukkitApiProvider;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
@@ -60,6 +61,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.api.ApiRegistrationUtil;
+import dev.aurelium.auraskills.common.api.implementation.ApiProvider;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.config.preset.PresetManager;
@@ -113,6 +115,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private AuraSkillsApi api;
     private AuraSkillsBukkit apiBukkit;
+    private ApiProvider apiProvider;
     private SkillManager skillManager;
     private BukkitAbilityManager abilityManager;
     private BukkitManaAbilityManager manaAbilityManager;
@@ -161,6 +164,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     public void onEnable() {
         // Register the API
         this.api = new ApiAuraSkills(this);
+        this.apiProvider = new BukkitApiProvider(this);
         ApiRegistrationUtil.register(api);
         this.itemManager = new ApiItemManager(this); // Needed in ApiAuraSkillsBukkit
         this.apiBukkit = new ApiAuraSkillsBukkit(this);
@@ -606,6 +610,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public PlatformUtil getPlatformUtil() {
         return platformUtil;
+    }
+
+    @Override
+    public ApiProvider getApiProvider() {
+        return apiProvider;
     }
 
     public ItemManager getItemManager() {
