@@ -137,4 +137,15 @@ public interface ItemManager {
      */
     ItemStack parseItem(ConfigurationNode config);
 
+    /**
+     * Parses a list of ItemStack from a ConfigurationNode if it has a materials list. Only the material
+     * differs between each item, the amount and all meta remains the same across items. If a regular material
+     * string is defined, a single item will be parsed like {@link #parseItem(ConfigurationNode)} and the list
+     * returned will be of size 1.
+     *
+     * @param config the Configurate ConfigurationNode to parse keys from, should be a mapping
+     * @return a list of parsed ItemStack
+     */
+    List<ItemStack> parseMultipleItems(ConfigurationNode config);
+
 }

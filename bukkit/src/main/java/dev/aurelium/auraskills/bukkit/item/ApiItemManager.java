@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.List;
 import java.util.Map;
@@ -102,5 +103,14 @@ public class ApiItemManager implements ItemManager {
     @Override
     public ItemStack parseItem(ConfigurationNode config) {
         return itemParser.parseItem(config);
+    }
+
+    @Override
+    public List<ItemStack> parseMultipleItems(ConfigurationNode config) {
+        try {
+            return itemParser.parseMultipleItems(config);
+        } catch (SerializationException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -53,19 +53,28 @@ public class ConfigurateItemParser {
 
     public ItemStack parseItem(ConfigurationNode config, List<String> excludedKeys) {
         ItemStack item = parseBaseItem(config, excludedKeys);
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            String displayName = parseDisplayName(config);
-            if (displayName != null) {
-                meta.setDisplayName(displayName);
-            }
-            List<String> lore = parseLore(config);
-            if (!lore.isEmpty()) {
-                meta.setLore(lore);
-            }
-            item.setItemMeta(meta);
-        }
+        parseDisplayNameAndLore(item, config);
         return item;
+    }
+
+    public List<ItemStack> parseMultipleItems(ConfigurationNode config) throws SerializationException {
+        if (config.node("materials").virtual()) {
+            return List.of(parseBaseItem(config));
+        }
+        List<String> materialList = config.node("materials").getList(String.class);
+        if (materialList == null) return List.of(parseBaseItem(config));
+
+        List<ItemStack> parsedItems = new ArrayList<>();
+
+        for (String materialString : materialList) {
+            ItemStack item = parseMaterialString(materialString);
+            item = parseItemMeta(item, config, new ArrayList<>());
+            parseDisplayNameAndLore(item, config);
+
+            parsedItems.add(item);
+        }
+
+        return parsedItems;
     }
 
     public ItemStack parseBaseItem(ConfigurationNode config) {
@@ -85,7 +94,12 @@ public class ConfigurateItemParser {
         Validate.notNull(materialString, "Item must specify a material");
 
         ItemStack item = parseMaterialString(materialString);
+        item = parseItemMeta(item, config, excludedKeys);
 
+        return item;
+    }
+
+    public ItemStack parseItemMeta(ItemStack item, ConfigurationNode config, List<String> excludedKeys) {
         if (!excludedKeys.contains("amount")) {
             parseAmount(item, config);
         }
@@ -131,6 +145,22 @@ public class ConfigurateItemParser {
             parseSkullMeta(item, item.getItemMeta(), skullMetaSection);
         }
         return item;
+    }
+
+    public void parseDisplayNameAndLore(ItemStack item, ConfigurationNode config) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return;
+        }
+        String displayName = parseDisplayName(config);
+        if (displayName != null) {
+            meta.setDisplayName(displayName);
+        }
+        List<String> lore = parseLore(config);
+        if (!lore.isEmpty()) {
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
     }
 
     @Nullable

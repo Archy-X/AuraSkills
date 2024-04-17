@@ -40,7 +40,6 @@ import java.util.*;
 public abstract class LootHandler {
 
     protected final AuraSkills plugin;
-    private final Random random = new Random();
     private final TextFormatter tf = new TextFormatter();
 
     public LootHandler(AuraSkills plugin) {
