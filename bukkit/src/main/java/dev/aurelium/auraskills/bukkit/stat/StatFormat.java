@@ -23,7 +23,7 @@ public class StatFormat {
         String name = modifier.name();
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
-                .replace("{stat}", stat.getDisplayName(locale))
+                .replace("{stat}", stat.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(value))
                 .replace("{name}", name));
     }
@@ -32,7 +32,7 @@ public class StatFormat {
         Stat stat = modifier.stat();
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
-                .replace("{stat}", stat.getDisplayName(locale))
+                .replace("{stat}", stat.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(modifier.value()))
                 .replace("{name}", modifier.name())
                 .replace("{player}", player.getName()));
@@ -41,21 +41,21 @@ public class StatFormat {
     public String applyPlaceholders(String input, Stat stat, Player player, Locale locale) {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
-                .replace("{stat}", stat.getDisplayName(locale))
+                .replace("{stat}", stat.getDisplayName(locale, false))
                 .replace("{player}", player.getName()));
     }
 
     public String applyPlaceholders(String input, Stat stat, double value, Locale locale) {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
-                .replace("{stat}", stat.getDisplayName(locale))
+                .replace("{stat}", stat.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(value)));
     }
 
     public String applyPlaceholders(String input, Stat stat, Locale locale) {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
-                .replace("{stat}", stat.getDisplayName(locale)));
+                .replace("{stat}", stat.getDisplayName(locale, false)));
     }
 
     public String applyPlaceholders(String input, String name, Player player) {

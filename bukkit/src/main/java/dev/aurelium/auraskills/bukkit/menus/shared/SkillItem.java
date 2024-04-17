@@ -82,7 +82,7 @@ public class SkillItem {
                 Locale locale = p.locale();
 
                 for (Stat stat : plugin.getRewardManager().getRewardTable(p.value()).getStatsLeveled()) {
-                    builder.append(entry, "{color}", stat.getColor(locale), "{stat}", stat.getDisplayName(locale));
+                    builder.append(entry, "{color}", stat.getColor(locale), "{stat}", stat.getDisplayName(locale, false));
                 }
                 return builder.build();
             });

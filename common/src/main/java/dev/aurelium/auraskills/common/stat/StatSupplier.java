@@ -59,7 +59,7 @@ public class StatSupplier implements StatProvider {
 
     @Override
     public String getColoredName(Stat stat, Locale locale) {
-        return messageProvider.applyFormatting(messageProvider.getStatColor(stat, locale) + stat.getDisplayName(locale));
+        return messageProvider.applyFormatting(messageProvider.getStatColor(stat, locale) + stat.getDisplayName(locale, false));
     }
 
     @Override

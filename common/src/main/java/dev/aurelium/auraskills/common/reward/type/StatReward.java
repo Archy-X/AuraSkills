@@ -43,7 +43,7 @@ public class StatReward extends SkillReward {
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
                 "{symbol}", stat.getSymbol(locale),
-                "{stat}", stat.getDisplayName(locale));
+                "{stat}", stat.getDisplayName(locale, false));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class StatReward extends SkillReward {
                 "{color}", stat.getColor(locale),
                 "{num}", NumberUtil.format1(value),
                 "{symbol}", stat.getSymbol(locale),
-                "{stat}", stat.getDisplayName(locale)));
+                "{stat}", stat.getDisplayName(locale, false)));
     }
 
 }
