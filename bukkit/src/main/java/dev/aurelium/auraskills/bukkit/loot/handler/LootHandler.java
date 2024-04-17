@@ -119,59 +119,38 @@ public abstract class LootHandler {
 
     @Nullable
     protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext) {
-        List<Loot> lootList = new ArrayList<>();
-        // Add applicable loot to list for selection
-        for (Loot loot : pool.getLoot()) {
+        return pool.rollLoot(loot -> {
             if (providedContext instanceof SourceContext sourceContext) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists
                 if (lootContexts != null && sourceContext.source() != null) {
+                    boolean matched = false;
                     for (LootContext context : lootContexts) { // Go through LootContext and cast to Source
                         if (context instanceof SourceContext sourceLootContext) {
                             if (sourceLootContext.source().equals(sourceContext.source())) { // Check if source matches one of the contexts
-                                lootList.add(loot);
+                                matched = true;
                                 break;
                             }
                         }
                     }
-                } else {
-                    lootList.add(loot);
+                    return matched;
                 }
             } else if (providedContext instanceof MobContext mobContext) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("mobs");
                 if (lootContexts != null && mobContext.entityType() != null) {
+                    boolean matched = false;
                     for (LootContext context : lootContexts) {
                         if (context instanceof MobContext mobLootContext) {
                             if (mobLootContext.entityType().equals(mobContext.entityType())) {
-                                lootList.add(loot);
-                                break;
+                                matched = true;
                             }
                         }
                     }
-                } else {
-                    lootList.add(loot);
+                    return matched;
                 }
             }
-        }
-        // Loot selected based on weight
-        int totalWeight = 0;
-        for (Loot loot : lootList) {
-            totalWeight += loot.getValues().getWeight();
-        }
-        if (totalWeight == 0) { // Don't attempt selection if no loot entries are applicable
-            return null;
-        }
-        int selected = random.nextInt(totalWeight);
-        int currentWeight = 0;
-        Loot selectedLoot = null;
-        for (Loot loot : lootList) {
-            if (selected >= currentWeight && selected < currentWeight + loot.getValues().getWeight()) {
-                selectedLoot = loot;
-                break;
-            }
-            currentWeight += loot.getValues().getWeight();
-        }
-        return selectedLoot;
+            return true;
+        }).orElse(null);
     }
 
     private void giveXp(Player player, Loot loot, @Nullable XpSource source, Skill skill) {
