@@ -68,7 +68,7 @@ public class StatsMenu {
 
         menu.template("stat", Stat.class, template -> {
             template.replace("color", p -> p.value().getColor(p.locale()));
-            template.replace("stat", p -> p.value().getDisplayName(p.locale()));
+            template.replace("stat", p -> p.value().getDisplayName(p.locale(), false));
             template.replace("stat_desc", p -> p.value().getDescription(p.locale(), false));
             template.replace("level", p -> getDisplayLevel(p.value(), plugin.getUser(p.player())));
             template.replace("traits", this::getTraitEntries);
