@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import org.bukkit.inventory.ItemStack;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
 import java.util.Map;
@@ -126,5 +127,14 @@ public interface ItemManager {
      * @return whether the item passes the filter
      */
     boolean passesFilter(ItemStack item, ItemFilter filter);
+
+    /**
+     * Parses an ItemStack from a ConfigurationNode section in the same
+     * format used to parse items in default loot and menus.
+     *
+     * @param config the Configurate ConfigurationNode to parse keys from, should be a mapping
+     * @return the parsed ItemStack
+     */
+    ItemStack parseItem(ConfigurationNode config);
 
 }

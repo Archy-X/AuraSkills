@@ -8,7 +8,9 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import org.bukkit.inventory.ItemStack;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
 import java.util.Map;
@@ -16,9 +18,11 @@ import java.util.Map;
 public class ApiItemManager implements ItemManager {
 
     private final AuraSkills plugin;
+    private final ConfigurateItemParser itemParser;
 
     public ApiItemManager(AuraSkills plugin) {
         this.plugin = plugin;
+        this.itemParser = new ConfigurateItemParser(plugin);
     }
 
     @Override
@@ -93,5 +97,10 @@ public class ApiItemManager implements ItemManager {
     @Override
     public boolean passesFilter(ItemStack item, ItemFilter filter) {
         return plugin.getItemRegistry().passesFilter(item, filter);
+    }
+
+    @Override
+    public ItemStack parseItem(ConfigurationNode config) {
+        return itemParser.parseItem(config);
     }
 }
