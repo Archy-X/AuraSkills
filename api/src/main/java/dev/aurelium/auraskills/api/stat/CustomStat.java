@@ -59,7 +59,12 @@ public class CustomStat implements Stat {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, formatted);
     }
 
     @Override

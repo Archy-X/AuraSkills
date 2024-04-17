@@ -43,8 +43,8 @@ public class StatSupplier implements StatProvider {
     }
 
     @Override
-    public String getDisplayName(Stat stat, Locale locale) {
-        return messageProvider.getStatDisplayName(stat, locale);
+    public String getDisplayName(Stat stat, Locale locale, boolean formatted) {
+        return messageProvider.getStatDisplayName(stat, locale, formatted);
     }
 
     @Override

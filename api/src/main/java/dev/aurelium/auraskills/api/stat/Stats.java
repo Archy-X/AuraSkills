@@ -56,7 +56,12 @@ public enum Stats implements Stat {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return provider.getDisplayName(this, locale);
+        return provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return provider.getDisplayName(this, locale, formatted);
     }
 
     @Override

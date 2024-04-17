@@ -34,7 +34,7 @@ public class ApiMessageManager implements MessageManager {
 
     @Override
     public String getStatDisplayName(Stat stat, Locale locale) {
-        return plugin.getMessageProvider().getStatDisplayName(stat, locale);
+        return plugin.getMessageProvider().getStatDisplayName(stat, locale, true);
     }
 
     @Override

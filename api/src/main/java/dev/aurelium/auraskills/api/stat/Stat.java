@@ -45,6 +45,15 @@ public interface Stat extends Optioned, NamespaceIdentified {
     String getDisplayName(Locale locale);
 
     /**
+     * Gets the stat display name as defined in the locale's messages file.
+     *
+     * @param locale the locale to get the display name in
+     * @param formatted whether to apply formatting to the display name
+     * @return the display name in the specified locale or in a fallback language
+     */
+    String getDisplayName(Locale locale, boolean formatted);
+
+    /**
      * Gets the stat description as defined in the locale's messages file.
      *
      * @param locale the locale to get the description in
