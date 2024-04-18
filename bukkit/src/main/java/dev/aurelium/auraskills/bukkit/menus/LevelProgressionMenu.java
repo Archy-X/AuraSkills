@@ -338,7 +338,10 @@ public class LevelProgressionMenu {
     }
 
     private List<Ability> getLeveledUp(Skill skill, int level) {
-        return plugin.getAbilityManager().getAbilities(skill, level).stream().filter(a -> a.getUnlock() != level).toList();
+        return plugin.getAbilityManager().getAbilities(skill, level).stream()
+                .filter(a -> a.getUnlock() != level)
+                .filter(Ability::isEnabled)
+                .toList();
     }
 
     private Ability unlockedAbility(ComponentPlaceholderInfo<Integer> p) {
@@ -346,7 +349,10 @@ public class LevelProgressionMenu {
     }
 
     private List<Ability> getUnlocked(Skill skill, int level) {
-        return plugin.getAbilityManager().getAbilities(skill, level).stream().filter(a -> a.getUnlock() == level).toList();
+        return plugin.getAbilityManager().getAbilities(skill, level).stream()
+                .filter(a -> a.getUnlock() == level)
+                .filter(Ability::isEnabled)
+                .toList();
     }
 
     private ImmutableList<SkillReward> getRewardsList(Skill skill, int level) {
