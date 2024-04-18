@@ -518,7 +518,10 @@ commands:
     add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
     set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
     remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  ability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Unknown skill!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:

@@ -518,7 +518,10 @@ commands:
     add: "<gray>プレイヤー<gray>{player}<aqua>{amount}{skill}<gray>XPが追加されました"
     set: "<gray>プレイヤー<gray>{player}<aqua>{skill}<gray>XPが{amount}に設定されました"
     remove: "<gray>プレイヤー<gold>{player}<aqua>{amount}{skill}<gray>XPが削除されました"
+  ability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>未知のスキルです！"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>プレイヤーにスキルプロファイルがありません。ゲームから抜けて、再度入り直すか、サーバーを再起動してください。"
 leveler:

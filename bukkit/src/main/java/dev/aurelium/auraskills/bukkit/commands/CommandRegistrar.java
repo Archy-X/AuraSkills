@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.commands;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -60,6 +61,15 @@ public class CommandRegistrar {
             }
             return skill;
         });
+        contexts.registerContext(ManaAbility.class, c -> {
+            String arg = c.popFirstArg();
+            ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(NamespacedId.fromDefault(arg));
+            if (manaAbility == null || !manaAbility.isEnabled()) {
+                Locale locale = plugin.getLocale(c.getSender());
+                throw new InvalidCommandArgument(plugin.getMsg(CommandMessage.UNKNOWN_MANA_ABILITY, locale));
+            }
+            return manaAbility;
+        });
         contexts.registerContext(Stat.class, c -> {
             String arg = c.popFirstArg();
             Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(arg));
@@ -113,6 +123,13 @@ public class CommandRegistrar {
                 skills.add(getSkillName(skill));
             }
             return skills;
+        });
+        completions.registerAsyncCompletion("mana_abilities", c -> {
+            List<String> abilities = new ArrayList<>();
+            for (ManaAbility manaAbility : plugin.getManaAbilityManager().getEnabledAbilities()) {
+                abilities.add(manaAbility.name().toLowerCase(Locale.ROOT));
+            }
+            return abilities;
         });
         completions.registerAsyncCompletion("skills_global", c -> {
             List<String> skills = new ArrayList<>();
@@ -184,6 +201,7 @@ public class CommandRegistrar {
         manager.registerCommand(new PresetCommand(plugin));
         manager.registerCommand(new StorageCommand(plugin));
         manager.registerCommand(new OpenMenuCommand(plugin));
+        manager.registerCommand(new AbilityCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

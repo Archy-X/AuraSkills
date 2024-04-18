@@ -518,7 +518,10 @@ commands:
     add: "<gray>Oyuncuya <aqua>{amount} {skill} <gray>XP eklendi <gray>{player}"
     set: "<gray>Oyuncu <gray>{player} için <aqua>{skill} <gray>XP ayarlayın <gray> {amount}"
     remove: "<gray>Oyuncudan <aqua>{amount} {skill} <gray>XP kaldırıldı <gold>{player}"
+  ability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Bilinmeyen beceri!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Bilinmeyen statü!"
   no_profile: "<yellow>Oyuncunun bir beceri profili yok. Lütfen oyuna tekrar katılmayı veya sunucuyu yeniden başlatmayı deneyin."
 leveler:
