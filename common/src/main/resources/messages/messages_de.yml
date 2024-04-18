@@ -518,10 +518,7 @@ commands:
     add: "<gray><aqua>{amount} {skill} <gray>EP zu Spieler <gray>{player} <gray>hinzugefügt"
     set: "<gray>Setze <aqua>{skill} <gray>XP für Spieler <gray>{player} <gray>auf <aqua>{amount}"
     remove: "<gray>Entfernt <aqua>{amount} {skill} <gray>XP von Spieler <gold>{player}"
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Unbekannte Fertigkeit!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unbekannte Fertigkeit!"
   no_profile: "<yellow>Spieler hat kein Fertigkeitenprofil!"
 leveler:

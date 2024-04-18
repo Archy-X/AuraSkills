@@ -16,11 +16,11 @@ import org.bukkit.entity.Player;
 import java.util.Locale;
 
 @CommandAlias("%skills_alias")
-@Subcommand("ability")
-public class AbilityCommand extends BaseCommand {
+@Subcommand("manaability")
+public class ManaAbilityCommand extends BaseCommand {
     private final AuraSkills plugin;
 
-    public AbilityCommand(AuraSkills plugin) {
+    public ManaAbilityCommand(AuraSkills plugin) {
         this.plugin = plugin;
     }
 

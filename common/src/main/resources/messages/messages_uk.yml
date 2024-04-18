@@ -518,10 +518,7 @@ commands:
     add: "<gray> Додано <aqua>{amount} {skill} <gray>ХРдля гравця <gray>{player}"
     set: "<gray>Set <aqua>{skill} <gray>XP для гравця <gray>{player} <gray>to {amount}"
     remove: "\"<gray>Видалено{amount} {skill} <gray>XP з гравця <gold>{player}\"1"
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Невідома навичка!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>У гравця немає профілю навичок. Будь ласка, спробуйте ще раз під'єднатися до гри або перезавантажте сервер."
 leveler:

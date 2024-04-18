@@ -518,10 +518,7 @@ commands:
     add: "<gray>成功为玩家 <gold>{player} <gray>添加了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
     set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"
     remove: "<gray>成功为玩家 <gold>{player} <gray>取走了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>未知技能!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>未知属性!"
   no_profile: "<yellow>玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。"
 leveler:

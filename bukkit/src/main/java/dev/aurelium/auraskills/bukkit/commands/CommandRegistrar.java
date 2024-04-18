@@ -201,7 +201,7 @@ public class CommandRegistrar {
         manager.registerCommand(new PresetCommand(plugin));
         manager.registerCommand(new StorageCommand(plugin));
         manager.registerCommand(new OpenMenuCommand(plugin));
-        manager.registerCommand(new AbilityCommand(plugin));
+        manager.registerCommand(new ManaAbilityCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

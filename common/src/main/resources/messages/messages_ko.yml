@@ -518,10 +518,7 @@ commands:
     add: "<gray>사용자 <gold>{player} <gray>에게 <aqua>{skill} {amount} <gray>경험치가 추가되었습니다."
     set: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} <gray>경험치가 <gold>{amount} <gray>로 설정되었습니다."
     remove: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} {amount} <gray>경험치가 제거되었습니다."
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>알 수 없는 스킬!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:

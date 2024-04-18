@@ -518,10 +518,7 @@ commands:
     add: "<gray>Toegevoegd <aqua>{amount} {skill} <gray>XP aan speler <gray>{player}"
     set: "<gray>Stel <aqua>{skill} <gray>XP in voor speler <gray>{player} <gray>naar {amount}"
     remove: "<gray>Verwijderd <aqua>{amount} {skill} <gray>XP van speler <gold>{player}"
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Onbekende vaardigheid!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Player heeft geen vaardighedenprofiel. Probeer het spel opnieuw aan te sluiten of de server opnieuw te starten."
 leveler:

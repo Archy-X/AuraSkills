@@ -518,10 +518,7 @@ commands:
     add: "<gray>已增加玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
     set: "<gray>已設定玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
     remove: "<gray>已刪除玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
-  ability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>未知的技能!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>玩家沒有技能資料!"
 leveler:

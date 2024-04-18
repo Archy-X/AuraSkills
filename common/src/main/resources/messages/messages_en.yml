@@ -518,7 +518,7 @@ commands:
     add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
     set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
     remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
-  ability:
+  manaability:
     cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Unknown skill!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
@@ -849,4 +849,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 32
+file_version: 33
