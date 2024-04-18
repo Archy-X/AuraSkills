@@ -148,6 +148,26 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             return String.valueOf(Math.round(user.getMaxMana()));
         }
 
+        if (identifier.startsWith("mability_")) {
+            NamespacedId id = NamespacedId.fromDefault(
+                    identifier.replace("mability_", "").replace("_active", "").replace("_value", ""));
+            ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(id);
+
+            if(manaAbility == null) return null;
+
+            User user = plugin.getUser(player);
+
+            if (manaAbility.isEnabled()) {
+                if (identifier.endsWith("value")) {
+                    return String.valueOf(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)));
+                } else if (identifier.endsWith("active")) {
+                    return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
+                } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
+                    return String.valueOf(user.getManaAbilityLevel(manaAbility));
+                }
+            }
+        }
+
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getValues()) {
             if (identifier.equals(stat.name().toLowerCase(Locale.ROOT))) {
@@ -183,20 +203,6 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                     User user = plugin.getUser(player);
                     return String.valueOf(ability.getSecondaryValue(user.getAbilityLevel(ability)));
                 }
-            }
-        }
-
-        // Gets mana ability levels
-        for (ManaAbility manaAbility : plugin.getManaAbilityRegistry().getValues()) {
-            if (identifier.equals(manaAbility.name().toLowerCase(Locale.ROOT))) {
-                User user = plugin.getUser(player);
-                return String.valueOf(user.getManaAbilityLevel(manaAbility));
-            } else if (identifier.equals(manaAbility.name().toLowerCase(Locale.ROOT) + "_value")) {
-                User user = plugin.getUser(player);
-                return String.valueOf(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)));
-            } else if (identifier.equals(manaAbility.name().toLowerCase(Locale.ROOT) + "_active")) {
-                User user = plugin.getUser(player);
-                return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
             }
         }
 
@@ -364,9 +370,11 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_[stat]%",
                 "%auraskills_[stat]_int%",
                 "%auraskills_[ability]%",
-                "%auraskills_[ability]_active%",
                 "%auraskills_[ability]_value%",
                 "%auraskills_[ability]_value_2%",
+                "%auraskills_mability_[ability]%",
+                "%auraskills_mability_[ability]_active%",
+                "%auraskills_mability_[ability]_value%",
                 "%auraskills_average%",
                 "%auraskills_average_int%",
                 "%auraskills_average_1%",
