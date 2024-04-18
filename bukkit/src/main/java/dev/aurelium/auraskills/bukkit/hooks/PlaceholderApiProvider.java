@@ -153,7 +153,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                     identifier.replace("mability_", "").replace("_active", "").replace("_value", ""));
             ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(id);
 
-            if(manaAbility == null) return null;
+            if (manaAbility == null) return null;
 
             User user = plugin.getUser(player);
 
