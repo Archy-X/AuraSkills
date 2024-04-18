@@ -50,7 +50,7 @@ public class StatsMenu {
                     entry = TextUtil.replace(entry,
                             "{color}", stat.getColor(locale),
                             "{symbol}", stat.getSymbol(locale),
-                            "{stat}", stat.getDisplayName(locale),
+                            "{stat}", stat.getDisplayName(locale, false),
                             "{level}", getDisplayLevel(stat, user));
                     builder.append(entry);
                 }
