@@ -156,7 +156,9 @@ public enum CommandMessage implements MessageKey {
     XP_ADD,
     XP_SET,
     XP_REMOVE,
+    MANA_ABILITY_COOLDOWN_RESET("manaability.cooldown_reset"),
     UNKNOWN_SKILL("unknown_skill"),
+    UNKNOWN_MANA_ABILITY("unknown_mana_ability"),
     UNKNOWN_STAT("unknown_stat");
 
     private final String path;

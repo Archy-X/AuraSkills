@@ -1,11 +1,13 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
@@ -27,7 +29,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
     private final AuraSkills plugin;
     private final String identifier;
-    private final String[] xpIdentifiers = new String[] {"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
+    private final String[] xpIdentifiers = new String[]{"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
 
     public PlaceholderApiProvider(AuraSkills plugin, String identifier) {
         this.plugin = plugin;
@@ -146,6 +148,26 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             return String.valueOf(Math.round(user.getMaxMana()));
         }
 
+        if (identifier.startsWith("mability_")) {
+            NamespacedId id = NamespacedId.fromDefault(
+                    identifier.replace("mability_", "").replace("_active", "").replace("_value", ""));
+            ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(id);
+
+            if (manaAbility == null) return null;
+
+            User user = plugin.getUser(player);
+
+            if (manaAbility.isEnabled()) {
+                if (identifier.endsWith("value")) {
+                    return String.valueOf(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)));
+                } else if (identifier.endsWith("active")) {
+                    return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
+                } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
+                    return String.valueOf(user.getManaAbilityLevel(manaAbility));
+                }
+            }
+        }
+
         //Gets stat values
         for (Stat stat : plugin.getStatRegistry().getValues()) {
             if (identifier.equals(stat.name().toLowerCase(Locale.ROOT))) {
@@ -162,8 +184,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             if (identifier.equals(skill.name().toLowerCase(Locale.ROOT))) {
                 User user = plugin.getUser(player);
                 return String.valueOf(user.getSkillLevel(skill));
-            }
-            else if (identifier.equals(skill.name().toLowerCase(Locale.ROOT) + "_roman")) {
+            } else if (identifier.equals(skill.name().toLowerCase(Locale.ROOT) + "_roman")) {
                 User user = plugin.getUser(player);
                 return RomanNumber.toRoman(user.getSkillLevel(skill), plugin);
             }
@@ -351,6 +372,9 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_[ability]%",
                 "%auraskills_[ability]_value%",
                 "%auraskills_[ability]_value_2%",
+                "%auraskills_mability_[ability]%",
+                "%auraskills_mability_[ability]_active%",
+                "%auraskills_mability_[ability]_value%",
                 "%auraskills_average%",
                 "%auraskills_average_int%",
                 "%auraskills_average_1%",

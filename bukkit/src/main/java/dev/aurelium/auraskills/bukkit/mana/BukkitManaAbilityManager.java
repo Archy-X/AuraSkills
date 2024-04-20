@@ -21,7 +21,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class BukkitManaAbilityManager extends ManaAbilityManager {
 
@@ -74,7 +76,7 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;
         plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_ENOUGH_MANA, user.getLocale())
-                ,"{mana}", NumberUtil.format0(manaCost)
+                , "{mana}", NumberUtil.format0(manaCost)
                 , "{current_mana}", String.valueOf(Math.round(user.getMana()))
                 , "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
     }
@@ -89,4 +91,13 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
         return desc;
     }
 
+    public Set<ManaAbility> getEnabledAbilities() {
+        Set<ManaAbility> abilities = new LinkedHashSet<>();
+        for (ManaAbilityProvider abilityProvider : providerMap.values()) {
+            if (!abilityProvider.isDisabled()) {
+                abilities.add(abilityProvider.getManaAbility());
+            }
+        }
+        return abilities;
+    }
 }
