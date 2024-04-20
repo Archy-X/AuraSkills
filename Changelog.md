@@ -2,6 +2,50 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.0.7
+
+### New Features
+- Add trait placeholders
+  - `%auraskills_trait_[trait]%` gets the effective level of a trait
+  - `%auraskills_trait_[trait]_bonus%` gets the bonus level of a trait (level excluding the base value)
+  - `%auraskills_trait_[trait]_menu%` gets the trait in the same format displayed in the stats menu
+- Add mana ability placeholders (thanks Erik)
+  - `%auraskills_mability_[ability]%` gets the player's mana ability level
+  - `%auraskills_mability_[ability]_value%` gets the mana ability value
+  - `%auraskills_mability_[ability]_active%` returns true if mana ability is active, false otherwise
+- Add MythicMobs hook to fix issues with damage (thanks Erik)
+  - Add takeMana mechanic
+    - Syntax: takeMana{m=number}
+  - Add giveSkillXP mechanic
+    - Syntax: giveSkillXP{xp=number,s=skill}
+  - Add hasMana condition for MythicCrucible
+    - Syntax: hasMana{m=number}
+- Add cause and excluded_cause options to entity source
+  - These options can be optionally added to filter DamageCause
+- Add directly_to_inventory option to config.yml to make all bonus item drops from luck traits and loot always add directly to the player's inventory instead of being dropped in the world
+  - This option does not affect vanilla item drops
+
+### Changes
+- Bleed no longer creates invulnerable damage frames
+- Add Turkish, Finnish, and Thai messages
+
+### Bug Fixes
+- Fix disabled abilities showing in level progression menu items
+- Fix hex colors in stat names not working in menus
+- Fix the WorldGuard hook not loading blocked_check_replace_regions option
+- Fix user data being reset in some cases
+- Fix block luck not applying to players in Adventure mode
+- Fix CustomSkill not showing defined messages in menus
+
+### API Changes
+- Add openMenu methods and registerContext to MenuManager
+- Add parseItem and parseMultipleItems to ItemManager, allowing parsing of ItemStack from a ConfigurationNode
+- Add passesFilter to ItemManager
+- Add loot API for accessing existing loot tables and registering new loot types
+  - New loot tables can be loaded by using NamespacedRegistry#setLootDirectory
+- Add SourceManager API for getting sources of a type
+- Remove the extra repositories that were required to load the dependency in 2.0.6
+
 ## 2.0.6
 
 ### New Features
