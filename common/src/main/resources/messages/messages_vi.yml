@@ -518,7 +518,10 @@ commands:
     add: "<gray>Đã thêm <aqua>{amount} XP {skill}<gray> cho <gray>{player}"
     set: "<gray> Đã đặt XP <aqua>{skill} <gray>cho người chơi <gray>{player} <gray>thành {amount}"
     remove: "<gray>Đã xóa bỏ <aqua>{amount} {skill} <gray>XP từ người chơi <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Khả năng không khả dụng!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Chỉ số không khả dụng!"
   no_profile: "<yellow>Người chơi không có hồ sơ Khả năng. Hãy thử thoát ra và vào lại hoặc khởi động lại máy chủ."
 leveler:

@@ -518,7 +518,10 @@ commands:
     add: "<gray>Přidáno <aqua>{amount} {skill} <gray>XP k hráči <gray>{player}"
     set: "<gray>Nastavit <aqua>{skill} <gray>XP pro hráče <gray>{player} <gray>to {amount}"
     remove: "<gray>Odstraněno <aqua>{amount} {skill} <gray>XP od hráče <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Neznamá Dovednost!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
   no_profile: "<yellow>Hráč nemá profil dovedností!"
 leveler:
