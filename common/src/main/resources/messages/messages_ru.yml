@@ -518,7 +518,10 @@ commands:
     add: "<gray>Добавлены <aqua>{amount} {skill} <gray>XP игроку <gray>{player}"
     set: "<gray>Установить <aqua>{skill} <gray>XP для игрока <gray>{player} <gray>на {amount}"
     remove: "<gray>Удалить <aqua>{amount} {skill} <gray>XP у игрока <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Неизвестный навык!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Неизвестная статистика!"
   no_profile: "<yellow>Игрок не имеет профиля навыков. Пожалуйста, попробуйте переподключиться к игре или перезапустить сервер."
 leveler:
