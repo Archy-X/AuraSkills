@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: การเก็บเกี่ยวอันอุดมสมบูรณ์
+    desc: "เงินช่วยเหลือ +{value} โชคลาภเกษตรกรรม ซึ่งเพิ่มโอกาสในการดรอปพิเศษ"
+    info: "+{value} Farming Luck"
+  farmer:
+    name: ชาวนา
+    desc: "ได้รับ {value}% XP เพิ่มจากการทำฟาม"
+    info: "+{value}% XP"
+  scythe_master:
+    name: สกิลเก็บเกี่ยว
+    desc: "เพิ่มความเสียหายจากจอบ {value}%"
+    info: "+{value}% ความเสียหายจากจอบ"
+  geneticist:
+    name: นักพันธุศาสตร์
+    desc: "เพิ่มอาหารได้รับจาก จากพืชโดย {value}"
+    info: "+{value} อาหาร"
+  growth_aura:
+    name: ออร่าการเจริญเติบโต
+    desc: "พืชที่มีระยะการเติบโตภายใน {radius} บล็อกของคุณจะเติบโตเร็วขึ้น {value}%"
+    info: "+{value}% การเจริญเติบโต"
+  lumberjack:
+    name: คนตัดไม้
+    desc: "เงินช่วยเหลือ +{value} การหาโชค ซึ่งจะเพิ่มโอกาสในการดรอปพิเศษ"
+    info: "+{value} Foraging Luck"
+  forager:
+    name: ล่าซัพพลาย
+    desc: "ได้รับ {value}% XP เพิ่มจากการทำฟาม"
+    info: "+{value}% XP"
+  axe_master:
+    name: ปรมาจารย์ขวาน
+    desc: "เพิ่มความเสียหายจากจอบ {value}%"
+    info: "+{value}% ความเสียหายจากจอบ"
+  valor:
+    name: ความกล้าหาญ
+    desc: "ให้ +{value}ความแข็งแกร่งขณะถือขวาน"
+    info: "+{value} ค่าความแข็งแกร่ง"
+  shredder:
+    name: จอมบดขยี้
+    desc: "{value}% โอกาสที่จะทำความเสียหายต่อ 3 ค่าทนทาน ด้วยขวาน"
+    info: "{value}% 3x ความเสียหายต่อความทนทาน"
+  lucky_miner:
+    name: ลัคกี้ ไมเนอร์
+    desc: "ให้ +{value} การขุดโชคลาภ ซึ่งเพิ่มโอกาสในการดรอปพิเศษ"
+    info: "+{value} การขุดโชคลาภ"
+  miner:
+    name: นักขุดแร่
+    desc: "ได้รับ {value}% ค่าประสบการณ์ เพิ่มจากการขุดแร่."
+    info: "+{value}% ค่าประสบการณ์"
+  pick_master:
+    name: ปรามาจารย์อีเต้อ
+    desc: "ทำความเสียหาย {value}% มากขึ้นด้วยอีเต้อ."
+    info: "+{value}% ความเสียหายจากอีเต้อ"
+  stamina:
+    name: พละกำลัง
+    desc: "เพื่ม +{value} ความทนทานขณะถืออีเต้อ"
+    info: "+{value} ความทนทาน"
+  hardened_armor:
+    name: ชุดเกราะแข็งกล้า
+    desc: "{value}% โอกาศที่จะต้านความเสียหาย ของความทนทานของเกราะ"
+    info: "{value}% ที่จะไม่มีการเสียหายของความทนทาน"
+  lucky_catch:
+    name: โชคตกปลา
+    desc: "เพื่ม +{value} โชคตกปลา ซึ่งเพิ่มโอกาสในการดรอปพิเศษ"
+    info: "+{value} โชคตกปลา"
+  fisher:
+    name: นักตกปลา
+    desc: "ได้รับ {value}% ค่าประสบการณ์ เพิ่มจากการทำฟาม"
+    info: "+{value}% ค่าประสบการณ์"
+  treasure_hunter:
+    name: นักล่าสมบัติ
+    desc: "{value}% โอกาสมากขึ้นที่จะได้ของแรร์จากการตกปลา."
+    info: "+{value}% ของแรร์"
+  grappler:
+    name: ดึงไว
+    desc: "ตก Entity {value}% เริ่วมากขึ้น."
+    info: "+{value}% ความเร็วการตก"
+  epic_catch:
+    name: ตกของ มหากาพย์
+    desc: "{value}% โอกาสมากขึ้นที่จะได้ของ epic จากการตกปลา."
+    info: "+{value}% ของระดับ Epic"
+  metal_detector:
+    name: เครื่องตรวจจับโลหะ
+    desc: "{value}% เพิ่มโอกาสในการได้รับของหายากจากการขุด"
+    info: "+{value}% ของหายาก"
+  excavator:
+    name: ขุดเจาะ
+    desc: "ได้รับ {value}% ค่าประสบการณ์ เพิ่มจากการขุด"
+    info: "+{value}% ค่าประสบการณ์"
+  spade_master:
+    name: ปรมาจารย์การใช้จอบ
+    desc: "ทำความเสียหาย {value}% มากขึ้นด้วยที่ขุด."
+    info: "+{value}% ความเสียหายจากที่ขุด"
+  bigger_scoop:
+    name: คำโตๆ
+    desc: "{value}% โอกาสที่จะได้ดรอปเป็นสามเท่า จากการขุด."
+    info: "{value}% 3x ดรอบ"
+  lucky_spades:
+    name: จอบนำโชค
+    desc: "{value}% เพิ่มโอกาสมากขึ้นในการได้ของระดับepicจากการขุด."
+    info: "+{value}% ของระดับ Epic"
+  retrieval:
+    name: การเรียกคืน
+    desc: "ลูกศรที่คุณพลาดจะถูกดึงกลับมาทันที {time} ขึ้นอยู่กับ {value} บล็อกห่างออกไป "
+    info: "{value} ระยะทาง"
+  archer:
+    name: นักธนู
+    desc: "ได้รับ {value}% ค่าประสบการณ์ เพิ่มจากการยิงธนู."
+    info: "+{value}% ค่าประสบการณ์"
+  bow_master:
+    name: ปรมาจารย์ธนู
+    desc: "ทำความเสียหาย {value}% มากขึ้นด้วยที่ธนู."
+    info: "+{value}% ความเสียหายจากธนู"
+  piercing:
+    name: เจาะเกราะ
+    desc: "{value}% มีโอกาศที่ลูกธนูยิงทลุ"
+    info: "+{value}% โอกาสในการติดคริ"
+  stun:
+    name: มึนงง
+    desc: "{value}% มีโอกาศที่จำทำให้สัตรู ความเร็วการเคลื่อนที่ ลดลง 20% เป็นเวลา 2 วินาที."
+    info: "+{value}% โอกาสในการติดมึนงง"
+  shielding:
+    name: การป้องกัน
+    desc: "ลดความเสียหายที่เข้ามาโดย {value}% ในขณะที่ด้อม"
+    info: "-{value}% การโจมตี Dmg ที่กำลังเข้ามา"
+  defender:
+    name: ผู้พิทักษ์
+    desc: "รับ {value}% ค่าประสบการณ์ การป้องกันเพิ่ม"
+    info: "+{value}% ค่าประสบการณ์"
+  mob_master:
+    name: ปรมาจารย์ด้านสิ่งมีชีวิต
+    desc: "ลดความเสียหายจากสิ่งมีชีวิต by {value}%"
+    info: "ลด {value}% ความเสียหายจากสิ่งมีชีวิต"
+  immunity:
+    name: ทำให้พ้นอันตราย
+    desc: "{value}% มีโอกาศที่จะทำให้ การโจมตีของศัตรูไม่เป็นผล."
+    info: "{value}% พ้นอันตราย"
+  no_debuff:
+    name: ไม่มีดีบัฟ
+    desc: "{value}% โอกาสที่จะลบล้างสิ่งที่เป็นอันตราย จากผลของยา."
+    info: "{value}% ไร้ดีบัฟ"
+  parry:
+    name: ปัดป้อง
+    desc: "ขาดการแกว่งดาบอยู่ข้างใน {time} ก่อนโดนโจมตีจะลดความเสียหายลงด้วย {value}% และยกเลิกการน็อคแบ็ค"
+    info: "{value}% ลดความเสียหาย"
+    parried: "<red>โจมตีปัดป้อง"
+  fighter:
+    name: นักสู้
+    desc: "ได้รับ {value}% การต่อสู้มากขึ้น ค่าประสบการณ์"
+    info: "+{value}% ค่าประสบการณ์"
+  sword_master:
+    name: ปรมาจารย์ดาบ
+    desc: "ข้อเสนอ {value}% สร้างความเสียหายด้วยดาบมากขึ้น"
+    info: "+{value}% ความเสียหายจากดาบ"
+  first_strike:
+    name: First Strike
+    desc: "ทำความเสียหายมากขึ้น {value}% ในการโจมตีครั้งแรก"
+    info: "{value}% โอกาส {value_2} ความเสียหาย"
+    dealt: "&cจัดการการโจมตีครั้งแรก!"
+  bleed:
+    name: เลือดออก
+    desc: "{value}% มีโอกาสทำให้ศัตรูเลือดออกได้ {base_ticks} เลือดออกเห็บจัดการ {value_2} ความเสียหายต่อขีด {added_ticks} เพิ่มเห็บให้กับศัตรูที่เลือดออกแล้ว"
+    info: "{value}% โอกาส {value_2} ความเสียหาย"
+    enemy_bleeding: "<red>ศัตรูเดือด!"
+    self_bleeding: "<red>คุณมีเลือดออก!"
+    stop: "<white>เลือดหยุดแล้ว"
+  anti_hunger:
+    name: ต่อต้านความหิว
+    desc: "{value}% โอกาสที่จะหยุดการสูญเสียความหิว"
+    info: "{value}% ไม่มีการสูญเสียความหิว"
+  runner:
+    name: นักวิ่ง
+    desc: "ได้รับ {value}% ความอดทนมากขึ้น ค่าประสบการณ์"
+    info: "+{value}% ค่าประสบการณ์"
+  golden_heal:
+    name: โกลเด้นฮีล
+    desc: "เพิ่มผลการฟื้นฟู สุขภาพดีได้ด้วย {value}%"
+    info: "+{value}% การฟื้นฟูเอฟเฟกต์"
+  recovery:
+    name: การกู้คืน
+    desc: "เพิ่มการฟื้นฟูตามธรรมชาติเมื่อ น้อยกว่าครึ่งหนึ่งของสุขภาพด้วย {value}%"
+    info: "+{value}% อัตราฟื้นฟู เลือด ต่ำ"
+  meal_steal:
+    name: ขโมยอาหาร
+    desc: "{value}% มีโอกาสขโมย 1 คะแนนความหิว เมื่อโจมตีผู้เล่น"
+    info: "{value}% ขโมยความหิว"
+  light_fall:
+    name: แสงตก
+    desc: "ลดความเสียหายจากการตกทั้งหมดด้วย {value}%"
+    info: "-{value}% ความเสียหายจากการตก"
+  jumper:
+    name: กระโดด
+    desc: "ได้รับ {value}% ความคล่องตัวมากขึ้น ค่าประสบการณ์"
+    info: "+{value}% ค่าประสบการณ์"
+  sugar_rush:
+    name: ชูการ์รัช
+    desc: "สิ้นเปลืองและกระจายความเร็วและบูสต์ การกระโดดยาคงอยู่ {value}% อีกต่อไป"
+    info: "{value}% ความเร็วอีกต่อไป"
+  fleeting:
+    name: หายวับไป
+    desc: "ได้รับ +{value} ความเร็วเมื่อสุขภาพต่ำกว่า 20%"
+    info: "+{value}% ความเร็ว"
+    start: "<white>คุณได้รับความเร็วเพิ่มขึ้นอย่างรวดเร็ว! <gray>(+{value}% ความเร็ว)"
+    end: "<gray>การเร่งความเร็วที่หายวับไปหมดลง"
+  thunder_fall:
+    name: ฟ้าร้องตก
+    desc: "เมื่อด้อมในระหว่างการล้มคุณมี {value}% โอกาสในการจัดการ {value_2}% ของความเสียหายจากการตกที่คาดว่าจะเกิดขึ้นกับฝูงชนในรัศมี 3 ช่วงตึก"
+    info: "{value}% โอกาส {value_2}% ความเสียหาย"
+  alchemist:
+    name: นักเล่นแร่แปรธาตุ
+    desc: "ยาที่คุณชงมี {value}% ระยะเวลานานขึ้น"
+    info: "+{value}% ระยะเวลาของยา"
+  brewer:
+    name: บรูเออร์
+    desc: "ได้รับ {value}% การเล่นแร่แปรธาตุมากขึ้น"
+    info: "+{value}% ค่าประสบการณ์"
+  splasher:
+    name: สแปลเชอร์
+    desc: "ยาที่คุณสาดได้รับ {value}% ระยะเวลานานขึ้นสำหรับ ผู้เล่นแต่ละคนที่ได้รับผลกระทบ"
+    info: "+{value}% ระยะเวลา/ผู้เล่น"
+  lingering:
+    name: อ้อยอิ่ง
+    desc: "ยาที่ค้างอยู่จะสลายไปตามธรรมชาติ {value}% ช้าลงและสลายตัว {value_2}% น้อยลงต่อเอนทิตีที่ได้รับผลกระทบ"
+    info: "-{value}% เป็นธรรมชาติ -{value_2}% การสลายตัวของเอนทิตี"
+  wise_effect:
+    name: ผลอันชาญฉลาด
+    desc: "ผลอันชาญฉลาด {value} สติปัญญาสำหรับเอฟเฟกต์ยา ที่ออกฤทธิ์ไม่ซ้ำใคร"
+    info: "+{value} ความฉลาด/ผล"
+  xp_convert:
+    name: การแปลงค่าประสบการณ์
+    desc: "รับประสบการณ์ Minecraft 1 ครั้งต่อทุกๆ ครั้ง {value} ทักษะค่าประสบการณ์ที่คุณได้รับ"
+    info: "1 EXP/{value} ทักษะค่าประสบการณ์"
+  enchanter:
+    name: เจ้าเสน่ห์
+    desc: "ได้รับ {value}% ค่าประสบการณ์ที่มีเสน่ห์มากขึ้น."
+    info: "+{value}% ค่าประสบการณ์"
+  xp_warrior:
+    name: ค่าประสบการณ์นักรบ
+    desc: "มอนที่คุณฆ่ามี {value}% โอกาสที่จะดรอปประสบการณ์สองเท่า"
+    info: "{value}% 2x มอนค่าประสบการณ์"
+  enchanted_strength:
+    name: พลังแห่งมนต์เสน่ห์
+    desc: "ได้รับ {value} ความแข็งแกร่งสำหรับทุกการร่ายมนตร์ ที่เป็นเอกลักษณ์บนไอเท็มที่ถืออยู่"
+    info: "{value} ความแข็งแกร่ง/เสน่ห์"
+  lucky_table:
+    name: โต๊ะคราฟนำโชค
+    desc: "ไอเทมที่คุณร่ายมนตร์โดยใช้ตารางร่ายมนตร์จะมี {value}% โอกาสที่จะอัพเกรดระดับเสน่ห์ 1 หากไม่ใช่ระดับสูงสุด"
+    info: "{value}% โอกาสอัพเกรดเสน่ห์"
+  life_essence:
+    name: แก่นแท้แห่งชีวิต
+    desc: ยารักษาสุขภาพทันที{value}% มากกว่า
+    info: "+{value}% สุขภาพทันที"
+  healer:
+    name: เลือด
+    desc: ได้รับ {value}% ค่าประสบการณ์ การรักษาเพิ่มเติม
+    info: "+{value}% ค่าประสบการณ์"
+  life_steal:
+    name: ขโมยชีวิต
+    desc: รักษา {value}% ของ เลือด สูงสุดของฝูงศัตรูและผู้เล่นที่คุณสังหาร
+    info: "Steal {value}% เลือด"
+  golden_heart:
+    name: หัวใจสีทอง
+    desc: ความเสียหายที่เกิดกับหัวใจดูดซับของคุณจะลดลง {value}%
+    info: "-{value}% การดูดซึม"
+  revival:
+    name: การฟื้นฟู
+    desc: ได้รับ +{value} สุขภาพและ +{value_2} การฟื้นฟูเป็นเวลา 30 วินาทีหลังจากเกิดใหม่
+    info: "+{value} เลือด +{value_2} รีเจน"
+    message: "<white>คุณได้รับโบนัสการฟื้นฟูเป็นเวลา 30 วินาที! <white>(<red>+{value} เลือด <gold>+{value_2} การฟื้นฟู<white>)"
+  disenchanter:
+    name: ผู้สลายเสน่ห์
+    desc: ได้รับ {value}% ประสบการณ์มากขึ้นเมื่อสลายไอเทมโดยใช้หินลับ
+    info: "+{value}% เวล"
+  forger:
+    name: ช่างตีเหล็ก
+    desc: ได้รับ {value}% เพิ่ม ค่าประสบการณ์ การตีขึ้นรูป
+    info: "+{value}% ค่าประสบการณ์"
+  repairing:
+    name: กำลังซ่อม
+    desc: การซ่อมแซมสิ่งของในทั่งตีเหล็กโดยใช้วัตถุดิบที่ได้จากการซ่อมแซม {value}% ความทนทานมากขึ้น
+    info: "+{value}% ซ่อมทั่ง"
+  anvil_master:
+    name: ทั่งมาสเตอร์
+    desc: เพิ่มค่าซ่อมสูงสุดของทั่งตีเหล็กก่อนที่จะแพงเกินไป {value} ประสบการณ์
+    info: "{value} ต้นทุนสูงสุด"
+  skill_mender:
+    name: ทักษะ เมนเดอร์
+    desc: การได้รับทักษะ ค่าประสบการณ์มี {value}% โอกาสในการซ่อมแซมไอเทมที่ถือไว้หรือชิ้นส่วนเกราะที่สวมใส่ด้วยมนต์เสน่ห์ Mending 1 ความทนทานต่อ 2 ค่าประสบการณ์ ทักษะ
+    info: "{value}% โอกาสซ่อม"
+acf:
+  core:
+    permission_denied: "<red>ขออภัย คุณไม่ได้รับอนุญาตให้ดำเนินการคำสั่งนี้"
+    permission_denied_parameter: "<red>ขออภัย คุณไม่ได้รับอนุญาตให้ดำเนินการคำสั่งนี้"
+    error_generic_logged: "<red>เกิดข้อผิดพลาด. ปัญหานี้ถูกบันทึกไว้แล้ว ขออภัยในความไม่สะดวก."
+    unknown_command: "<red>คำสั่งที่ไม่รู้จัก โปรดพิมพ์ <yellow>/sk help"
+    invalid_syntax: "<yellow>การใช้งาน: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>ข้อผิดพลาด: {message}"
+    error_performing_command: "<red>ขออภัย มีข้อผิดพลาดในการดำเนินการคำสั่งนี้"
+    please_specify_one_of: "<red>ข้อผิดพลาด: โปรดระบุอย่างใดอย่างหนึ่ง(<yellow>{valid}<red>)"
+    must_be_a_number: "<red>ข้อผิดพลาด: {num}ต้องเป็นตัวเลข"
+    must_be_min_length: "<red>ข้อผิดพลาด: ต้องมีอย่างน้อย {min} ตัวอักษรยาว"
+    must_be_max_length: "<red>ข้อผิดพลาด: ต้องมีความยาวไม่เกิน {max} อักขระ"
+    please_specify_at_most: "<red>ข้อผิดพลาด: โปรดระบุค่าสูงสุด {max}"
+    please_specify_at_least: "<red>ข้อผิดพลาด: กรุณาระบุค่าเป็นอย่างน้อย {min}"
+    not_allowed_on_console: "<red>ข้อผิดพลาด: คอนโซลไม่สามารถดำเนินการคำสั่งนี้ได้"
+    could_not_find_player: "<red>ข้อผิดพลาด: ไม่พบผู้เล่นตามชื่อ: <yellow>{search}"
+    no_command_matched_search: "<red>ไม่มีคำสั่งที่ตรงกัน <yellow>{search}."
+    help_page_information: "<aqua> - กำลังแสดงหน้า<green>{page} <aqua>ของ <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>ข้อผิดพลาด: ไม่มีผลลัพธ์อีกต่อไป"
+    help_header: "<yellow>=== <aqua>กำลังแสดงความช่วยเหลือสำหรับ <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>กำลังแสดงความช่วยเหลือโดยละเอียดสำหรับ <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>ผลการค้นหาสำหรับ <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>ข้อผิดพลาด: โลกนั้นไม่มีอยู่จริง"
+    you_must_be_holding_item: "<red>ข้อผิดพลาด: คุณต้องถือสิ่งของไว้ในมือหลักของคุณ"
+    player_is_vanished_confirm: "<yellow>คำเตือน: <green>{vanished} <yellow>หายไปแล้ว อย่าระเบิดที่กำบังของพวกเขา!\n<yellow>เพื่อยืนยันการกระทำของคุณให้เพิ่ม <green>:ยืนยัน <yellow>ต่อท้ายชื่อของพวกเขา\n<yellow>Ex: {vanished}:ยืนยัน"
+    username_too_short: "<red>ข้อผิดพลาด: ชื่อผู้ใช้สั้นเกินไป ต้องมีอักขระอย่างน้อยสามตัว"
+    is_not_a_valid_name: "<red>ข้อผิดพลาด: <yellow>{name} <red>ไม่ใช่ชื่อผู้ใช้ที่ถูกต้อง"
+    multiple_players_match: "<red>ข้อผิดพลาด: ผู้เล่นหลายคนตรงกัน <aqua>{search} <yellow>({all})<red> โปรดระบุให้เจาะจงมากขึ้น"
+    no_player_found_server: "<red>ไม่มีผู้เล่นที่ตรงกัน <yellow>{search} <red>เชื่อมต่อกับเซิร์ฟเวอร์นี้แล้ว"
+    no_player_found_offline: "<red>ไม่มีผู้เล่นที่ตรงกัน <yellow>{search}<red> สามารถพบได้"
+    no_player_found: "<red>ไม่มีผู้เล่นที่ตรงกัน <yellow>{search}<red> สามารถพบได้"
+    location_please_specify_world: "<red>ข้อผิดพลาด:กรุณาระบุโลก ตัวอย่าง: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>ข้อผิดพลาด: กรุณาระบุพิกัด x, y, and z. ตัวอย่าง: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>ข้อผิดพลาด: คอนโซลไม่สามารถใช้พิกัดสัมพัทธ์สำหรับตำแหน่งได้"
+commands:
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
+      list:
+        header: "<white>Armor modifiers found:"
+      removeall:
+        removed: "<gray>All armor modifiers have been removed from your item"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
+      list:
+        header: "<white>Armor multipliers found:"
+      removeall:
+        removed: "<gray>All armor multipliers have been removed from your item"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
+      list:
+        header: "<white>Armor requirements found:"
+      removeall:
+        removed: "<gray>All armor requirements have been removed from your item"
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
+    save:
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
+  claimitems:
+    no_items: "<yellow>You have no items to claim"
+  item:
+    give:
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
+      list:
+        header: "<white>Item modifiers found:"
+      removeall:
+        removed: "<gray>All item modifiers have been removed from your item"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
+      list:
+        header: "<white>Item multipliers found:"
+      removeall:
+        removed: "<gray>All item multipliers have been removed from your item"
+    register:
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
+      list:
+        header: "<white>Item requirements found:"
+      removeall:
+        removed: "<gray>All item requirements have been removed from your item"
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
+    unregister:
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
+  lang:
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
+  mana:
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+    remove: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
+  modifier:
+    add:
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
+    remove:
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
+    list:
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
+    removeall:
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
+  multiplier:
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
+  profile:
+    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Config reloaded!"
+  save:
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
+  skill:
+    setall:
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
+    setlevel:
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
+    at_least: "<yellow>Level must be at least {level}!"
+  toggle:
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
+  top:
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
+  updateleaderboards:
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  xp:
+    add: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+    set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+    remove: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+  unknown_skill: "<yellow>Unknown skill!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
+leveler:
+  level_up: "{skill} ยกระดับ"
+  skill_level_up: ระดับทักษะเพิ่มขึ้น
+  rewards: รางวัล
+  ability_unlock: ปลดล็อคความสามารถ
+  ability_level_up: ระดับความสามารถเพิ่มขึ้น
+  mana_ability_unlock: ปลดล็อคความสามารถของมานา
+  mana_ability_level_up: ระดับความสามารถมานาเพิ่มขึ้น
+  unclaimed_item: "<red>คุณมีสินค้าที่ไม่มีการอ้างสิทธิ์เนื่องจากสินค้าคงคลังของคุณเต็ม ใช้งาน <yellow>/skills claimitems <red>เพื่อเรียกร้องพวกเขา"
+menus:
+  common:
+    close: "ปิด"
+    level: "ระดับ"
+    progress_to_level: "ความคืบหน้าสู่ระดับ"
+    max_level: "ระดับสูงสุด"
+    ability_levels: "ระดับความสามารถ"
+    stats_leveled: "สถิติเลเวลแล้ว"
+    mana_ability: "ความสามารถของมานา"
+    duration: "ระยะเวลา"
+    mana_cost: "ค่ามานา"
+    cooldown: "คูลดาวน์"
+    damage: "ความเสียหาย"
+    max_mana_cost: "ค่ามานาสูงสุด"
+    attack_speed: "ความเร็วในการโจมตี"
+    back: "กลับไป"
+    back_click: "กลับไปที่ {menu_name} เมนู"
+    unlocked: "ปลดล็อคแล้ว"
+    in_progress: "กำลังดำเนินการ"
+    locked: "ล็อคแล้ว"
+    your_level: "ระดับของคุณ"
+    next_page: "หน้าต่อไป"
+    next_page_click: "คลิกเพื่อไปยังหน้าถัดไป"
+    previous_page: "หน้าก่อนหน้า"
+    previous_page_click: "คลิกเพื่อไปยังหน้าก่อนหน้า"
+  skills:
+    skills_title: "ทักษะของคุณs"
+    your_skills: "ทักษะของคุณ"
+    your_skills_desc: "อัปเกรดทักษะโดยทำภารกิจต่างๆ เพื่อปลดล็อกการเพิ่มสถิติอันมีค่า ความสามารถ และอื่นๆ อีกมากมาย!"
+    your_skills_hover: "วางเมาส์เหนือทักษะเพื่อดูข้อมูลเพิ่มเติม!"
+    your_skills_click: "คลิกที่ทักษะเพื่อดูความก้าวหน้าของระดับ!"
+    skill_click: "คลิกเพื่อดูความก้าวหน้าของระดับ!"
+    stats: "สถิติ"
+    stats_desc: "รับบัฟสถิติโดยการอัพเลเวลทักษะ"
+    stats_click: "คลิกเพื่อเรียนรู้เพิ่มเติมหรือดูสถิติของคุณ"
+  level_progression:
+    level_progression_title: "{skill} ระดับ - หน้า {page}"
+    your_ranking: "การจัดอันดับทักษะของคุณ"
+    rank_out_of: "<1>คุณได้รับการจัดอันดับ <2>{rank}</2> ออกจาก {total} ผู้เล่น</1>"
+    rank_percent: "<1>คุณอยู่ในด้านบน <2>{percent}%</2> ของผู้เล่น</1>"
+    rewards: "รางวัล"
+    ability_unlock: "ปลดล็อคความสามารถ"
+    mana_ability_unlock: "ปลดล็อคความสามารถของมานา"
+    progress: "ความคืบหน้า"
+    leaderboard_click: "คลิกเพื่อดู {skill} ลีดเดอร์บอร์ด"
+    sources: "ค่าประสบการณ์แหล่งที่มา"
+    sources_desc: "เมนูแหล่งที่มาจะแสดงวิธีทั้งหมดที่คุณจะได้รับ ค่าประสบการณ์ จากทักษะ รวมถึงจำนวนค่าประสบการณ์ ที่แต่ละแหล่งให้"
+    sources_click: "คลิกเพื่อดู {skill} แหล่งที่มา"
+    abilities: "ความสามารถ"
+    abilities_desc: "<2>ความสามารถ</2> <1>เป็นสิทธิพิเศษที่คุณปลดล็อคและอัปเกรดเมื่อคุณเลเวลอัพทักษะ </1>"
+    mana_abilities_desc: "<3>ความสามารถของมานา</3> <1>เป็นความสามารถพิเศษที่ต้องเปิดใช้งานและใช้มานา</1>"
+    abilities_click: "คลิกเพื่อดู {skill} ความสามารถ"
+  stats:
+    stats_title: สถิติของคุณ
+    skills: "ทักษะ"
+    added_drop: "+{value} ต่ำ"
+    added_drops: "+{value} สูง"
+    chance_drop: "{chance}% สำหรับ +{value} ต่ำ"
+    chance_drops: "{chance}% สำหรับ +{value} สูง"
+  unclaimed_items:
+    unclaimed_items_title: "อ้างสิทธิ์รายการ"
+    inventory_full: "คุณมีพื้นที่ในสินค้าคงคลังไม่เพียงพอที่จะอ้างสิทธิ์รายการนั้น"
+    click_to_claim: "คลิกเพื่อรับ!"
+  leaderboard:
+    leaderboard_title: "{skill} ลีดเดอร์บอร์ด"
+  sources:
+    sources_title: "{skill} แหล่งที่มาค่าประสบการณ์ "
+    sorter: "จัดเรียงแหล่งที่มา ค่าประสบการณ์"
+    descending: "สูงสุดไปต่ำสุด"
+    ascending: "ต่ำสุดไปสูงสุด"
+    alphabetical: "ชื่อ (A-Z)"
+    reverse_alphabetical: "ชื่อ (Z-A)"
+    sort_click: "คลิกเพื่อเรียงลำดับประเภทวงจร"
+    multiplied_xp: "เพิ่มจำนวน {xp_unit}"
+    multiplied_desc: "นี่คือ ค่าประสบการณ์ ที่คุณจะได้รับตามจริงจากตัวคูณ ค่าประสบการณ์ ปัจจุบันของคุณ"
+  abilities:
+    abilities_title: "{skill} ความสามารถ"
+    description: "คำอธิบาย"
+    unlocked_at: "<1>ปลดล็อคแล้วที่ <2>{skill} {level}"
+    next_upgrade_at: "<1>อัพเกรดครั้งต่อไปที่ <2>{skill} {level}"
+mana_abilities:
+  replenish:
+    name: เก็บพืชอัตโนมัติ
+    desc: "ปลูกพืชทดแทนโดยอัตโนมัติ {value} วินาที <1>[คลิกขวาที่จอบแล้วทำลายพืชผลเพื่อเปิดใช้งาน]"
+    raise: "<gray>คุณยกจอบของคุณ"
+    lower: "<gray>คุณลดจอบลง"
+    start: "<gold>เปิดใช้งานการเก็บพืชอัตโนมัติแล้ว! <gray>(-{mana} {mana_unit})"
+    end: "<gray>การเก็บพืชอัตโนมัติหมดลงแล้ว"
+  treecapitator:
+    name: ตัดไม้อัตโนมัติ
+    desc: "ทำลายต้นไม้ทั้งต้น {value} วินาที <1>[คลิกขวาที่ขวานแล้วทำลายบันทึกเพื่อเปิดใช้งาน]"
+    raise: "<gray>คุณยกขวานของคุณ"
+    lower: "<gray>คุณลดขวานลง"
+    start: "<gold>เปิดใช้งาน ตัดไม้อัตโนมัติ แล้ว!<gray>(-{mana} {mana_unit})"
+    end: "<gray>ตัดไม้อัตโนมัติ หมดสภาพแล้ว"
+  speed_mine:
+    name: ขุดเหมืองเร็ว
+    desc: "ให้ขุดเหมืองเร็ว {haste_level} สำหรับ {value} วินาที <1>[คลิกขวาที่พลั่วและบล็อกของฉันเพื่อเปิดใช้งาน]"
+    raise: "<gray>คุณยกพลั่วของคุณขึ้น"
+    lower: "<gray>คุณลดพลั่วของคุณลง"
+    start: "<gold>เปิดใช้งานขุดเหมืองเร็วแล้ว! <gray>(-{mana} {mana_unit})"
+    end: "<gray>ขุดเหมืองเร็ว หมดสภาพแล้ว"
+  absorption:
+    name: การดูดซึม
+    desc: "ความเสียหายที่เข้ามาจะลดมานาลง 2 เท่าของความเสียหาย แทนที่จะเป็นสุขภาพของคุณ {value} วินาที มานาจะไม่งอกใหม่ในขณะที่การดูดซึมทำงานอยู่ <1>[คลิกซ้ายที่โล่และรับความเสียหายเพื่อเปิดใช้งาน]"
+    raise: "<gray>คุณยกโล่ของคุณ"
+    lower: "<gray>คุณลดโล่ของคุณลง"
+    start: "<gold>การดูดซึมเปิดใช้งานแล้ว! <gray>(-{mana} {mana_unit})"
+    end: "<gray>การดูดซึมหมดลง"
+  terraform:
+    name: เทอร์ราฟอร์ม
+    desc: "เมื่อขุด ให้ทำลายบล็อกที่เชื่อมต่อทันทีใน {radius} บล็อกรัศมีในแนวนอนสำหรับ {value} วินาที <1>[คลิกขวาที่พลั่วและขุดบล็อกเพื่อเปิดใช้งาน]"
+    raise: "<gray>คุณยกพลั่วของคุณ"
+    lower: "<gray>คุณลดพลั่วลง"
+    start: "<gold>เทอร์ราฟอร์มเปิดใช้งานแล้ว! <gray>(-{mana} {mana_unit})"
+    end: "<gray>เทอร์ราฟอร์มหมดสภาพแล้ว"
+  sharp_hook:
+    name: ตะขอคม
+    desc: "ข้อเสนอ {value} สร้างความเสียหายให้กับตัวตะขอเมื่อคลิกซ้ายด้วยเบ็ดตกปลา"
+    use: "<gold>ใช้ตะขอคมแล้ว!<gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: ชาร์จช็อต
+    desc: "ลูกธนูที่คุณยิงจะสร้างความเสียหายได้มากขึ้นตามระยะที่ธนูถูกดึงไปด้านหลัง ซึ่งต้องใช้มานาในกระบวนการนี้ ทำ {value}% ความเสียหายมากขึ้นต่อมานาที่ใช้ไป <1>[คลิกซ้ายที่ธนูเพื่อสลับโหมดชาร์จช็อต]"
+    enable: "<gray>ตอนนี้เปิดใช้งานโหมดชาร์จช็อตแล้ว"
+    disable: "<gray>โหมดชาร์จช็อตถูกปิดใช้งานแล้ว"
+    shoot: "<gold>ใช้ชาร์จช็อตแล้ว! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: ดาบสายฟ้า
+    desc: เพิ่มความเร็วในการโจมตีโดย {value}% สำหรับ {duration} วินาที <1>[คลิกขวาที่ดาบและโจมตีม็อบเพื่อเปิดใช้งาน]
+    raise: "<gray>คุณเตรียมดาบของคุณแล้ว"
+    lower: "<gray>คุณลดดาบลง"
+    start: "<gold>ดาบสายฟ้าเปิดใช้งานแล้ว! <gray>(-{mana} {mana_unit})"
+    end: "<gray>ดาบสายฟ้า หมดสภาพแล้ว"
+  not_ready: "<red>ความสามารถไม่พร้อม! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>มานาไม่พอ! <gray>({mana} {mana_unit} required)"
+skills:
+  farming:
+    name: Farming
+    desc: "เก็บเกี่ยวพืชผลเพื่อรับค่าประสบการณ์"
+  foraging:
+    name: Foraging
+    desc: "ตัดต้นไม้เพื่อรับค่าประสบการณ์"
+  mining:
+    name: Mining
+    desc: "ขุดหินและแร่เพื่อรับค่าประสบการณ์"
+  fishing:
+    name: Fishing
+    desc: "ตกปลาเพื่อรับค่าประสบการณ์"
+  excavation:
+    name: Excavation
+    desc: "ขุดด้วยพลั่วเพื่อรับค่าประสบการณ์"
+  archery:
+    name: Archery
+    desc: "ยิงธนูเพื่อรับค่าประสบการณ์"
+  defense:
+    name: Defense
+    desc: "รับความเสียหายจากเอนทิตีเพื่อเพื่อรับค่า ประสบการณ์"
+  fighting:
+    name: Fighting
+    desc: "ต่อสู้ด้วยอาวุธระยะประชิดเพื่อรับค่าประสบการณ์"
+  endurance:
+    name: Endurance
+    desc: "เดินและวิ่งเพื่อรับค่าประสบการณ์"
+  agility:
+    name: Agility
+    desc: "กระโดดเเละตกจากที่สูงเพื่อรับค่าประสยการณ์"
+  alchemy:
+    name: Alchemy
+    desc: "ปรุงยาเพื่อรับค่าประสบการณ์"
+  enchanting:
+    name: Enchanting
+    desc: "ร่ายมนตร์เพื่อรับค่าประสบการณ์"
+  sorcery:
+    name: Sorcery
+    desc: "ใช้มานาเพื่อรับค่าประสบการณ์"
+  healing:
+    name: Healing
+    desc: "ดื่มและปายาเพื่อรับค่าประสบการณ์"
+  forging:
+    name: Forging
+    desc: "ใช้ทั่งตีเหล็กเพื่อรับค่าประสบการณ์"
+sources:
+  fishing:
+    cod: ปลาค็อด
+    salmon: แซลมอน
+    tropical_fish: ปลาเขตร้อน
+    pufferfish: ปลาปักเป้า
+    treasure: ล่าการสมบัติ
+    junk: ขยะ
+    rare: ของหายาก
+    epic: ยกเค้ามหากาพย์
+  damage:
+    mob_damage: ความเสียหายจากม็อบ
+    player_damage: ความเสียหายจากผู้เล่น
+    fall_damage: รับความเสียหายจากการล้ม
+  statistic:
+    walk_per_meter: การเดิน
+    sprint_per_meter: การวิ่ง
+    swim_per_meter: การว่ายน้ำ
+  jumping:
+    jump_per_100: กระโดด
+  brewing:
+    awkward: ชงยาที่น่าอึดอัดใจ
+    regular: ชงยาปกติ
+    extended: ชงยาขยายระยะเวลา
+    upgraded: ต้มยาอัพเกรด
+    splash: ชงสแปลชโพชั่น
+    lingering: ชงยาที่ค้างอยู่
+  enchanting:
+    weapon_per_level: อาวุธวิเศษ
+    armor_per_level: เกราะเสน่ห์
+    tool_per_level: เครื่องมือร่ายมนตร์
+    book_per_level: หนังสือมนต์เสน่ห์
+  mana_ability_use:
+    mana_ability_use: การใช้ความสามารถของมานา
+  item_consume:
+    drink_regular: ดื่มยาสามัญ
+    drink_extended: ดื่มยาขยายระยะเวลา
+    drink_upgraded: ดื่มยาอัพเกรด
+    golden_apple: กินแอปเปิ้ลทองคำ
+    enchanted_golden_apple: กินแอปเปิ้ลทองคำร่ายมนตร์
+  potion_splash:
+    splash_regular: ปายาปกติ
+    splash_extended: น้ำยาขยายระยะเวลาสแปลช
+    splash_upgraded: น้ำยาอัพเกรดปา
+    lingering_regular: ใช้ยาที่ค้างอยู่ปกติ
+    lingering_extended: ใช้ยาคงค้างแบบขยายระยะเวลา
+    lingering_upgraded: ใช้ยาที่ค้างอยู่ที่อัปเกรดแล้ว
+  anvil:
+    combine_books_per_level: รวมหนังสือมนต์เสน่ห์
+    combine_weapon_per_level: รวมอาวุธกับหนังสือ
+    combine_armor_per_level: รวมชุดเกราะเข้ากับหนังสือ
+    combine_tool_per_level: รวมเครื่องมือเข้ากับหนังสือ
+  grindstone:
+    grindstone_per_level: สลายไอเท็มด้วยหินลับ
+  units:
+    damage: ความเสียหาย
+    meter: เมตร
+    100_jumps: กระโดด 100 ครั้ง
+    mana: มานาที่ใช้ไป
+    combine_level: ประสบการณ์ต้นทุนทั่งตีเหล็ก
+    grindstone_level: ระดับของ Enchant บนไอเท็ม
+    enchant_level: ระดับของ Enchant ที่ได้รับ
+stats:
+  strength:
+    name: ความแข็งแกร่ง
+    desc: "&7ความแข็งแกร่งจะเพิ่มความเสียหายจากการ โจมตีของคุณด้วยอาวุธหลากหลายชนิด"
+  health:
+    name: พลังชีวิต
+    desc: "&7สุขภาพจะเพิ่มจำนวน {hp_unit} คุณมีทำให้คุณอยู่ได้นานขึ้นต่อสู้"
+  regeneration:
+    name: การฟื้นฟู
+    desc: "&7การงอกใหม่จะเพิ่มความเร็วของคุณ ฟื้นฟูทั้งสุขภาพและมานา"
+  luck:
+    name: โชค
+    desc: "&7โชคเพิ่มโอกาสในการได้รับ ของหายากจากม็อบ การตกปลา และอื่นๆ"
+  wisdom:
+    name: ความฉลาด
+    desc: "&7เพิ่มมานาสูงสุดของคุณเพิ่มขึ้น ค่าประสบการณ์ที่เพิ่มขึ้น และลดต้นทุนทั่งตีเหล็ก"
+  toughness:
+    name: ความทนทาน
+    desc: "&7ความทนทานจะเพิ่มปริมาณ ความเสียหายลดลงจากการโจมตีของศัตรู"
+  crit_chance:
+    name: โอกาสคริติคอล
+    desc: "โอกาสคริติคอลคือโอกาสที่คุณจะจัดการการโจมตีแบบคริติคอล"
+  crit_damage:
+    name: ความเสียหายคริติคอล
+    desc: "ความเสียหายคริติคอลคือเปอร์เซ็นต์ ของความเสียหายที่เพิ่มขึ้นเมื่อทำคริติคอลตี"
+  speed:
+    name: ความเร็ว
+    desc: "ความเร็วจะเพิ่มความเร็วที่คุณสามารถ เดินและวิ่งได้"
+traits:
+  attack_damage:
+    name: ความเสียหายจากการโจมตี
+  hp:
+    name: HP
+  saturation_regen:
+    name: รีเจนความอิ่มตัว
+  hunger_regen:
+    name: รีเจนหิว
+  mana_regen:
+    name: มานา รีเจน
+  luck:
+    name: คุณสมบัติโชคลาภ
+  double_drop:
+    name: ดับเบิ้ลดรอป
+  experience_bonus:
+    name: โบนัสประสบการณ์
+  anvil_discount:
+    name: ส่วนลดทั่งตี๋
+  max_mana:
+    name: แม็กซ์ มานา
+  damage_reduction:
+    name: การลดความเสียหาย
+  crit_chance:
+    name: โอกาสคริติคอล
+  crit_damage:
+    name: ความเสียหายคริติคอล
+  movement_speed:
+    name: ความเร็วในการเคลื่อนที่
+  farming_luck:
+    name: โชคลาภเกษตรกรรม
+  foraging_luck:
+    name: การหาโชค
+  mining_luck:
+    name: การขุดโชคลาภ
+  excavation_luck:
+    name: โชคลาภการขุดค้น
+  fishing_luck:
+    name: โชคตกปลา
+ui:
+  maxed: MAXED
+units:
+  mana: มานา
+  hp: HP
+  xp: XP
+file_version: 32
