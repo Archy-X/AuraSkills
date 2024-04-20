@@ -1,18 +1,19 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.BigNumber;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -164,6 +165,29 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                     return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
                 } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
                     return String.valueOf(user.getManaAbilityLevel(manaAbility));
+                }
+            }
+        }
+
+        if (identifier.startsWith("trait_")) {
+            String traitName = identifier.replace("trait_", "")
+                    .replace("_bonus", "")
+                    .replace("_menu", "");
+            NamespacedId id = NamespacedId.fromDefault(traitName);
+            Trait trait = plugin.getTraitRegistry().getOrNull(id);
+
+            if (trait == null || !trait.isEnabled()) return null;
+
+            User user = plugin.getUser(player);
+
+            if (identifier.endsWith(traitName)) {
+                return NumberUtil.format2(user.getEffectiveTraitLevel(trait));
+            } else if (identifier.endsWith("bonus")) {
+                return NumberUtil.format2(user.getBonusTraitLevel(trait));
+            } else if (identifier.endsWith("menu")) {
+                BukkitTraitHandler handler = plugin.getTraitManager().getTraitImpl(trait);
+                if (handler != null) {
+                    return handler.getMenuDisplay(user.getEffectiveTraitLevel(trait), trait, user.getLocale());
                 }
             }
         }
@@ -375,6 +399,9 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_mability_[ability]%",
                 "%auraskills_mability_[ability]_active%",
                 "%auraskills_mability_[ability]_value%",
+                "%auraskills_trait_[trait]",
+                "%auraskills_trait_[trait]_bonus",
+                "%auraskills_trait_[trait]_menu",
                 "%auraskills_average%",
                 "%auraskills_average_int%",
                 "%auraskills_average_1%",
