@@ -21,7 +21,7 @@ public class ApiAuraSkillsBukkit implements AuraSkillsBukkit {
         this.blockTracker = new ApiRegions(plugin);
         this.itemManager = plugin.getItemManager();
         this.locationManager = new ApiLocationManager(plugin);
-        this.menuManager = new ApiMenuManager();
+        this.menuManager = new ApiMenuManager(plugin);
     }
 
     @Override

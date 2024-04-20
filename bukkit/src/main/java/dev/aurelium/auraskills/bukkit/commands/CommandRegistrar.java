@@ -126,7 +126,7 @@ public class CommandRegistrar {
         });
         completions.registerAsyncCompletion("mana_abilities", c -> {
             List<String> abilities = new ArrayList<>();
-            for (ManaAbility manaAbility : plugin.getManaAbilityManager().getEnabledAbilities()) {
+            for (ManaAbility manaAbility : plugin.getManaAbilityManager().getEnabledManaAbilities()) {
                 abilities.add(manaAbility.name().toLowerCase(Locale.ROOT));
             }
             return abilities;

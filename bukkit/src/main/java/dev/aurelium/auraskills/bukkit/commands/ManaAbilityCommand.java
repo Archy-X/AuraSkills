@@ -18,6 +18,7 @@ import java.util.Locale;
 @CommandAlias("%skills_alias")
 @Subcommand("manaability")
 public class ManaAbilityCommand extends BaseCommand {
+
     private final AuraSkills plugin;
 
     public ManaAbilityCommand(AuraSkills plugin) {
@@ -35,7 +36,7 @@ public class ManaAbilityCommand extends BaseCommand {
         if (ability.isEnabled()) {
             ManaAbilityData data = user.getManaAbilityData(ability);
 
-            if(data.getCooldown() > 0 && !data.isActivated()) {
+            if (data.getCooldown() > 0 && !data.isActivated()) {
                 data.setCooldown(0);
                 ManaAbilityRefreshEvent event = new ManaAbilityRefreshEvent(player, user.toApi(), ability);
                 Bukkit.getPluginManager().callEvent(event);

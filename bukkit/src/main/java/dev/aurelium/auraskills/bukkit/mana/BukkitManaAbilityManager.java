@@ -91,7 +91,7 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
         return desc;
     }
 
-    public Set<ManaAbility> getEnabledAbilities() {
+    public Set<ManaAbility> getEnabledManaAbilities() {
         Set<ManaAbility> abilities = new LinkedHashSet<>();
         for (ManaAbilityProvider abilityProvider : providerMap.values()) {
             if (!abilityProvider.isDisabled()) {
