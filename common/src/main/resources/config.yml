@@ -19,7 +19,7 @@ sql:
   always_load_on_join: false
   ssl: false
 default_language: en
-languages: [en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi, tr]
+languages: [en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi, tr, fi, th]
 try_detect_client_language: false
 hooks:
   HolographicDisplays:
