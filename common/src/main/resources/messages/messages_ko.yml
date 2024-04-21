@@ -286,11 +286,11 @@ abilities:
   anvil_master:
     name: Anvil Master
     desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
-    info: "{value} Max Cost"
+    info: "{value} 최댓값"
   skill_mender:
     name: Skill Mender
-    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
-    info: "{value}% Mend Chance"
+    desc: 스킬 경험치 획득 시 {value}% 확률로 스킬경험치 2 당 내구도 1%를 수선합니다.
+    info: "{value}% 수선 확률"
 acf:
   core:
     permission_denied: "<red>죄송합니다. 이 명령을 수행할 수 있는 권한이 없습니다."
