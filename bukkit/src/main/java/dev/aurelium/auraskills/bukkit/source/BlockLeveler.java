@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
+import dev.aurelium.auraskills.api.source.type.BlockXpSource.BlockTriggers;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
@@ -30,10 +31,16 @@ import java.util.concurrent.TimeUnit;
 public class BlockLeveler extends SourceLeveler {
 
     private final BlockLevelerHelper helper;
+    private final Map<UniqueBlock, SkillSource<BlockXpSource>> sourceCache;
 
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BLOCK);
         this.helper = new BlockLevelerHelper(plugin);
+        this.sourceCache = new HashMap<>();
+    }
+
+    public void clearSourceCache() {
+        this.sourceCache.clear();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -130,6 +137,13 @@ public class BlockLeveler extends SourceLeveler {
 
     @Nullable
     public SkillSource<BlockXpSource> getSource(Block block, BlockXpSource.BlockTriggers trigger) {
+        var cacheKey = new UniqueBlock(block.getType(), block.getBlockData().getAsString(true), trigger);
+        SkillSource<BlockXpSource> cachedSource = sourceCache.get(cacheKey);
+        // Cache hit
+        if (cachedSource != null) {
+            return cachedSource;
+        }
+
         List<SkillSource<BlockXpSource>> sources = plugin.getSkillManager().getSourcesOfType(BlockXpSource.class);
         sources = filterByTrigger(sources, trigger);
         for (SkillSource<BlockXpSource> entry : sources) {
@@ -154,7 +168,8 @@ public class BlockLeveler extends SourceLeveler {
                     continue;
                 }
             }
-
+            // Update cache
+            sourceCache.put(cacheKey, entry);
             return entry;
         }
         return null;
@@ -276,6 +291,10 @@ public class BlockLeveler extends SourceLeveler {
         }
         // Return as a String otherwise
         return value;
+    }
+
+    public record UniqueBlock(Material material, String blockData, BlockTriggers trigger) {
+
     }
 
 }
