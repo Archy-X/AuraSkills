@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
 import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.context.ContextProvider;
+import dev.aurelium.slate.function.ItemReplacer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -65,6 +66,11 @@ public class ApiMenuManager implements MenuManager {
                 return parser.parse(menuName, input);
             }
         });
+    }
+
+    @Override
+    public void registerGlobalReplacer(ItemReplacer replacer) {
+        plugin.getSlate().getGlobalOptions().globalReplacers().add(replacer);
     }
 
     public Set<String> getNonDefaultMenuNames() {

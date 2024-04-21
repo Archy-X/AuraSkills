@@ -41,12 +41,16 @@ public class PlaceholderHelper {
         MessageKey key = MessageKey.of("menus." + activeMenu.getName().toLowerCase(Locale.ROOT) + "." + stripped);
         String message = plugin.getMessageProvider().getRaw(key, locale);
         // No message found in menu section, try common section
+        MessageKey commonKey = MessageKey.of("menus.common." + stripped);
         if (message.equals(key.getPath())) {
-            message = plugin.getMessageProvider().getRaw(MessageKey.of("menus.common." + stripped), locale);
+            message = plugin.getMessageProvider().getRaw(commonKey, locale);
         }
         // Replace placeholders
         message = TextUtil.replace(message, replacer);
-        return message;
+        if (!message.equals(commonKey.getPath())) {
+            return message;
+        }
+        return null; // Don't replace unknown placeholders
     }
 
     public String replaceMenuMessages(String source, Player player, ActiveMenu activeMenu, Replacer replacer) {

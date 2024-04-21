@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api.menu;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.function.ItemReplacer;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -58,5 +59,7 @@ public interface MenuManager {
     void openLevelProgressionMenu(Player player, Skill skill);
 
     <T> void registerContext(String key, Class<T> contextClass, ContextParser<T> parser);
+
+    void registerGlobalReplacer(ItemReplacer replacer);
 
 }

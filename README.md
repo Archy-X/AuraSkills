@@ -30,7 +30,7 @@ Release versions are published to the Maven central repository.
 <dependency>
     <groupId>dev.aurelium</groupId>
     <artifactId>auraskills-api-bukkit</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.7</version>
 </dependency>
 ```
 ### Gradle
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.0.3'
+    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.0.7'
 }
 ```
 **Kotlin DSL:**
@@ -52,7 +52,7 @@ repositories {
 }
 
 dependencies { 
-    compileOnly("dev.aurelium:auraskills-api-bukkit:2.0.3")
+    compileOnly("dev.aurelium:auraskills-api-bukkit:2.0.7")
 }
 ```
 
