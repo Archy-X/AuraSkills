@@ -54,10 +54,10 @@ public class BukkitLuckPermsHook extends LuckPermsHook {
     private Set<PermissionAttachmentInfo> getMultiplierPermissions(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            return new HashSet<>(); // Return empty set if player not found
+            return new HashSet<>();
         }
 
-        Set<PermissionAttachmentInfo> filteredPermissions = new HashSet<>(); // Initialize with expected capacity
+        Set<PermissionAttachmentInfo> filteredPermissions = new HashSet<>();
 
         for (PermissionAttachmentInfo pai : player.getEffectivePermissions()) {
             String permission = pai.getPermission();
