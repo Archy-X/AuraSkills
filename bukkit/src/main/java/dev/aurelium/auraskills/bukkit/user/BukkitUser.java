@@ -63,12 +63,9 @@ public class BukkitUser extends User {
             }
             return multiplier;
         } else {
-            long start = System.nanoTime();
             for (PermissionAttachmentInfo permission : player.getEffectivePermissions()) {
                 multiplier += getMultiplierFromPermission(permission.getPermission(), skill);
             }
-            long end = System.nanoTime();
-            System.out.println("With Player#getEffectivePermissions the multiplier lookup took: " + (end - start) + " nanoseconds.");
         }
 
         return multiplier;
