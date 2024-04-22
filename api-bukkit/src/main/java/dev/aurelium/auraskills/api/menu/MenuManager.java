@@ -8,6 +8,9 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * An interface used to interact with menus, including building, opening, and extending menus.
+ */
 public interface MenuManager {
 
     /**
@@ -58,8 +61,25 @@ public interface MenuManager {
      */
     void openLevelProgressionMenu(Player player, Skill skill);
 
+    /**
+     * Registers a context parser to a context class necessary for creating a template with a
+     * custom type parameter.
+     *
+     * @param key the name of the type in CamelCase
+     * @param contextClass the Class instance of the type being registered
+     * @param parser a parser that takes in a menuName String and input String to parse the type
+     * @param <T> the type class
+     */
     <T> void registerContext(String key, Class<T> contextClass, ContextParser<T> parser);
 
+    /**
+     * Registers a placeholder replacer that applies to placeholders in all menus. If a placeholder shouldn't
+     * be replaced, the {@link ItemReplacer} should return null to not replace, so other global replacers can
+     * check that placeholder.
+     *
+     * @param replacer the placeholder replacer that takes a {@link dev.aurelium.slate.info.PlaceholderInfo} argument
+     *                 and returns the replaced String.
+     */
     void registerGlobalReplacer(ItemReplacer replacer);
 
 }

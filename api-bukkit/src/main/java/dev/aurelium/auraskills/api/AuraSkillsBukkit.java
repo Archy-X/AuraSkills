@@ -5,6 +5,9 @@ import dev.aurelium.auraskills.api.menu.MenuManager;
 import dev.aurelium.auraskills.api.region.LocationManager;
 import dev.aurelium.auraskills.api.region.Regions;
 
+/**
+ * The main interface for API classes that depend on the Bukkit API.
+ */
 public interface AuraSkillsBukkit {
 
     /**

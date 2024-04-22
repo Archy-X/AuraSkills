@@ -15,6 +15,9 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.UUID;
 
+/**
+ * The main interface where most API interfaces are accessed from.
+ */
 public interface AuraSkillsApi {
 
     /**

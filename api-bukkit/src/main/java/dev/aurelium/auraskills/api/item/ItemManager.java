@@ -12,6 +12,9 @@ import org.spongepowered.configurate.ConfigurationNode;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An interface used to add modifiers to items and parse items from configuration.
+ */
 public interface ItemManager {
 
     /**
