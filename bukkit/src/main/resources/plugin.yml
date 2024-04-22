@@ -4,7 +4,7 @@ main: dev.aurelium.auraskills.bukkit.AuraSkills
 description: The ultra-versatile RPG skills plugin
 author: Archyx
 website: https://aurelium.dev/auraskills
-softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, DecentHolograms, Vault, ProtocolLib, LuckPerms, Slimefun, Towny, MythicMobs, LuckPerms]
+softdepend: [WorldGuard, PlaceholderAPI, HolographicDisplays, DecentHolograms, Vault, ProtocolLib, LuckPerms, Slimefun, Towny, MythicMobs]
 api-version: '1.13'
 prefix: AuraSkills
 
