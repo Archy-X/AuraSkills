@@ -44,7 +44,6 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
-    compileOnly("net.luckperms:api:5.4")
 }
 
 tasks.withType<ShadowJar> {
