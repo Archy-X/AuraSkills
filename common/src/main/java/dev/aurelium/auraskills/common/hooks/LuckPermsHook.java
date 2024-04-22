@@ -9,7 +9,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 
 public class LuckPermsHook extends PermissionsHook {
 
-    private final LuckPerms luckPerms;
+    protected final LuckPerms luckPerms;
 
     public LuckPermsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
