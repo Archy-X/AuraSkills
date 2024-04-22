@@ -24,9 +24,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Treecapitator extends ReadiedManaAbility {
 
+    private final boolean GIVE_XP;
+
     public Treecapitator(AuraSkills plugin) {
         super(plugin, ManaAbilities.TREECAPITATOR, ManaAbilityMessage.TREECAPITATOR_START, ManaAbilityMessage.TREECAPITATOR_END,
                 new String[]{"_AXE"}, new Action[]{Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
+        this.GIVE_XP = ManaAbilities.TREECAPITATOR.optionBoolean("give_xp");
     }
 
     @Override
@@ -65,7 +68,8 @@ public class Treecapitator extends ReadiedManaAbility {
         if (plugin.getRegionManager().isPlacedBlock(block)) {
             return;
         }
-        if (isTrunk(block) || block.getType().toString().contains("STRIPPED")) {
+        BlockXpSource source = getSource(block);
+        if (isTrunk(source) || block.getType().toString().contains("STRIPPED")) {
             Player player = event.getPlayer();
 
             if (failsChecks(player)) return;
@@ -91,18 +95,18 @@ public class Treecapitator extends ReadiedManaAbility {
             return;
         }
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
-            boolean isTrunk = isTrunk(adjacentBlock);
-            boolean isLeaf = isLeaf(adjacentBlock);
+            BlockXpSource adjSource = getSource(adjacentBlock);
+            boolean isTrunk = isTrunk(adjSource);
+            boolean isLeaf = isLeaf(adjSource);
             if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
             // Make sure block was not placed
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
             }
-            BlockXpSource source = getSource(block);
             adjacentBlock.breakNaturally();
             tree.incrementBlocksBroken();
-            if (source != null) {
-                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), source, source.getXp());
+            if (adjSource != null && GIVE_XP) {
+                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
             }
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
@@ -124,20 +128,12 @@ public class Treecapitator extends ReadiedManaAbility {
         return null;
     }
 
-    private boolean isTrunk(Block block) {
-        BlockXpSource source = getSource(block);
-        if (source != null) {
-            return source.isTrunk();
-        }
-        return false;
+    private boolean isTrunk(BlockXpSource source) {
+        return source != null && source.isTrunk();
     }
 
-    private boolean isLeaf(Block block) {
-        BlockXpSource source = getSource(block);
-        if (source != null) {
-            return source.isLeaf();
-        }
-        return false;
+    private boolean isLeaf(BlockXpSource source) {
+        return source != null && source.isLeaf();
     }
 
     private static class TreecapitatorTree {

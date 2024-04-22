@@ -137,6 +137,11 @@ public class BlockLeveler extends SourceLeveler {
 
     @Nullable
     public SkillSource<BlockXpSource> getSource(Block block, BlockXpSource.BlockTriggers trigger) {
+        // Optimize by immediately rejecting air blocks
+        if (block.getType().isAir()) {
+            return null;
+        }
+
         var cacheKey = new UniqueBlock(block.getType(), block.getBlockData().getAsString(true), trigger);
         SkillSource<BlockXpSource> cachedSource = sourceCache.get(cacheKey);
         // Cache hit
