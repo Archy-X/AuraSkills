@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
+
     private final String prefix = "auraskills.multiplier.";
     private final Map<UUID, Set<String>> permissionCache = new ConcurrentHashMap<>();
 
@@ -36,16 +37,16 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
         super(plugin, config);
 
         luckPerms.getEventBus().subscribe(NodeAddEvent.class,
-                (event) -> handleEvent(event.getNode(), event.getTarget()));
+                event -> handleEvent(event.getNode(), event.getTarget()));
 
         luckPerms.getEventBus().subscribe(NodeRemoveEvent.class,
-                (event) -> handleEvent(event.getNode(), event.getTarget()));
+                event -> handleEvent(event.getNode(), event.getTarget()));
     }
 
     private void handleEvent(Node node, PermissionHolder target) {
-        if(!(node instanceof PermissionNode) && !(node instanceof InheritanceNode)) return;
+        if (!(node instanceof PermissionNode) && !(node instanceof InheritanceNode)) return;
 
-        if(node instanceof PermissionNode permissionNode) {
+        if (node instanceof PermissionNode permissionNode) {
             if (permissionNode.isWildcard()) return;
             if (!permissionNode.getValue()) return;
             if (!permissionNode.getPermission().startsWith(prefix)) return;
@@ -65,7 +66,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
         } else if (target instanceof Group group) {
             final List<UUID> affectedPlayers = new ArrayList<>(permissionCache.keySet().size());
 
-            if(node instanceof InheritanceNode) {
+            if (node instanceof InheritanceNode) {
                 // This shouldn't really happen on a prod server too often.
                 affectedPlayers.addAll(permissionCache.keySet());
             } else {
@@ -86,7 +87,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
                 for (UUID uuid : affectedPlayers) {
                     Player player = Bukkit.getPlayer(uuid);
                     // In case if someone logs out in that 500 ms timeframe
-                    if(player == null || !player.isOnline()) continue;
+                    if (player == null || !player.isOnline()) continue;
                     permissionCache.put(uuid, getMultiplierPermissions(uuid));
                 }
             }, 500, TimeUnit.MILLISECONDS);
@@ -115,7 +116,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
         // Put it in the cache async
         UUID uuid = event.getPlayer().getUniqueId();
         plugin.getScheduler().executeAsync(() -> {
-            if(!event.getPlayer().isOnline()) return;
+            if (!event.getPlayer().isOnline()) return;
             permissionCache.put(uuid, getMultiplierPermissions(uuid));
         });
     }
