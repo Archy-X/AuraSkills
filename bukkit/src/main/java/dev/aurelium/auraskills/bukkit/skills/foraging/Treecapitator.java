@@ -77,17 +77,17 @@ public class Treecapitator extends ReadiedManaAbility {
             User user = plugin.getUser(player);
 
             if (isActivated(user)) {
-                breakTree(user, block);
+                breakTree(user, block, source);
                 return;
             }
             if (isHoldingMaterial(player) && checkActivation(player)) {
-                breakTree(user, block);
+                breakTree(user, block, source);
             }
         }
     }
 
-    public void breakTree(User user, Block block) {
-        breakBlock(user, block, new TreecapitatorTree(plugin, block));
+    public void breakTree(User user, Block block, BlockXpSource source) {
+        breakBlock(user, block, new TreecapitatorTree(plugin, block, source));
     }
 
     private void breakBlock(User user, Block block, TreecapitatorTree tree) {
@@ -143,10 +143,10 @@ public class Treecapitator extends ReadiedManaAbility {
         private int blocksBroken;
         private int maxBlocks;
 
-        public TreecapitatorTree(AuraSkills plugin, Block originalBlock) {
+        public TreecapitatorTree(AuraSkills plugin, Block originalBlock, BlockXpSource source) {
             this.plugin = plugin;
             this.originalBlock = originalBlock;
-            setMaxBlocks();
+            setMaxBlocks(source);
         }
 
         public Block getOriginalBlock() {
@@ -165,11 +165,7 @@ public class Treecapitator extends ReadiedManaAbility {
             return maxBlocks;
         }
 
-        private void setMaxBlocks() {
-            var skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSource(originalBlock, BlockXpSource.BlockTriggers.BREAK);
-
-            XpSource source = skillSource != null ? skillSource.source() : null;
-
+        private void setMaxBlocks(XpSource source) {
             String matName = originalBlock.getType().toString();
             if (source == null && matName.contains("STRIPPED")) {
                 String[] woodNames = new String[] {"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "CRIMSON", "WARPED", "MANGROVE", "CHERRY"};
@@ -190,7 +186,7 @@ public class Treecapitator extends ReadiedManaAbility {
                 } else if (matName.contains("SPRUCE") || matName.contains("CRIMSON") || matName.contains("WARPED") || matName.contains("MANGROVE")) {
                     maxBlocks = 125;
                 } else if (matName.contains("JUNGLE")) {
-                    maxBlocks = 200;
+                    maxBlocks = 220;
                 } else if (matName.contains("DARK_OAK")) {
                     maxBlocks = 150;
                 }
