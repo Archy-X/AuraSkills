@@ -3,17 +3,17 @@ package dev.aurelium.auraskills.bukkit.skills.archery;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.damage.DamageMeta;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
-import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -28,9 +28,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public class ArcheryAbilities extends AbilityImpl {
@@ -207,26 +208,25 @@ public class ArcheryAbilities extends AbilityImpl {
                 return;
             }
 
-            arrow.getWorld().spawnParticle(Particle.SPELL_WITCH, arrow.getLocation(), 5, 0, 0, 0);
+            arrow.getWorld().spawnParticle(CompatUtil.witchParticle(), arrow.getLocation(), 5, 0, 0, 0);
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.4f, 1.9f);
 
             arrow.remove();
         }, Math.round(ability.optionDouble("delay_sec") * 1000), TimeUnit.MILLISECONDS);
     }
 
-    @SuppressWarnings("deprecation")
     private ItemStack getArrowItem(AbstractArrow abstractArrow) {
         if (abstractArrow instanceof Arrow arrow) {
-            if (arrow.getBasePotionData().getType() == PotionType.UNCRAFTABLE) {
+            if (isNormalArrow(arrow)) {
                 return new ItemStack(Material.ARROW);
             } else {
                 ItemStack item = new ItemStack(Material.TIPPED_ARROW);
                 PotionMeta meta = (PotionMeta) item.getItemMeta();
                 if (meta != null) {
-                    if (VersionUtils.isAtLeastVersion(20, 4)) {
+                    if (VersionUtils.isAtLeastVersion(20, 2)) {
                         meta.setBasePotionType(arrow.getBasePotionType());
                     } else {
-                        meta.setBasePotionData(arrow.getBasePotionData());
+                        setLegacyTippedArrow(arrow, meta);
                     }
                     item.setItemMeta(meta);
                 }
@@ -236,6 +236,39 @@ public class ArcheryAbilities extends AbilityImpl {
             return new ItemStack(Material.SPECTRAL_ARROW);
         }
         return new ItemStack(Material.ARROW);
+    }
+
+    private boolean isNormalArrow(Arrow arrow) {
+        if (VersionUtils.isAtLeastVersion(20, 2)) {
+            return arrow.getBasePotionType() == null || arrow.getBasePotionType().toString().equals("UNCRAFTABLE");
+        } else {
+            try {
+                Method getBasePotionData = arrow.getClass().getDeclaredMethod("getBasePotionData");
+                Object potionData = getBasePotionData.invoke(arrow);
+
+                Method getType = potionData.getClass().getDeclaredMethod("getType");
+                Object potionType = getType.invoke(potionData);
+
+                return potionType.toString().equals("UNCRAFTABLE");
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    // Below 1.20.2
+    private void setLegacyTippedArrow(Arrow arrow, PotionMeta meta) {
+        try {
+            Method getBasePotionData = arrow.getClass().getDeclaredMethod("getBasePotionData");
+            Object potionData = getBasePotionData.invoke(arrow);
+            // Set PotionData to PotionMeta
+            Class<?> potionDataClass = Class.forName("org.bukkit.potion.PotionData");
+            Method setBasePotionData = meta.getClass().getDeclaredMethod("setBasePotionData", potionDataClass);
+
+            setBasePotionData.invoke(meta, potionData);
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

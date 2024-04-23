@@ -7,10 +7,14 @@ import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.*;
+import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -87,9 +91,8 @@ public class Absorption extends ReadiedManaAbility {
             double z = radius * Math.sin(theta);
 
             Location location = center.clone().add(x, 0, z);
-            world.spawnParticle(Particle.REDSTONE, location, count, new DustOptions(Color.fromRGB(255, 0, 255), 1));
+            world.spawnParticle(CompatUtil.blockParticle(), location, count, new DustOptions(Color.fromRGB(255, 0, 255), 1));
         }
-
     }
 
 }

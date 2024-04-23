@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import dev.aurelium.slate.context.ContextGroup;
@@ -27,7 +28,6 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -123,7 +123,7 @@ public class ConfigurateItemParser {
             parseGlow(item);
         }
         // Custom NBT
-        if (!config.node("nbt").virtual() && !excludedKeys.contains("nbt")) {
+        if (!config.node("nbt").virtual() && !excludedKeys.contains("nbt") && !plugin.isNbtApiDisabled()) {
             if (config.node("nbt").isMap()) {
                 ConfigurationNode nbtSection = config.node("nbt");
                 item = parseNBT(item, nbtSection.childrenMap());
@@ -140,6 +140,9 @@ public class ConfigurateItemParser {
         if (!config.node("durability").virtual() && !excludedKeys.contains("durability")) {
             parseDurability(config, item);
         }
+        // Parses custom_model_data and old format CustomModelData nbt map
+        parseCustomModelData(config, item);
+
         ConfigurationNode skullMetaSection = config.node("skull_meta");
         if (!skullMetaSection.virtual() && !excludedKeys.contains("skull_meta")) {
             parseSkullMeta(item, item.getItemMeta(), skullMetaSection);
@@ -194,7 +197,7 @@ public class ConfigurateItemParser {
 
     private void parseGlow(ItemStack item) {
         ItemMeta meta = getMeta(item);
-        meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+        meta.addEnchant(Enchantment.MENDING, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
     }
@@ -217,15 +220,15 @@ public class ConfigurateItemParser {
         item.setItemMeta(potionMeta);
     }
 
-    @SuppressWarnings("deprecation")
-    private void parsePotionData(ItemStack item, ConfigurationNode node) {
+    public static void parsePotionData(ItemStack item, ConfigurationNode node) {
         PotionMeta potionMeta = (PotionMeta) getMeta(item);
         PotionType potionType = PotionType.valueOf(node.node("type").getString("WATER").toUpperCase(Locale.ROOT));
         boolean extended = node.node("extended").getBoolean(false);
         boolean upgraded = node.node("upgraded").getBoolean(false);
 
-        PotionData potionData = new PotionData(potionType, extended, upgraded);
-        potionMeta.setBasePotionData(potionData);
+        BukkitPotionType bukkitPotionType = new BukkitPotionType(potionType, extended, upgraded);
+        bukkitPotionType.applyToMeta(potionMeta);
+
         item.setItemMeta(potionMeta);
     }
 
@@ -305,7 +308,7 @@ public class ConfigurateItemParser {
         return item;
     }
 
-    private @NotNull ItemMeta getMeta(ItemStack item) {
+    public static @NotNull ItemMeta getMeta(ItemStack item) {
         return Objects.requireNonNull(item.getItemMeta());
     }
 
@@ -342,20 +345,23 @@ public class ConfigurateItemParser {
 
     private void applyMapToNBT(NBTCompound item, Map<Object, ? extends ConfigurationNode> map) {
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : map.entrySet()) {
-            Object key = entry.getKey();
+            Object keyObj = entry.getKey();
             Object value = entry.getValue().raw();
-            if (key instanceof String) {
+            if (keyObj instanceof String key) {
+                if (key.equals("CustomModelData")) { // Parsed elsewhere
+                    continue;
+                }
                 if (value instanceof ConfigurationNode childNode) { // Recursively apply sub maps
-                    applyMapToNBT(item.getOrCreateCompound((String) key), childNode.childrenMap());
+                    applyMapToNBT(item.getOrCreateCompound(key), childNode.childrenMap());
                 } else {
                     if (value instanceof Integer) {
-                        item.setInteger((String) key, (int) value);
+                        item.setInteger(key, (int) value);
                     } else if (value instanceof Double) {
-                        item.setDouble((String) key, (double) value);
+                        item.setDouble(key, (double) value);
                     } else if (value instanceof Boolean) {
-                        item.setBoolean((String) key, (boolean) value);
+                        item.setBoolean(key, (boolean) value);
                     } else if (value instanceof String) {
-                        item.setString((String) key, (String) value);
+                        item.setString(key, (String) value);
                     }
                 }
             }
@@ -371,6 +377,11 @@ public class ConfigurateItemParser {
 
     @Nullable
     protected Material parseMaterial(String name) {
+        if (name.equals("SCUTE") && VersionUtils.isAtLeastVersion(20, 5)) {
+            return Material.TURTLE_SCUTE;
+        } else if (name.equals("TURTLE_SCUTE") && !VersionUtils.isAtLeastVersion(20, 5)) {
+            return Material.valueOf("SCUTE");
+        }
         return Material.getMaterial(name);
     }
 
@@ -406,6 +417,20 @@ public class ConfigurateItemParser {
     private void parseAmount(ItemStack item, ConfigurationNode section) {
         int amount = section.node("amount").getInt(1);
         item.setAmount(amount);
+    }
+
+    private void parseCustomModelData(ConfigurationNode config, ItemStack item) {
+        if (!config.node("custom_model_data").virtual()) {
+            int data = config.node("custom_model_data").getInt();
+            ItemMeta meta = getMeta(item);
+            meta.setCustomModelData(data);
+            item.setItemMeta(meta);
+        } else if (!config.node("nbt").node("CustomModelData").virtual()) {
+            int data = config.node("nbt").node("CustomModelData").getInt();
+            ItemMeta meta = getMeta(item);
+            meta.setCustomModelData(data);
+            item.setItemMeta(meta);
+        }
     }
 
 }

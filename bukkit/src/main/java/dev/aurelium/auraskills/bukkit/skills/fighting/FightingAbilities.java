@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
@@ -248,7 +249,7 @@ public class FightingAbilities extends AbilityImpl {
         Location location = entity.getLocation().add(0, entity.getHeight() * 0.6, 0);
         BlockData particleData = Material.REDSTONE_BLOCK.createBlockData();
 
-        entity.getWorld().spawnParticle(Particle.BLOCK_DUST, location, 30, particleData);
+        entity.getWorld().spawnParticle(CompatUtil.dustParticle(), location, 30, particleData);
     }
 
     @EventHandler

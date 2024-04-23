@@ -8,6 +8,8 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
@@ -27,12 +29,12 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AgilityAbilities extends AbilityImpl {
@@ -66,7 +68,7 @@ public class AgilityAbilities extends AbilityImpl {
         if (isDisabled(ability)) return;
 
         for (PotionEffect effect : event.getPotion().getEffects()) {
-            if (!effect.getType().equals(PotionEffectType.SPEED) && !effect.getType().equals(PotionEffectType.JUMP)) continue;
+            if (!effect.getType().equals(PotionEffectType.SPEED) && !CompatUtil.isEffect(effect.getType(), Set.of("jump_boost", "jump"))) continue;
 
             for (LivingEntity entity : event.getAffectedEntities()) {
                 if (!(entity instanceof Player player)) continue;
@@ -101,7 +103,6 @@ public class AgilityAbilities extends AbilityImpl {
     }
 
     // For potion drinking
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGH)
     public void sugarRushDrink(PlayerItemConsumeEvent event) {
         var ability = Abilities.SUGAR_RUSH;
@@ -119,24 +120,30 @@ public class AgilityAbilities extends AbilityImpl {
         if (item.getType() != Material.POTION) return;
         if (!(item.getItemMeta() instanceof PotionMeta meta)) return;
 
-        PotionData potion = meta.getBasePotionData();
+        BukkitPotionType bukkitPotionType = new BukkitPotionType(meta);
+        PotionType potionType = bukkitPotionType.getType();
+        if (potionType == null) return;
+
         double multiplier = 1 + (getValue(ability, user) / 100);
 
-        if (potion.getType() == PotionType.SPEED || potion.getType() == PotionType.JUMP) {
+        String name = potionType.toString();
+        boolean isSwiftness = name.contains("SWIFTNESS") || name.equals("SPEED");
+        boolean isLeaping = name.contains("LEAPING") || name.equals("JUMP");
+        if (isSwiftness || isLeaping) {
             int amplifier = 0;
-            if (potion.isUpgraded()) {
+            if (bukkitPotionType.isUpgraded()) {
                 amplifier = 1;
             }
             PotionEffectType potionEffectType;
-            if (potion.getType() == PotionType.SPEED) {
+            if (isLeaping) {
                 potionEffectType = PotionEffectType.SPEED;
             } else {
-                potionEffectType = PotionEffectType.JUMP;
+                potionEffectType = CompatUtil.jumpBoost();
             }
             int duration;
-            if (potion.isExtended()) {
+            if (bukkitPotionType.isExtended()) {
                 duration = 480;
-            } else if (potion.isUpgraded()) {
+            } else if (bukkitPotionType.isUpgraded()) {
                 duration = 90;
             } else {
                 duration = 180;
@@ -147,7 +154,7 @@ public class AgilityAbilities extends AbilityImpl {
         // Apply custom effects
         if (meta.hasCustomEffects()) {
             for (PotionEffect effect : meta.getCustomEffects()) {
-                if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                if (effect.getType().equals(PotionEffectType.SPEED) || CompatUtil.isEffect(effect.getType(), Set.of("jump_boost", "jump"))) {
                     PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                 }
             }

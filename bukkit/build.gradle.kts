@@ -32,12 +32,14 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.2")
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.5-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.2")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5")
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.5.2")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
+        exclude("org.bukkit", "bukkit")
+    }
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("net.luckperms:api:5.4")
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")

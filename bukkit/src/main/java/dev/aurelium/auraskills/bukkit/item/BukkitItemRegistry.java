@@ -110,7 +110,11 @@ public class BukkitItemRegistry implements ItemRegistry {
         }
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            return meta.hasDisplayName() ? meta.getDisplayName() : meta.getLocalizedName();
+            if (meta.hasDisplayName()) {
+                return meta.getDisplayName();
+            } else {
+                return item.getType().name().toLowerCase(Locale.ROOT).replace("_", " ");
+            }
         }
         return null;
     }
@@ -178,7 +182,6 @@ public class BukkitItemRegistry implements ItemRegistry {
         return storage;
     }
 
-    @SuppressWarnings("deprecation")
     private boolean passesItemMetaFilter(ItemStack item, ItemFilter filter) {
         ItemFilterMeta filterMeta = filter.meta();
         if (filterMeta == null) {
@@ -217,34 +220,36 @@ public class BukkitItemRegistry implements ItemRegistry {
             if (!(itemMeta instanceof PotionMeta potionMeta)) {
                 return false;
             }
-            org.bukkit.potion.PotionData basePotionData = potionMeta.getBasePotionData();
             String[] types = potionData.types();
-            if (types != null) {
-                if (!TextUtil.contains(types, basePotionData.getType().toString())) {
+            // Backwards compatibility
+            BukkitPotionType bukkitPotionType = new BukkitPotionType(potionMeta);
+
+            PotionType basePotionType = bukkitPotionType.getType();
+            if (types != null && basePotionType != null) {
+                if (!TextUtil.contains(types, basePotionType.toString())) {
                     return false;
                 }
             }
             String[] excludedTypes = potionData.excludedTypes();
-            if (excludedTypes != null) {
-                if (TextUtil.contains(excludedTypes, basePotionData.getType().toString())) {
+            if (excludedTypes != null && basePotionType != null) {
+                if (TextUtil.contains(excludedTypes, basePotionType.toString())) {
                     return false;
                 }
             }
-            if (potionData.extended() != basePotionData.isExtended()) {
+            if (potionData.extended() != bukkitPotionType.isExtended()) {
                 return false;
             }
-            if (potionData.upgraded() != basePotionData.isUpgraded()) {
+            if (potionData.upgraded() != bukkitPotionType.isUpgraded()) {
                 return false;
             }
-            if (potionData.excludeNegative() && PotionUtil.isNegativePotion(basePotionData.getType())) {
-                return false;
+            if (potionData.excludeNegative()) {
+                return basePotionType == null || !PotionUtil.isNegativePotion(basePotionType);
             }
             return true;
         }
         return true;
     }
 
-    @SuppressWarnings("deprecation")
     private Set<ItemCategory> getItemCategories(ItemStack item, Material mat) {
         Set<ItemCategory> found = new HashSet<>();
         String name = mat.toString();
@@ -269,10 +274,8 @@ public class BukkitItemRegistry implements ItemRegistry {
         }
         // Check water bottle
         if (mat == Material.POTION) {
-            if (item.getItemMeta() instanceof PotionMeta potionMeta) {
-                if (potionMeta.getBasePotionData().getType() == PotionType.WATER) {
-                    found.add(ItemCategory.FISHING_JUNK);
-                }
+            if (item.getItemMeta() instanceof PotionMeta) {
+                found.add(ItemCategory.FISHING_JUNK);
             }
         }
         if (mat == Material.BOW || mat == Material.ENCHANTED_BOOK || mat == Material.NAME_TAG || mat == Material.NAUTILUS_SHELL || mat == Material.SADDLE) {

@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.source.GrindstoneLeveler;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.EnchantmentValue;
 import dev.aurelium.auraskills.bukkit.util.GrindstoneEnchant;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -241,7 +242,7 @@ public class ForgingAbilities extends AbilityImpl {
                 return Material.NETHERITE_INGOT;
             }
         } else if (name.equals("TURTLE_HELMET")) {
-            return Material.SCUTE;
+            return CompatUtil.getTurtleScute();
         } else if (material == Material.ELYTRA) {
             return Material.PHANTOM_MEMBRANE;
         } else if (name.startsWith("CHAINMAIL")) {
