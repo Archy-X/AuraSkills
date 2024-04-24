@@ -357,9 +357,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
                 .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .nbtEnabled(nbtApiEnabled)
                 .itemMetaParser("potion_data", (item, config) -> {
-                    ConfigurateItemParser.parsePotionData(item, config);
+                    new ConfigurateItemParser(this).parsePotionData(item, config);
                     return item;
                 })
+                .itemMetaParser("nbt", (item, config) -> new ConfigurateItemParser(this).parseNBT(item, config))
                 .build());
         menuHelper = new SlateMenuHelper(slate);
     }

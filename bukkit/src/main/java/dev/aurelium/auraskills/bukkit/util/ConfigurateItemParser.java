@@ -123,16 +123,8 @@ public class ConfigurateItemParser {
             parseGlow(item);
         }
         // Custom NBT
-        if (!config.node("nbt").virtual() && !excludedKeys.contains("nbt") && !plugin.isNbtApiDisabled()) {
-            if (config.node("nbt").isMap()) {
-                ConfigurationNode nbtSection = config.node("nbt");
-                item = parseNBT(item, nbtSection.childrenMap());
-            } else if (config.node("nbt").getString() != null) {
-                String nbtString = config.getString("nbt");
-                if (nbtString != null) {
-                    item = parseNBTString(item, nbtString);
-                }
-            }
+        if (!config.node("nbt").virtual() && !excludedKeys.contains("nbt")) {
+            item = parseNBT(item, config.node("nbt"));
         }
         if (!config.node("flags").virtual() && !excludedKeys.contains("flags")) {
             parseFlags(config, item);
@@ -146,6 +138,21 @@ public class ConfigurateItemParser {
         ConfigurationNode skullMetaSection = config.node("skull_meta");
         if (!skullMetaSection.virtual() && !excludedKeys.contains("skull_meta")) {
             parseSkullMeta(item, item.getItemMeta(), skullMetaSection);
+        }
+        return item;
+    }
+
+    public ItemStack parseNBT(ItemStack item, ConfigurationNode config) {
+        if (plugin.isNbtApiDisabled()) {
+            return item;
+        }
+        if (config.isMap()) {
+            item = parseNBT(item, config.childrenMap());
+        } else if (config.getString() != null) {
+            String nbtString = config.getString("nbt");
+            if (nbtString != null) {
+                item = parseNBTString(item, nbtString);
+            }
         }
         return item;
     }
@@ -220,7 +227,7 @@ public class ConfigurateItemParser {
         item.setItemMeta(potionMeta);
     }
 
-    public static void parsePotionData(ItemStack item, ConfigurationNode node) {
+    public void parsePotionData(ItemStack item, ConfigurationNode node) {
         PotionMeta potionMeta = (PotionMeta) getMeta(item);
         PotionType potionType = PotionType.valueOf(node.node("type").getString("WATER").toUpperCase(Locale.ROOT));
         boolean extended = node.node("extended").getBoolean(false);
@@ -308,7 +315,7 @@ public class ConfigurateItemParser {
         return item;
     }
 
-    public static @NotNull ItemMeta getMeta(ItemStack item) {
+    public @NotNull ItemMeta getMeta(ItemStack item) {
         return Objects.requireNonNull(item.getItemMeta());
     }
 

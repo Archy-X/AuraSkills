@@ -15,8 +15,7 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    // TODO Update to 1.0.3
-    api("dev.aurelium:slate:1.0.2-SNAPSHOT") {
+    api("dev.aurelium:slate:1.0.4") {
         exclude("org.yaml", "snakeyaml")
         exclude("org.spongepowered", "configurate-yaml")
     }
