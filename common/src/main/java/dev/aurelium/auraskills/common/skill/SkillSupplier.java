@@ -7,14 +7,14 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.SkillProvider;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.message.MessageProvider;
+import dev.aurelium.auraskills.common.registry.OptionSupplier;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class SkillSupplier implements SkillProvider {
+public class SkillSupplier extends OptionSupplier<Skill> implements SkillProvider {
 
     private final SkillManager skillManager;
     private final MessageProvider messageProvider;
@@ -67,52 +67,12 @@ public class SkillSupplier implements SkillProvider {
     }
 
     @Override
-    public boolean optionBoolean(Skill type, String key) {
-        return get(type).options().getBoolean(key);
+    public OptionProvider getOptions(Skill type) {
+        return get(type).options();
     }
 
     @Override
-    public boolean optionBoolean(Skill type, String key, boolean def) {
-        return get(type).options().getBoolean(key, def);
-    }
-
-    @Override
-    public int optionInt(Skill type, String key) {
-        return get(type).options().getInt(key);
-    }
-
-    @Override
-    public int optionInt(Skill type, String key, int def) {
-        return get(type).options().getInt(key, def);
-    }
-
-    @Override
-    public double optionDouble(Skill type, String key) {
-        return get(type).options().getDouble(key);
-    }
-
-    @Override
-    public double optionDouble(Skill type, String key, double def) {
-        return get(type).options().getDouble(key, def);
-    }
-
-    @Override
-    public String optionString(Skill type, String key) {
-        return get(type).options().getString(key);
-    }
-
-    @Override
-    public String optionString(Skill type, String key, String def) {
-        return get(type).options().getString(key, def);
-    }
-
-    @Override
-    public List<String> optionStringList(Skill type, String key) {
-        return get(type).options().getStringList(key);
-    }
-
-    @Override
-    public Map<String, Object> optionMap(Skill type, String key) {
-        return get(type).options().getMap(key);
+    public boolean isLoaded(Skill type) {
+        return skillManager.isLoaded(type);
     }
 }

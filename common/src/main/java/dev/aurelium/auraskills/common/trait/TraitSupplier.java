@@ -3,12 +3,12 @@ package dev.aurelium.auraskills.common.trait;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitProvider;
 import dev.aurelium.auraskills.common.message.MessageProvider;
+import dev.aurelium.auraskills.common.registry.OptionSupplier;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class TraitSupplier implements TraitProvider {
+public class TraitSupplier extends OptionSupplier<Trait> implements TraitProvider {
 
     private final TraitManager traitManager;
     private final MessageProvider messageProvider;
@@ -36,53 +36,12 @@ public class TraitSupplier implements TraitProvider {
     }
 
     @Override
-    public boolean optionBoolean(Trait type, String key) {
-        return get(type).options().getBoolean(key);
+    public OptionProvider getOptions(Trait type) {
+        return get(type).options();
     }
 
     @Override
-    public boolean optionBoolean(Trait type, String key, boolean def) {
-        return get(type).options().getBoolean(key, def);
+    public boolean isLoaded(Trait type) {
+        return traitManager.isLoaded(type);
     }
-
-    @Override
-    public int optionInt(Trait type, String key) {
-        return get(type).options().getInt(key);
-    }
-
-    @Override
-    public int optionInt(Trait type, String key, int def) {
-        return get(type).options().getInt(key, def);
-    }
-
-    @Override
-    public double optionDouble(Trait type, String key) {
-        return get(type).options().getDouble(key);
-    }
-
-    @Override
-    public double optionDouble(Trait type, String key, double def) {
-        return get(type).options().getDouble(key, def);
-    }
-
-    @Override
-    public String optionString(Trait type, String key) {
-        return get(type).options().getString(key);
-    }
-
-    @Override
-    public String optionString(Trait type, String key, String def) {
-        return get(type).options().getString(key, def);
-    }
-
-    @Override
-    public List<String> optionStringList(Trait type, String key) {
-        return get(type).options().getStringList(key);
-    }
-
-    @Override
-    public Map<String, Object> optionMap(Trait type, String key) {
-        return get(type).options().getMap(key);
-    }
-
 }

@@ -7,19 +7,17 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.MessageProvider;
+import dev.aurelium.auraskills.common.registry.OptionSupplier;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class ManaAbilitySupplier implements ManaAbilityProvider {
+public class ManaAbilitySupplier extends OptionSupplier<ManaAbility> implements ManaAbilityProvider {
 
-    private final AuraSkillsPlugin plugin;
     private final ManaAbilityManager manaAbilityManager;
     private final MessageProvider messageProvider;
 
     public ManaAbilitySupplier(AuraSkillsPlugin plugin, ManaAbilityManager manaAbilityManager) {
-        this.plugin = plugin;
         this.manaAbilityManager = manaAbilityManager;
         this.messageProvider = plugin.getMessageProvider();
     }
@@ -122,52 +120,12 @@ public class ManaAbilitySupplier implements ManaAbilityProvider {
     }
 
     @Override
-    public boolean optionBoolean(ManaAbility type, String key) {
-        return get(type).config().getBoolean(key);
+    public OptionProvider getOptions(ManaAbility type) {
+        return get(type).config();
     }
 
     @Override
-    public boolean optionBoolean(ManaAbility type, String key, boolean def) {
-        return get(type).config().getBoolean(key, def);
-    }
-
-    @Override
-    public int optionInt(ManaAbility type, String key) {
-        return get(type).config().getInt(key);
-    }
-
-    @Override
-    public int optionInt(ManaAbility type, String key, int def) {
-        return get(type).config().getInt(key, def);
-    }
-
-    @Override
-    public double optionDouble(ManaAbility type, String key) {
-        return get(type).config().getDouble(key);
-    }
-
-    @Override
-    public double optionDouble(ManaAbility type, String key, double def) {
-        return get(type).config().getDouble(key, def);
-    }
-
-    @Override
-    public String optionString(ManaAbility type, String key) {
-        return get(type).config().getString(key);
-    }
-
-    @Override
-    public String optionString(ManaAbility type, String key, String def) {
-        return get(type).config().getString(key, def);
-    }
-
-    @Override
-    public List<String> optionStringList(ManaAbility type, String key) {
-        return get(type).config().getStringList(key);
-    }
-
-    @Override
-    public Map<String, Object> optionMap(ManaAbility type, String key) {
-        return get(type).config().getMap(key);
+    public boolean isLoaded(ManaAbility type) {
+        return manaAbilityManager.isLoaded(type);
     }
 }

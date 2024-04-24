@@ -5,12 +5,12 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatProvider;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.common.message.MessageProvider;
+import dev.aurelium.auraskills.common.registry.OptionSupplier;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class StatSupplier implements StatProvider {
+public class StatSupplier extends OptionSupplier<Stat> implements StatProvider {
 
     private final StatManager statManager;
     private final MessageProvider messageProvider;
@@ -68,52 +68,12 @@ public class StatSupplier implements StatProvider {
     }
 
     @Override
-    public boolean optionBoolean(Stat type, String key) {
-        return get(type).options().getBoolean(key);
+    public OptionProvider getOptions(Stat type) {
+        return get(type).options();
     }
 
     @Override
-    public boolean optionBoolean(Stat type, String key, boolean def) {
-        return get(type).options().getBoolean(key, def);
-    }
-
-    @Override
-    public int optionInt(Stat type, String key) {
-        return get(type).options().getInt(key);
-    }
-
-    @Override
-    public int optionInt(Stat type, String key, int def) {
-        return get(type).options().getInt(key, def);
-    }
-
-    @Override
-    public double optionDouble(Stat type, String key) {
-        return get(type).options().getDouble(key);
-    }
-
-    @Override
-    public double optionDouble(Stat type, String key, double def) {
-        return get(type).options().getDouble(key, def);
-    }
-
-    @Override
-    public String optionString(Stat type, String key) {
-        return get(type).options().getString(key);
-    }
-
-    @Override
-    public String optionString(Stat type, String key, String def) {
-        return get(type).options().getString(key, def);
-    }
-
-    @Override
-    public List<String> optionStringList(Stat type, String key) {
-        return get(type).options().getStringList(key);
-    }
-
-    @Override
-    public Map<String, Object> optionMap(Stat type, String key) {
-        return get(type).options().getMap(key);
+    public boolean isLoaded(Stat type) {
+        return statManager.isLoaded(type);
     }
 }

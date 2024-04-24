@@ -4,12 +4,12 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbilityProvider;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.message.MessageProvider;
+import dev.aurelium.auraskills.common.registry.OptionSupplier;
+import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class AbilitySupplier implements AbilityProvider {
+public class AbilitySupplier extends OptionSupplier<Ability> implements AbilityProvider {
 
     private final AbilityManager abilityManager;
     private final MessageProvider messageProvider;
@@ -100,52 +100,12 @@ public class AbilitySupplier implements AbilityProvider {
     }
 
     @Override
-    public boolean optionBoolean(Ability type, String key) {
-        return get(type).config().getBoolean(key);
+    public OptionProvider getOptions(Ability type) {
+        return get(type).config();
     }
 
     @Override
-    public boolean optionBoolean(Ability type, String key, boolean def) {
-        return get(type).config().getBoolean(key, def);
-    }
-
-    @Override
-    public int optionInt(Ability type, String key) {
-        return get(type).config().getInt(key);
-    }
-
-    @Override
-    public int optionInt(Ability type, String key, int def) {
-        return get(type).config().getInt(key, def);
-    }
-
-    @Override
-    public double optionDouble(Ability type, String key) {
-        return get(type).config().getDouble(key);
-    }
-
-    @Override
-    public double optionDouble(Ability type, String key, double def) {
-        return get(type).config().getDouble(key, def);
-    }
-
-    @Override
-    public String optionString(Ability type, String key) {
-        return get(type).config().getString(key);
-    }
-
-    @Override
-    public String optionString(Ability type, String key, String def) {
-        return get(type).config().getString(key, def);
-    }
-
-    @Override
-    public List<String> optionStringList(Ability type, String key) {
-        return get(type).config().getStringList(key);
-    }
-
-    @Override
-    public Map<String, Object> optionMap(Ability type, String key) {
-        return get(type).config().getMap(key);
+    public boolean isLoaded(Ability type) {
+        return abilityManager.isLoaded(type);
     }
 }
