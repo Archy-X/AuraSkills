@@ -164,3 +164,5 @@ sources:
     xp: 1.2
   warden:
     xp: 1000.0
+  armadillo:
+    xp: 3.0
