@@ -32,7 +32,7 @@ public class AbilitiesMenu {
         var globalItems = new GlobalItems(plugin);
         menu.item("back", globalItems::backToLevelProgression);
 
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
         menu.properties(m -> Map.of(
                 "skill", m.menu().getProperty("skill", Skills.FARMING),
@@ -45,7 +45,7 @@ public class AbilitiesMenu {
                     "{value_2}", NumberUtil.format1(p.value().getSecondaryValue(1)),
                     "{chance_value}", plugin.getAbilityManager().getChanceValue(p.value(), 1),
                     "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(p.value(), 1)));
-            template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+            template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
             template.replace("level", p -> RomanNumber.toRoman(p.value().getUnlock(), plugin));
 
             template.definedContexts(m -> {
@@ -88,7 +88,7 @@ public class AbilitiesMenu {
             template.replace("desc", p -> TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player())),
                     "{value}", NumberUtil.format1(p.value().getDisplayValue(1)),
                     "{duration}", NumberUtil.format1(getDuration(p.value()))));
-            template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+            template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
             template.replace("level", p -> RomanNumber.toRoman(p.value().getUnlock(), plugin));
 
             template.definedContexts(m -> {
@@ -154,7 +154,7 @@ public class AbilitiesMenu {
                 }
                 return null;
             });
-            component.replace("skill", p -> p.value().getSkill().getDisplayName(p.locale()));
+            component.replace("skill", p -> p.value().getSkill().getDisplayName(p.locale(), false));
             component.replace("level", p -> RomanNumber.toRoman(getNextUpgradeLevel(p.value(), plugin.getUser(p.player())), plugin));
 
             component.shouldShow(t -> isNotMaxed(plugin.getUser(t.player()), t.value()));

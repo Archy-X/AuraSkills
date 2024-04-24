@@ -60,7 +60,7 @@ public class SourcesMenu {
 
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
         menu.pages(m -> {
             var skill = (Skill) m.menu().getProperty("skill");

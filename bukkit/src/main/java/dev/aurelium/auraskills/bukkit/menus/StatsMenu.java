@@ -114,7 +114,7 @@ public class StatsMenu {
                 ListBuilder builder = new ListBuilder(p.data().listData());
 
                 List<Skill> skillsLeveledBy = plugin.getRewardManager().getSkillsLeveledBy(p.value());
-                skillsLeveledBy.forEach(s -> builder.append(s.getDisplayName(locale)));
+                skillsLeveledBy.forEach(s -> builder.append(s.getDisplayName(locale, false)));
 
                 return builder.build();
             });

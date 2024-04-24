@@ -25,7 +25,7 @@ public class LeaderboardMenu {
     }
 
     public void build(MenuBuilder menu) {
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
         menu.properties(m -> Map.of(
                 "skill", m.menu().getProperty("skill", Skills.FARMING),

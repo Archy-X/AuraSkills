@@ -44,7 +44,7 @@ public class LevelProgressionMenu {
                 "start_level", 1,
                 "track", SkillLevelItem.getDefaultTrack()));
 
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
         menu.replaceTitle("page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
 
         menu.properties(m -> {
@@ -95,7 +95,7 @@ public class LevelProgressionMenu {
                 double percent = getLbPercent(skill, p.player());
                 return percent > 1 ? String.valueOf(Math.round(percent)) : NumberUtil.format2(percent);
             });
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
             item.onClick(c -> {
                 var properties = c.menu().getProperties(); // Retain current properties
@@ -105,7 +105,7 @@ public class LevelProgressionMenu {
         });
 
         menu.item("sources", item -> {
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
             item.onClick(c -> {
                 BuiltMenu sourcesMenu = plugin.getSlate().getBuiltMenu("sources");
@@ -115,7 +115,7 @@ public class LevelProgressionMenu {
         });
 
         menu.item("abilities", item -> {
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale()));
+            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
             item.onClick(c -> {
                 BuiltMenu abilitiesMenu = plugin.getSlate().getBuiltMenu("abilities");
