@@ -119,7 +119,7 @@ pools:
         xp: 5000
         sources: [dirts]
       - type: item
-        material: scute
+        material: turtle_scute
         weight: 4
         amount: 1
         xp: 5000

@@ -25,8 +25,7 @@ public class BukkitPotionType {
     }
 
     public BukkitPotionType(PotionMeta meta) {
-        // TODO Change to 20, 2
-        if (VersionUtils.isAtLeastVersion(20, 5)) {
+        if (VersionUtils.isAtLeastVersion(20, 2)) {
             type = meta.getBasePotionType();
             if (type != null) {
                 extended = type.getKey().getKey().contains("long_");
