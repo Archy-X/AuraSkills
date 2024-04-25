@@ -16,4 +16,14 @@ public class ApiMainConfig implements MainConfig {
     public boolean isDisabledInCreative() {
         return plugin.configBoolean(Option.DISABLE_IN_CREATIVE_MODE);
     }
+
+    @Override
+    public int getStartLevel() {
+        return plugin.config().getStartLevel();
+    }
+
+    @Override
+    public int getHighestMaxLevel() {
+        return plugin.config().getHighestMaxLevel();
+    }
 }
