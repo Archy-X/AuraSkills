@@ -70,7 +70,7 @@ public class BukkitPotionType {
         } else {
             try {
                 Class<?> potionDataClass = Class.forName("org.bukkit.potion.PotionData");
-                Constructor<?> potionDataConstructor = potionDataClass.getDeclaredConstructor(PotionType.class, Boolean.class, Boolean.class);
+                Constructor<?> potionDataConstructor = potionDataClass.getDeclaredConstructor(PotionType.class, boolean.class, boolean.class);
 
                 Object potionData = potionDataConstructor.newInstance(type, extended, upgraded);
 

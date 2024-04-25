@@ -263,7 +263,7 @@ public class ArcheryAbilities extends AbilityImpl {
             Object potionData = getBasePotionData.invoke(arrow);
             // Set PotionData to PotionMeta
             Class<?> potionDataClass = Class.forName("org.bukkit.potion.PotionData");
-            Method setBasePotionData = meta.getClass().getDeclaredMethod("setBasePotionData", potionDataClass);
+            Method setBasePotionData = PotionMeta.class.getDeclaredMethod("setBasePotionData", potionDataClass);
 
             setBasePotionData.invoke(meta, potionData);
         } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException e) {
