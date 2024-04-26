@@ -5,8 +5,8 @@
 abilities:
   bountiful_harvest:
     name: 풍성한 수확
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "+{value} 의 농업 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 농업 행운"
   farmer:
     name: 농부
     desc: "농사 경험치가 {value}% 증가합니다."
@@ -20,13 +20,13 @@ abilities:
     desc: "식물성 음식 포만감을 {value} 만큼 증가시킵니다."
     info: "+{value} 포만감"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: 성장 오라
+    desc: "{radius} 블록 내에 성장 단계가 있는 작물은 {value}% 더 빨리 자랍니다."
+    info: "+{value}% 성장"
   lumberjack:
     name: 나무꾼
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "+{value} 의 채집 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 행운 채집"
   forager:
     name: 채집
     desc: "채집 경험치가 {value}% 증가합니다."
@@ -45,8 +45,8 @@ abilities:
     info: "{value}% 3x 내구도 피해"
   lucky_miner:
     name: 행운의 광부
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "+{value} 채굴 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 채굴 행운"
   miner:
     name: 광부
     desc: "채굴 경험치가 {value}% 증가합니다."
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% 내구도 손실 없음"
   lucky_catch:
     name: 행운의 낚시꾼
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "+{value} 낚시 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 낚시 행운"
   fisher:
     name: 낚시꾼
     desc: "낚시 경험치가 {value}% 증가합니다."
@@ -97,16 +97,16 @@ abilities:
     info: "+{value}% 삽 피해"
   bigger_scoop:
     name: 큰 삽
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "+{value} 발굴 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value}% 발굴 행운"
   lucky_spades:
     name: 행운의 스페이드
     desc: "땅을 팔 때 에픽 전리품 획득 확률 {value}% 증가합니다."
     info: "+{value}% 에픽 전리품"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: 검색
+    desc: "놓친 화살표는 최대 {value} 블록 떨어진 {time} 후에 즉시 검색됩니다."
+    info: "{value} 거리"
   archer:
     name: 궁수
     desc: "궁술 경험치가 {value}% 증가합니다."
@@ -144,9 +144,9 @@ abilities:
     desc: "{value}% 확률로 해로운 물약 효과를무효화합니다."
     info: "{value}% 디버프 저항"
   parry:
-    name: Parry
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
+    name: 받아치기
+    desc: "공격을 받기 전 {time}초 내에 검을 휘두르지 못하면 데미지가 {value}% 감소하고 넉백이 취소됩니다."
+    info: "{value}% 데미지 감소"
     parried: "<red>Attack parried"
   fighter:
     name: 싸움꾼
