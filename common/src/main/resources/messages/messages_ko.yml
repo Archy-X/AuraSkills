@@ -285,10 +285,10 @@ abilities:
     info: "+{value}% 모루 수리"
   anvil_master:
     name: 모루 장인
-    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    desc: '{value} 경험치에 너무 비싸지기 전에 모루의 최대 수리 비용을 늘립니다.'
     info: "{value} 최댓값"
   skill_mender:
-    name: Skill Mender
+    name: 수선 스킬
     desc: 스킬 경험치 획득 시 {value}% 확률로 스킬경험치 2 당 내구도 1%를 수선합니다.
     info: "{value}% 수선 확률"
 acf:
@@ -441,7 +441,7 @@ commands:
     display_other: "<white>{mana_unit} 중 {player}: <aqua>{current}/{max}"
     add: "<gray>사용자 <gold>{player}에게 <aqua>{amount} {mana_unit} <gray>가 추가되었습니다."
     remove: "<gray>사용자 <gold>{player}에게서 <aqua>{amount} {mana_unit} <gray>가 추가되었습니다."
-    set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    set: "<gray>플레이어 <gold>{player} <gray>를 <aqua>{amount} {mana_unit} 로 설정"
     at_least_zero: "<yellow>{mana_unit} 가 0 이상이어야 합니다!"
     console_specify_player: "<yellow>콘솔에서 사용자를 지정해야 합니다!"
   modifier:
@@ -468,22 +468,22 @@ commands:
     players_only: "<yellow>사용자만 본인의 경험치 배율을 확인 할 수 있습니다! 사용자 지정 후 재시도하십시오."
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
-      skipped: Skipped files
+      confirm: "<red>사전 설정을 로드하면 구성 파일이 재정의됩니다! 다음 파일이 영향을 받습니다. <gray>(<aqua>추가<gray>, <yellow>병합<gray>,<red>교체<gray>, <dark_red>삭제됨<gray>): {entries}<red>이것은 작업은 취소할 수 없습니다. 필요한 파일을 수동으로 백업하세요. 확인하려면 명령을 다시 입력하세요."
+      loaded: 사전 설정 {name} 을(를) 성공적으로 로드했습니다. 지금 서버를 다시 시작하세요.
+      created: 파일 생성
+      modified: 수정된 파일
+      replaced: 대체된 파일
+      deleted: 파일 삭제됨
+      skipped: 건너뛴 파일
   profile:
-    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+    skills: "<gold>{name} 의 기술 프로필:\n<gray>UUID: <white>{uuid}\n<gray>기술:{skill_entries}"
+    skill_entry: "\n<dark_aqua>{skill}<gray>- 레벨: <white>{level}<gray> XP: <white>{xp}"
+    stats: "<gold>{name} 에 대한 통계 프로필:\n<gray>UUID:<white>{uuid}\n<gray>통계:{stat_entries}"
+    stat_entry: "\n<dark_aqua>{stat}<gray>- 전체 레벨: <white>{total_level}<gray>, 기본 레벨: <white>{base_level}<gray>, 수정 레벨: <white>{modified_level}"
   rank:
     header: "<aqua><bold>스킬 순위"
-    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+    power: "<yellow>전력 <gray>(All Skills):<white>{total} 중 #{rank}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank}/{total}"
   reload: "<green>구성 다시 불러오기가 완료되었습니다!"
   save:
     already_saving: "<yellow>데이터가 이미 저장 중입니다!"
@@ -494,7 +494,7 @@ commands:
       set: "<gray>사용자 <gold>{player} <gray>의 모든 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
     setlevel:
       set: "<gray>사용자 <gold>{player} <gray>의 <aqua>{skill} 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>레벨은 최소 {level} 이상이어야 합니다!"
   toggle:
     enabled: "<green>스킬 액션 표시줄이 활성화되었습니다."
     disabled: "<red>스킬 액션 표시줄이 비활성화되었습니다."
@@ -508,8 +508,8 @@ commands:
     average_header_page: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>(Page {page})==--"
     usage: "<yellow>사용: <green>/sk top <white><page> <gray>나 <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
-    error: "<red>There was an error transferring player data. Check console for errors."
+    success: "<green><gray>{from} <green>에서 <gray>{to} 로 플레이어 데이터를 성공적으로 전송했습니다."
+    error: "<red>플레이어 데이터를 전송하는 중에 오류가 발생했습니다. 콘솔에 오류가 있는지 확인하세요."
   updateleaderboards:
     already_updating: "<yellow>순위가 이미 갱신 중입니다!"
     updated: "<green>순위가 갱신되었습니다!"
@@ -519,59 +519,59 @@ commands:
     set: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} <gray>경험치가 <gold>{amount} <gray>로 설정되었습니다."
     remove: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} {amount} <gray>경험치가 제거되었습니다."
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray><aqua>{ability} <gray>의 재사용 대기시간이 플레이어 <gold>{player} 에 대해 재설정되었습니다."
   unknown_skill: "<yellow>알 수 없는 스킬!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
-  unknown_stat: "<yellow>Unknown stat!"
-  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
+  unknown_mana_ability: "<yellow>알 수 없는 마나 능력!"
+  unknown_stat: "<yellow>알 수 없는 통계입니다!"
+  no_profile: "<yellow>플레이어에게 스킬 프로필이 없습니다. 게임에 다시 참여하거나 서버를 다시 시작해 보세요."
 leveler:
-  level_up: "{skill} Level Up"
-  skill_level_up: Skill Level Up
-  rewards: Rewards
-  ability_unlock: Ability Unlock
-  ability_level_up: Ability Level Up
-  mana_ability_unlock: Mana Ability Unlock
-  mana_ability_level_up: Mana Ability Level Up
-  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  level_up: "{skill} 레벨 업"
+  skill_level_up: 스킬 레벨 상승!
+  rewards: 보상
+  ability_unlock: 능력 잠금 해제
+  ability_level_up: 능력 레벨 업
+  mana_ability_unlock: 마나 능력 잠금 해제
+  mana_ability_level_up: 마나 능력 레벨 업
+  unclaimed_item: "<red>인벤토리가 가득 차서 수령하지 않은 아이템이 있습니다. <yellow>/skillsclaimitems<red>를 사용하여 수령하세요."
 menus:
   common:
-    close: "Close"
-    level: "Level"
-    progress_to_level: "Progress to Level"
-    max_level: "MAX LEVEL"
-    ability_levels: "Ability Levels"
-    stats_leveled: "Stats Leveled"
-    mana_ability: "Mana Ability"
-    duration: "Duration"
-    mana_cost: "Mana Cost"
-    cooldown: "Cooldown"
-    damage: "Damage"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
-    back: "Go Back"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
-    next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
-    previous_page_click: "Click to go to previous page"
+    close: "닫기"
+    level: "레벨"
+    progress_to_level: "레벨 진행"
+    max_level: "최대 레벨"
+    ability_levels: "능력 레벨"
+    stats_leveled: "통계 수준"
+    mana_ability: "마나 능력"
+    duration: "지속시간"
+    mana_cost: "마나 비용:"
+    cooldown: "쿨다운"
+    damage: "피해"
+    max_mana_cost: "최대 마나 비용"
+    attack_speed: "공격 속도"
+    back: "뒤로 가기"
+    back_click: "{menu_name} 메뉴로 돌아가기"
+    unlocked: "잠금 해제됨"
+    in_progress: "진행 중"
+    locked: "잠김"
+    your_level: "레벨:"
+    next_page: "다음 페이지"
+    next_page_click: "다음 페이지로 이동하려면 클릭하세요."
+    previous_page: "이전 페이지"
+    previous_page_click: "이전 페이지로 이동하려면 클릭하세요."
   skills:
-    skills_title: "Your Skills"
-    your_skills: "Your Skills"
-    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
-    your_skills_hover: "Hover over a Skill for more information!"
-    your_skills_click: "Click on a Skill to view level progression!"
-    skill_click: "Click to view Level Progression!"
-    stats: "Stats"
-    stats_desc: "Earn stat buffs by leveling up skills"
-    stats_click: "Click to learn more or view your stats"
+    skills_title: "자신의 스킬"
+    your_skills: "자신의 스킬"
+    your_skills_desc: "귀중한 능력치 부스트, 능력 등을 잠금 해제하려면 다양한 작업을 수행하여 스킬을 업그레이드하세요!"
+    your_skills_hover: "자세한 내용을 보려면 스킬 위에 마우스를 올리세요!"
+    your_skills_click: "레벨 진행 상황을 보려면 스킬을 클릭하세요!"
+    skill_click: "레벨 진행 상황을 보려면 클릭하세요!"
+    stats: "스탯"
+    stats_desc: "스킬 레벨을 올려 능력치 버프를 획득하세요"
+    stats_click: "자세히 알아보거나 통계를 보려면 클릭하세요."
   level_progression:
-    level_progression_title: "{skill} Levels - Page {page}"
-    your_ranking: "Your Skill Ranking"
-    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    level_progression_title: "{skill} 레벨 - 페이지 {page}"
+    your_ranking: "당신의 스킬 순위"
+    rank_out_of: "<1>귀하는 총 플레이어 수 중 <2>{rank}</2>위입니다</1>"
     rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
     rewards: "Rewards"
     ability_unlock: "Ability Unlock"
