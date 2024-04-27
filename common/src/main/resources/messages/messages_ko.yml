@@ -147,7 +147,7 @@ abilities:
     name: 받아치기
     desc: "공격을 받기 전 {time}초 내에 검을 휘두르지 못하면 데미지가 {value}% 감소하고 넉백이 취소됩니다."
     info: "{value}% 데미지 감소"
-    parried: "<red>Attack parried"
+    parried: "<red>공격이 막혔습니다."
   fighter:
     name: 싸움꾼
     desc: "전투 경험치가 {value}% 증가합니다."
@@ -163,7 +163,7 @@ abilities:
     dealt: "<red>선제 공격!"
   bleed:
     name: 출혈
-    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    desc: "{value}%의 확률로 적에게 {base_ticks} 출혈 틱 동안 출혈을 주어 틱당 {value_2} 피해를 입힙니다. 이미 출혈 중인 적에게는 {add_ticks} 틱이 추가됩니다."
     info: "{value}% 확률로 {value_2} 피해"
     enemy_bleeding: "<red>적이 피를 흘리고 있습니다!"
     self_bleeding: "<red>피를 흘리고 있습니다!"
@@ -233,7 +233,7 @@ abilities:
   xp_convert:
     name: 경험치 변환
     desc: "마인크래프트 경험치 1당 {value} 만큼의 스킬 경험치로 변환합니다."
-    info: "1 EXP/{value} Skill XP"
+    info: "1 EXP/{value} 스킬 XP"
   enchanter:
     name: 부여술사
     desc: "부여마법 경험치가 {value}% 증가합니다."
@@ -251,40 +251,40 @@ abilities:
     desc: "마법부여대에서 부여가능한 마법이 최대 레벨이 아닐경우 {value}% 확률로 등급이 상승합니다."
     info: "{value}% 마법부여 승 확률"
   life_essence:
-    name: Life Essence
-    desc: Instant Health potions heal {value}% more.
-    info: "+{value}% Instant Health"
+    name: 생명의 정수
+    desc: 즉시 건강 물약은 {value}% 더 치유합니다.
+    info: "+{value}% 즉시 회복"
   healer:
-    name: Healer
-    desc: Earn {value}% more Healing XP.
-    info: "+{value}% XP"
+    name: 치유사
+    desc: '{value}% 더 많은 치유 XP를 획득하세요.'
+    info: "+{value}% 경험치"
   life_steal:
-    name: Life Steal
-    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
-    info: "Steal {value}% HP"
+    name: 생명 강탈
+    desc: 당신이 죽인 적대적인 몹과 플레이어의 최대 HP의 {value}%를 치유하십시오.
+    info: "{value}% HP를 훔칩니다."
   golden_heart:
-    name: Golden Heart
-    desc: Damage done to your absorption hearts is reduced by {value}%
-    info: "-{value}% Absorption Dmg"
+    name: 골든 하트
+    desc: 흡수 하트에 가해지는 피해가 {value}%만큼 감소합니다.
+    info: "-{value}% 흡수 데미지"
   revival:
-    name: Revival
-    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
-    info: "+{value} Health, +{value_2} Regen"
-    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
+    name: 회복
+    desc: 부활 후 30초 동안 +{value} 체력과 +{value_2} 재생력을 얻습니다.
+    info: "+{value} 건강, +{value_2} 재생"
+    message: "<white>30초 동안 부활 보너스를 받았습니다! <white>(<red>+{value} 체력,<gold>+{{value_2} 재생<white>)"
   disenchanter:
-    name: Disenchanter
-    desc: Gain {value}% more experience when disenchanting items using a grindstone.
-    info: "+{value}% Grindstone EXP"
+    name: 마법 파훼자
+    desc: 숫돌을 사용하여 아이템을 추출할 때 {value}% 더 많은 경험치를 얻습니다.
+    info: "+{value}% 숫돌 경험치"
   forger:
-    name: Forger
-    desc: Earn {value}% more Forging XP.
-    info: "+{value}% XP"
+    name: 대장장이
+    desc: '{value}% 더 많은 단조 XP를 획득하세요.'
+    info: "+{value}% 경험치"
   repairing:
-    name: Repairing
-    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
-    info: "+{value}% Anvil Repair"
+    name: 수리공
+    desc: 모루에 있는 아이템을 수리하여 만든 원자재를 사용하여 아이템을 수리하면 내구도가 {value}% 더 늘어납니다.
+    info: "+{value}% 모루 수리"
   anvil_master:
-    name: Anvil Master
+    name: 모루 장인
     desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
     info: "{value} 최댓값"
   skill_mender:
