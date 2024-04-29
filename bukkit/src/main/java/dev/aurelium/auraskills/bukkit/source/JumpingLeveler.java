@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.source;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.JumpingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -46,8 +46,8 @@ public class JumpingLeveler extends SourceLeveler {
         }
 
         double jumpVelocity = 0.42F;
-        if (player.hasPotionEffect(PotionEffectType.JUMP)) {
-            PotionEffect effect = player.getPotionEffect(PotionEffectType.JUMP);
+        if (CompatUtil.hasEffect(player, Set.of("jump", "jump_boost"))) {
+            PotionEffect effect = CompatUtil.getEffect(player, Set.of("jump", "jump_boost"));
             if (effect != null) {
                 jumpVelocity += ((float) (effect.getAmplifier() + 1) * 0.1F);
             }

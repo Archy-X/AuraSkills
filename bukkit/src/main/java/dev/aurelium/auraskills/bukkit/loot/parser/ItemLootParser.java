@@ -11,7 +11,6 @@ import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.util.data.Validate;
-import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -79,10 +78,10 @@ public class ItemLootParser implements LootParser {
                 String levelString = splitEntry[1];
                 if (levelString.contains("-")) { // Handle level range format (eg. 1-5)
                     String[] splitLevel = levelString.split("-");
-                    minLevel = NumberUtils.toInt(splitLevel[0], 1);
-                    maxLevel = NumberUtils.toInt(splitLevel[1], 1);
+                    minLevel = Integer.parseInt(splitLevel[0]);
+                    maxLevel = Integer.parseInt(splitLevel[1]);
                 } else {
-                    int fixedLevel = NumberUtils.toInt(splitEntry[1], 1);
+                    int fixedLevel = Integer.parseInt(splitEntry[1]);
                     minLevel = fixedLevel;
                     maxLevel = fixedLevel;
                 }
@@ -100,10 +99,10 @@ public class ItemLootParser implements LootParser {
                 return new int[] {amount, amount};
             } else if (object instanceof String amountString) {
                 String[] splitString = amountString.split("-");
-                int minAmount = NumberUtils.toInt(splitString[0]);
+                int minAmount = Integer.parseInt(splitString[0]);
                 int maxAmount = minAmount;
                 if (splitString.length > 1) {
-                    maxAmount = NumberUtils.toInt(splitString[1], minAmount);
+                    maxAmount = Integer.parseInt(splitString[1]);
                 }
                 return new int[] {minAmount, maxAmount};
             }

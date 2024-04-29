@@ -4,14 +4,16 @@ import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -95,27 +96,29 @@ public class AlchemyAbilities extends AbilityImpl {
 
     private boolean isApplicablePotion(PotionType potionType) {
         switch (potionType) {
-            case INSTANT_DAMAGE, INSTANT_HEAL, AWKWARD, MUNDANE, THICK, WATER -> {
+            case AWKWARD, MUNDANE, THICK, WATER -> {
                 return false;
             }
         }
         return switch (potionType.toString()) {
-            case "STRONG_HARMING", "STRONG_HEALING" -> false;
+            // INSTANT_DAMAGE and INSTANT_HEAL are replaced by HARMING and HEALING in 1.20.5
+            case "HARMING", "HEALING", "STRONG_HARMING", "STRONG_HEALING", "INSTANT_DAMAGE", "INSTANT_HEAL" -> false;
             default -> true;
         };
     }
 
-    @SuppressWarnings("deprecation")
     private ItemStack applyDurationData(ItemStack item, double multiplier, Locale locale) {
         PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
         if (potionMeta == null) {
             return item;
         }
-        PotionData potionData = potionMeta.getBasePotionData();
-        if (!isApplicablePotion(potionData.getType())) {
+        BukkitPotionType bukkitPotionType = new BukkitPotionType(potionMeta);
+
+        PotionType potionType = bukkitPotionType.getType();
+        if (potionType != null && !isApplicablePotion(potionType)) {
             return item;
         }
-        int originalDuration = PotionUtil.getDuration(potionData);
+        int originalDuration = PotionUtil.getDuration(bukkitPotionType);
         int duration = (int) (originalDuration * multiplier); // Get duration in ticks
         int durationBonus = duration - originalDuration;
 
@@ -156,14 +159,17 @@ public class AlchemyAbilities extends AbilityImpl {
         int durationBonus = item.getItemMeta().getPersistentDataContainer().getOrDefault(DURATION_BONUS_KEY, PersistentDataType.INTEGER, 0);
         if (durationBonus <= 0) return;
 
-        PotionData potionData = meta.getBasePotionData();
-        PotionType potionType = potionData.getType();
+        BukkitPotionType bukkitPotionType = new BukkitPotionType(meta);
+        PotionType potionType = bukkitPotionType.getType();
+        if (potionType == null) return;
+
         PotionEffectType effectType = potionType.getEffectType();
         if (effectType != null) {
-            if (!potionType.toString().equals("TURTLE_MASTER")) {
+            int duration = PotionUtil.getDuration(bukkitPotionType);
+            if (!potionType.toString().contains("TURTLE_MASTER")) {
                 // Get amplifier
                 int amplifier = 0;
-                if (potionData.isUpgraded()) {
+                if (bukkitPotionType.isUpgraded()) {
                     if (potionType.equals(PotionType.SLOWNESS)) {
                         amplifier = 3;
                     } else {
@@ -171,21 +177,21 @@ public class AlchemyAbilities extends AbilityImpl {
                     }
                 }
                 // Apply effect
-                if (effectType.equals(PotionEffectType.SPEED) || effectType.equals(PotionEffectType.JUMP)) {
+                if (effectType.equals(PotionEffectType.SPEED) || CompatUtil.isEffect(effectType, Set.of("jump_boost", "jump"))) {
                     var agilityAbilities = plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class);
-                    PotionUtil.applyEffect(player, new PotionEffect(effectType, (int) ((PotionUtil.getDuration(potionData) + durationBonus) * agilityAbilities.getSugarRushSplashMultiplier(player)), amplifier));
+                    PotionUtil.applyEffect(player, new PotionEffect(effectType, (int) ((duration + durationBonus) * agilityAbilities.getSugarRushSplashMultiplier(player)), amplifier));
                 } else {
-                    PotionUtil.applyEffect(player, new PotionEffect(effectType, PotionUtil.getDuration(potionData) + durationBonus, amplifier));
+                    PotionUtil.applyEffect(player, new PotionEffect(effectType, duration + durationBonus, amplifier));
                 }
             }
             // Special case for Turtle Master
             else {
-                if (!potionData.isUpgraded()) {
-                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 3));
-                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 2));
+                if (!bukkitPotionType.isUpgraded()) {
+                    PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration + durationBonus, 3));
+                    PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration + durationBonus, 2));
                 } else {
-                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, PotionUtil.getDuration(potionData) + durationBonus, 5));
-                    PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, PotionUtil.getDuration(potionData) + durationBonus, 3));
+                    PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration + durationBonus, 5));
+                    PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration + durationBonus, 3));
                 }
             }
         }
@@ -196,7 +202,6 @@ public class AlchemyAbilities extends AbilityImpl {
     }
 
     // Handles duration boosts for splash potions. Includes Alchemist, Sugar Rush, and Splasher.
-    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSplash(PotionSplashEvent event) {
         if (event.isCancelled()) return;
@@ -205,7 +210,10 @@ public class AlchemyAbilities extends AbilityImpl {
         if (!(item.getItemMeta() instanceof PotionMeta meta) || item.getItemMeta() == null) {
             return;
         }
-        PotionData potionData = meta.getBasePotionData();
+        BukkitPotionType bukkitPotionType = new BukkitPotionType(meta);
+        PotionType potionType = bukkitPotionType.getType();
+        if (potionType == null) return;
+
         if (meta.hasCustomEffects() && Skills.ALCHEMY.optionBoolean("ignore_custom_potions")) return;
         // Get potion duration bonus from Alchemist ability
         int durationBonus = 0;
@@ -227,11 +235,11 @@ public class AlchemyAbilities extends AbilityImpl {
                 // Calculate and get multipliers
                 double splasherMultiplier = getSplasherMultiplier(event.getPotion().getShooter(), event.getAffectedEntities());
                 double intensity = event.getIntensity(player);
-                int duration = (int) ((PotionUtil.getDuration(potionData) + durationBonus) * splasherMultiplier * intensity);
+                int duration = (int) ((PotionUtil.getDuration(bukkitPotionType) + durationBonus) * splasherMultiplier * intensity);
                 // Apply normal effects
-                if (!potionData.getType().toString().equals("TURTLE_MASTER")) {
+                if (!potionType.toString().contains("TURTLE_MASTER")) {
                     // Apply Sugar Rush
-                    if (effect.getType().equals(PotionEffectType.SPEED) || effect.getType().equals(PotionEffectType.JUMP)) {
+                    if (effect.getType().equals(PotionEffectType.SPEED) || CompatUtil.isEffect(effect.getType(), Set.of("jump_boost", "jump"))) {
                         var agilityAbilities = plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class);
                         PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (duration * agilityAbilities.getSugarRushSplashMultiplier(player)), effect.getAmplifier()));
                     } else {
@@ -241,12 +249,12 @@ public class AlchemyAbilities extends AbilityImpl {
                 }
                 // Special case for Turtle Master
                 else {
-                    if (!potionData.isUpgraded()) {
-                        PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, duration, 3));
-                        PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, duration, 2));
+                    if (!bukkitPotionType.isUpgraded()) {
+                        PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration, 3));
+                        PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration, 2));
                     } else {
-                        PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.SLOW, duration, 5));
-                        PotionUtil.applyEffect(player, new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,duration, 3));
+                        PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration, 5));
+                        PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration, 3));
                     }
                 }
             }

@@ -15,13 +15,13 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("dev.aurelium:slate:1.0.1") {
+    api("dev.aurelium:slate:1.0.4") {
         exclude("org.yaml", "snakeyaml")
         exclude("org.spongepowered", "configurate-yaml")
     }
     // api(files("../../Slate/build/libs/Slate-1.0.0.jar"))
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.5-R0.1-SNAPSHOT")
 }
 
 tasks.withType<JavaCompile> {

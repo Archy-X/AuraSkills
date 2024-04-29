@@ -3,10 +3,10 @@ package dev.aurelium.auraskills.bukkit.skills.farming;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -92,7 +92,7 @@ public class Replenish extends ReadiedManaAbility {
 
     private void attemptSpawnParticle(Block block) {
         if (manaAbility.optionBoolean("show_particles", true)) {
-            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().add(0.5, 0.2, 0.5), 8, 0.25, 0, 0.25);
+            block.getWorld().spawnParticle(CompatUtil.villagerParticle(), block.getLocation().add(0.5, 0.2, 0.5), 8, 0.25, 0, 0.25);
         }
     }
 

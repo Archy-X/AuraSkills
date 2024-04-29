@@ -55,6 +55,7 @@ import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
+import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.bukkit.util.MetricsUtil;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -207,6 +208,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
         configProvider.loadOptions();
+        initializeNbtApi();
         initializeMenus(); // Generate menu files
         // Initialize and migrate storage (connect to SQL database if enabled)
         initStorageProvider();
@@ -257,14 +259,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             // bStats custom charts
             new MetricsUtil(getInstance()).registerCustomCharts(metrics);
         });
-
-        // Check if NBT API is supported for the version
-        if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
-            getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
-            nbtApiEnabled = false;
-        } else {
-            nbtApiEnabled = true;
-        }
     }
 
     @Override
@@ -361,8 +355,24 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
                 .keyedItemProvider(new ItemRegistryMenuProvider(itemRegistry))
                 .mainDirectory(new File(getDataFolder(), "menus"))
                 .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
+                .nbtEnabled(nbtApiEnabled)
+                .itemMetaParser("potion_data", (item, config) -> {
+                    new ConfigurateItemParser(this).parsePotionData(item, config);
+                    return item;
+                })
+                .itemMetaParser("nbt", (item, config) -> new ConfigurateItemParser(this).parseNBT(item, config))
                 .build());
         menuHelper = new SlateMenuHelper(slate);
+    }
+
+    private void initializeNbtApi() {
+        // Check if NBT API is supported for the version
+        if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
+            getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
+            nbtApiEnabled = false;
+        } else {
+            nbtApiEnabled = true;
+        }
     }
 
     private void registerAndLoadMenus() {

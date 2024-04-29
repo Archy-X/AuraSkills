@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
@@ -18,7 +19,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class SpeedMine extends ReadiedManaAbility {
 
@@ -31,7 +31,7 @@ public class SpeedMine extends ReadiedManaAbility {
     @SuppressWarnings("deprecation")
     public void onActivate(Player player, User user) {
         int amplifier = manaAbility.optionInt("haste_level", 10) - 1;
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (getValue(user) * 20),
+        player.addPotionEffect(new PotionEffect(CompatUtil.haste(), (int) (getValue(user) * 20),
                 amplifier, false, false), true);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
