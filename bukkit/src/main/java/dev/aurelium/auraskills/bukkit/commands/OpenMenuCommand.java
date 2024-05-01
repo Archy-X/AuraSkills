@@ -60,6 +60,7 @@ public class OpenMenuCommand extends BaseCommand {
         try {
             plugin.getSlate().openMenuUnchecked(target, menuName, getProperties(target, menuName, properties), page);
         } catch (Exception e) {
+            target.closeInventory(); // Ensure players can't take items out
             var errorMsg = TextUtil.replace(plugin.getMsg(ACFCoreMessage.ERROR_PREFIX, locale),
                     "{message}", e.getMessage() != null ? e.getMessage() : "Check console for error");
             sender.sendMessage(errorMsg);

@@ -70,7 +70,7 @@ public class ApiMenuManager implements MenuManager {
 
     @Override
     public void registerGlobalReplacer(ItemReplacer replacer) {
-        plugin.getSlate().getGlobalOptions().globalReplacers().add(replacer);
+        plugin.getSlate().getGlobalBehavior().globalReplacers().add(replacer);
     }
 
     public Set<String> getNonDefaultMenuNames() {

@@ -25,7 +25,6 @@ public class MenuOptions {
                 .keyedItemProvider(new ItemRegistryMenuProvider(plugin.getItemRegistry()))
                 .mainDirectory(new File(plugin.getDataFolder(), "menus"))
                 .loreWrappingWidth(plugin.configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
-                .nbtEnabled(!plugin.isNbtApiDisabled())
                 .itemMetaParsers(getMetaParsers())
                 .build();
     }

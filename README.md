@@ -4,6 +4,10 @@
 The ultra-versatile Minecraft RPG skills plugin
 </p>
 
+[![GitHub Release](https://img.shields.io/github/v/release/Archy-X/AuraSkills?style=flat-square)](https://github.com/Archy-X/AuraSkills/releases/latest)
+[![Maven Central Version](https://img.shields.io/maven-central/v/dev.aurelium/auraskills-api-bukkit?style=flat-square&color=%238529F5)](https://central.sonatype.com/artifact/dev.aurelium/auraskills-api-bukkit)
+[![Spiget Downloads](https://img.shields.io/spiget/downloads/81069?style=flat-square)](https://www.spigotmc.org/resources/81069/)
+
 <p style="text-align: center;font-weight: bold;">
   <a href="https://aurelium.dev/auraskills/download">Downloads</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;

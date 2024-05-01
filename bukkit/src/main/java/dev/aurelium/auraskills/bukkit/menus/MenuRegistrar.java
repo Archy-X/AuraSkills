@@ -38,12 +38,12 @@ public class MenuRegistrar {
     }
 
     private void buildMenus() {
-        slate.setGlobalOptions(options -> {
-            options.replacer(c -> {
+        slate.setGlobalBehavior(behavior -> {
+            behavior.replacer(c -> {
                 // Returns null if not a menu message
                 return placeholderHelper.replaceMenuMessage(c.placeholder(), null, c.player(), c.menu(), new Replacer());
             });
-            options.localeProvider(plugin::getLocale);
+            behavior.localeProvider(plugin::getLocale);
         });
 
         buildMenu("skills", menu -> new SkillsMenu(plugin).build(menu));
