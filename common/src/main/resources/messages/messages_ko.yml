@@ -163,7 +163,7 @@ abilities:
     dealt: "<red>선제 공격!"
   bleed:
     name: 출혈
-    desc: "{value}%의 확률로 적에게 {base_ticks} 출혈 틱 동안 출혈을 주어 틱당 {value_2} 피해를 입힙니다. 이미 출혈 중인 적에게는 {add_ticks} 틱이 추가됩니다."
+    desc: "{value}%의 확률로 적에게 {base_ticks} 출혈 틱 동안 출혈을 주어 틱당 {value_2} 피해를 입힙니다. 이미 출혈 중인 적에게는 {added_ticks} 틱이 추가됩니다."
     info: "{value}% 확률로 {value_2} 피해"
     enemy_bleeding: "<red>적이 피를 흘리고 있습니다!"
     self_bleeding: "<red>피를 흘리고 있습니다!"
@@ -849,4 +849,4 @@ units:
   mana: 마나
   hp: 체력
   xp: 경험치
-file_version: 32
+file_version: 33
