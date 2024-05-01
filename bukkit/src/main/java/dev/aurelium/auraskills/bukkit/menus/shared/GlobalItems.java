@@ -3,9 +3,13 @@ package dev.aurelium.auraskills.bukkit.menus.shared;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.builder.ItemBuilder;
+import dev.aurelium.slate.info.ItemInfo;
 import dev.aurelium.slate.menu.ActiveMenu;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class GlobalItems {
 
@@ -45,6 +49,17 @@ public class GlobalItems {
 
     public void close(ItemBuilder item) {
         item.onClick(c -> c.player().closeInventory());
+    }
+
+    public ItemStack fill(ItemInfo info) {
+        ItemStack item = info.item();
+        ItemMeta meta = item.getItemMeta();
+
+        if (meta != null && VersionUtils.isAtLeastVersion(20, 5)) {
+            meta.setHideTooltip(true);
+            item.setItemMeta(meta);
+        }
+        return item;
     }
 
 }

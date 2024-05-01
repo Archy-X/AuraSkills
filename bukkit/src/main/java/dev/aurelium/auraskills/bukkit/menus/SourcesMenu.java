@@ -79,6 +79,7 @@ public class SourcesMenu {
         menu.item("back", globalItems::backToLevelProgression);
         menu.item("previous_page", globalItems::previousPage);
         menu.item("next_page", globalItems::nextPage);
+        menu.fillItem(globalItems::fill);
 
         menu.item("sorter", item -> {
             item.replace("sort_types", this::getSortedTypesLore);

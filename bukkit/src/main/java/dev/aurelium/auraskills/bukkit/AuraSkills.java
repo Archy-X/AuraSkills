@@ -21,7 +21,6 @@ import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
-import dev.aurelium.auraskills.bukkit.item.ItemRegistryMenuProvider;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
@@ -34,6 +33,7 @@ import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.handler.MobLootHandler;
 import dev.aurelium.auraskills.bukkit.mana.BukkitManaAbilityManager;
 import dev.aurelium.auraskills.bukkit.menus.MenuFileManager;
+import dev.aurelium.auraskills.bukkit.menus.MenuOptions;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
@@ -55,7 +55,6 @@ import dev.aurelium.auraskills.bukkit.ui.BukkitUiProvider;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
-import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.bukkit.util.MetricsUtil;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -96,7 +95,6 @@ import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.slate.Slate;
 import dev.aurelium.slate.inv.InventoryManager;
-import dev.aurelium.slate.option.SlateOptionsBuilder;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -351,17 +349,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     private void initializeMenus() {
-        slate = new Slate(this, new SlateOptionsBuilder()
-                .keyedItemProvider(new ItemRegistryMenuProvider(itemRegistry))
-                .mainDirectory(new File(getDataFolder(), "menus"))
-                .loreWrappingWidth(configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
-                .nbtEnabled(nbtApiEnabled)
-                .itemMetaParser("potion_data", (item, config) -> {
-                    new ConfigurateItemParser(this).parsePotionData(item, config);
-                    return item;
-                })
-                .itemMetaParser("nbt", (item, config) -> new ConfigurateItemParser(this).parseNBT(item, config))
-                .build());
+        slate = new Slate(this, new MenuOptions(this).getBaseOptions());
         menuHelper = new SlateMenuHelper(slate);
     }
 

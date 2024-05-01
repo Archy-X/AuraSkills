@@ -31,6 +31,7 @@ public class AbilitiesMenu {
     public void build(MenuBuilder menu) {
         var globalItems = new GlobalItems(plugin);
         menu.item("back", globalItems::backToLevelProgression);
+        menu.fillItem(globalItems::fill);
 
         menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 

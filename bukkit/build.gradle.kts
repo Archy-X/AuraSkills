@@ -59,6 +59,7 @@ tasks.withType<ShadowJar> {
     relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
     relocate("net.kyori", "dev.aurelium.auraskills.kyori")
     relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
+    relocate("dev.aurelium.slate", "dev.aurelium.auraskills.slate")
 
     exclude("acf-*.properties")
 

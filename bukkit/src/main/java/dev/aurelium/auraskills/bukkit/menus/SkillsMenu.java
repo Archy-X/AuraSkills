@@ -31,6 +31,7 @@ public class SkillsMenu {
 
         var globalItems = new GlobalItems(plugin);
         menu.item("close", globalItems::close); // Close item
+        menu.fillItem(globalItems::fill);
 
         var skillItem = new SkillItem(plugin);
         skillItem.buildComponents(menu);

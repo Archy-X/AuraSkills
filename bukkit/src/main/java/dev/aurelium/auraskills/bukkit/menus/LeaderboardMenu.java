@@ -33,6 +33,7 @@ public class LeaderboardMenu {
 
         var globalItems = new GlobalItems(plugin);
         menu.item("back", globalItems::backToLevelProgression);
+        menu.fillItem(globalItems::fill);
 
         menu.template("leaderboard_player", Integer.class, template -> {
             LeaderboardManager lb = plugin.getLeaderboardManager();

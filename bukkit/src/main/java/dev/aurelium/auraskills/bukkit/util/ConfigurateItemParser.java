@@ -134,6 +134,7 @@ public class ConfigurateItemParser {
         }
         // Parses custom_model_data and old format CustomModelData nbt map
         parseCustomModelData(config, item);
+        parseHideTooltip(config, item);
 
         ConfigurationNode skullMetaSection = config.node("skull_meta");
         if (!skullMetaSection.virtual() && !excludedKeys.contains("skull_meta")) {
@@ -436,6 +437,17 @@ public class ConfigurateItemParser {
             int data = config.node("nbt").node("CustomModelData").getInt();
             ItemMeta meta = getMeta(item);
             meta.setCustomModelData(data);
+            item.setItemMeta(meta);
+        }
+    }
+
+    public void parseHideTooltip(ConfigurationNode config, ItemStack item) {
+        if (!config.node("hide_tooltip").virtual()) {
+            boolean hideTooltip = config.node("hide_tooltip").getBoolean();
+            ItemMeta meta = getMeta(item);
+            if (VersionUtils.isAtLeastVersion(20, 5)) {
+                meta.setHideTooltip(hideTooltip);
+            }
             item.setItemMeta(meta);
         }
     }
