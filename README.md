@@ -50,7 +50,7 @@ dependencies {
 }
 ```
 **Kotlin DSL:**
-```kotlin
+```Gradle Kotlin DSL
 repositories { 
     mavenCentral()
 }

@@ -2,6 +2,33 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.0.8
+
+### New Features
+- Minecraft 1.20.5 and 1.20.6 support
+- Add hide_tooltip option to items in menus/loot to completely hide the tooltip
+  - Tooltips are hidden automatically for menu fill items
+  - Only works on 1.20.5+
+
+### Changes
+- Various optimizations for servers with high player counts
+  - Optimize BlockLeveler with cache for sources
+  - Optimize multiplier permission lookup with cache using LuckPerms events
+  - Optimize Treecapitator
+- Treecapitator now gives XP for all blocks broken by default
+  - This can be disabled in mana_abilities.yml by setting give_xp to false
+- Update Korean messages
+
+### Bug Fixes
+- Fix hex colors in skill names not working fully in menus
+- Fix mana ability is not loaded error
+- Fix Grappler ignoring region protection
+
+### API Changes
+- Slate is now relocated in the AuraSkills jar, so if you use dev.aurelium.slate packages with the api, you should relocate them to dev.aurelium.auraskills.slate using the Gradle Shadow or Maven Shade plugin
+- Add MainConfig#getStartLevel and getHighestMaxLevel
+- Add MenuManager#registerGlobalReplacer
+
 ## 2.0.7
 
 ### New Features
