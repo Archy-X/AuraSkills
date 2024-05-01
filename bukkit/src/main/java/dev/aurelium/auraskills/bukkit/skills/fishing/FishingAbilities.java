@@ -56,7 +56,7 @@ public class FishingAbilities extends AbilityImpl {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void grappler(PlayerFishEvent event) {
         var ability = Abilities.GRAPPLER;
 

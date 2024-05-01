@@ -21,7 +21,7 @@ dependencies {
     }
     // api(files("../../Slate/build/libs/Slate-1.0.0.jar"))
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.spigotmc:spigot-api:1.20.5-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.6-R0.1-SNAPSHOT")
 }
 
 tasks.withType<JavaCompile> {
