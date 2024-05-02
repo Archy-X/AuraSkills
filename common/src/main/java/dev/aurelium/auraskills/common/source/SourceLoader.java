@@ -104,7 +104,7 @@ public class SourceLoader {
                 }
                 applyNodeReplacements(sourceNode, sourceNode, sourceName);
                 XpSource source = parseSourceFromType(type, sourceNode, sourceName);
-                if (source != null) {
+                if (source != null && source.getXp() > 0.0) {
                     deserializedSources.add(source);
                     registerMenuItem(source, sourceNode);
                 }
@@ -119,6 +119,11 @@ public class SourceLoader {
 
     public boolean updateUserFile(Map<String, ConfigurationNode> embeddedSources, Map<String, ConfigurationNode> userSources,
                                File userFile, ConfigurationNode user) throws IOException {
+        String skillName = userFile.getName();
+        if (skillName.contains("alchemy") || skillName.contains("agility") || skillName.contains("enchanting")) {
+            return false;
+        }
+
         int added = 0;
         for (Entry<String, ConfigurationNode> embeddedEntry : embeddedSources.entrySet()) {
             String sourceName = embeddedEntry.getKey();

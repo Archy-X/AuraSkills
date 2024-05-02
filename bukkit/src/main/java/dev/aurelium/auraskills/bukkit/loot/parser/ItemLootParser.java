@@ -50,7 +50,7 @@ public class ItemLootParser implements LootParser {
     private ItemSupplier parseItem(ConfigurationNode config) throws SerializationException {
         List<String> excludedKeys = List.of("amount", "enchantments");
         ItemStack baseItem = itemParser.parseItem(config, excludedKeys);
-        // Parse possible enchantments
+        // Parse possible enchantments, value of the map is the weight
         Map<LootEnchantList, Integer> possibleEnchants = parsePossibleEnchants(config);
 
         return new ItemSupplier(baseItem, new LootEnchantments(possibleEnchants));
