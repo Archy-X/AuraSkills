@@ -153,11 +153,10 @@ public class HpTrait extends TraitImpl {
     }
 
     private void applyScaling(Player player) {
-        if (!Traits.HP.isEnabled()) return;
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
 
-        if (Traits.HP.optionBoolean("health_scaling")) {
+        if (Traits.HP.optionBoolean("health_scaling") && Traits.HP.isEnabled()) {
             double health = attribute.getValue();
             player.setHealthScaled(true);
             int scaledHearts = 0;
@@ -173,7 +172,7 @@ public class HpTrait extends TraitImpl {
                 scaledHearts = 10;
             }
             player.setHealthScale(scaledHearts * 2);
-        } else {
+        } else if (Traits.HP.optionBoolean("ensure_scaling_disabled")) {
             player.setHealthScaled(false);
         }
     }

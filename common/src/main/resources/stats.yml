@@ -86,6 +86,7 @@ traits:
     update_delay: 0
     force_base_health: false
     keep_full_on_increase: false
+    ensure_scaling_disabled: true
   auraskills/saturation_regen:
     enabled: true
     use_custom_delay: false
@@ -134,4 +135,4 @@ traits:
   auraskills/double_drop:
     enabled: true
     max_percent: 100
-file_version: 2
+file_version: 3
