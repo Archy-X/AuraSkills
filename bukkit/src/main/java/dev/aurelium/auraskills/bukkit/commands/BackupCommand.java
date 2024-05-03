@@ -34,9 +34,13 @@ public class BackupCommand extends BaseCommand {
             issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_SAVE_SAVING, locale));
             try {
                 File file = backupProvider.saveBackup(true);
-                MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_SAVE_SAVED,
-                        "type", plugin.getStorageProvider().getClass().getSimpleName(),
-                        "file", file.getName()).send(issuer);
+                if (file != null) {
+                    MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_SAVE_SAVED,
+                            "type", plugin.getStorageProvider().getClass().getSimpleName(),
+                            "file", file.getName()).send(issuer);
+                } else {
+                    throw new IllegalArgumentException("Did not save backup due to too many entries");
+                }
             } catch (Exception e) {
                 issuer.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.BACKUP_SAVE_ERROR, locale),
                         "{type}", plugin.getStorageProvider().getClass().getSimpleName()));
@@ -75,7 +79,7 @@ public class BackupCommand extends BaseCommand {
     private void loadBackup(File file, CommandIssuer issuer, Locale locale) {
         issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_LOAD_LOADING, locale));
         try {
-            plugin.getBackupProvider().loadBackup(file, issuer);
+            plugin.getBackupProvider().loadBackup(file);
             MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_LOAD_LOADED).send(issuer);
         } catch (Exception e) {
             issuer.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.BACKUP_LOAD_ERROR, locale),

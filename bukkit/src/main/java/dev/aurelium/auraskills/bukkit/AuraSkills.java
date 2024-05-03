@@ -311,10 +311,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             if (backupProvider == null) {
                 return;
             }
-            backupProvider.saveBackup(false);
             // Update meta file
             metaConfig.node("last_automatic_backup").set(System.currentTimeMillis());
             FileUtil.saveYamlFile(metaFile, metaConfig);
+
+            backupProvider.saveBackup(false);
         }
     }
 

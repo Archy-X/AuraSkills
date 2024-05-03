@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.storage.backup;
 
-import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -8,6 +7,7 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -19,10 +19,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class BackupProvider {
 
@@ -62,7 +59,13 @@ public class BackupProvider {
 
         config.node("backup_version").set(2);
 
-        for (UserState state : plugin.getStorageProvider().loadStates(false)) {
+        int index = 0;
+        List<UserState> states = plugin.getStorageProvider().loadStates(false);
+        if (states.size() > plugin.configInt(Option.AUTOMATIC_BACKUPS_MAX_USERS)) {
+            plugin.logger().info("Automatic backup saving was skipped due to too many users (" + states.size() + "), use your own backup system.");
+            return null;
+        }
+        for (UserState state : states) {
             ConfigurationNode userNode = config.node("users", state.uuid().toString());
             // Save skill levels and xp
             for (Skill skill : state.skillLevels().keySet()) {
@@ -90,13 +93,15 @@ public class BackupProvider {
                 modifierNode.node("trait").set(statModifier.trait().getId().toString());
                 modifierNode.node("value").set(statModifier.value());
             }
+            plugin.logger().info("Saved backup user " + index);
+            index++;
         }
         // Save the backup file
         loader.save(config);
         return backupFile;
     }
 
-    public void loadBackup(File file, CommandIssuer issuer) throws Exception {
+    public void loadBackup(File file) throws Exception {
         ConfigurationNode root = YamlConfigurationLoader.builder().path(file.toPath()).build().load();
 
         int version = root.node("backup_version").getInt(0);

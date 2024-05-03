@@ -199,6 +199,7 @@ check_for_updates: true
 automatic_backups:
   enabled: true
   minimum_interval_hours: 24
+  max_users: 50000
 save_blank_profiles: false
 metadata:
   config_migration_complete: false

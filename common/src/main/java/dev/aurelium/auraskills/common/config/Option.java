@@ -114,6 +114,7 @@ public enum Option {
     CHECK_FOR_UPDATES("check_for_updates", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_ENABLED("automatic_backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic_backups.minimum_interval_hours", OptionType.DOUBLE),
+    AUTOMATIC_BACKUPS_MAX_USERS("automatic_backups.max_users", OptionType.INT),
     SAVE_BLANK_PROFILES("save_blank_profiles", OptionType.BOOLEAN);
 
     private final String path;
