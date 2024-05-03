@@ -2,6 +2,59 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.0.9
+
+Note: If you are using the 15 skill legacy preset and previously updated to 2.0.8, your sources files for alchemy, agility, and enchanting may have been forcefully updated to include duplicate sources due to a bug in source updating. While this update fixes the bug going forward, you may have to manually remove sources that are duplicated with healing, endurance, and forging, respectively.
+
+### New Features
+- Add menu conditions system
+  - Conditions on items are used to add requirements for viewing or clicking an item
+  - View conditions will hide the item if not all conditions are met
+  - View conditions are added with a `view_conditions` key under an item
+  - Click conditions will prevent click actions or built-in click behavior from running if not all conditions are met
+  - Click conditions are added using the `on_click_conditions` key, or for a specific button trigger like `on_right_click_conditions`
+  - The syntax for any condition key is a map list of conditions that all must be met. This is similar to the click actions syntax.
+  - Permission condition type:
+    - Permission conditions check if the player has a permission
+    - Uses `type: permission` (optional due to auto type detection)
+    - Must specify a `permission` key for the permission node to check
+    - An optional boolean `value` can be specified (defaults to true)
+  - Placeholder condition type:
+    - Placeholder conditions compare two values that can contain PlaceholderAPI placeholders
+    - Uses `type: placeholder` (optional due to auto type detection)
+    - Must specify a `placeholder` string key as the left side value to be compared
+    - Must specify a `value` string key as the right side value to be compared
+    - An optional `compare` string can be specified for the type of comparison operation to perform (defaults to equals)
+      - `equals` checks for numerical or string equality
+      - `greater_than` checks if `placeholder` is strictly greater than `value`
+      - `greater_than_or_equals` checks if `placeholder` is greater than or equal to `value`
+      - `less_than` checks if `placeholder` is strictly less than `value`
+      - `less_than_or_equals` checks if `placeholder` is less than or equal to `value`
+    - Any `compare` other than `equals` requires both `placeholder` and `value` to be evaluated to doubles
+- Add menu `on_open` and `on_close` actions for running actions when a menu is opened or closed
+  - These are map lists of actions defined directly in the top-level of the menu file
+  - `on_close` will run even if the player switches to a different menu immediately
+- Add sound menu action
+  - Plays a sound for a player
+  - Uses `type: sound` (optional due to auto type detection)
+  - Must specify a `sound` string key as the sound type to player. This uses the vanilla names matching the /playsound command.
+  - An optional `category` string can be specified (defaults to master)
+  - An optional `volume` number can be specified (defaults to 1)
+  - An optional `pitch` number can be specified (defaults to 1)
+- Add syntax to duplicate default menu items with placeholders
+  - Creating a new item with a name in the format `item_name(1)` will replace all the display_name and lore placeholders exactly like the default `item_name`.
+  - Any number can be used within the parenthesis
+  - This is useful for duplicating default items across multiple slots with different materials and custom_model_data for resource packs
+- Add syntax for duplicating the exact same menu item easily across multiple slots
+  - Specify a list of slot values with the `pos` key instead of a single value
+
+### Changes
+- Click action types will now be automatically detected, so specifying a `type` is no longer required
+
+### Bug Fixes
+- Fix duplicate source updating for legacy preset
+- Fix command actions not working without PlaceholderAPI
+
 ## 2.0.8
 
 ### New Features

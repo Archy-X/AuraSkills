@@ -587,7 +587,7 @@ menus:
     abilities_click: "Cliquez pour voir les capacités de {skill}"
   stats:
     stats_title: Vos statistiques
-    skills: "7Compétences"
+    skills: "Compétences"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% pour +{value} Drop"
