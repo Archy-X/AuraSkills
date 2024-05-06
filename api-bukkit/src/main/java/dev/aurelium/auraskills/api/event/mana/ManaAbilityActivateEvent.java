@@ -8,6 +8,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Called when a player activates a mana ability.
+ */
 public class ManaAbilityActivateEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
@@ -27,30 +30,65 @@ public class ManaAbilityActivateEvent extends Event implements Cancellable {
         this.manaUsed = manaUsed;
     }
 
+    /**
+     * Gets the player that activated the mana ability.
+     *
+     * @return the player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets the {@link SkillsUser} that activated the ability.
+     *
+     * @return the user
+     */
     public SkillsUser getUser() {
         return skillsUser;
     }
 
+    /**
+     * Gets the mana ability that was activated.
+     *
+     * @return the mana ability
+     */
     public ManaAbility getManaAbility() {
         return manaAbility;
     }
 
+    /**
+     * Gets the duration the mana ability will be active in ticks.
+     *
+     * @return the duration in ticks
+     */
     public int getDuration() {
         return duration;
     }
 
+    /**
+     * Sets the duration the mana ability will be active for in ticks.
+     *
+     * @param duration duration in ticks
+     */
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
+    /**
+     * Gets the amount of mana consumed by the activation.
+     *
+     * @return the mana used
+     */
     public double getManaUsed() {
         return manaUsed;
     }
 
+    /**
+     * Sets the amount of mana consumed by the activation.
+     *
+     * @param manaUsed the mana consumed
+     */
     public void setManaUsed(double manaUsed) {
         this.manaUsed = manaUsed;
     }

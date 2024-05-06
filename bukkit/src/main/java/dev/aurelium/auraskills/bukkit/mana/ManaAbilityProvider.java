@@ -68,7 +68,7 @@ public abstract class ManaAbilityProvider implements Listener {
             return false;
         }
 
-        int duration = getDuration(user);
+        int duration = getDuration(user); // In ticks
         double manaCost = getManaCost(user);
 
         // Check that player has enough mana
@@ -146,6 +146,7 @@ public abstract class ManaAbilityProvider implements Listener {
         return manaAbility.getValue(user.getManaAbilityLevel(manaAbility));
     }
 
+    // Duration in ticks
     protected int getDuration(User user) {
         return (int) Math.round(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)) * 20);
     }
