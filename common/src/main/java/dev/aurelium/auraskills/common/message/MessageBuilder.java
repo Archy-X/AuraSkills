@@ -2,15 +2,15 @@ package dev.aurelium.auraskills.common.message;
 
 import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.recipient.CommandIssuerRecipient;
 import dev.aurelium.auraskills.common.message.recipient.UserRecipient;
-import dev.aurelium.auraskills.common.message.recipient.Recipient;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
@@ -37,22 +37,12 @@ public class MessageBuilder {
     }
 
     /**
-     * Sends the message to a recipient
-     *
-     * @param recipient The recipient
-     */
-    public void send(@NotNull Recipient recipient) {
-        validateComponent();
-        recipient.sendMessage(component);
-    }
-
-    /**
      * Sends the message to a PlayerData recipient
      *
      * @param user The PlayerData recipient
      */
     public void send(User user) {
-        validateComponent();
+        validateComponent(user);
         new UserRecipient(user).sendMessage(component);
     }
 
@@ -62,7 +52,12 @@ public class MessageBuilder {
      * @param issuer The CommandIssuer recipient
      */
     public void send(CommandIssuer issuer) {
-        validateComponent();
+        if (issuer.isPlayer()) {
+            User user = plugin.getUserManager().getUser(issuer.getUniqueId());
+            validateComponent(user);
+        } else {
+            validateComponent(null);
+        }
         new CommandIssuerRecipient(plugin, issuer).sendMessage(component);
     }
 
@@ -156,9 +151,15 @@ public class MessageBuilder {
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
 
-    private void validateComponent() {
+    private void validateComponent(@Nullable User user) {
         if (component == null) {
             throw new IllegalStateException("Cannot send message because text component is null");
+        }
+        // Replace PlaceholderAPI
+        if (plugin.getHookManager().isRegistered(PlaceholderHook.class) && user != null) {
+            String text = toString();
+            text = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, text);
+            component = toComponent(text);
         }
     }
 
