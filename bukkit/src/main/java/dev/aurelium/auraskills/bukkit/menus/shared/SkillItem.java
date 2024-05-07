@@ -101,9 +101,9 @@ public class SkillItem {
                     // Get the format depending on whether ability is unlocked
                     int level = plugin.getUser(p.player()).getAbilityLevel(ability);
                     String entry = level > 0 ? p.menu().getFormat("unlocked_ability_entry") : p.menu().getFormat("locked_ability_entry");
-                    builder.append(entry, "{name}", ability.getDisplayName(locale),
+                    builder.append(entry, "{name}", ability.getDisplayName(locale, false),
                             "{level}", RomanNumber.toRoman(level, plugin),
-                            "{info}", TextUtil.replace(ability.getInfo(locale),
+                            "{info}", TextUtil.replace(ability.getInfo(locale, false),
                                     "{value}", NumberUtil.format2(ability.getValue(level)),
                                     "{value_2}", NumberUtil.format2(ability.getSecondaryValue(level)),
                                     "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, level),
@@ -119,7 +119,7 @@ public class SkillItem {
         menu.component("mana_ability_info", Skill.class, component -> {
             component.replace("name", p -> {
                 ManaAbility manaAbility = p.value().getManaAbility();
-                return manaAbility != null ? manaAbility.getDisplayName(p.locale()) : null;
+                return manaAbility != null ? manaAbility.getDisplayName(p.locale(), false) : null;
             });
             component.replace("level", p -> {
                 ManaAbility manaAbility = p.value().getManaAbility();

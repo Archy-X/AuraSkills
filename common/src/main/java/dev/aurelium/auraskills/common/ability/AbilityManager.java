@@ -90,7 +90,7 @@ public abstract class AbilityManager {
         return abilityMap.containsKey(ability);
     }
 
-    public abstract String getBaseDescription(Ability ability, User user);
+    public abstract String getBaseDescription(Ability ability, User user, boolean formatted);
 
     public String getChanceValue(Ability ability, int level) {
         return NumberUtil.format1(ability.getValue(level) - (Math.floor(ability.getValue(level) / 100) * 100));

@@ -9,11 +9,11 @@ public interface AbilityProvider extends OptionedProvider<Ability> {
 
     Skill getSkill(Ability ability);
 
-    String getDisplayName(Ability ability, Locale locale);
+    String getDisplayName(Ability ability, Locale locale, boolean formatted);
 
-    String getDescription(Ability ability, Locale locale);
+    String getDescription(Ability ability, Locale locale, boolean formatted);
 
-    String getInfo(Ability ability, Locale locale);
+    String getInfo(Ability ability, Locale locale, boolean formatted);
 
     boolean isEnabled(Ability ability);
 

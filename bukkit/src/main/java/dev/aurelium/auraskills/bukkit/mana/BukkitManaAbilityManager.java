@@ -82,8 +82,8 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
     }
 
     @Override
-    public String getBaseDescription(ManaAbility manaAbility, User user) {
-        String desc = manaAbility.getDescription(user.getLocale());
+    public String getBaseDescription(ManaAbility manaAbility, User user, boolean formatted) {
+        String desc = manaAbility.getDescription(user.getLocale(), formatted);
         ManaAbilityProvider provider = plugin.getManaAbilityManager().getProvider(manaAbility);
         if (provider != null) {
             desc = provider.replaceDescPlaceholders(desc, user);

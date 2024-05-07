@@ -223,11 +223,11 @@ public class LevelProgressionMenu {
         menu.component("ability_unlock", Integer.class, component -> {
             component.replace("name", p -> {
                 Ability ability = unlockedAbility(p);
-                return ability.getDisplayName(p.locale());
+                return ability.getDisplayName(p.locale(), false);
             });
             component.replace("desc", p -> {
                 Ability ability = unlockedAbility(p);
-                return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player())),
+                return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player()), false),
                         "{value}", NumberUtil.format1(ability.getValue(1)),
                         "{value_2}", NumberUtil.format1(ability.getSecondaryValue(1)),
                         "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, 1),
@@ -242,12 +242,12 @@ public class LevelProgressionMenu {
         menu.component("ability_level", Integer.class, component -> {
             component.replace("name", p -> {
                 Ability ability = leveledUpAbility(p);
-                return ability.getDisplayName(p.locale());
+                return ability.getDisplayName(p.locale(), false);
             });
             component.replace("desc", p -> {
                 Ability ability = leveledUpAbility(p);
                 int level = ((p.value() - ability.getUnlock()) / ability.getLevelUp()) + 1;
-                return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player())),
+                return TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, plugin.getUser(p.player()), false),
                         "{value}", NumberUtil.format1(ability.getValue(level)),
                         "{value_2}", NumberUtil.format1(ability.getSecondaryValue(level)),
                         "{chance_value}", plugin.getAbilityManager().getChanceValue(ability, level),
@@ -267,12 +267,12 @@ public class LevelProgressionMenu {
         menu.component("mana_ability_unlock", Integer.class, component -> {
             component.replace("name", p -> {
                 ManaAbility manaAbility = ((Skill) p.menu().getProperty("skill")).getManaAbility();
-                return manaAbility != null ? manaAbility.getDisplayName(p.locale()) : null;
+                return manaAbility != null ? manaAbility.getDisplayName(p.locale(), false) : null;
             });
             component.replace("desc", p -> {
                 ManaAbility manaAbility = ((Skill) p.menu().getProperty("skill")).getManaAbility();
                 if (manaAbility == null) return null;
-                return TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, plugin.getUser(p.player())),
+                return TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, plugin.getUser(p.player()), false),
                         "{value}", NumberUtil.format1(manaAbility.getDisplayValue(1)),
                         "{duration}", NumberUtil.format1(getDuration(manaAbility, 1)),
                         "{haste_level}", String.valueOf(ManaAbilities.SPEED_MINE.optionInt("haste_level", 10)));
@@ -291,14 +291,14 @@ public class LevelProgressionMenu {
         menu.component("mana_ability_level", Integer.class, component -> {
             component.replace("name", p -> {
                 ManaAbility manaAbility = ((Skill) p.menu().getProperty("skill")).getManaAbility();
-                return manaAbility != null ? manaAbility.getDisplayName(p.locale()) : null;
+                return manaAbility != null ? manaAbility.getDisplayName(p.locale(), false) : null;
             });
             component.replace("desc", p -> {
                 ManaAbility manaAbility = ((Skill) p.menu().getProperty("skill")).getManaAbility();
                 if (manaAbility == null) return null;
                 int manaAbilityLevel = ((p.value() - manaAbility.getUnlock()) / manaAbility.getLevelUp()) + 1;
 
-                return TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, plugin.getUser(p.player())),
+                return TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, plugin.getUser(p.player()), false),
                         "{value}", NumberUtil.format1(manaAbility.getDisplayValue(manaAbilityLevel)),
                         "{duration}", NumberUtil.format1(getDuration(manaAbility, manaAbilityLevel)),
                         "{haste_level}", String.valueOf(ManaAbilities.SPEED_MINE.optionInt("haste_level", 10)));

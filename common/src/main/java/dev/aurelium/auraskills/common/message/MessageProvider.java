@@ -157,29 +157,54 @@ public abstract class MessageProvider implements PolyglotProvider {
         return getRaw(MessageKey.of("stats." + key + ".symbol"), locale);
     }
 
-    public String getAbilityDisplayName(Ability ability, Locale locale) {
+    public String getAbilityDisplayName(Ability ability, Locale locale, boolean formatted) {
         String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
-        return get(MessageKey.of("abilities." + key + ".name"), locale);
+        MessageKey msgKey = MessageKey.of("abilities." + key + ".name");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
-    public String getAbilityDescription(Ability ability, Locale locale) {
+    public String getAbilityDescription(Ability ability, Locale locale, boolean formatted) {
         String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
-        return get(MessageKey.of("abilities." + key + ".desc"), locale);
+        MessageKey msgKey = MessageKey.of("abilities." + key + ".desc");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
-    public String getAbilityInfo(Ability ability, Locale locale) {
+    public String getAbilityInfo(Ability ability, Locale locale, boolean formatted) {
         String key = ability instanceof Abilities ? ability.getId().getKey() : ability.getId().toString();
-        return get(MessageKey.of("abilities." + key + ".info"), locale);
+        MessageKey msgKey = MessageKey.of("abilities." + key + ".info");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
-    public String getManaAbilityDisplayName(ManaAbility ability, Locale locale) {
+    public String getManaAbilityDisplayName(ManaAbility ability, Locale locale, boolean formatted) {
         String key = ability instanceof ManaAbilities ? ability.getId().getKey() : ability.getId().toString();
-        return get(MessageKey.of("mana_abilities." + key + ".name"), locale);
+        MessageKey msgKey = MessageKey.of("mana_abilities." + key + ".name");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
-    public String getManaAbilityDescription(ManaAbility ability, Locale locale) {
+    public String getManaAbilityDescription(ManaAbility ability, Locale locale, boolean formatted) {
         String key = ability instanceof ManaAbilities ? ability.getId().getKey() : ability.getId().toString();
-        return get(MessageKey.of("mana_abilities." + key + ".desc"), locale);
+        MessageKey msgKey = MessageKey.of("mana_abilities." + key + ".desc");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
     public String getTraitDisplayName(Trait trait, Locale locale) {

@@ -62,12 +62,22 @@ public class CustomManaAbility implements ManaAbility {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, formatted);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return defined.description != null ? defined.description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, true);
+    }
+
+    @Override
+    public String getDescription(Locale locale, boolean formatted) {
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, formatted);
     }
 
     @Override

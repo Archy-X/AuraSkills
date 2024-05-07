@@ -40,8 +40,8 @@ public class AbilitiesMenu {
                 "previous_menu", "level_progression"));
 
         menu.template("locked_ability", Ability.class, template -> {
-            template.replace("name", p -> p.value().getDisplayName(p.locale()));
-            template.replace("desc", p -> TextUtil.replace(plugin.getAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player())),
+            template.replace("name", p -> p.value().getDisplayName(p.locale(), false));
+            template.replace("desc", p -> TextUtil.replace(plugin.getAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player()), false),
                     "{value}", NumberUtil.format1(p.value().getValue(1)),
                     "{value_2}", NumberUtil.format1(p.value().getSecondaryValue(1)),
                     "{chance_value}", plugin.getAbilityManager().getChanceValue(p.value(), 1),
@@ -66,7 +66,7 @@ public class AbilitiesMenu {
         });
 
         menu.template("unlocked_ability", Ability.class, template -> {
-            template.replace("name", p -> p.value().getDisplayName(p.locale()));
+            template.replace("name", p -> p.value().getDisplayName(p.locale(), false));
 
             template.definedContexts(m -> {
                 Skill skill = (Skill) m.menu().getProperty("skill");
@@ -85,8 +85,8 @@ public class AbilitiesMenu {
         });
 
         menu.template("locked_mana_ability", ManaAbility.class, template -> {
-            template.replace("name", p -> p.value().getDisplayName(p.locale()));
-            template.replace("desc", p -> TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player())),
+            template.replace("name", p -> p.value().getDisplayName(p.locale(), false));
+            template.replace("desc", p -> TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(p.value(), plugin.getUser(p.player()), false),
                     "{value}", NumberUtil.format1(p.value().getDisplayValue(1)),
                     "{duration}", NumberUtil.format1(getDuration(p.value()))));
             template.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
@@ -107,7 +107,7 @@ public class AbilitiesMenu {
         });
 
         menu.template("unlocked_mana_ability", ManaAbility.class, template -> {
-            template.replace("name", p -> p.value().getDisplayName(p.locale()));
+            template.replace("name", p -> p.value().getDisplayName(p.locale(), false));
 
             template.definedContexts(m -> {
                 Skill skill = (Skill) m.menu().getProperty("skill");
@@ -140,7 +140,7 @@ public class AbilitiesMenu {
                 String format = p.menu().getFormat("desc_upgrade_value");
                 if (p.value() instanceof Ability ability) {
                     int level = user.getAbilityLevel(ability);
-                    String desc = plugin.getAbilityManager().getBaseDescription(ability, user);
+                    String desc = plugin.getAbilityManager().getBaseDescription(ability, user, false);
                     return TextUtil.replace(desc,
                             "{value}", AbilityUtil.getUpgradeValue(ability, level, format),
                             "{value_2}", AbilityUtil.getUpgradeValue2(ability, level, format),
@@ -148,7 +148,7 @@ public class AbilitiesMenu {
                             "{guaranteed_value}", plugin.getAbilityManager().getGuaranteedValue(ability, level));
                 } else if (p.value() instanceof ManaAbility manaAbility) {
                     int level = user.getManaAbilityLevel(manaAbility);
-                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, user);
+                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, user, false);
                     return TextUtil.replace(desc,
                             "{value}", AbilityUtil.getUpgradeValue(manaAbility, level, format),
                             "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level, format));
@@ -165,12 +165,12 @@ public class AbilitiesMenu {
             component.replace("desc", p -> {
                 User user = plugin.getUser(p.player());
                 if (p.value() instanceof Ability ability) {
-                    String desc = plugin.getAbilityManager().getBaseDescription(ability, user);
+                    String desc = plugin.getAbilityManager().getBaseDescription(ability, user, false);
                     return TextUtil.replace(desc,
                             "{value}", NumberUtil.format1(ability.getValue(user.getAbilityLevel(ability))),
                             "{value_2}", NumberUtil.format1(ability.getSecondaryValue(user.getAbilityLevel(ability))));
                 } else if (p.value() instanceof ManaAbility manaAbility) {
-                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, user);
+                    String desc = plugin.getManaAbilityManager().getBaseDescription(manaAbility, user, false);
                     return TextUtil.replace(desc,
                             "{value}", NumberUtil.format1(manaAbility.getDisplayValue(user.getManaAbilityLevel(manaAbility))),
                             "{duration}", NumberUtil.format1(AbilityUtil.getDuration(manaAbility, user.getManaAbilityLevel(manaAbility))));

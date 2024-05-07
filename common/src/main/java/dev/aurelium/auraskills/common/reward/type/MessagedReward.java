@@ -23,20 +23,25 @@ public abstract class MessagedReward extends SkillReward {
 
     @Override
     public String getMenuMessage(User user, Locale locale, Skill skill, int level) {
-        return attemptAsMessageKey(menuMessage, user, locale, skill, level);
+        return attemptAsMessageKey(menuMessage, user, locale, skill, level, true);
     }
 
     @Override
     public String getChatMessage(User user, Locale locale, Skill skill, int level) {
-        return attemptAsMessageKey(chatMessage, user, locale, skill, level);
+        return attemptAsMessageKey(chatMessage, user, locale, skill, level, false);
     }
 
     /**
      * Attempts to use the input as a message key. If a matching translation for the key is found, it will return the translation.
      * Otherwise it will return the key.
      */
-    private String attemptAsMessageKey(String potentialKey, User user, Locale locale, Skill skill, int level) {
-        String message = plugin.getMessageProvider().get(MessageKey.of(potentialKey), locale);
+    private String attemptAsMessageKey(String potentialKey, User user, Locale locale, Skill skill, int level, boolean raw) {
+        String message;
+        if (raw) {
+            message = plugin.getMessageProvider().getRaw(MessageKey.of(potentialKey), locale);
+        } else {
+            message = plugin.getMessageProvider().get(MessageKey.of(potentialKey), locale);
+        }
         if (message == null) {
             message = potentialKey;
         }

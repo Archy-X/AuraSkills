@@ -32,13 +32,13 @@ public class ManaAbilitySupplier extends OptionSupplier<ManaAbility> implements 
     }
 
     @Override
-    public String getDisplayName(ManaAbility manaAbility, Locale locale) {
-        return messageProvider.getManaAbilityDisplayName(manaAbility, locale);
+    public String getDisplayName(ManaAbility manaAbility, Locale locale, boolean formatted) {
+        return messageProvider.getManaAbilityDisplayName(manaAbility, locale, formatted);
     }
 
     @Override
-    public String getDescription(ManaAbility manaAbility, Locale locale) {
-        return messageProvider.getManaAbilityDescription(manaAbility, locale);
+    public String getDescription(ManaAbility manaAbility, Locale locale, boolean formatted) {
+        return messageProvider.getManaAbilityDescription(manaAbility, locale, formatted);
     }
 
     @Override

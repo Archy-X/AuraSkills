@@ -84,7 +84,7 @@ public class LevelUpMessenger {
                 continue;
             }
             if (ability.getUnlock() == level) { // If ability is unlocked at this level
-                String desc = TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, user),
+                String desc = TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, user, true),
                         "{value}", AbilityUtil.getCurrentValue(ability, 1),
                         "{value_2}", AbilityUtil.getCurrentValue2(ability, 1));
                 desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
@@ -117,7 +117,7 @@ public class LevelUpMessenger {
     private String getAbilityLevelUpDesc(Ability ability, int level, Locale locale) {
         String format = plugin.getMsg(LevelerFormat.DESC_UPGRADE_VALUE, locale);
         // Subtract 1 from level to go from previous to current value
-        String desc = TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, user),
+        String desc = TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, user, true),
                         "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
                         "{value_2}", AbilityUtil.getUpgradeValue2(ability, level - 1, format));
         desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
@@ -133,7 +133,7 @@ public class LevelUpMessenger {
 
         // If mana ability is unlocked at this level
         if (manaAbility.getUnlock() == level) {
-            String desc = TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, user)
+            String desc = TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, user, false)
                             .replace("<1>", "<white>"),
                     "{value}", String.valueOf(manaAbility.getDisplayValue(1)),
                     "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
@@ -157,7 +157,7 @@ public class LevelUpMessenger {
         if (manaAbility.getUnlock() != level) {
             int level = user.getManaAbilityLevel(manaAbility);
             sb.append(TextUtil.replace(plugin.getMessageProvider().getRaw(LevelerFormat.MANA_ABILITY_LEVEL_UP, locale),
-                    "{mana_ability}", manaAbility.getDisplayName(locale),
+                    "{mana_ability}", manaAbility.getDisplayName(locale, false),
                     "{previous}", RomanNumber.toRoman(level - 1, plugin),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{desc}", getManaAbilityLevelUpDesc(manaAbility, level, locale)));
@@ -168,7 +168,7 @@ public class LevelUpMessenger {
     private String getManaAbilityLevelUpDesc(ManaAbility manaAbility, int level, Locale locale) {
         String format = plugin.getMsg(LevelerFormat.DESC_UPGRADE_VALUE, locale);
         // Subtract 1 from level to go from previous to current value
-        String message = TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, user)
+        String message = TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, user, false)
                         .replace("<1>", "<white>"),
                         "{value}", AbilityUtil.getUpgradeValue(manaAbility, level - 1, format),
                         "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),

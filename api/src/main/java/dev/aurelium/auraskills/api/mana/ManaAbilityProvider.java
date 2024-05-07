@@ -9,9 +9,9 @@ public interface ManaAbilityProvider extends OptionedProvider<ManaAbility> {
 
     Skill getSkill(ManaAbility manaAbility);
 
-    String getDisplayName(ManaAbility manaAbility, Locale locale);
+    String getDisplayName(ManaAbility manaAbility, Locale locale, boolean formatted);
 
-    String getDescription(ManaAbility manaAbility, Locale locale);
+    String getDescription(ManaAbility manaAbility, Locale locale, boolean formatted);
 
     boolean isEnabled(ManaAbility manaAbility);
 

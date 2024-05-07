@@ -15,6 +15,8 @@ public interface ManaAbility extends AbstractAbility, Optioned {
      */
     String getDisplayName(Locale locale);
 
+    String getDisplayName(Locale locale, boolean formatted);
+
     /**
      * Gets the mana ability description as defined in the locale's messages file.
      *
@@ -22,6 +24,8 @@ public interface ManaAbility extends AbstractAbility, Optioned {
      * @return the description in the specified locale or in a fallback language
      */
     String getDescription(Locale locale);
+
+    String getDescription(Locale locale, boolean formatted);
 
     /**
      * Gets a fully uppercase String of the mana ability name without the namespace

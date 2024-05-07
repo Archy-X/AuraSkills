@@ -40,17 +40,32 @@ public class CustomAbility implements Ability {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale);
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return defined.displayName != null ? defined.displayName : provider.getDisplayName(this, locale, formatted);
     }
 
     @Override
     public String getDescription(Locale locale) {
-        return defined.description != null ? defined.description : provider.getDescription(this, locale);
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, true);
+    }
+
+    @Override
+    public String getDescription(Locale locale, boolean formatted) {
+        return defined.description != null ? defined.description : provider.getDescription(this, locale, formatted);
     }
 
     @Override
     public String getInfo(Locale locale) {
-        return defined.info != null ? defined.info : provider.getInfo(this, locale);
+        return defined.info != null ? defined.info : provider.getInfo(this, locale, true);
+    }
+
+    @Override
+    public String getInfo(Locale locale, boolean formatted) {
+        return defined.info != null ? defined.info : provider.getInfo(this, locale, formatted);
     }
 
     @Override

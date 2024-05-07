@@ -29,18 +29,18 @@ public class AbilitySupplier extends OptionSupplier<Ability> implements AbilityP
     }
 
     @Override
-    public String getDisplayName(Ability ability, Locale locale) {
-        return messageProvider.getAbilityDisplayName(ability, locale);
+    public String getDisplayName(Ability ability, Locale locale, boolean formatted) {
+        return messageProvider.getAbilityDisplayName(ability, locale, formatted);
     }
 
     @Override
-    public String getDescription(Ability ability, Locale locale) {
-        return messageProvider.getAbilityDescription(ability, locale);
+    public String getDescription(Ability ability, Locale locale, boolean formatted) {
+        return messageProvider.getAbilityDescription(ability, locale, formatted);
     }
 
     @Override
-    public String getInfo(Ability ability, Locale locale) {
-        return messageProvider.getAbilityInfo(ability, locale);
+    public String getInfo(Ability ability, Locale locale, boolean formatted) {
+        return messageProvider.getAbilityInfo(ability, locale, formatted);
     }
 
     @Override

@@ -87,8 +87,8 @@ public class BukkitAbilityManager extends AbilityManager {
     }
 
     @Override
-    public String getBaseDescription(Ability ability, User user) {
-        String desc = ability.getDescription(user.getLocale());
+    public String getBaseDescription(Ability ability, User user, boolean formatted) {
+        String desc = ability.getDescription(user.getLocale(), formatted);
         AbilityImpl impl = plugin.getAbilityManager().getAbilityImpl(ability);
         if (impl != null) {
             desc = impl.replaceDescPlaceholders(desc, ability, user);

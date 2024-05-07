@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -75,6 +74,6 @@ public abstract class ManaAbilityManager {
 
     public abstract void sendNotEnoughManaMessage(User user, double manaCost);
 
-    public abstract String getBaseDescription(ManaAbility manaAbility, User user);
+    public abstract String getBaseDescription(ManaAbility manaAbility, User user, boolean formatted);
 
 }

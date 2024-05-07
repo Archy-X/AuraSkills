@@ -14,6 +14,8 @@ public interface Ability extends AbstractAbility, Optioned {
      */
     String getDisplayName(Locale locale);
 
+    String getDisplayName(Locale locale, boolean formatted);
+
     /**
      * Gets the ability description as defined in the locale's messages file.
      *
@@ -21,6 +23,8 @@ public interface Ability extends AbstractAbility, Optioned {
      * @return the description in the specified locale or in a fallback language
      */
     String getDescription(Locale locale);
+
+    String getDescription(Locale locale, boolean formatted);
 
     /**
      * Gets the ability info text as defined in the locale's messages file.
@@ -31,6 +35,8 @@ public interface Ability extends AbstractAbility, Optioned {
      * @return the info text in the specified locale or in a fallback language
      */
     String getInfo(Locale locale);
+
+    String getInfo(Locale locale, boolean formatted);
 
     /**
      * Gets a fully uppercase String of the ability name without the namespace
