@@ -35,6 +35,7 @@ public class SqlStorageProvider extends StorageProvider {
     public final int ABILITY_DATA_ID = 3;
     public final int UNCLAIMED_ITEMS_ID = 4;
     public final int ACTION_BAR_ID = 5;
+    public final int JOBS_ID = 6;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
@@ -86,6 +87,8 @@ public class SqlStorageProvider extends StorageProvider {
                     loadTraitModifiers(connection, uuid, userId).values().forEach(m -> user.addTraitModifier(m, false));
                     // Load ability data
                     loadAbilityData(connection, user, userId);
+                    // Load job data
+                    loadJobs(connection, user, userId);
                     // Load unclaimed items
                     user.setUnclaimedItems(loadUnclaimedItems(connection, userId));
                     user.clearInvalidItems();
@@ -199,6 +202,37 @@ public class SqlStorageProvider extends StorageProvider {
                     } else {
                         user.getAbilityData(ability).setData(keyName, parsed);
                     }
+                }
+            }
+        }
+    }
+
+    private void loadJobs(Connection connection, User user, int userId) throws SQLException {
+        String query = "SELECT key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, JOBS_ID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    String keyName = resultSet.getString("key_name");
+                    String value = resultSet.getString("value");
+
+                    if (!keyName.equals("jobs")) {
+                        continue;
+                    }
+
+                    user.clearAllJobs();
+
+                    String[] splitValue = value.split(",");
+                    for (String skillName : splitValue) {
+                        NamespacedId id = NamespacedId.fromString(skillName);
+                        Skill skill = plugin.getSkillRegistry().getOrNull(id);
+                        if (skill == null) continue;
+
+                        user.addJob(skill);
+                    }
+                    // Only load one jobs row
+                    break;
                 }
             }
         }
@@ -398,6 +432,7 @@ public class SqlStorageProvider extends StorageProvider {
         saveAbilityData(connection, userId, user.getAbilityDataMap(), user.getManaAbilityDataMap());
         saveUnclaimedItems(connection, userId, user.getUnclaimedItems());
         saveActionBar(connection, userId, user);
+        saveJobs(connection, userId, user.getJobs());
     }
 
     private void deleteKeyValues(Connection connection, int userId) throws SQLException {
@@ -516,6 +551,20 @@ public class SqlStorageProvider extends StorageProvider {
             String value = String.valueOf(user.isActionBarEnabled(type));
             statement.setString(5, value);
             statement.setString(6, value);
+            statement.executeUpdate();
+        }
+    }
+
+    private void saveJobs(Connection connection, int userId, Set<Skill> jobs) throws SQLException {
+        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, JOBS_ID);
+            statement.setNull(3, Types.NULL);
+            statement.setString(4, "jobs");
+            String jobCommaList = String.join(",", jobs.stream().map(s -> s.getId().toString()).toList());
+            statement.setString(5, jobCommaList);
+            statement.setString(6, jobCommaList);
             statement.executeUpdate();
         }
     }

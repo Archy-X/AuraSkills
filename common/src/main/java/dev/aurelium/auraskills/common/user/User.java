@@ -48,6 +48,7 @@ public abstract class User {
     private final Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
     private final Map<ActionBarType, Boolean> actionBarSettings;
+    private final Set<Skill> jobs;
 
     private boolean saving;
     private boolean shouldSave;
@@ -73,6 +74,7 @@ public abstract class User {
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
         this.multipliers = new HashMap<>();
+        this.jobs = new HashSet<>();
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -408,6 +410,22 @@ public abstract class User {
 
     public void setUnclaimedItems(@NotNull List<KeyIntPair> unclaimedItems) {
         this.unclaimedItems = unclaimedItems;
+    }
+
+    public Set<Skill> getJobs() {
+        return Collections.unmodifiableSet(jobs);
+    }
+
+    public void addJob(Skill skill) {
+        jobs.add(skill);
+    }
+
+    public void removeJob(Skill skill) {
+        jobs.remove(skill);
+    }
+
+    public void clearAllJobs() {
+        jobs.clear();
     }
 
     public boolean isSaving() {
