@@ -1,14 +1,13 @@
 package dev.aurelium.auraskills.common.api.implementation;
 
-import dev.aurelium.auraskills.api.source.CustomSource;
-import dev.aurelium.auraskills.api.source.SkillSource;
-import dev.aurelium.auraskills.api.source.SourceManager;
-import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.source.*;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.MessageKey;
+import dev.aurelium.auraskills.common.source.income.IncomeLoader;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
 import java.util.Locale;
@@ -16,9 +15,11 @@ import java.util.Locale;
 public class ApiSourceManager implements SourceManager {
 
     private final AuraSkillsPlugin plugin;
+    private final IncomeLoader incomeLoader;
 
     public ApiSourceManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
+        this.incomeLoader = new IncomeLoader(plugin);
     }
 
     @Override
@@ -51,5 +52,10 @@ public class ApiSourceManager implements SourceManager {
             unitName = TextUtil.replace(unitName, "{" + keyStr + "}", message);
         }
         return unitName;
+    }
+
+    @Override
+    public SourceIncome loadSourceIncome(ConfigurationNode source) {
+        return incomeLoader.loadSourceIncome(source);
     }
 }

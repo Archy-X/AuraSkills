@@ -85,7 +85,17 @@ boss_bar:
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
   xp_format: '#.#'
-  percent_format: "#.##"
+  percent_format: '#.##'
+  money_format: '0.00'
+jobs:
+  enabled: true
+  income:
+    use_xp: true
+    use_expression: false
+    default:
+      income_per_xp: 0.1
+      expression: 0.1*xp
+    use_final_xp: true
 enable_roman_numerals: false
 damage_holograms:
   enabled: true

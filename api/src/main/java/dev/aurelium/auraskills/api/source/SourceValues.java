@@ -14,15 +14,17 @@ public class SourceValues {
     private final String displayName;
     @Nullable
     private final String unitName;
+    private final SourceIncome income;
 
     public SourceValues(AuraSkillsApi api, SourceType type, NamespacedId id, double xp,
-                        @Nullable String displayName, @Nullable String unitName) {
+                        @Nullable String displayName, @Nullable String unitName, SourceIncome income) {
         this.api = api;
         this.type = type;
         this.id = id;
         this.xp = xp;
         this.displayName = displayName;
         this.unitName = unitName;
+        this.income = income;
     }
 
     public AuraSkillsApi getApi() {
@@ -49,5 +51,9 @@ public class SourceValues {
     @Nullable
     public String getUnitName() {
         return unitName;
+    }
+
+    public SourceIncome getIncome() {
+        return income;
     }
 }

@@ -17,6 +17,8 @@ action_bar:
   ability: "{message}"
   boss_bar_xp: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%)"
   boss_bar_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})"
+  boss_bar_income: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%) <green>(+${income})"
+  boss_bar_income_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}}) <green>(+${income})"
 acf:
   core:
     info_message: "{message}"
@@ -113,4 +115,4 @@ stats:
   speed:
     color: "<white>"
     symbol: "➤"
-file_version: 1
+file_version: 2
