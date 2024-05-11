@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillLevelItem;
+import dev.aurelium.auraskills.common.ability.AbilityUtil;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
@@ -324,13 +325,7 @@ public class LevelProgressionMenu {
     }
 
     private double getDuration(ManaAbility manaAbility, int level) {
-        if (manaAbility == ManaAbilities.LIGHTNING_BLADE) {
-            double baseDuration = ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration");
-            double durationPerLevel = ManaAbilities.LIGHTNING_BLADE.optionDouble("duration_per_level");
-            return baseDuration + (durationPerLevel * (level - 1));
-        } else {
-            return manaAbility.getValue(level);
-        }
+        return AbilityUtil.getDuration(manaAbility, level);
     }
 
     private Ability leveledUpAbility(ComponentPlaceholderInfo<Integer> p) {

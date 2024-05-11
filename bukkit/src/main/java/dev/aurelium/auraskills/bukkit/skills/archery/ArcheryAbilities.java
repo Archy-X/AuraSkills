@@ -172,7 +172,7 @@ public class ArcheryAbilities extends AbilityImpl {
     @Override
     public String replaceDescPlaceholders(String input, Ability ability, User user) {
         if (ability.equals(Abilities.RETRIEVAL)) {
-            return TextUtil.replace(input, "{time}", NumberUtil.format1(ability.optionDouble("delay_sec")));
+            return TextUtil.replace(input, "{time}", NumberUtil.format1(ability.optionDouble("delay_sec", 3)));
         }
         return input;
     }
@@ -212,7 +212,7 @@ public class ArcheryAbilities extends AbilityImpl {
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.4f, 1.9f);
 
             arrow.remove();
-        }, Math.round(ability.optionDouble("delay_sec") * 1000), TimeUnit.MILLISECONDS);
+        }, Math.round(ability.optionDouble("delay_sec", 3) * 1000), TimeUnit.MILLISECONDS);
     }
 
     private ItemStack getArrowItem(AbstractArrow abstractArrow) {

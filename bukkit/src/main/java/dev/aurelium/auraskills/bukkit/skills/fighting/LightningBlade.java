@@ -75,8 +75,8 @@ public class LightningBlade extends ReadiedManaAbility {
 
     @Override
     protected int getDuration(User user) {
-        double baseDuration = manaAbility.optionDouble("base_duration");
-        double durationPerLevel = manaAbility.optionDouble("duration_per_level");
+        double baseDuration = manaAbility.optionDouble("base_duration", 5.0);
+        double durationPerLevel = manaAbility.optionDouble("duration_per_level", 4.0);
         double durationSeconds = baseDuration + (durationPerLevel * (user.getManaAbilityLevel(manaAbility) - 1));
         return (int) Math.round(durationSeconds * 20);
     }

@@ -138,7 +138,7 @@ public class ManaCommand extends BaseCommand {
         }
         double manaToSet = amount;
         if (manaToSet > user.getMaxMana()) { // If setting mana will go over max mana
-            if (!allowOverMax || !Traits.MAX_MANA.optionBoolean("allow_overflow")) { // Should not go over max mana
+            if (!allowOverMax || !Traits.MAX_MANA.optionBoolean("allow_overflow", false)) { // Should not go over max mana
                 manaToSet = user.getMaxMana(); // Set mana to set to max mana
             }
         }

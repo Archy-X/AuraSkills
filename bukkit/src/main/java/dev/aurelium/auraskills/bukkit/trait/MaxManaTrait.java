@@ -19,7 +19,7 @@ public class MaxManaTrait extends TraitImpl {
 
     @Override
     protected void reload(Player player, Trait trait) {
-        if (!trait.optionBoolean("allow_overflow")) {
+        if (!trait.optionBoolean("allow_overflow", false)) {
             User user = plugin.getUser(player);
             // Remove overflow mana
             double maxMana = user.getMaxMana();

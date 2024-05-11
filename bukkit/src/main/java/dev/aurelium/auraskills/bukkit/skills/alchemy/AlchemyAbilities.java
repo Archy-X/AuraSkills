@@ -214,7 +214,7 @@ public class AlchemyAbilities extends AbilityImpl {
         PotionType potionType = bukkitPotionType.getType();
         if (potionType == null) return;
 
-        if (meta.hasCustomEffects() && Skills.ALCHEMY.optionBoolean("ignore_custom_potions")) return;
+        if (meta.hasCustomEffects() && Skills.ALCHEMY.optionBoolean("ignore_custom_potions", false)) return;
         // Get potion duration bonus from Alchemist ability
         int durationBonus = 0;
         if (!isDisabled(Abilities.ALCHEMIST)) {
@@ -294,7 +294,7 @@ public class AlchemyAbilities extends AbilityImpl {
         if (failsChecks(player, ability)) return;
 
         AreaEffectCloud cloud = event.getAreaEffectCloud();
-        if (cloud.hasCustomEffects() && Skills.ALCHEMY.optionBoolean("ignore_custom_potions")) return;
+        if (cloud.hasCustomEffects() && Skills.ALCHEMY.optionBoolean("ignore_custom_potions", false)) return;
 
         User user = plugin.getUser(player);
         // Get values

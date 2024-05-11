@@ -201,7 +201,7 @@ public class AbilitiesMenu {
 
     private double getDuration(ManaAbility manaAbility) {
         if (manaAbility == ManaAbilities.LIGHTNING_BLADE) {
-            return ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration");
+            return ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration", 5.0);
         } else {
             return manaAbility.getValue(1);
         }

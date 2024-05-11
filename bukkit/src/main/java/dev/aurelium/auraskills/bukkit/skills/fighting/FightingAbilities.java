@@ -302,7 +302,7 @@ public class FightingAbilities extends AbilityImpl {
 
         plugin.getUiProvider().sendActionBar(user, plugin.getMsg(AbilityMessage.PARRY_PARRIED, user.getLocale()));
         plugin.getUiProvider().getActionBarManager().setPaused(user, 1500, TimeUnit.MILLISECONDS);
-        if (ability.optionBoolean("enable_sound")) {
+        if (ability.optionBoolean("enable_sound", true)) {
             player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RETURN, SoundCategory.PLAYERS, 1f, 1.4f);
         }
 

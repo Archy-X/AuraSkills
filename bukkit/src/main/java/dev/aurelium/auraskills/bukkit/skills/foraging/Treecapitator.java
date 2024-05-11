@@ -29,7 +29,7 @@ public class Treecapitator extends ReadiedManaAbility {
     public Treecapitator(AuraSkills plugin) {
         super(plugin, ManaAbilities.TREECAPITATOR, ManaAbilityMessage.TREECAPITATOR_START, ManaAbilityMessage.TREECAPITATOR_END,
                 new String[]{"_AXE"}, new Action[]{Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
-        this.GIVE_XP = ManaAbilities.TREECAPITATOR.optionBoolean("give_xp");
+        this.GIVE_XP = ManaAbilities.TREECAPITATOR.optionBoolean("give_xp", true);
     }
 
     @Override

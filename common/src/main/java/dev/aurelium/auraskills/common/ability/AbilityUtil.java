@@ -50,8 +50,8 @@ public class AbilityUtil {
 
     public static double getDuration(ManaAbility manaAbility, int level) {
         if (manaAbility == ManaAbilities.LIGHTNING_BLADE) {
-            double baseDuration = ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration");
-            double durationPerLevel = ManaAbilities.LIGHTNING_BLADE.optionDouble("duration_per_level");
+            double baseDuration = ManaAbilities.LIGHTNING_BLADE.optionDouble("base_duration", 5.0);
+            double durationPerLevel = ManaAbilities.LIGHTNING_BLADE.optionDouble("duration_per_level", 4.0);
             return baseDuration + (durationPerLevel * (level - 1));
         } else {
             return manaAbility.getValue(level);

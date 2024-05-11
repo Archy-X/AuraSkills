@@ -86,7 +86,7 @@ public class HealthRegenTraits extends TraitImpl {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, Traits.HUNGER_REGEN.optionInt("delay") * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 0, Traits.HUNGER_REGEN.optionInt("delay", 60) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void startSaturationRegen() {
@@ -100,7 +100,7 @@ public class HealthRegenTraits extends TraitImpl {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, Traits.SATURATION_REGEN.optionInt("delay") * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerSync(task, 0, Traits.SATURATION_REGEN.optionInt("delay", 20) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void handleCustomRegen(Player player, Trait trait, Function<Player, Boolean> regenCondition, CustomRegenEvent.Reason reason) {

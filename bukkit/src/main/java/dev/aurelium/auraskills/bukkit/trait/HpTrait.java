@@ -131,7 +131,7 @@ public class HpTrait extends TraitImpl {
             return;
         }
         // Force base health if enabled
-        if (trait.optionBoolean("force_base_health")) {
+        if (trait.optionBoolean("force_base_health", false)) {
             attribute.setBaseValue(20.0);
         }
         // Return if no change
@@ -142,7 +142,7 @@ public class HpTrait extends TraitImpl {
             if (player.getHealth() > attribute.getValue()) {
                 player.setHealth(attribute.getValue());
             }
-            if (trait.optionBoolean("keep_full_on_increase") && attribute.getValue() > originalMaxHealth) {
+            if (trait.optionBoolean("keep_full_on_increase", false) && attribute.getValue() > originalMaxHealth) {
                 // Heals player to full health if had full health before modifier
                 if (player.getHealth() >= originalMaxHealth) {
                     player.setHealth(attribute.getValue());
@@ -156,7 +156,7 @@ public class HpTrait extends TraitImpl {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attribute == null) return;
 
-        if (Traits.HP.optionBoolean("health_scaling") && Traits.HP.isEnabled()) {
+        if (Traits.HP.isEnabled() && Traits.HP.optionBoolean("health_scaling", true)) {
             double health = attribute.getValue();
             player.setHealthScaled(true);
             int scaledHearts = 0;
@@ -172,7 +172,7 @@ public class HpTrait extends TraitImpl {
                 scaledHearts = 10;
             }
             player.setHealthScale(scaledHearts * 2);
-        } else if (Traits.HP.optionBoolean("ensure_scaling_disabled")) {
+        } else if (Traits.HP.optionBoolean("ensure_scaling_disabled", true)) {
             player.setHealthScaled(false);
         }
     }

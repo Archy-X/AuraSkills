@@ -45,7 +45,7 @@ public class DamageLeveler extends SourceLeveler {
         if (failsChecks(event, player, player.getLocation(), skill)) return;
 
         // Check shield blocking option
-        if (skill.equals(Skills.DEFENSE) && !Skills.DEFENSE.optionBoolean("allow_shield_blocking") && player.isBlocking()) {
+        if (skill.equals(Skills.DEFENSE) && !Skills.DEFENSE.optionBoolean("allow_shield_blocking", false) && player.isBlocking()) {
             return;
         }
 
@@ -65,9 +65,9 @@ public class DamageLeveler extends SourceLeveler {
 
         // Adjust to max and min for defense
         if (skill.equals(Skills.DEFENSE)) {
-            xp = Math.min(xp, Skills.DEFENSE.optionDouble("max"));
+            xp = Math.min(xp, Skills.DEFENSE.optionDouble("max", 100.0));
             // Returns if xp is less than the min
-            if (xp < Skills.DEFENSE.optionDouble("min")) {
+            if (xp < Skills.DEFENSE.optionDouble("min", 0)) {
                 return;
             }
         }
