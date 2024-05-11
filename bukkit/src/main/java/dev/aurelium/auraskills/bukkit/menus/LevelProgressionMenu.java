@@ -12,7 +12,6 @@ import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillLevelItem;
 import dev.aurelium.auraskills.common.ability.AbilityUtil;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.user.User;
@@ -144,7 +143,7 @@ public class LevelProgressionMenu {
         menu.item("job", item -> {
             item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
             // Hide if jobs are disabled
-            item.modify(i -> plugin.configBoolean(Option.JOBS_ENABLED) ? i.item() : null);
+            item.modify(i -> plugin.config().jobSelectionEnabled() ? i.item() : null);
 
             item.onClick(ClickTrigger.LEFT, c -> {
                 User user = plugin.getUserManager().getUser(c.player());

@@ -125,3 +125,5 @@ permissions:
         default: true
     auraskills.checkupdates:
         default: op
+    auraskills.jobs.limit:
+        default: false

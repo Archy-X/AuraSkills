@@ -100,9 +100,8 @@ public class SkillItem {
     }
 
     private void skillJobActive(MenuBuilder menu) {
-        menu.component("skill_job_active", Skill.class, component -> {
-            component.shouldShow(t -> plugin.config().jobSelectionEnabled() && plugin.getUser(t.player()).getJobs().contains(t.value()));
-        });
+        menu.component("skill_job_active", Skill.class, component ->
+                component.shouldShow(t -> plugin.config().jobSelectionEnabled() && plugin.getUser(t.player()).getJobs().contains(t.value())));
     }
 
     public void statsLeveled(MenuBuilder menu) {

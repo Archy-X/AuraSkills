@@ -97,6 +97,8 @@ public abstract class User {
 
     public abstract void setCommandLocale(Locale locale);
 
+    public abstract int getPermissionJobLimit();
+
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }
@@ -432,6 +434,10 @@ public abstract class User {
     }
 
     public int getJobLimit() {
+        int permLimit = getPermissionJobLimit();
+        if (permLimit > 0) {
+            return permLimit;
+        }
         return plugin.configInt(Option.JOBS_SELECTION_DEFAULT_JOB_LIMIT);
     }
 

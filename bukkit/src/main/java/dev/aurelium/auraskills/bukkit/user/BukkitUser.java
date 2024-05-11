@@ -140,6 +140,32 @@ public class BukkitUser extends User {
     }
 
     @Override
+    public int getPermissionJobLimit() {
+        if (player == null) return 0;
+
+        final String prefix = "auraskills.jobs.limit.";
+        int highestLimit = 0;
+
+        for (PermissionAttachmentInfo permissionInfo : player.getEffectivePermissions()) {
+            String permission = permissionInfo.getPermission();
+
+            if (!permission.startsWith(prefix)) continue;
+
+            permission = permission.substring(prefix.length());
+
+            if (isNumeric(permission)) {
+                try {
+                    int value = Integer.parseInt(permission);
+                    if (value > highestLimit) {
+                        highestLimit = value;
+                    }
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return highestLimit;
+    }
+
+    @Override
     public void sendMessage(Component component) {
         // Don't send empty messages
         if (plugin.getMessageProvider().componentToString(component).isEmpty()) {
