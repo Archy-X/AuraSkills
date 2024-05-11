@@ -568,6 +568,7 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Levels - Page {page}"
     your_ranking: "Your Skill Ranking"
@@ -585,6 +586,12 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit another job to be able to select this one.
   stats:
     stats_title: Your Stats
     skills: "Skills"
@@ -849,4 +856,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 33
+file_version: 34

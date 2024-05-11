@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -417,7 +418,9 @@ public abstract class User {
     }
 
     public void addJob(Skill skill) {
-        jobs.add(skill);
+        if (jobs.size() < getJobLimit()) {
+            jobs.add(skill);
+        }
     }
 
     public void removeJob(Skill skill) {
@@ -426,6 +429,10 @@ public abstract class User {
 
     public void clearAllJobs() {
         jobs.clear();
+    }
+
+    public int getJobLimit() {
+        return plugin.configInt(Option.JOBS_SELECTION_DEFAULT_JOB_LIMIT);
     }
 
     public boolean isSaving() {

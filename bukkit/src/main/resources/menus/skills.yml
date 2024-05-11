@@ -75,6 +75,7 @@ templates:
       - ' '
       - component: progress
       - component: max_level
+      - component: skill_job_active
       - ' '
       - '<yellow>{{skill_click}}'
 components:
@@ -104,6 +105,11 @@ components:
     context: Skill
     lore:
       - '<gold>{{max_level}}'
+  skill_job_active:
+    context: Skill
+    lore:
+      - ' '
+      - '<dark_gray>▶ <green>{{active_job}}'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'
   unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'

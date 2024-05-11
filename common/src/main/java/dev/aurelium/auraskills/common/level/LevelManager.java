@@ -73,6 +73,10 @@ public abstract class LevelManager {
         if (source == null) {
             return 0.0;
         }
+        // Selection is required and job is not selected
+        if (plugin.config().jobSelectionEnabled() && !user.getJobs().contains(skill)) {
+            return 0.0;
+        }
 
         double income = source.getIncome().getIncomeEarned(user.toApi(), source.getValues(), skill, amount);
 

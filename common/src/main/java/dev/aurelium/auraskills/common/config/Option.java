@@ -40,6 +40,8 @@ public enum Option {
     BOSS_BAR_MONEY_FORMAT("boss_bar.money_format", OptionType.STRING),
     // Jobs options
     JOBS_ENABLED("jobs.enabled", OptionType.BOOLEAN),
+    JOBS_SELECTION_REQUIRE_SELECTION("jobs.selection.require_selection", OptionType.BOOLEAN),
+    JOBS_SELECTION_DEFAULT_JOB_LIMIT("jobs.selection.default_job_limit", OptionType.INT),
     JOBS_INCOME_USE_XP("jobs.income.use_xp", OptionType.BOOLEAN),
     JOBS_INCOME_USE_EXPRESSION("jobs.income.use_expression", OptionType.BOOLEAN),
     JOBS_INCOME_DEFAULT_INCOME_PER_XP("jobs.income.default.income_per_xp", OptionType.DOUBLE),

@@ -345,7 +345,9 @@ public class FileStorageProvider extends StorageProvider {
         }
 
         // Save jobs
-        if (!user.getJobs().isEmpty()) {
+        if (user.getJobs().isEmpty()) {
+            root.removeChild("jobs");
+        } else {
             List<String> jobNames = new ArrayList<>();
             for (Skill skill : user.getJobs()) {
                 jobNames.add(skill.getId().toString());

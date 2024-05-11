@@ -65,6 +65,18 @@ items:
           3: '<light_purple>'
       - ' '
       - '<yellow>{{abilities_click}}'
+  job:
+    pos: 0,4
+    material: gold_ingot
+    display_name: '<yellow>{{job}}'
+    lore:
+      - text: '{{job_desc}}'
+        wrap: true
+        style: '<gray>'
+      - ' '
+      - component: job_select
+      - component: job_active
+      - component: job_limit
 templates:
   skill:
     pos: 0,0
@@ -206,6 +218,19 @@ components:
         styles:
           0: '<gray>'
           1: '<yellow>'
+  job_select:
+    lore:
+      - '<yellow>{{job_select}}'
+  job_active:
+    lore:
+      - '<green>{{job_active}}'
+      - ' '
+      - '<red>{{job_quit}}'
+  job_limit:
+    lore:
+      - text: '{{job_limit}}'
+        wrap: true
+        style: '<red>'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'
   unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'

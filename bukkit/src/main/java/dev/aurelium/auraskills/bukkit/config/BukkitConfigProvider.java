@@ -146,4 +146,9 @@ public class BukkitConfigProvider implements ConfigProvider {
     public int getStartLevel() {
         return options.get(Option.START_LEVEL).asInt();
     }
+
+    @Override
+    public boolean jobSelectionEnabled() {
+        return plugin.configBoolean(Option.JOBS_ENABLED) && plugin.configBoolean(Option.JOBS_SELECTION_REQUIRE_SELECTION);
+    }
 }
