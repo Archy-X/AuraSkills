@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("dev.aurelium:slate:1.1.1-SNAPSHOT") {
+    api("dev.aurelium:slate:1.1.2") {
         exclude("org.yaml", "snakeyaml")
         exclude("org.spongepowered", "configurate-yaml")
     }
