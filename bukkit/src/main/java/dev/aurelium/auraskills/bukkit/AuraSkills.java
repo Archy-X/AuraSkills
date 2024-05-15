@@ -21,6 +21,7 @@ import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
+import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
@@ -396,6 +397,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new RegionListener(this), this);
         pm.registerEvents(new RegionBlockListener(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
+        pm.registerEvents(new JobsListener(this), this);
     }
 
     public BukkitAudiences getAudiences() {
