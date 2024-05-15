@@ -51,6 +51,12 @@ public class DoubleDropTrait extends TraitImpl {
 
         Player player = event.getPlayer();
         Block block = event.getBlock();
+
+        // AdvancedEnchantments compatibility fix
+        if (block.hasMetadata("blockbreakevent-ignore")) {
+            return;
+        }
+
         //Checks if in blocked or disabled world
         if (plugin.getWorldManager().isInBlockedWorld(block.getLocation())) {
             return;

@@ -73,6 +73,11 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         Block block = event.getBlock();
 
+        // AdvancedEnchantments compatibility fix
+        if (block.hasMetadata("blockbreakevent-ignore")) {
+            return;
+        }
+
         var originalSource = getSource(block);
 
         if (originalSource == null) return;
