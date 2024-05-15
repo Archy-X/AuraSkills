@@ -36,23 +36,23 @@ abilities:
     desc: "斧から与えられるダメージを{value}%増やす。"
     info: "+{value}% 斧ダメージ"
   valor:
-    name: Valor
+    name: 勇気
     desc: "斧を持っている間、+{value}のStrengthを付与します"
     info: "+{value}のStrength"
   shredder:
-    name: Shredder
+    name: シュレッダー
     desc: "斧で攻撃時、{value}%の確率で3倍の耐久度ダメージを与えます。"
     info: "{value}%の3倍の耐久度ダメージ"
   lucky_miner:
-    name: Lucky Miner
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    name: 幸運な採掘家
+    desc: "採掘運 {value} は、追加のドロップ率を増加させます。"
+    info: "採掘運 + {value}"
   miner:
-    name: Miner
+    name: 採掘家
     desc: "採掘経験値を{value}%増やします。"
     info: "+{value}%の経験値"
   pick_master:
-    name: Pick Master
+    name: ツルハシの達人
     desc: "ピッケルで{value}%の追加ダメージを与えます。"
     info: "+{value}%のピッケルダメージ"
   stamina:
