@@ -11,17 +11,21 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
 
 public abstract class ManaAbilityProvider implements Listener {
 
+    public static final String IGNORE_INTERACT_KEY = "ignore_interact";
     protected final AuraSkills plugin;
     protected final ManaAbility manaAbility;
     private final ManaAbilityMessage activateMessage;
@@ -177,6 +181,15 @@ public abstract class ManaAbilityProvider implements Listener {
 
     private int getCooldownTicks(User user) {
         return (int) manaAbility.getCooldown(user.getManaAbilityLevel(manaAbility)) * 20;
+    }
+
+    protected boolean shouldIgnoreItem(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return false;
+
+        var container = meta.getPersistentDataContainer();
+
+        return container.has(new NamespacedKey(plugin, IGNORE_INTERACT_KEY));
     }
 
 }

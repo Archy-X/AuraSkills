@@ -86,6 +86,8 @@ public enum CommandMessage implements MessageKey {
     ITEM_REQUIREMENT_ENTRY,
     ITEM_UNREGISTER_UNREGISTERED,
     ITEM_UNREGISTER_NOT_REGISTERED(Command.ITEM_UNREGISTER, "not_registered"),
+    ITEM_IGNORE_ADD,
+    ITEM_IGNORE_REMOVE,
     LANG_SET,
     LANG_NOT_FOUND(Command.LANG, "not_found"),
     MANA_DISPLAY,
