@@ -8,6 +8,6 @@ public interface TraitProvider extends OptionedProvider<Trait> {
 
     boolean isEnabled(Trait trait);
 
-    String getDisplayName(Trait trait, Locale locale);
+    String getDisplayName(Trait trait, Locale locale, boolean formatted);
 
 }

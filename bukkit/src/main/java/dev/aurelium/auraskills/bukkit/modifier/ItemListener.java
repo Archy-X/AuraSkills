@@ -76,7 +76,7 @@ public class ItemListener implements Listener {
             }
             // Apply modifiers and multipliers
             SkillsItem skillsItem = new SkillsItem(held, plugin);
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 user.addStatModifier(modifier, false);
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
@@ -139,7 +139,7 @@ public class ItemListener implements Listener {
                         User user = plugin.getUser(player);
                         SkillsItem storedItem = new SkillsItem(stored, plugin);
 
-                        for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
+                        for (StatModifier modifier : storedItem.getStatModifiers(ModifierType.ITEM)) {
                             user.removeStatModifier(modifier.name(), false);
                             statsToReload.add(modifier.stat());
                         }
@@ -166,7 +166,7 @@ public class ItemListener implements Listener {
                         User user = plugin.getUser(player);
                         SkillsItem heldItem = new SkillsItem(held, plugin);
                         if (heldItem.meetsRequirements(ModifierType.ITEM, player)) {
-                            for (StatModifier modifier : heldItem.getModifiers(ModifierType.ITEM)) {
+                            for (StatModifier modifier : heldItem.getStatModifiers(ModifierType.ITEM)) {
                                 user.addStatModifier(modifier, false);
                                 statsToReload.add(modifier.stat());
                             }
@@ -221,7 +221,7 @@ public class ItemListener implements Listener {
             SkillsItem skillsItem = new SkillsItem(itemOffHand, plugin);
             boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
             // For each modifier on the item
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the old modifier from main hand
                 StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
                 playerData.removeStatModifier(modifier.name(), false);
@@ -247,7 +247,7 @@ public class ItemListener implements Listener {
             SkillsItem skillsItem = new SkillsItem(itemMainHand, plugin);
             boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
             // For each modifier on the item
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the offhand modifier if wasn't already added
                 if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
                     playerData.removeStatModifier(modifier.name() + ".Offhand", false);
@@ -291,7 +291,7 @@ public class ItemListener implements Listener {
                         if (!stored.getType().equals(Material.AIR)) {
                             User playerData = plugin.getUser(player);
                             SkillsItem storedItem = new SkillsItem(stored, plugin);
-                            for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
+                            for (StatModifier modifier : storedItem.getStatModifiers(ModifierType.ITEM)) {
                                 playerData.removeStatModifier(modifier.name() + ".Offhand");
                             }
                             for (Multiplier multiplier : storedItem.getMultipliers(ModifierType.ITEM)) {
@@ -316,7 +316,7 @@ public class ItemListener implements Listener {
 
     private void applyOffhandModifiers(ItemStack held, User user) {
         SkillsItem skillsItem = new SkillsItem(held, plugin);
-        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+        for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
             StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
             user.addStatModifier(offHandModifier);
         }

@@ -207,9 +207,14 @@ public abstract class MessageProvider implements PolyglotProvider {
         }
     }
 
-    public String getTraitDisplayName(Trait trait, Locale locale) {
+    public String getTraitDisplayName(Trait trait, Locale locale, boolean formatted) {
         String key = trait instanceof Traits ? trait.getId().getKey() : trait.getId().toString();
-        return get(MessageKey.of("traits." + key + ".name"), locale);
+        MessageKey msgKey = MessageKey.of("traits." + key + ".name");
+        if (formatted) {
+            return get(msgKey, locale);
+        } else {
+            return getRaw(msgKey, locale);
+        }
     }
 
     public void loadDefaultLanguageOption() {

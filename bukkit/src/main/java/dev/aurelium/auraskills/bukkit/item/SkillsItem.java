@@ -2,10 +2,14 @@ package dev.aurelium.auraskills.bukkit.item;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.item.ModifierType;
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
@@ -14,7 +18,6 @@ import dev.aurelium.auraskills.bukkit.requirement.GlobalRequirement;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
@@ -45,7 +48,7 @@ public class SkillsItem {
         return item;
     }
 
-    public List<StatModifier> getModifiers(ModifierType type) {
+    public List<StatModifier> getStatModifiers(ModifierType type) {
         PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
         List<StatModifier> modifiers = new ArrayList<>();
 
@@ -67,19 +70,41 @@ public class SkillsItem {
         return modifiers;
     }
 
-    public void addModifier(ModifierType type, Stat stat, double value) {
-        PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
-        NamespacedKey statKey = new NamespacedKey(plugin, stat.getId().toString());
-        container.set(statKey, PersistentDataType.DOUBLE, value);
-        saveTagContainer(container, MetaType.MODIFIER, type);
+    public List<TraitModifier> getTraitModifiers(ModifierType type) {
+        PersistentDataContainer container = getContainer(MetaType.TRAIT_MODIFIER, type);
+        List<TraitModifier> modifiers = new ArrayList<>();
+
+        for (NamespacedKey key : container.getKeys()) {
+            double value = container.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
+            if (value == 0.0) continue;
+
+            Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
+            if (trait == null) continue;
+
+            if (type == ModifierType.ITEM) {
+                modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Item." + getName(trait), trait, value));
+            } else if (type == ModifierType.ARMOR) {
+                modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait), trait, value));
+            }
+        }
+        return modifiers;
     }
 
-    public void removeModifier(ModifierType type, Stat stat) {
-        PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
-        NamespacedKey statKey = new NamespacedKey(plugin, stat.getId().toString());
-        container.remove(statKey);
-        saveTagContainer(container, MetaType.MODIFIER, type);
-        removeEmpty(container, MetaType.MODIFIER, type);
+    // MetaType must be MODIFIER or TRAIT_MODIFIER
+    public void addModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified, double value) {
+        PersistentDataContainer container = getContainer(metaType, modifierType);
+        NamespacedKey key = new NamespacedKey(plugin, identified.getId().toString());
+        container.set(key, PersistentDataType.DOUBLE, value);
+        saveTagContainer(container, metaType, modifierType);
+    }
+
+    // MetaType must be MODIFIER or TRAIT_MODIFIER
+    public void removeModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified) {
+        PersistentDataContainer container = getContainer(metaType, modifierType);
+        NamespacedKey key = new NamespacedKey(plugin, identified.getId().toString());
+        container.remove(key);
+        saveTagContainer(container, metaType, modifierType);
+        removeEmpty(container, metaType, modifierType);
     }
 
     public void removeAll(MetaType metaType, ModifierType modifierType) {
@@ -163,7 +188,7 @@ public class SkillsItem {
             if (legacy.isEmpty()) continue;
 
             for (StatModifier modifier : legacy) {
-                addModifier(type, modifier.stat(), modifier.value());
+                addModifier(MetaType.MODIFIER, type, modifier.stat(), modifier.value());
             }
         }
         // Convert multipliers
@@ -217,7 +242,7 @@ public class SkillsItem {
         return requirements;
     }
 
-    public void addModifierLore(ModifierType type, Stat stat, double value, Locale locale) {
+    public void addModifierLore(ModifierType type, NamespaceIdentified identified, double value, Locale locale) {
         List<String> lore;
         if (meta.getLore() != null) {
             if (!meta.getLore().isEmpty()) lore = meta.getLore();
@@ -232,10 +257,18 @@ public class SkillsItem {
         } else {
             message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
         }
-        lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
-                "{stat}", stat.getDisplayName(locale),
-                "{value}", NumberUtil.format1(Math.abs(value)),
-                "{color}", stat.getColor(locale))));
+        if (identified instanceof Stat stat) {
+            lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
+                    "{stat}", stat.getDisplayName(locale),
+                    "{value}", NumberUtil.format1(Math.abs(value)),
+                    "{color}", stat.getColor(locale))));
+        } else if (identified instanceof Trait trait) {
+            @Nullable Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+            lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
+                    "{stat}", trait.getDisplayName(locale),
+                    "{value}", NumberUtil.format1(Math.abs(value)),
+                    "{color}", stat != null ? stat.getColor(locale) : "")));
+        }
         meta.setLore(lore);
     }
 
@@ -353,6 +386,10 @@ public class SkillsItem {
         return TextUtil.capitalize(stat.name().toLowerCase(Locale.ROOT));
     }
 
+    private String getName(Trait trait) {
+        return TextUtil.capitalize(trait.name().toLowerCase(Locale.ROOT));
+    }
+
     private String getMultiplierName(@Nullable Skill skill) {
         if (skill != null) {
             return TextUtil.capitalize(skill.toString().toLowerCase(Locale.ROOT));
@@ -377,6 +414,7 @@ public class SkillsItem {
     public enum MetaType {
 
         MODIFIER("modifiers"),
+        TRAIT_MODIFIER("trait_modifiers"),
         REQUIREMENT("requirements"),
         MULTIPLIER("multipliers");
 

@@ -30,7 +30,7 @@ public class ModifierManager {
         ItemStack item = player.getInventory().getItemInMainHand();
         if (!(item.getType() == Material.AIR)) {
             SkillsItem skillsItem = new SkillsItem(item, plugin);
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 user.removeStatModifier(modifier.name());
                 statsToReload.add(modifier.stat());
             }
@@ -38,7 +38,7 @@ public class ModifierManager {
                 user.removeMultiplier(multiplier.name());
             }
             if (skillsItem.meetsRequirements(ModifierType.ITEM, player)) {
-                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                     user.addStatModifier(modifier, false);
                     statsToReload.add(modifier.stat());
                 }
@@ -50,7 +50,7 @@ public class ModifierManager {
         ItemStack itemOffHand = player.getInventory().getItemInOffHand();
         if (!(itemOffHand.getType() == Material.AIR)) {
             SkillsItem skillsItem = new SkillsItem(itemOffHand, plugin);
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 user.removeStatModifier(modifier.name() + ".Offhand");
                 statsToReload.add(modifier.stat());
             }
@@ -58,7 +58,7 @@ public class ModifierManager {
                 user.removeMultiplier(multiplier.name() + ".Offhand");
             }
             if (skillsItem.meetsRequirements(ModifierType.ITEM, player)) {
-                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                     StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
                     user.addStatModifier(offHandModifier, false);
                     statsToReload.add(modifier.stat());
@@ -79,7 +79,7 @@ public class ModifierManager {
                     continue;
                 }
                 SkillsItem skillsItem = new SkillsItem(armor, plugin);
-                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                     user.removeStatModifier(modifier.name());
                     statsToReload.add(modifier.stat());
                 }
@@ -87,7 +87,7 @@ public class ModifierManager {
                     user.removeMultiplier(multiplier.name());
                 }
                 if (skillsItem.meetsRequirements(ModifierType.ARMOR, player)) {
-                    for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                    for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                         user.addStatModifier(modifier, false);
                         statsToReload.add(modifier.stat());
                     }

@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -29,7 +30,7 @@ public class ApiItemManager implements ItemManager {
     @Override
     public ItemStack addModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        skillsItem.addModifier(type, stat, value);
+        skillsItem.addModifier(MetaType.MODIFIER, type, stat, value);
         if (lore) {
             skillsItem.addModifierLore(type, stat, value, plugin.getDefaultLanguage());
         }
@@ -39,13 +40,13 @@ public class ApiItemManager implements ItemManager {
     @Override
     public List<StatModifier> getModifiers(ItemStack item, ModifierType type) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        return skillsItem.getModifiers(type);
+        return skillsItem.getStatModifiers(type);
     }
 
     @Override
     public ItemStack removeModifier(ItemStack item, ModifierType type, Stat stat) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        skillsItem.removeModifier(type, stat);
+        skillsItem.removeModifier(MetaType.MODIFIER, type, stat);
         return skillsItem.getItem();
     }
 

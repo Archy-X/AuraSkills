@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.bukkit.stat;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageProvider;
@@ -24,6 +26,17 @@ public class StatFormat {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale, false))
+                .replace("{value}", NumberUtil.format1(value))
+                .replace("{name}", name));
+    }
+
+    public String applyPlaceholders(String input, TraitModifier modifier, Locale locale) {
+        Trait trait = modifier.trait();
+        double value = modifier.value();
+        String name = modifier.name();
+        return provider.applyFormatting(input.replace("{color}", "")
+                .replace("{symbol}", "")
+                .replace("{stat}", trait.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(value))
                 .replace("{name}", name));
     }
@@ -52,10 +65,23 @@ public class StatFormat {
                 .replace("{value}", NumberUtil.format1(value)));
     }
 
+    public String applyPlaceholders(String input, Trait trait, double value, Locale locale) {
+        return provider.applyFormatting(input.replace("{color}", "")
+                .replace("{symbol}", "")
+                .replace("{stat}", trait.getDisplayName(locale, false))
+                .replace("{value}", NumberUtil.format1(value)));
+    }
+
     public String applyPlaceholders(String input, Stat stat, Locale locale) {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale, false)));
+    }
+
+    public String applyPlaceholders(String input, Trait trait, Locale locale) {
+        return provider.applyFormatting(input.replace("{color}", "")
+                .replace("{symbol}", "")
+                .replace("{stat}", trait.getDisplayName(locale, false)));
     }
 
     public String applyPlaceholders(String input, String name, Player player) {

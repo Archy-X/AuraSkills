@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
@@ -150,6 +151,9 @@ public class CommandRegistrar {
             }
             return stats;
         });
+        completions.registerAsyncCompletion("traits", c -> plugin.getTraitManager().getEnabledTraits().stream()
+                .map(t -> t instanceof CustomTrait ? t.getId().toString() : t.name().toLowerCase(Locale.ROOT))
+                .toList());
         completions.registerAsyncCompletion("modifiers", c -> {
             Player player = c.getPlayer();
             User user = plugin.getUser(player);
