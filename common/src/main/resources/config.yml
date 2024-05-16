@@ -88,7 +88,7 @@ boss_bar:
   percent_format: '#.##'
   money_format: '0.00'
 jobs:
-  enabled: true
+  enabled: false
   selection:
     require_selection: true
     default_job_limit: 2
