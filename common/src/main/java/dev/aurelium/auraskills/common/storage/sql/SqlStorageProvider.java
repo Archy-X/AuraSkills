@@ -225,6 +225,8 @@ public class SqlStorageProvider extends StorageProvider {
 
                     String[] splitValue = value.split(",");
                     for (String skillName : splitValue) {
+                        if (skillName.isEmpty()) continue;
+
                         NamespacedId id = NamespacedId.fromString(skillName);
                         Skill skill = plugin.getSkillRegistry().getOrNull(id);
                         if (skill == null) continue;
@@ -556,6 +558,8 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private void saveJobs(Connection connection, int userId, Set<Skill> jobs) throws SQLException {
+        if (jobs.isEmpty()) return;
+
         String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);

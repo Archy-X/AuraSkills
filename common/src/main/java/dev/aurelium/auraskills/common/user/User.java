@@ -422,6 +422,7 @@ public abstract class User {
     public void addJob(Skill skill) {
         if (jobs.size() < getJobLimit()) {
             jobs.add(skill);
+            blank = false;
         }
     }
 
@@ -511,6 +512,9 @@ public abstract class User {
             if (statLevel > 0.0) {
                 return false;
             }
+        }
+        if (!jobs.isEmpty()) {
+            return false;
         }
         return statModifiers.isEmpty();
     }
