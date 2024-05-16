@@ -348,6 +348,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private void generateDefaultMenuFiles() {
         menuFileManager = new MenuFileManager(this);
         menuFileManager.generateDefaultFiles();
+        menuFileManager.updateMenus();
     }
 
     private void initializeMenus() {
