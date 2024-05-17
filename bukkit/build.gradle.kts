@@ -14,13 +14,13 @@ repositories {
     maven("https://github.com/deanveloper/SkullCreator/raw/mvn-repo")
     maven("https://repo.aikar.co/content/groups/aikar/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://maven.enginehub.org/repo/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.codemc.io/repository/maven-public/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.maven.apache.org/maven2/")
     maven("https://mvn.lumine.io/repository/maven-public/")
+    maven("https://maven.enginehub.org/repo/")
 }
 
 dependencies {
