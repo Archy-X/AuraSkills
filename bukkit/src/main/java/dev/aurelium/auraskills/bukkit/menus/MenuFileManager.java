@@ -11,6 +11,8 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuFileManager {
 
@@ -50,7 +52,7 @@ public class MenuFileManager {
                 ConfigurationNode embeddedConfig = FileUtil.loadEmbeddedYamlFile("menus/" + menuName + ".yml", plugin);
                 ConfigurationNode userConfig = FileUtil.loadYamlFile(userFile);
 
-                updateAndSave(embeddedConfig, userConfig, userFile);
+                updateAndSave(menuName, embeddedConfig, userConfig, userFile);
             } catch (IOException e) {
                 plugin.logger().warn("Error updating menu file " + userFile.getName());
                 e.printStackTrace();
@@ -58,16 +60,35 @@ public class MenuFileManager {
         }
     }
 
-    private void updateAndSave(ConfigurationNode embedded, ConfigurationNode user, File userFile) throws SerializationException {
-        int changed = 0;
-        changed += updateConfigSection("items", embedded, user);
-        changed += updateConfigSection("templates", embedded, user);
-        changed += updateConfigSection("components", embedded, user);
-        changed += updateStringSection("formats", embedded, user);
+    private void updateAndSave(String menuName, ConfigurationNode embedded, ConfigurationNode user, File userFile) throws SerializationException {
+        // Files that don't have updating enabled yet, since they haven't had changes
+        if (embedded.node("file_version").virtual()) return;
 
-        if (changed <= 0) {
+        int embVersion = embedded.node("file_version").getInt();
+        int userVersion = user.node("file_version").getInt(0);
+
+        // User file is already up-to-date
+        if (userVersion >= embVersion) {
             return;
         }
+
+        List<MenuFileUpdates> updates = MenuFileUpdates.getUpdates(menuName, userVersion, embVersion);
+        if (updates.isEmpty()) return;
+
+        int changed = 0;
+        for (MenuFileUpdates update : updates) {
+            List<String> addedItems = update.getAddedKeys().getOrDefault("items", new ArrayList<>());
+            changed += updateConfigSection("items", embedded, user, addedItems);
+            List<String> addedTemplates = update.getAddedKeys().getOrDefault("templates", new ArrayList<>());
+            changed += updateConfigSection("templates", embedded, user, addedTemplates);
+            List<String> addedComponents = update.getAddedKeys().getOrDefault("components", new ArrayList<>());
+            changed += updateConfigSection("components", embedded, user, addedComponents);
+            List<String> addedFormats = update.getAddedKeys().getOrDefault("formats", new ArrayList<>());
+            changed += updateStringSection("formats", embedded, user, addedFormats);
+        }
+
+        user.node("file_version").set(embVersion);
+
         try {
             YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                     .file(userFile)
@@ -83,12 +104,14 @@ public class MenuFileManager {
         }
     }
 
-    private int updateConfigSection(String name, ConfigurationNode embedded, ConfigurationNode user) throws SerializationException {
+    private int updateConfigSection(String name, ConfigurationNode embedded, ConfigurationNode user, List<String> keys) throws SerializationException {
+        if (keys.isEmpty()) return 0;
         int changed = 0;
         if (!embedded.node(name).virtual() && !user.node(name).virtual()) {
             for (ConfigurationNode embSec : embedded.node(name).childrenMap().values()) {
                 String key = (String) embSec.key();
                 if (key == null) continue;
+                if (!keys.contains(key)) continue; // Only update sections passed in the keys list
                 if (!embSec.isMap()) continue;
                 // User file does not have embedded key
                 if (user.node(name).node(key).virtual()) {
@@ -100,12 +123,14 @@ public class MenuFileManager {
         return changed;
     }
 
-    private int updateStringSection(String name, ConfigurationNode embedded, ConfigurationNode user) throws SerializationException {
+    private int updateStringSection(String name, ConfigurationNode embedded, ConfigurationNode user, List<String> keys) throws SerializationException {
+        if (keys.isEmpty()) return 0;
         int changed = 0;
         if (!embedded.node(name).virtual() && !user.node(name).virtual()) {
             for (ConfigurationNode embSec : embedded.node(name).childrenMap().values()) {
                 String key = (String) embSec.key();
                 if (key == null) continue;
+                if (!keys.contains(key)) continue;
 
                 String value = embSec.getString();
                 if (value == null) continue;

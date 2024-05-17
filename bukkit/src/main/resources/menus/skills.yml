@@ -11,16 +11,16 @@ items:
       base64: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjcwNWZkOTRhMGM0MzE5MjdmYjRlNjM5YjBmY2ZiNDk3MTdlNDEyMjg1YTAyYjQzOWUwMTEyZGEyMmIyZTJlYyJ9fX0=
     display_name: '<aqua>{{your_skills}} - <gold>{player}'
     lore:
-      - text: '{{your_skills_desc}}'
-        wrap: true
-        style: '<gray>'
-      - ' '
-      - text: '{{your_skills_hover}}'
-        wrap: true
-        style: '<yellow>'
-      - text: '{{your_skills_click}}'
-        wrap: true
-        style: '<yellow>'
+    - text: '{{your_skills_desc}}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - text: '{{your_skills_hover}}'
+      wrap: true
+      style: '<yellow>'
+    - text: '{{your_skills_click}}'
+      wrap: true
+      style: '<yellow>'
   close:
     pos: 4,8
     material: barrier
@@ -30,27 +30,91 @@ items:
     material: player_head
     display_name: '<aqua>{{stats}}'
     lore:
-      - '<gray>{{stats_desc}}'
-      - ' '
-      - '<yellow>{{stats_click}}'
+    - '<gray>{{stats_desc}}'
+    - ' '
+    - '<yellow>{{stats_click}}'
 templates:
   skill:
     contexts:
-      archery: { group: first_row, order: 1, material: bow }
-      fighting: { group: first_row, order: 2, material: iron_sword, flags: [ hide_attributes ] }
-      defense: { group: first_row, order: 3, material: chainmail_chestplate, flags: [ hide_attributes ] }
-      endurance: {group: first_row, order: 4, material: golden_apple}
-      farming: {group: second_row, order: 1, material: iron_hoe, flags: [hide_attributes]}
-      foraging: {group: second_row, order: 2, material: iron_axe, flags: [hide_attributes]}
-      mining: {group: second_row, order: 3, material: iron_pickaxe, flags: [hide_attributes]}
-      fishing: {group: second_row, order: 4, material: fishing_rod}
-      excavation: {group: second_row, order: 5, material: iron_shovel, flags: [hide_attributes]}
-      agility: {group: third_row, order: 1, material: feather}
-      alchemy: {group: third_row, order: 2, material: potion, potion_data: {type: regen}, flags: [hide_potion_effects]}
-      enchanting: {group: third_row, order: 3, material: enchanting_table}
-      sorcery: {group: third_row, order: 4, material: blaze_rod}
-      healing: {group: third_row, order: 5, material: splash_potion, potion_data: {type: instant_heal}, flags: [hide_potion_effects]}
-      forging: {group: third_row, order: 6, material: anvil}
+      archery:
+        group: first_row
+        order: 1
+        material: bow
+      fighting:
+        group: first_row
+        order: 2
+        material: iron_sword
+        flags:
+          - hide_attributes
+      defense:
+        group: first_row
+        order: 3
+        material: chainmail_chestplate
+        flags: hide_attributes
+      endurance:
+        group: first_row
+        order: 4
+        material: golden_apple
+      farming:
+        group: second_row
+        order: 1
+        material: iron_hoe
+        flags:
+          - hide_attributes
+      foraging:
+        group: second_row
+        order: 2
+        material: iron_axe
+        flags:
+          - hide_attributes
+      mining:
+        group: second_row
+        order: 3
+        material: iron_pickaxe
+        flags:
+          - hide_attributes
+      fishing:
+        group: second_row
+        order: 4
+        material: fishing_rod
+      excavation:
+        group: second_row
+        order: 5
+        material: iron_shovel
+        flags:
+          - hide_attributes
+      agility:
+        group: third_row
+        order: 1
+        material: feather
+      alchemy:
+        group: third_row
+        order: 2
+        material: potion
+        potion_data:
+          type: regen
+        flags:
+          - hide_potion_effects
+      enchanting:
+        group: third_row
+        order: 3
+        material: enchanting_table
+      sorcery:
+        group: third_row
+        order: 4
+        material: blaze_rod
+      healing:
+        group: third_row
+        order: 5
+        material: splash_potion
+        potion_data:
+          type: instant_heal
+        flags:
+          - hide_potion_effects
+      forging:
+        group: third_row
+        order: 6
+        material: anvil
     groups:
       first_row:
         start: 1,0
@@ -66,50 +130,50 @@ templates:
         align: center
     display_name: '<aqua>{skill} <dark_aqua>{level}'
     lore:
-      - text: '{desc}'
-        wrap: true
-        style: '<gray>'
-      - component: stats_leveled
-      - component: ability_levels
-      - component: mana_ability_info
-      - ' '
-      - component: progress
-      - component: max_level
-      - component: skill_job_active
-      - ' '
-      - '<yellow>{{skill_click}}'
+    - text: '{desc}'
+      wrap: true
+      style: '<gray>'
+    - component: stats_leveled
+    - component: ability_levels
+    - component: mana_ability_info
+    - ' '
+    - component: progress
+    - component: max_level
+    - component: skill_job_active
+    - ' '
+    - '<yellow>{{skill_click}}'
 components:
   stats_leveled:
     context: Skill
     lore:
-      - ' '
-      - '<gray>{{stats_leveled}}: {entries[<gray>, ]}'
+    - ' '
+    - '<gray>{{stats_leveled}}: {entries[<gray>, ]}'
   ability_levels:
     context: Skill
     lore:
-      - ' '
-      - '<gray>{{ability_levels}}: {entries[]}'
+    - ' '
+    - '<gray>{{ability_levels}}: {entries[]}'
   mana_ability_info:
     context: Skill
     lore:
-      - ' '
-      - '<light_purple><bold>{{mana_ability}}</bold> <blue>{name} {level}'
-      - '  {entries[\n  ](3)}'
+    - ' '
+    - '<light_purple><bold>{{mana_ability}}</bold> <blue>{name} {level}'
+    - '  {entries[\n  ](3)}'
   progress:
     context: Skill
     lore:
-      - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
-      - '{bar}'
-      - '<gray>{current_xp}/{level_xp} {xp_unit}'
+    - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
+    - '{bar}'
+    - '<gray>{current_xp}/{level_xp} {xp_unit}'
   max_level:
     context: Skill
     lore:
-      - '<gold>{{max_level}}'
+    - '<gold>{{max_level}}'
   skill_job_active:
     context: Skill
     lore:
-      - ' '
-      - '<dark_gray>▶ <green>{{active_job}}'
+    - ' '
+    - '<dark_gray>▶ <green>{{active_job}}'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'
   unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'
@@ -126,3 +190,4 @@ formats:
   bar_remaining: '<gray>■'
 options:
   bar_length: 20
+file_version: 1
