@@ -13,9 +13,11 @@ import java.util.Locale;
 
 public class StatFormat {
 
+    private final AuraSkills plugin;
     private final MessageProvider provider;
 
     public StatFormat(AuraSkills plugin) {
+        this.plugin = plugin;
         this.provider = plugin.getMessageProvider();
     }
 
@@ -34,7 +36,8 @@ public class StatFormat {
         Trait trait = modifier.trait();
         double value = modifier.value();
         String name = modifier.name();
-        return provider.applyFormatting(input.replace("{color}", "")
+        Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+        return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(value))
@@ -51,10 +54,30 @@ public class StatFormat {
                 .replace("{player}", player.getName()));
     }
 
+    public String applyPlaceholders(String input, TraitModifier modifier, Player player, Locale locale) {
+        Trait trait = modifier.trait();
+        Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+        return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
+                .replace("{symbol}", "")
+                .replace("{stat}", trait.getDisplayName(locale, false))
+                .replace("{value}", NumberUtil.format1(modifier.value()))
+                .replace("{name}", modifier.name())
+                .replace("{player}", player.getName()));
+    }
+
     public String applyPlaceholders(String input, Stat stat, Player player, Locale locale) {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale, false))
+                .replace("{player}", player.getName()));
+    }
+
+    public String applyPlaceholders(String input, Trait trait, Player player, Locale locale) {
+        Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+        return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
+                .replace("{symbol}", "")
+                .replace("{stat}", trait.getDisplayName(locale, false))
+                .replace("{trait}", trait.getDisplayName(locale, false))
                 .replace("{player}", player.getName()));
     }
 
@@ -66,7 +89,8 @@ public class StatFormat {
     }
 
     public String applyPlaceholders(String input, Trait trait, double value, Locale locale) {
-        return provider.applyFormatting(input.replace("{color}", "")
+        Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+        return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false))
                 .replace("{value}", NumberUtil.format1(value)));
@@ -79,7 +103,8 @@ public class StatFormat {
     }
 
     public String applyPlaceholders(String input, Trait trait, Locale locale) {
-        return provider.applyFormatting(input.replace("{color}", "")
+        Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+        return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false)));
     }

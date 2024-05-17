@@ -625,6 +625,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return messageProvider.get(key, locale);
     }
 
+    public String getRawMsg(MessageKey key, Locale locale) {
+        return messageProvider.getRaw(key, locale);
+    }
+
     @Override
     public String getPrefix(Locale locale) {
         return messageProvider.get(CommandMessage.PREFIX, locale);

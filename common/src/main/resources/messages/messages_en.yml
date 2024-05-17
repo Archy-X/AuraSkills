@@ -467,6 +467,14 @@ commands:
       removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
       removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
       players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
