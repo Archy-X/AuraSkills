@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.item;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -264,9 +265,17 @@ public class SkillsItem {
                     "{color}", stat.getColor(locale))));
         } else if (identified instanceof Trait trait) {
             @Nullable Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
+            BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
+            String formatValue;
+            // Don't use menu display for gathering luck traits (farming_luck, etc.) because it has extra info
+            if (impl != null && !trait.getId().getKey().contains("_luck")) {
+                formatValue = impl.getMenuDisplay(value, trait, locale);
+            } else {
+                formatValue = NumberUtil.format1(Math.abs(value));
+            }
             lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
                     "{stat}", trait.getDisplayName(locale),
-                    "{value}", NumberUtil.format1(Math.abs(value)),
+                    "{value}", formatValue,
                     "{color}", stat != null ? stat.getColor(locale) : "")));
         }
         meta.setLore(lore);

@@ -529,6 +529,7 @@ commands:
   unknown_skill: "<yellow>Unknown skill!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} Level Up"
