@@ -382,4 +382,34 @@ public class ItemCommand extends BaseCommand {
         player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ITEM_MULTIPLIER_REMOVEALL_REMOVED, locale));
     }
 
+    @Subcommand("ignore add")
+    @CommandPermission("auraskills.command.item.ignore")
+    @Description("Adds the tag that ignores the held item from mana ability interactions.")
+    public void onItemIgnoreAdd(@Flags("itemheld") Player player) {
+        Locale locale = plugin.getUser(player).getLocale();
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addIgnore();
+        item = skillsItem.getItem();
+
+        player.getInventory().setItemInMainHand(item);
+        player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ITEM_IGNORE_ADD, locale));
+    }
+
+    @Subcommand("ignore remove")
+    @CommandPermission("auraskills.command.item.ignore")
+    @Description("Removes the tag that ignores the held item from mana ability interactions.")
+    public void onItemIgnoreRemove(@Flags("itemheld") Player player) {
+        Locale locale = plugin.getUser(player).getLocale();
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.removeIgnore();
+        item = skillsItem.getItem();
+
+        player.getInventory().setItemInMainHand(item);
+        player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ITEM_IGNORE_REMOVE, locale));
+    }
+
 }

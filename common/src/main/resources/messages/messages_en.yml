@@ -433,6 +433,9 @@ commands:
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
   lang:
     set: "<gray>Language set to <aqua>{lang}"
     not_found: "<yellow>Language not found!"

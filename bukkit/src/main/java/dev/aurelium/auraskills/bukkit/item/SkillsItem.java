@@ -3,18 +3,19 @@ package dev.aurelium.auraskills.bukkit.item;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
 import dev.aurelium.auraskills.bukkit.modifier.Multipliers;
 import dev.aurelium.auraskills.bukkit.requirement.GlobalRequirement;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
@@ -150,6 +151,18 @@ public class SkillsItem {
         container.remove(key);
         saveTagContainer(container, MetaType.REQUIREMENT, type);
         removeEmpty(container, MetaType.REQUIREMENT, type);
+    }
+
+    public void addIgnore() {
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, ManaAbilityProvider.IGNORE_INTERACT_KEY);
+        container.set(key, PersistentDataType.BOOLEAN, true);
+    }
+
+    public void removeIgnore() {
+        PersistentDataContainer container = meta.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(plugin, ManaAbilityProvider.IGNORE_INTERACT_KEY);
+        container.remove(key);
     }
 
     public void convertFromLegacy() {

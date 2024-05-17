@@ -72,6 +72,7 @@ public class ChargedShot extends ManaAbilityProvider {
         ItemStack item = event.getItem();
         if (item == null) return;
         if (item.getType() != Material.BOW) return;
+        if (shouldIgnoreItem(item)) return;
         if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
             User user = plugin.getUser(player);
 
