@@ -18,6 +18,7 @@ import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -309,6 +310,22 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             }
         }
 
+        if (identifier.startsWith("jobs_")) {
+            User user = plugin.getUser(player);
+            switch (identifier) {
+                case "jobs_list":
+                    return String.join(",", user.getJobs().stream().map(s -> s.getId().getKey()).toList());
+                case "jobs_list_formatted":
+                    return String.join(ChatColor.RESET + ", ", user.getJobs().stream()
+                            .map(s -> s.getDisplayName(plugin.getDefaultLanguage()))
+                            .toList());
+                case "jobs_count":
+                    return String.valueOf(user.getJobs().size());
+                case "jobs_limit":
+                    return String.valueOf(user.getJobLimit());
+            }
+        }
+
         return null;
     }
 
@@ -433,7 +450,11 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_multiplier_[skill]%",
                 "%auraskills_multiplier_percent%",
                 "%auraskills_multiplier_percent_[skill]%",
-                "%auraskills_actionbar_status%"
+                "%auraskills_actionbar_status%",
+                "%auraskills_jobs_list",
+                "%auraskills_jobs_list_formatted",
+                "%auraskills_jobs_count",
+                "%auraskills_jobs_limit"
         );
     }
 }
