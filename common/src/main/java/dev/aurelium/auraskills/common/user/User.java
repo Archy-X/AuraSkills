@@ -428,6 +428,7 @@ public abstract class User {
 
     public void removeJob(Skill skill) {
         jobs.remove(skill);
+        blank = false;
     }
 
     public void clearAllJobs() {
