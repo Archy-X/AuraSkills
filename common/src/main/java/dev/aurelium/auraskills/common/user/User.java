@@ -517,7 +517,7 @@ public abstract class User {
         if (!jobs.isEmpty()) {
             return false;
         }
-        return statModifiers.isEmpty();
+        return statModifiers.isEmpty() && traitModifiers.isEmpty() && unclaimedItems.isEmpty();
     }
 
     public UserState getState() {

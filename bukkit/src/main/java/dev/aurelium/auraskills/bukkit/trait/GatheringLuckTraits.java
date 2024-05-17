@@ -95,7 +95,11 @@ public class GatheringLuckTraits extends TraitImpl {
         // Get the luck trait value from the ability value
         double value = ability.getValue(user.getAbilityLevel(ability));
 
-        user.addTraitModifier(new TraitModifier(modifierName, trait, value), false);
+        if (value != 0) {
+            user.addTraitModifier(new TraitModifier(modifierName, trait, value), false);
+        } else {
+            user.removeTraitModifier(modifierName);
+        }
     }
 
     @EventHandler

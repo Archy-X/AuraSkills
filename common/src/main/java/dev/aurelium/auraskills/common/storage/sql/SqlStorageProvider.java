@@ -378,6 +378,13 @@ public class SqlStorageProvider extends StorageProvider {
 
         // Don't save blank profiles if the option is disabled
         if (!plugin.configBoolean(Option.SAVE_BLANK_PROFILES) && user.isBlankProfile()) {
+            try (Connection connection = pool.getConnection()) {
+                deleteUser(connection, user);
+                connection.setAutoCommit(false);
+            } catch (SQLException e) {
+                plugin.logger().severe("Error deleting blank profile of user with UUID " + user.getUuid());
+                throw e;
+            }
             return;
         }
 
@@ -435,6 +442,46 @@ public class SqlStorageProvider extends StorageProvider {
         saveUnclaimedItems(connection, userId, user.getUnclaimedItems());
         saveActionBar(connection, userId, user);
         saveJobs(connection, userId, user.getJobs());
+    }
+
+    private void deleteUser(Connection connection, User user) throws SQLException {
+        connection.setAutoCommit(false);
+        String getUserIdQuery = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
+        try (PreparedStatement statement = connection.prepareStatement(getUserIdQuery)) {
+            statement.setString(1, user.getUuid().toString());
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int userId = rs.getInt("user_id");
+
+                    String deleteKeyValuesQuery = "DELETE FROM " + tablePrefix + "key_values WHERE user_id=?;";
+                    try (PreparedStatement delStatement = connection.prepareStatement(deleteKeyValuesQuery)) {
+                        delStatement.setInt(1, userId);
+                        delStatement.executeUpdate();
+                    }
+
+                    String deleteSkillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
+                    try (PreparedStatement delStatement = connection.prepareStatement(deleteSkillLevelsQuery)) {
+                        delStatement.setInt(1, userId);
+                        delStatement.executeUpdate();
+                    }
+
+                    String deleteUsersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
+                    try (PreparedStatement delStatement = connection.prepareStatement(deleteUsersQuery)) {
+                        delStatement.setInt(1, userId);
+                        delStatement.executeUpdate();
+                    }
+
+                    connection.commit();
+                } else {
+                    connection.rollback();
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     private void deleteKeyValues(Connection connection, int userId) throws SQLException {
