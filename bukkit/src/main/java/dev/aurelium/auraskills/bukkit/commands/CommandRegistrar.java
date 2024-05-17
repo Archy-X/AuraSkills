@@ -9,6 +9,8 @@ import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.trait.CustomTrait;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
@@ -78,6 +80,15 @@ public class CommandRegistrar {
                 throw new InvalidCommandArgument(plugin.getMsg(CommandMessage.UNKNOWN_STAT, locale));
             }
             return stat;
+        });
+        contexts.registerContext(Trait.class, c -> {
+            String arg = c.popFirstArg();
+            Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(arg));
+            if (trait == null || !trait.isEnabled()) {
+                Locale locale = plugin.getLocale(c.getSender());
+                throw new InvalidCommandArgument(plugin.getMsg(CommandMessage.UNKNOWN_TRAIT, locale));
+            }
+            return trait;
         });
         contexts.registerContext(UUID.class, c -> {
             String input = c.popFirstArg();
@@ -150,6 +161,9 @@ public class CommandRegistrar {
             }
             return stats;
         });
+        completions.registerAsyncCompletion("traits", c -> plugin.getTraitManager().getEnabledTraits().stream()
+                .map(t -> t instanceof CustomTrait ? t.getId().toString() : t.name().toLowerCase(Locale.ROOT))
+                .toList());
         completions.registerAsyncCompletion("modifiers", c -> {
             Player player = c.getPlayer();
             User user = plugin.getUser(player);
@@ -202,6 +216,7 @@ public class CommandRegistrar {
         manager.registerCommand(new StorageCommand(plugin));
         manager.registerCommand(new OpenMenuCommand(plugin));
         manager.registerCommand(new ManaAbilityCommand(plugin));
+        manager.registerCommand(new TraitCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -56,8 +58,11 @@ public class ArmorModifierListener implements Listener {
             }
             SkillsItem skillsItem = new SkillsItem(armor, plugin);
             if (skillsItem.meetsRequirements(ModifierType.ARMOR, player)) {
-                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                     user.addStatModifier(modifier, false);
+                }
+                for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                    user.addTraitModifier(modifier, false);
                 }
                 for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                     user.addMultiplier(multiplier);
@@ -77,8 +82,11 @@ public class ArmorModifierListener implements Listener {
             ItemStack item = event.getNewArmorPiece();
             SkillsItem skillsItem = new SkillsItem(item, plugin);
             if (skillsItem.meetsRequirements(ModifierType.ARMOR, player)) {
-                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                     user.addStatModifier(modifier);
+                }
+                for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                    user.addTraitModifier(modifier);
                 }
                 for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                     user.addMultiplier(multiplier);
@@ -89,8 +97,11 @@ public class ArmorModifierListener implements Listener {
         if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR) {
             ItemStack item = event.getOldArmorPiece();
             SkillsItem skillsItem = new SkillsItem(item, plugin);
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                 user.removeStatModifier(modifier.name());
+            }
+            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                user.removeTraitModifier(modifier.name());
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                 user.removeMultiplier(multiplier.name());
@@ -119,14 +130,19 @@ public class ArmorModifierListener implements Listener {
                         }
 
                         Set<Stat> statsToReload = new HashSet<>();
+                        Set<Trait> traitsToReload = new HashSet<>();
                         // Remove modifiers and multipliers that are on stored item from player
                         if (remove && stored.getType() != Material.AIR) {
                             User user = plugin.getUser(player);
                             SkillsItem skillsItem = new SkillsItem(stored, plugin);
 
-                            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                                 user.removeStatModifier(modifier.name(), false);
                                 statsToReload.add(modifier.stat());
+                            }
+                            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                                user.addTraitModifier(modifier, false);
+                                traitsToReload.add(modifier.trait());
                             }
                             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                                 user.removeMultiplier(multiplier.name());
@@ -138,9 +154,13 @@ public class ArmorModifierListener implements Listener {
                             SkillsItem skillsItem = new SkillsItem(wearing, plugin);
 
                             if (skillsItem.meetsRequirements(ModifierType.ARMOR, player)) {
-                                for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ARMOR)) {
+                                for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
                                     user.addStatModifier(modifier, false);
                                     statsToReload.add(modifier.stat());
+                                }
+                                for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                                    user.addTraitModifier(modifier, false);
+                                    traitsToReload.add(modifier.trait());
                                 }
                                 for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                                     user.addMultiplier(multiplier);
@@ -149,6 +169,9 @@ public class ArmorModifierListener implements Listener {
                         }
                         for (Stat stat : statsToReload) {
                             statManager.reloadStat(plugin.getUser(player), stat);
+                        }
+                        for (Trait trait : traitsToReload) {
+                            statManager.reload(plugin.getUser(player), trait);
                         }
                         // Set stored item to worn item
                         if (wearing != null) {

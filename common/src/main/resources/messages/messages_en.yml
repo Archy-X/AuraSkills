@@ -341,6 +341,9 @@ commands:
         header: "<white>Armor modifiers found:"
       removeall:
         removed: "<gray>All armor modifiers have been removed from your item"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -390,7 +393,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier was removed from your item"
@@ -398,6 +401,9 @@ commands:
         header: "<white>Item modifiers found:"
       removeall:
         removed: "<gray>All item modifiers have been removed from your item"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -464,6 +470,14 @@ commands:
       removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
       removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
       players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -526,6 +540,7 @@ commands:
   unknown_skill: "<yellow>Unknown skill!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} Level Up"
@@ -852,4 +867,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 33
+file_version: 34

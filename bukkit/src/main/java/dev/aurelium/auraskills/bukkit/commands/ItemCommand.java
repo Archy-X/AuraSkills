@@ -5,16 +5,19 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
+import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.message.type.LevelerMessage;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -46,7 +49,7 @@ public class ItemCommand extends BaseCommand {
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
 
-        for (StatModifier statModifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+        for (StatModifier statModifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
             if (statModifier.stat() == stat) {
                 player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_ADD_ALREADY_EXISTS, locale), stat, locale));
                 return;
@@ -55,7 +58,7 @@ public class ItemCommand extends BaseCommand {
         if (lore) {
             skillsItem.addModifierLore(ModifierType.ITEM, stat, value, locale);
         }
-        skillsItem.addModifier(ModifierType.ITEM, stat, value);
+        skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ITEM, stat, value);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale), stat, value, locale));
@@ -70,9 +73,9 @@ public class ItemCommand extends BaseCommand {
         ItemStack item = player.getInventory().getItemInMainHand();
         boolean removed = false;
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+        for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
             if (modifier.stat() == stat) {
-                skillsItem.removeModifier(ModifierType.ITEM, stat);
+                skillsItem.removeModifier(MetaType.MODIFIER, ModifierType.ITEM, stat);
                 removed = true;
                 break;
             }
@@ -84,8 +87,7 @@ public class ItemCommand extends BaseCommand {
         player.getInventory().setItemInMainHand(item);
         if (removed) {
             player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_REMOVE_REMOVED, locale), stat, locale));
-        }
-        else {
+        } else {
             player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_REMOVE_DOES_NOT_EXIST, locale), stat, locale));
         }
     }
@@ -98,7 +100,7 @@ public class ItemCommand extends BaseCommand {
         ItemStack item = player.getInventory().getItemInMainHand();
         StringBuilder message = new StringBuilder(plugin.getMsg(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale));
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+        for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
             message.append("\n").append(format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale), modifier, locale));
         }
         player.sendMessage(message.toString());
@@ -113,7 +115,88 @@ public class ItemCommand extends BaseCommand {
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
 
-        skillsItem.removeAll(SkillsItem.MetaType.MODIFIER, ModifierType.ITEM);
+        skillsItem.removeAll(MetaType.MODIFIER, ModifierType.ITEM);
+        item = skillsItem.getItem();
+
+        player.getInventory().setItemInMainHand(item);
+        player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.ITEM_MODIFIER_REMOVEALL_REMOVED, locale));
+    }
+
+    @Subcommand("trait add")
+    @CommandCompletion("@traits @nothing false|true")
+    @CommandPermission("auraskills.command.item.modifier")
+    @Description("Adds an item trait modifier to the item held, along with lore by default.")
+    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, @Default("true") boolean lore) {
+        Locale locale = plugin.getUser(player).getLocale();
+        ItemStack item = player.getInventory().getItemInMainHand();
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+
+        for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+            if (modifier.trait().equals(trait)) {
+                player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_TRAIT_ADD_ALREADY_EXISTS, locale), trait, locale));
+                return;
+            }
+        }
+        if (lore) {
+            skillsItem.addModifierLore(ModifierType.ITEM, trait, value, locale);
+        }
+        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ITEM, trait, value);
+        ItemStack newItem = skillsItem.getItem();
+        player.getInventory().setItemInMainHand(newItem);
+        player.sendMessage(plugin.getPrefix(locale) +
+                format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale), trait, value, locale));
+    }
+
+    @Subcommand("trait remove")
+    @CommandCompletion("@traits")
+    @CommandPermission("auraskills.command.item.modifier")
+    @Description("Removes an item trait modifier from the item held.")
+    public void onItemTraitRemove(@Flags("itemheld") Player player, Trait trait) {
+        Locale locale = plugin.getUser(player).getLocale();
+        ItemStack item = player.getInventory().getItemInMainHand();
+        boolean removed = false;
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+            if (modifier.trait().equals(trait)) {
+                skillsItem.removeModifier(MetaType.TRAIT_MODIFIER, ModifierType.ITEM, trait);
+                removed = true;
+                break;
+            }
+        }
+        // Lore removal not implemented yet
+        item = skillsItem.getItem();
+        player.getInventory().setItemInMainHand(item);
+        if (removed) {
+            player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_REMOVE_REMOVED, locale), trait, locale));
+        } else {
+            player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_REMOVE_DOES_NOT_EXIST, locale), trait, locale));
+        }
+    }
+
+    @Subcommand("trait list")
+    @CommandPermission("auraskills.command.item.modifier")
+    @Description("Lists all item trait modifiers on the item held.")
+    public void onItemTraitList(@Flags("itemheld") Player player) {
+        Locale locale = plugin.getUser(player).getLocale();
+        ItemStack item = player.getInventory().getItemInMainHand();
+        StringBuilder message = new StringBuilder(plugin.getMsg(CommandMessage.ITEM_MODIFIER_LIST_HEADER, locale));
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+            message.append("\n").append(format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_LIST_ENTRY, locale), modifier, locale));
+        }
+        player.sendMessage(message.toString());
+    }
+
+    @Subcommand("trait removeall")
+    @CommandPermission("auraskills.command.item.modifier")
+    @Description("Removes all item trait modifiers from the item held.")
+    public void onItemTraitRemoveAll(@Flags("itemheld") Player player) {
+        Locale locale = plugin.getUser(player).getLocale();
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+
+        skillsItem.removeAll(MetaType.TRAIT_MODIFIER, ModifierType.ITEM);
         item = skillsItem.getItem();
 
         player.getInventory().setItemInMainHand(item);
