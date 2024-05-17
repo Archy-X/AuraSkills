@@ -45,6 +45,22 @@ public interface XpSource {
     double getXp();
 
     /**
+     * Gets the income data for this source that determines the money gained
+     * when the source is gained. Income is only gained if jobs are enabled.
+     *
+     * @return the source income data
+     */
+    SourceIncome getIncome();
+
+    /**
+     * Gets the {@link SourceValues} object that contains data about the source. All the information
+     * in the source values is already accessible through other methods in this interface.
+     *
+     * @return the source values
+     */
+    SourceValues getValues();
+
+    /**
      * Checks if the XP source is valid on the server's Minecraft version.
      *
      * @return whether the XP source is valid

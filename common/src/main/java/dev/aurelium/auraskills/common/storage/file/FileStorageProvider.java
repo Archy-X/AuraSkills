@@ -85,6 +85,9 @@ public class FileStorageProvider extends StorageProvider {
         // Load action bar settings
         loadActionBar(root.node("action_bar"), user);
 
+        // Load jobs
+        loadJobs(root.node("jobs"), user);
+
         return user;
     }
 
@@ -183,6 +186,21 @@ public class FileStorageProvider extends StorageProvider {
             String typeName = type.toString().toLowerCase(Locale.ROOT);
             if (!node.node(typeName).virtual()) {
                 user.setActionBarSetting(type, node.node(typeName).getBoolean());
+            }
+        }
+    }
+
+    private void loadJobs(ConfigurationNode node, User user) {
+        user.clearAllJobs();
+
+        for (ConfigurationNode jobNode : node.childrenList()) {
+            String skillName = jobNode.getString();
+            if (skillName == null) continue;
+
+            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(skillName));
+
+            if (skill != null) {
+                user.addJob(skill);
             }
         }
     }
@@ -324,6 +342,17 @@ public class FileStorageProvider extends StorageProvider {
             if (type != ActionBarType.IDLE) continue; // Only save idle action bar for now
             boolean value = user.isActionBarEnabled(type);
             actionBarNode.node(type.toString().toLowerCase(Locale.ROOT)).set(value);
+        }
+
+        // Save jobs
+        if (user.getJobs().isEmpty()) {
+            root.removeChild("jobs");
+        } else {
+            List<String> jobNames = new ArrayList<>();
+            for (Skill skill : user.getJobs()) {
+                jobNames.add(skill.getId().toString());
+            }
+            root.node("jobs").set(jobNames);
         }
 
         saveYamlFile(root, user.getUuid());

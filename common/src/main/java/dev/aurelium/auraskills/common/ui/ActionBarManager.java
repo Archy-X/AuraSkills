@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
+import dev.aurelium.auraskills.common.ui.UiProvider.FormatType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
@@ -97,7 +98,7 @@ public abstract class ActionBarManager {
         plugin.getScheduler().timerSync(task, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
     }
 
-    public void sendXpActionBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+    public void sendXpActionBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed, double income) {
         ActionBarType sendType = maxed ? ActionBarType.MAXED : ActionBarType.XP;
         // Return if the type is disabled in config
         if (!plugin.configBoolean(sendType.getOption()) || !plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
@@ -140,7 +141,7 @@ public abstract class ActionBarManager {
                         return;
                     }
 
-                    String message = getXpActionBarMessage(user, skill, currentXp, levelXp, xpGained, level, maxed);
+                    String message = getXpActionBarMessage(user, skill, currentXp, levelXp, xpGained, level, maxed, income);
                     uiProvider.sendActionBar(user, message);
                 }
             }, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
@@ -203,7 +204,7 @@ public abstract class ActionBarManager {
         setPaused(user, 15 * 50, TimeUnit.MILLISECONDS);
     }
 
-    private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+    private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed, double income) {
         ActionBarMessage messageKey = maxed ? ActionBarMessage.MAXED : ActionBarMessage.XP;
         Locale locale = user.getLocale();
 
@@ -214,11 +215,12 @@ public abstract class ActionBarManager {
                 "{max_hp}", getMaxHp(user),
                 "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained),
                 "{skill}", skill.getDisplayName(locale),
-                "{current_xp}", NumberUtil.format1(currentXp),
+                "{current_xp}", plugin.getUiProvider().getFormat(FormatType.XP).format(currentXp),
                 "{level_xp}", NumberUtil.format1(levelXp),
                 "{skill_level}", String.valueOf(level),
                 "{mana}", getMana(user),
-                "{max_mana}", getMaxMana(user));
+                "{max_mana}", getMaxMana(user),
+                "{income}", plugin.getUiProvider().getFormat(FormatType.MONEY).format(income));
         // Replace PlaceholderAPI placeholders
         message = replacePlaceholderApi(user, message);
 

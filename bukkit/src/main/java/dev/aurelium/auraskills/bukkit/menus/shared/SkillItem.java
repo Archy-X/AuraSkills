@@ -18,8 +18,13 @@ import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.builder.TemplateBuilder;
+import dev.aurelium.slate.info.TemplateInfo;
 import dev.aurelium.slate.item.provider.ListBuilder;
 import dev.aurelium.slate.menu.LoadedMenu;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.List;
@@ -48,17 +53,36 @@ public class SkillItem {
 
         template.modify(t -> {
             if (!t.value().isEnabled()) return null;
+            ItemStack item = t.item();
             if (t.value() instanceof CustomSkill customSkill) {
                 try { // Get custom skill API-defined item
                     ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
-                    return parser.parseBaseItem(parser.parseItemContext(customSkill.getDefined().getItem()));
+                    item = parser.parseBaseItem(parser.parseItemContext(customSkill.getDefined().getItem()));
                 } catch (SerializationException | IllegalArgumentException e) {
                     plugin.logger().warn("Error parsing ItemContext of CustomSkill " + customSkill.getId());
                     e.printStackTrace();
                 }
             }
-            return t.item();
+            addSelectedJobGlint(item, t);
+            return item;
         });
+    }
+
+    private void addSelectedJobGlint(ItemStack item, TemplateInfo<Skill> t) {
+        if (!t.menu().getName().equals("skills")) return; // Don't apply to level progression menu
+        if (!plugin.config().jobSelectionEnabled()) return;
+
+        // Show enchant glint if selected as job
+        User user = plugin.getUser(t.player());
+        Skill skill = t.value();
+        if (user.getJobs().contains(skill)) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta != null) {
+                meta.addEnchant(Enchantment.MENDING, 1, true);
+                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                item.setItemMeta(meta);
+            }
+        }
     }
 
     /**
@@ -72,6 +96,12 @@ public class SkillItem {
         manaAbilityInfo(menu);
         progress(menu);
         maxLevel(menu);
+        skillJobActive(menu);
+    }
+
+    private void skillJobActive(MenuBuilder menu) {
+        menu.component("skill_job_active", Skill.class, component ->
+                component.shouldShow(t -> plugin.config().jobSelectionEnabled() && plugin.getUser(t.player()).getJobs().contains(t.value())));
     }
 
     public void statsLeveled(MenuBuilder menu) {

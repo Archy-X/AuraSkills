@@ -37,6 +37,17 @@ public enum Option {
     BOSS_BAR_FORMAT("boss_bar.format", OptionType.LIST),
     BOSS_BAR_XP_FORMAT("boss_bar.xp_format", OptionType.STRING),
     BOSS_BAR_PERCENT_FORMAT("boss_bar.percent_format", OptionType.STRING),
+    BOSS_BAR_MONEY_FORMAT("boss_bar.money_format", OptionType.STRING),
+    // Jobs options
+    JOBS_ENABLED("jobs.enabled", OptionType.BOOLEAN),
+    JOBS_SELECTION_REQUIRE_SELECTION("jobs.selection.require_selection", OptionType.BOOLEAN),
+    JOBS_SELECTION_DEFAULT_JOB_LIMIT("jobs.selection.default_job_limit", OptionType.INT),
+    JOBS_SELECTION_DISABLE_UNSELECTED_XP("jobs.selection.disable_unselected_xp", OptionType.BOOLEAN),
+    JOBS_INCOME_USE_XP("jobs.income.use_xp", OptionType.BOOLEAN),
+    JOBS_INCOME_USE_EXPRESSION("jobs.income.use_expression", OptionType.BOOLEAN),
+    JOBS_INCOME_DEFAULT_INCOME_PER_XP("jobs.income.default.income_per_xp", OptionType.DOUBLE),
+    JOBS_INCOME_DEFAULT_EXPRESSION("jobs.income.default.expression", OptionType.STRING),
+    JOBS_INCOME_USE_FINAL_XP("jobs.income.use_final_xp", OptionType.BOOLEAN),
     ENABLE_ROMAN_NUMERALS("enable_roman_numerals", OptionType.BOOLEAN),
     // Damage hologram options
     DAMAGE_HOLOGRAMS_ENABLED("damage_holograms.enabled", OptionType.BOOLEAN),

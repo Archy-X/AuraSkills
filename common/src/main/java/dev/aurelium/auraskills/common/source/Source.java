@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.MessageKey;
+import dev.aurelium.auraskills.api.source.SourceIncome;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -66,6 +67,15 @@ public class Source implements XpSource {
     @Override
     public double getXp() {
         return values.getXp();
+    }
+
+    public SourceIncome getIncome() {
+        return values.getIncome();
+    }
+
+    @Override
+    public SourceValues getValues() {
+        return values;
     }
 
     @Override
