@@ -53,6 +53,11 @@ public class CustomTrait implements Trait {
     }
 
     @Override
+    public String getMenuDisplay(double value, Locale locale) {
+        return provider.getMenuDisplay(this, value, locale);
+    }
+
+    @Override
     public String name() {
         return id.getKey().toUpperCase(Locale.ROOT);
     }

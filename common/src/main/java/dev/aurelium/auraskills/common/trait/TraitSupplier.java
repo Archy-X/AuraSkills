@@ -36,6 +36,11 @@ public class TraitSupplier extends OptionSupplier<Trait> implements TraitProvide
     }
 
     @Override
+    public String getMenuDisplay(Trait trait, double value, Locale locale) {
+        return traitManager.getMenuDisplay(trait, value, locale);
+    }
+
+    @Override
     public OptionProvider getOptions(Trait type) {
         return get(type).options();
     }

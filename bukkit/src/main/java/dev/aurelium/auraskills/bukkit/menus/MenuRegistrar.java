@@ -62,7 +62,7 @@ public class MenuRegistrar {
         slate.buildMenu(name, menu -> {
             builder.accept(menu);
             // Apply external menu builders
-            ((ApiMenuManager) plugin.getApiBukkit().getMenuManager()).applyBuilder(name, menu);
+            ((ApiMenuManager) plugin.getApiBukkit().getMenuManager()).applyBuilders(name, menu);
         });
     }
 

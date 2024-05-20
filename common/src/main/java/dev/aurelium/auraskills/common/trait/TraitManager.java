@@ -7,10 +7,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class TraitManager {
 
@@ -72,4 +69,6 @@ public abstract class TraitManager {
     }
 
     public abstract void registerTraitHandler(TraitHandler traitHandler);
+
+    public abstract String getMenuDisplay(Trait trait, double value, Locale locale);
 }

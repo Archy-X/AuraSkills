@@ -60,6 +60,12 @@ public enum Traits implements Trait {
         return provider.getDisplayName(this, locale, formatted);
     }
 
+    @Override
+    public String getMenuDisplay(double value, Locale locale) {
+        validate();
+        return provider.getMenuDisplay(this, value, locale);
+    }
+
     private void validate() {
         if (provider == null) {
             throw new IllegalStateException("Attempting to access stat provider before it has been injected!");

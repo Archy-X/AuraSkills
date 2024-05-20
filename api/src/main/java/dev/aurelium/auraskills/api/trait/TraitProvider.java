@@ -10,4 +10,6 @@ public interface TraitProvider extends OptionedProvider<Trait> {
 
     String getDisplayName(Trait trait, Locale locale, boolean formatted);
 
+    String getMenuDisplay(Trait trait, double value, Locale locale);
+
 }
