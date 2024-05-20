@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.reward.type;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
+import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.type.LevelerFormat;
@@ -41,7 +42,7 @@ public class StatReward extends SkillReward {
         String format = plugin.getMenuHelper().getFormat("level_progression", "stat_reward_entry");
         return TextUtil.replace(format,
                 "{color}", stat.getColor(locale),
-                "{num}", NumberUtil.format1(value),
+                "{num}", getDisplayValue(locale),
                 "{symbol}", stat.getSymbol(locale),
                 "{stat}", stat.getDisplayName(locale, false));
     }
@@ -50,9 +51,17 @@ public class StatReward extends SkillReward {
     public String getChatMessage(User player, Locale locale, Skill skill, int level) {
         return plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(LevelerFormat.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
-                "{num}", NumberUtil.format1(value),
+                "{num}", getDisplayValue(locale),
                 "{symbol}", stat.getSymbol(locale),
                 "{stat}", stat.getDisplayName(locale, false)));
+    }
+
+    private String getDisplayValue(Locale locale) {
+        if (stat.getTraits().contains(Traits.HP) && stat.getTraitModifier(Traits.HP) == 1.0) {
+            return Traits.HP.getMenuDisplay(value, locale);
+        } else {
+            return NumberUtil.format1(value);
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.common.user.User;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -68,6 +70,12 @@ public class HpTrait extends TraitImpl {
         setHealth(player, plugin.getUser(player));
 
         plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Trait trait, Locale locale) {
+        double scaling = trait.optionDouble("action_bar_scaling", 1);
+        return NumberUtil.format1(scaling * value);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
