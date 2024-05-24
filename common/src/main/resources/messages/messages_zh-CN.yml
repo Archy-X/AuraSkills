@@ -519,9 +519,9 @@ commands:
     set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"
     remove: "<gray>成功为玩家 <gold>{player} <gray>取走了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{ability} <gray>冷却已被重置"
   unknown_skill: "<yellow>未知技能!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>未知的魔法能力！"
   unknown_stat: "<yellow>未知属性!"
   no_profile: "<yellow>玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。"
 leveler:
@@ -849,4 +849,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 32
+file_version: 33
