@@ -106,7 +106,8 @@ public class StatFormat {
         Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
         return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
-                .replace("{stat}", trait.getDisplayName(locale, false)));
+                .replace("{stat}", trait.getDisplayName(locale, false))
+                .replace("{trait}", trait.getDisplayName(locale, false)));
     }
 
     public String applyPlaceholders(String input, String name, Player player) {
