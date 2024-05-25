@@ -64,6 +64,7 @@ public class BukkitUser extends User {
             return multiplier;
         } else {
             for (PermissionAttachmentInfo permission : player.getEffectivePermissions()) {
+                if (!permission.getValue()) continue;
                 multiplier += getMultiplierFromPermission(permission.getPermission(), skill);
             }
         }

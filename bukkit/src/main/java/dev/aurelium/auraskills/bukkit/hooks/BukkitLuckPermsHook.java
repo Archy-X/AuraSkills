@@ -47,7 +47,6 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
         if (!(node instanceof PermissionNode) && !(node instanceof InheritanceNode)) return;
 
         if (node instanceof PermissionNode permissionNode) {
-            if (permissionNode.isWildcard()) return;
             if (!permissionNode.getValue()) return;
             if (!permissionNode.getPermission().startsWith(prefix)) return;
         }
@@ -106,6 +105,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
 
         return player.getEffectivePermissions()
                 .stream()
+                .filter(PermissionAttachmentInfo::getValue)
                 .map(PermissionAttachmentInfo::getPermission)
                 .filter(p -> p.startsWith(prefix))
                 .collect(Collectors.toSet());
