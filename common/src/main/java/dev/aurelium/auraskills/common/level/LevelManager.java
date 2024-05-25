@@ -73,6 +73,9 @@ public abstract class LevelManager {
         if (source == null) {
             return 0.0;
         }
+        if (!plugin.configBoolean(Option.JOBS_ENABLED)) {
+            return 0.0;
+        }
         // Selection is required and job is not selected
         if (plugin.config().jobSelectionEnabled() && !user.getJobs().contains(skill)) {
             return 0.0;
