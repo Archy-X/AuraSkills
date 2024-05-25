@@ -275,7 +275,8 @@ public class SkillsItem {
             lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
                     "{stat}", stat.getDisplayName(locale),
                     "{value}", NumberUtil.format1(Math.abs(value)),
-                    "{color}", stat.getColor(locale))));
+                    "{color}", stat.getColor(locale),
+                    "{symbol}", stat.getSymbol(locale))));
         } else if (identified instanceof Trait trait) {
             @Nullable Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
             BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
