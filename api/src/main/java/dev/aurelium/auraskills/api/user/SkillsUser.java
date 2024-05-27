@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public interface SkillsUser {
@@ -264,5 +265,40 @@ public interface SkillsUser {
      * @return whether the player has the permission
      */
     boolean hasSkillPermission(Skill skill);
+
+    /**
+     * Gets the player's active jobs. Returns an empty set if the user has no jobs or
+     * if jobs are not enabled. The returned set cannot be modified, use {@link #addJob(Skill)}
+     * and {@link #removeJob(Skill)} to change player jobs.
+     *
+     * @return the set of active jobs
+     */
+    Set<Skill> getJobs();
+
+    /**
+     * Adds a skill as an active job.
+     *
+     * @param job the skill to add as a job
+     */
+    void addJob(Skill job);
+
+    /**
+     * Removes a skill from the player's active jobs.
+     *
+     * @param job the job to remove
+     */
+    void removeJob(Skill job);
+
+    /**
+     * Removes all active jobs.
+     */
+    void clearAllJobs();
+
+    /**
+     * Gets the maximum number of jobs the player can have active at once.
+     *
+     * @return the jobs limit
+     */
+    int getJobLimit();
 
 }
