@@ -4,8 +4,11 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTType;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
@@ -13,7 +16,6 @@ import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.stat.StatManager;
 import dev.aurelium.auraskills.common.user.User;
@@ -76,8 +78,11 @@ public class ItemListener implements Listener {
             }
             // Apply modifiers and multipliers
             SkillsItem skillsItem = new SkillsItem(held, plugin);
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 user.addStatModifier(modifier, false);
+            }
+            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+                user.addTraitModifier(modifier, false);
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 user.addMultiplier(multiplier);
@@ -134,14 +139,19 @@ public class ItemListener implements Listener {
                         continue;
                     }
                     Set<Stat> statsToReload = new HashSet<>();
+                    Set<Trait> traitsToReload = new HashSet<>();
                     // Remove modifiers from stored item
                     if (!stored.getType().equals(Material.AIR)) {
                         User user = plugin.getUser(player);
                         SkillsItem storedItem = new SkillsItem(stored, plugin);
 
-                        for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
+                        for (StatModifier modifier : storedItem.getStatModifiers(ModifierType.ITEM)) {
                             user.removeStatModifier(modifier.name(), false);
                             statsToReload.add(modifier.stat());
+                        }
+                        for (TraitModifier modifier : storedItem.getTraitModifiers(ModifierType.ITEM)) {
+                            user.removeTraitModifier(modifier.name(), false);
+                            traitsToReload.add(modifier.trait());
                         }
                         for (Multiplier multiplier : storedItem.getMultipliers(ModifierType.ITEM)) {
                             user.removeMultiplier(multiplier.name());
@@ -166,9 +176,13 @@ public class ItemListener implements Listener {
                         User user = plugin.getUser(player);
                         SkillsItem heldItem = new SkillsItem(held, plugin);
                         if (heldItem.meetsRequirements(ModifierType.ITEM, player)) {
-                            for (StatModifier modifier : heldItem.getModifiers(ModifierType.ITEM)) {
+                            for (StatModifier modifier : heldItem.getStatModifiers(ModifierType.ITEM)) {
                                 user.addStatModifier(modifier, false);
                                 statsToReload.add(modifier.stat());
+                            }
+                            for (TraitModifier modifier : heldItem.getTraitModifiers(ModifierType.ITEM)) {
+                                user.addTraitModifier(modifier, false);
+                                traitsToReload.add(modifier.trait());
                             }
                             for (Multiplier multiplier : heldItem.getMultipliers(ModifierType.ITEM)) {
                                 user.addMultiplier(multiplier);
@@ -185,6 +199,9 @@ public class ItemListener implements Listener {
                     }
                     for (Stat stat : statsToReload) {
                         statManager.reloadStat(plugin.getUser(player), stat);
+                    }
+                    for (Trait trait : traitsToReload) {
+                        statManager.reload(plugin.getUser(player), trait);
                     }
                     // Set stored item to held item
                     heldItems.put(player.getUniqueId(), held.clone());
@@ -215,13 +232,14 @@ public class ItemListener implements Listener {
         // Things to prevent double reloads
         Set<String> offHandModifiers = new HashSet<>();
         Set<Stat> statsToReload = new HashSet<>();
+        Set<Trait> traitsToReload = new HashSet<>();
         Set<String> offHandMultipliers = new HashSet<>();
         // Check offhand item
         if (itemOffHand != null && itemOffHand.getType() != Material.AIR) {
             SkillsItem skillsItem = new SkillsItem(itemOffHand, plugin);
             boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
             // For each modifier on the item
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the old modifier from main hand
                 StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
                 playerData.removeStatModifier(modifier.name(), false);
@@ -232,6 +250,17 @@ public class ItemListener implements Listener {
                 // Reload check stuff
                 offHandModifiers.add(offHandModifier.name());
                 statsToReload.add(modifier.stat());
+            }
+            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+                TraitModifier offHandModifier = new TraitModifier(modifier.name() + ".Offhand", modifier.trait(), modifier.value());
+                playerData.removeTraitModifier(modifier.name(), false);
+                // Add new one if meets requirements
+                if (meetsRequirements) {
+                    playerData.addTraitModifier(offHandModifier, false);
+                }
+                // Reload check stuff
+                offHandModifiers.add(offHandModifier.name());
+                traitsToReload.add(modifier.trait());
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
@@ -247,7 +276,7 @@ public class ItemListener implements Listener {
             SkillsItem skillsItem = new SkillsItem(itemMainHand, plugin);
             boolean meetsRequirements = skillsItem.meetsRequirements(ModifierType.ITEM, player); // Get whether player meets requirements
             // For each modifier on the item
-            for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the offhand modifier if wasn't already added
                 if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
                     playerData.removeStatModifier(modifier.name() + ".Offhand", false);
@@ -258,6 +287,19 @@ public class ItemListener implements Listener {
                 }
                 // Reload check stuff
                 statsToReload.add(modifier.stat());
+            }
+            // For each modifier on the item
+            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+                // Removes the offhand modifier if wasn't already added
+                if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
+                    playerData.removeTraitModifier(modifier.name() + ".Offhand", false);
+                }
+                // Add if meets requirements
+                if (meetsRequirements) {
+                    playerData.addTraitModifier(modifier, false);
+                }
+                // Reload check stuff
+                traitsToReload.add(modifier.trait());
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 if (!offHandMultipliers.contains(multiplier.name() + ".Offhand")) {
@@ -271,6 +313,9 @@ public class ItemListener implements Listener {
         // Reload stats
         for (Stat stat : statsToReload) {
             statManager.reloadStat(plugin.getUser(player), stat);
+        }
+        for (Trait trait : traitsToReload) {
+            statManager.reload(plugin.getUser(player), trait);
         }
     }
 
@@ -291,8 +336,11 @@ public class ItemListener implements Listener {
                         if (!stored.getType().equals(Material.AIR)) {
                             User playerData = plugin.getUser(player);
                             SkillsItem storedItem = new SkillsItem(stored, plugin);
-                            for (StatModifier modifier : storedItem.getModifiers(ModifierType.ITEM)) {
+                            for (StatModifier modifier : storedItem.getStatModifiers(ModifierType.ITEM)) {
                                 playerData.removeStatModifier(modifier.name() + ".Offhand");
+                            }
+                            for (TraitModifier modifier : storedItem.getTraitModifiers(ModifierType.ITEM)) {
+                                playerData.removeTraitModifier(modifier.name() + ".Offhand");
                             }
                             for (Multiplier multiplier : storedItem.getMultipliers(ModifierType.ITEM)) {
                                 playerData.removeMultiplier(multiplier.name() + ".Offhand");
@@ -316,9 +364,13 @@ public class ItemListener implements Listener {
 
     private void applyOffhandModifiers(ItemStack held, User user) {
         SkillsItem skillsItem = new SkillsItem(held, plugin);
-        for (StatModifier modifier : skillsItem.getModifiers(ModifierType.ITEM)) {
+        for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
             StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
             user.addStatModifier(offHandModifier);
+        }
+        for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
+            TraitModifier offHandModifier = new TraitModifier(modifier.name() + ".Offhand", modifier.trait(), modifier.value());
+            user.addTraitModifier(offHandModifier);
         }
         for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
             Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());

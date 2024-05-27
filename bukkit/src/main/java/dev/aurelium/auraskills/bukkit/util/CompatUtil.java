@@ -95,7 +95,7 @@ public class CompatUtil {
 
     public static Particle dustParticle() {
         if (VersionUtils.isAtLeastVersion(20, 5)) {
-            return Particle.DUST;
+            return Particle.BLOCK;
         } else {
             return Particle.valueOf("BLOCK_DUST");
         }
@@ -103,7 +103,7 @@ public class CompatUtil {
 
     public static Particle blockParticle() {
         if (VersionUtils.isAtLeastVersion(20, 5)) {
-            return Particle.BLOCK;
+            return Particle.DUST;
         } else {
             return Particle.valueOf("REDSTONE");
         }

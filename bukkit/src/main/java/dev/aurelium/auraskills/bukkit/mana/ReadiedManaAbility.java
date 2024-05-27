@@ -156,6 +156,10 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
             return false;
         }
+        ItemStack item = player.getInventory().getItemInMainHand();
+        if (shouldIgnoreItem(item)) {
+            return false;
+        }
         // Check permission
         User user = plugin.getUser(player);
         return user.hasSkillPermission(manaAbility.getSkill());

@@ -55,6 +55,11 @@ public class CustomSource implements XpSource {
         return values.getXp();
     }
 
+    @Override
+    public SourceIncome getIncome() {
+        return values.getIncome();
+    }
+
     public SourceValues getValues() {
         return values;
     }

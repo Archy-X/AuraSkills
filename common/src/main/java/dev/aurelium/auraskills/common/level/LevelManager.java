@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.scheduler.Tick;
 import dev.aurelium.auraskills.common.user.User;
@@ -56,14 +57,37 @@ public abstract class LevelManager {
         var res = plugin.getEventHandler().callXpGainEvent(user, skill, source, amountToAdd);
         if (res.first()) return;
 
-        addXpRaw(user, skill, res.second());
+        addXpRaw(user, skill, res.second(), source);
     }
 
-    protected void addXpRaw(User user, Skill skill, double amount) {
+    protected void addXpRaw(User user, Skill skill, double amount, @Nullable XpSource xpSource) {
+        double income = addJobsIncome(user, skill, amount, xpSource);
+
         user.addSkillXp(skill, amount);
         checkLevelUp(user, skill);
         // Send action bar and boss bar
-        sendXpUi(user, skill, amount);
+        sendXpUi(user, skill, amount, income);
+    }
+
+    private double addJobsIncome(User user, Skill skill, double amount, @Nullable XpSource source) {
+        if (source == null) {
+            return 0.0;
+        }
+        if (!plugin.configBoolean(Option.JOBS_ENABLED)) {
+            return 0.0;
+        }
+        // Selection is required and job is not selected
+        if (plugin.config().jobSelectionEnabled() && !user.getJobs().contains(skill)) {
+            return 0.0;
+        }
+
+        double income = source.getIncome().getIncomeEarned(user.toApi(), source.getValues(), skill, amount);
+
+        if (income > 0 && plugin.getHookManager().isRegistered(EconomyHook.class)) {
+            EconomyHook economy = plugin.getHookManager().getHook(EconomyHook.class);
+            economy.deposit(user, income);
+        }
+        return income;
     }
 
     public void setXp(User user, Skill skill, double amount) {
@@ -75,18 +99,18 @@ public abstract class LevelManager {
         // Sends action bar message
         double xpAmount = amount - originalAmount;
 
-        sendXpUi(user, skill, xpAmount);
+        sendXpUi(user, skill, xpAmount, 0.0);
     }
 
-    private void sendXpUi(User user, Skill skill, double xpGained) {
+    private void sendXpUi(User user, Skill skill, double xpGained, double income) {
         double currentXp = user.getSkillXp(skill);
         int level = user.getSkillLevel(skill);
         double levelXp = xpRequirements.getXpRequired(skill, level + 1);
         boolean maxed = xpRequirements.getListSize(skill) <= user.getSkillLevel(skill) - 1 || level >= skill.getMaxLevel();
 
-        plugin.getUiProvider().getActionBarManager().sendXpActionBar(user, skill, currentXp, levelXp, xpGained, level, maxed);
+        plugin.getUiProvider().getActionBarManager().sendXpActionBar(user, skill, currentXp, levelXp, xpGained, level, maxed, income);
         if (plugin.configBoolean(Option.BOSS_BAR_ENABLED)) {
-            plugin.getUiProvider().sendXpBossBar(user, skill, currentXp, levelXp, xpGained, level, maxed);
+            plugin.getUiProvider().sendXpBossBar(user, skill, currentXp, levelXp, xpGained, level, maxed, income);
         }
     }
 

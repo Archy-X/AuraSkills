@@ -11,7 +11,9 @@ public enum ActionBarMessage implements MessageKey {
     MAXED,
     ABILITY,
     BOSS_BAR_XP,
-    BOSS_BAR_MAXED;
+    BOSS_BAR_MAXED,
+    BOSS_BAR_INCOME,
+    BOSS_BAR_INCOME_MAXED;
 
     @Override
     public String getPath() {

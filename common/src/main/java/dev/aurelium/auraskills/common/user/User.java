@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -48,6 +49,7 @@ public abstract class User {
     private final Map<String, Object> metadata;
     private List<KeyIntPair> unclaimedItems;
     private final Map<ActionBarType, Boolean> actionBarSettings;
+    private final Set<Skill> jobs;
 
     private boolean saving;
     private boolean shouldSave;
@@ -73,6 +75,7 @@ public abstract class User {
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
         this.multipliers = new HashMap<>();
+        this.jobs = new HashSet<>();
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -93,6 +96,8 @@ public abstract class User {
     public abstract boolean hasSkillPermission(Skill skill);
 
     public abstract void setCommandLocale(Locale locale);
+
+    public abstract int getPermissionJobLimit();
 
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
@@ -410,6 +415,34 @@ public abstract class User {
         this.unclaimedItems = unclaimedItems;
     }
 
+    public Set<Skill> getJobs() {
+        return Collections.unmodifiableSet(jobs);
+    }
+
+    public void addJob(Skill skill) {
+        if (jobs.size() < getJobLimit()) {
+            jobs.add(skill);
+            blank = false;
+        }
+    }
+
+    public void removeJob(Skill skill) {
+        jobs.remove(skill);
+        blank = false;
+    }
+
+    public void clearAllJobs() {
+        jobs.clear();
+    }
+
+    public int getJobLimit() {
+        int permLimit = getPermissionJobLimit();
+        if (permLimit > 0) {
+            return permLimit;
+        }
+        return plugin.configInt(Option.JOBS_SELECTION_DEFAULT_JOB_LIMIT);
+    }
+
     public boolean isSaving() {
         return saving;
     }
@@ -481,7 +514,10 @@ public abstract class User {
                 return false;
             }
         }
-        return statModifiers.isEmpty();
+        if (!jobs.isEmpty()) {
+            return false;
+        }
+        return statModifiers.isEmpty() && traitModifiers.isEmpty() && unclaimedItems.isEmpty();
     }
 
     public UserState getState() {

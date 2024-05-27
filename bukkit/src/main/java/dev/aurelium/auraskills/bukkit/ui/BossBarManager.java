@@ -43,6 +43,7 @@ public class BossBarManager implements Listener {
     private Map<Skill, BossBar.Overlay> overlays;
     private NumberFormat xpFormat;
     private NumberFormat percentFormat;
+    private NumberFormat moneyFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
 
@@ -57,13 +58,27 @@ public class BossBarManager implements Listener {
         loadNumberFormats();
     }
 
+    public NumberFormat getXpFormat() {
+        return xpFormat;
+    }
+
+    public NumberFormat getPercentFormat() {
+        return percentFormat;
+    }
+
+    public NumberFormat getMoneyFormat() {
+        return moneyFormat;
+    }
+
     private void loadNumberFormats() {
         try {
             this.xpFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_XP_FORMAT));
             this.percentFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_PERCENT_FORMAT));
+            this.moneyFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_MONEY_FORMAT));
         } catch (IllegalArgumentException e) {
             this.xpFormat = new DecimalFormat("#.#");
             this.percentFormat = new DecimalFormat("#.##");
+            this.moneyFormat = new DecimalFormat("#.00");
             plugin.logger().warn("Invalid boss_bar.xp_format or percent_format: " + e.getMessage());
         }
     }
@@ -121,7 +136,7 @@ public class BossBarManager implements Listener {
         singleBossBars.clear();
     }
 
-    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+    public void sendBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed, double income) {
         UUID playerId = player.getUniqueId();
         if (maxed && !plugin.configBoolean(Option.BOSS_BAR_DISPLAY_MAXED)) { // display-maxed option
             return;
@@ -141,13 +156,14 @@ public class BossBarManager implements Listener {
             if (!bossBars.containsKey(playerId)) bossBars.put(playerId, new HashMap<>());
             bossBar = bossBars.get(playerId).get(skill);
         }
+        String text = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, income, plugin.getLocale(player));
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
-            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
+            bossBar = handleNewBossBar(player, skill, currentXp, levelXp, text);
         }
         // Use existing one
         else {
-            handleExistingBossBar(bossBar, player, skill, currentXp, levelXp, xpGained, level, maxed);
+            handleExistingBossBar(bossBar, player, skill, currentXp, levelXp, text);
         }
         // Increment current action
         if (mode.equals("single")) {
@@ -158,13 +174,11 @@ public class BossBarManager implements Listener {
         scheduleHide(playerId, skill, bossBar); // Schedule tasks to hide the boss bar
     }
 
-    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
-        Locale locale = plugin.getUser(player).getLocale();
+    private BossBar handleNewBossBar(Player player, Skill skill, double currentXp, double levelXp, String text) {
         BossBar.Color color = getColor(skill);
         BossBar.Overlay overlay = getOverlay(skill);
-        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, locale);
 
-        Component name = tf.toComponent(bossBarText);
+        Component name = tf.toComponent(text);
 
         // Calculate xp progress
         double progress = currentXp / levelXp;
@@ -183,11 +197,8 @@ public class BossBarManager implements Listener {
         return bossBar;
     }
 
-    private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
-        Locale locale = plugin.getUser(player).getLocale();
-        String bossBarText = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, locale);
-
-        Component name = tf.toComponent(bossBarText);
+    private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, double currentXp, double levelXp, String text) {
+        Component name = tf.toComponent(text);
 
         bossBar.name(name); // Update the boss bar to the new text value
         // Calculate xp progress
@@ -201,24 +212,28 @@ public class BossBarManager implements Listener {
         plugin.getAudiences().player(player).showBossBar(bossBar);
     }
 
-    private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, Locale locale) {
+    private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, double income, Locale locale) {
         String bossBarText;
         String currentXpText = getCurrentXpText(currentXp);
         MessageProvider provider = plugin.getMessageProvider();
         if (!maxed) {
-            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_XP, locale),
+            ActionBarMessage key = income > 0 ? ActionBarMessage.BOSS_BAR_INCOME : ActionBarMessage.BOSS_BAR_XP;
+            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(key, locale),
                     "{skill}", skill.getDisplayName(locale, false),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
                     "{level_xp}", getLevelXpText(levelXp),
                     "{percent}", percentFormat.format(currentXp / (double) levelXp * 100),
-                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
+                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained),
+                    "{income}", moneyFormat.format(income)));
         } else {
-            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(ActionBarMessage.BOSS_BAR_MAXED, locale),
+            ActionBarMessage key = income > 0 ? ActionBarMessage.BOSS_BAR_INCOME_MAXED : ActionBarMessage.BOSS_BAR_MAXED;
+            bossBarText = setPlaceholders(player, TextUtil.replace(provider.getRaw(key, locale),
                     "{skill}", skill.getDisplayName(locale, false),
                     "{level}", RomanNumber.toRoman(level, plugin),
                     "{current_xp}", currentXpText,
-                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained)));
+                    "{xp_gained}", xpGained > 0 ? "+" + xpFormat.format(xpGained) : xpFormat.format(xpGained),
+                    "{income}", moneyFormat.format(income)));
         }
         return bossBarText;
     }

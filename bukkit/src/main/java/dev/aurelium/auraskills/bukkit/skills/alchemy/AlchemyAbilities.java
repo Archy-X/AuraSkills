@@ -128,6 +128,10 @@ public class AlchemyAbilities extends AbilityImpl {
         }
         // Add duration to PersistentDataContainer
         var container = meta.getPersistentDataContainer();
+        // Don't apply duration to the same item
+        if (container.has(DURATION_BONUS_KEY, PersistentDataType.INTEGER)) {
+            return item;
+        }
         container.set(DURATION_BONUS_KEY, PersistentDataType.INTEGER, durationBonus);
         // Add lore
         if (Abilities.ALCHEMIST.optionBoolean("add_item_lore", true)) {

@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.HookRegistrar;
 import dev.aurelium.auraskills.common.config.*;
+import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import org.bukkit.ChatColor;
@@ -145,5 +146,12 @@ public class BukkitConfigProvider implements ConfigProvider {
     @Override
     public int getStartLevel() {
         return options.get(Option.START_LEVEL).asInt();
+    }
+
+    @Override
+    public boolean jobSelectionEnabled() {
+        boolean economyEnabled = plugin.getHookManager().isRegistered(EconomyHook.class);
+        boolean selectionEnabled = plugin.configBoolean(Option.JOBS_SELECTION_REQUIRE_SELECTION);
+        return plugin.configBoolean(Option.JOBS_ENABLED) && economyEnabled && selectionEnabled;
     }
 }

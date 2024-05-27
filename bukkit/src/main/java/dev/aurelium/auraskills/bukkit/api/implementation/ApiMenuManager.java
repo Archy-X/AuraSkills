@@ -13,16 +13,13 @@ import dev.aurelium.slate.function.ItemReplacer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class ApiMenuManager implements MenuManager {
 
     private final AuraSkills plugin;
-    private final Map<String, Consumer<MenuBuilder>> builders = new HashMap<>();
+    private final Map<String, List<Consumer<MenuBuilder>>> builders = new HashMap<>();
 
     public ApiMenuManager(AuraSkills plugin) {
         this.plugin = plugin;
@@ -30,7 +27,7 @@ public class ApiMenuManager implements MenuManager {
 
     @Override
     public void buildMenu(String name, Consumer<MenuBuilder> menu) {
-        builders.put(name, menu);
+        builders.computeIfAbsent(name, k -> new ArrayList<>()).add(menu);
     }
 
     @Override
@@ -83,11 +80,15 @@ public class ApiMenuManager implements MenuManager {
         return nonDefault;
     }
 
-    public void applyBuilder(String name, MenuBuilder builder) {
-        Consumer<MenuBuilder> consumer = builders.get(name);
-        if (consumer == null) return;
+    public void applyBuilders(String name, MenuBuilder builder) {
+        List<Consumer<MenuBuilder>> consumers = builders.get(name);
+        if (consumers == null) return;
 
-        consumer.accept(builder);
+        for (Consumer<MenuBuilder> consumer : consumers) {
+            if (consumer == null) return;
+
+            consumer.accept(builder);
+        }
     }
 
 }

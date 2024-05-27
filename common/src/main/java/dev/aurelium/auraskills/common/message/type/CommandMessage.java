@@ -18,6 +18,7 @@ public enum CommandMessage implements MessageKey {
     ARMOR_MODIFIER_LIST_HEADER,
     ARMOR_MODIFIER_LIST_ENTRY,
     ARMOR_MODIFIER_REMOVEALL_REMOVED,
+    ARMOR_TRAIT_ADD_ALREADY_EXISTS(Command.ARMOR_TRAIT_ADD, "already_exists"),
     ARMOR_MULTIPLIER_ADD_ADDED,
     ARMOR_MULTIPLIER_ADD_ALREADY_EXISTS(Command.ARMOR_MULTIPLIER_ADD, "already_exists"),
     ARMOR_MULTIPLIER_ADD_SKILL_LORE(Command.ARMOR_MULTIPLIER_ADD, "skill_lore"),
@@ -60,6 +61,7 @@ public enum CommandMessage implements MessageKey {
     ITEM_MODIFIER_LIST_HEADER,
     ITEM_MODIFIER_LIST_ENTRY,
     ITEM_MODIFIER_REMOVEALL_REMOVED,
+    ITEM_TRAIT_ADD_ALREADY_EXISTS(Command.ITEM_TRAIT_ADD, "already_exists"),
     ITEM_MULTIPLIER_ADD_ADDED,
     ITEM_MULTIPLIER_ADD_ALREADY_EXISTS(Command.ITEM_MULTIPLIER_ADD, "already_exists"),
     ITEM_MULTIPLIER_ADD_SKILL_LORE(Command.ITEM_MULTIPLIER_ADD, "skill_lore"),
@@ -86,6 +88,14 @@ public enum CommandMessage implements MessageKey {
     ITEM_REQUIREMENT_ENTRY,
     ITEM_UNREGISTER_UNREGISTERED,
     ITEM_UNREGISTER_NOT_REGISTERED(Command.ITEM_UNREGISTER, "not_registered"),
+    ITEM_IGNORE_ADD,
+    ITEM_IGNORE_REMOVE,
+    JOBS_ADD_ADDED,
+    JOBS_ADD_LIMITED,
+    JOBS_ADD_EXISTING,
+    JOBS_REMOVE_REMOVED,
+    JOBS_REMOVE_UNCHANGED,
+    JOBS_REMOVEALL_REMOVED,
     LANG_SET,
     LANG_NOT_FOUND(Command.LANG, "not_found"),
     MANA_DISPLAY,
@@ -107,6 +117,10 @@ public enum CommandMessage implements MessageKey {
     MODIFIER_REMOVEALL_REMOVED_ALL_STATS(Command.MODIFIER_REMOVEALL, "removed_all_stats"),
     MODIFIER_REMOVEALL_REMOVED_ONE_STAT(Command.MODIFIER_REMOVEALL, "removed_one_stat"),
     MODIFIER_REMOVEALL_PLAYERS_ONLY(Command.MODIFIER_REMOVEALL, "players_only"),
+    TRAIT_ADD_ALREADY_EXISTS(Command.TRAIT_ADD, "already_exists"),
+    TRAIT_LIST_ALL_TRAITS_HEADER(Command.TRAIT_LIST, "all_traits_header"),
+    TRAIT_LIST_ONE_TRAIT_HEADER(Command.TRAIT_LIST, "one_trait_header"),
+    TRAIT_REMOVEALL_REMOVED_ALL_TRAITS(Command.TRAIT_REMOVEALL, "removed_all_traits"),
     NO_PROFILE("no_profile"),
     MULTIPLIER_LIST,
     MULTIPLIER_PLAYERS_ONLY(Command.MULTIPLIER, "players_only"),
@@ -159,7 +173,8 @@ public enum CommandMessage implements MessageKey {
     MANA_ABILITY_COOLDOWN_RESET("manaability.cooldown_reset"),
     UNKNOWN_SKILL("unknown_skill"),
     UNKNOWN_MANA_ABILITY("unknown_mana_ability"),
-    UNKNOWN_STAT("unknown_stat");
+    UNKNOWN_STAT("unknown_stat"),
+    UNKNOWN_TRAIT("unknown_trait");
 
     private final String path;
 

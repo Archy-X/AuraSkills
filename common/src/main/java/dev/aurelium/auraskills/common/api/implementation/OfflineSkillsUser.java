@@ -12,10 +12,7 @@ import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class OfflineSkillsUser implements SkillsUser {
 
@@ -180,5 +177,30 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public boolean hasSkillPermission(Skill skill) {
         return true;
+    }
+
+    @Override
+    public Set<Skill> getJobs() {
+        return Set.of();
+    }
+
+    @Override
+    public void addJob(Skill job) {
+
+    }
+
+    @Override
+    public void removeJob(Skill job) {
+
+    }
+
+    @Override
+    public void clearAllJobs() {
+
+    }
+
+    @Override
+    public int getJobLimit() {
+        return 0;
     }
 }

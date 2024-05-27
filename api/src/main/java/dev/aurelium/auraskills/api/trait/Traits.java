@@ -51,7 +51,19 @@ public enum Traits implements Trait {
     @Override
     public String getDisplayName(Locale locale) {
         validate();
-        return provider.getDisplayName(this, locale);
+        return provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        validate();
+        return provider.getDisplayName(this, locale, formatted);
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Locale locale) {
+        validate();
+        return provider.getMenuDisplay(this, value, locale);
     }
 
     private void validate() {

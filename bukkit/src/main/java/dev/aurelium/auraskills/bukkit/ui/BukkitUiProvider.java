@@ -15,6 +15,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 
+import java.text.NumberFormat;
 import java.time.Duration;
 
 public class BukkitUiProvider implements UiProvider {
@@ -36,6 +37,15 @@ public class BukkitUiProvider implements UiProvider {
         return actionBarManager;
     }
 
+    @Override
+    public NumberFormat getFormat(FormatType type) {
+        return switch (type) {
+            case XP -> bossBarManager.getXpFormat();
+            case PERCENT -> bossBarManager.getPercentFormat();
+            case MONEY -> bossBarManager.getMoneyFormat();
+        };
+    }
+
     public BossBarManager getBossBarManager() {
         return bossBarManager;
     }
@@ -55,10 +65,10 @@ public class BukkitUiProvider implements UiProvider {
     }
 
     @Override
-    public void sendXpBossBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed) {
+    public void sendXpBossBar(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed, double income) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;
-        bossBarManager.sendBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed);
+        bossBarManager.sendBossBar(player, skill, currentXp, levelXp, xpGained, level, maxed, income);
     }
 
     @Override

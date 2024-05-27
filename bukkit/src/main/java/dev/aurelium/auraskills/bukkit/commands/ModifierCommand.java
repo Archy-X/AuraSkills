@@ -43,23 +43,7 @@ public class ModifierCommand extends BaseCommand {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ADDED, locale), modifier, player, locale));
             }
         } else if (stack) { // Stack modifier by using a numbered name
-            Set<String> modifierNames = user.getStatModifiers().keySet();
-            int lastStackNumber = 1;
-            for (String modifierName : modifierNames) { // Find the previous highest stack number
-                if (modifierName.startsWith(name)) {
-                    String endName = modifierName.substring(name.length()); // Get the part of the string after name
-                    if (endName.startsWith("(") && endName.endsWith(")")) {
-                        String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
-                        int stackNumber = NumberUtil.toInt(numberString);
-                        if (stackNumber > lastStackNumber) {
-                            lastStackNumber = stackNumber;
-                        }
-                    }
-                }
-            }
-            int newStackNumber = lastStackNumber + 1;
-
-            String newModifierName = name + "(" + newStackNumber + ")";
+            String newModifierName = getStackedName(user.getStatModifiers().keySet(), name);
             StatModifier newModifier = new StatModifier(newModifierName, stat, value);
             user.addStatModifier(newModifier);
             if (!silent) {
@@ -70,6 +54,24 @@ public class ModifierCommand extends BaseCommand {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ALREADY_EXISTS, locale), modifier, player, locale));
             }
         }
+    }
+
+    public static String getStackedName(Set<String> modifierNames, String name) {
+        int lastStackNumber = 1;
+        for (String modifierName : modifierNames) { // Find the previous highest stack number
+            if (modifierName.startsWith(name)) {
+                String endName = modifierName.substring(name.length()); // Get the part of the string after name
+                if (endName.startsWith("(") && endName.endsWith(")")) {
+                    String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
+                    int stackNumber = NumberUtil.toInt(numberString);
+                    if (stackNumber > lastStackNumber) {
+                        lastStackNumber = stackNumber;
+                    }
+                }
+            }
+        }
+        int newStackNumber = lastStackNumber + 1;
+        return name + "(" + newStackNumber + ")";
     }
 
     @Subcommand("remove")
@@ -99,12 +101,10 @@ public class ModifierCommand extends BaseCommand {
         if (player == null) {
             if (sender instanceof Player target) {
                 listModifiers(sender, target, stat, locale);
-            }
-            else {
+            } else {
                 sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.MODIFIER_LIST_PLAYERS_ONLY, locale));
             }
-        }
-        else {
+        } else {
             listModifiers(sender, player, stat, locale);
         }
     }
@@ -116,14 +116,14 @@ public class ModifierCommand extends BaseCommand {
             message = new StringBuilder(format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_LIST_ALL_STATS_HEADER, locale), player));
             for (String key : user.getStatModifiers().keySet()) {
                 StatModifier modifier = user.getStatModifiers().get(key);
-                message.append("\n").append(format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, player, locale));
+                message.append("\n").append(format.applyPlaceholders(plugin.getRawMsg(CommandMessage.MODIFIER_LIST_ALL_STATS_ENTRY, locale), modifier, player, locale));
             }
         } else {
-            message = new StringBuilder(format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, player, locale));
+            message = new StringBuilder(format.applyPlaceholders(plugin.getRawMsg(CommandMessage.MODIFIER_LIST_ONE_STAT_HEADER, locale), stat, player, locale));
             for (String key : user.getStatModifiers().keySet()) {
                 StatModifier modifier = user.getStatModifiers().get(key);
                 if (modifier.stat() == stat) {
-                    message.append("\n").append(format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, player, locale));
+                    message.append("\n").append(format.applyPlaceholders(plugin.getRawMsg(CommandMessage.MODIFIER_LIST_ONE_STAT_ENTRY, locale), modifier, player, locale));
                 }
             }
         }
@@ -139,14 +139,12 @@ public class ModifierCommand extends BaseCommand {
         if (player == null) {
             if (sender instanceof Player target) {
                 removeAllModifiers(sender, stat, silent, locale, target, plugin.getUser(target));
-            }
-            else {
+            } else {
                 if (!silent) {
                     sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.MODIFIER_REMOVEALL_PLAYERS_ONLY, locale));
                 }
             }
-        }
-        else {
+        } else {
             removeAllModifiers(sender, stat, silent, locale, player, plugin.getUser(player));
         }
     }
@@ -171,13 +169,11 @@ public class ModifierCommand extends BaseCommand {
             if (!silent) {
                 if (stat == null) {
                     sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ALL_STATS, locale), target).replace("{num}", String.valueOf(removed)));
-                }
-                else {
+                } else {
                     sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_REMOVEALL_REMOVED_ONE_STAT, locale), stat, target, locale).replace("{num}", String.valueOf(removed)));
                 }
             }
-        }
-        else {
+        } else {
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.NO_PROFILE, locale));
             }

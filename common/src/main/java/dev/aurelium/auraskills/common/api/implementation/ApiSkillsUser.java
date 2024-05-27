@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ApiSkillsUser implements SkillsUser {
@@ -193,6 +194,31 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public boolean hasSkillPermission(Skill skill) {
         return user.hasSkillPermission(skill);
+    }
+
+    @Override
+    public Set<Skill> getJobs() {
+        return user.getJobs();
+    }
+
+    @Override
+    public void addJob(Skill job) {
+        user.addJob(job);
+    }
+
+    @Override
+    public void removeJob(Skill job) {
+        user.removeJob(job);
+    }
+
+    @Override
+    public void clearAllJobs() {
+        user.clearAllJobs();
+    }
+
+    @Override
+    public int getJobLimit() {
+        return user.getJobLimit();
     }
 
 }

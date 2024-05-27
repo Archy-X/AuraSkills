@@ -64,6 +64,7 @@ public class BukkitUser extends User {
             return multiplier;
         } else {
             for (PermissionAttachmentInfo permission : player.getEffectivePermissions()) {
+                if (!permission.getValue()) continue;
                 multiplier += getMultiplierFromPermission(permission.getPermission(), skill);
             }
         }
@@ -137,6 +138,32 @@ public class BukkitUser extends User {
         if (player != null) {
             plugin.getCommandManager().setPlayerLocale(player, locale);
         }
+    }
+
+    @Override
+    public int getPermissionJobLimit() {
+        if (player == null) return 0;
+
+        final String prefix = "auraskills.jobs.limit.";
+        int highestLimit = 0;
+
+        for (PermissionAttachmentInfo permissionInfo : player.getEffectivePermissions()) {
+            String permission = permissionInfo.getPermission();
+
+            if (!permission.startsWith(prefix)) continue;
+
+            permission = permission.substring(prefix.length());
+
+            if (isNumeric(permission)) {
+                try {
+                    int value = Integer.parseInt(permission);
+                    if (value > highestLimit) {
+                        highestLimit = value;
+                    }
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return highestLimit;
     }
 
     @Override

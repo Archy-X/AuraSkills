@@ -50,6 +50,8 @@ public class SharpHook extends ManaAbilityProvider {
         ItemStack item = event.getItem();
         if (item == null || item.getType() != Material.FISHING_ROD) return;
 
+        if (shouldIgnoreItem(item)) return;
+
         Player player = event.getPlayer();
         if (failsChecks(player)) return;
 

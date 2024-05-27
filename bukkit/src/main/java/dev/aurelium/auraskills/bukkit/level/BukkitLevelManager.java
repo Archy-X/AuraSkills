@@ -82,7 +82,7 @@ public class BukkitLevelManager extends LevelManager {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
-        addXpRaw(user, skill, event.getAmount());
+        addXpRaw(user, skill, event.getAmount(), source);
     }
 
     public void addDamageXp(User user, Skill skill, @NotNull XpSource source, double amount,
@@ -95,7 +95,7 @@ public class BukkitLevelManager extends LevelManager {
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return;
 
-        addXpRaw(user, skill, event.getAmount());
+        addXpRaw(user, skill, event.getAmount(), source);
     }
 
     @Override

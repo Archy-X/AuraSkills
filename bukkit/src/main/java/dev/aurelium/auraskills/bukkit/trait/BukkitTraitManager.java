@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.trait;
 import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitHandler;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.trait.TraitManager;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class BukkitTraitManager extends TraitManager {
@@ -86,6 +88,16 @@ public class BukkitTraitManager extends TraitManager {
     public void registerTraitHandler(TraitHandler traitHandler) {
         if (traitHandler instanceof BukkitTraitHandler bukkitTraitHandler) {
             registerTraitImpl(bukkitTraitHandler);
+        }
+    }
+
+    @Override
+    public String getMenuDisplay(Trait trait, double value, Locale locale) {
+        BukkitTraitHandler impl = getTraitImpl(trait);
+        if (impl != null) {
+            return impl.getMenuDisplay(value, trait, locale);
+        } else {
+            return NumberUtil.format1(value);
         }
     }
 }

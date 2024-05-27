@@ -85,11 +85,17 @@ permissions:
         default: op
     auraskills.command.item.give:
         default: op
+    auraskills.command.item.ignore:
+        default: op
     auraskills.command.storage:
         default: op
     auraskills.command.openmenu:
         default: op
     auraskills.command.manaability.resetcooldown:
+        default: op
+    auraskills.command.jobs:
+        default: op
+    auraskills.command.jobs.other:
         default: op
     auraskills.multiplier:
         default: false
@@ -125,3 +131,5 @@ permissions:
         default: true
     auraskills.checkupdates:
         default: op
+    auraskills.jobs.limit:
+        default: false

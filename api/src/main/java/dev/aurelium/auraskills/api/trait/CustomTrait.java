@@ -44,7 +44,17 @@ public class CustomTrait implements Trait {
 
     @Override
     public String getDisplayName(Locale locale) {
-        return displayName != null ? displayName : provider.getDisplayName(this, locale);
+        return displayName != null ? displayName : provider.getDisplayName(this, locale, true);
+    }
+
+    @Override
+    public String getDisplayName(Locale locale, boolean formatted) {
+        return displayName != null ? displayName : provider.getDisplayName(this, locale, formatted);
+    }
+
+    @Override
+    public String getMenuDisplay(double value, Locale locale) {
+        return provider.getMenuDisplay(this, value, locale);
     }
 
     @Override

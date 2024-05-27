@@ -27,4 +27,6 @@ public interface ConfigProvider {
 
     int getStartLevel();
 
+    boolean jobSelectionEnabled();
+
 }
