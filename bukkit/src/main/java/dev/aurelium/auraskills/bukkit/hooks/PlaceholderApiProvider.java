@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
@@ -31,7 +32,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
     private final AuraSkills plugin;
     private final String identifier;
-    private final String[] xpIdentifiers = new String[]{"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_"};
+    private final String[] xpIdentifiers = new String[]{"xp_required_formatted_", "xp_required_", "xp_progress_int_", "xp_progress_1_", "xp_progress_", "xp_int_", "xp_formatted_", "xp_bar_", "xp_"};
 
     public PlaceholderApiProvider(AuraSkills plugin, String identifier) {
         this.plugin = plugin;
@@ -269,6 +270,9 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                     return String.valueOf(Math.round(user.getSkillXp(skill)));
                 case "xp_formatted_":
                     return BigNumber.withSuffix(Math.round(user.getSkillXp(skill)));
+                case "xp_bar_":
+                    int xpRequired = plugin.getXpRequirements().getXpRequired(skill, user.getSkillLevel(skill) + 1);
+                    return plugin.getMessageProvider().applyFormatting(SkillItem.getBar(plugin, user.getSkillXp(skill), xpRequired));
                 case "xp_":
                     return String.valueOf(user.getSkillXp(skill));
             }
@@ -445,6 +449,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_xp_progress_[skill]%",
                 "%auraskills_xp_int_[skill]%",
                 "%auraskills_xp_formatted_[skill]%",
+                "%auraskills_xp_bar_[skill]",
                 "%auraskills_xp_[skill]%",
                 "%auraskills_multiplier%",
                 "%auraskills_multiplier_[skill]%",
