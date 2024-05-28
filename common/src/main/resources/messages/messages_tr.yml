@@ -617,8 +617,8 @@ menus:
     job: Job
     job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
     job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
+    job_active: Zaten bu görevdesin
+    job_quit: Sağ tıklayarak bu görevi bırak
     job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
   stats:
     stats_title: İstatistikleriniz
