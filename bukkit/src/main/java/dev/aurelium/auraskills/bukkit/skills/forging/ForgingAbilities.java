@@ -67,6 +67,11 @@ public class ForgingAbilities extends AbilityImpl {
                 && action != InventoryAction.DROP_ONE_SLOT && action != InventoryAction.HOTBAR_SWAP) {
             return;
         }
+        if (player.getItemOnCursor().getType() != Material.AIR) {
+            if (action == InventoryAction.DROP_ALL_SLOT || action == InventoryAction.DROP_ONE_SLOT) {
+                return;
+            }
+        }
         if (event.getClickedInventory().getType() != InventoryType.GRINDSTONE) {
             return;
         }
