@@ -19,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.TimeUnit;
@@ -189,7 +190,7 @@ public abstract class ManaAbilityProvider implements Listener {
 
         var container = meta.getPersistentDataContainer();
 
-        return container.has(new NamespacedKey(plugin, IGNORE_INTERACT_KEY));
+        return container.has(new NamespacedKey(plugin, IGNORE_INTERACT_KEY), PersistentDataType.BOOLEAN);
     }
 
 }

@@ -2,6 +2,19 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.1.1
+
+### New Features
+- Add auraskills.jobs.block.[skill] permission to prevent skills from being selected as jobs if set to true (ex: auraskills.jobs.block.mining)
+- Add `%auraskils_jobs_active_[skill]%` placeholder that returns true/false whether the job is active (ex: %auraskills_jobs_active_farming%)
+
+### Changes
+- Support property placeholders in menu placeholder conditions, such as {skill} for the skill name in certain menus
+- Slightly tweaked the jobs item lore style in the level_progression menu
+### Bug Fixes
+- Fix grindstone experience exploit
+- Fix NoSuchMethodError on older versions
+
 ## 2.1.0
 
 ### New Features
