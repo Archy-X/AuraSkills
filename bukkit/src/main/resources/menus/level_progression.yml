@@ -257,9 +257,9 @@ components:
     - '<yellow>{{job_select}}'
   job_active:
     lore:
-    - '<green>{{job_active}}'
+    - '<dark_gray>▶ <green>{{job_active}}'
     - ' '
-    - '<red>{{job_quit}}'
+    - '<gray>{{job_quit}}'
   job_limit:
     lore:
     - text: '{{job_limit}}'

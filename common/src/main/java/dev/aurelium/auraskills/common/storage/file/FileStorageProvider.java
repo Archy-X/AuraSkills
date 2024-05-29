@@ -199,9 +199,11 @@ public class FileStorageProvider extends StorageProvider {
 
             Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(skillName));
 
-            if (skill != null) {
-                user.addJob(skill);
-            }
+            if (skill == null) continue;
+
+            if (!user.canSelectJob(skill)) continue;
+
+            user.addJob(skill);
         }
     }
 

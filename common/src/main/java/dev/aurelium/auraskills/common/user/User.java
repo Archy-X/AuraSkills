@@ -420,7 +420,7 @@ public abstract class User {
     }
 
     public void addJob(Skill skill) {
-        if (jobs.size() < getJobLimit()) {
+        if (jobs.size() < getJobLimit() && canSelectJob(skill)) {
             jobs.add(skill);
             blank = false;
         }
@@ -442,6 +442,8 @@ public abstract class User {
         }
         return plugin.configInt(Option.JOBS_SELECTION_DEFAULT_JOB_LIMIT);
     }
+
+    public abstract boolean canSelectJob(@NotNull Skill skill);
 
     public boolean isSaving() {
         return saving;

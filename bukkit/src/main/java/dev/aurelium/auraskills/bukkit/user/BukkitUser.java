@@ -11,6 +11,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -164,6 +165,27 @@ public class BukkitUser extends User {
             }
         }
         return highestLimit;
+    }
+
+    @Override
+    public boolean canSelectJob(@NotNull Skill skill) {
+        if (player == null) return true;
+
+        final String prefix = "auraskills.jobs.block.";
+
+        for (PermissionAttachmentInfo permissionInfo : player.getEffectivePermissions()) {
+            String permission = permissionInfo.getPermission();
+
+            if (!permission.startsWith(prefix)) continue;
+
+            String skillName = permission.substring(prefix.length());
+            if (skillName.equals(skill.getId().getKey()) || skillName.equals(skill.getId().toString())) {
+                if (permissionInfo.getValue()) { // If permission is true, selection is blocked
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override

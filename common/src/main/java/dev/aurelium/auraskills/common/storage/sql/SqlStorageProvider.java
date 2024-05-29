@@ -231,6 +231,8 @@ public class SqlStorageProvider extends StorageProvider {
                         Skill skill = plugin.getSkillRegistry().getOrNull(id);
                         if (skill == null) continue;
 
+                        if (!user.canSelectJob(skill)) continue;
+
                         user.addJob(skill);
                     }
                     // Only load one jobs row

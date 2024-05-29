@@ -143,7 +143,13 @@ public class LevelProgressionMenu {
         menu.item("job", item -> {
             item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
             // Hide if jobs are disabled
-            item.modify(i -> plugin.config().jobSelectionEnabled() ? i.item() : null);
+            item.modify(i -> {
+                Skill skill = (Skill) i.menu().getProperty("skill");
+                if (plugin.config().jobSelectionEnabled() && plugin.getUser(i.player()).canSelectJob(skill)) {
+                    return i.item();
+                }
+                return null;
+            });
 
             item.onClick(ClickTrigger.LEFT, c -> {
                 User user = plugin.getUserManager().getUser(c.player());
