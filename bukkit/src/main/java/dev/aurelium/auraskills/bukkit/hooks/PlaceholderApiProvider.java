@@ -328,6 +328,14 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 case "jobs_limit":
                     return String.valueOf(user.getJobLimit());
             }
+            final String activePrefix = "jobs_active_";
+            if (identifier.startsWith(activePrefix)) {
+                String skillName = identifier.substring(activePrefix.length());
+                Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(skillName));
+                if (skill != null) {
+                    return user.getJobs().contains(skill) ? "true" : "false";
+                }
+            }
         }
 
         return null;
@@ -456,10 +464,11 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_multiplier_percent%",
                 "%auraskills_multiplier_percent_[skill]%",
                 "%auraskills_actionbar_status%",
-                "%auraskills_jobs_list",
-                "%auraskills_jobs_list_formatted",
-                "%auraskills_jobs_count",
-                "%auraskills_jobs_limit"
+                "%auraskills_jobs_list%",
+                "%auraskills_jobs_list_formatted%",
+                "%auraskills_jobs_count%",
+                "%auraskills_jobs_limit%",
+                "%auraskills_jobs_active_[skill]%"
         );
     }
 }
