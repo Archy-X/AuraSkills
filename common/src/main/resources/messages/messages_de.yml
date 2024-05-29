@@ -343,7 +343,7 @@ commands:
         removed: "<gray>Alle Rüstungsmodifikatoren wurden von deinem Gegenstand entfernt"
     trait:
       add:
-        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        already_exists: "<yellow>Ein Rüstungsmodifikator mit der Eigenschaft {trait} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>Multiplikator mit dem Wert <aqua>{value} <gray>wurde zum Item hinzugefügt"
@@ -393,7 +393,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>Modifikator mit Stufe <aqua>{value} <gray>wurde dem Gegenstand hinzugefügt"
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>Ein Gegenstandmodifikator mit dem Wert{color}{stat} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Der Gegenstand hat keinen {color}{stat} <yellow>Modifikator!"
         removed: "{color}{stat} <gray>Modifikator wurde von deinem Gegenstand entfernt"
@@ -403,7 +403,7 @@ commands:
         removed: "<gray>Alle Modifikatoren wurden von deinem Gegenstand entfernt"
     trait:
       add:
-        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        already_exists: "<yellow>Ein Gegenstandmodifikator mit der Eigenschaft{trait} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>Multiplikator mit dem Wert <aqua>{value} <gray>wurde zum Item hinzugefügt"
@@ -440,18 +440,18 @@ commands:
       unregistered: "<white>Unregistriertes Gegenstand mit Schlüssel {key}"
       not_registered: "<yellow>Es ist kein Gegenstand mit dem Schlüssel {key} registriert"
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add: "<gray>Dein Gegenstand wird nun von Mana Fähigkeits-Interaktionen ignoriert"
+      remove: "<gray>Dein Gegenstand wird nun nicht mehr von Mana Fähigkeit-Interaktionen ignoriert"
   jobs:
     add:
-      added: "<white>The job {job} was successfully added to player {player}"
-      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
-      existing: "<yellow>Player {player} already has the job {job}"
+      added: "<white>Der Job {job} wurde erfolgreich dem Spieler {player} zugewiesen"
+      limited: "<yellow>Es ist nicht möglich diesen Job hinzuzufügen da der Spieler {player} das Job-Limit erreicht hat"
+      existing: "<yellow>Spieler {player} hat bereits den Job {job}"
     remove:
-      removed: "<white>Removed job {job} from player {player}"
-      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      removed: "<white>Der Job {job} wurde vom Spieler {player} entfernt"
+      unchanged: "<yellow>Nichts wurde verändert da der Spieler {player} den Job {job} nicht hat"
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
+      removed: "<white>Alle Jobs vom Spieler {player} wurden entfernt"
   lang:
     set: "<gray>Sprache geändert auf <aqua>{lang}"
     not_found: "<yellow>Sprache nicht gefunden!"
@@ -482,12 +482,12 @@ commands:
       players_only: "<yellow>Nur Spieler können ihre eigenen Modifikatoren entfernen! Versuche einen Spieler anzugeben"
   trait:
     add:
-      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      already_exists: "<yellow>Ein Modifikator mit dem Namen {name} existiert bereits auf dem Spieler <gold>{player}<yellow>! Entferne ihn zuerst mit <gold>/sk trait remove {player} {name}"
     list:
-      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
-      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      all_traits_header: "<gray>Eigenschaftsmodifikatoren für den Spieler <gold>{player}:"
+      one_trait_header: "<gray>Eigenschaftsmodifikatoren ({color}{trait}<gray>) für den Spieler <gold>{player}:"
     removeall:
-      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      removed_all_traits: "<gray>Es wurden <aqua>{num} <gray>Eigenschaftsmodifikatoren vom Spieler <gold>{player} <gray>entfernt"
   multiplier:
     global: Global
     list: "<white>Globaler XP Multiplikator für <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -546,11 +546,11 @@ commands:
     set: "<gray>Setze <aqua>{skill} <gray>XP für Spieler <gray>{player} <gray>auf <aqua>{amount}"
     remove: "<gray>Entfernt <aqua>{amount} {skill} <gray>XP von Spieler <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>Abklingzeit für <aqua>{ability} <gray>wurde für den Spieler <gold>{player} <gray>zurückgesetzt"
   unknown_skill: "<yellow>Unbekannte Fertigkeit!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Unbekannte Mana-Fähigkeit!"
   unknown_stat: "<yellow>Unbekannte Fertigkeit!"
-  unknown_trait: "<yellow>Unknown trait!"
+  unknown_trait: "<yellow>Unbekannte Eigenschaft!"
   no_profile: "<yellow>Spieler hat kein Fertigkeitenprofil!"
 leveler:
   level_up: "{skill} Stufe erhöht"
@@ -596,7 +596,7 @@ menus:
     stats: "Stats"
     stats_desc: "Erhalte stat buffs indem du Skills hochlevelst."
     stats_click: "Klick um mehr zu erfahren, oder deine stats anzuschauen"
-    active_job: Active Job
+    active_job: Aktiver Job
   level_progression:
     level_progression_title: "{skill} Stufen - Seite {page}"
     your_ranking: "Dein Fertigkeitsrang"
@@ -615,11 +615,11 @@ menus:
     mana_abilities_desc: "<3>Mana Fähigkeiten</3> <1>sind spezielle Fähigkeiten, welche man aktivieren muss, und Mana kosten.</1>"
     abilities_click: "Klicke um die Fähigkeiten von {skill} zu sehen"
     job: Job
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_desc: Das Wählen von {skill} als deinen Job erlaubt es dir Geld zu verdienen während du XP verdienst.
+    job_select: Linksklicke um {skill} als deinen Job zu wählen
+    job_active: Du arbeitest aktiv in diesem Job
+    job_quit: Rechtsklicke um diesen Job zu verlassen
+    job_limit: Du hast dein Job-Limit erreicht. Verlasse einen aktiven Job um diesen Job auswählen zu können.
   stats:
     stats_title: Deine Werte
     skills: "Fähigkeiten"
