@@ -540,7 +540,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Papan Peringkat Sudah diperbarui!"
     updated: "<green>Papan peringkat diperbarui!"
-  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
     add: "<gray>Menambahkan <aqua>{amount} {skill} <gray>EXP untuk pemain <gray>{player}"
     set: "<gray>Menyetel <aqua>{skill} <gray>EXP untuk pemain <gray>{player} <gray>ke {amount}"
