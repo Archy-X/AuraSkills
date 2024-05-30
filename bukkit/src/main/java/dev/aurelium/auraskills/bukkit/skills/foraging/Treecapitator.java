@@ -69,11 +69,6 @@ public class Treecapitator extends ReadiedManaAbility {
             return;
         }
 
-        // AdvancedEnchantments compatibility fix
-        if (block.hasMetadata("blockbreakevent-ignore")) {
-            return;
-        }
-
         BlockXpSource source = getSource(block);
         if (isTrunk(source) || block.getType().toString().contains("STRIPPED")) {
             Player player = event.getPlayer();

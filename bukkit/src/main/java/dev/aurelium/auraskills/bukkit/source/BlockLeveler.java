@@ -47,12 +47,6 @@ public class BlockLeveler extends SourceLeveler {
     public void onBreak(BlockBreakEvent event) {
         if (disabled()) return;
 
-        Block block = event.getBlock();
-        // AdvancedEnchantments compatibility fix
-        if (block.hasMetadata("blockbreakevent-ignore")) {
-            return;
-        }
-
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
 
