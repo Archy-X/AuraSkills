@@ -11,6 +11,7 @@ Changelog for versions since 2.0.0.
 ### Changes
 - Support property placeholders in menu placeholder conditions, such as {skill} for the skill name in certain menus
 - Slightly tweaked the jobs item lore style in the level_progression menu
+
 ### Bug Fixes
 - Fix grindstone experience exploit
 - Fix NoSuchMethodError on older versions

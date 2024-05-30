@@ -21,11 +21,8 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
@@ -269,6 +266,20 @@ public class EntityLeveler extends SourceLeveler {
         LivingEntity entity = event.getEntity();
         PersistentDataContainer data = entity.getPersistentDataContainer();
         data.set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onMobSplit(EntityTransformEvent event) {
+        if (event.getTransformReason() != EntityTransformEvent.TransformReason.SPLIT) return;
+
+        Entity original = event.getEntity();
+        // Ignore entities that aren't spawner mobs
+        if (!original.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) return;
+
+        // Apply key to split entities
+        for (Entity entity : event.getTransformedEntities()) {
+            entity.getPersistentDataContainer().set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+        }
     }
 
     private double getSpawnerMultiplier(Entity entity, Skill skill) {
