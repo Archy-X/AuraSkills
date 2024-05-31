@@ -153,7 +153,11 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
         if (identifier.startsWith("mability_")) {
             NamespacedId id = NamespacedId.fromDefault(
-                    identifier.replace("mability_", "").replace("_active", "").replace("_value", ""));
+                    identifier.replace("mability_", "")
+                            .replace("_active", "")
+                            .replace("_value_int", "")
+                            .replace("_value", "")
+                            .replace("_roman", ""));
             ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(id);
 
             if (manaAbility == null) return null;
@@ -163,8 +167,12 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             if (manaAbility.isEnabled()) {
                 if (identifier.endsWith("value")) {
                     return String.valueOf(manaAbility.getValue(user.getManaAbilityLevel(manaAbility)));
+                } else if (identifier.endsWith("value_int")) {
+                    return String.valueOf(Math.round(manaAbility.getValue(user.getManaAbilityLevel(manaAbility))));
                 } else if (identifier.endsWith("active")) {
                     return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
+                } else if (identifier.endsWith("roman")) {
+                    return RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin);
                 } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
                     return String.valueOf(user.getManaAbilityLevel(manaAbility));
                 }
@@ -221,13 +229,24 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             if (identifier.equals(ability.name().toLowerCase(Locale.ROOT))) {
                 User user = plugin.getUser(player);
                 return String.valueOf(user.getAbilityLevel(ability));
+            } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_roman")) {
+                User user = plugin.getUser(player);
+                return RomanNumber.toRoman(user.getAbilityLevel(ability), plugin);
             } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value")) {
                 User user = plugin.getUser(player);
                 return String.valueOf(ability.getValue(user.getAbilityLevel(ability)));
+            } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value_int")) {
+                User user = plugin.getUser(player);
+                return String.valueOf(Math.round(ability.getValue(user.getAbilityLevel(ability))));
             } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value_2")) {
                 if (ability.hasSecondaryValue()) {
                     User user = plugin.getUser(player);
                     return String.valueOf(ability.getSecondaryValue(user.getAbilityLevel(ability)));
+                }
+            } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value_2_int")) {
+                if (ability.hasSecondaryValue()) {
+                    User user = plugin.getUser(player);
+                    return String.valueOf(Math.round(ability.getSecondaryValue(user.getAbilityLevel(ability))));
                 }
             }
         }
@@ -423,11 +442,16 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_[stat]%",
                 "%auraskills_[stat]_int%",
                 "%auraskills_[ability]%",
+                "%auraskills_[ability]_roman%",
                 "%auraskills_[ability]_value%",
+                "%auraskills_[ability]_value_int%",
                 "%auraskills_[ability]_value_2%",
+                "%auraskills_[ability]_value_2_int%",
                 "%auraskills_mability_[ability]%",
+                "%auraskills_mability_[ability]_roman%",
                 "%auraskills_mability_[ability]_active%",
                 "%auraskills_mability_[ability]_value%",
+                "%auraskills_mability_[ability]_value_int%",
                 "%auraskills_trait_[trait]",
                 "%auraskills_trait_[trait]_bonus",
                 "%auraskills_trait_[trait]_menu",
