@@ -46,18 +46,20 @@ public class RomanNumber {
     public static String toRoman(int number, AuraSkillsPlugin plugin) {
     	if (number > 0) {
 	    	if (plugin.configBoolean(Option.ENABLE_ROMAN_NUMERALS)) {
-		        int l =  map.floorKey(number);
-		        if ( number == l ) {
-		            return map.get(number);
-		        }
-		        return map.get(l) + toRoman(number-l, plugin);
-	    	}
-	    	else {
+		        return toRomanAlways(number);
+	    	} else {
 	    		return String.valueOf(number);
 	    	}
-    	}
-    	else {
+    	} else {
     		return String.valueOf(number);
     	}
+    }
+
+    public static String toRomanAlways(int number) {
+        int l = map.floorKey(number);
+        if (number == l) {
+            return map.get(number);
+        }
+        return map.get(l) + toRomanAlways(number - l);
     }
 }
