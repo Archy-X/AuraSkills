@@ -265,7 +265,10 @@ public abstract class User {
             if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
                 return;
             }
-            removeModifier(modifier.name(), reload, map, levels);
+            // Do not reload on remove since that would reset health and other stuff (mainly for 3rd party plugins)
+            // Reload will happen at the end of this method if it was true either way.
+            // So here we are just preventing double stat reload.
+            removeModifier(modifier.name(), false, map, levels);
         }
         map.put(modifier.name(), modifier);
         if (levels != null) {
