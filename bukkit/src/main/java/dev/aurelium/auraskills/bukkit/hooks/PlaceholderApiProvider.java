@@ -172,7 +172,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 } else if (identifier.endsWith("active")) {
                     return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
                 } else if (identifier.endsWith("roman")) {
-                    return RomanNumber.toRoman(user.getManaAbilityLevel(manaAbility), plugin);
+                    return RomanNumber.toRomanAlways(user.getManaAbilityLevel(manaAbility));
                 } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
                     return String.valueOf(user.getManaAbilityLevel(manaAbility));
                 }
@@ -213,14 +213,14 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             }
         }
 
-        //Gets skill levels
+        // Gets skill levels
         for (Skill skill : plugin.getSkillRegistry().getValues()) {
             if (identifier.equals(skill.name().toLowerCase(Locale.ROOT))) {
                 User user = plugin.getUser(player);
                 return String.valueOf(user.getSkillLevel(skill));
             } else if (identifier.equals(skill.name().toLowerCase(Locale.ROOT) + "_roman")) {
                 User user = plugin.getUser(player);
-                return RomanNumber.toRoman(user.getSkillLevel(skill), plugin);
+                return RomanNumber.toRomanAlways(user.getSkillLevel(skill));
             }
         }
 
@@ -231,7 +231,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 return String.valueOf(user.getAbilityLevel(ability));
             } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_roman")) {
                 User user = plugin.getUser(player);
-                return RomanNumber.toRoman(user.getAbilityLevel(ability), plugin);
+                return RomanNumber.toRomanAlways(user.getAbilityLevel(ability));
             } else if (identifier.equals(ability.name().toLowerCase(Locale.ROOT) + "_value")) {
                 User user = plugin.getUser(player);
                 return String.valueOf(ability.getValue(user.getAbilityLevel(ability)));
