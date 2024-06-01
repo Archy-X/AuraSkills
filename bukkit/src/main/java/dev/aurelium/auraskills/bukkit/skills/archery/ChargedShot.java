@@ -142,7 +142,7 @@ public class ChargedShot extends ManaAbilityProvider {
     @EventHandler(ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
         DamageMeta meta = event.getDamageMeta();
-        Player attacker = meta.getAttackerAsPlayer();
+        Entity attacker = meta.getAttacker();
 
         if (attacker != null && meta.getDamageType() == DamageType.BOW) {
             meta.addAttackModifier(applyChargedShot(attacker));
