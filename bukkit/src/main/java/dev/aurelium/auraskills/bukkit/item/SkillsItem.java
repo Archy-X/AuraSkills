@@ -182,7 +182,7 @@ public class SkillsItem {
     public void addIgnore() {
         PersistentDataContainer container = meta.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(plugin, ManaAbilityProvider.IGNORE_INTERACT_KEY);
-        container.set(key, PersistentDataType.BOOLEAN, true);
+        container.set(key, PersistentDataType.BYTE, (byte) 1);
     }
 
     public void removeIgnore() {

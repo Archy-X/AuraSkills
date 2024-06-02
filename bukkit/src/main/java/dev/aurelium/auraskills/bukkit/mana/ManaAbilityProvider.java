@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.event.mana.ManaAbilityActivateEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
@@ -190,7 +191,17 @@ public abstract class ManaAbilityProvider implements Listener {
 
         var container = meta.getPersistentDataContainer();
 
-        return container.has(new NamespacedKey(plugin, IGNORE_INTERACT_KEY), PersistentDataType.BOOLEAN);
+        NamespacedKey key = new NamespacedKey(plugin, IGNORE_INTERACT_KEY);
+
+        if (VersionUtils.isAtLeastVersion(20)) {
+            // Convert old format from 2.1.0-2.1.1
+            if (container.has(key, PersistentDataType.BOOLEAN)) {
+                container.remove(key);
+                container.set(key, PersistentDataType.BYTE, (byte) 1);
+            }
+        }
+
+        return container.has(new NamespacedKey(plugin, IGNORE_INTERACT_KEY), PersistentDataType.BYTE);
     }
 
 }
