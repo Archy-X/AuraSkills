@@ -35,10 +35,12 @@ import java.util.UUID;
 public class EntityLeveler extends SourceLeveler {
 
     private final NamespacedKey SPAWNER_MOB_KEY;
+    private final NamespacedKey ROSE_STACKER_SPAWNER;
 
     public EntityLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.ENTITY);
         this.SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
+        this.ROSE_STACKER_SPAWNER = NamespacedKey.fromString("rosestacker:spawner_spawned");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -283,11 +285,18 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     private double getSpawnerMultiplier(Entity entity, Skill skill) {
-        if (entity.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) { // Is spawner mob
+        if (isSpawnerSpawned(entity)) {
             return skill.optionDouble("spawner_multiplier", 1.0);
         } else {
             return 1.0;
         }
+    }
+
+    private boolean isSpawnerSpawned(Entity entity) {
+        PersistentDataContainer container = entity.getPersistentDataContainer();
+        if (container.has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) {
+            return true;
+        } else return container.has(ROSE_STACKER_SPAWNER, PersistentDataType.INTEGER);
     }
 
     @Nullable
