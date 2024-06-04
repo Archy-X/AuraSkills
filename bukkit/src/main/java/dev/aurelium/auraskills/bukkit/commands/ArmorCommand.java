@@ -39,7 +39,7 @@ public class ArmorCommand extends BaseCommand {
     @CommandCompletion("@stats @nothing false|true")
     @CommandPermission("auraskills.command.armor.modifier")
     @Description("Adds an armor stat modifier to the item held, along with lore by default.")
-    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, int value, @Default("true") boolean lore) {
+    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);

@@ -35,6 +35,7 @@ Release versions are published to the Maven central repository.
     <groupId>dev.aurelium</groupId>
     <artifactId>auraskills-api-bukkit</artifactId>
     <version>2.1.0</version>
+    <scope>provided</scope>
 </dependency>
 ```
 ### Gradle
