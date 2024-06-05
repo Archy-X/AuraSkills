@@ -72,7 +72,8 @@ public class LevelProgressionMenu {
                     itemsPerPage = (int) itemsPerPageObj;
                 }
             }
-            return (skill.getMaxLevel() - 2) / itemsPerPage + 1;
+            int startLevel = m.menu().getOption(Integer.class, "start_level", 1);
+            return (skill.getMaxLevel() - startLevel) / itemsPerPage + 1;
         });
 
         var globalItems = new GlobalItems(plugin);
