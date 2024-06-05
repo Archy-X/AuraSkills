@@ -137,6 +137,8 @@ blocked_worlds:
 disabled_worlds:
   - Example
 disable_in_creative_mode: false
+data_validation:
+  correct_over_max_level: false
 on_death:
   reset_skills: false
   reset_xp: false

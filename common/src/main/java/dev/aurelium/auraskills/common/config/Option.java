@@ -67,6 +67,7 @@ public enum Option {
     DAMAGE_HOLOGRAMS_COLORS_DEFAULT("damage_holograms.colors.default", OptionType.STRING),
     DAMAGE_HOLOGRAMS_COLORS_CRITICAL_DIGITS("damage_holograms.colors.critical.digits", OptionType.LIST),
     START_LEVEL("start_level", OptionType.INT),
+    DATA_VALIDATION_CORRECT_OVER_MAX_LEVEL("data_validation.correct_over_max_level", OptionType.BOOLEAN),
     LEADERBOARDS_UPDATE_PERIOD("leaderboards.update_period", OptionType.INT),
     LEADERBOARDS_UPDATE_DELAY("leaderboards.update_delay", OptionType.INT),
     ENABLE_SKILL_COMMANDS("enable_skill_commands", OptionType.BOOLEAN),

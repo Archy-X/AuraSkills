@@ -97,6 +97,15 @@ public abstract class StorageProvider {
                 user.setSkillLevel(skill, startLevel);
             }
         }
+        // Correct over max level
+        if (plugin.configBoolean(Option.DATA_VALIDATION_CORRECT_OVER_MAX_LEVEL)) {
+            for (Skill skill : user.getSkillLevelMap().keySet()) {
+                int maxLevel = skill.getMaxLevel();
+                if (user.getSkillLevelMap().get(skill) > maxLevel) {
+                    user.setSkillLevel(skill, maxLevel);
+                }
+            }
+        }
     }
 
 }
