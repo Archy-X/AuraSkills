@@ -617,9 +617,9 @@ menus:
     job: 职业
     job_desc: 将 {skill} 选定为你的职业可以在收集经验的同时赚钱。
     job_select: 左键点击将 {skill} 选定为当前职业
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_active: 你当前为该职业
+    job_quit: 右键点击退出该职业
+    job_limit: 你不能申请更多职业。请先退出其他职业再选择该职业。
   stats:
     stats_title: 你的属性
     skills: "技能"
