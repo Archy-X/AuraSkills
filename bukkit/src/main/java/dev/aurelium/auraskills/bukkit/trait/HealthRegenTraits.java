@@ -118,6 +118,12 @@ public class HealthRegenTraits extends TraitImpl {
         if (regenCondition.apply(player)) {
             double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait)
                     , attribute.getValue() - player.getHealth());
+
+            final double gainThreshold = 0.001;
+            if (amountGained < gainThreshold) {
+                return;
+            }
+
             CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
             Bukkit.getPluginManager().callEvent(event);
 
