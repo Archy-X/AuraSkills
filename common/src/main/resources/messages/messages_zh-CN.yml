@@ -343,7 +343,7 @@ commands:
         removed: "<gray>成功清除了物品上的所有属性"
     trait:
       add:
-        already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
+        already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk armor modifier remove 删除它!"
     multiplier:
       add:
         added: "<gray>装备时属性增强<aqua> {target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
