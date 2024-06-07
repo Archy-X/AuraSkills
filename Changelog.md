@@ -2,6 +2,34 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.1.2
+
+### New Features
+- Add roman and int placeholders for abilities (thanks Erik)
+  - `%auraskills_[ability]_roman%` - Gets ability level as a Roman numeral
+  - `%auraskills_[ability]_value_int%` - Gets ability value rounded to an integer
+  - `%auraskills_[ability]_value_2_int%` - Gets secondary ability value rounded to an integer if it exists
+  - `%auraskills_mability_[ability]_roman%` - Gets mana ability level as a Roman numeral
+  - `%auraskills_mability_[ability]_value_int%` - Gets mana ability value rounded to an integer
+- Add correct_over_max_level option to main config to prevent skill levels being over max level on join (false by default)
+- Add shape option to menu fill items
+  - Available values are border, top_row, bottom_row, left_column, and right_column
+
+### Changes
+- Revert unnecessary AdvancedEnchantments event ignores, fixing compatibility
+- Update German and Chinese Simplified messages
+
+### Bug Fixes
+- Fix split slimes and magma cubes not applying spawner_multiplier
+- Fix double reloading on addStatModifier (thanks Erik)
+  - This fixes extra health resets with plugins like MMOItems
+- Fix Charged Shot not applying damage bonus
+- Fix NoSuchFieldError on older versions when using mana abilities
+- Fix RoseStacker spawner mobs not working with spawner_multiplier
+- Fix armor add command not accepting decimal values
+- Fix level progression total page count sometimes being wrong
+- Fix food level decreasing at full health with use_custom_delay true
+
 ## 2.1.1
 
 ### New Features

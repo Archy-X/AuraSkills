@@ -14,7 +14,7 @@ public final class AuraSkillsBukkitProvider {
     public static AuraSkillsBukkit getInstance() {
         AuraSkillsBukkit instance = AuraSkillsBukkitProvider.instance;
         if (instance == null) {
-            throw new IllegalStateException("AureliumSkillsAPI is not initialized");
+            throw new IllegalStateException("AuraSkillsBukkit is not initialized");
         }
         return instance;
     }
