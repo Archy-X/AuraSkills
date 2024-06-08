@@ -60,6 +60,7 @@ action_bar:
   placeholder_api: true
   use_suffix: true
   format_last: false
+  update_async: false
 boss_bar:
   enabled: true
   mode: single
