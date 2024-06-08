@@ -217,12 +217,27 @@ public abstract class ActionBarManager {
     public void sendAbilityActionBar(User user, String message) {
         if (!user.isActionBarEnabled(ActionBarType.ABILITY)) return;
 
-        String actionBarText = TextUtil.replace(plugin.getMsg(ActionBarMessage.ABILITY, user.getLocale()),
+        boolean formatLast = plugin.configBoolean(Option.ACTION_BAR_FORMAT_LAST);
+
+        String base;
+        if (formatLast) {
+            base = plugin.getMessageProvider().getRaw(ActionBarMessage.ABILITY, user.getLocale());
+        } else {
+            base = plugin.getMsg(ActionBarMessage.ABILITY, user.getLocale());
+        }
+
+        String actionBarText = TextUtil.replace(base,
                 "{hp}", getHp(user),
                 "{max_hp}", getMaxHp(user),
                 "{mana}", getMana(user),
                 "{max_mana}", getMaxMana(user),
                 "{message}", message);
+        actionBarText = replacePlaceholderApi(user, actionBarText);
+
+        if (formatLast) {
+            actionBarText = plugin.getMessageProvider().applyFormatting(actionBarText);
+        }
+
         plugin.getUiProvider().sendActionBar(user, actionBarText);
         setPaused(user, 15 * 50, TimeUnit.MILLISECONDS);
     }
@@ -231,9 +246,17 @@ public abstract class ActionBarManager {
         ActionBarMessage messageKey = maxed ? ActionBarMessage.MAXED : ActionBarMessage.XP;
         Locale locale = user.getLocale();
 
-        String message = plugin.getMsg(messageKey, locale);
+        boolean formatLast = plugin.configBoolean(Option.ACTION_BAR_FORMAT_LAST);
+
+        String base;
+        if (formatLast) {
+            base = plugin.getMessageProvider().getRaw(messageKey, locale);
+        } else {
+            base = plugin.getMsg(messageKey, locale);
+        }
+
         // Replace built in placeholders
-        message = TextUtil.replace(message,
+        String message = TextUtil.replace(base,
                 "{hp}", getHp(user),
                 "{max_hp}", getMaxHp(user),
                 "{xp_gained}", xpGained > 0 ? "+" + NumberUtil.format1(xpGained) : NumberUtil.format1(xpGained),
@@ -246,6 +269,10 @@ public abstract class ActionBarManager {
                 "{income}", plugin.getUiProvider().getFormat(FormatType.MONEY).format(income));
         // Replace PlaceholderAPI placeholders
         message = replacePlaceholderApi(user, message);
+
+        if (formatLast) {
+            message = plugin.getMessageProvider().applyFormatting(message);
+        }
 
         return message;
     }
