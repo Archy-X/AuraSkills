@@ -12,10 +12,8 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public abstract class ActionBarManager {
@@ -25,8 +23,9 @@ public abstract class ActionBarManager {
 
     private final HashSet<UUID> isPaused = new HashSet<>();
     private final HashSet<UUID> isGainingXp = new HashSet<>();
-    private final HashMap<UUID, Integer> timer = new HashMap<>();
-    private final HashMap<UUID, Integer> currentAction = new HashMap<>();
+    private final Map<UUID, Integer> timer = new HashMap<>();
+    private final Map<UUID, Integer> currentAction = new HashMap<>();
+    private final Map<Locale, String> idleMessageCache = new ConcurrentHashMap<>();
 
     public ActionBarManager(AuraSkillsPlugin plugin, UiProvider uiProvider) {
         this.plugin = plugin;
@@ -84,12 +83,32 @@ public abstract class ActionBarManager {
                         continue;
                     }
 
-                    String message = TextUtil.replace(plugin.getMsg(ActionBarMessage.IDLE, user.getLocale())
+                    boolean formatLast = plugin.configBoolean(Option.ACTION_BAR_FORMAT_LAST);
+                    Locale locale = user.getLocale();
+
+                    String base;
+                    if (formatLast) {
+                        base = plugin.getMessageProvider().getRaw(ActionBarMessage.IDLE, locale);
+                    } else {
+                        String cache = idleMessageCache.get(locale);
+                        if (cache != null) { // Cache hit
+                            base = cache;
+                        } else { // Cache miss
+                            base = plugin.getMsg(ActionBarMessage.IDLE, locale);
+                            idleMessageCache.put(locale, base);
+                        }
+                    }
+
+                    String message = TextUtil.replace(base
                             , "{hp}", getHp(user)
                             , "{max_hp}", getMaxHp(user)
                             , "{mana}", getMana(user)
                             , "{max_mana}", getMaxMana(user));
                     message = replacePlaceholderApi(user, message);
+
+                    if (formatLast) {
+                        message = plugin.getMessageProvider().applyFormatting(message);
+                    }
 
                     uiProvider.sendActionBar(user, message);
                 }
@@ -245,7 +264,7 @@ public abstract class ActionBarManager {
     }
 
     private String replacePlaceholderApi(User user, String message) {
-        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
+        if (plugin.getHookManager().isRegistered(PlaceholderHook.class) && plugin.configBoolean(Option.ACTION_BAR_PLACEHOLDER_API)) {
             return plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
         }
         return message;

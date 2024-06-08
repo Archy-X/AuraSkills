@@ -49,7 +49,7 @@ public class ProtocolLibHook extends Hook {
 
     private void sendActionBarTextPacket(Player player, String message) {
         PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SET_ACTION_BAR_TEXT);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
+        packet.getChatComponents().write(0, WrappedChatComponent.fromLegacyText(message));
         packet.setMeta("AuraSkills", true); // Mark packet as from Aurelium Skills
         protocolManager.sendServerPacket(player, packet);
     }
@@ -58,7 +58,7 @@ public class ProtocolLibHook extends Hook {
     private void sendTitlePacket(Player player, String message) {
         PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.TITLE);
         packet.getEnumModifier(EnumWrappers.TitleAction.class, 0).write(0, EnumWrappers.TitleAction.ACTIONBAR);
-        packet.getChatComponents().write(0, WrappedChatComponent.fromText(message));
+        packet.getChatComponents().write(0, WrappedChatComponent.fromLegacyText(message));
         packet.setMeta("AuraSkills", true); // Mark packet as from Aurelium Skills
         protocolManager.sendServerPacket(player, packet);
     }

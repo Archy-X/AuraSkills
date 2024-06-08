@@ -84,6 +84,18 @@ public abstract class MessageProvider implements PolyglotProvider {
         return componentToString(converted);
     }
 
+    public Component getComponent(MessageKey key, Locale locale) {
+        LocalizedKey localizedKey = new LocalizedKey(key, locale);
+        Component cached = componentCache.get(localizedKey);
+        if (cached != null) {
+            return cached;
+        }
+        String message = manager.get(locale, convertKey(key));
+        Component converted = stringToComponent(message);
+        componentCache.put(localizedKey, converted);
+        return converted;
+    }
+
     /**
      * Get a message as a raw string without any formatting applied
      *

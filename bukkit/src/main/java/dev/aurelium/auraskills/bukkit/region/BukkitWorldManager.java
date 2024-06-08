@@ -6,14 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BukkitWorldManager implements WorldManager {
 
-    private List<String> blockedWorlds;
-    private List<String> disabledWorlds;
-    private List<String> blockedCheckBlockReplaceWorlds;
+    private Set<String> blockedWorlds;
+    private Set<String> disabledWorlds;
+    private Set<String> blockedCheckBlockReplaceWorlds;
     private final AuraSkills plugin;
 
     public BukkitWorldManager(AuraSkills plugin) {
@@ -22,9 +22,9 @@ public class BukkitWorldManager implements WorldManager {
 
     public void loadWorlds(FileConfiguration config) {
         int blockedWorldsLoaded = 0;
-        blockedWorlds = new LinkedList<>();
-        disabledWorlds = new LinkedList<>();
-        blockedCheckBlockReplaceWorlds = new LinkedList<>();
+        blockedWorlds = new HashSet<>();
+        disabledWorlds = new HashSet<>();
+        blockedCheckBlockReplaceWorlds = new HashSet<>();
         for (String blockedWorld : config.getStringList("blocked_worlds")) {
             blockedWorlds.add(blockedWorld);
             blockedWorldsLoaded++;

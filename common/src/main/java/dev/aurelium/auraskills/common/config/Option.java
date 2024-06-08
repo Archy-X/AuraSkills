@@ -25,6 +25,7 @@ public enum Option {
     ACTION_BAR_ROUND_XP("action_bar.round_xp", OptionType.BOOLEAN),
     ACTION_BAR_PLACEHOLDER_API("action_bar.placeholder_api", OptionType.BOOLEAN),
     ACTION_BAR_USE_SUFFIX("action_bar.use_suffix", OptionType.BOOLEAN),
+    ACTION_BAR_FORMAT_LAST("action_bar.format_last", OptionType.BOOLEAN),
     // Boss bar options
     BOSS_BAR_ENABLED("boss_bar.enabled", OptionType.BOOLEAN),
     BOSS_BAR_MODE("boss_bar.mode", OptionType.STRING),

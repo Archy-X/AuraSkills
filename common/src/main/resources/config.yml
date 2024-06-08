@@ -59,6 +59,7 @@ action_bar:
   round_xp: false
   placeholder_api: true
   use_suffix: true
+  format_last: false
 boss_bar:
   enabled: true
   mode: single
