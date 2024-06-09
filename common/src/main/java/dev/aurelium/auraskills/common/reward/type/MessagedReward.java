@@ -28,7 +28,7 @@ public abstract class MessagedReward extends SkillReward {
 
     @Override
     public String getChatMessage(User user, Locale locale, Skill skill, int level) {
-        return attemptAsMessageKey(chatMessage, user, locale, skill, level, false);
+        return attemptAsMessageKey(chatMessage, user, locale, skill, level, true);
     }
 
     /**

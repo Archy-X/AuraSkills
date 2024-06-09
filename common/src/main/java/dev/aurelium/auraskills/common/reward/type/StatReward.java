@@ -49,11 +49,11 @@ public class StatReward extends SkillReward {
 
     @Override
     public String getChatMessage(User player, Locale locale, Skill skill, int level) {
-        return plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(LevelerFormat.STAT_LEVEL, locale),
+        return TextUtil.replace(plugin.getMessageProvider().getRaw(LevelerFormat.STAT_LEVEL, locale),
                 "{color}", stat.getColor(locale),
                 "{num}", getDisplayValue(locale),
                 "{symbol}", stat.getSymbol(locale),
-                "{stat}", stat.getDisplayName(locale, false)));
+                "{stat}", stat.getDisplayName(locale, false));
     }
 
     private String getDisplayValue(Locale locale) {
