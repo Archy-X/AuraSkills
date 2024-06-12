@@ -221,6 +221,10 @@ public abstract class User {
     }
 
     public double getBonusTraitLevel(Trait trait) {
+        if (!trait.isEnabled()) {
+            return 0.0;
+        }
+
         double level = 0.0;
         for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
             level += getStatLevel(stat) * stat.getTraitModifier(trait);

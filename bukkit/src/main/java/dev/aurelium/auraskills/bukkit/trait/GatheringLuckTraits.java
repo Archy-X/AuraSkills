@@ -51,6 +51,7 @@ public class GatheringLuckTraits extends TraitImpl {
     }
 
     public void apply(Trait trait, Block block, Player player, User user, XpSource source) {
+        if (!trait.isEnabled()) return;
         // Get the skill corresponding to the block trait
         Skill skill = getSkill(trait);
         if (skill == null) return;
