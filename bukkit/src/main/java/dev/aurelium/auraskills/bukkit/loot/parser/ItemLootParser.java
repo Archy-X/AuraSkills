@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.parser;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
@@ -10,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantList;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -28,21 +30,26 @@ public class ItemLootParser implements LootParser {
     }
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigurationNode config) throws SerializationException {
+    public Loot parse(LootParsingContext context, ConfigNode config) {
         ItemSupplier item = null;
+        ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
         for (CustomItemParser parser : manager.getCustomItemParsers()) {
-            if (parser.shouldUseParser(config)) {
-                item = new ItemSupplier(parser.parseCustomItem(config), null);
+            if (parser.shouldUseParser(backing)) {
+                item = new ItemSupplier(parser.parseCustomItem(backing), null);
                 break;
             }
         }
         // Parse normally
         if (item == null) {
-            item = parseItem(config);
+            try {
+                item = parseItem(backing);
+            } catch (SerializationException e) {
+                throw new RuntimeException(e);
+            }
         }
         Validate.notNull(item, "Failed to parse item");
 
-        int[] amounts = parseAmount(config);
+        int[] amounts = parseAmount(backing);
 
         return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1]);
     }

@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.api.loot;
 
-import org.spongepowered.configurate.ConfigurationNode;
+import dev.aurelium.auraskills.api.config.ConfigNode;
 
 public interface LootParsingContext {
 
-    LootValues parseValues(ConfigurationNode config);
+    LootValues parseValues(ConfigNode config);
 
 }

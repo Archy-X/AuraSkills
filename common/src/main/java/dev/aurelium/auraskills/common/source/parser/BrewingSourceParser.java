@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.common.source.parser;
 
 import dev.aurelium.auraskills.api.item.ItemFilter;
-import dev.aurelium.auraskills.api.source.SourceContext;
 import dev.aurelium.auraskills.api.source.type.BrewingXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.ConfigurateSourceContext;
 import dev.aurelium.auraskills.common.source.type.BrewingSource;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -15,7 +15,7 @@ public class BrewingSourceParser extends SourceParser<BrewingSource> {
     }
 
     @Override
-    public BrewingSource parse(ConfigurationNode source, SourceContext context) throws SerializationException {
+    public BrewingSource parse(ConfigurationNode source, ConfigurateSourceContext context) throws SerializationException {
         ItemFilter ingredients = context.required(source, "ingredient").get(ItemFilter.class);
         BrewingXpSource.BrewTriggers trigger = context.required(source, "trigger").get(BrewingXpSource.BrewTriggers.class);
 

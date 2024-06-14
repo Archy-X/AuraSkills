@@ -1,14 +1,14 @@
 package dev.aurelium.auraskills.api.source;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.configurate.ConfigurationNode;
 
 public class SourceContext extends BaseContext {
 
-    private final SourceType sourceType;
-    private final String sourceName;
+    protected final SourceType sourceType;
+    protected final String sourceName;
 
     public SourceContext(AuraSkillsApi api, SourceType sourceType, String sourceName) {
         super(api);
@@ -24,7 +24,7 @@ public class SourceContext extends BaseContext {
         return sourceName;
     }
 
-    public SourceValues parseValues(ConfigurationNode source) {
+    public SourceValues parseValues(ConfigNode source) {
         NamespacedId id = NamespacedId.of(NamespacedId.AURASKILLS, sourceName);
         double xp = source.node("xp").getDouble(0.0);
         @Nullable String displayName = source.node("display_name").getString();
