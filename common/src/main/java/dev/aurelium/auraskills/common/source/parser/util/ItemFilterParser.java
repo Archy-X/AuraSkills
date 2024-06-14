@@ -7,7 +7,6 @@ import dev.aurelium.auraskills.api.item.ItemFilterMeta;
 import dev.aurelium.auraskills.api.source.BaseContext;
 import dev.aurelium.auraskills.api.source.UtilityParser;
 import dev.aurelium.auraskills.common.item.SourceItem;
-import org.spongepowered.configurate.serialize.SerializationException;
 
 public class ItemFilterParser implements UtilityParser<ItemFilter> {
 
