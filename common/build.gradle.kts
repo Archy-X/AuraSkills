@@ -17,6 +17,9 @@ dependencies {
         exclude("org.spongepowered", "configurate-yaml")
     }
     api("com.ezylang:EvalEx:3.3.0")
+    api("org.spongepowered:configurate-yaml:4.1.2") {
+        exclude("org.yaml", "snakeyaml")
+    }
     implementation("com.zaxxer:HikariCP:5.1.0") {
         exclude("org.slf4j", "slf4j-api")
     }
