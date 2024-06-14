@@ -343,7 +343,7 @@ commands:
         removed: "<gray>아이템에서 모든 방어구 효과가 제거되었습니다."
     trait:
       add:
-        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        already_exists: "<yellow>방어구에 {trait} 이 가 이미 존재합니다. <yellow>/sk armor modifier remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
     multiplier:
       add:
         added: "<aqua>{target} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
@@ -393,7 +393,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>{color}{stat} <yellow>효과가 아이템에 이미 존재합니다. /sk item modifier remove 명령어로 제거 후 재시도하십시오."
       remove:
         does_not_exist: "<yellow>아이템에 {color}{stat} <yellow>효과가 없습니다!"
         removed: "{color}{stat} <gray>효과가 아이템에서 제거되었습니다."
