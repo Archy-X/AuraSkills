@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
@@ -191,14 +191,13 @@ public class SkillsItem {
         container.remove(key);
     }
 
-    public void convertFromLegacy() {
+    public void convertFromLegacy(ReadWriteNBT nbt) {
         if (plugin.isNbtApiDisabled()) return;
 
-        NBTItem nbtItem = new NBTItem(item);
         // Convert stat modifiers
         Modifiers modifiers = new Modifiers(plugin);
         for (ModifierType type : ModifierType.values()) {
-            List<StatModifier> legacy = modifiers.getLegacyModifiers(type, nbtItem);
+            List<StatModifier> legacy = modifiers.getLegacyModifiers(type, nbt);
             if (legacy.isEmpty()) continue;
 
             for (StatModifier modifier : legacy) {
@@ -208,7 +207,7 @@ public class SkillsItem {
         // Convert multipliers
         Multipliers multipliers = new Multipliers(plugin);
         for (ModifierType type : ModifierType.values()) {
-            List<Multiplier> legacy = multipliers.getLegacyMultipliers(type, nbtItem);
+            List<Multiplier> legacy = multipliers.getLegacyMultipliers(type, nbt);
             if (legacy.isEmpty()) continue;
 
             for (Multiplier multiplier : legacy) {
@@ -218,7 +217,7 @@ public class SkillsItem {
         // Convert requirements
         Requirements requirements = new Requirements(plugin);
         for (ModifierType type : ModifierType.values()) {
-            Map<Skill, Integer> legacy = requirements.getLegacyRequirements(type, nbtItem);
+            Map<Skill, Integer> legacy = requirements.getLegacyRequirements(type, nbt);
             if (legacy.isEmpty()) continue;
 
             for (Map.Entry<Skill, Integer> entry : legacy.entrySet()) {

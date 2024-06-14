@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import de.tr7zw.changeme.nbtapi.NBTCompound;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -100,90 +99,76 @@ public class ItemUtils {
 		return lore;
 	}
 
-	public static NBTCompound getCompound(NBTCompound root, String name) {
-		NBTCompound compound = root.getCompound(name);
+	public static ReadWriteNBT getCompound(ReadWriteNBT root, String name) {
+		ReadWriteNBT compound = root.getCompound(name);
 		if (compound == null) {
-			compound = root.addCompound(name);
+			compound = root.getOrCreateCompound(name);
 		}
 		return compound;
 	}
 
-	public static NBTCompound getRootCompound(NBTItem item) {
-		NBTCompound compound = item.getCompound("AuraSkills");
+	public static ReadWriteNBT getRootCompound(ReadWriteNBT item) {
+		ReadWriteNBT compound = item.getCompound("AuraSkills");
 		if (compound == null) {
-			compound = item.addCompound("AuraSkills");
+			compound = item.getOrCreateCompound("AuraSkills");
 		}
 		return compound;
 	}
 
-	public static NBTCompound getLegacyRootCompound(NBTItem item) {
-		NBTCompound compound = item.getCompound("AureliumSkills");
+	public static ReadWriteNBT getLegacyRootCompound(ReadWriteNBT item) {
+		ReadWriteNBT compound = item.getCompound("AureliumSkills");
 		if (compound == null) {
-			compound = item.addCompound("AureliumSkills");
+			compound = item.getOrCreateCompound("AureliumSkills");
 		}
 		return compound;
 	}
 
-	public static NBTCompound getModifiersCompound(NBTItem item) {
+	public static ReadWriteNBT getModifiersCompound(ReadWriteNBT item) {
 		return getCompound(getRootCompound(item), "Modifiers");
 	}
 
-	public static NBTCompound getLegacyModifiersCompound(NBTItem item) {
+	public static ReadWriteNBT getLegacyModifiersCompound(ReadWriteNBT item) {
 		return getCompound(getLegacyRootCompound(item), "Modifiers");
 	}
 
-	public static NBTCompound getModifiersTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getModifiersTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
-	public static NBTCompound getLegacyModifiersTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getLegacyModifiersTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getLegacyModifiersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
-	public static NBTCompound getRequirementsCompound(NBTItem item) {
+	public static ReadWriteNBT getRequirementsCompound(ReadWriteNBT item) {
 		return getCompound(getRootCompound(item), "Requirements");
 	}
 
-	public static NBTCompound getRequirementsTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getRequirementsTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
-	public static NBTCompound getLegacyRequirementsCompound(NBTItem item) {
+	public static ReadWriteNBT getLegacyRequirementsCompound(ReadWriteNBT item) {
 		return getCompound(getLegacyRootCompound(item), "Requirements");
 	}
 
-
-	public static NBTCompound getLegacyRequirementsTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getLegacyRequirementsTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getLegacyRequirementsCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
-	public static NBTCompound getMultipliersCompound(NBTItem item) {
+	public static ReadWriteNBT getMultipliersCompound(ReadWriteNBT item) {
 		return getCompound(getRootCompound(item), "Multipliers");
 	}
 
-	public static NBTCompound getMultipliersTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getMultipliersTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
 	}
 
-	public static NBTCompound getLegacyMultipliersCompound(NBTItem item) {
+	public static ReadWriteNBT getLegacyMultipliersCompound(ReadWriteNBT item) {
 		return getCompound(getLegacyRootCompound(item), "Multipliers");
 	}
 
-	public static NBTCompound getLegacyMultipliersTypeCompound(NBTItem item, ModifierType type) {
+	public static ReadWriteNBT getLegacyMultipliersTypeCompound(ReadWriteNBT item, ModifierType type) {
 		return getCompound(getLegacyMultipliersCompound(item), TextUtil.capitalize(type.name().toLowerCase(Locale.ROOT)));
-	}
-
-	public static void removeParentCompounds(NBTCompound compound) {
-		if (compound.getKeys().isEmpty()) {
-			NBTCompound parent = compound.getParent();
-			parent.removeKey(compound.getName());
-			if (parent.getKeys().isEmpty()) {
-				parent.getParent().removeKey(parent.getName());
-				if (parent.getParent().getKeys().isEmpty()) {
-					parent.getParent().getParent().removeKey(parent.getParent().getName());
-				}
-			}
-		}
 	}
 
 	public static boolean isInventoryFull(Player player) {

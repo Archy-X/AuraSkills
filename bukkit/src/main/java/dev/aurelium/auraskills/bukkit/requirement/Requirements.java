@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
-import de.tr7zw.changeme.nbtapi.NBTCompound;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -20,8 +19,8 @@ public class Requirements {
         this.plugin = plugin;
     }
 
-    public Map<Skill, Integer> getLegacyRequirements(ModifierType type, NBTItem nbtItem) {
-        NBTCompound legacyCompound = ItemUtils.getLegacyRequirementsTypeCompound(nbtItem, type);
+    public Map<Skill, Integer> getLegacyRequirements(ModifierType type, ReadWriteNBT nbtItem) {
+        ReadWriteNBT legacyCompound = ItemUtils.getLegacyRequirementsTypeCompound(nbtItem, type);
         Map<Skill, Integer> requirements = new HashMap<>();
 
         for (String key : legacyCompound.getKeys()) {

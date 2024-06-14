@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import de.tr7zw.changeme.nbtapi.NBTCompound;
+import de.tr7zw.changeme.nbtapi.NBT;
 import de.tr7zw.changeme.nbtapi.NBTContainer;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -149,11 +149,11 @@ public class ConfigurateItemParser {
             return item;
         }
         if (config.isMap()) {
-            item = parseNBT(item, config.childrenMap());
+            parseNBT(item, config.childrenMap());
         } else if (config.getString() != null) {
             String nbtString = config.getString("nbt");
             if (nbtString != null) {
-                item = parseNBTString(item, nbtString);
+                parseNBTString(item, nbtString);
             }
         }
         return item;
@@ -349,13 +349,13 @@ public class ConfigurateItemParser {
         }
     }
 
-    private ItemStack parseNBT(ItemStack item, Map<Object, ? extends ConfigurationNode> map) {
-        NBTItem nbtItem = new NBTItem(item);
-        applyMapToNBT(nbtItem, map);
-        return nbtItem.getItem();
+    private void parseNBT(ItemStack item, Map<Object, ? extends ConfigurationNode> map) {
+        NBT.modify(item, nbt -> {
+            applyMapToNBT(nbt, map);
+        });
     }
 
-    private void applyMapToNBT(NBTCompound item, Map<Object, ? extends ConfigurationNode> map) {
+    private void applyMapToNBT(ReadWriteNBT item, Map<Object, ? extends ConfigurationNode> map) {
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : map.entrySet()) {
             Object keyObj = entry.getKey();
             Object value = entry.getValue().raw();
@@ -380,11 +380,11 @@ public class ConfigurateItemParser {
         }
     }
 
-    private ItemStack parseNBTString(ItemStack item, String nbtString) {
+    private void parseNBTString(ItemStack item, String nbtString) {
         NBTContainer container = new NBTContainer(nbtString);
-        NBTItem nbtItem = new NBTItem(item);
-        nbtItem.mergeCompound(container);
-        return nbtItem.getItem();
+        NBT.modify(item, nbt -> {
+            nbt.mergeCompound(container);
+        });
     }
 
     @Nullable

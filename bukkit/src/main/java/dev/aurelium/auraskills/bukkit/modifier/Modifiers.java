@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
-import de.tr7zw.changeme.nbtapi.NBTCompound;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -21,10 +20,10 @@ public class Modifiers {
         this.plugin = plugin;
     }
 
-    public List<StatModifier> getLegacyModifiers(ModifierType type, NBTItem nbtItem) {
+    public List<StatModifier> getLegacyModifiers(ModifierType type, ReadWriteNBT nbt) {
         if (plugin.isNbtApiDisabled()) return new ArrayList<>();
         List<StatModifier> modifiers = new ArrayList<>();
-        NBTCompound compound = ItemUtils.getLegacyModifiersTypeCompound(nbtItem, type);
+        ReadWriteNBT compound = ItemUtils.getLegacyModifiersTypeCompound(nbt, type);
         for (String key : compound.getKeys()) {
             Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.toLowerCase(Locale.ROOT)));
             if (stat != null) {
