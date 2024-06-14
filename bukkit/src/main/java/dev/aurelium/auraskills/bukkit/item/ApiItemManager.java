@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.item.ModifierType;
@@ -12,6 +13,7 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -143,11 +145,27 @@ public class ApiItemManager implements ItemManager {
     }
 
     @Override
+    public ItemStack parseItem(ConfigNode config) {
+        return itemParser.parseItem(((ApiConfigNode) config).getBacking());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public ItemStack parseItem(ConfigurationNode config) {
         return itemParser.parseItem(config);
     }
 
     @Override
+    public List<ItemStack> parseMultipleItems(ConfigNode config) {
+        try {
+            return itemParser.parseMultipleItems(((ApiConfigNode) config).getBacking());
+        } catch (SerializationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
     public List<ItemStack> parseMultipleItems(ConfigurationNode config) {
         try {
             return itemParser.parseMultipleItems(config);

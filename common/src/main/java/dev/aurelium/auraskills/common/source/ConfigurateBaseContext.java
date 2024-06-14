@@ -1,31 +1,26 @@
-package dev.aurelium.auraskills.api.source;
+package dev.aurelium.auraskills.common.source;
 
-import dev.aurelium.auraskills.api.AuraSkillsApi;
-import dev.aurelium.auraskills.api.config.ConfigNode;
+import dev.aurelium.auraskills.api.source.BaseContext;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.lang.reflect.Array;
 import java.util.List;
 
-public class BaseContext {
+public class ConfigurateBaseContext extends BaseContext {
 
-    protected final AuraSkillsApi api;
-
-    public BaseContext(AuraSkillsApi api) {
-        this.api = api;
+    public ConfigurateBaseContext(BaseContext context) {
+        super(context.getApi());
     }
 
-    public AuraSkillsApi getApi() {
-        return api;
-    }
-
-    public ConfigNode required(ConfigNode node, String path)  {
+    public ConfigurationNode required(ConfigurationNode node, String path)  {
         if (!node.hasChild(path)) {
             throw new IllegalArgumentException("Missing required field: " + path);
         }
         return node.node(path);
     }
 
-    public <V> V[] requiredPluralizedArray(String key, ConfigNode source, Class<V> type) {
+    public <V> V[] requiredPluralizedArray(String key, ConfigurationNode source, Class<V> type) {
         V[] array = pluralizedArray(key, source, type);
         if (array == null) {
             throw new IllegalArgumentException("Missing required field '" + key + "' or list '" + key + "s' of type " + type.getName());
@@ -34,14 +29,14 @@ public class BaseContext {
     }
 
     @SuppressWarnings("unchecked")
-    public <V> V[] pluralizedArray(String key, ConfigNode source, Class<V> type) {
+    public <V> V[] pluralizedArray(String key, ConfigurationNode source, Class<V> type) {
         V[] array;
         String pluralKey = api.getMessageManager().toPluralForm(key); // Convert key to plural
         if (source.hasChild(pluralKey)) {
             List<V> list;
             try {
                 list = source.node(pluralKey).getList(type);
-            } catch (RuntimeException e) {
+            } catch (SerializationException e) {
                 throw new IllegalArgumentException("Failed to convert value of key "  + pluralKey + " to a list of type " + type.getName());
             }
             if (list != null) {
@@ -53,7 +48,7 @@ public class BaseContext {
             array = (V[]) Array.newInstance(type, 1);
             try {
                 array[0] = source.node(key).get(type);
-            } catch (RuntimeException e) {
+            } catch (SerializationException e) {
                 throw new IllegalArgumentException("Failed to convert value of key " + key + " to type " + type.getName());
             }
         } else {

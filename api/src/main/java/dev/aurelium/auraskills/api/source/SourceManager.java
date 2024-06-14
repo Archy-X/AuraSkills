@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.api.source;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +36,6 @@ public interface SourceManager {
     String getUnitName(XpSource source, Locale locale);
 
     @Internal
-    SourceIncome loadSourceIncome(ConfigurationNode source);
+    SourceIncome loadSourceIncome(ConfigNode source);
 
 }
