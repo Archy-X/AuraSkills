@@ -14,10 +14,12 @@ import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.*;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.event.EventHandler;
@@ -26,17 +28,21 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class ArcheryAbilities extends AbilityImpl {
 
-    private final String STUN_MODIFIER_NAME = "AureliumSkills-Stun";
+    private final UUID LEGACY_STUN_ID = UUID.fromString("886ccad1-20f0-48e4-8634-53f3a76cf2ea");
+    private final String LEGACY_STUN_NAME = "AureliumSkills-Stun";
+    private final String STUN_KEY = "stun_ability";
 
     public ArcheryAbilities(AuraSkills plugin) {
         super(plugin, Abilities.RETRIEVAL, Abilities.ARCHER, Abilities.BOW_MASTER, Abilities.PIERCING, Abilities.STUN);
@@ -103,22 +109,38 @@ public class ArcheryAbilities extends AbilityImpl {
             AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
             if (speed == null) return;
             // Applies stun
-            double reducedSpeed = speed.getValue() * STUN_SPEED_REDUCTION;
-            AttributeModifier modifier = new AttributeModifier(STUN_MODIFIER_NAME, -1 * reducedSpeed, AttributeModifier.Operation.ADD_NUMBER);
+            AttributeModifier modifier = getAttributeModifier(speed, STUN_SPEED_REDUCTION);
             speed.addModifier(modifier);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    AttributeInstance newSpeed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
-                    if (newSpeed == null) return;
-                    for (AttributeModifier attributeModifier : newSpeed.getModifiers()) {
-                        if (attributeModifier.getName().equals(STUN_MODIFIER_NAME)) {
-                            newSpeed.removeModifier(attributeModifier);
-                        }
-                    }
-                }
-            }.runTaskLater(plugin, 40L);
+
+            scheduleStunRemoval(entity);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private @NotNull AttributeModifier getAttributeModifier(AttributeInstance speed, double STUN_SPEED_REDUCTION) {
+        double reducedSpeed = speed.getValue() * STUN_SPEED_REDUCTION;
+        double attributeValue = -1 * reducedSpeed;
+
+        AttributeModifier modifier;
+        if (VersionUtils.isAtLeastVersion(21)) {
+            NamespacedKey key = new NamespacedKey(plugin, STUN_KEY);
+            modifier = new AttributeModifier(key, attributeValue, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY);
+        } else {
+            modifier = new AttributeModifier(LEGACY_STUN_ID, LEGACY_STUN_NAME, attributeValue, Operation.ADD_NUMBER);
+        }
+        return modifier;
+    }
+
+    private void scheduleStunRemoval(LivingEntity entity) {
+        plugin.getScheduler().scheduleSync(() -> {
+            AttributeInstance newSpeed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            if (newSpeed == null) return;
+            for (AttributeModifier attributeModifier : newSpeed.getModifiers()) {
+                if (isStunModifier(attributeModifier)) {
+                    newSpeed.removeModifier(attributeModifier);
+                }
+            }
+        }, 40L * 50L, TimeUnit.MILLISECONDS);
     }
 
     @EventHandler
@@ -128,10 +150,24 @@ public class ArcheryAbilities extends AbilityImpl {
         if (speed == null) return;
 
         for (AttributeModifier attributeModifier : speed.getModifiers()) {
-            if (attributeModifier.getName().equals(STUN_MODIFIER_NAME)) {
+            if (isStunModifier(attributeModifier)) {
                 speed.removeModifier(attributeModifier);
             }
         }
+    }
+
+    private boolean isStunModifier(AttributeModifier modifier) {
+        if (modifier.getName().equals(LEGACY_STUN_NAME)) {
+            return true;
+        }
+        if (VersionUtils.isAtLeastVersion(21)) {
+            final String pluginNamespace = "auraskills";
+            String namespace = modifier.getKey().getNamespace();
+            String key = modifier.getKey().getKey();
+
+            return namespace.equals(pluginNamespace) && key.equals(STUN_KEY);
+        }
+        return false;
     }
 
     public void piercing(Player player, EntityDamageByEntityEvent event, User user, Arrow arrow) {
