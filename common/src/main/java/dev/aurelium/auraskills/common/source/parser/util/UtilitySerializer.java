@@ -21,7 +21,7 @@ public class UtilitySerializer<T> implements TypeSerializer<T> {
     }
 
     @Override
-    public T deserialize(Type type, ConfigurationNode node) throws SerializationException {
+    public T deserialize(Type type, ConfigurationNode node) {
         return parser.parse(ApiConfigNode.toApi(node), context);
     }
 
