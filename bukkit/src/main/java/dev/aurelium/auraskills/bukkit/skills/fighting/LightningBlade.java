@@ -3,12 +3,15 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,12 +20,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlotGroup;
 
 import java.util.UUID;
 
 public class LightningBlade extends ReadiedManaAbility {
 
     private final UUID MODIFIER_ID = UUID.fromString("2fc64528-614b-11ee-8c99-0242ac120002");
+    private final String LEGACY_MODIFIER_NAME = "auraskills_lightning_blade";
+    private final String MODIFIER_KEY = "lightning_blade_mana_ability";
 
     public LightningBlade(AuraSkills plugin) {
         super(plugin, ManaAbilities.LIGHTNING_BLADE, ManaAbilityMessage.LIGHTNING_BLADE_START, ManaAbilityMessage.LIGHTNING_BLADE_END,
@@ -30,26 +36,56 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onActivate(Player player, User user) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) return;
 
         // Remove existing modifier if exists
         for (AttributeModifier modifier : attribute.getModifiers()) {
-            if (modifier.getName().equals("auraskills_lightning_blade")) {
+            if (isLightningBladeModifier(modifier)) {
                 attribute.removeModifier(modifier);
             }
         }
         // Increase attack speed attribute
         double addedValue = getValue(user) / 100;
-        attribute.addModifier(new AttributeModifier(MODIFIER_ID, "auraskills_lightning_blade", addedValue, AttributeModifier.Operation.MULTIPLY_SCALAR_1));
+        if (VersionUtils.isAtLeastVersion(21)) {
+            NamespacedKey key = new NamespacedKey(plugin, MODIFIER_KEY);
+            attribute.addModifier(new AttributeModifier(key, addedValue, Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.ANY));
+        } else {
+            attribute.addModifier(new AttributeModifier(MODIFIER_ID, LEGACY_MODIFIER_NAME, addedValue, Operation.MULTIPLY_SCALAR_1));
+        }
         // Play sound and send message
         player.playSound(player.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.5f, 1);
     }
 
     @Override
     public void onStop(Player player, User user) {
-        user.removeTraitModifier("lightning_blade");
+        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        if (attribute == null) return;
+
+        for (AttributeModifier modifier : attribute.getModifiers()) {
+            if (isLightningBladeModifier(modifier)) {
+                attribute.removeModifier(modifier);
+            }
+        }
+    }
+
+    private boolean isLightningBladeModifier(AttributeModifier am) {
+        if (am.getName().equals(LEGACY_MODIFIER_NAME)) {
+            return true;
+        }
+        if (VersionUtils.isAtLeastVersion(21)) {
+            String namespace = am.getKey().getNamespace();
+            String key = am.getKey().getKey();
+            if (key.equals(MODIFIER_ID.toString())) {
+                return true;
+            } else {
+                final String attributeNamespace = "auraskills";
+                return namespace.equals(attributeNamespace) && key.equals(MODIFIER_KEY);
+            }
+        }
+        return false;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

@@ -5,16 +5,20 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.EquipmentSlotGroup;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,6 +32,7 @@ public class HpTrait extends TraitImpl {
     private final Map<Integer, Double> hearts = new HashMap<>();
     private static final double threshold = 0.1;
     private final UUID ATTRIBUTE_ID = UUID.fromString("7d1423dd-91db-467a-8eb8-1886e30ca0b1");
+    private final String ATTRIBUTE_KEY = "hp_trait";
 
     HpTrait(AuraSkills plugin) {
         super(plugin, Traits.HP);
@@ -53,7 +58,7 @@ public class HpTrait extends TraitImpl {
         double current = attribute.getValue();
         // Subtract skills attribute value
         for (AttributeModifier am : attribute.getModifiers()) {
-            if (am.getName().equals("skillsHealth")) {
+            if (isSkillsHealthModifier(am)) {
                 current -= am.getAmount();
             }
         }
@@ -104,6 +109,7 @@ public class HpTrait extends TraitImpl {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setHealth(Player player, User user) {
         Trait trait = Traits.HP;
 
@@ -114,7 +120,7 @@ public class HpTrait extends TraitImpl {
         boolean hasChange = true;
         // Removes existing modifiers of the same name and check for change
         for (AttributeModifier am : attribute.getModifiers()) {
-            if (am.getName().equals("skillsHealth")) {
+            if (isSkillsHealthModifier(am)) {
                 // Check for any changes, if not, return
                 if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
                     hasChange = false;
@@ -129,7 +135,7 @@ public class HpTrait extends TraitImpl {
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) || !trait.isEnabled()) {
             player.setHealthScaled(false);
             for (AttributeModifier am : attribute.getModifiers()) {
-                if (am.getName().equals("skillsHealth")) {
+                if (isSkillsHealthModifier(am)) {
                     attribute.removeModifier(am);
                 }
             }
@@ -145,7 +151,12 @@ public class HpTrait extends TraitImpl {
         // Return if no change
         if (hasChange) {
             // Applies modifier
-            attribute.addModifier(new AttributeModifier(ATTRIBUTE_ID, "skillsHealth", modifier, AttributeModifier.Operation.ADD_NUMBER));
+            if (VersionUtils.isAtLeastVersion(21)) {
+                NamespacedKey modifierKey = new NamespacedKey(plugin, ATTRIBUTE_KEY);
+                attribute.addModifier(new AttributeModifier(modifierKey, modifier, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
+            } else {
+                attribute.addModifier(new AttributeModifier(ATTRIBUTE_ID, "skillsHealth", modifier, Operation.ADD_NUMBER));
+            }
             // Sets health to max if over max
             if (player.getHealth() > attribute.getValue()) {
                 player.setHealth(attribute.getValue());
@@ -158,6 +169,24 @@ public class HpTrait extends TraitImpl {
             }
         }
         applyScaling(player);
+    }
+
+    private boolean isSkillsHealthModifier(AttributeModifier am) {
+        if (am.getName().equals("skillsHealth")) {
+            return true;
+        }
+        if (VersionUtils.isAtLeastVersion(21)) {
+            String namespace = am.getKey().getNamespace();
+            String key = am.getKey().getKey();
+            if (key.equals(ATTRIBUTE_ID.toString())) {
+                // When migrating to 1.21, old attributes are converted to the NamespacedKey minecraft:ATTRIBUTE_ID
+                return true;
+            } else {
+                final String attributeNamespace = "auraskills";
+                return namespace.equals(attributeNamespace) && key.equals(ATTRIBUTE_KEY);
+            }
+        }
+        return false;
     }
 
     private void applyScaling(Player player) {

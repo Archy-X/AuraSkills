@@ -1,6 +1,6 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.NBT;
 import de.tr7zw.changeme.nbtapi.NBTType;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.item.ModifierType;
@@ -105,15 +105,17 @@ public class ItemListener implements Listener {
     }
 
     private ItemStack convertLegacyItem(ItemStack item) {
+        if (plugin.isNbtApiDisabled()) return item;
+
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        skillsItem.convertFromLegacy();
+        NBT.modify(item, skillsItem::convertFromLegacy);
         item = skillsItem.getItem();
 
-        NBTItem nbtItem = new NBTItem(item);
-        if (nbtItem.hasTag("AureliumSkills", NBTType.NBTTagCompound)) {
-            nbtItem.removeKey("AureliumSkills");
-            item = nbtItem.getItem();
-        }
+        NBT.modify(item, nbt -> {
+            if (nbt.hasTag("AureliumSkills", NBTType.NBTTagCompound)) {
+                nbt.removeKey("AureliumSkills");
+            }
+        });
 
         return item;
     }

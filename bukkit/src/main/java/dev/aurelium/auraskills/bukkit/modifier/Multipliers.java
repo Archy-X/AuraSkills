@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.bukkit.modifier;
 
-import de.tr7zw.changeme.nbtapi.NBTCompound;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +20,8 @@ public class Multipliers {
         this.plugin = plugin;
     }
 
-    public List<Multiplier> getLegacyMultipliers(ModifierType type, NBTItem nbtItem) {
-        NBTCompound legacyCompound = ItemUtils.getLegacyMultipliersTypeCompound(nbtItem, type);
+    public List<Multiplier> getLegacyMultipliers(ModifierType type, ReadWriteNBT nbt) {
+        ReadWriteNBT legacyCompound = ItemUtils.getLegacyMultipliersTypeCompound(nbt, type);
         List<Multiplier> multipliers = new ArrayList<>();
 
         for (String key : legacyCompound.getKeys()) {
