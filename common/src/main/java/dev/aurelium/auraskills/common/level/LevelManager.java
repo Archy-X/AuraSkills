@@ -61,6 +61,8 @@ public abstract class LevelManager {
     }
 
     protected void addXpRaw(User user, Skill skill, double amount, @Nullable XpSource xpSource) {
+        if (amount <= 0.0) return;
+
         double income = addJobsIncome(user, skill, amount, xpSource);
 
         user.addSkillXp(skill, amount);
