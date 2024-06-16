@@ -145,7 +145,8 @@ public abstract class User {
     public void addSkillXp(Skill skill, double amount) {
         if (!skill.isEnabled()) return; // Ignore disabled skills
 
-        skillXp.merge(skill, amount, Double::sum);
+        // Add XP while ensuring it is not negative
+        skillXp.merge(skill, amount, (existing, added) -> Math.max(existing + added, 0.0));
         if (amount > 0.0) { // Mark as modified
             blank = false;
         }
