@@ -2,6 +2,25 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.1.3
+
+### New Features
+- Minecraft 1.21 support
+  - Add bogged and breeze to Fighting and Archery sources
+- Add new action_bar options to main config
+  - format_last - If true, parsing of MiniMessage will happen after placeholders are replaced on each send. This makes MiniMessage gradients work at the cost of performance (false by default).
+  - update_async - If true, the idle action bar will be updated and sent asynchronously. This is an experimental option (false by default).
+
+### Changes
+- The option modifier.auto_convert_from_legacy is now false by default
+
+### Bug Fixes
+- Fix Lightning Blade attribute modifier not being removed
+- Fix backup debug message spam
+- Fix disabled traits not being fully disabled sometimes
+- Fix hex colors not working in level up title and chat message
+- Fix hex colors not working in action bars
+
 ## 2.1.2
 
 ### New Features
