@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityUtil;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
 import dev.aurelium.auraskills.common.message.type.LevelerFormat;
 import dev.aurelium.auraskills.common.reward.SkillReward;
@@ -52,6 +53,10 @@ public class LevelUpMessenger {
                 "mana_ability_level_up", getManaAbilityLevelUpMessage(),
                 "money_reward", getMoneyRewardMessage())
                 .toString();
+        // Replace PlaceholderAPI placeholders
+        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
+            message = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
+        }
         Component component = plugin.getMessageProvider().stringToComponent(message);
         user.sendMessage(component);
     }
