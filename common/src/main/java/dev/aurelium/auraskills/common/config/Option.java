@@ -50,6 +50,8 @@ public enum Option {
     JOBS_INCOME_DEFAULT_INCOME_PER_XP("jobs.income.default.income_per_xp", OptionType.DOUBLE),
     JOBS_INCOME_DEFAULT_EXPRESSION("jobs.income.default.expression", OptionType.STRING),
     JOBS_INCOME_USE_FINAL_XP("jobs.income.use_final_xp", OptionType.BOOLEAN),
+    JOBS_INCOME_BATCHING_ENABLED("jobs.income.batching.enabled", OptionType.BOOLEAN),
+    JOBS_INCOME_BATCHING_INTERVAL_MS("jobs.income.batching.interval_ms", OptionType.INT),
     ENABLE_ROMAN_NUMERALS("enable_roman_numerals", OptionType.BOOLEAN),
     // Damage hologram options
     DAMAGE_HOLOGRAMS_ENABLED("damage_holograms.enabled", OptionType.BOOLEAN),

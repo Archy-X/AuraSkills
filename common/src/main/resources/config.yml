@@ -102,6 +102,9 @@ jobs:
       income_per_xp: 0.1
       expression: 0.1*xp
     use_final_xp: true
+    batching:
+      enabled: false
+      interval_ms: 2000
 enable_roman_numerals: false
 damage_holograms:
   enabled: true

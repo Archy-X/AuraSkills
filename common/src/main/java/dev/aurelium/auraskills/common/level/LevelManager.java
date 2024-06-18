@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
+import dev.aurelium.auraskills.common.jobs.JobsBatchData;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.scheduler.Tick;
 import dev.aurelium.auraskills.common.user.User;
@@ -85,11 +86,35 @@ public abstract class LevelManager {
 
         double income = source.getIncome().getIncomeEarned(user.toApi(), source.getValues(), skill, amount);
 
+        if (plugin.configBoolean(Option.JOBS_INCOME_BATCHING_ENABLED)) {
+            income = handleBatching(user, income); // Sets income to 0 if not enough time has passed, or gets batched income
+        }
+
         if (income > 0 && plugin.getHookManager().isRegistered(EconomyHook.class)) {
             EconomyHook economy = plugin.getHookManager().getHook(EconomyHook.class);
             economy.deposit(user, income);
         }
         return income;
+    }
+
+    private double handleBatching(User user, double income) {
+        JobsBatchData batchData = user.getJobsBatchData();
+
+        int interval = plugin.configInt(Option.JOBS_INCOME_BATCHING_INTERVAL_MS);
+        long lastAdd = batchData.getLastAddTime();
+        long now = System.currentTimeMillis();
+
+        if (now > lastAdd + interval) {
+            // Execute batch, enough time has passed
+            double toAdd = batchData.getAccumulatedIncome() + income;
+            batchData.setAccumulatedIncome(0.0);
+            batchData.setLastAddTime(now);
+            return toAdd;
+        } else {
+            // Add to next batch, don't add income this time
+            batchData.addAccumulatedIncome(income);
+            return 0.0;
+        }
     }
 
     public void setXp(User user, Skill skill, double amount) {

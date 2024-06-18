@@ -16,6 +16,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.jobs.JobsBatchData;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -57,6 +58,7 @@ public abstract class User {
 
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
+    private final JobsBatchData jobsBatchData;
 
     public User(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -76,6 +78,7 @@ public abstract class User {
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
         this.multipliers = new HashMap<>();
         this.jobs = new HashSet<>();
+        this.jobsBatchData = new JobsBatchData();
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -499,6 +502,10 @@ public abstract class User {
 
     public void setActionBarSetting(ActionBarType type, boolean enabled) {
         this.actionBarSettings.put(type, enabled);
+    }
+
+    public JobsBatchData getJobsBatchData() {
+        return jobsBatchData;
     }
 
     /**
