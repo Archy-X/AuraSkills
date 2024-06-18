@@ -25,6 +25,7 @@ public class SkillManager {
     private final Map<SourceTag, List<XpSource>> sourceTagMap;
     private final SkillSupplier supplier;
     private final Set<File> contentDirectories;
+    private final Map<SourceType, Boolean> sourceEnabledCache = new HashMap<>();
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -102,14 +103,25 @@ public class SkillManager {
      * @return Whether the source is enabled
      */
     public boolean isSourceEnabled(SourceType sourceType) {
-        for (Skill skill : getEnabledSkills()) {
-            for (XpSource source : skill.getSources()) {
-                if (sourceType.equals(source.getType())) {
-                    return true;
+        Boolean enabled = sourceEnabledCache.get(sourceType);
+        if (enabled != null) {
+            // Cache hit
+            return enabled;
+        } else {
+            // Cache miss
+            boolean foundEnabled = false;
+            outerLoop:
+            for (Skill skill : getEnabledSkills()) {
+                for (XpSource source : skill.getSources()) {
+                    if (sourceType.equals(source.getType())) {
+                        foundEnabled = true;
+                        break outerLoop;
+                    }
                 }
             }
+            sourceEnabledCache.put(sourceType, foundEnabled);
+            return foundEnabled;
         }
-        return false;
     }
 
     @Nullable
