@@ -19,7 +19,7 @@ dependencies {
         exclude("org.yaml", "snakeyaml")
         exclude("org.spongepowered", "configurate-yaml")
     }
-    // api(files("../../Slate/build/libs/Slate-1.0.0.jar"))
+    // api(files("../../Slate/build/libs/Slate-1.1.7.jar"))
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
 }

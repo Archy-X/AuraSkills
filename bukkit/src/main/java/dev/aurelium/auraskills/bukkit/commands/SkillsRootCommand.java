@@ -4,16 +4,13 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.*;
-import de.tr7zw.changeme.nbtapi.NBTCompoundList;
-import de.tr7zw.changeme.nbtapi.NBTFile;
-import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
-import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBTCompoundList;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.UnclaimedItemsMenu;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
+import dev.aurelium.auraskills.bukkit.storage.Uninstaller;
 import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
@@ -31,10 +28,8 @@ import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @CommandAlias("%skills_alias")
 public class SkillsRootCommand extends BaseCommand {
@@ -297,84 +292,8 @@ public class SkillsRootCommand extends BaseCommand {
 	@Description("Removes all attribute modifiers by Aurelium Skills for easy uninstalling. This only works on offline players.")
 	public void onResetHealth(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {
-			File playerDataFolder = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata");
-			int successful = 0;
-			int error = 0;
-			int total = 0;
-			for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-				if (!player.isOnline()) {
-					total++;
-					File playerFile = new File(playerDataFolder, player.getUniqueId() + ".dat");
-					if (playerFile.exists() && playerFile.canWrite()) {
-						try {
-							NBTFile nbtFile = new NBTFile(playerFile);
-							NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
-							if (compoundList != null) {
-								final AtomicBoolean save = new AtomicBoolean(false);
-								for (ReadWriteNBT listCompound : compoundList.subList(0, compoundList.size())) {
-                                    switch (listCompound.getString("Name")) {
-                                        case "generic.maxHealth", "minecraft:generic.max_health" -> {
-                                            ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
-                                            if (modifierList != null) {
-                                                modifierList.removeIf((modifier) -> {
-                                                    if (modifier.getString("Name").equals("skillsHealth")) {
-                                                        save.set(true);
-                                                        return true;
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                });
-                                                if (modifierList.isEmpty()) {
-                                                    listCompound.removeKey("Modifiers");
-                                                }
-                                            }
-                                        }
-                                        case "generic.luck", "minecraft:generic.luck" -> {
-                                            ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
-                                            if (modifierList != null) {
-                                                modifierList.removeIf((modifier) -> {
-                                                    if (modifier.getString("Name").equals("AureliumSkills-Luck")) {
-                                                        save.set(true);
-                                                        return true;
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                });
-                                                if (modifierList.isEmpty()) {
-                                                    listCompound.removeKey("Modifiers");
-                                                }
-                                            }
-                                        }
-                                        case "generic.attackSpeed", "minecraft:generic.attack_speed" -> {
-                                            ReadWriteNBTCompoundList modifierList = listCompound.getCompoundList("Modifiers");
-                                            if (modifierList != null) {
-                                                modifierList.removeIf((modifier) -> {
-                                                    if (modifier.getString("Name").equals("AureliumSkills-LightningBlade")) {
-                                                        save.set(true);
-                                                        return true;
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                });
-                                                if (modifierList.isEmpty()) {
-                                                    listCompound.removeKey("Modifiers");
-                                                }
-                                            }
-                                        }
-                                    }
-								}
-								if (save.get()) {
-									nbtFile.save();
-									successful++;
-								}
-							}
-						} catch (Exception e) {
-							error++;
-						}
-					}
-				}
-			}
-			sender.sendMessage("Searched " + total + " offline players. Successfully removed attributes from " + successful + " players. Failed to remove on " + error + " players.");
+			Uninstaller uninstaller = new Uninstaller();
+			uninstaller.removeAttributes(sender);
 		} else {
 			sender.sendMessage(ChatColor.RED + "Only console may execute this command!");
 		}
