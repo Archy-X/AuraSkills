@@ -2,6 +2,25 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.1.4
+
+### New Features
+- Add jobs income batching options to reduce economy lag
+  - If jobs.income.batching.enabled is true, accumulated income will be given in an interval instead of immediately
+  - The interval_ms option controls the minimum delay between when money is given
+  - If display_individual is true, the boss bar will display the original individual income instead of batched
+
+### Changes
+- Optimize checking for disabled sources using cache
+
+### Bug Fixes
+- Fix XP duplication exploit with land claiming plugins
+- Fix resethealth command not working on 1.21
+- Fix modifier is already applied error with stun
+- Fix NoSuchMethodError on 1.19.4
+- Fix PlaceholderAPI not working in level up message
+- Fix negative XP gain after negative multipliers
+
 ## 2.1.3
 
 ### New Features
