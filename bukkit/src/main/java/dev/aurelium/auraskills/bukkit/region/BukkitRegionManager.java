@@ -1,6 +1,9 @@
 package dev.aurelium.auraskills.bukkit.region;
 
+import dev.aurelium.auraskills.api.source.SkillSource;
+import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.region.*;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -9,8 +12,11 @@ import org.jetbrains.annotations.Nullable;
 
 public class BukkitRegionManager extends RegionManager {
 
+    private final BlockLeveler blockLeveler;
+
     public BukkitRegionManager(AuraSkills plugin) {
         super(plugin);
+        this.blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
     }
 
     public boolean isPlacedBlock(Block block) {
@@ -31,6 +37,22 @@ public class BukkitRegionManager extends RegionManager {
             }
         }
         return false;
+    }
+
+    public void handleBlockPlace(Block block) {
+        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+
+        if (skillSource == null) { // Not a source
+            return;
+        }
+
+        BlockXpSource source = skillSource.source();
+
+        if (!source.checkReplace()) { // Check source option
+            return;
+        }
+
+        addPlacedBlock(block);
     }
 
     public void addPlacedBlock(Block block) {

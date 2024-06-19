@@ -53,20 +53,7 @@ public class RegionBlockListener implements Listener {
         if (!plugin.configBoolean(Option.CHECK_BLOCK_REPLACE_ENABLED)) return;
 
         Block block = event.getBlock();
-
-        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
-
-        if (skillSource == null) { // Not a source
-            return;
-        }
-
-        BlockXpSource source = skillSource.source();
-
-        if (!source.checkReplace()) { // Check source option
-            return;
-        }
-
-        regionManager.addPlacedBlock(block);
+        regionManager.handleBlockPlace(block);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

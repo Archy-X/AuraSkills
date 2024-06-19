@@ -21,6 +21,7 @@ repositories {
     maven("https://repo.maven.apache.org/maven2/")
     maven("https://mvn.lumine.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
+    maven("https://repo.oraxen.com/releases")
 }
 
 dependencies {
@@ -46,6 +47,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
+    compileOnly("io.th0rgal:oraxen:1.173.0")
 }
 
 tasks.withType<ShadowJar> {
