@@ -85,16 +85,24 @@ public abstract class LevelManager {
         }
 
         double income = source.getIncome().getIncomeEarned(user.toApi(), source.getValues(), skill, amount);
+        double originalIncome = income;
+        boolean displayIndividual = false;
 
         if (plugin.configBoolean(Option.JOBS_INCOME_BATCHING_ENABLED)) {
             income = handleBatching(user, income); // Sets income to 0 if not enough time has passed, or gets batched income
+            displayIndividual = plugin.configBoolean(Option.JOBS_INCOME_BATCHING_DISPLAY_INDIVIDUAL);
         }
 
         if (income > 0 && plugin.getHookManager().isRegistered(EconomyHook.class)) {
             EconomyHook economy = plugin.getHookManager().getHook(EconomyHook.class);
             economy.deposit(user, income);
         }
-        return income;
+        if (displayIndividual) {
+            // If batched and display_individual is true, show the individual income to UI instead of batched
+            return originalIncome;
+        } else {
+            return income;
+        }
     }
 
     private double handleBatching(User user, double income) {

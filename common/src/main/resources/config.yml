@@ -105,6 +105,7 @@ jobs:
     batching:
       enabled: false
       interval_ms: 2000
+      display_individual: false
 enable_roman_numerals: false
 damage_holograms:
   enabled: true
