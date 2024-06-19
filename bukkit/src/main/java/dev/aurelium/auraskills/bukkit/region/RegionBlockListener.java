@@ -69,7 +69,7 @@ public class RegionBlockListener implements Listener {
         regionManager.addPlacedBlock(block);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onSandFall(EntityChangeBlockEvent event) {
         Block block = event.getBlock();
         if (!regionManager.isPlacedBlock(block)) return;
@@ -113,7 +113,7 @@ public class RegionBlockListener implements Listener {
         checkSupportSide(block);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPistonExtend(BlockPistonExtendEvent event) {
         for (Block block : event.getBlocks()) {
             regionManager.addPlacedBlock(block.getRelative(event.getDirection()));
@@ -121,7 +121,7 @@ public class RegionBlockListener implements Listener {
         regionManager.removePlacedBlock(event.getBlock().getRelative(event.getDirection()));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPistonRetract(BlockPistonRetractEvent event) {
         Block lastBlock = event.getBlock();
         for (Block block : event.getBlocks()) {
@@ -135,7 +135,7 @@ public class RegionBlockListener implements Listener {
         regionManager.removePlacedBlock(lastBlock);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onStructureGrow(StructureGrowEvent event) {
         int growY = event.getLocation().getBlockY();
         for (BlockState state : event.getBlocks()) {
