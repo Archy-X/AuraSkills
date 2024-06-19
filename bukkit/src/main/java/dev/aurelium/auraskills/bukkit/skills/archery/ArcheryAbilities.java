@@ -108,6 +108,12 @@ public class ArcheryAbilities extends AbilityImpl {
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
             AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
             if (speed == null) return;
+            // Check if there already is a stun modifier
+            for (AttributeModifier existingModifier : speed.getModifiers()) {
+                if (isStunModifier(existingModifier)) {
+                    return;
+                }
+            }
             // Applies stun
             AttributeModifier modifier = getAttributeModifier(speed, STUN_SPEED_REDUCTION);
             speed.addModifier(modifier);
