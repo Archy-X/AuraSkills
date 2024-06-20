@@ -23,11 +23,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class BlockLeveler extends SourceLeveler {
 
@@ -49,11 +47,12 @@ public class BlockLeveler extends SourceLeveler {
         if (disabled()) return;
 
         Player player = event.getPlayer();
+        Block block = event.getBlock();
 
-        handleBreak(player, event.getBlock(), event);
+        handleBreak(player, block, event, trait -> trait.getUniqueDrops(block, player));
     }
 
-    public void handleBreak(Player player, Block block, Cancellable event) {
+    public void handleBreak(Player player, Block block, Cancellable event, Function<GatheringLuckTraits, Set<ItemStack>> dropFunction) {
         User user = plugin.getUser(player);
 
         SkillSource<BlockXpSource> skillSource = getSource(block, BlockXpSource.BlockTriggers.BREAK);
@@ -71,7 +70,7 @@ public class BlockLeveler extends SourceLeveler {
             // Allow Lucky Miner drops for ores that don't drop in block form (Silk Touch check handled by Lucky Miner)
             var miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
             if (miningAbilities.dropsMineralDirectly(block)) {
-                applyBlockLuck(skill, player, user, block, source);
+                applyBlockLuck(skill, player, user, block, source, dropFunction);
             }
             return;
         }
@@ -80,7 +79,7 @@ public class BlockLeveler extends SourceLeveler {
         multiplier *= helper.getStateMultiplier(block, source);
 
         plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-        applyBlockLuck(skill, player, user, block, source);
+        applyBlockLuck(skill, player, user, block, source, dropFunction);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -120,6 +119,10 @@ public class BlockLeveler extends SourceLeveler {
     }
 
     private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source) {
+        applyBlockLuck(skill, player, user, block, source, trait -> trait.getUniqueDrops(block, player));
+    }
+
+    private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source, Function<GatheringLuckTraits, Set<ItemStack>> dropFunction) {
         // Don't drop extra for silk touch + ores
         ItemStack tool = player.getInventory().getItemInMainHand();
         if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0 && plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class).dropsMineralDirectly(block)) {
@@ -129,7 +132,7 @@ public class BlockLeveler extends SourceLeveler {
         GatheringLuckTraits traitImpl = plugin.getTraitManager().getTraitImpl(GatheringLuckTraits.class);
         Trait blockLuckTrait = traitImpl.getTrait(skill);
         if (blockLuckTrait != null) {
-            traitImpl.apply(blockLuckTrait, block, player, user, source);
+            traitImpl.apply(blockLuckTrait, block, player, user, source, dropFunction.apply(traitImpl));
         }
     }
 
