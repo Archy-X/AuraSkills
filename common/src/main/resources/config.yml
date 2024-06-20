@@ -28,6 +28,8 @@ hooks:
     enabled: true
   LuckPerms:
     enabled: true
+  Oraxen:
+    enabled: true
   PlaceholderAPI:
     enabled: true
   ProtocolLib:

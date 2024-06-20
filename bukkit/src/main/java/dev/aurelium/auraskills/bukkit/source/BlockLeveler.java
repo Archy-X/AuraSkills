@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -48,9 +49,14 @@ public class BlockLeveler extends SourceLeveler {
         if (disabled()) return;
 
         Player player = event.getPlayer();
+
+        handleBreak(player, event.getBlock(), event);
+    }
+
+    public void handleBreak(Player player, Block block, Cancellable event) {
         User user = plugin.getUser(player);
 
-        SkillSource<BlockXpSource> skillSource = getSource(event.getBlock(), BlockXpSource.BlockTriggers.BREAK);
+        SkillSource<BlockXpSource> skillSource = getSource(block, BlockXpSource.BlockTriggers.BREAK);
         if (skillSource == null) {
             return;
         }
@@ -58,23 +64,23 @@ public class BlockLeveler extends SourceLeveler {
         BlockXpSource source = skillSource.source();
         Skill skill = skillSource.skill();
 
-        if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
+        if (failsChecks(event, player, block.getLocation(), skill)) return;
 
         // Check for player placed blocks
-        if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(event.getBlock())) {
+        if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(block)) {
             // Allow Lucky Miner drops for ores that don't drop in block form (Silk Touch check handled by Lucky Miner)
             var miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
-            if (miningAbilities.dropsMineralDirectly(event.getBlock())) {
-                applyBlockLuck(skill, player, user, event.getBlock(), source);
+            if (miningAbilities.dropsMineralDirectly(block)) {
+                applyBlockLuck(skill, player, user, block, source);
             }
             return;
         }
 
-        double multiplier = helper.getBlocksBroken(event.getBlock(), source);
-        multiplier *= helper.getStateMultiplier(event.getBlock(), source);
+        double multiplier = helper.getBlocksBroken(block, source);
+        multiplier *= helper.getStateMultiplier(block, source);
 
         plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-        applyBlockLuck(skill, player, user, event.getBlock(), source);
+        applyBlockLuck(skill, player, user, block, source);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
