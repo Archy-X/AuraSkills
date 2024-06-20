@@ -12,11 +12,13 @@ import org.jetbrains.annotations.Nullable;
 
 public class BukkitRegionManager extends RegionManager {
 
-    private final BlockLeveler blockLeveler;
+    private final AuraSkills plugin;
+    @Nullable
+    private BlockLeveler blockLeveler; // Lazy initialized in handleBlockPlace
 
     public BukkitRegionManager(AuraSkills plugin) {
         super(plugin);
-        this.blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
+        this.plugin = plugin;
     }
 
     public boolean isPlacedBlock(Block block) {
@@ -40,6 +42,11 @@ public class BukkitRegionManager extends RegionManager {
     }
 
     public void handleBlockPlace(Block block) {
+        // Lazy initialize BlockLeveler
+        if (blockLeveler == null) {
+            blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
+        }
+
         SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
 
         if (skillSource == null) { // Not a source
