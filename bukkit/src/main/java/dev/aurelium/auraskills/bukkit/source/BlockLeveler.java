@@ -231,7 +231,7 @@ public class BlockLeveler extends SourceLeveler {
         return filtered;
     }
 
-    private Map<String, Object> parseFromBlockData(String input) {
+    public static Map<String, Object> parseFromBlockData(String input) {
         Map<String, Object> result = new HashMap<>();
         // Check if the input is valid
         if (input == null || input.isEmpty()) {
@@ -283,7 +283,7 @@ public class BlockLeveler extends SourceLeveler {
         return result;
     }
 
-    private Object parseValue(String value) {
+    private static Object parseValue(String value) {
         // Try to parse as an int
         try {
             return Integer.parseInt(value);

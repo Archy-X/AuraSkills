@@ -188,7 +188,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         traitRegistry = new TraitRegistry(this);
         abilityRegistry = new AbilityRegistry(this);
         manaAbilityRegistry = new ManaAbilityRegistry(this);
-        sourceTypeRegistry = new SourceTypeRegistry(this);
+        sourceTypeRegistry = new SourceTypeRegistry();
         sourceTypeRegistry.registerDefaults();
         itemRegistry = new BukkitItemRegistry(this);
         itemRegistry.getStorage().load();
@@ -206,7 +206,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         migrationManager.attemptConfigMigration();
         // Load config.yml file
         configProvider = new BukkitConfigProvider(this);
-        configProvider.loadOptions();
+        configProvider.loadOptions(); // Also loads external plugin hooks
         initializeNbtApi();
         initializeMenus(); // Generate menu files
         // Initialize and migrate storage (connect to SQL database if enabled)

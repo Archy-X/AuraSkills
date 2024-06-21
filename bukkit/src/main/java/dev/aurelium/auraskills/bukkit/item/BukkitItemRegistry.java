@@ -33,6 +33,7 @@ public class BukkitItemRegistry implements ItemRegistry {
     private final Map<NamespacedId, ItemStack> items = new HashMap<>();
     private final BukkitSourceMenuItems sourceMenuItems;
     private final ItemRegistryStorage storage;
+    private final Map<String, ExternalItemProvider> externalItemProviders = new HashMap<>();
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
@@ -180,6 +181,19 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     public ItemRegistryStorage getStorage() {
         return storage;
+    }
+
+    public Map<String, ExternalItemProvider> getExternalItemProviders() {
+        return externalItemProviders;
+    }
+
+    @Nullable
+    public ExternalItemProvider getExternalItemProvider(String namespace) {
+        return externalItemProviders.get(namespace);
+    }
+
+    public void registerExternalItemProvider(String namespace, ExternalItemProvider provider) {
+        externalItemProviders.put(namespace, provider);
     }
 
     private boolean passesItemMetaFilter(ItemStack item, ItemFilter filter) {

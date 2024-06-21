@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.parser.BlockSourceParser;
+import dev.aurelium.auraskills.common.source.parser.ParsingExtension;
 import dev.aurelium.auraskills.common.source.parser.util.*;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -216,6 +217,10 @@ public class SourceLoader {
         SourceContext context = new SourceContext(plugin.getApi(), sourceType, sourceName);
         try {
             XpSource source = (XpSource) parser.parse(sourceNode, context);
+            // Apply parsing extensions, if any
+            for (ParsingExtension extension : plugin.getSourceTypeRegistry().getParsingExtensions(sourceType)) {
+                source = extension.parse(source);
+            }
             if (source.isVersionValid()) {
                 return source;
             } else {

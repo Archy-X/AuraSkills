@@ -85,9 +85,17 @@ public class BlockSource extends Source implements BlockXpSource {
         return !stateMultiplier.isEmpty();
     }
 
+    public String getStateMultiplier() {
+        return stateMultiplier;
+    }
+
     @Override
     public boolean requiresSupportBlock(SupportBlockType direction) {
         return supportBlockType == direction;
+    }
+
+    public SupportBlockType getSupportBlockType() {
+        return supportBlockType;
     }
 
     @Override

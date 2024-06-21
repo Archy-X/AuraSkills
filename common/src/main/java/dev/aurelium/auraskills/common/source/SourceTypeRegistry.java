@@ -2,19 +2,22 @@ package dev.aurelium.auraskills.common.source;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.SourceType;
-import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.parser.ParsingExtension;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SourceTypeRegistry {
 
-    private final AuraSkillsPlugin plugin;
     private final Map<NamespacedId, SourceType> sourceTypes;
+    private final Map<SourceType, List<ParsingExtension>> parsingExtensions;
 
-    public SourceTypeRegistry(AuraSkillsPlugin plugin) {
-        this.plugin = plugin;
+    public SourceTypeRegistry() {
         this.sourceTypes = new HashMap<>();
+        this.parsingExtensions = new HashMap<>();
     }
 
     public SourceType get(NamespacedId id) throws IllegalArgumentException {
@@ -38,6 +41,17 @@ public class SourceTypeRegistry {
         for (SourceTypes defaultType : SourceTypes.values()) {
             sourceTypes.put(defaultType.getId(), defaultType);
         }
+    }
+
+    @NotNull
+    public List<ParsingExtension> getParsingExtensions(SourceType sourceType) {
+        return parsingExtensions.getOrDefault(sourceType, new ArrayList<>());
+    }
+
+    public void registerParsingExtension(SourceType sourceType, ParsingExtension extension) {
+        List<ParsingExtension> extensions = parsingExtensions.getOrDefault(sourceType, new ArrayList<>());
+        extensions.add(extension);
+        parsingExtensions.put(sourceType, extensions);
     }
 
 }
