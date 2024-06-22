@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.common.leaderboard;
 
 import dev.aurelium.auraskills.api.skill.Skill;
-import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
@@ -45,7 +44,7 @@ public class LeaderboardManager {
             setSorting(true);
             // Initialize lists
             Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
-            for (Skill skill : plugin.getSkillRegistry().getValues()) {
+            for (Skill skill : plugin.getSkillManager().getSkillValues()) {
                 skillLeaderboards.put(skill, new ArrayList<>());
             }
             List<SkillValue> powerLeaderboard = new ArrayList<>();
@@ -161,7 +160,7 @@ public class LeaderboardManager {
             int powerLevel = 0;
             double powerXp = 0;
             int numEnabled = 0;
-            for (Skill skill : Skills.values()) {
+            for (Skill skill : plugin.getSkillManager().getSkillValues()) {
                 int level = user.getSkillLevel(skill);
                 double xp = user.getSkillXp(skill);
                 // Add to lists

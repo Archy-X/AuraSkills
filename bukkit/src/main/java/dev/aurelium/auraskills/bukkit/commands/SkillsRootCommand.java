@@ -82,8 +82,7 @@ public class SkillsRootCommand extends BaseCommand {
 						.replace("{player}", name != null ? name : "?")
 						.replace("{level}", String.valueOf(skillValue.level())));
 			}
-		}
-		else if (args.length == 1) {
+		} else if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("average")) {
 				List<SkillValue> lb = plugin.getLeaderboardManager().getAverageLeaderboard(1, 10);
 				sender.sendMessage(plugin.getMsg(CommandMessage.TOP_AVERAGE_HEADER, locale));
@@ -101,8 +100,12 @@ public class SkillsRootCommand extends BaseCommand {
 								.replace("{level}", String.valueOf(skillValue.level())));
 					}
 				} catch (Exception e) {
-					Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(args[0]));
-					if (skill != null) {
+					String skillName = args[0].toLowerCase(Locale.ROOT);
+					Skill skill = plugin.getSkillRegistry().getFromKey(skillName);
+					if (skill == null) {
+						skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(skillName));
+					}
+					if (skill != null && skill.isEnabled()) {
 						List<SkillValue> lb = plugin.getLeaderboardManager().getLeaderboard(skill, 1, 10);
 						sender.sendMessage(plugin.getMsg(CommandMessage.TOP_SKILL_HEADER, locale).replace("{skill}", skill.getDisplayName(locale)));
 						for (SkillValue skillValue : lb) {

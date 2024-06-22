@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.skill.SkillProvider;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -27,6 +28,16 @@ public class SkillRegistry extends Registry<Skill, SkillProvider> {
         for (Skill skill : Skills.values()) {
             this.register(skill.getId(), skill, plugin.getSkillManager().getSupplier());
         }
+    }
+
+    @Nullable
+    public Skill getFromKey(String key) {
+        for (Skill skill : getValues()) {
+            if (skill.getId().getKey().equals(key)) {
+                return skill;
+            }
+        }
+        return null;
     }
 
     public ConfigurationNode getDefinedConfig() throws SerializationException {

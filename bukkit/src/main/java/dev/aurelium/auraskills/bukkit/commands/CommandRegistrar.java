@@ -173,7 +173,7 @@ public class CommandRegistrar {
         completions.registerAsyncCompletion("skill_top", c -> {
             List<String> values = new ArrayList<>();
             for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-                values.add(getSkillName(skill));
+                values.add(skill.getId().getKey());
             }
             values.add("average");
             return values;
