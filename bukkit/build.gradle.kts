@@ -60,6 +60,8 @@ tasks.withType<ShadowJar> {
     relocate("net.kyori", "dev.aurelium.auraskills.kyori")
     relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
     relocate("dev.aurelium.slate", "dev.aurelium.auraskills.slate")
+    relocate("org.spongepowered.configurate", "dev.aurelium.auraskills.configurate")
+    relocate("io.leangen.geantyref", "dev.aurelium.auraskills.geantyref")
 
     exclude("acf-*.properties")
 

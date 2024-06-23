@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.api.implementation;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.source.*;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.MessageKey;
@@ -7,7 +8,6 @@ import dev.aurelium.auraskills.common.source.income.IncomeLoader;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
 import java.util.Locale;
@@ -55,7 +55,7 @@ public class ApiSourceManager implements SourceManager {
     }
 
     @Override
-    public SourceIncome loadSourceIncome(ConfigurationNode source) {
-        return incomeLoader.loadSourceIncome(source);
+    public SourceIncome loadSourceIncome(ConfigNode source) {
+        return incomeLoader.loadSourceIncome(((ApiConfigNode) source).getBacking());
     }
 }

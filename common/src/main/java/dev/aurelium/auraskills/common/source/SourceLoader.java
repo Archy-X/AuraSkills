@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.*;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.parser.BlockSourceParser;
 import dev.aurelium.auraskills.common.source.parser.util.*;
@@ -215,13 +216,13 @@ public class SourceLoader {
 
         SourceContext context = new SourceContext(plugin.getApi(), sourceType, sourceName);
         try {
-            XpSource source = (XpSource) parser.parse(sourceNode, context);
+            XpSource source = (XpSource) parser.parse(ApiConfigNode.toApi(sourceNode), context);
             if (source.isVersionValid()) {
                 return source;
             } else {
                 return null;
             }
-        } catch (SerializationException e) {
+        } catch (RuntimeException e) {
             throw new IllegalArgumentException("Error deserializing source of type " + type);
         }
     }

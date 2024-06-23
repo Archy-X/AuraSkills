@@ -1,11 +1,10 @@
 package dev.aurelium.auraskills.api.source;
 
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.serialize.SerializationException;
+import dev.aurelium.auraskills.api.config.ConfigNode;
 
 @FunctionalInterface
 public interface UtilityParser<T> {
 
-    T parse(ConfigurationNode source, BaseContext context) throws SerializationException;
+    T parse(ConfigNode source, BaseContext context);
 
 }

@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.source.parser.util;
 
 import dev.aurelium.auraskills.api.source.BaseContext;
 import dev.aurelium.auraskills.api.source.UtilityParser;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -20,8 +21,8 @@ public class UtilitySerializer<T> implements TypeSerializer<T> {
     }
 
     @Override
-    public T deserialize(Type type, ConfigurationNode node) throws SerializationException {
-        return parser.parse(node, context);
+    public T deserialize(Type type, ConfigurationNode node) {
+        return parser.parse(ApiConfigNode.toApi(node), context);
     }
 
     @Override

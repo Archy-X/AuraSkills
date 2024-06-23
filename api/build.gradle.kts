@@ -11,9 +11,6 @@ repositories {
 }
 
 dependencies {
-    api("org.spongepowered:configurate-yaml:4.1.2") {
-        exclude("org.yaml", "snakeyaml")
-    }
     compileOnly("org.jetbrains:annotations:24.1.0")
 }
 

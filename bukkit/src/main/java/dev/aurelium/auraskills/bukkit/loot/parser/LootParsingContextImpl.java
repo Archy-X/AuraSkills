@@ -1,10 +1,12 @@
 package dev.aurelium.auraskills.bukkit.loot.parser;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
 import dev.aurelium.auraskills.api.loot.LootValues;
 import dev.aurelium.auraskills.bukkit.loot.LootManager;
 import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -21,7 +23,8 @@ public class LootParsingContextImpl implements LootParsingContext {
     }
 
     @Override
-    public LootValues parseValues(ConfigurationNode config) {
+    public LootValues parseValues(ConfigNode apiConfig) {
+        ConfigurationNode config = ((ApiConfigNode) apiConfig).getBacking();
         int weight = config.node("weight").getInt(10);
         String message = config.node("message").getString("");
         return new LootValues(weight, message, parseContexts(config), parseOptions(config));

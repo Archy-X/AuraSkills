@@ -15,6 +15,9 @@ dependencies {
     api("net.kyori:adventure-text-serializer-legacy:4.16.0")
     api("com.github.Archy-X:Polyglot:7f56b6fd04")
     api("com.ezylang:EvalEx:3.1.1")
+    api("org.spongepowered:configurate-yaml:4.1.2") {
+        exclude("org.yaml", "snakeyaml")
+    }
     implementation("com.zaxxer:HikariCP:5.1.0") {
         exclude("org.slf4j", "slf4j-api")
     }
