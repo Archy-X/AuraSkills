@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -22,11 +23,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class BlockLeveler extends SourceLeveler {
 
@@ -48,9 +47,15 @@ public class BlockLeveler extends SourceLeveler {
         if (disabled()) return;
 
         Player player = event.getPlayer();
+        Block block = event.getBlock();
+
+        handleBreak(player, block, event, trait -> trait.getUniqueDrops(block, player));
+    }
+
+    public void handleBreak(Player player, Block block, Cancellable event, Function<GatheringLuckTraits, Set<ItemStack>> dropFunction) {
         User user = plugin.getUser(player);
 
-        SkillSource<BlockXpSource> skillSource = getSource(event.getBlock(), BlockXpSource.BlockTriggers.BREAK);
+        SkillSource<BlockXpSource> skillSource = getSource(block, BlockXpSource.BlockTriggers.BREAK);
         if (skillSource == null) {
             return;
         }
@@ -58,23 +63,23 @@ public class BlockLeveler extends SourceLeveler {
         BlockXpSource source = skillSource.source();
         Skill skill = skillSource.skill();
 
-        if (failsChecks(event, player, event.getBlock().getLocation(), skill)) return;
+        if (failsChecks(event, player, block.getLocation(), skill)) return;
 
         // Check for player placed blocks
-        if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(event.getBlock())) {
+        if (source.checkReplace() && plugin.getRegionManager().isPlacedBlock(block)) {
             // Allow Lucky Miner drops for ores that don't drop in block form (Silk Touch check handled by Lucky Miner)
             var miningAbilities = plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class);
-            if (miningAbilities.dropsMineralDirectly(event.getBlock())) {
-                applyBlockLuck(skill, player, user, event.getBlock(), source);
+            if (miningAbilities.dropsMineralDirectly(block)) {
+                applyBlockLuck(skill, player, user, block, source, dropFunction);
             }
             return;
         }
 
-        double multiplier = helper.getBlocksBroken(event.getBlock(), source);
-        multiplier *= helper.getStateMultiplier(event.getBlock(), source);
+        double multiplier = helper.getBlocksBroken(block, source);
+        multiplier *= helper.getStateMultiplier(block, source);
 
         plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
-        applyBlockLuck(skill, player, user, event.getBlock(), source);
+        applyBlockLuck(skill, player, user, block, source, dropFunction);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -114,6 +119,10 @@ public class BlockLeveler extends SourceLeveler {
     }
 
     private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source) {
+        applyBlockLuck(skill, player, user, block, source, trait -> trait.getUniqueDrops(block, player));
+    }
+
+    private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source, Function<GatheringLuckTraits, Set<ItemStack>> dropFunction) {
         // Don't drop extra for silk touch + ores
         ItemStack tool = player.getInventory().getItemInMainHand();
         if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0 && plugin.getAbilityManager().getAbilityImpl(MiningAbilities.class).dropsMineralDirectly(block)) {
@@ -123,7 +132,7 @@ public class BlockLeveler extends SourceLeveler {
         GatheringLuckTraits traitImpl = plugin.getTraitManager().getTraitImpl(GatheringLuckTraits.class);
         Trait blockLuckTrait = traitImpl.getTrait(skill);
         if (blockLuckTrait != null) {
-            traitImpl.apply(blockLuckTrait, block, player, user, source);
+            traitImpl.apply(blockLuckTrait, block, player, user, source, dropFunction.apply(traitImpl));
         }
     }
 
@@ -222,7 +231,7 @@ public class BlockLeveler extends SourceLeveler {
         return filtered;
     }
 
-    private Map<String, Object> parseFromBlockData(String input) {
+    public static Map<String, Object> parseFromBlockData(String input) {
         Map<String, Object> result = new HashMap<>();
         // Check if the input is valid
         if (input == null || input.isEmpty()) {
@@ -274,7 +283,7 @@ public class BlockLeveler extends SourceLeveler {
         return result;
     }
 
-    private Object parseValue(String value) {
+    private static Object parseValue(String value) {
         // Try to parse as an int
         try {
             return Integer.parseInt(value);

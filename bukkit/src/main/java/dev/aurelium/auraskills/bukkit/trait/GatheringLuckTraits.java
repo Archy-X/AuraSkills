@@ -50,7 +50,7 @@ public class GatheringLuckTraits extends TraitImpl {
         return 0;
     }
 
-    public void apply(Trait trait, Block block, Player player, User user, XpSource source) {
+    public void apply(Trait trait, Block block, Player player, User user, XpSource source, Set<ItemStack> drops) {
         if (!trait.isEnabled()) return;
         // Get the skill corresponding to the block trait
         Skill skill = getSkill(trait);
@@ -64,7 +64,7 @@ public class GatheringLuckTraits extends TraitImpl {
 
         if (failsChecks(player, skill)) return;
 
-        for (ItemStack item : getUniqueDrops(block, player)) {
+        for (ItemStack item : drops) {
             int numExtra = rollExtraDrops(user, trait);
             if (numExtra == 0) continue;
 
@@ -146,7 +146,7 @@ public class GatheringLuckTraits extends TraitImpl {
                 "{value}", String.valueOf(guaranteed + 1));
     }
 
-    private Set<ItemStack> getUniqueDrops(Block block, Player player) {
+    public Set<ItemStack> getUniqueDrops(Block block, Player player) {
         Set<ItemStack> unique = new HashSet<>();
         for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand(), player)) {
             // Check if a similar item already exists
