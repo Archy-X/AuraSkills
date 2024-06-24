@@ -230,10 +230,15 @@ public class SkillsItem {
         if (!plugin.configBoolean(Option.REQUIREMENT_ENABLED)) return true;
         if (player.hasMetadata("NPC")) return true;
         User user = plugin.getUser(player);
-        // Check global requirements
-        for (Map.Entry<Skill, Integer> entry : getGlobalRequirements(type).entrySet()) {
-            if (user.getSkillLevel(entry.getKey()) < entry.getValue()) {
-                return false;
+        Map<Skill, Integer> itemRequirements = getRequirements(type);
+
+        // If override_global is true, only check global if the item has no defined NBT requirements
+        if (!plugin.configBoolean(Option.REQUIREMENT_OVERRIDE_GLOBAL) || itemRequirements.isEmpty()) {
+            // Check global requirements
+            for (Map.Entry<Skill, Integer> entry : getGlobalRequirements(type).entrySet()) {
+                if (user.getSkillLevel(entry.getKey()) < entry.getValue()) {
+                    return false;
+                }
             }
         }
         // Check requirements on item

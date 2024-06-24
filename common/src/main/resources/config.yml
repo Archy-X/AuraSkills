@@ -181,6 +181,7 @@ modifier:
   auto_convert_from_legacy: false
 requirement:
   enabled: true
+  override_global: false
   item:
     prevent_tool_use: true
     prevent_weapon_use: true

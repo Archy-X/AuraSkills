@@ -1,11 +1,15 @@
 package dev.aurelium.auraskills.bukkit.region;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.region.WorldManager;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,24 +24,31 @@ public class BukkitWorldManager implements WorldManager {
         this.plugin = plugin;
     }
 
-    public void loadWorlds(FileConfiguration config) {
-        int blockedWorldsLoaded = 0;
-        blockedWorlds = new HashSet<>();
-        disabledWorlds = new HashSet<>();
-        blockedCheckBlockReplaceWorlds = new HashSet<>();
-        for (String blockedWorld : config.getStringList("blocked_worlds")) {
-            blockedWorlds.add(blockedWorld);
-            blockedWorldsLoaded++;
+    public void loadWorlds() {
+        ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+        try {
+            ConfigurationNode config = loader.loadUserFile("config.yml");
+
+            int blockedWorldsLoaded = 0;
+            blockedWorlds = new HashSet<>();
+            disabledWorlds = new HashSet<>();
+            blockedCheckBlockReplaceWorlds = new HashSet<>();
+            for (String blockedWorld : config.node("blocked_worlds").getList(String.class, new ArrayList<>())) {
+                blockedWorlds.add(blockedWorld);
+                blockedWorldsLoaded++;
+            }
+            for (String blockedWorld : config.node("disabled_worlds").getList(String.class, new ArrayList<>())) {
+                disabledWorlds.add(blockedWorld);
+                blockedWorldsLoaded++;
+            }
+            for (String blockedWorld : config.node("check_block_replace", "blocked_worlds").getList(String.class, new ArrayList<>())) {
+                blockedCheckBlockReplaceWorlds.add(blockedWorld);
+                blockedWorldsLoaded++;
+            }
+            plugin.logger().info("Loaded " + blockedWorldsLoaded + " blocked/disabled world" + (blockedWorldsLoaded != 1 ? "s" : ""));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        for (String blockedWorld : config.getStringList("disabled_worlds")) {
-            disabledWorlds.add(blockedWorld);
-            blockedWorldsLoaded++;
-        }
-        for (String blockedWorld : config.getStringList("check_block_replace.blocked_worlds")) {
-            blockedCheckBlockReplaceWorlds.add(blockedWorld);
-            blockedWorldsLoaded++;
-        }
-        plugin.logger().info("Loaded " + blockedWorldsLoaded + " blocked worlds.");
     }
 
     public boolean isInBlockedWorld(Location location) {

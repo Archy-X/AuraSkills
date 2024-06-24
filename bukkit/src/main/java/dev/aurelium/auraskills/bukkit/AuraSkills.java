@@ -214,7 +214,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         migrationManager.attemptUserMigration();
         // Load blocked/disabled worlds lists
         worldManager = new BukkitWorldManager(this);
-        worldManager.loadWorlds(getConfig());
+        worldManager.loadWorlds(); // Requires generateConfigs before
         regionManager = new BukkitRegionManager(this);
         backupProvider = new BackupProvider(this);
         xpRequirements = new XpRequirements(this);

@@ -104,6 +104,7 @@ public enum Option {
     MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto_convert_from_legacy", OptionType.BOOLEAN),
     // Requirement options
     REQUIREMENT_ENABLED("requirement.enabled", OptionType.BOOLEAN),
+    REQUIREMENT_OVERRIDE_GLOBAL("requirement.override_global", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_TOOL_USE("requirement.item.prevent_tool_use", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_WEAPON_USE("requirement.item.prevent_weapon_use", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE("requirement.item.prevent_block_place", OptionType.BOOLEAN),

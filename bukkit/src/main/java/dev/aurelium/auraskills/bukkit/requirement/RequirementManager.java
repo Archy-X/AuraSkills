@@ -4,13 +4,16 @@ import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -28,30 +31,41 @@ public class RequirementManager implements Listener {
     }
 
     public void load() {
-        FileConfiguration config = plugin.getConfig();
-        this.globalRequirements = new HashSet<>();
-        for (ModifierType type : ModifierType.values()) {
-            List<String> list = config.getStringList("requirement." + type.name().toLowerCase(Locale.ROOT) + ".global");
-            for (String text : list) {
-                String[] splitText = text.split(" ");
-                Material material = Material.valueOf(splitText[0].toUpperCase(Locale.ROOT));
-                Map<Skill, Integer> requirements = new HashMap<>();
-                for (int i = 1; i < splitText.length; i++) {
-                    String requirementText = splitText[i];
-                    try {
-                        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0].toLowerCase(Locale.ROOT)));
-                        if (skill != null) {
-                            int level = Integer.parseInt(requirementText.split(":")[1]);
-                            requirements.put(skill, level);
-                        }
-                    } catch (Exception e) {
-                        plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
-                    }
-                }
-                GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
-                globalRequirements.add(globalRequirement);
+        ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+        try {
+            ConfigurationNode config = loader.loadUserFile("config.yml");
 
+            this.globalRequirements = new HashSet<>();
+            int loaded = 0;
+            for (ModifierType type : ModifierType.values()) {
+                List<String> list = config.node("requirement", type.name().toLowerCase(Locale.ROOT), "global").getList(String.class, new ArrayList<>());
+                for (String text : list) {
+                    String[] splitText = text.split(" ");
+                    Material material = Material.valueOf(splitText[0].toUpperCase(Locale.ROOT));
+                    Map<Skill, Integer> requirements = new HashMap<>();
+                    for (int i = 1; i < splitText.length; i++) {
+                        String requirementText = splitText[i];
+                        try {
+                            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0].toLowerCase(Locale.ROOT)));
+                            if (skill != null) {
+                                int level = Integer.parseInt(requirementText.split(":")[1]);
+                                requirements.put(skill, level);
+                            }
+                        } catch (Exception e) {
+                            plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
+                        }
+                    }
+                    GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
+                    globalRequirements.add(globalRequirement);
+                    loaded++;
+                }
             }
+            if (loaded > 0) {
+                plugin.logger().info("Loaded " + loaded + " global requirement" + (loaded != 1 ? "s" : ""));
+            }
+        } catch (IOException e) {
+            plugin.logger().warn("Error loading global requirements: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
