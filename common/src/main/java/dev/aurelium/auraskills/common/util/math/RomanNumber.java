@@ -44,22 +44,22 @@ public class RomanNumber {
     }
 
     public static String toRoman(int number, AuraSkillsPlugin plugin) {
-    	if (number > 0) {
-	    	if (plugin.configBoolean(Option.ENABLE_ROMAN_NUMERALS)) {
-		        return toRomanAlways(number);
-	    	} else {
-	    		return String.valueOf(number);
-	    	}
-    	} else {
-    		return String.valueOf(number);
-    	}
+        if (plugin.configBoolean(Option.ENABLE_ROMAN_NUMERALS)) {
+            return toRomanAlways(number);
+        } else {
+            return String.valueOf(number);
+        }
     }
 
     public static String toRomanAlways(int number) {
-        int l = map.floorKey(number);
-        if (number == l) {
-            return map.get(number);
+        if (number > 0) {
+            int l = map.floorKey(number);
+            if (number == l) {
+                return map.get(number);
+            }
+            return map.get(l) + toRomanAlways(number - l);
+        } else {
+            return String.valueOf(number);
         }
-        return map.get(l) + toRomanAlways(number - l);
     }
 }
