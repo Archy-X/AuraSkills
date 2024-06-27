@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityRefreshEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
@@ -15,20 +16,22 @@ import java.util.concurrent.TimeUnit;
 public class TimerCountdown {
 
     private final AuraSkills plugin;
+    private final int PERIOD;
 
     public TimerCountdown(AuraSkills plugin) {
         this.plugin = plugin;
+        this.PERIOD = Math.min(plugin.configInt(Option.MANA_COOLDOWN_TIMER_PERIOD), 1);
         startCountdown();
     }
 
     public void startCountdown() {
-        // Count cooldown by 2 every 2 ticks
+        // Count cooldown by period every period ticks
         plugin.getScheduler().timerSync(new TaskRunnable() {
             @Override
             public void run() {
                 countCooldown();
             }
-        }, 0, 2 * 50L, TimeUnit.MILLISECONDS);
+        }, 0, PERIOD * 50L, TimeUnit.MILLISECONDS);
         // Count error timer by 1 every second
         plugin.getScheduler().timerSync(new TaskRunnable() {
             @Override
@@ -42,11 +45,10 @@ public class TimerCountdown {
         for (User user : plugin.getUserManager().getOnlineUsers()) {
             for (ManaAbilityData data : user.getManaAbilityDataMap().values()) {
                 int cooldown = data.getCooldown();
-                if (cooldown >= 2) {
-                    data.setCooldown(cooldown - 2);
-
-                    callRefreshEvent(user, data.getManaAbility());
-                } else if (cooldown == 1) {
+                if (cooldown > PERIOD) {
+                    data.setCooldown(cooldown - PERIOD);
+                } else if (cooldown > 0) {
+                    // Cooldown is less than or equal to period
                     data.setCooldown(0);
 
                     callRefreshEvent(user, data.getManaAbility());

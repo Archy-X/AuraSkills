@@ -9,10 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitUserManager implements UserManager {
@@ -73,11 +70,12 @@ public class BukkitUserManager implements UserManager {
     }
 
     @Override
-    public Set<User> getOnlineUsers() {
-        Set<User> online = new HashSet<>();
+    public List<User> getOnlineUsers() {
+        List<User> online = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (playerDataMap.containsKey(player.getUniqueId())) {
-                online.add(playerDataMap.get(player.getUniqueId()));
+            User user = playerDataMap.get(player.getUniqueId());
+            if (user != null) {
+                online.add(user);
             }
         }
         return online;
