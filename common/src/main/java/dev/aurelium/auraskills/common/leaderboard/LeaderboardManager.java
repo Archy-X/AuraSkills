@@ -44,7 +44,7 @@ public class LeaderboardManager {
             setSorting(true);
             // Initialize lists
             Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
-            for (Skill skill : plugin.getSkillManager().getSkillValues()) {
+            for (Skill skill : plugin.getSkillRegistry().getValues()) {
                 skillLeaderboards.put(skill, new ArrayList<>());
             }
             List<SkillValue> powerLeaderboard = new ArrayList<>();
@@ -194,7 +194,7 @@ public class LeaderboardManager {
 
                 // Add to skill leaderboard
                 SkillValue skillValue = new SkillValue(state.uuid(), level, xp);
-                skillLb.get(skill).add(skillValue);
+                skillLb.computeIfAbsent(skill, k -> new ArrayList<>()).add(skillValue);
 
                 if (skill.isEnabled()) {
                     powerLevel += level;
@@ -213,7 +213,7 @@ public class LeaderboardManager {
     private void sortLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
         LeaderboardSorter sorter = new LeaderboardSorter();
         for (Skill skill : plugin.getSkillManager().getSkillValues()) {
-            skillLb.get(skill).sort(sorter);
+            skillLb.computeIfAbsent(skill, k -> new ArrayList<>()).sort(sorter);
         }
         powerLb.sort(sorter);
         AverageSorter averageSorter = new AverageSorter();
