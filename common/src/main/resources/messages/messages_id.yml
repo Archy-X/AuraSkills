@@ -20,7 +20,7 @@ abilities:
     desc: "Meningkatkan Kekenyangan yang didapat dari tanaman yang dimakan sebanyak {value}."
     info: "+{value} Kekenyangan"
   growth_aura:
-    name: Growth Aura
+    name: Pertumbuhan Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
     info: "+{value}% Pertumbuhan"
   lumberjack:
@@ -104,7 +104,7 @@ abilities:
     desc: "{value}% kesempatan mendapatkan barang sangat langka dari menggali."
     info: "{value}% Barang sangat langka"
   retrieval:
-    name: Retrieval
+    name: Pengambilan
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Jarak"
   archer:
@@ -144,7 +144,7 @@ abilities:
     desc: "{value}% kesempatan untuk tidak menerima efek yang merugikan dari ramuan."
     info: "{value}% Tidak ada efek buruk"
   parry:
-    name: Parry
+    name: Menangkis
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
     info: "{value}% Pengurangan Kerusakan"
     parried: "<red>Attack parried"
