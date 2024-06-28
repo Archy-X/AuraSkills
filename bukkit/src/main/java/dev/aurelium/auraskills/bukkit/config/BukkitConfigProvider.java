@@ -7,9 +7,9 @@ import dev.aurelium.auraskills.common.config.*;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.skill.LoadedSkill;
+import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.bukkit.ChatColor;
 import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
@@ -44,7 +44,7 @@ public class BukkitConfigProvider implements ConfigProvider {
             long start = System.currentTimeMillis();
             for (Option option : Option.values()) {
                 // Get the value from config
-                Object value = config.node(toPath(option.getPath())).raw();
+                Object value = config.node(FileUtil.toPath(option.getPath())).raw();
                 // Check if value exists
                 if (value == null) {
                     logger.warn("Missing value in config.yml: Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
@@ -86,11 +86,6 @@ public class BukkitConfigProvider implements ConfigProvider {
             plugin.logger().severe("Failed to load config.yml: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private NodePath toPath(String path) {
-        String[] split = path.split("\\.");
-        return NodePath.of(split);
     }
 
     @Override

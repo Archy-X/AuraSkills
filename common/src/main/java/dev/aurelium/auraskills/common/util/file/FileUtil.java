@@ -4,7 +4,9 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.NodePath;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -91,7 +93,11 @@ public class FileUtil {
     }
 
     public static ConfigurationNode loadEmbeddedYamlFile(String fileName, AuraSkillsPlugin plugin) throws IOException {
-        URI uri = getEmbeddedURI(fileName, plugin);
+        return loadEmbeddedYamlFile(fileName, plugin.getClass().getClassLoader(), true);
+    }
+
+    public static ConfigurationNode loadEmbeddedYamlFile(String fileName, ClassLoader classLoader, boolean createFileSystem) throws IOException {
+        URI uri = getEmbeddedURI(fileName, classLoader);
 
         if (uri == null) {
             throw new IllegalArgumentException("File " + fileName + " does not exist");
@@ -99,23 +105,30 @@ public class FileUtil {
 
         Map<String, String> env = new HashMap<>();
         env.put("create", "true");
-        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
-
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .path(Path.of(uri))
-                    .build();
-
-            return loader.load();
+        if (createFileSystem) {
+            try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
+                return loadFromUri(uri);
+            }
+        } else {
+            return loadFromUri(uri);
         }
     }
 
-    private static URI getEmbeddedURI(String fileName, AuraSkillsPlugin plugin) {
+    private static ConfigurationNode loadFromUri(URI uri) throws ConfigurateException {
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .path(Path.of(uri))
+                .build();
+
+        return loader.load();
+    }
+
+    public static URI getEmbeddedURI(String fileName, ClassLoader classLoader) {
         if (fileName == null) {
             throw new IllegalArgumentException("fileName cannot be null");
         }
 
         try {
-            URL url = plugin.getClass().getClassLoader().getResource(fileName);
+            URL url = classLoader.getResource(fileName);
 
             if (url == null) {
                 return null;
@@ -126,6 +139,11 @@ public class FileUtil {
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    public static NodePath toPath(String path) {
+        String[] split = path.split("\\.");
+        return NodePath.of(split);
     }
 
 }

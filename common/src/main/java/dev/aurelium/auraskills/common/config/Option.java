@@ -13,6 +13,11 @@ public enum Option {
     SQL_LOAD_DELAY("sql.load_delay", OptionType.INT),
     SQL_ALWAYS_LOAD_ON_JOIN("sql.always_load_on_join", OptionType.BOOLEAN),
     SQL_SSL("sql.ssl", OptionType.BOOLEAN),
+    SQL_POOL_MAXIMUM_POOL_SIZE("sql.pool.maximum_pool_size", OptionType.INT),
+    SQL_POOL_MINIMUM_IDLE("sql.pool.minimum_idle", OptionType.INT),
+    SQL_POOL_CONNECTION_TIMEOUT("sql.pool.connection_timeout", OptionType.INT),
+    SQL_POOL_MAX_LIFETIME("sql.pool.max_lifetime", OptionType.INT),
+    SQL_POOL_KEEPALIVE_TIME("sql.pool.keepalive_time", OptionType.INT),
     DEFAULT_LANGUAGE("default_language", OptionType.STRING),
     TRY_DETECT_CLIENT_LANGUAGE("try_detect_client_language", OptionType.BOOLEAN),
     // Action bar options

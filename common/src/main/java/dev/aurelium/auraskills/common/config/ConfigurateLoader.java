@@ -12,8 +12,6 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -52,7 +50,7 @@ public class ConfigurateLoader {
 
     @Nullable
     public ConfigurationNode loadEmbeddedFileOrNull(String fileName) throws IOException {
-        URI uri = getEmbeddedURI(fileName);
+        URI uri = FileUtil.getEmbeddedURI(fileName, classLoader);
 
         if (uri == null) {
             return null;
@@ -217,25 +215,6 @@ public class ConfigurateLoader {
         loadedFiles.addAll(Arrays.asList(others));
 
         return mergeNodes(loadedFiles.toArray(new ConfigurationNode[0]));
-    }
-
-    private URI getEmbeddedURI(String fileName) {
-        if (fileName == null) {
-            throw new IllegalArgumentException("fileName cannot be null");
-        }
-
-        try {
-            URL url = classLoader.getResource(fileName);
-
-            if (url == null) {
-                return null;
-            }
-
-            // Convert URL to URI
-            return url.toURI();
-        } catch (URISyntaxException e) {
-            throw new IllegalArgumentException(e);
-        }
     }
 
 }

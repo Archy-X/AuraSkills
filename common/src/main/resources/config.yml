@@ -18,6 +18,12 @@ sql:
   load_delay: 0
   always_load_on_join: false
   ssl: false
+  pool:
+    maximum_pool_size: 10
+    minimum_idle: 10
+    connection_timeout: 5000
+    max_lifetime: 1800000
+    keepalive_time: 0
 default_language: en
 languages: [en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi, tr, fi, th]
 try_detect_client_language: false

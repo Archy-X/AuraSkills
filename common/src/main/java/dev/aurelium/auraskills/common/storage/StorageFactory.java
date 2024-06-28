@@ -19,7 +19,7 @@ public abstract class StorageFactory {
     public StorageProvider createStorageProvider(StorageType type) {
         switch (type) {
             case MYSQL:
-                ConnectionPool pool = new MySqlConnectionPool(getCredentials());
+                ConnectionPool pool = new MySqlConnectionPool(plugin, getCredentials());
                 pool.enable();
                 return new SqlStorageProvider(plugin, pool);
             case YAML:
