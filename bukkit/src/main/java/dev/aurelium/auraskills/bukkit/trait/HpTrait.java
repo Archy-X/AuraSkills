@@ -163,7 +163,8 @@ public class HpTrait extends TraitImpl {
             }
             if (trait.optionBoolean("keep_full_on_increase", false) && attribute.getValue() > originalMaxHealth) {
                 // Heals player to full health if had full health before modifier
-                if (player.getHealth() >= originalMaxHealth) {
+                final double THRESHOLD = 0.01;
+                if (player.getHealth() >= originalMaxHealth - THRESHOLD) {
                     player.setHealth(attribute.getValue());
                 }
             }
