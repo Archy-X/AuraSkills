@@ -2,6 +2,34 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.1.5
+
+### New Features
+- Add Oraxen support
+  - Oraxen note blocks defined in sources will now give XP properly
+  - Custom blocks can now be easily defined in sources by prefixing the `block` option of a block source with `oraxen:`
+    - For example, `block: oraxen:mythril_ore` will automatically register the block state from Oraxen without needing to manually define a `state`
+  - Oraxen items can be directly used in any source `menu_item` option using a string key prefixed with `oraxen:`
+    - For example, `menu_item: oraxen:mythril` will use the exact item defined in Oraxen, including any NBT
+    - This is defined as a string value directly on the `menu_item` key rather than the map section used for normal menu items
+  - Custom loot from Oraxen blocks will drop extra items correctly with Luck traits like Mining Luck
+- Add requirement.override_global option to main config
+  - If true, global requirements will be ignored if item-specific requirements are defined
+- Add mana.cooldown_timer_period option to main config
+  - Increasing can help reduce lag caused by TimerCountdown for mana abilities
+- Add sql.pool options to main config
+  - The new options maximum_pool_size, minimum_idle, connection_timeout, max_lifetime, and keepalive_time are used to configure the Hikari connection pool
+  - These should not be changed unless you have issues with connection stability and know what you are doing
+
+### Bug Fixes
+- Fix power leaderboard not adding custom skills
+- Fix leaderboard still showing for disabled skills
+- Fix global requirements and world options not being updated on skills reload
+- Fix roman placeholders with value 0 not working
+- Fix ManaAbilityRefreshEvent being called invalidly
+- Fix hp keep_full_on_increase not working sometimes
+- Fix snow golem and mooshroom not giving XP in 1.20.5+
+
 ## 2.1.4
 
 ### New Features
