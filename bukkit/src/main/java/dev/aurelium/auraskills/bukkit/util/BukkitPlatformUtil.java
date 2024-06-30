@@ -43,6 +43,10 @@ public class BukkitPlatformUtil implements PlatformUtil {
 
     @Override
     public String convertEntityName(String input) {
+        // Don't need to convert above 1.20.5 since EntityType was renamed to match vanilla
+        if (VersionUtils.isAtLeastVersion(20, 5)) {
+            return input;
+        }
         return switch (input) {
             case "snow_golem" -> "snowman";
             case "mooshroom" -> "mushroom_cow";
