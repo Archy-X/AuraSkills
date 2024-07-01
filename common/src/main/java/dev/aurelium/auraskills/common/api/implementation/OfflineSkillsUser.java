@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class OfflineSkillsUser implements SkillsUser {
 
@@ -202,5 +203,20 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public int getJobLimit() {
         return 0;
+    }
+
+    @Override
+    public void sendActionBar(String message) {
+
+    }
+
+    @Override
+    public void sendActionBar(String message, int duration, TimeUnit timeUnit) {
+
+    }
+
+    @Override
+    public void pauseActionBar(int duration, TimeUnit timeUnit) {
+
     }
 }
