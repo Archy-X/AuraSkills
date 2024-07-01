@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public interface SkillsUser {
 
@@ -300,5 +301,30 @@ public interface SkillsUser {
      * @return the jobs limit
      */
     int getJobLimit();
+
+    /**
+     * Sends an action bar to the user and pauses other AuraSkills action bars for the default duration (750ms or 15 ticks).
+     *
+     * @param message the message to send
+     */
+    void sendActionBar(String message);
+
+    /**
+     * Sends an action bar to the user and pauses other AuraSkills action bars for the specified duration.
+     *
+     * @param message the action bar message
+     * @param duration the duration
+     * @param timeUnit the time unit of the duration
+     */
+    void sendActionBar(String message, int duration, TimeUnit timeUnit);
+
+    /**
+     * Pauses AuraSkills action bars for a certain duration. While idle and xp action bars will be paused, others like ability
+     * messages may still be sent.
+     *
+     * @param duration the duration to pause
+     * @param timeUnit the time unit of the duration
+     */
+    void pauseActionBar(int duration, TimeUnit timeUnit);
 
 }

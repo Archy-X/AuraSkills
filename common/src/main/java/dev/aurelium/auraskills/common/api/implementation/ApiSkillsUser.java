@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ApiSkillsUser implements SkillsUser {
 
@@ -219,6 +221,23 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public int getJobLimit() {
         return user.getJobLimit();
+    }
+
+    @Override
+    public void sendActionBar(String message) {
+        plugin.getUiProvider().sendActionBar(user, message);
+        plugin.getUiProvider().getActionBarManager().setPaused(user, ActionBarManager.PAUSE_MS, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public void sendActionBar(String message, int duration, TimeUnit timeUnit) {
+        plugin.getUiProvider().sendActionBar(user, message);
+        plugin.getUiProvider().getActionBarManager().setPaused(user, duration, timeUnit);
+    }
+
+    @Override
+    public void pauseActionBar(int duration, TimeUnit timeUnit) {
+        plugin.getUiProvider().getActionBarManager().setPaused(user, duration, timeUnit);
     }
 
 }

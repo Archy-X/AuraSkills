@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ActionBarManager {
 
+    public static final int PAUSE_MS = 750;
     protected final AuraSkillsPlugin plugin;
     private final UiProvider uiProvider;
 
@@ -239,7 +240,7 @@ public abstract class ActionBarManager {
         }
 
         plugin.getUiProvider().sendActionBar(user, actionBarText);
-        setPaused(user, 15 * 50, TimeUnit.MILLISECONDS);
+        setPaused(user, PAUSE_MS, TimeUnit.MILLISECONDS);
     }
 
     private String getXpActionBarMessage(User user, Skill skill, double currentXp, double levelXp, double xpGained, int level, boolean maxed, double income) {
