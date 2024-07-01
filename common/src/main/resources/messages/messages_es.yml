@@ -596,7 +596,7 @@ menus:
     stats: "Estadísticas"
     stats_desc: "Gana ventajas de estadísticas al subir de nivel las habilidades"
     stats_click: "Haz clic para aprender más o ver tus estadísticas"
-    active_job: Active Job
+    active_job: Trabajo actual
   level_progression:
     level_progression_title: "Niveles de {skill} - Página {page}"
     your_ranking: "Tu Clasificación de habilidades"
@@ -614,12 +614,12 @@ menus:
     abilities_desc: "<2>Las habilidades</2> <1>son ventajas pasivas que desbloqueas y mejoras a medida que subes de nivel.</1>"
     mana_abilities_desc: "<3>Las habilidades</3> <1>de maná son un tipo especial de habilidad que requieren activación y consume maná.</1>"
     abilities_click: "Clic para ver las habilidades de {skill}"
-    job: Job
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job: Trabajo
+    job_desc: Seleccionando {skill} como tu trabajo te permite ganar dinero mientras ganas XP.
+    job_select: Clic Izquierdo para seleccionar {skill} como trabajo
+    job_active: Estás trabajando actualmente en este trabajo
+    job_quit: Clic Derecho para renunciar
+    job_limit: Has alcanzado el límite de trabajos. Sal de algún trabajo actual primero para seleccionar este.
   stats:
     stats_title: Tus estadísticas
     skills: "Habilidades"
