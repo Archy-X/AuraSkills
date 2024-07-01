@@ -209,7 +209,7 @@ public class BossBarManager implements Listener {
 
         plugin.getAudiences().player(player).showBossBar(bossBar);
 
-        // Boss bar progress is updated later, so the player sees the animation going from old progress to new
+        // Boss bar progress is updated later, so the player sees the animation going from previous progress to new
         plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
     }
 
