@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.ContextProvider;
+import dev.aurelium.auraskills.bukkit.loot.parser.CustomEntityParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomItemParser;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,6 +17,7 @@ public class LootManager {
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
     private final List<CustomItemParser> customItemParsers;
+    private final List<CustomEntityParser> customEntityParsers;
     private final Map<String, LootParser> customLootParsers;
 
     public LootManager(AuraSkills plugin) {
@@ -24,6 +26,7 @@ public class LootManager {
         this.contextProviders = new HashMap<>();
         this.lootOptionKeys = new HashSet<>();
         this.poolOptionKeys = new HashSet<>();
+        this.customEntityParsers = new ArrayList<>();
         this.customItemParsers = new ArrayList<>();
         this.customLootParsers = new HashMap<>();
     }
@@ -77,8 +80,16 @@ public class LootManager {
         return customItemParsers;
     }
 
+    public List<CustomEntityParser> getCustomEntityParsers() {
+        return customEntityParsers;
+    }
+
     public void registerCustomItemParser(CustomItemParser customItemParser) {
         customItemParsers.add(customItemParser);
+    }
+
+    public void registerCustomEntityParser(CustomEntityParser customEntityParser) {
+        customEntityParsers.add(customEntityParser);
     }
 
     public Map<String, LootParser> getCustomLootParsers() {

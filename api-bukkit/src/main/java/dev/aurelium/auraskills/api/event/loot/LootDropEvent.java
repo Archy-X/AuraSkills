@@ -2,12 +2,15 @@ package dev.aurelium.auraskills.api.event.loot;
 
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Called when AuraSkills drops extra loot from mechanics like Fishing, Luck, and custom loot tables.
@@ -22,6 +25,7 @@ public class LootDropEvent extends Event implements Cancellable {
     private Location location;
     private final Cause cause;
     private boolean toInventory;
+    private Entity entity;
     private boolean cancelled = false;
 
     public LootDropEvent(Player player, SkillsUser user, ItemStack item, Location location, Cause cause, boolean toInventory) {
@@ -31,6 +35,26 @@ public class LootDropEvent extends Event implements Cancellable {
         this.location = location;
         this.cause = cause;
         this.toInventory = toInventory;
+    }
+
+    public LootDropEvent(Player player, SkillsUser user, Entity entity, Location location, Cause cause) {
+        this.player = player;
+        this.user = user;
+        this.location = location;
+        this.cause = cause;
+        this.toInventory = false;
+        this.entity = entity;
+        // Let's not break things and make the item not nullable still
+        this.item = new ItemStack(Material.AIR);
+    }
+
+    /**
+     * Gets the spawned entity if the loot was an entity.
+     *
+     * @return the entity
+     */
+    public @Nullable Entity getEntity() {
+        return entity;
     }
 
     /**
@@ -53,6 +77,7 @@ public class LootDropEvent extends Event implements Cancellable {
 
     /**
      * Gets the item that will be dropped by the event.
+     * If the drop is an entity, this will be AIR.
      *
      * @return the item
      */
