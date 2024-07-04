@@ -18,7 +18,7 @@ public class MythicEntitySupplier extends EntitySupplier {
     public Entity spawnEntity(AuraSkills plugin, Location location) {
         ActiveMob activeMob;
 
-        if(getEntityProperties().level() != null) {
+        if (getEntityProperties().level() != null) {
             activeMob = MythicBukkit.inst().getMobManager().spawnMob(getEntityProperties().entityId(), location, getEntityProperties().level());
         } else {
             activeMob = MythicBukkit.inst().getMobManager().spawnMob(getEntityProperties().entityId(), location);
