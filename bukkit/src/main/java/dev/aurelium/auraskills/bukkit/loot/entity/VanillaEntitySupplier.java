@@ -2,10 +2,14 @@ package dev.aurelium.auraskills.bukkit.loot.entity;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 
 public class VanillaEntitySupplier extends EntitySupplier {
 
@@ -32,6 +36,9 @@ public class VanillaEntitySupplier extends EntitySupplier {
             entity.setCustomNameVisible(true);
         }
 
+        if (getEntityProperties().level() != null) {
+            entity.setMetadata("aura_skills_level", new FixedMetadataValue(plugin, getEntityProperties().level()));
+        }
 
         return entity;
     }
