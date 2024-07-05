@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
 public class MythicEntitySupplier extends EntitySupplier {
+
     public MythicEntitySupplier(EntityProperties entityProperties) {
         super(entityProperties);
     }

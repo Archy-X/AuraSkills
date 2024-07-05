@@ -12,6 +12,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 
 public class EntityLootParser implements LootParser {
+
     protected final LootManager manager;
 
     public EntityLootParser(LootManager manager) {

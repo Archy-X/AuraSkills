@@ -137,10 +137,10 @@ public abstract class LootHandler {
         itemEntity.setItemStack(new ItemStack(Material.AIR));
 
         Float hVelocity = loot.getEntity().getEntityProperties().horizontalVelocity();
-        if(hVelocity == null) hVelocity = 1.2f;
+        if (hVelocity == null) hVelocity = 1.2f;
 
         Float vVelocity = loot.getEntity().getEntityProperties().verticalVelocity();
-        if(vVelocity == null) vVelocity = 1.3f;
+        if (vVelocity == null) vVelocity = 1.3f;
 
         Vector vector = player.getLocation().subtract(location).toVector().multiply(hVelocity - 1);
         vector.setY((vector.getY() + 0.2) * vVelocity);
