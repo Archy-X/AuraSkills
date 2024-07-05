@@ -489,7 +489,7 @@ commands:
     removeall:
       removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
-    global: Global
+    global: 全域
     list: "<gold>{player}<white>的經驗值倍數: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!"
@@ -501,7 +501,7 @@ commands:
       modified: Modified files
       replaced: Replaced files
       deleted: Deleted files
-      skipped: Skipped files
+      skipped: 跳過的檔案
   profile:
     skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
@@ -555,7 +555,7 @@ commands:
 leveler:
   level_up: "{skill} Level Up"
   skill_level_up: Skill Level Up
-  rewards: Rewards
+  rewards: 獎勵
   ability_unlock: Ability Unlock
   ability_level_up: Ability Level Up
   mana_ability_unlock: Mana Ability Unlock
@@ -573,18 +573,18 @@ menus:
     duration: "Duration"
     mana_cost: "Mana Cost"
     cooldown: "Cooldown"
-    damage: "Damage"
+    damage: "傷害"
     max_mana_cost: "Max Mana Cost"
     attack_speed: "Attack Speed"
-    back: "Go Back"
+    back: "返回"
     back_click: "Back to {menu_name} Menu"
     unlocked: "UNLOCKED"
     in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
+    locked: "已鎖定"
+    your_level: "你的等級"
+    next_page: "下一頁"
     next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
+    previous_page: "上一頁"
     previous_page_click: "Click to go to previous page"
   skills:
     skills_title: "你的技能"
@@ -593,7 +593,7 @@ menus:
     your_skills_hover: "滑鼠指在技能上取得更多資訊!"
     your_skills_click: "點擊一項技能可以查看等級進度!"
     skill_click: "點擊查看等級進度!"
-    stats: "Stats"
+    stats: "統計"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
     active_job: Active Job
@@ -610,11 +610,11 @@ menus:
     sources: "XP Sources"
     sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
     sources_click: "Click to view {skill} sources"
-    abilities: "Abilities"
+    abilities: "能力"
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
-    job: Job
+    job: 工作
     job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
     job_select: Left click to select {skill} as your job
     job_active: You are actively working this job
@@ -622,7 +622,7 @@ menus:
     job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
   stats:
     stats_title: 你的統計資料
-    skills: "Skills"
+    skills: "技能"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
@@ -638,8 +638,8 @@ menus:
     sorter: "Sort XP Sources"
     descending: "Highest to Lowest"
     ascending: "Lowest to Highest"
-    alphabetical: "Name (A-Z)"
-    reverse_alphabetical: "Name (Z-A)"
+    alphabetical: "名稱 (A-Z)"
+    reverse_alphabetical: "名稱 (Z-A)"
     sort_click: "Click to cycle sort type"
     multiplied_xp: "Multiplied {xp_unit}"
     multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
@@ -752,8 +752,8 @@ skills:
 sources:
   fishing:
     cod: Cod
-    salmon: Salmon
-    tropical_fish: Tropical Fish
+    salmon: 鮭魚
+    tropical_fish: 熱帶魚
     pufferfish: Pufferfish
     treasure: Treasure Items
     junk: Junk Items
@@ -764,9 +764,9 @@ sources:
     player_damage: Damage from Players
     fall_damage: Taking Fall Damage
   statistic:
-    walk_per_meter: Walking
+    walk_per_meter: 步行
     sprint_per_meter: Sprinting
-    swim_per_meter: Swimming
+    swim_per_meter: 游泳
   jumping:
     jump_per_100: Jumping
   brewing:
@@ -804,8 +804,8 @@ sources:
   grindstone:
     grindstone_per_level: Disenchant Item with Grindstone
   units:
-    damage: Damage
-    meter: Meter
+    damage: 傷害
+    meter: 儀表
     100_jumps: 100 Jumps
     mana: Mana Consumed
     combine_level: Anvil Cost Experience
@@ -837,11 +837,11 @@ stats:
     name: Crit Damage
     desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
   speed:
-    name: Speed
+    name: 速度
     desc: "Speed increases how fast you can walk and run"
 traits:
   attack_damage:
-    name: Attack Damage
+    name: 攻擊力
   hp:
     name: HP
   saturation_regen:
@@ -849,7 +849,7 @@ traits:
   hunger_regen:
     name: Hunger Regen
   mana_regen:
-    name: Mana Regen
+    name: 法力恢復
   luck:
     name: Luck Attribute
   double_drop:
