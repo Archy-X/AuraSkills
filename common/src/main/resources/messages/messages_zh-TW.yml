@@ -5,8 +5,8 @@
 abilities:
   bountiful_harvest:
     name: 豐收
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "授予 +{value} 農業運氣，這會增加額外掉落的幾率。"
+    info: "+{value} 農耕運氣"
   farmer:
     name: 農夫
     desc: "獲得{value}% 額外的農業經驗."
@@ -22,11 +22,11 @@ abilities:
   growth_aura:
     name: 生長光環
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    info: "+{value}% 生長"
   lumberjack:
     name: 伐木工
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "授予 +{value} 覓食運氣，這會增加獲得額外掉落物的幾率。"
+    info: "+{value} 覓食運氣"
   forager:
     name: 伐木
     desc: "獲得{value}% 伐木經驗."
@@ -45,8 +45,8 @@ abilities:
     info: "{value}% 三倍耐久度損壞"
   lucky_miner:
     name: 幸運礦工
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "授予 +{value} 採礦運氣，這會增加額外掉落的幾率。"
+    info: "+{value} 採礦運氣"
   miner:
     name: 礦工
     desc: "獲得{value}% 挖礦經驗."
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% 不會對耐久度造成損耗"
   lucky_catch:
     name: 幸運爪子
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "授予 +{value} 釣魚運氣，這會增加獲得額外掉落物的幾率。"
+    info: "+{value} 釣魚運氣"
   fisher:
     name: 漁夫
     desc: "獲得{value}% 額外的釣魚經驗"
@@ -97,16 +97,16 @@ abilities:
     info: "+{value}% 鏟子傷害"
   bigger_scoop:
     name: 大杓子
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "授予 +{value} 挖掘運氣，這會增加額外掉落的幾率。"
+    info: "+{value}% 挖掘運氣"
   lucky_spades:
     name: 幸運黑桃
     desc: "有{value}% 機率釣到史詩級寶物."
     info: "{value}% 史詩級寶物"
   retrieval:
-    name: Retrieval
+    name: 恢復
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    info: "{value}距離"
   archer:
     name: 弓箭手
     desc: "獲得{value}% 射箭經驗."
@@ -146,8 +146,8 @@ abilities:
   parry:
     name: 格擋
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    info: "{value}% 傷害減少"
+    parried: "<red>攻擊被招架"
   fighter:
     name: 戰鬥
     desc: "獲得{value}% 戰鬥經驗"
@@ -348,10 +348,10 @@ commands:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
         already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
-        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
-        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+        skill_lore: "<gray>配戴時：<aqua> +{value}% {skill} XP"
+        skill_lore_subtract: "<gray>配戴時：<aqua> -{value}% {skill} XP"
+        global_lore: "<gray>配戴時：<blue> +{value}% 技能 XP"
+        global_lore_subtract: "<gray>配戴時：<blue> -{value}% 技能 XP"
       remove:
         does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
         removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
@@ -374,22 +374,22 @@ commands:
       equip: "<yellow>你沒有裝備這個物品的條件!"
   backup:
     load:
-      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
-      loading: "<white>Loading backup..."
-      loaded: "<green>Successfully loaded backup"
-      error: "<red>Error loading backup: {error}"
-      must_be_yaml: "<yellow>File must be a .yml file!"
-      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
+      confirm: "<red>載入備份將恢復玩家的所有技能資料。此操作是永久性的且無法撤消。您可能需要在載入備份之前儲存備份。再次輸入命令以確認此操作"
+      loading: "<white>正在載入備份..."
+      loaded: "<green>成功載入備份"
+      error: "<red>載入備份時發生錯誤：{error}"
+      must_be_yaml: "<yellow>檔案必須是 .yml 檔！"
+      file_not_found: "<yellow>備份資料夾中不存在該檔案名稱的備份！"
     save:
-      saving: "<white>Saving backup..."
-      saved: "<white>Backed up {type} data as {file}"
-      error: "<red>Error backing up {type} data! See error in console/below for details"
+      saving: "<white>正在儲存備份..."
+      saved: "<white>已將 {type} 資料備份為 {file}"
+      error: "<red>備份 {type} 資料時出錯！有關詳細信息，請參閱控制台/下面的錯誤"
   claimitems:
-    no_items: "<yellow>You have no items to claim"
+    no_items: "<yellow>您沒有可以領取的物品"
   item:
     give:
-      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
-      receiver: "<white>You were given <aqua>{amount}x {key}"
+      sender: "<white>給予<aqua>{amount}×{key}<white>到{player}"
+      receiver: "<white>你被賦予了<aqua>{amount}×{key}"
     modifier:
       add:
         added: "物品已添加{color}{stat} <aqua>{value} 屬性"
@@ -445,13 +445,13 @@ commands:
   jobs:
     add:
       added: "<white>The job {job} was successfully added to player {player}"
-      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
-      existing: "<yellow>Player {player} already has the job {job}"
+      limited: "<yellow>無法新增此作業，因為玩家 {player} 已達到作業限制"
+      existing: "<yellow>玩家 {player} 已擁有職位 {job}"
     remove:
-      removed: "<white>Removed job {job} from player {player}"
-      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      removed: "<white>已從玩家 {player} 中刪除作業 {job}"
+      unchanged: "<yellow>由於玩家 {player} 沒有職位 {job}，因此沒有任何更改"
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
+      removed: "<white>刪除了玩家 {player} 的所有任務"
   lang:
     set: "<gray>語言設定成 <aqua>{lang}"
     not_found: "<yellow>這個語言不存在!"
@@ -496,11 +496,11 @@ commands:
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
+      loaded: 已成功載入預設 {name}，立即重新啟動伺服器。
+      created: 建立的文件
+      modified: 修改文件
+      replaced: 替換的文件
+      deleted: 已刪除的文件
       skipped: 跳過的檔案
   profile:
     skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
@@ -521,7 +521,7 @@ commands:
       set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
     setlevel:
       set: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill} 設定成等級<aqua>{level}"
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>等級必須至少為 {level}！"
   toggle:
     enabled: "<green>狀態列已啟用"
     disabled: "<red>狀態列已停用"
@@ -536,7 +536,7 @@ commands:
     usage: "<yellow>使用: <green>/sk top <white><頁碼> <gray>或 <green>/sk top <white>[skill] <頁碼>"
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
-    error: "<red>There was an error transferring player data. Check console for errors."
+    error: "<red>傳輸玩家資料時出錯。檢查控制台是否有錯誤。"
   updateleaderboards:
     already_updating: "<yellow>排行榜已經更新過了!"
     updated: "<green>排行榜已更新!"
@@ -548,44 +548,44 @@ commands:
   manaability:
     cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>未知的技能!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
-  unknown_stat: "<yellow>Unknown stat!"
-  unknown_trait: "<yellow>Unknown trait!"
+  unknown_mana_ability: "<yellow>未知的法力能力！"
+  unknown_stat: "<yellow>未知統計！"
+  unknown_trait: "<yellow>未知特質！"
   no_profile: "<yellow>玩家沒有技能資料!"
 leveler:
-  level_up: "{skill} Level Up"
-  skill_level_up: Skill Level Up
+  level_up: "{skill}升級"
+  skill_level_up: 技能等級提升
   rewards: 獎勵
-  ability_unlock: Ability Unlock
-  ability_level_up: Ability Level Up
-  mana_ability_unlock: Mana Ability Unlock
-  mana_ability_level_up: Mana Ability Level Up
-  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  ability_unlock: 能力解鎖
+  ability_level_up: 能力等級提升
+  mana_ability_unlock: 法力能力解鎖
+  mana_ability_level_up: 法力能力等級提升
+  unclaimed_item: "<red>由於庫存已滿，您有無人認領的物品，請使用<yellow>/技能要求項目<red>聲稱他們"
 menus:
   common:
     close: "關閉"
     level: "等級"
-    progress_to_level: "Progress to Level"
+    progress_to_level: "到達等級"
     max_level: "最大等級"
     ability_levels: "能力等級"
     stats_leveled: "Stats Leveled"
     mana_ability: "法術能力"
     duration: "Duration"
-    mana_cost: "Mana Cost"
-    cooldown: "Cooldown"
+    mana_cost: "法力消耗"
+    cooldown: "冷卻"
     damage: "傷害"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
+    max_mana_cost: "最大法力消耗"
+    attack_speed: "攻擊速度"
     back: "返回"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
+    back_click: "返回{menu_name}選單"
+    unlocked: "解鎖"
+    in_progress: "進行中"
     locked: "已鎖定"
     your_level: "你的等級"
     next_page: "下一頁"
-    next_page_click: "Click to go to next page"
+    next_page_click: "點擊進入下一頁"
     previous_page: "上一頁"
-    previous_page_click: "Click to go to previous page"
+    previous_page_click: "點擊進入上一頁"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"
@@ -595,7 +595,7 @@ menus:
     skill_click: "點擊查看等級進度!"
     stats: "統計"
     stats_desc: "Earn stat buffs by leveling up skills"
-    stats_click: "Click to learn more or view your stats"
+    stats_click: "點擊了解更多或查看您的統計數據"
     active_job: Active Job
   level_progression:
     level_progression_title: "{skill} 等級 - 第 {page} 頁"
@@ -603,50 +603,50 @@ menus:
     rank_out_of: "<1>你的排名是 {total} 玩家中的第<2>{rank}</2> 位</1>"
     rank_percent: "<1>你的排行超過 <2>{percent}%</2>的玩家</1>"
     rewards: "獎勵"
-    ability_unlock: "Ability Unlock"
+    ability_unlock: "能力解鎖"
     mana_ability_unlock: "法術能力解鎖"
     progress: "進度"
-    leaderboard_click: "Click to view the {skill} leaderboard"
-    sources: "XP Sources"
-    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    leaderboard_click: "點擊看{skill}排行榜"
+    sources: "XP 來源"
+    sources_desc: "來源選單顯示了您可以透過某項技能賺取 XP 的所有方式，以及每個來源提供的 XP 數量。"
     sources_click: "Click to view {skill} sources"
     abilities: "能力"
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
-    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    mana_abilities_desc: "<3>法力能力</3><1>是一種需要啟動並消耗法力的特殊能力。</1>"
     abilities_click: "Click to view {skill} abilities"
     job: 工作
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_desc: 選擇 {skill} 作為您的工作可以讓您在賺取 XP 的同時賺錢。
+    job_select: 左鍵點選選擇 {skill} 作為您的作業
+    job_active: 您正在積極從事這份工作
+    job_quit: 右鍵單擊退出此工作
+    job_limit: 您已達到工作上限。首先退出目前的工作才能選擇此工作。
   stats:
     stats_title: 你的統計資料
     skills: "技能"
-    added_drop: "+{value} Drop"
+    added_drop: "+{value} 掉落"
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
     chance_drops: "{chance}% for +{value} Drops"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
-    inventory_full: "You do not have enough space in your inventory to claim that item"
-    click_to_claim: "Click to claim!"
+    inventory_full: "您的庫存中沒有足夠的空間來領取該物品"
+    click_to_claim: "點擊領取！"
   leaderboard:
-    leaderboard_title: "{skill} Leaderboard"
+    leaderboard_title: "{skill}排行榜"
   sources:
-    sources_title: "{skill} XP Sources"
-    sorter: "Sort XP Sources"
-    descending: "Highest to Lowest"
-    ascending: "Lowest to Highest"
+    sources_title: "{skill} XP 來源"
+    sorter: "對 XP 來源進行排序"
+    descending: "從最高到最低"
+    ascending: "從最低到最高"
     alphabetical: "名稱 (A-Z)"
     reverse_alphabetical: "名稱 (Z-A)"
-    sort_click: "Click to cycle sort type"
+    sort_click: "點擊循環排序類型"
     multiplied_xp: "Multiplied {xp_unit}"
-    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+    multiplied_desc: "這是您根據目前 XP 乘數實際獲得的 XP"
   abilities:
-    abilities_title: "{skill} Abilities"
-    description: "Description"
-    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    abilities_title: "{skill}能力"
+    description: "說明"
+    unlocked_at: "<1>已於 <2>{skill} {level} 解鎖"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
 mana_abilities:
   replenish:
@@ -679,9 +679,9 @@ mana_abilities:
     end: "<gray>吸收已消耗完"
   terraform:
     name: Terraform
-    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
-    raise: "<gray>You raise your shovel"
-    lower: "<gray>You lower your shovel"
+    desc: "挖掘時，立即水平打破 {radius} 方塊半徑內的連接方塊，持續 {value} 秒。 <1>[右鍵鏟子挖塊啟動]"
+    raise: "<gray>你舉起鏟子"
+    lower: "<gray>你放下鏟子"
     start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
     end: "<gray>Terraform has worn off"
   sharp_hook:
@@ -733,10 +733,10 @@ skills:
     desc: "走路或跑步來獲得耐力{xp_unit}"
   agility:
     name: 敏捷
-    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+    desc: "四處走動並承受墜落傷害以獲得敏捷度 {xp_unit}"
   alchemy:
     name: 釀造
-    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+    desc: "釀造和潑濺藥水以獲得煉金術 {xp_unit}"
   enchanting:
     name: 附魔
     desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
@@ -751,65 +751,65 @@ skills:
     desc: "在鐵砧上使用書籍將物品結合來獲得鍛造{xp_unit}"
 sources:
   fishing:
-    cod: Cod
+    cod: 鱈魚
     salmon: 鮭魚
     tropical_fish: 熱帶魚
-    pufferfish: Pufferfish
-    treasure: Treasure Items
-    junk: Junk Items
-    rare: Rare Loot
-    epic: Epic Loot
+    pufferfish: 河豚魚
+    treasure: 寶藏物品
+    junk: 垃圾物品
+    rare: 稀有戰利品
+    epic: 史詩戰利品
   damage:
-    mob_damage: Damage from Mobs
-    player_damage: Damage from Players
-    fall_damage: Taking Fall Damage
+    mob_damage: 來自小怪的傷害
+    player_damage: 玩家造成的傷害
+    fall_damage: 承受墜落傷害
   statistic:
     walk_per_meter: 步行
-    sprint_per_meter: Sprinting
+    sprint_per_meter: 跑步
     swim_per_meter: 游泳
   jumping:
-    jump_per_100: Jumping
+    jump_per_100: 跳躍
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: 釀造愚蠢的藥水
+    regular: 釀造普通藥水
+    extended: 釀造長效藥水
+    upgraded: 釀造升級藥水
+    splash: 釀造飛濺藥水
+    lingering: 釀造滯留藥水
   enchanting:
-    weapon_per_level: Enchant Weapon
-    armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    weapon_per_level: 附魔武器
+    armor_per_level: 附魔護甲
+    tool_per_level: 附魔工具
+    book_per_level: 附魔書
   mana_ability_use:
-    mana_ability_use: Using Mana Abilities
+    mana_ability_use: 使用法力能力
   item_consume:
-    drink_regular: Drink Regular Potion
-    drink_extended: Drink Extended Duration Potion
-    drink_upgraded: Drink Upgraded Potion
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    drink_regular: 喝普通藥水
+    drink_extended: 喝長效藥水
+    drink_upgraded: 喝升級藥水
+    golden_apple: 吃金蘋果
+    enchanted_golden_apple: 食用附魔金蘋果
   potion_splash:
-    splash_regular: Splash Regular Potion
+    splash_regular: 噴濺普通藥水
     splash_extended: Splash Extended Duration Potion
-    splash_upgraded: Splash Upgraded Potion
-    lingering_regular: Use Regular Lingering Potion
-    lingering_extended: Use Extended Duration Lingering Potion
-    lingering_upgraded: Use Upgraded Lingering Potion
+    splash_upgraded: 飛濺升級藥水
+    lingering_regular: 使用普通滯留藥水
+    lingering_extended: 使用延長滯留藥水
+    lingering_upgraded: 使用升級後的滯留藥水
   anvil:
-    combine_books_per_level: Combine Enchanted Books
-    combine_weapon_per_level: Combine Weapon with Book
-    combine_armor_per_level: Combine Armor with Book
-    combine_tool_per_level: Combine Tool with Book
+    combine_books_per_level: 結合魔法書
+    combine_weapon_per_level: 將武器與書籍結合起來
+    combine_armor_per_level: 將盔甲與書籍結合起來
+    combine_tool_per_level: 將工具與書籍結合起來
   grindstone:
     grindstone_per_level: Disenchant Item with Grindstone
   units:
     damage: 傷害
     meter: 儀表
-    100_jumps: 100 Jumps
-    mana: Mana Consumed
+    100_jumps: 100 次跳躍
+    mana: 法力消耗
     combine_level: Anvil Cost Experience
-    grindstone_level: Level of Enchant on Item
+    grindstone_level: 物品附魔等級
     enchant_level: Level of Enchant Received
 stats:
   strength:
@@ -823,7 +823,7 @@ stats:
     desc: "恢復可以增加恢復生命值和法力值的速度"
   luck:
     name: 運氣
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "運氣會增加收集技能時從方塊中額外掉落的機會。"
   wisdom:
     name: 智慧
     desc: "智慧可以增加最大法力值, 增加經驗值並減少鐵砧成本"
@@ -831,10 +831,10 @@ stats:
     name: 剛性
     desc: "剛性增加了敵人攻擊所減少的傷害"
   crit_chance:
-    name: Crit Chance
+    name: 爆擊幾率
     desc: "Crit Chance is your odds to deal a critical hit"
   crit_damage:
-    name: Crit Damage
+    name: 暴擊傷害
     desc: "Crit Damage is the percentage increase in damage when dealing a critical hit"
   speed:
     name: 速度
@@ -847,39 +847,39 @@ traits:
   saturation_regen:
     name: Saturation Regen
   hunger_regen:
-    name: Hunger Regen
+    name: 飢餓恢復
   mana_regen:
     name: 法力恢復
   luck:
-    name: Luck Attribute
+    name: 幸運屬性
   double_drop:
     name: Double Drop
   experience_bonus:
-    name: Experience Bonus
+    name: 經驗獎勵
   anvil_discount:
     name: Anvil Discount
   max_mana:
-    name: Max Mana
+    name: 最大法力值
   damage_reduction:
-    name: Damage Reduction
+    name: 減少傷害
   crit_chance:
-    name: Crit Chance
+    name: 爆擊幾率
   crit_damage:
-    name: Crit Damage
+    name: 暴擊傷害
   movement_speed:
-    name: Movement Speed
+    name: 移動速度
   farming_luck:
     name: Farming Luck
   foraging_luck:
     name: Foraging Luck
   mining_luck:
-    name: Mining Luck
+    name: 採礦運氣
   excavation_luck:
-    name: Excavation Luck
+    name: 挖掘運氣
   fishing_luck:
-    name: Fishing Luck
+    name: 釣魚運氣
 ui:
-  maxed: MAXED
+  maxed: 最大
 units:
   mana: 法力
   hp: 血量
