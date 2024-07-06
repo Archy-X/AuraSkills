@@ -10,7 +10,6 @@ import dev.aurelium.auraskills.common.util.data.Validate;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-
 public class EntityLootParser implements LootParser {
 
     protected final LootManager manager;

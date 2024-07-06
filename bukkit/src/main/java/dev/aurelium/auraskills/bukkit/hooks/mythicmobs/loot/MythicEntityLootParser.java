@@ -14,6 +14,6 @@ public class MythicEntityLootParser implements CustomEntityParser {
 
     @Override
     public boolean shouldUseParser(ConfigurationNode config) {
-        return config.node("entity").getString().startsWith("mythicmobs:");
+        return config.node("entity").getString("").startsWith("mythicmobs:");
     }
 }

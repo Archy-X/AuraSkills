@@ -11,7 +11,7 @@ public record EntityProperties(String entityId,
                                Float verticalVelocity) {
 
     public static EntityProperties fromConfig(ConfigurationNode config) {
-        String[] id = config.node("entity").getString().split(":");
+        String[] id = config.node("entity").getString("").split(":");
 
         return new EntityProperties(
                 id.length > 1 ? id[1] : id[0],

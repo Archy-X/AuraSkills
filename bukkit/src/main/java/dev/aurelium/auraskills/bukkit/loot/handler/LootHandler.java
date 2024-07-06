@@ -120,11 +120,13 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveFishingEntityLoot(Player player, EntityLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause, LootTable table) {
+    protected void giveFishingEntityLoot(Player player, EntityLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
         if (!(event.getCaught() instanceof Item itemEntity)) return;
 
         Location location = event.getHook().getLocation();
         Entity entity = loot.getEntity().spawnEntity(plugin, event.getHook().getLocation());
+
+        if (entity == null) return;
 
         LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), entity, event.getHook().getLocation(), cause);
         Bukkit.getPluginManager().callEvent(dropEvent);

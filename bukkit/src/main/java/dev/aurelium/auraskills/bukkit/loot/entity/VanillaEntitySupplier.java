@@ -2,7 +2,9 @@ package dev.aurelium.auraskills.bukkit.loot.entity;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -16,15 +18,24 @@ public class VanillaEntitySupplier extends EntitySupplier {
 
     @Override
     public Entity spawnEntity(AuraSkills plugin, Location location) {
-        Entity entity = location.getWorld().spawnEntity(location, EntityType.valueOf(getEntityProperties().entityId().toUpperCase()));
+        World world = location.getWorld();
+        if (world == null) return null;
+
+        Entity entity = world.spawnEntity(location, EntityType.valueOf(getEntityProperties().entityId().toUpperCase()));
 
         if (entity instanceof LivingEntity livingEntity) {
             if (getEntityProperties().health() != null) {
-                livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(getEntityProperties().health());
-                livingEntity.setHealth(getEntityProperties().health());
+                AttributeInstance attribute = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                if (attribute != null) {
+                    attribute.setBaseValue(getEntityProperties().health());
+                    livingEntity.setHealth(Math.min(getEntityProperties().health(), attribute.getValue()));
+                }
             }
             if (getEntityProperties().damage() != null) {
-                livingEntity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(getEntityProperties().damage());
+                AttributeInstance attribute = livingEntity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+                if (attribute != null) {
+                    attribute.setBaseValue(getEntityProperties().damage());
+                }
             }
         }
 
