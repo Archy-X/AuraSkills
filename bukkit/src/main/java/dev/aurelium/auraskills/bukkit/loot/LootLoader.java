@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.loot;
 import dev.aurelium.auraskills.api.loot.*;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.loot.parser.CommandLootParser;
+import dev.aurelium.auraskills.bukkit.loot.parser.EntityLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.ItemLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.LootParsingContextImpl;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
@@ -70,6 +71,9 @@ public class LootLoader extends Parser {
                     // Command loot
                     else if (lootType.equalsIgnoreCase("command")) {
                         loot = new CommandLootParser().parse(context, lootNode);
+                    // Entity loot, mainly for fishing
+                    } else if (lootType.equalsIgnoreCase("entity")) {
+                        loot = new EntityLootParser(manager).parse(context, lootNode);
                     } else {
                         // Parse custom loot registered from API
                         LootParser customParser = manager.getCustomLootParsers().get(lootType);

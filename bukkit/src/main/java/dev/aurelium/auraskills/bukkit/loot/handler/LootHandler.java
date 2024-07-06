@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
+import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
@@ -26,9 +27,12 @@ import dev.aurelium.slate.text.TextFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
@@ -112,6 +116,38 @@ public abstract class LootHandler {
         if (dropEvent.isCancelled()) return;
 
         itemEntity.setItemStack(dropEvent.getItem());
+        attemptSendMessage(player, loot);
+        giveXp(player, loot, source, skill);
+    }
+
+    protected void giveFishingEntityLoot(Player player, EntityLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause) {
+        if (!(event.getCaught() instanceof Item itemEntity)) return;
+
+        Location location = event.getHook().getLocation();
+        Entity entity = loot.getEntity().spawnEntity(plugin, event.getHook().getLocation());
+
+        if (entity == null) return;
+
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), entity, event.getHook().getLocation(), cause);
+        Bukkit.getPluginManager().callEvent(dropEvent);
+
+        if (dropEvent.isCancelled()) {
+            loot.getEntity().removeEntity(entity);
+            return;
+        }
+
+        itemEntity.setItemStack(new ItemStack(Material.AIR));
+
+        Float hVelocity = loot.getEntity().getEntityProperties().horizontalVelocity();
+        if (hVelocity == null) hVelocity = 1.2f;
+
+        Float vVelocity = loot.getEntity().getEntityProperties().verticalVelocity();
+        if (vVelocity == null) vVelocity = 1.3f;
+
+        Vector vector = player.getLocation().subtract(location).toVector().multiply(hVelocity - 1);
+        vector.setY((vector.getY() + 0.2) * vVelocity);
+        entity.setVelocity(vector);
+
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
     }

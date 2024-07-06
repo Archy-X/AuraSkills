@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.api.loot.LootPool;
 import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
+import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
@@ -103,6 +104,8 @@ public class FishingLootHandler extends LootHandler implements Listener {
                     giveFishingItemLoot(player, itemLoot, event, source, skill, cause, table);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
                     giveCommandLoot(player, commandLoot, source, skill);
+                } else if (selectedLoot instanceof EntityLoot entityLoot) {
+                    giveFishingEntityLoot(player, entityLoot, event, source, skill, cause);
                 }
                 break; // Stop iterating pools
             }

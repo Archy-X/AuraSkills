@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
 import dev.aurelium.auraskills.bukkit.damage.DamageResult;
+import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.loot.MythicEntityLootParser;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import io.lumine.mythic.api.adapters.AbstractEntity;
@@ -30,6 +31,10 @@ public class MythicMobsHook extends Hook implements Listener {
         super(plugin, config);
         this.plugin = plugin;
         this.damageHandler = new DamageHandler();
+
+        // Wait for loot manager to be created, but add parser before it is loaded
+        plugin.getScheduler().executeSync(() ->
+                plugin.getLootTableManager().getLootManager().registerCustomEntityParser(new MythicEntityLootParser()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)

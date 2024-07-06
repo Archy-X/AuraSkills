@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContextProvider;
+import dev.aurelium.auraskills.bukkit.loot.entity.VanillaEntityParser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
@@ -44,6 +45,7 @@ public class LootTableManager {
 		lootManager.registerContextProvider(new SourceContextProvider(plugin));
 		lootManager.registerContextProvider(new MobContextProvider());
 		lootManager.registerCustomItemParser(new ItemKeyParser(plugin));
+		lootManager.registerCustomEntityParser(new VanillaEntityParser());
 		lootManager.addLootOptionKeys("xp");
 		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
 	}
