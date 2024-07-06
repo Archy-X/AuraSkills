@@ -46,6 +46,7 @@ public class BossBarManager implements Listener {
     private NumberFormat moneyFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
+    private final boolean ANIMATE_PROGRESS;
 
     public BossBarManager(AuraSkills plugin) {
         this.bossBars = new HashMap<>();
@@ -56,6 +57,7 @@ public class BossBarManager implements Listener {
         this.checkCurrentActions = new HashMap<>();
         this.singleCheckCurrentActions = new HashMap<>();
         loadNumberFormats();
+        this.ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
     }
 
     public NumberFormat getXpFormat() {
@@ -187,11 +189,17 @@ public class BossBarManager implements Listener {
 
         Component name = tf.toComponent(text);
 
+        if (!ANIMATE_PROGRESS) {
+            progressOld = progressNew;
+        }
+
         BossBar bossBar = BossBar.bossBar(name, progressOld, color, overlay);
 
         plugin.getAudiences().player(player).showBossBar(bossBar);
-        // Boss bar progress is updated later, so the player sees the animation going from progressOld to progressNew
-        plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
+        if (ANIMATE_PROGRESS) {
+            // Boss bar progress is updated later, so the player sees the animation going from progressOld to progressNew
+            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
+        }
         // Add to maps
         if (mode.equals("single")) {
             singleBossBars.put(player.getUniqueId(), bossBar);
@@ -204,13 +212,18 @@ public class BossBarManager implements Listener {
     private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, float progress, String text) {
         Component name = tf.toComponent(text);
 
+        if (!ANIMATE_PROGRESS) {
+            bossBar.progress(progress);
+        }
         bossBar.name(name); // Update the boss bar to the new text value
         bossBar.color(getColor(skill));
 
         plugin.getAudiences().player(player).showBossBar(bossBar);
 
-        // Boss bar progress is updated later, so the player sees the animation going from previous progress to new
-        plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
+        if (ANIMATE_PROGRESS) {
+            // Boss bar progress is updated later, so the player sees the animation going from previous progress to new
+            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
+        }
     }
 
     private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, double income, Locale locale) {
@@ -265,8 +278,7 @@ public class BossBarManager implements Listener {
         // Increment current action
         if (mode.equals("single")) {
             singleCheckCurrentActions.put(playerId, singleCheckCurrentActions.get(playerId) + 1);
-        }
-        else {
+        } else {
             Integer currentAction = checkCurrentActions.get(playerId).get(skill);
             if (currentAction != null) {
                 checkCurrentActions.get(playerId).put(skill, currentAction + 1);

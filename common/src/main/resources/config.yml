@@ -97,6 +97,7 @@ boss_bar:
   xp_format: '#.#'
   percent_format: '#.##'
   money_format: '0.00'
+  animate_progress: true
 jobs:
   enabled: false
   selection:

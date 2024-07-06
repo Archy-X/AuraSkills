@@ -45,6 +45,7 @@ public enum Option {
     BOSS_BAR_XP_FORMAT("boss_bar.xp_format", OptionType.STRING),
     BOSS_BAR_PERCENT_FORMAT("boss_bar.percent_format", OptionType.STRING),
     BOSS_BAR_MONEY_FORMAT("boss_bar.money_format", OptionType.STRING),
+    BOSS_BAR_ANIMATE_PROGRESS("boss_bar.animate_progress", OptionType.BOOLEAN),
     // Jobs options
     JOBS_ENABLED("jobs.enabled", OptionType.BOOLEAN),
     JOBS_SELECTION_REQUIRE_SELECTION("jobs.selection.require_selection", OptionType.BOOLEAN),
