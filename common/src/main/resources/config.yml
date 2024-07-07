@@ -115,6 +115,35 @@ jobs:
       enabled: false
       interval_ms: 2000
       display_individual: false
+anti_afk:
+  enabled: true
+  checks:
+    block_a:
+      enabled: true
+      min_count: 100
+    damage_a:
+      enabled: true
+      max_distance: 0.5
+      min_count: 10
+    damage_b:
+      enabled: true
+      min_count: 10
+    damage_c:
+      enabled: true
+      min_count: 20
+    entity_a:
+      enabled: true
+      max_distance: 0.5
+      min_count: 10
+    entity_b:
+      enabled: true
+      min_count: 10
+    entity_c:
+      enabled: true
+      min_count: 5
+    fishing_a:
+      enabled: true
+      min_count: 15
 enable_roman_numerals: false
 damage_holograms:
   enabled: true

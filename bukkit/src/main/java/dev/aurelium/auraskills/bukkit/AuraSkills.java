@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
+import dev.aurelium.auraskills.bukkit.antiafk.AntiAfkManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.api.implementation.BukkitApiProvider;
@@ -158,6 +159,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ConfirmManager confirmManager;
     private PresetManager presetManager;
     private PlatformUtil platformUtil;
+    private AntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
 
     @Override
@@ -230,6 +232,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         commandManager = commandRegistrar.registerCommands();
         messageProvider.setACFMessages(commandManager);
         levelManager = new BukkitLevelManager(this);
+        antiAfkManager = new AntiAfkManager(this); // Requires config loaded
         registerPriorityEvents();
         // Enabled bStats
         Metrics metrics = new Metrics(this, 21318);
@@ -439,6 +442,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public ConfirmManager getConfirmManager() {
         return confirmManager;
+    }
+
+    public AntiAfkManager getAntiAfkManager() {
+        return antiAfkManager;
     }
 
     public int getResourceId() {
