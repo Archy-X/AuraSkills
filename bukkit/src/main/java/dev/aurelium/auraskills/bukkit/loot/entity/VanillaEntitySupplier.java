@@ -8,7 +8,12 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+
+import java.util.Map.Entry;
 
 public class VanillaEntitySupplier extends EntitySupplier {
 
@@ -21,7 +26,9 @@ public class VanillaEntitySupplier extends EntitySupplier {
         World world = location.getWorld();
         if (world == null) return null;
 
-        Entity entity = world.spawnEntity(location, EntityType.valueOf(getEntityProperties().entityId().toUpperCase()));
+        EntityProperties properties = getEntityProperties();
+
+        Entity entity = world.spawnEntity(location, EntityType.valueOf(properties.entityId().toUpperCase()));
 
         if (entity instanceof LivingEntity livingEntity) {
             if (getEntityProperties().health() != null) {
@@ -31,20 +38,29 @@ public class VanillaEntitySupplier extends EntitySupplier {
                     livingEntity.setHealth(Math.min(getEntityProperties().health(), attribute.getValue()));
                 }
             }
-            if (getEntityProperties().damage() != null) {
+            if (properties.damage() != null) {
                 AttributeInstance attribute = livingEntity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
                 if (attribute != null) {
                     attribute.setBaseValue(getEntityProperties().damage());
                 }
             }
+            // Add equipment
+            EntityEquipment equipment = livingEntity.getEquipment();
+            if (equipment != null) {
+                for (Entry<EquipmentSlot, ItemStack> entry : properties.equipment().entrySet()) {
+                    EquipmentSlot slot = entry.getKey();
+                    ItemStack item = entry.getValue();
+                    equipment.setItem(slot, item, true);
+                }
+            }
         }
 
-        if (getEntityProperties().name() != null) {
+        if (properties.name() != null) {
             entity.setCustomName(plugin.getMessageProvider().applyFormatting(getEntityProperties().name()));
             entity.setCustomNameVisible(true);
         }
 
-        if (getEntityProperties().level() != null) {
+        if (properties.level() != null) {
             entity.setMetadata("auraskills_level", new FixedMetadataValue(plugin, getEntityProperties().level()));
         }
 

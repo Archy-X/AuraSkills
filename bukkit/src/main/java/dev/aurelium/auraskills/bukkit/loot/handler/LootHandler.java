@@ -2,16 +2,16 @@ package dev.aurelium.auraskills.bukkit.loot.handler;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootContext;
+import dev.aurelium.auraskills.api.loot.LootPool;
+import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
-import dev.aurelium.auraskills.api.loot.Loot;
-import dev.aurelium.auraskills.api.loot.LootPool;
-import dev.aurelium.auraskills.api.loot.LootTable;
-import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
@@ -32,14 +32,17 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Random;
+import java.util.Set;
 
 public abstract class LootHandler {
 

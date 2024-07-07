@@ -45,7 +45,7 @@ public class LootTableManager {
 		lootManager.registerContextProvider(new SourceContextProvider(plugin));
 		lootManager.registerContextProvider(new MobContextProvider());
 		lootManager.registerCustomItemParser(new ItemKeyParser(plugin));
-		lootManager.registerCustomEntityParser(new VanillaEntityParser());
+		lootManager.registerCustomEntityParser(new VanillaEntityParser(plugin));
 		lootManager.addLootOptionKeys("xp");
 		lootManager.addPoolOptionKeys("chance_per_luck", "require_open_water");
 	}

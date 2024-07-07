@@ -34,7 +34,7 @@ public class MythicMobsHook extends Hook implements Listener {
 
         // Wait for loot manager to be created, but add parser before it is loaded
         plugin.getScheduler().executeSync(() ->
-                plugin.getLootTableManager().getLootManager().registerCustomEntityParser(new MythicEntityLootParser()));
+                plugin.getLootTableManager().getLootManager().registerCustomEntityParser(new MythicEntityLootParser(plugin)));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
