@@ -55,7 +55,7 @@ public class AbilitiesMenu {
                 Set<Ability> lockedAbilities = new HashSet<>();
                 // Add abilities that player has not unlocked yet
                 for (Ability ability : skill.getAbilities()) {
-                    if (user.getAbilityLevel(ability) <= 0) {
+                    if (user.getAbilityLevel(ability) <= 0 && ability.isEnabled()) {
                         lockedAbilities.add(ability);
                     }
                 }
@@ -74,7 +74,7 @@ public class AbilitiesMenu {
                 Set<Ability> unlockedAbilities = new HashSet<>();
                 // Add abilities that player has not unlocked yet
                 for (Ability ability : skill.getAbilities()) {
-                    if (user.getAbilityLevel(ability) >= 1) {
+                    if (user.getAbilityLevel(ability) >= 1 && ability.isEnabled()) {
                         unlockedAbilities.add(ability);
                     }
                 }
@@ -97,7 +97,7 @@ public class AbilitiesMenu {
                 ManaAbility manaAbility = skill.getManaAbility();
 
                 Set<ManaAbility> locked = new HashSet<>();
-                if (manaAbility != null && plugin.getUser(m.player()).getManaAbilityLevel(manaAbility) <= 0) {
+                if (manaAbility != null && manaAbility.isEnabled() && plugin.getUser(m.player()).getManaAbilityLevel(manaAbility) <= 0) {
                     locked.add(manaAbility);
                 }
                 return locked;
@@ -115,7 +115,7 @@ public class AbilitiesMenu {
                 Set<ManaAbility> unlocked = new HashSet<>();
                 // Add abilities that player has not unlocked yet
                 ManaAbility manaAbility = skill.getManaAbility();
-                if (manaAbility != null && user.getManaAbilityLevel(manaAbility) >= 1) {
+                if (manaAbility != null && manaAbility.isEnabled() && user.getManaAbilityLevel(manaAbility) >= 1) {
                     unlocked.add(manaAbility);
                 }
                 return unlocked;
