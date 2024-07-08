@@ -46,7 +46,6 @@ public class BossBarManager implements Listener {
     private NumberFormat moneyFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
-    private final boolean ANIMATE_PROGRESS;
 
     public BossBarManager(AuraSkills plugin) {
         this.bossBars = new HashMap<>();
@@ -57,7 +56,6 @@ public class BossBarManager implements Listener {
         this.checkCurrentActions = new HashMap<>();
         this.singleCheckCurrentActions = new HashMap<>();
         loadNumberFormats();
-        this.ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
     }
 
     public NumberFormat getXpFormat() {
@@ -184,6 +182,7 @@ public class BossBarManager implements Listener {
     }
 
     private BossBar handleNewBossBar(Player player, Skill skill, float progressOld, float progressNew, String text) {
+        final boolean ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         BossBar.Color color = getColor(skill);
         BossBar.Overlay overlay = getOverlay(skill);
 
@@ -210,6 +209,7 @@ public class BossBarManager implements Listener {
     }
 
     private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, float progress, String text) {
+        final boolean ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         Component name = tf.toComponent(text);
 
         if (!ANIMATE_PROGRESS) {
