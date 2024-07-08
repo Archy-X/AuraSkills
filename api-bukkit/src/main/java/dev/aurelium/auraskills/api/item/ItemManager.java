@@ -6,6 +6,9 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.trait.Traits;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -18,7 +21,7 @@ import java.util.Map;
 public interface ItemManager {
 
     /**
-     * Adds a modifier to an item, with optional lore. This does not change the item passed in directly,
+     * Adds a stat modifier to an item, with optional lore. This does not change the item passed in directly,
      * you must use the returned ItemStack. This means the original ItemStack passed in is not changed at all, a new
      * one is created.
      *
@@ -27,8 +30,27 @@ public interface ItemManager {
      * @param stat the stat to add (Use {@link Stats} enum for default stats)
      * @param value the value of the stat to add
      * @param lore whether to add lore
-     * @return a new ItemStack with the modifier
+     * @return a new ItemStack with the static modifier
      */
+    ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore);
+
+    /**
+     * Adds a trait modifier to an item, with optional lore. This does not change the item passed in directly,
+     * you must use the returned ItemStack.
+     *
+     * @param item the original item
+     * @param type the {@link ModifierType} to add
+     * @param trait the trait to add (Use {@link Traits} enum for default stats)
+     * @param value the value of the trait to add
+     * @param lore whether to add lore
+     * @return a new ItemStack with the trait modifier
+     */
+    ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, boolean lore);
+
+    /**
+     * @deprecated use {@link #addStatModifier(ItemStack, ModifierType, Stat, double, boolean)}
+     */
+    @Deprecated
     ItemStack addModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore);
 
     /**
@@ -38,10 +60,25 @@ public interface ItemManager {
      * @param type the modifier type
      * @return a list of modifiers
      */
+    List<StatModifier> getStatModifiers(ItemStack item, ModifierType type);
+
+    /**
+     * Gets a list of trait modifiers on an item for a given modifier type.
+     *
+     * @param item the item to get the trait modifiers of
+     * @param type the modifier type
+     * @return a list of modifiers
+     */
+    List<TraitModifier> getTraitModifiers(ItemStack item, ModifierType type);
+
+    /**
+     * @deprecated use {@link #getStatModifiers(ItemStack, ModifierType)}
+     */
+    @Deprecated
     List<StatModifier> getModifiers(ItemStack item, ModifierType type);
 
     /**
-     * Removes a modifier from an item for a given modifier type and stat.
+     * Removes a stat modifier from an item for a given modifier type and stat.
      * Does not modify the ItemStack passed in, instead returns a copy of the item with the
      * modifier removed. Will not remove any lore.
      *
@@ -50,6 +87,24 @@ public interface ItemManager {
      * @param stat the stat of the modifier to remove
      * @return the item with the modifier removed
      */
+    ItemStack removeStatModifier(ItemStack item, ModifierType type, Stat stat);
+
+    /**
+     * Removes a trait modifier from an item for a given modifier type and stat.
+     * Does not modify the ItemStack passed in, instead returns a copy of the item with the
+     * modifier removed. Will not remove any lore.
+     *
+     * @param item The item to remove the modifier from. Does not get modified.
+     * @param type the modifier type
+     * @param trait the trait of the modifier to remove
+     * @return the item with the modifier removed
+     */
+    ItemStack removeTraitModifier(ItemStack item, ModifierType type, Trait trait);
+
+    /**
+     * @deprecated use {@link #removeStatModifier(ItemStack, ModifierType, Stat)}
+     */
+    @Deprecated
     ItemStack removeModifier(ItemStack item, ModifierType type, Stat stat);
 
     /**

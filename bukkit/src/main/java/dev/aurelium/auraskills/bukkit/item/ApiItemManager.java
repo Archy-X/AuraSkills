@@ -7,6 +7,8 @@ import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
@@ -17,6 +19,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class ApiItemManager implements ItemManager {
 
     private final AuraSkills plugin;
@@ -28,7 +31,7 @@ public class ApiItemManager implements ItemManager {
     }
 
     @Override
-    public ItemStack addModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
+    public ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         skillsItem.addModifier(MetaType.MODIFIER, type, stat, value);
         if (lore) {
@@ -38,16 +41,54 @@ public class ApiItemManager implements ItemManager {
     }
 
     @Override
-    public List<StatModifier> getModifiers(ItemStack item, ModifierType type) {
+    public ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, boolean lore) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, type, trait, value);
+        if (lore) {
+            skillsItem.addModifierLore(type, trait, value, plugin.getDefaultLanguage());
+        }
+        return skillsItem.getItem();
+    }
+
+    @Override
+    public ItemStack addModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
+        return addStatModifier(item, type, stat, value, lore);
+    }
+
+    @Override
+    public List<StatModifier> getStatModifiers(ItemStack item, ModifierType type) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         return skillsItem.getStatModifiers(type);
     }
 
     @Override
-    public ItemStack removeModifier(ItemStack item, ModifierType type, Stat stat) {
+    public List<TraitModifier> getTraitModifiers(ItemStack item, ModifierType type) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        return skillsItem.getTraitModifiers(type);
+    }
+
+    @Override
+    public List<StatModifier> getModifiers(ItemStack item, ModifierType type) {
+        return getStatModifiers(item, type);
+    }
+
+    @Override
+    public ItemStack removeStatModifier(ItemStack item, ModifierType type, Stat stat) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         skillsItem.removeModifier(MetaType.MODIFIER, type, stat);
         return skillsItem.getItem();
+    }
+
+    @Override
+    public ItemStack removeTraitModifier(ItemStack item, ModifierType type, Trait trait) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.removeModifier(MetaType.TRAIT_MODIFIER, type, trait);
+        return skillsItem.getItem();
+    }
+
+    @Override
+    public ItemStack removeModifier(ItemStack item, ModifierType type, Stat stat) {
+        return removeStatModifier(item, type, stat);
     }
 
     @Override
