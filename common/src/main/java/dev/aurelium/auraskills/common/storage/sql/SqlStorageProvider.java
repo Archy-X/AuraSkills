@@ -196,10 +196,11 @@ public class SqlStorageProvider extends StorageProvider {
                     statement.executeUpdate();
                 }
             }
-            // Save stat modifiers
-            saveStatModifiers(connection, userId, state.statModifiers());
-            // Save trait modifiers
-            saveTraitModifiers(connection, userId, state.traitModifiers());
+            List<KeyValueRow> rows = new ArrayList<>();
+            rows.addAll(getStatModifierRows(state.statModifiers()));
+            rows.addAll(getTraitModifierRows(state.traitModifiers()));
+
+            saveKeyValueRows(connection, userId, rows);
         }
     }
 
@@ -226,7 +227,7 @@ public class SqlStorageProvider extends StorageProvider {
         if (!plugin.configBoolean(Option.SAVE_BLANK_PROFILES) && user.isBlankProfile()) {
             try (Connection connection = pool.getConnection()) {
                 deleteUser(connection, user);
-                connection.setAutoCommit(false);
+                connection.setAutoCommit(true);
             } catch (SQLException e) {
                 plugin.logger().severe("Error deleting blank profile of user with UUID " + user.getUuid());
                 throw e;
@@ -282,12 +283,37 @@ public class SqlStorageProvider extends StorageProvider {
         // Delete existing key values
         deleteKeyValues(connection, userId);
         // Save key values
-        saveStatModifiers(connection, userId, user.getStatModifiers());
-        saveTraitModifiers(connection, userId, user.getTraitModifiers());
-        saveAbilityData(connection, userId, user.getAbilityDataMap(), user.getManaAbilityDataMap());
-        saveUnclaimedItems(connection, userId, user.getUnclaimedItems());
-        saveActionBar(connection, userId, user);
-        saveJobs(connection, userId, user.getJobs());
+        List<KeyValueRow> rows = new ArrayList<>();
+        rows.addAll(getStatModifierRows(user.getStatModifiers()));
+        rows.addAll(getTraitModifierRows(user.getTraitModifiers()));
+        rows.addAll(getAbilityDataRows(user.getAbilityDataMap(), user.getManaAbilityDataMap()));
+        rows.addAll(getUnclaimedItemsRow(user.getUnclaimedItems()));
+        rows.addAll(getActionBarRow(user));
+        rows.addAll(getJobsRow(user.getJobs()));
+        // Insert all key values in a batch
+        saveKeyValueRows(connection, userId, rows);
+    }
+
+    private void saveKeyValueRows(Connection connection, int userId, List<KeyValueRow> rows) throws SQLException {
+        connection.setAutoCommit(false);
+        final String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            for (KeyValueRow row : rows) {
+                ps.setInt(1, userId);
+                ps.setInt(2, row.dataId());
+                ps.setString(3, row.categoryId());
+                ps.setString(4, row.keyName());
+                ps.setString(5, row.value());
+                ps.setString(6, row.value());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
+        }
     }
 
     private void deleteUser(Connection connection, User user) throws SQLException {
@@ -338,94 +364,69 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private void saveStatModifiers(Connection connection, int userId, Map<String, StatModifier> modifiers) throws SQLException {
+    private List<KeyValueRow> getStatModifierRows(Map<String, StatModifier> modifiers) {
+        List<KeyValueRow> rows = new ArrayList<>();
         if (modifiers.isEmpty()) {
-            return;
+            return rows;
         }
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, STAT_MODIFIER_ID);
-            for (StatModifier modifier : modifiers.values()) {
-                String categoryId = modifier.stat().getId().toString();
-                statement.setString(3, categoryId);
-                statement.setString(4, modifier.name());
-                statement.setString(5, String.valueOf(modifier.value()));
-                statement.setString(6, String.valueOf(modifier.value()));
-                statement.executeUpdate();
-            }
+        for (StatModifier modifier : modifiers.values()) {
+            String categoryId = modifier.stat().getId().toString();
+            var row = new KeyValueRow(STAT_MODIFIER_ID, categoryId, modifier.name(), String.valueOf(modifier.value()));
+            rows.add(row);
         }
+        return rows;
     }
 
-    private void saveTraitModifiers(Connection connection, int userId, Map<String, TraitModifier> modifiers) throws SQLException {
+    private List<KeyValueRow> getTraitModifierRows(Map<String, TraitModifier> modifiers) {
+        List<KeyValueRow> rows = new ArrayList<>();
         if (modifiers.isEmpty()) {
-            return;
+            return rows;
         }
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, TRAIT_MODIFIER_ID);
-            for (TraitModifier modifier : modifiers.values()) {
-                String categoryId = modifier.trait().getId().toString();
-                statement.setString(3, categoryId);
-                statement.setString(4, modifier.name());
-                statement.setString(5, String.valueOf(modifier.value()));
-                statement.setString(6, String.valueOf(modifier.value()));
-                statement.executeUpdate();
-            }
+
+        for (TraitModifier modifier : modifiers.values()) {
+            String categoryId = modifier.trait().getId().toString();
+            var row = new KeyValueRow(TRAIT_MODIFIER_ID, categoryId, modifier.name(), String.valueOf(modifier.value()));
+            rows.add(row);
         }
+        return rows;
     }
 
-    private void saveAbilityData(Connection connection, int userId, Map<AbstractAbility, AbilityData> abilityDataMap, Map<ManaAbility, ManaAbilityData> manaAbilityDataMap) throws SQLException {
+    private List<KeyValueRow> getAbilityDataRows(Map<AbstractAbility, AbilityData> abilityDataMap, Map<ManaAbility, ManaAbilityData> manaAbilityDataMap) {
+        List<KeyValueRow> rows = new ArrayList<>();
         if (abilityDataMap.isEmpty()) {
-            return;
+            return rows;
         }
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, ABILITY_DATA_ID);
-            for (AbilityData abilityData : abilityDataMap.values()) {
-                String categoryId = abilityData.getAbility().getId().toString();
-                statement.setString(3, categoryId);
-                for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
-                    statement.setString(4, dataEntry.getKey());
-                    statement.setString(5, String.valueOf(dataEntry.getValue()));
-                    statement.setString(6, String.valueOf(dataEntry.getValue()));
-                    statement.executeUpdate();
-                }
-            }
-            for (ManaAbilityData data : manaAbilityDataMap.values()) {
-                if (data.getCooldown() <= 0) continue;
-                
-                String categoryId = data.getManaAbility().getId().toString();
-                statement.setString(3, categoryId);
-                statement.setString(4, "cooldown");
-                statement.setString(5, String.valueOf(data.getCooldown()));
-                statement.setString(6, String.valueOf(data.getCooldown()));
-                statement.executeUpdate();
+        for (AbilityData abilityData : abilityDataMap.values()) {
+            String categoryId = abilityData.getAbility().getId().toString();
+            for (Map.Entry<String, Object> dataEntry : abilityData.getDataMap().entrySet()) {
+                var row = new KeyValueRow(ABILITY_DATA_ID, categoryId, dataEntry.getKey(), String.valueOf(dataEntry.getValue()));
+                rows.add(row);
             }
         }
+        for (ManaAbilityData data : manaAbilityDataMap.values()) {
+            if (data.getCooldown() <= 0) continue;
+
+            String categoryId = data.getManaAbility().getId().toString();
+            var row = new KeyValueRow(ABILITY_DATA_ID, categoryId, "cooldown", String.valueOf(data.getCooldown()));
+            rows.add(row);
+        }
+        return rows;
     }
 
-    private void saveUnclaimedItems(Connection connection, int userId, List<KeyIntPair> unclaimedItems) throws SQLException {
+    private List<KeyValueRow> getUnclaimedItemsRow(List<KeyIntPair> unclaimedItems) {
+        List<KeyValueRow> rows = new ArrayList<>();
         if (unclaimedItems.isEmpty()) {
-            return;
+            return rows;
         }
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, UNCLAIMED_ITEMS_ID);
-            for (KeyIntPair unclaimedItem : unclaimedItems) {
-                statement.setNull(3, Types.NULL);
-                statement.setString(4, unclaimedItem.getKey());
-                statement.setString(5, String.valueOf(unclaimedItem.getValue()));
-                statement.setString(6, String.valueOf(unclaimedItem.getValue()));
-                statement.executeUpdate();
-            }
+        for (KeyIntPair unclaimedItem : unclaimedItems) {
+            var row = new KeyValueRow(UNCLAIMED_ITEMS_ID, null, unclaimedItem.getKey(), String.valueOf(unclaimedItem.getValue()));
+            rows.add(row);
         }
+        return rows;
     }
 
-    private void saveActionBar(Connection connection, int userId, User user) throws SQLException {
+    private List<KeyValueRow> getActionBarRow(User user) {
+        List<KeyValueRow> rows = new ArrayList<>();
         boolean shouldSave = false;
         // Only save if one of the action bars is disabled
         for (ActionBarType type : ActionBarType.values()) {
@@ -434,36 +435,30 @@ public class SqlStorageProvider extends StorageProvider {
             }
         }
         if (!shouldSave) {
-            return;
+            return rows;
         }
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, ACTION_BAR_ID);
-            statement.setNull(3, Types.NULL);
-            ActionBarType type = ActionBarType.IDLE;
-            statement.setString(4, type.toString().toLowerCase(Locale.ROOT));
-            String value = String.valueOf(user.isActionBarEnabled(type));
-            statement.setString(5, value);
-            statement.setString(6, value);
-            statement.executeUpdate();
-        }
+
+        ActionBarType type = ActionBarType.IDLE;
+        String keyName = type.toString().toLowerCase(Locale.ROOT);
+        String value = String.valueOf(user.isActionBarEnabled(type));
+
+        var row = new KeyValueRow(ACTION_BAR_ID, null, keyName, value);
+        rows.add(row);
+
+        return rows;
     }
 
-    private void saveJobs(Connection connection, int userId, Set<Skill> jobs) throws SQLException {
-        if (jobs.isEmpty()) return;
-
-        String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, JOBS_ID);
-            statement.setNull(3, Types.NULL);
-            statement.setString(4, "jobs");
-            String jobCommaList = String.join(",", jobs.stream().map(s -> s.getId().toString()).toList());
-            statement.setString(5, jobCommaList);
-            statement.setString(6, jobCommaList);
-            statement.executeUpdate();
+    private List<KeyValueRow> getJobsRow(Set<Skill> jobs) {
+        List<KeyValueRow> rows = new ArrayList<>();
+        if (jobs.isEmpty()) {
+            return rows;
         }
+
+        String jobCommaList = String.join(",", jobs.stream().map(s -> s.getId().toString()).toList());
+        var row = new KeyValueRow(JOBS_ID, null, "jobs", jobCommaList);
+        rows.add(row);
+
+        return rows;
     }
 
     @Override

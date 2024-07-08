@@ -55,7 +55,7 @@ public class SqlUserLoader {
         FROM
             auraskills_users u
         WHERE
-            u.player_uuid = ?
+            u.player_uuid = ?;
         """;
 
     public SqlUserLoader(AuraSkillsPlugin plugin) {
