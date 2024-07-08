@@ -188,17 +188,14 @@ public class BossBarManager implements Listener {
 
         Component name = tf.toComponent(text);
 
-        if (!ANIMATE_PROGRESS) {
-            progressOld = progressNew;
-        }
-
         BossBar bossBar = BossBar.bossBar(name, progressOld, color, overlay);
-
-        plugin.getAudiences().player(player).showBossBar(bossBar);
-        if (ANIMATE_PROGRESS) {
-            // Boss bar progress is updated later, so the player sees the animation going from progressOld to progressNew
+        if (!ANIMATE_PROGRESS) {  // If the config option is disabled, immediately show new progress
+            bossBar.progress(progressNew);
+        } else {  // Update the progress later to display its animation from progressOld to progressNew
             plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
         }
+        plugin.getAudiences().player(player).showBossBar(bossBar);
+
         // Add to maps
         if (mode.equals("single")) {
             singleBossBars.put(player.getUniqueId(), bossBar);
@@ -212,18 +209,15 @@ public class BossBarManager implements Listener {
         final boolean ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         Component name = tf.toComponent(text);
 
-        if (!ANIMATE_PROGRESS) {
+        if (!ANIMATE_PROGRESS) {  // Update boss bar progress immediately
             bossBar.progress(progress);
+        } else {  // Update progress later, so the player sees the animation from previous progress (from reused boss bar) to new
+            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
         }
         bossBar.name(name); // Update the boss bar to the new text value
         bossBar.color(getColor(skill));
 
         plugin.getAudiences().player(player).showBossBar(bossBar);
-
-        if (ANIMATE_PROGRESS) {
-            // Boss bar progress is updated later, so the player sees the animation going from previous progress to new
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
-        }
     }
 
     private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, double income, Locale locale) {
