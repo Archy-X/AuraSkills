@@ -46,7 +46,7 @@ public class BossBarManager implements Listener {
     private NumberFormat moneyFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
-    private final boolean ANIMATE_PROGRESS;
+    private boolean ANIMATE_PROGRESS;
 
     public BossBarManager(AuraSkills plugin) {
         this.bossBars = new HashMap<>();
@@ -91,6 +91,7 @@ public class BossBarManager implements Listener {
         stayTime = plugin.configInt(Option.BOSS_BAR_STAY_TIME);
         colors = new HashMap<>();
         overlays = new HashMap<>();
+        ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         for (String entry : plugin.configStringList(Option.BOSS_BAR_FORMAT)) {
             String[] splitEntry = entry.split(" ");
             Skill skill;
