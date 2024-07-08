@@ -8,7 +8,6 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
@@ -28,18 +27,20 @@ import java.util.*;
 public class SqlStorageProvider extends StorageProvider {
 
     private final ConnectionPool pool;
+    private final SqlUserLoader userLoader;
     private final String tablePrefix = "auraskills_";
 
-    public final int STAT_MODIFIER_ID = 1;
-    public final int TRAIT_MODIFIER_ID = 2;
-    public final int ABILITY_DATA_ID = 3;
-    public final int UNCLAIMED_ITEMS_ID = 4;
-    public final int ACTION_BAR_ID = 5;
-    public final int JOBS_ID = 6;
+    public static final int STAT_MODIFIER_ID = 1;
+    public static final int TRAIT_MODIFIER_ID = 2;
+    public static final int ABILITY_DATA_ID = 3;
+    public static final int UNCLAIMED_ITEMS_ID = 4;
+    public static final int ACTION_BAR_ID = 5;
+    public static final int JOBS_ID = 6;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
         this.pool = pool;
+        this.userLoader = new SqlUserLoader(plugin);
         attemptTableCreation();
     }
 
@@ -54,50 +55,11 @@ public class SqlStorageProvider extends StorageProvider {
 
     @Override
     protected User loadRaw(UUID uuid) throws Exception {
-        String loadQuery = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
         try (Connection connection = pool.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
-                statement.setString(1, uuid.toString());
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    User user = userManager.createNewUser(uuid);
-                    if (!resultSet.next()) { // If the player doesn't exist in the database
-                        return user;
-                    }
-                    int userId = resultSet.getInt("user_id");
-                    // Load skill levels and xp
-                    SkillLevelMaps skillLevelMaps = loadSkillLevels(connection, uuid, userId);
-                    // Apply skill levels and xp from maps
-                    for (Map.Entry<Skill, Integer> entry : skillLevelMaps.levels().entrySet()) {
-                        user.setSkillLevel(entry.getKey(), entry.getValue());
-                    }
-                    for (Map.Entry<Skill, Double> entry : skillLevelMaps.xp().entrySet()) {
-                        user.setSkillXp(entry.getKey(), entry.getValue());
-                    }
-                    // Load locale
-                    String localeString = resultSet.getString("locale");
-                    if (localeString != null) {
-                        user.setLocale(new Locale(localeString));
-                    }
-                    // Load mana
-                    double mana = resultSet.getDouble("mana");
-                    user.setMana(mana);
-                    // Load stat modifiers
-                    loadStatModifiers(connection, uuid, userId).values().forEach(m -> user.addStatModifier(m, false));
-                    // Load trait modifiers
-                    loadTraitModifiers(connection, uuid, userId).values().forEach(m -> user.addTraitModifier(m, false));
-                    // Load ability data
-                    loadAbilityData(connection, user, userId);
-                    // Load job data
-                    loadJobs(connection, user, userId);
-                    // Load unclaimed items
-                    user.setUnclaimedItems(loadUnclaimedItems(connection, userId));
-                    user.clearInvalidItems();
-                    // Load action bar
-                    loadActionBar(connection, user, userId);
+            User user = userManager.createNewUser(uuid);
+            userLoader.loadUser(uuid, user, connection);
 
-                    return user;
-                }
-            }
+            return user;
         }
     }
 
@@ -177,124 +139,6 @@ public class SqlStorageProvider extends StorageProvider {
             }
         }
         return modifiers;
-    }
-
-    private void loadAbilityData(Connection connection, User user, int userId) throws SQLException {
-        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, ABILITY_DATA_ID);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String categoryId = resultSet.getString("category_id");
-                    AbstractAbility ability = plugin.getAbilityManager().getAbstractAbility(NamespacedId.fromString(categoryId));
-                    if (ability == null) {
-                        plugin.logger().warn("Failed to load ability data for player " + user.getUuid() + " because " + categoryId + " is not a registered ability");
-                        continue;
-                    }
-                    String keyName = resultSet.getString("key_name");
-                    String value = resultSet.getString("value");
-
-                    Object parsed = castValue(value);
-
-                    if (keyName.equals("cooldown") && ability instanceof ManaAbility manaAbility) {
-                        user.getManaAbilityData(manaAbility).setCooldown(NumberUtil.toInt(value));
-                    } else {
-                        user.getAbilityData(ability).setData(keyName, parsed);
-                    }
-                }
-            }
-        }
-    }
-
-    private void loadJobs(Connection connection, User user, int userId) throws SQLException {
-        String query = "SELECT key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, JOBS_ID);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String keyName = resultSet.getString("key_name");
-                    String value = resultSet.getString("value");
-
-                    if (!keyName.equals("jobs")) {
-                        continue;
-                    }
-
-                    user.clearAllJobs();
-
-                    String[] splitValue = value.split(",");
-                    for (String skillName : splitValue) {
-                        if (skillName.isEmpty()) continue;
-
-                        NamespacedId id = NamespacedId.fromString(skillName);
-                        Skill skill = plugin.getSkillRegistry().getOrNull(id);
-                        if (skill == null) continue;
-
-                        if (!user.canSelectJob(skill)) continue;
-
-                        user.addJob(skill);
-                    }
-                    // Only load one jobs row
-                    break;
-                }
-            }
-        }
-    }
-
-    @NotNull
-    private Object castValue(String value) {
-        Object parsed = value;
-        if (value.equals("true")) {
-            parsed = true;
-        } else if (value.equals("false")) {
-            parsed = false;
-        } else {
-            try {
-                parsed = Integer.parseInt(value);
-            } catch (NumberFormatException e) {
-                try {
-                    parsed = Double.parseDouble(value);
-                } catch (NumberFormatException ignored) {}
-            }
-        }
-        return parsed;
-    }
-
-    private List<KeyIntPair> loadUnclaimedItems(Connection connection, int userId) throws SQLException {
-        List<KeyIntPair> unclaimedItems = new ArrayList<>();
-        String query = "SELECT key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, UNCLAIMED_ITEMS_ID);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String keyName = resultSet.getString("key_name");
-                    String value = resultSet.getString("value");
-                    unclaimedItems.add(new KeyIntPair(keyName, NumberUtil.toInt(value, 1)));
-                }
-            }
-        }
-        return unclaimedItems;
-    }
-
-    private void loadActionBar(Connection connection, User user, int userId) throws SQLException {
-        String query = "SELECT key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, ACTION_BAR_ID);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String keyName = resultSet.getString("key_name");
-                    String value = resultSet.getString("value");
-                    try {
-                        ActionBarType type = ActionBarType.valueOf(keyName.toUpperCase(Locale.ROOT));
-                        boolean enabled = !value.equals("false");
-                        user.setActionBarSetting(type, enabled);
-                    } catch (IllegalArgumentException ignored) { }
-                }
-            }
-        }
     }
 
     @Override
