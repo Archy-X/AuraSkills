@@ -59,7 +59,7 @@ public class BackupProvider {
 
         config.node("backup_version").set(2);
 
-        List<UserState> states = plugin.getStorageProvider().loadStates(false);
+        List<UserState> states = plugin.getStorageProvider().loadStates(false, false);
         if (states.size() > plugin.configInt(Option.AUTOMATIC_BACKUPS_MAX_USERS)) {
             plugin.logger().info("Automatic backup saving was skipped due to too many users (" + states.size() + "), use your own backup system.");
             return null;

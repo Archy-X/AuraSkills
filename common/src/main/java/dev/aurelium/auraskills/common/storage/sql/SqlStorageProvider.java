@@ -642,7 +642,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadStates(boolean ignoreOnline) throws Exception {
+    public List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception {
         List<UserState> states = new ArrayList<>();
 
         Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
@@ -655,7 +655,8 @@ public class SqlStorageProvider extends StorageProvider {
                     while (resultSet.next()) {
                         int userId = resultSet.getInt("user_id");
                         String skillName = resultSet.getString("skill_name");
-                        Skill skill = plugin.getSkillRegistry().get(NamespacedId.fromString(skillName));
+                        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(skillName));
+                        if (skill == null) continue;
 
                         int level = resultSet.getInt("skill_level");
                         double xp = resultSet.getDouble("skill_xp");
@@ -665,7 +666,6 @@ public class SqlStorageProvider extends StorageProvider {
                     }
                 }
             }
-
             String usersQuery = "SELECT user_id, player_uuid, mana FROM " + tablePrefix + "users;";
             try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -679,8 +679,15 @@ public class SqlStorageProvider extends StorageProvider {
 
                         double mana = resultSet.getDouble("mana");
 
-                        Map<String, StatModifier> statModifiers = loadStatModifiers(connection, uuid, userId);
-                        Map<String, TraitModifier> traitModifiers = loadTraitModifiers(connection, uuid, userId);
+                        Map<String, StatModifier> statModifiers;
+                        Map<String, TraitModifier> traitModifiers;
+                        if (!skipKeyValues) {
+                            statModifiers = loadStatModifiers(connection, uuid, userId);
+                            traitModifiers = loadTraitModifiers(connection, uuid, userId);
+                        } else {
+                            statModifiers = Collections.emptyMap();
+                            traitModifiers = Collections.emptyMap();
+                        }
 
                         Map<Skill, Integer> skillLevelMap = loadedSkillLevels.get(userId);
                         Map<Skill, Double> skillXpMap = loadedSkillXp.get(userId);

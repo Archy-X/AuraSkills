@@ -401,7 +401,7 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadStates(boolean ignoreOnline) {
+    public List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) {
         List<UserState> states = new ArrayList<>();
         // Get all files in data directory
         File[] files = new File(dataDirectory).listFiles();

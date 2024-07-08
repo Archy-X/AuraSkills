@@ -37,7 +37,7 @@ public class StorageCommand extends BaseCommand {
         int success = 0;
         try {
             StorageProvider storage = plugin.getStorageProvider();
-            for (UserState state : storage.loadStates(false)) {
+            for (UserState state : storage.loadStates(false, false)) {
                 Entry<Skill, Integer> fromEntry = state.skillLevels().entrySet().stream()
                         .filter(e -> e.getKey().getId().toString().equals(from))
                         .findFirst()
@@ -84,7 +84,7 @@ public class StorageCommand extends BaseCommand {
         int skipped = 0;
         try {
             StorageProvider storage = plugin.getStorageProvider();
-            for (UserState state : storage.loadStates(false)) {
+            for (UserState state : storage.loadStates(false, false)) {
                 if (state.statModifiers().isEmpty() && state.traitModifiers().isEmpty()){
                     skipped++;
                     continue;

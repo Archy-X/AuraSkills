@@ -62,7 +62,7 @@ public abstract class StorageProvider {
 
     public abstract void delete(UUID uuid) throws Exception;
 
-    public abstract List<UserState> loadStates(boolean ignoreOnline) throws Exception;
+    public abstract List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception;
 
     public void startAutoSaving() {
         if (!plugin.configBoolean(Option.AUTO_SAVE_ENABLED)) {
