@@ -10,14 +10,16 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public record EntityProperties(String entityId,
-                               String name,
-                               Integer level,
-                               Double health,
-                               Double damage,
-                               Float horizontalVelocity,
-                               Float verticalVelocity,
-                               Map<EquipmentSlot, ItemStack> equipment) {
+public record EntityProperties(
+        String entityId,
+        String name,
+        Integer level,
+        Double health,
+        Double damage,
+        Float horizontalVelocity,
+        Float verticalVelocity,
+        Map<EquipmentSlot, ItemStack> equipment
+) {
 
     public static EntityProperties fromConfig(ConfigurationNode config, AuraSkills plugin) {
         String[] id = config.node("entity").getString("").split(":");
