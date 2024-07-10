@@ -1,5 +1,6 @@
 plugins {
     java
+    idea
 }
 
 repositories {
@@ -20,4 +21,12 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+
+idea {
+    module {
+        isDownloadSources = true
+        isDownloadJavadoc = true
+    }
 }
