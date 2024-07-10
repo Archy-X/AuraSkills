@@ -546,9 +546,9 @@ commands:
     set: "<gray>Установить <aqua>{skill} <gray>XP для игрока <gray>{player} <gray>на {amount}"
     remove: "<gray>Удалить <aqua>{amount} {skill} <gray>XP у игрока <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>Перезарядка для <aqua>{ability} <gray>было сброшено для игрока <gold>{player}"
   unknown_skill: "<yellow>Неизвестный навык!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Неизвестная способность, использующая ману!"
   unknown_stat: "<yellow>Неизвестная статистика!"
   unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Игрок не имеет профиля навыков. Пожалуйста, попробуйте переподключиться к игре или перезапустить сервер."
@@ -596,7 +596,7 @@ menus:
     stats: "Статистика"
     stats_desc: "Зарабатывайте очки статистики, повышая уровень навыков"
     stats_click: "Нажмите, чтобы узнать больше или просмотреть свою статистику"
-    active_job: Active Job
+    active_job: Активная работа
   level_progression:
     level_progression_title: "{skill} Уровни - Страница {page}"
     your_ranking: "Ваш ранг скилла"
@@ -615,10 +615,10 @@ menus:
     mana_abilities_desc: "<3>Мана способности</3> <1> это специальный тип способности, который активируется и тратит ману.</1>"
     abilities_click: "Нажмите чтобы увидеть {skill} способности"
     job: Работа
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
+    job_desc: Выбрав {skill} как вашу работу, позволяет вам зарабатывать деньги при получении опыта.
+    job_select: Нажмите левую кнопку мыши, чтобы выбрать {skill} как вашу работу
+    job_active: Вы активно работаете на этой работе
+    job_quit: Нажмите правой кнопкой мыши, чтобы покинуть эту работу
     job_limit: Вы исчерпали свой лимит по количеству заданий. Сначала закройте текущее задание, чтобы выбрать это.
   stats:
     stats_title: Ваша статистика
