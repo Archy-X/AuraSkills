@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -18,7 +19,6 @@ import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.jobs.JobsBatchData;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import net.kyori.adventure.text.Component;
@@ -117,7 +117,7 @@ public abstract class User {
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
             if (entry.getKey().isEnabled()) {
                 sum += entry.getValue();
-                numEnabled ++;
+                numEnabled++;
             }
         }
         return sum / (double) numEnabled;
@@ -298,7 +298,8 @@ public abstract class User {
         map.remove(name);
         // Reloads modifier type
         if (reload) {
-            plugin.getStatManager().reload(this, modifier.type());
+            // Run a tick later to prevent invalid removing then readding of the same modifier by 3rd parties
+            plugin.getScheduler().executeSync(() -> plugin.getStatManager().reload(this, modifier.type()));
         }
         return true;
     }
@@ -510,6 +511,7 @@ public abstract class User {
 
     /**
      * Checks if the profile has not had any changes since creation
+     *
      * @return True if profile has not been modified, false if player has leveled profile
      */
     public boolean isBlankProfile() {
