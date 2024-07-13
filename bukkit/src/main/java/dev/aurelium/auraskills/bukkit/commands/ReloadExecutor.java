@@ -45,6 +45,7 @@ public class ReloadExecutor {
         plugin.getMenuFileManager().generateDefaultFiles();
         plugin.getMenuFileManager().loadMenus();
         plugin.getUiProvider().getActionBarManager().resetActionBars();
+        plugin.getAntiAfkManager().reload();
         if (plugin.getHookManager().isRegistered(HologramsHook.class)) {
             plugin.getHookManager().getHook(HologramsHook.class).loadConfig();
         }

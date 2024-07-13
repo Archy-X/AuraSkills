@@ -115,7 +115,7 @@ public class SqlUserMigrator {
         String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
-            statement.setInt(2, storageProvider.STAT_MODIFIER_ID);
+            statement.setInt(2, SqlStorageProvider.STAT_MODIFIER_ID);
             for (StatModifier modifier : modifiers) {
                 String categoryId = modifier.stat().getId().toString();
                 statement.setString(3, categoryId);
@@ -132,7 +132,7 @@ public class SqlUserMigrator {
         String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
-            statement.setInt(2, storageProvider.ABILITY_DATA_ID);
+            statement.setInt(2, SqlStorageProvider.ABILITY_DATA_ID);
             for (AbilityData data : abilityData.values()) {
                 String categoryId = data.getAbility().getId().toString();
                 statement.setString(3, categoryId);
@@ -151,9 +151,9 @@ public class SqlUserMigrator {
         String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
-            statement.setInt(2, storageProvider.UNCLAIMED_ITEMS_ID);
+            statement.setInt(2, SqlStorageProvider.UNCLAIMED_ITEMS_ID);
             for (KeyIntPair unclaimedItem : unclaimedItems) {
-                statement.setNull(3, Types.NULL);
+                statement.setNull(3, Types.VARCHAR);
                 statement.setString(4, unclaimedItem.getKey());
                 statement.setString(5, String.valueOf(unclaimedItem.getValue()));
                 statement.executeUpdate();

@@ -51,6 +51,7 @@ public abstract class User {
     private List<KeyIntPair> unclaimedItems;
     private final Map<ActionBarType, Boolean> actionBarSettings;
     private final Set<Skill> jobs;
+    private final List<AntiAfkLog> sessionAntiAfkLogs;
 
     private boolean saving;
     private boolean shouldSave;
@@ -59,6 +60,8 @@ public abstract class User {
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
     private final JobsBatchData jobsBatchData;
+    @Nullable
+    private List<AntiAfkLog> storedAntiAfkLogs;
 
     public User(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -79,6 +82,7 @@ public abstract class User {
         this.multipliers = new HashMap<>();
         this.jobs = new HashSet<>();
         this.jobsBatchData = new JobsBatchData();
+        this.sessionAntiAfkLogs = new ArrayList<>();
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -506,6 +510,18 @@ public abstract class User {
 
     public JobsBatchData getJobsBatchData() {
         return jobsBatchData;
+    }
+
+    public List<AntiAfkLog> getSessionAntiAfkLogs() {
+        return sessionAntiAfkLogs;
+    }
+
+    public Optional<List<AntiAfkLog>> getStoredAntiAfkLogs() {
+        return Optional.ofNullable(storedAntiAfkLogs);
+    }
+
+    public void setStoredAntiAfkLogs(@NotNull List<AntiAfkLog> logs) {
+        this.storedAntiAfkLogs = logs;
     }
 
     /**

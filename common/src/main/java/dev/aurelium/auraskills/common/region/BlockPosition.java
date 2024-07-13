@@ -1,6 +1,8 @@
 package dev.aurelium.auraskills.common.region;
 
 import com.google.common.base.Objects;
+import dev.aurelium.auraskills.api.util.NumberUtil;
+import org.jetbrains.annotations.NotNull;
 
 public class BlockPosition {
 
@@ -12,6 +14,17 @@ public class BlockPosition {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public static BlockPosition fromCommaString(@NotNull String list) {
+        String[] splitCoords = list.split(",");
+        int x = 0, y = 0, z = 0;
+        if (splitCoords.length == 3) {
+            x = NumberUtil.toInt(splitCoords[0]);
+            y = NumberUtil.toInt(splitCoords[1]);
+            z = NumberUtil.toInt(splitCoords[2]);
+        }
+        return new BlockPosition(x, y, z);
     }
 
     public int getX() {
@@ -44,4 +57,8 @@ public class BlockPosition {
         return Objects.hashCode(x, y, z);
     }
 
+    @Override
+    public String toString() {
+        return x + "," + y + "," + z;
+    }
 }

@@ -61,6 +61,8 @@ public enum Option {
     JOBS_INCOME_BATCHING_DISPLAY_INDIVIDUAL("jobs.income.batching.display_individual", OptionType.BOOLEAN),
     // Anti-AFK options
     ANTI_AFK_ENABLED("anti_afk.enabled", OptionType.BOOLEAN),
+    ANTI_AFK_LOGGING_ENABLED("anti_afk.logging_enabled", OptionType.BOOLEAN),
+    ANTI_AFK_LOG_THRESHOLD("anti_afk.log_threshold", OptionType.STRING),
     ANTI_AFK_CHECKS_BLOCK_A_ENABLED("anti_afk.checks.block_a.enabled", OptionType.BOOLEAN),
     ANTI_AFK_CHECKS_BLOCK_A_MIN_COUNT("anti_afk.checks.block_a.min_count", OptionType.INT),
     ANTI_AFK_CHECKS_DAMAGE_A_ENABLED("anti_afk.checks.damage_a.enabled", OptionType.BOOLEAN),
