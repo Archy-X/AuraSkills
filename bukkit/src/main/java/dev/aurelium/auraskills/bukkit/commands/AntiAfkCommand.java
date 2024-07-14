@@ -57,6 +57,7 @@ public class AntiAfkCommand extends BaseCommand {
                 // Load if stored logs have not been loaded
                 plugin.getScheduler().executeAsync(() -> {
                     List<AntiAfkLog> loaded = plugin.getStorageProvider().loadAntiAfkLogs(offlinePlayer.getUniqueId());
+                    user.setStoredAntiAfkLogs(new ArrayList<>(loaded)); // Set loaded into User cache
                     loaded.addAll(user.getSessionAntiAfkLogs()); // Add the logs created this session to the stored logs
                     List<AntiAfkLog> logs = getMostRecent(loaded, offset, perPage);
 

@@ -374,7 +374,7 @@ public class FileStorageProvider extends StorageProvider {
 
                 nodeList.add(logNode);
             }
-            node.set(nodeList);
+            node.setList(ConfigurationNode.class, nodeList);
         }
 
         saveYamlFile(root, user.getUuid());
