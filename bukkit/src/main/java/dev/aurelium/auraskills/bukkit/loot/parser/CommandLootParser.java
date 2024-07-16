@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.util.data.Validate;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class CommandLootParser implements LootParser {
@@ -18,9 +19,17 @@ public class CommandLootParser implements LootParser {
         String executorName = config.node("executor").getString("console");
         CommandExecutor executor = CommandExecutor.valueOf(executorName.toUpperCase(Locale.ROOT));
 
-        String command = config.node("command").getString("");
-        Validate.notNull(command, "Command loot must specify key command");
+        String[] commands;
+        if (!config.node("commands").empty()) {
+            commands = config.node("commands")
+                    .getList(String.class, new ArrayList<>())
+                    .toArray(new String[0]);
+        } else {
+            String command = config.node("command").getString("");
+            Validate.notNull(command, "Command loot must specify key command");
+            commands = new String[] {command};
+        }
 
-        return new CommandLoot(context.parseValues(config), executor, command);
+        return new CommandLoot(context.parseValues(config), executor, commands);
     }
 }

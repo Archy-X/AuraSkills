@@ -55,17 +55,19 @@ public abstract class LootHandler {
 
     protected void giveCommandLoot(Player player, CommandLoot loot, @Nullable XpSource source, Skill skill) {
         // Apply placeholders to command
-        String finalCommand = TextUtil.replace(loot.getCommand(), "{player}", player.getName());
         User user = plugin.getUser(player);
-        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
-            finalCommand = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, finalCommand);
-        }
-        // Execute command
-        CommandExecutor executor = loot.getExecutor();
-        if (executor == CommandExecutor.CONSOLE) {
-            Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), finalCommand);
-        } else if (executor == CommandExecutor.PLAYER) {
-            Bukkit.dispatchCommand(player, finalCommand);
+        for (String command : loot.getCommands()) {
+            String finalCommand = TextUtil.replace(command, "{player}", player.getName());
+            if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
+                finalCommand = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, finalCommand);
+            }
+            // Execute command
+            CommandExecutor executor = loot.getExecutor();
+            if (executor == CommandExecutor.CONSOLE) {
+                Bukkit.dispatchCommand(plugin.getServer().getConsoleSender(), finalCommand);
+            } else if (executor == CommandExecutor.PLAYER) {
+                Bukkit.dispatchCommand(player, finalCommand);
+            }
         }
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
