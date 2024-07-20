@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>错误: 控制台不能使用相对坐标来确定位置。"
 commands:
   prefix: "<dark_gray>[<aqua>技能插件<dark_gray>] "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -884,4 +889,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 34
+file_version: 35
