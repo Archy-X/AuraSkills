@@ -54,7 +54,6 @@ public class EnchantingAbilities extends AbilityImpl {
         if (value > 0) {
             int added = (int) (totalXp / value);
             double remainder = totalXp - added * value;
-            plugin.logger().info("Value: " + value + ", added: " + added + ", remainder: " + remainder);
             player.giveExp(Math.max(added, 0));
             user.getAbilityData(ability).setData("xp", remainder);
         }
