@@ -58,11 +58,13 @@ tasks.withType<ShadowJar> {
     relocate("co.aikar.locales", "dev.aurelium.auraskills.locales")
     relocate("de.tr7zw.changeme.nbtapi", "dev.aurelium.auraskills.nbtapi")
     relocate("org.bstats", "dev.aurelium.auraskills.bstats")
-    relocate("com.udojava.evalex", "dev.aurelium.auraskills.evalex")
+    relocate("com.ezylang.evalex", "dev.aurelium.auraskills.evalex")
     relocate("net.kyori", "dev.aurelium.auraskills.kyori")
     relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
     relocate("dev.aurelium.slate", "dev.aurelium.auraskills.slate")
-
+    relocate("net.querz", "dev.aurelium.auraskills.querz")
+    relocate("com.archyx.polyglot", "dev.aurelium.auraskills.polyglot")
+    relocate("org.atteo.evo.inflector", "dev.aurelium.auraskills.inflector")
     exclude("acf-*.properties")
 
     finalizedBy("copyJar")
