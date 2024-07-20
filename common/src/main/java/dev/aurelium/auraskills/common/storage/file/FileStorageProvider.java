@@ -10,8 +10,10 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
+import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
+import dev.aurelium.auraskills.common.user.AntiAfkLog;
 import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -357,6 +359,24 @@ public class FileStorageProvider extends StorageProvider {
             root.node("jobs").set(jobNames);
         }
 
+        // Save anti-AFK logs
+        if (!user.getSessionAntiAfkLogs().isEmpty()) {
+            // Since logs are not loaded on join, we should append new logs instead of overriding
+            ConfigurationNode node = root.node("logs", "anti_afk");
+            List<ConfigurationNode> nodeList = node.getList(ConfigurationNode.class, new ArrayList<>());
+
+            for (AntiAfkLog log : user.getSessionAntiAfkLogs()) {
+                var logNode = CommentedConfigurationNode.root();
+                logNode.node("time").set(log.timestamp());
+                logNode.node("message").set(log.message());
+                logNode.node("coords").set(log.coords().toString());
+                logNode.node("world").set(log.world());
+
+                nodeList.add(logNode);
+            }
+            node.setList(ConfigurationNode.class, nodeList);
+        }
+
         saveYamlFile(root, user.getUuid());
         user.setSaving(false);
     }
@@ -427,5 +447,36 @@ public class FileStorageProvider extends StorageProvider {
             }
         }
         return states;
+    }
+
+    @Override
+    public List<AntiAfkLog> loadAntiAfkLogs(UUID uuid) {
+        try {
+            ConfigurationNode root = loadYamlFile(uuid);
+
+            if (root.empty()) {
+                return new ArrayList<>();
+            }
+
+            List<AntiAfkLog> logs = new ArrayList<>();
+
+            for (ConfigurationNode logNode : root.node("logs", "anti_afk").childrenList()) {
+                long timestamp = logNode.node("time").getLong();
+
+                String message = logNode.node("message").getString("");
+                String coordsStr = logNode.node("coords").getString("");
+                var coords = BlockPosition.fromCommaString(coordsStr);
+                String world = logNode.node("world").getString("");
+
+                logs.add(new AntiAfkLog(timestamp, message, coords, world));
+            }
+
+            return logs;
+        } catch (ConfigurateException e) {
+            plugin.logger().warn("Failed to load anti-AFK logs from storage for UUID " + uuid);
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
     }
 }

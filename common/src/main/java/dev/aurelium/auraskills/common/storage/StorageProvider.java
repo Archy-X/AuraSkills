@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
+import dev.aurelium.auraskills.common.user.AntiAfkLog;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -63,6 +64,8 @@ public abstract class StorageProvider {
     public abstract void delete(UUID uuid) throws Exception;
 
     public abstract List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception;
+
+    public abstract List<AntiAfkLog> loadAntiAfkLogs(UUID uuid);
 
     public void startAutoSaving() {
         if (!plugin.configBoolean(Option.AUTO_SAVE_ENABLED)) {

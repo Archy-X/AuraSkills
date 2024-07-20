@@ -18,6 +18,7 @@ import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,37 +91,41 @@ public class SqlUserLoader {
 
         // Load skill levels
         JsonArray skillLevels = getJsonArray("skill_levels", rs);
-        for (JsonElement skillLevelElement : skillLevels) {
-            JsonObject skillLevelObj = skillLevelElement.getAsJsonObject();
+        if (skillLevels != null) {
+            for (JsonElement skillLevelElement : skillLevels) {
+                JsonObject skillLevelObj = skillLevelElement.getAsJsonObject();
 
-            String name = skillLevelObj.get("name").getAsString();
-            int level = skillLevelObj.get("level").getAsInt();
-            double xp = skillLevelObj.get("xp").getAsDouble();
+                String name = skillLevelObj.get("name").getAsString();
+                int level = skillLevelObj.get("level").getAsInt();
+                double xp = skillLevelObj.get("xp").getAsDouble();
 
-            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(name));
-            if (skill == null) continue;
+                Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(name));
+                if (skill == null) continue;
 
-            user.setSkillLevel(skill, level);
-            user.setSkillXp(skill, xp);
+                user.setSkillLevel(skill, level);
+                user.setSkillXp(skill, xp);
+            }
         }
 
         // Load key values
         JsonArray keyValues = getJsonArray("key_values", rs);
-        for (JsonElement keyValueElement : keyValues) {
-            JsonObject keyValueObj = keyValueElement.getAsJsonObject();
+        if (keyValues != null) {
+            for (JsonElement keyValueElement : keyValues) {
+                JsonObject keyValueObj = keyValueElement.getAsJsonObject();
 
-            int dataId = keyValueObj.get("data_id").getAsInt();
-            String categoryId = keyValueObj.get("category_id").getAsString();
-            String keyName = keyValueObj.get("key_name").getAsString();
-            String value = keyValueObj.get("value").getAsString();
+                int dataId = keyValueObj.get("data_id").getAsInt();
+                String categoryId = keyValueObj.get("category_id").getAsString();
+                String keyName = keyValueObj.get("key_name").getAsString();
+                String value = keyValueObj.get("value").getAsString();
 
-            switch (dataId) {
-                case STAT_MODIFIER_ID -> applyStatModifier(user, categoryId, keyName, value);
-                case TRAIT_MODIFIER_ID -> applyTraitModifier(user, categoryId, keyName, value);
-                case ABILITY_DATA_ID -> applyAbilityData(user, categoryId, keyName, value);
-                case UNCLAIMED_ITEMS_ID -> applyUnclaimedItem(user, keyName, value);
-                case ACTION_BAR_ID -> applyActionBar(user, keyName, value);
-                case JOBS_ID -> applyJobs(user, keyName, value);
+                switch (dataId) {
+                    case STAT_MODIFIER_ID -> applyStatModifier(user, categoryId, keyName, value);
+                    case TRAIT_MODIFIER_ID -> applyTraitModifier(user, categoryId, keyName, value);
+                    case ABILITY_DATA_ID -> applyAbilityData(user, categoryId, keyName, value);
+                    case UNCLAIMED_ITEMS_ID -> applyUnclaimedItem(user, keyName, value);
+                    case ACTION_BAR_ID -> applyActionBar(user, keyName, value);
+                    case JOBS_ID -> applyJobs(user, keyName, value);
+                }
             }
         }
 
@@ -201,8 +206,10 @@ public class SqlUserLoader {
         }
     }
 
+    @Nullable
     private JsonArray getJsonArray(String name, ResultSet rs) throws SQLException {
         String raw = rs.getString(name);
+        if (raw == null) return null;
         return JsonParser.parseString(raw).getAsJsonArray();
     }
 

@@ -9,6 +9,9 @@ import java.util.Locale;
 public enum CommandMessage implements MessageKey {
 
     PREFIX,
+    ANTIAFK_FAILED,
+    ANTIAFK_LOGS_HEADER,
+    ANTIAFK_LOGS_ENTRY,
     ARMOR_MODIFIER_ADD_ADDED,
     ARMOR_MODIFIER_ADD_ALREADY_EXISTS(Command.ARMOR_MODIFIER_ADD, "already_exists"),
     ARMOR_MODIFIER_ADD_LORE,

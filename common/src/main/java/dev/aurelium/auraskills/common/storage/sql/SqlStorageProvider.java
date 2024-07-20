@@ -12,9 +12,11 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
+import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
+import dev.aurelium.auraskills.common.user.AntiAfkLog;
 import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -36,6 +38,8 @@ public class SqlStorageProvider extends StorageProvider {
     public static final int UNCLAIMED_ITEMS_ID = 4;
     public static final int ACTION_BAR_ID = 5;
     public static final int JOBS_ID = 6;
+    public static final String LOG_TYPE_ANTI_AFK = "anti_afk";
+    public static final int LOG_LEVEL_WARN = 2;
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
@@ -67,7 +71,7 @@ public class SqlStorageProvider extends StorageProvider {
         Map<Skill, Integer> levelsMap = new HashMap<>();
         Map<Skill, Double> xpMap = new HashMap<>();
 
-        String loadQuery = "SELECT * FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
+        String loadQuery = "SELECT * FROM " + tablePrefix + "skill_levels WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
             statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -93,7 +97,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private Map<String, StatModifier> loadStatModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
         Map<String, StatModifier> modifiers = new HashMap<>();
-        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, STAT_MODIFIER_ID);
@@ -118,7 +122,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private Map<String, TraitModifier> loadTraitModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
         Map<String, TraitModifier> modifiers = new HashMap<>();
-        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?;";
+        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, TRAIT_MODIFIER_ID);
@@ -143,7 +147,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     @Override
     public @NotNull UserState loadState(UUID uuid) throws Exception {
-        String query = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?;";
+        String query = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?";
         try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, uuid.toString());
@@ -171,7 +175,7 @@ public class SqlStorageProvider extends StorageProvider {
     @Override
     public void applyState(UserState state) throws Exception {
         // Insert into users database
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?;";
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?";
         try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
                 statement.setString(1, state.uuid().toString());
@@ -181,7 +185,7 @@ public class SqlStorageProvider extends StorageProvider {
             }
             // Insert into skill_levels database
             int userId = getUserId(connection, state.uuid());
-            String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?;";
+            String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
             try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
                 statement.setInt(1, userId);
                 for (Map.Entry<Skill, Integer> entry : state.skillLevels().entrySet()) {
@@ -206,7 +210,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     public int getUserId(Connection connection, UUID uuid) throws SQLException {
         // Get user_id from users database
-        String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
+        String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, uuid.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -239,11 +243,12 @@ public class SqlStorageProvider extends StorageProvider {
             saveUsersTable(connection, user);
             saveSkillLevelsTable(connection, user);
             saveKeyValuesTable(connection, user);
+            saveLogsTable(connection, user);
         }
     }
 
     private void saveUsersTable(Connection connection, User user) throws SQLException {
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?;";
+        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?";
         try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
             statement.setString(1, user.getUuid().toString());
             int curr = 2; // Current index to set
@@ -251,7 +256,7 @@ public class SqlStorageProvider extends StorageProvider {
                 if (user.hasLocale()) {
                     statement.setString(curr++, user.getLocale().toString());
                 } else {
-                    statement.setNull(curr++, Types.NULL);
+                    statement.setNull(curr++, Types.VARCHAR);
                 }
                 statement.setDouble(curr++, user.getMana());
             }
@@ -261,7 +266,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private void saveSkillLevelsTable(Connection connection, User user) throws SQLException {
         int userId = getUserId(connection, user.getUuid());
-        String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?;";
+        String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
         try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
             statement.setInt(1, userId);
             for (Map.Entry<Skill, Integer> entry : user.getSkillLevelMap().entrySet()) {
@@ -294,9 +299,13 @@ public class SqlStorageProvider extends StorageProvider {
         saveKeyValueRows(connection, userId, rows);
     }
 
+    private void saveLogsTable(Connection connection, User user) throws SQLException {
+        saveAntiAfkLogs(user.getSessionAntiAfkLogs(), connection, user);
+    }
+
     private void saveKeyValueRows(Connection connection, int userId, List<KeyValueRow> rows) throws SQLException {
         connection.setAutoCommit(false);
-        final String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?;";
+        final String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             for (KeyValueRow row : rows) {
                 ps.setInt(1, userId);
@@ -318,7 +327,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private void deleteUser(Connection connection, User user) throws SQLException {
         connection.setAutoCommit(false);
-        String getUserIdQuery = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?;";
+        String getUserIdQuery = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?";
         try (PreparedStatement statement = connection.prepareStatement(getUserIdQuery)) {
             statement.setString(1, user.getUuid().toString());
             try (ResultSet rs = statement.executeQuery()) {
@@ -331,17 +340,7 @@ public class SqlStorageProvider extends StorageProvider {
                         delStatement.executeUpdate();
                     }
 
-                    String deleteSkillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
-                    try (PreparedStatement delStatement = connection.prepareStatement(deleteSkillLevelsQuery)) {
-                        delStatement.setInt(1, userId);
-                        delStatement.executeUpdate();
-                    }
-
-                    String deleteUsersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
-                    try (PreparedStatement delStatement = connection.prepareStatement(deleteUsersQuery)) {
-                        delStatement.setInt(1, userId);
-                        delStatement.executeUpdate();
-                    }
+                    deleteSkillLevelsUsers(connection, userId);
 
                     connection.commit();
                 } else {
@@ -356,8 +355,22 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
+    private void deleteSkillLevelsUsers(Connection connection, int userId) throws SQLException {
+        String deleteSkillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
+        try (PreparedStatement delStatement = connection.prepareStatement(deleteSkillLevelsQuery)) {
+            delStatement.setInt(1, userId);
+            delStatement.executeUpdate();
+        }
+
+        String deleteUsersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
+        try (PreparedStatement delStatement = connection.prepareStatement(deleteUsersQuery)) {
+            delStatement.setInt(1, userId);
+            delStatement.executeUpdate();
+        }
+    }
+
     private void deleteKeyValues(Connection connection, int userId) throws SQLException {
-        String query = "DELETE FROM " + tablePrefix + "key_values WHERE user_id=?;";
+        String query = "DELETE FROM " + tablePrefix + "key_values WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.executeUpdate();
@@ -461,22 +474,35 @@ public class SqlStorageProvider extends StorageProvider {
         return rows;
     }
 
+    private void saveAntiAfkLogs(List<AntiAfkLog> logs, Connection connection, User user) throws SQLException {
+        connection.setAutoCommit(false);
+        final String query = "INSERT IGNORE INTO " + tablePrefix + "logs (log_type, log_time, log_level, log_message, player_uuid, player_coords, world_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            for (AntiAfkLog log : logs) {
+                ps.setString(1, LOG_TYPE_ANTI_AFK);
+                ps.setTimestamp(2, new Timestamp(log.timestamp()));
+                ps.setInt(3, LOG_LEVEL_WARN);
+                ps.setString(4, log.message());
+                ps.setString(5, user.getUuid().toString());
+                ps.setString(6, log.coords().toString());
+                ps.setString(7, log.world());
+                ps.addBatch();
+            }
+            ps.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
+
     @Override
     public void delete(UUID uuid) throws Exception {
         try (Connection connection = pool.getConnection()) {
             int userId = getUserId(connection, uuid);
 
-            String usersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
-            try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
-                statement.setInt(1, userId);
-                statement.executeUpdate();
-            }
-
-            String skillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
-            try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
-                statement.setInt(1, userId);
-                statement.executeUpdate();
-            }
+            deleteSkillLevelsUsers(connection, userId);
         }
     }
 
@@ -538,6 +564,47 @@ public class SqlStorageProvider extends StorageProvider {
             }
         }
         return states;
+    }
+
+    @Override
+    public List<AntiAfkLog> loadAntiAfkLogs(UUID uuid) {
+        try (Connection connection = pool.getConnection()) {
+            String query = "SELECT log_time, log_message, player_coords, world_name FROM " + tablePrefix + "logs WHERE player_uuid=? AND log_type=?";
+
+            List<AntiAfkLog> logs = new ArrayList<>();
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, uuid.toString());
+                statement.setString(2, LOG_TYPE_ANTI_AFK);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        long timestamp = resultSet.getTimestamp("log_time").getTime();
+
+                        String message = resultSet.getString("log_message");
+                        if (message == null) {
+                            message = "";
+                        }
+
+                        String coordsStr = resultSet.getString("player_coords");
+                        if (coordsStr == null) {
+                            coordsStr = "";
+                        }
+                        var coords = BlockPosition.fromCommaString(coordsStr);
+
+                        String worldName = resultSet.getString("world_name");
+
+                        logs.add(new AntiAfkLog(timestamp, message, coords, worldName));
+                    }
+                }
+            }
+
+            return logs;
+        } catch (SQLException e) {
+            plugin.logger().warn("Failed to load anti-AFK logs from storage for UUID " + uuid);
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 
 }

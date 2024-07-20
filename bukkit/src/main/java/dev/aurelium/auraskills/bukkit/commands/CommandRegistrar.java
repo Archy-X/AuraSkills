@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.commands;
 
+import co.aikar.commands.ConditionFailedException;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.MinecraftMessageKeys;
 import co.aikar.commands.PaperCommandManager;
@@ -36,11 +37,26 @@ public class CommandRegistrar {
         manager.usePerIssuerLocale(true, false);
         manager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
 
+        registerConditions(manager);
         registerContexts(manager);
         registerCompletions(manager);
         registerBaseCommands(manager);
         registerSkillCommands(manager);
         return manager;
+    }
+
+    private void registerConditions(PaperCommandManager manager) {
+        manager.getCommandConditions().addCondition(Integer.class, "limits", (c, exec, value) -> {
+            if (value == null) {
+                return;
+            }
+            if (c.hasConfig("min") && c.getConfigValue("min", 0) > value) {
+                throw new ConditionFailedException("Min value must be " + c.getConfigValue("min", 0));
+            }
+            if (c.hasConfig("max") && c.getConfigValue("max", 3) < value) {
+                throw new ConditionFailedException("Max value must be " + c.getConfigValue("max", 3));
+            }
+        });
     }
 
     private void registerContexts(PaperCommandManager manager) {
@@ -218,6 +234,7 @@ public class CommandRegistrar {
         manager.registerCommand(new ManaAbilityCommand(plugin));
         manager.registerCommand(new TraitCommand(plugin));
         manager.registerCommand(new JobsCommand(plugin));
+        manager.registerCommand(new AntiAfkCommand(plugin));
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

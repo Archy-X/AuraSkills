@@ -3,6 +3,8 @@ package dev.aurelium.auraskills.bukkit.user;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.antiafk.CheckData;
+import dev.aurelium.auraskills.bukkit.antiafk.CheckType;
 import dev.aurelium.auraskills.bukkit.hooks.BukkitLuckPermsHook;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
@@ -14,20 +16,21 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class BukkitUser extends User {
 
     @Nullable
     private final Player player;
     private final AuraSkills plugin;
+    // Non-persistent data
+    private final Map<CheckType, CheckData> checkData;
 
     public BukkitUser(UUID uuid, @Nullable Player player, AuraSkills plugin) {
         super(uuid, plugin);
         this.player = player;
         this.plugin = plugin;
+        this.checkData = new HashMap<>();
     }
 
     @Nullable
@@ -37,6 +40,11 @@ public class BukkitUser extends User {
 
     public static BukkitUser getUser(SkillsUser skillsUser) {
         return (BukkitUser) ((ApiSkillsUser) skillsUser).getUser();
+    }
+
+    @NotNull
+    public CheckData getCheckData(CheckType type) {
+        return checkData.computeIfAbsent(type, t -> new CheckData());
     }
 
     @Nullable

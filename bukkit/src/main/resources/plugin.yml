@@ -97,6 +97,8 @@ permissions:
         default: op
     auraskills.command.jobs.other:
         default: op
+    auraskills.command.antiafk.logs:
+        default: op
     auraskills.multiplier:
         default: false
     auraskills.skill.farming:
@@ -135,3 +137,5 @@ permissions:
         default: false
     auraskills.jobs.block:
         default: false
+    auraskills.antiafk.notify:
+        default: op
