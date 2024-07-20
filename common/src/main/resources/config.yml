@@ -116,7 +116,7 @@ jobs:
       interval_ms: 2000
       display_individual: false
 anti_afk:
-  enabled: true
+  enabled: false
   logging_enabled: true
   log_threshold: min_count*4
   checks:
