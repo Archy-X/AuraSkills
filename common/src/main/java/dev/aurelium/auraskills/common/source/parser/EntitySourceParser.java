@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.common.source.parser;
 
-import dev.aurelium.auraskills.api.source.SourceContext;
 import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.ConfigurateSourceContext;
 import dev.aurelium.auraskills.common.source.type.EntitySource;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -16,7 +16,7 @@ public class EntitySourceParser extends SourceParser<EntitySource> {
     }
 
     @Override
-    public EntitySource parse(ConfigurationNode source, SourceContext context) throws SerializationException {
+    public EntitySource parse(ConfigurationNode source, ConfigurateSourceContext context) throws SerializationException {
         String entity = context.required(source, "entity").getString();
         EntityXpSource.EntityTriggers[] triggers = context.requiredPluralizedArray("trigger", source, EntityXpSource.EntityTriggers.class);
         EntityXpSource.EntityDamagers[] damagers = context.pluralizedArray("damager", source, EntityXpSource.EntityDamagers.class);

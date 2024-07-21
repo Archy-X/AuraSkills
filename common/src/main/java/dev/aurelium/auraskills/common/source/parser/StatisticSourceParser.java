@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.source.parser;
 
-import dev.aurelium.auraskills.api.source.SourceContext;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.source.ConfigurateSourceContext;
 import dev.aurelium.auraskills.common.source.type.StatisticSource;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -13,7 +13,7 @@ public class StatisticSourceParser extends SourceParser<StatisticSource> {
     }
 
     @Override
-    public StatisticSource parse(ConfigurationNode source, SourceContext context) throws SerializationException {
+    public StatisticSource parse(ConfigurationNode source, ConfigurateSourceContext context) throws SerializationException {
         String statistic = context.required(source, "statistic").getString();
         double multiplier = source.node("multiplier").getDouble(1.0);
         int minimumIncrease = source.node("minimum_increase").getInt(1);

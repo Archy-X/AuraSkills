@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.bukkit.loot.parser.EntityLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.ItemLootParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.LootParsingContextImpl;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
+import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.util.data.Parser;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -66,14 +67,14 @@ public class LootLoader extends Parser {
                             continue;
                         }
 
-                        loot = new ItemLootParser(manager).parse(context, lootNode);
+                        loot = new ItemLootParser(manager).parse(context, ApiConfigNode.toApi(lootNode));
                     }
                     // Command loot
                     else if (lootType.equalsIgnoreCase("command")) {
-                        loot = new CommandLootParser().parse(context, lootNode);
+                        loot = new CommandLootParser().parse(context, ApiConfigNode.toApi(lootNode));
                     // Entity loot, mainly for fishing
                     } else if (lootType.equalsIgnoreCase("entity")) {
-                        loot = new EntityLootParser(manager).parse(context, lootNode);
+                        loot = new EntityLootParser(manager).parse(context, ApiConfigNode.toApi(lootNode));
                     } else {
                         // Parse custom loot registered from API
                         LootParser customParser = manager.getCustomLootParsers().get(lootType);
@@ -81,7 +82,7 @@ public class LootLoader extends Parser {
                             throw new IllegalArgumentException("Unknown loot type: " + lootType);
                         }
 
-                        loot = customParser.parse(context, lootNode);
+                        loot = customParser.parse(context, ApiConfigNode.toApi(lootNode));
                     }
                 } catch (Exception e) {
                     manager.getPlugin().getLogger().warning("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");

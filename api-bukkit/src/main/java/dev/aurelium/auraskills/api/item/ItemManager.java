@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.api.item;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -193,17 +194,29 @@ public interface ItemManager {
      * @param config the Configurate ConfigurationNode to parse keys from, should be a mapping
      * @return the parsed ItemStack
      */
+    ItemStack parseItem(ConfigNode config);
+
+    /**
+     * Use {@link #parseItem(ConfigNode)}
+     */
+    @Deprecated
     ItemStack parseItem(ConfigurationNode config);
 
     /**
      * Parses a list of ItemStack from a ConfigurationNode if it has a materials list. Only the material
      * differs between each item, the amount and all meta remains the same across items. If a regular material
-     * string is defined, a single item will be parsed like {@link #parseItem(ConfigurationNode)} and the list
+     * string is defined, a single item will be parsed like {@link #parseItem(ConfigNode)} and the list
      * returned will be of size 1.
      *
      * @param config the Configurate ConfigurationNode to parse keys from, should be a mapping
      * @return a list of parsed ItemStack
      */
+    List<ItemStack> parseMultipleItems(ConfigNode config);
+
+    /**
+     * Use {@link #parseMultipleItems(ConfigNode)}
+     */
+    @Deprecated
     List<ItemStack> parseMultipleItems(ConfigurationNode config);
 
 }

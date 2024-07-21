@@ -1,22 +1,21 @@
 package dev.aurelium.auraskills.common.source.parser.util;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.item.ItemCategory;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemFilterMeta;
 import dev.aurelium.auraskills.api.source.BaseContext;
 import dev.aurelium.auraskills.api.source.UtilityParser;
 import dev.aurelium.auraskills.common.item.SourceItem;
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.serialize.SerializationException;
 
 public class ItemFilterParser implements UtilityParser<ItemFilter> {
 
     @Override
-    public ItemFilter parse(ConfigurationNode source, BaseContext context) throws SerializationException {
+    public ItemFilter parse(ConfigNode source, BaseContext context) {
         if (!source.isMap() && !source.isList()) {
             String material = source.getString();
             if (material == null) {
-                throw new SerializationException("Invalid direct String value item filter, must be of type String");
+                throw new RuntimeException("Invalid direct String value item filter, must be of type String");
             }
             return new SourceItem(new String[]{material}, null, null, null);
         }

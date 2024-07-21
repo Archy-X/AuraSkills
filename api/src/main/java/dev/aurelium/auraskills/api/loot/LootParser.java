@@ -1,11 +1,10 @@
 package dev.aurelium.auraskills.api.loot;
 
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.serialize.SerializationException;
+import dev.aurelium.auraskills.api.config.ConfigNode;
 
 @FunctionalInterface
 public interface LootParser {
 
-    Loot parse(LootParsingContext context, ConfigurationNode config) throws SerializationException;
+    Loot parse(LootParsingContext context, ConfigNode config);
 
 }
