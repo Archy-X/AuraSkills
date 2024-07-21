@@ -48,14 +48,16 @@ public class EnchantingAbilities extends AbilityImpl {
         User user = BukkitUser.getUser(event.getUser());
 
         if (!(event.getAmount() > 0)) return;
-        
-        double totalXp = user.getAbilityData(ability).getDouble("xp") + event.getAmount();
+
         double value = getValue(ability, user);
+        double prevData = Math.min(user.getAbilityData(ability).getDouble("xp"), value);
+        double eventAmount = event.getAmount();
+        double totalXp = prevData + eventAmount;
         if (value > 0) {
             int added = (int) (totalXp / value);
             double remainder = totalXp - added * value;
             player.giveExp(Math.max(added, 0));
-            user.getAbilityData(ability).setData("xp", remainder);
+            user.getAbilityData(ability).setData("xp", Math.min(remainder, value));
         }
     }
 
