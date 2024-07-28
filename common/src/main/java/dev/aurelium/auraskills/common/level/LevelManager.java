@@ -83,6 +83,9 @@ public abstract class LevelManager {
         if (plugin.config().jobSelectionEnabled() && !user.getJobs().contains(skill)) {
             return 0.0;
         }
+        if (!plugin.getHookManager().isRegistered(EconomyHook.class)) {
+            return 0.0;
+        }
 
         double income = source.getIncome().getIncomeEarned(user.toApi(), source.getValues(), skill, amount);
         double originalIncome = income;
