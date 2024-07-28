@@ -65,19 +65,30 @@ public class BukkitRegionManager extends RegionManager {
     public void addPlacedBlock(Block block) {
         Region region = getRegionFromBlock(block);
         // Create region if it does not exist
-        if (region == null) {
-            int regionX = (int) Math.floor((double) block.getChunk().getX() / 32.0);
-            int regionZ = (int) Math.floor((double) block.getChunk().getZ() / 32.0);
-
-            region = new Region(block.getWorld().getName(), regionX, regionZ);
-
-            RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
-            regions.put(regionCoordinate, region);
-            loadRegion(region);
-        } else if (region.shouldReload()) {
-            loadRegion(region);
+        if (region == null || region.shouldReload()) {
+            addLoadRegionAsync(block);
+        } else {
+            addToRegion(block, region);
         }
+    }
 
+    private void addLoadRegionAsync(Block block) {
+        plugin.getScheduler().executeAsync(() -> {
+            Region region = getRegionFromBlock(block);
+            if (region == null) {
+                int regionX = (int) Math.floor((double) block.getChunk().getX() / 32.0);
+                int regionZ = (int) Math.floor((double) block.getChunk().getZ() / 32.0);
+                region = new Region(block.getWorld().getName(), regionX, regionZ);
+
+                RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
+                regions.put(regionCoordinate, region);
+            }
+            loadRegion(region);
+            addToRegion(block, region);
+        });
+    }
+
+    private void addToRegion(Block block, Region region) {
         byte regionChunkX = (byte) (block.getChunk().getX() - region.getX() * 32);
         byte regionChunkZ = (byte) (block.getChunk().getZ() - region.getZ() * 32);
         ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
