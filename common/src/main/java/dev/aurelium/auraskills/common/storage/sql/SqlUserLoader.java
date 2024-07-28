@@ -95,7 +95,7 @@ public class SqlUserLoader {
             for (JsonElement skillLevelElement : skillLevels) {
                 JsonObject skillLevelObj = skillLevelElement.getAsJsonObject();
 
-                String name = skillLevelObj.get("name").getAsString();
+                String name = getString(skillLevelObj, "name");
                 int level = skillLevelObj.get("level").getAsInt();
                 double xp = skillLevelObj.get("xp").getAsDouble();
 
@@ -109,14 +109,14 @@ public class SqlUserLoader {
 
         // Load key values
         JsonArray keyValues = getJsonArray("key_values", rs);
-        if (keyValues != null) {
+        if (keyValues != null && !keyValues.isJsonNull()) {
             for (JsonElement keyValueElement : keyValues) {
                 JsonObject keyValueObj = keyValueElement.getAsJsonObject();
 
                 int dataId = keyValueObj.get("data_id").getAsInt();
-                String categoryId = keyValueObj.get("category_id").getAsString();
-                String keyName = keyValueObj.get("key_name").getAsString();
-                String value = keyValueObj.get("value").getAsString();
+                String categoryId = getString(keyValueObj, "category_id");
+                String keyName = getString(keyValueObj, "key_name");
+                String value = getString(keyValueObj, "value");
 
                 switch (dataId) {
                     case STAT_MODIFIER_ID -> applyStatModifier(user, categoryId, keyName, value);
@@ -131,6 +131,14 @@ public class SqlUserLoader {
 
         // Cleanup
         user.clearInvalidItems();
+    }
+
+    private String getString(JsonObject parent, String key) {
+        JsonElement element = parent.get(key);
+        if (element != null && !element.isJsonNull() && element.isJsonPrimitive()) {
+            return element.getAsString();
+        }
+        return "";
     }
 
     private void applyStatModifier(User user, String categoryId, String keyName, String valueStr) {
