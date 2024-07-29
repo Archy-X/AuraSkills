@@ -330,7 +330,7 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>Навыки<dark_gray>] "
   antiafk:
-    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    failed: "<red>{player} не прошёл анти-AFK проверку {check} <gray>(Счет: {count})"
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
