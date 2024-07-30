@@ -17,7 +17,7 @@ public record PositionHandler(double maxDistance, int minCount) {
 
         if (prevLoc == null) return false;
 
-        if (!Objects.equals(currentLoc.getWorld(), currentLoc.getWorld())) {
+        if (!Objects.equals(currentLoc.getWorld(), prevLoc.getWorld())) {
             data.resetCount();
             return false;
         }

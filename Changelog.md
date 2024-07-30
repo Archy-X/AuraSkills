@@ -28,7 +28,7 @@ Changelog for versions since 2.0.0.
   - The `health` key overrides the entity max health attribute
   - The `damage` key overrides the entity attack damage attribute
   - The `level` key can be used to define the AuraMobs or MythicMobs level
-  - The default vertical and horizontal velocities when caught can be overridden with `entity.horizontal` and `entity.vertical`
+  - The default vertical and horizontal velocities when caught can be overridden with `velocity.horizontal` and `velocity.vertical`
   - The keys `hand`, `off_hand`, `feet`, `legs`, `chest`, and `head` are used to define equipment on the spawned entity
     - The value is a mapping in the same item format as regular item loot (Using keys `material`, `enchantments`, etc.)
 - Add boss bar animation using delay when upgrading progress
