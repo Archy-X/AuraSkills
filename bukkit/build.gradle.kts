@@ -4,7 +4,10 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
+
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -51,57 +54,93 @@ dependencies {
     compileOnly("io.th0rgal:oraxen:1.173.0")
 }
 
-tasks.withType<ShadowJar> {
-    val projectVersion: String by project
-    archiveFileName.set("AuraSkills-${projectVersion}.jar")
-
-    relocate("co.aikar.commands", "dev.aurelium.auraskills.acf")
-    relocate("co.aikar.locales", "dev.aurelium.auraskills.locales")
-    relocate("de.tr7zw.changeme.nbtapi", "dev.aurelium.auraskills.nbtapi")
-    relocate("org.bstats", "dev.aurelium.auraskills.bstats")
-    relocate("com.ezylang.evalex", "dev.aurelium.auraskills.evalex")
-    relocate("net.kyori", "dev.aurelium.auraskills.kyori")
-    relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
-    relocate("dev.aurelium.slate", "dev.aurelium.auraskills.slate")
-    relocate("org.spongepowered.configurate", "dev.aurelium.auraskills.configurate")
-    relocate("io.leangen.geantyref", "dev.aurelium.auraskills.geantyref")
-    relocate("net.querz", "dev.aurelium.auraskills.querz")
-    relocate("com.archyx.polyglot", "dev.aurelium.auraskills.polyglot")
-    relocate("org.atteo.evo.inflector", "dev.aurelium.auraskills.inflector")
-
-    exclude("acf-*.properties")
-
-    finalizedBy("copyJar")
-}
-
-java.sourceCompatibility = JavaVersion.VERSION_17
-
-tasks.register<Copy>("copyJar") {
-    val projectVersion : String by project
-    from("build/libs/AuraSkills-${projectVersion}.jar")
-    into("../build/libs")
-}
-
 tasks {
+    withType<ShadowJar> {
+        val projectVersion: String by project
+        archiveFileName.set("AuraSkills-${projectVersion}.jar")
+
+        relocate("co.aikar.commands", "dev.aurelium.auraskills.acf")
+        relocate("co.aikar.locales", "dev.aurelium.auraskills.locales")
+        relocate("de.tr7zw.changeme.nbtapi", "dev.aurelium.auraskills.nbtapi")
+        relocate("org.bstats", "dev.aurelium.auraskills.bstats")
+        relocate("com.ezylang.evalex", "dev.aurelium.auraskills.evalex")
+        relocate("net.kyori", "dev.aurelium.auraskills.kyori")
+        relocate("com.zaxxer.hikari", "dev.aurelium.auraskills.hikari")
+        relocate("dev.aurelium.slate", "dev.aurelium.auraskills.slate")
+        relocate("org.spongepowered.configurate", "dev.aurelium.auraskills.configurate")
+        relocate("io.leangen.geantyref", "dev.aurelium.auraskills.geantyref")
+        relocate("net.querz", "dev.aurelium.auraskills.querz")
+        relocate("com.archyx.polyglot", "dev.aurelium.auraskills.polyglot")
+        relocate("org.atteo.evo.inflector", "dev.aurelium.auraskills.inflector")
+
+        exclude("acf-*.properties")
+
+        finalizedBy("copyJar")
+    }
+
+    register<Copy>("copyJar") {
+        val projectVersion : String by project
+        from("build/libs/AuraSkills-${projectVersion}.jar")
+        into("../build/libs")
+    }
+
     build {
         dependsOn(shadowJar)
     }
+
     javadoc {
         options {
             (this as CoreJavadocOptions).addStringOption("Xdoclint:none", "-quiet")
         }
     }
-}
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-    options.compilerArgs.add("-parameters")
-    options.isFork = true
-    options.forkOptions.executable = "javac"
-}
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
+        options.isFork = true
+        options.forkOptions.executable = "javac"
+    }
 
-tasks.processResources {
-    filesMatching("plugin.yml") {
-        expand("projectVersion" to project.version)
+    processResources {
+        filesMatching("plugin.yml") {
+            expand("projectVersion" to project.version)
+        }
     }
 }
+
+val supportedVersions = (project.property("supportedMCVersions") as String).split(",").map { it.trim() }
+
+if (project.hasProperty("hangarApiKey")) {
+    hangarPublish {
+        publications.register("AuraSkills") {
+            val projectVersion = project.version as String
+
+            version.set(projectVersion)
+            id.set("AuraSkills")
+            channel.set("Release")
+            changelog.set(extractChangelog(projectVersion))
+
+            apiKey.set(project.property("hangarApiKey") as String)
+
+            platforms {
+                paper {
+                    jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                    platformVersions.set(supportedVersions)
+                }
+            }
+        }
+    }
+}
+
+fun extractChangelog(version: String): String {
+    val heading = Regex.escape(version)
+    val path = if (System.getProperty("user.dir").endsWith("bukkit")) "../Changelog.md" else "Changelog.md"
+
+    val fullChangelog = File(path).readText()
+    val headingPattern = Regex("## $heading\\R+([\\s\\S]*?)\\R+##\\s", RegexOption.DOT_MATCHES_ALL)
+    val result = headingPattern.find(fullChangelog)
+
+    return result?.groupValues?.get(1)?.trim()
+        ?: throw IllegalArgumentException("Failed to extract changelog section for version $version")
+}
+

@@ -2,6 +2,12 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.1
+
+### Bug Fixes
+- Fix cannot measure distance error in PositionHandler
+- Fix logs table not being created
+
 ## 2.2.0
 
 ### New Features
