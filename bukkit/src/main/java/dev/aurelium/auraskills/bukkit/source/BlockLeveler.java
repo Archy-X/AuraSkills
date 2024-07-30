@@ -49,7 +49,7 @@ public class BlockLeveler extends SourceLeveler {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        handleBreak(player, block, event, trait -> trait.getUniqueDrops(block, player));
+        handleBreak(player, block, event, trait -> event.isDropItems() ? trait.getUniqueDrops(block, player) : Collections.emptySet());
     }
 
     public void handleBreak(Player player, Block block, Cancellable event, Function<GatheringLuckTraits, Set<ItemStack>> dropFunction) {
