@@ -22,6 +22,7 @@ public class TableCreator {
             createUsersTable(connection);
             createSkillLevelsTable(connection);
             createKeyValuesTable(connection);
+            createLogsTable(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -98,7 +99,7 @@ public class TableCreator {
             return;
         }
         try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
-            statement.execute("create table " + tablePrefix + "auraskills_logs (" +
+            statement.execute("create table " + tablePrefix + "logs (" +
                     "log_id        bigint auto_increment primary key," +
                     "log_type      varchar(50)  not null," +
                     "log_time      timestamp    not null," +
