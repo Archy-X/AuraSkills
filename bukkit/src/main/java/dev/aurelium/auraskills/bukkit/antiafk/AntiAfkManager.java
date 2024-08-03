@@ -45,6 +45,7 @@ public class AntiAfkManager {
         }
         checkMap.clear();
         // Register checks again to account for changed config values
+        if (!plugin.configBoolean(Option.ANTI_AFK_ENABLED)) return;
         registerChecks();
     }
 
