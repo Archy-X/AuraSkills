@@ -32,14 +32,14 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
 
     private final String prefix = "auraskills.multiplier.";
     private final Map<UUID, Set<String>> permissionCache = new ConcurrentHashMap<>();
-    private final boolean optimizePermissionLookup;
+    private final boolean usePermissionCache;
 
     public BukkitLuckPermsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
 
-        this.optimizePermissionLookup = config.node("use_permission_cache").getBoolean(true);
+        this.usePermissionCache = config.node("use_permission_cache").getBoolean(true);
 
-        if (!this.optimizePermissionLookup) return;
+        if (!this.usePermissionCache) return;
 
         luckPerms.getEventBus().subscribe(NodeAddEvent.class,
                 event -> handleEvent(event.getNode(), event.getTarget()));
@@ -48,8 +48,8 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
                 event -> handleEvent(event.getNode(), event.getTarget()));
     }
 
-    public boolean optimizePermissionLookup() {
-        return optimizePermissionLookup;
+    public boolean usePermissionCache() {
+        return usePermissionCache;
     }
 
     private void handleEvent(Node node, PermissionHolder target) {

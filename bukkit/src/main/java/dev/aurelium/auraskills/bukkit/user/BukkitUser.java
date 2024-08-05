@@ -66,7 +66,7 @@ public class BukkitUser extends User {
         double multiplier = 0.0;
 
         if (plugin.getHookManager().isRegistered(BukkitLuckPermsHook.class)
-                && plugin.getHookManager().getHook(BukkitLuckPermsHook.class).optimizePermissionLookup()) {
+                && plugin.getHookManager().getHook(BukkitLuckPermsHook.class).usePermissionCache()) {
             Set<String> permissions = plugin.getHookManager().getHook(BukkitLuckPermsHook.class).getMultiplierPermissions(player);
             for (String permission : permissions) {
                 multiplier += getMultiplierFromPermission(permission, skill);
