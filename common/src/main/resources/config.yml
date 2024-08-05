@@ -25,7 +25,7 @@ sql:
     max_lifetime: 1800000
     keepalive_time: 0
 default_language: en
-languages: [en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi, tr, fi, th]
+languages: [ en, es, fr, de, zh-CN, zh-TW, pt-BR, it, cs, pl, uk, ko, nl, ja, ru, id, vi, tr, fi, th ]
 try_detect_client_language: false
 hooks:
   HolographicDisplays:
@@ -34,6 +34,7 @@ hooks:
     enabled: true
   LuckPerms:
     enabled: true
+    optimize_permission_lookup: true
   Oraxen:
     enabled: true
   PlaceholderAPI:
@@ -168,7 +169,7 @@ damage_holograms:
   colors:
     default: gray
     critical:
-      digits: [white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue]
+      digits: [ white, yellow, gold, red, dark_red, dark_purple, light_purple, blue, dark_blue ]
 leaderboards:
   update_period: 6000
   update_delay: 6000
@@ -228,10 +229,10 @@ requirement:
     prevent_weapon_use: true
     prevent_block_place: true
     prevent_interact: true
-    global: []
+    global: [ ]
   armor:
     prevent_armor_equip: true
-    global: []
+    global: [ ]
 critical:
   enabled:
     sword: true

@@ -32,15 +32,24 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
 
     private final String prefix = "auraskills.multiplier.";
     private final Map<UUID, Set<String>> permissionCache = new ConcurrentHashMap<>();
+    private final boolean optimizePermissionLookup;
 
     public BukkitLuckPermsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
+
+        this.optimizePermissionLookup = getConfig().node("optimize_permission_lookup").getBoolean();
+
+        if (!this.optimizePermissionLookup) return;
 
         luckPerms.getEventBus().subscribe(NodeAddEvent.class,
                 event -> handleEvent(event.getNode(), event.getTarget()));
 
         luckPerms.getEventBus().subscribe(NodeRemoveEvent.class,
                 event -> handleEvent(event.getNode(), event.getTarget()));
+    }
+
+    public boolean optimizePermissionLookup() {
+        return optimizePermissionLookup;
     }
 
     private void handleEvent(Node node, PermissionHolder target) {
@@ -56,7 +65,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
                     () -> {
                         Player player = Bukkit.getPlayer(user.getUniqueId());
                         // In case if someone logs out in that 500 ms timeframe
-                        if(player == null || !player.isOnline()) return;
+                        if (player == null || !player.isOnline()) return;
                         permissionCache.put(user.getUniqueId(), getMultiplierPermissions(user.getUniqueId()));
                     },
                     500,
