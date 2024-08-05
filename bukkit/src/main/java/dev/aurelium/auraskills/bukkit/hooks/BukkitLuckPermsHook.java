@@ -37,7 +37,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
     public BukkitLuckPermsHook(AuraSkillsPlugin plugin, ConfigurationNode config) {
         super(plugin, config);
 
-        this.optimizePermissionLookup = getConfig().node("optimize_permission_lookup").getBoolean();
+        this.optimizePermissionLookup = config.node("optimize_permission_lookup").getBoolean(true);
 
         if (!this.optimizePermissionLookup) return;
 
