@@ -326,17 +326,29 @@ public class ItemCommand extends BaseCommand {
                 item.setAmount(amount);
             }
             ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
-            sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_SENDER, locale),
-                    "{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName()));
+
+            String senderMsg = TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_SENDER, locale),
+                    "{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName());
+            if (!senderMsg.isEmpty()) {
+                sender.sendMessage(plugin.getPrefix(locale) + senderMsg);
+            }
+
             if (!sender.equals(player)) {
-                player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_RECEIVER, locale),
-                        "{amount}", String.valueOf(item.getAmount()), "{key}", key));
+                String message = TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_RECEIVER, locale),
+                        "{amount}", String.valueOf(item.getAmount()), "{key}", key);
+                if (!message.isEmpty()) {
+                    player.sendMessage(plugin.getPrefix(locale) + message);
+                }
             }
             // Add to unclaimed items if leftover
             if (leftoverItem != null) {
                 User user = plugin.getUser(player);
                 user.getUnclaimedItems().add(new KeyIntPair(key, leftoverItem.getAmount()));
-                player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, locale));
+
+                String message = plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, locale);
+                if (!message.isEmpty()) {
+                    player.sendMessage(plugin.getPrefix(locale) + message);
+                }
             }
         } else {
             sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_UNREGISTER_NOT_REGISTERED, locale), "{key}", key));
