@@ -5,6 +5,7 @@ plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
+    id("com.modrinth.minotaur") version "2.+"
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_17
@@ -129,6 +130,22 @@ if (project.hasProperty("hangarApiKey")) {
                 }
             }
         }
+    }
+}
+
+if (project.hasProperty("modrinthToken")) {
+    modrinth {
+        val projectVersion = project.version as String
+
+        token.set(project.property("modrinthToken") as String)
+
+        projectId.set("auraskills")
+        versionNumber.set(projectVersion)
+        versionType.set("release")
+        changelog.set(extractChangelog(projectVersion))
+        uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile }.get())
+        gameVersions.set(supportedVersions)
+        loaders.set(listOf("paper", "purpur", "spigot"))
     }
 }
 
