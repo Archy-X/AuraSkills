@@ -4,8 +4,12 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 
 public class TraitModifier extends AuraSkillsModifier<Trait> {
 
+    public TraitModifier(String name, Trait trait, double value, Operation operation) {
+        super(name, trait, value, operation);
+    }
+
     public TraitModifier(String name, Trait trait, double value) {
-        super(name, trait, value);
+        this(name, trait, value, Operation.ADD);
     }
 
     public Trait trait() {

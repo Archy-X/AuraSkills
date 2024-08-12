@@ -1,15 +1,19 @@
 package dev.aurelium.auraskills.api.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class AuraSkillsModifier<T> {
 
     protected final String name;
     protected final T type;
     protected final double value;
+    protected final Operation operation;
 
-    public AuraSkillsModifier(String name, T type, double value) {
+    public AuraSkillsModifier(String name, T type, double value, @NotNull Operation operation) {
         this.name = name;
         this.type = type;
         this.value = value;
+        this.operation = operation;
     }
 
     public String name() {
@@ -24,8 +28,21 @@ public abstract class AuraSkillsModifier<T> {
         return value;
     }
 
+    public Operation operation() {
+        return operation;
+    }
+
     @Override
     public String toString() {
         return name + "," + type + "," + value;
     }
+
+    public enum Operation {
+
+        ADD,
+        MULTIPLY,
+        SCALE
+
+    }
+
 }

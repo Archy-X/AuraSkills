@@ -285,7 +285,16 @@ public abstract class User {
         }
         map.put(modifier.name(), modifier);
         if (levels != null) {
-            levels.put(modifier.type(), levels.getOrDefault(modifier.type(), 0.0) + modifier.value());
+            double updatedLevel = 0.0;
+            switch (modifier.operation()) {
+                case ADD -> updatedLevel = levels.getOrDefault(modifier.type(), 0.0) + modifier.value();
+                case MULTIPLY -> updatedLevel = levels.getOrDefault(modifier.type(), 0.0) * modifier.value();
+                case SCALE -> {
+                    double current = levels.getOrDefault(modifier.type(), 0.0);
+                    updatedLevel = current + current * modifier.value();
+                }
+            }
+            levels.put(modifier.type(), updatedLevel);
         }
         // Reloads modifier type
         if (reload) {

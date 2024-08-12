@@ -4,8 +4,12 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 
 public class StatModifier extends AuraSkillsModifier<Stat> {
 
+    public StatModifier(String name, Stat stat, double value, Operation operation) {
+        super(name, stat, value, operation);
+    }
+
     public StatModifier(String name, Stat stat, double value) {
-        super(name, stat, value);
+        this(name, stat, value, Operation.ADD);
     }
 
     public Stat stat() {
