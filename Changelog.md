@@ -2,6 +2,16 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.2
+
+### New Features
+- Add 1.21.1 support
+- Add use_permission_cache option to disable LuckPerms multiplier permission cache
+
+### Bug Fixes
+- Fix anti-AFK being force enabled after reload
+- Skip sending item give command message if empty
+
 ## 2.2.1
 
 ### Bug Fixes
