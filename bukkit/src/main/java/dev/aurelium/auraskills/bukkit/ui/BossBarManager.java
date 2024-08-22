@@ -162,14 +162,15 @@ public class BossBarManager implements Listener {
         String text = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, income, plugin.getLocale(player));
         // Calculate xp progress
         float progressNew = (float) (currentXp / levelXp);
-        if (progressNew > 1 || progressNew < 0) {
-            progressNew = 1.0f;
-        }
+        progressNew = Math.min(progressNew, 1.0f);
+        progressNew = Math.max(progressNew, 0.0f);
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
             // Calculate progress before gaining xp, for boss bar animation
             float progressOld = (float) (Math.max(currentXp - xpGained, 0) / levelXp);
-            bossBar = handleNewBossBar(player, skill, progressOld > 1 ? 1.0f : progressOld, progressNew, text);
+            progressOld = Math.min(progressOld, 1.0f);
+            progressOld = Math.max(progressOld, 0.0f);
+            bossBar = handleNewBossBar(player, skill, progressOld, progressNew, text);
         }
         // Use existing one
         else {
