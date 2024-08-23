@@ -619,12 +619,12 @@ menus:
     abilities_desc: "<2>Zdolności</2> <1>są biernymi umiejętnościami, które odblokowujesz i ulepszasz w miarę podnoszenia umiejętności.</1>"
     mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę.</1>"
     abilities_click: "Kliknij, aby zobaczyć zdolności {skill}"
-    job: Job
+    job: Praca
     job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
+    job_select: Kliknij lewym przyciskiem myszy, aby wybrać {skill} jako swoją pracę
     job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_quit: Kliknij prawym przyciskiem myszy, aby zakończyć tę pracę
+    job_limit: Osiągnąłeś limit prac. Zakończ aktywną pracę, aby wybrać tę pracę.
   stats:
     stats_title: Twoje Statystyki
     skills: "Umiejętności"
