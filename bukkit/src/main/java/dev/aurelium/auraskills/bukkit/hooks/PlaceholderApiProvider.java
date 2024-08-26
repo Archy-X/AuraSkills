@@ -180,9 +180,8 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
         }
 
         if (identifier.startsWith("trait_")) {
-            String traitName = identifier.replace("trait_", "")
-                    .replace("_bonus", "")
-                    .replace("_menu", "");
+            String traitName = getTraitName(identifier);
+
             NamespacedId id = NamespacedId.fromDefault(traitName);
             Trait trait = plugin.getTraitRegistry().getOrNull(id);
 
@@ -358,6 +357,22 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
         }
 
         return null;
+    }
+
+    private static @NotNull String getTraitName(String identifier) {
+        String traitName = identifier;
+        if (traitName.startsWith("trait_")) {
+            traitName = traitName.substring(6); // Remove the first 6 characters ("trait_")
+        }
+
+        if (traitName.endsWith("_menu")) {
+            traitName = traitName.substring(0, traitName.length() - 5); // Remove the last 5 characters ("_menu")
+        }
+
+        if (traitName.endsWith("_bonus") && !traitName.equals("experience_bonus")) {
+            traitName = traitName.substring(0, traitName.length() - 6); // Remove the last 6 characters ("_bonus")
+        }
+        return traitName;
     }
 
     private String checkLeaderboardPlaceholders(String identifier) {
