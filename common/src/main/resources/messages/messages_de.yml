@@ -625,6 +625,7 @@ menus:
     job_active: Du arbeitest aktiv in diesem Job
     job_quit: Rechtsklicke um diesen Job zu verlassen
     job_limit: Du hast dein Job-Limit erreicht. Verlasse einen aktiven Job um diesen Job auswählen zu können.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Deine Werte
     skills: "Fähigkeiten"
