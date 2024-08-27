@@ -625,6 +625,7 @@ menus:
     job_active: Zaten bu görevdesin
     job_quit: Sağ tıklayarak bu görevi bırak
     job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: İstatistikleriniz
     skills: "Yetenekler"
