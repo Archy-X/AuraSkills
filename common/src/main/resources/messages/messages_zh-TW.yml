@@ -625,6 +625,7 @@ menus:
     job_active: 您正在積極從事這份工作
     job_quit: 右鍵單擊退出此工作
     job_limit: 您已達到工作上限。首先退出目前的工作才能選擇此工作。
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: 你的統計資料
     skills: "技能"
