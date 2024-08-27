@@ -625,6 +625,7 @@ menus:
     job_active: Вы активно работаете на этой работе
     job_quit: Нажмите правой кнопкой мыши, чтобы покинуть эту работу
     job_limit: Вы исчерпали свой лимит по количеству заданий. Сначала закройте текущее задание, чтобы выбрать это.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Ваша статистика
     skills: "Навыки"
