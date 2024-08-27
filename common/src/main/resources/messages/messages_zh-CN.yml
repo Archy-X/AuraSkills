@@ -625,6 +625,7 @@ menus:
     job_active: 你当前为该职业
     job_quit: 右键点击退出该职业
     job_limit: 你不能申请更多职业。请先退出其他职业再选择该职业。
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: 你的属性
     skills: "技能"
