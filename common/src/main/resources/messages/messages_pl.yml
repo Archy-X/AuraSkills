@@ -625,7 +625,7 @@ menus:
     job_active: Aktywnie wykonujesz tę pracę
     job_quit: Kliknij prawym przyciskiem myszy, aby zakończyć tę pracę
     job_limit: Osiągnąłeś limit prac. Zakończ aktywną pracę, aby wybrać tę pracę.
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    job_cooldown: Wybór pracy jest odnawialny. Możesz wybrać ponownie za {time}.
   stats:
     stats_title: Twoje Statystyki
     skills: "Umiejętności"
