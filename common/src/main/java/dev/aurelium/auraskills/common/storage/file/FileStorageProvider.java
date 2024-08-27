@@ -89,6 +89,9 @@ public class FileStorageProvider extends StorageProvider {
 
         // Load jobs
         loadJobs(root.node("jobs"), user);
+        // Load last job select time
+        long time = root.node("last_job_select_time").getLong(0L);
+        user.setLastJobSelectTime(time);
 
         return user;
     }
@@ -357,6 +360,11 @@ public class FileStorageProvider extends StorageProvider {
                 jobNames.add(skill.getId().toString());
             }
             root.node("jobs").set(jobNames);
+        }
+        // Save last job select time
+        long selectTime = user.getLastJobSelectTime();
+        if (selectTime > 0) {
+            root.node("last_job_select_time").set(selectTime);
         }
 
         // Save anti-AFK logs

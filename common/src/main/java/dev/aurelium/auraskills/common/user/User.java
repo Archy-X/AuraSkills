@@ -51,6 +51,7 @@ public abstract class User {
     private List<KeyIntPair> unclaimedItems;
     private final Map<ActionBarType, Boolean> actionBarSettings;
     private final Set<Skill> jobs;
+    private long lastJobSelectTime;
     private final List<AntiAfkLog> sessionAntiAfkLogs;
 
     private boolean saving;
@@ -83,6 +84,7 @@ public abstract class User {
         this.jobs = new HashSet<>();
         this.jobsBatchData = new JobsBatchData();
         this.sessionAntiAfkLogs = new ArrayList<>();
+        this.lastJobSelectTime = 0;
     }
 
     public AuraSkillsPlugin getPlugin() {
@@ -437,6 +439,7 @@ public abstract class User {
     public void addJob(Skill skill) {
         if (jobs.size() < getJobLimit() && canSelectJob(skill)) {
             jobs.add(skill);
+            setLastJobSelectTime(System.currentTimeMillis());
             blank = false;
         }
     }
@@ -510,6 +513,14 @@ public abstract class User {
 
     public JobsBatchData getJobsBatchData() {
         return jobsBatchData;
+    }
+
+    public long getLastJobSelectTime() {
+        return lastJobSelectTime;
+    }
+
+    public void setLastJobSelectTime(long lastJobSelectTime) {
+        this.lastJobSelectTime = lastJobSelectTime;
     }
 
     public List<AntiAfkLog> getSessionAntiAfkLogs() {

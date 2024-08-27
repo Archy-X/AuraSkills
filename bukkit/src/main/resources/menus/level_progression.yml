@@ -77,6 +77,7 @@ items:
     - component: job_select
     - component: job_active
     - component: job_limit
+    - component: job_cooldown
 templates:
   skill:
     pos: 0,0
@@ -265,6 +266,11 @@ components:
     - text: '{{job_limit}}'
       wrap: true
       style: '<red>'
+  job_cooldown:
+    lore:
+    - text: '{{job_cooldown}}'
+      wrap: true
+      style: '<red>'
 formats:
   stat_leveled_entry: '{color}{stat}<gray>'
   unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'
@@ -284,4 +290,4 @@ options:
   items_per_page: 24
   start_level: 1
   track: [9, 18, 27, 36, 37, 38, 29, 20, 11, 12, 13, 22, 31, 40, 41, 42, 33, 24, 15, 16, 17, 26, 35, 44]
-file_version: 1
+file_version: 2

@@ -194,23 +194,29 @@ public class SqlUserLoader {
     }
 
     private void applyJobs(User user, String keyName, String valueStr) {
-        if (!keyName.equals("jobs")) {
-            return;
-        }
+        if (keyName.equals("jobs")) {
+            user.clearAllJobs();
 
-        user.clearAllJobs();
+            String[] splitValue = valueStr.split(",");
+            for (String skillName : splitValue) {
+                if (skillName.isEmpty()) continue;
 
-        String[] splitValue = valueStr.split(",");
-        for (String skillName : splitValue) {
-            if (skillName.isEmpty()) continue;
+                NamespacedId id = NamespacedId.fromString(skillName);
+                Skill skill = plugin.getSkillRegistry().getOrNull(id);
+                if (skill == null) continue;
 
-            NamespacedId id = NamespacedId.fromString(skillName);
-            Skill skill = plugin.getSkillRegistry().getOrNull(id);
-            if (skill == null) continue;
+                if (!user.canSelectJob(skill)) continue;
 
-            if (!user.canSelectJob(skill)) continue;
-
-            user.addJob(skill);
+                user.addJob(skill);
+            }
+        } else if (keyName.equals(JOBS_LAST_SELECT_TIME)) {
+            long time;
+            try {
+                time = Long.parseLong(valueStr);
+            } catch (NumberFormatException e) {
+                time = 0L;
+            }
+            user.setLastJobSelectTime(time);
         }
     }
 

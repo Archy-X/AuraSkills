@@ -11,7 +11,10 @@ public enum MenuFileUpdates {
             "components", List.of("skill_job_active"))),
     LEVEL_PROGRESSION_1("level_progression", 1, Map.of(
             "items", List.of("job"),
-            "components", List.of("job_select", "job_active", "job_limit")));
+            "components", List.of("job_select", "job_active", "job_limit"))),
+    LEVEL_PROGRESSION_2("level_progression", 2, Map.of(
+            "components", List.of("job_cooldown")
+    ));
 
     private final String menu;
     private final int version;

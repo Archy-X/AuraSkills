@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillLevelItem;
 import dev.aurelium.auraskills.common.ability.AbilityUtil;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.type.MoneyReward;
 import dev.aurelium.auraskills.common.user.User;
@@ -26,6 +27,7 @@ import dev.aurelium.slate.info.TemplatePlaceholderInfo;
 import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -155,6 +157,8 @@ public class LevelProgressionMenu {
             item.onClick(ClickTrigger.LEFT, c -> {
                 User user = plugin.getUserManager().getUser(c.player());
                 Skill skill = (Skill) c.menu().getProperty("skill");
+
+                if (isOnJobSelectCooldown(user)) return;
                 // Select as job
                 if (!user.getJobs().contains(skill) && user.getJobs().size() < user.getJobLimit()) {
                     user.addJob(skill);
@@ -182,7 +186,7 @@ public class LevelProgressionMenu {
                 User user = plugin.getUser(t.player());
                 Skill skill = (Skill) t.menu().getProperty("skill");
                 // User isn't working job and can add this job
-                return !user.getJobs().contains(skill) && user.getJobs().size() < user.getJobLimit();
+                return !user.getJobs().contains(skill) && user.getJobs().size() < user.getJobLimit() && !isOnJobSelectCooldown(user);
             });
         });
 
@@ -197,8 +201,32 @@ public class LevelProgressionMenu {
             User user = plugin.getUser(t.player());
             Skill skill = (Skill) t.menu().getProperty("skill");
             // User isn't working this job and cannot add this job
-            return !user.getJobs().contains(skill) && user.getJobs().size() >= user.getJobLimit();
+            return !user.getJobs().contains(skill) && user.getJobs().size() >= user.getJobLimit() && !isOnJobSelectCooldown(user);
         }));
+
+        menu.component("job_cooldown", null, component -> {
+            component.replace("time", p -> {
+                long lastTime = plugin.getUser(p.player()).getLastJobSelectTime();
+                long cooldown = (plugin.configInt(Option.JOBS_SELECTION_COOLDOWN_SEC) * 1000L) - (System.currentTimeMillis() - lastTime);
+                Duration duration = Duration.ofMillis(cooldown);
+
+                long days = duration.toDays();
+                long hours = duration.toHoursPart();
+                long minutes = duration.toMinutesPart();
+                long seconds = duration.toSecondsPart();
+
+                if (days > 0) {
+                    return String.format("%d:%02d:%02d:%02d", days, hours, minutes, seconds);
+                } else {
+                    return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+                }
+            });
+            component.shouldShow(t -> {
+                User user = plugin.getUser(t.player());
+                Skill skill = t.menu().property("skill");
+                return !user.getJobs().contains(skill) && isOnJobSelectCooldown(user);
+            });
+        });
 
         menu.template("skill", Skill.class, template -> {
             // Sets text replacements and modifier
@@ -384,6 +412,15 @@ public class LevelProgressionMenu {
                 }
             });
         });
+    }
+
+    private boolean isOnJobSelectCooldown(User user) {
+        int selectionCooldown = plugin.configInt(Option.JOBS_SELECTION_COOLDOWN_SEC);
+        if (selectionCooldown > 0) { // Cooldown is enabled
+            long lastTime = user.getLastJobSelectTime();
+            return lastTime + (selectionCooldown * 1000L) > System.currentTimeMillis();
+        }
+        return false;
     }
 
     private double getDuration(ManaAbility manaAbility, int level) {

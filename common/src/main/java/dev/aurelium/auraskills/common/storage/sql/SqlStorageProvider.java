@@ -40,6 +40,7 @@ public class SqlStorageProvider extends StorageProvider {
     public static final int JOBS_ID = 6;
     public static final String LOG_TYPE_ANTI_AFK = "anti_afk";
     public static final int LOG_LEVEL_WARN = 2;
+    public static final String JOBS_LAST_SELECT_TIME = "last_select_time";
 
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
@@ -294,7 +295,7 @@ public class SqlStorageProvider extends StorageProvider {
         rows.addAll(getAbilityDataRows(user.getAbilityDataMap(), user.getManaAbilityDataMap()));
         rows.addAll(getUnclaimedItemsRow(user.getUnclaimedItems()));
         rows.addAll(getActionBarRow(user));
-        rows.addAll(getJobsRow(user.getJobs()));
+        rows.addAll(getJobsRow(user, user.getJobs()));
         // Insert all key values in a batch
         saveKeyValueRows(connection, userId, rows);
     }
@@ -461,15 +462,19 @@ public class SqlStorageProvider extends StorageProvider {
         return rows;
     }
 
-    private List<KeyValueRow> getJobsRow(Set<Skill> jobs) {
+    private List<KeyValueRow> getJobsRow(User user, Set<Skill> jobs) {
         List<KeyValueRow> rows = new ArrayList<>();
         if (jobs.isEmpty()) {
             return rows;
         }
 
         String jobCommaList = String.join(",", jobs.stream().map(s -> s.getId().toString()).toList());
-        var row = new KeyValueRow(JOBS_ID, null, "jobs", jobCommaList);
-        rows.add(row);
+        var jobsRow = new KeyValueRow(JOBS_ID, null, "jobs", jobCommaList);
+        rows.add(jobsRow);
+
+        // Save the timestamp of the last time user selected a job for cooldown feature
+        var timeRow = new KeyValueRow(JOBS_ID, null, JOBS_LAST_SELECT_TIME, String.valueOf(user.getLastJobSelectTime()));
+        rows.add(timeRow);
 
         return rows;
     }
