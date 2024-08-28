@@ -353,7 +353,7 @@ commands:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
         already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
-        skill_lore: "<gray>配戴時：<aqua> +{value}% {skill} XP"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
         skill_lore_subtract: "<gray>配戴時：<aqua> -{value}% {skill} XP"
         global_lore: "<gray>配戴時：<blue> +{value}% 技能 XP"
         global_lore_subtract: "<gray>配戴時：<blue> -{value}% 技能 XP"
