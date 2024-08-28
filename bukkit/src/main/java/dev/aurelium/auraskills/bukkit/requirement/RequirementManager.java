@@ -41,23 +41,28 @@ public class RequirementManager implements Listener {
                 List<String> list = config.node("requirement", type.name().toLowerCase(Locale.ROOT), "global").getList(String.class, new ArrayList<>());
                 for (String text : list) {
                     String[] splitText = text.split(" ");
-                    Material material = Material.valueOf(splitText[0].toUpperCase(Locale.ROOT));
-                    Map<Skill, Integer> requirements = new HashMap<>();
-                    for (int i = 1; i < splitText.length; i++) {
-                        String requirementText = splitText[i];
-                        try {
-                            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0].toLowerCase(Locale.ROOT)));
-                            if (skill != null) {
-                                int level = Integer.parseInt(requirementText.split(":")[1]);
-                                requirements.put(skill, level);
+                    try {
+                        Material material = Material.valueOf(splitText[0].toUpperCase(Locale.ROOT));
+                        Map<Skill, Integer> requirements = new HashMap<>();
+                        for (int i = 1; i < splitText.length; i++) {
+                            String requirementText = splitText[i];
+                            try {
+                                Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementText.split(":")[0].toLowerCase(Locale.ROOT)));
+                                if (skill != null) {
+                                    int level = Integer.parseInt(requirementText.split(":")[1]);
+                                    requirements.put(skill, level);
+                                }
+                            } catch (Exception e) {
+                                plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
                             }
-                        } catch (Exception e) {
-                            plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
                         }
+                        GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
+                        globalRequirements.add(globalRequirement);
+                        loaded++;
+                    } catch (IllegalArgumentException e) {
+                        plugin.logger().warn("Error loading global requirement with text " + text + ", is your material valid?");
+                        e.printStackTrace();
                     }
-                    GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
-                    globalRequirements.add(globalRequirement);
-                    loaded++;
                 }
             }
             if (loaded > 0) {
