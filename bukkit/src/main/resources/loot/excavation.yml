@@ -42,7 +42,7 @@ pools:
         material: coal
         weight: 7
         amount: 1-4
-        xo: 70
+        xp: 70
         sources: [clay, mud]
       - type: item
         material: brown_mushroom
@@ -54,7 +54,7 @@ pools:
         material: glowstone_dust
         weight: 7
         amount: 2-4
-        xo: 70
+        xp: 70
         sources: [soul_sand, soul_soil]
   epic:
     base_chance: 0
