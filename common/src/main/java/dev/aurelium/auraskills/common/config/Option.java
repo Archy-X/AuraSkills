@@ -43,6 +43,7 @@ public enum Option {
     BOSS_BAR_USE_SUFFIX("boss_bar.use_suffix", OptionType.BOOLEAN),
     BOSS_BAR_FORMAT("boss_bar.format", OptionType.LIST),
     BOSS_BAR_XP_FORMAT("boss_bar.xp_format", OptionType.STRING),
+    BOSS_BAR_LEVEL_XP_FORMAT("boss_bar.level_xp_format", OptionType.STRING),
     BOSS_BAR_PERCENT_FORMAT("boss_bar.percent_format", OptionType.STRING),
     BOSS_BAR_MONEY_FORMAT("boss_bar.money_format", OptionType.STRING),
     BOSS_BAR_ANIMATE_PROGRESS("boss_bar.animate_progress", OptionType.BOOLEAN),

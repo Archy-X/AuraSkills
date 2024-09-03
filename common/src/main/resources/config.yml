@@ -96,6 +96,7 @@ boss_bar:
     - 'HEALING WHITE PROGRESS'
     - 'FORGING YELLOW PROGRESS'
   xp_format: '#.#'
+  level_xp_format: '0'
   percent_format: '#.##'
   money_format: '0.00'
   animate_progress: true

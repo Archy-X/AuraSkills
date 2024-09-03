@@ -42,6 +42,7 @@ public class BossBarManager implements Listener {
     private Map<Skill, BossBar.Color> colors;
     private Map<Skill, BossBar.Overlay> overlays;
     private NumberFormat xpFormat;
+    private NumberFormat levelXpFormat;
     private NumberFormat percentFormat;
     private NumberFormat moneyFormat;
     private final AuraSkills plugin;
@@ -75,13 +76,15 @@ public class BossBarManager implements Listener {
     private void loadNumberFormats() {
         try {
             this.xpFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_XP_FORMAT));
+            this.levelXpFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_LEVEL_XP_FORMAT));
             this.percentFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_PERCENT_FORMAT));
             this.moneyFormat = new DecimalFormat(plugin.configString(Option.BOSS_BAR_MONEY_FORMAT));
         } catch (IllegalArgumentException e) {
             this.xpFormat = new DecimalFormat("#.#");
+            this.levelXpFormat = new DecimalFormat("0");
             this.percentFormat = new DecimalFormat("#.##");
             this.moneyFormat = new DecimalFormat("#.00");
-            plugin.logger().warn("Invalid boss_bar.xp_format or percent_format: " + e.getMessage());
+            plugin.logger().warn("Invalid boss_bar format: " + e.getMessage());
         }
     }
 
@@ -252,7 +255,7 @@ public class BossBarManager implements Listener {
         if (plugin.configBoolean(Option.BOSS_BAR_USE_SUFFIX)) {
             return BigNumber.withSuffix(levelXp);
         } else {
-            return String.valueOf(levelXp);
+            return levelXpFormat.format(levelXp);
         }
     }
 
