@@ -2,6 +2,26 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.3
+
+### New Features
+- Add new damage source options
+  - Add excluded_damager/excluded_damagers to prevent XP gain from specific entity types
+  - Add cooldown_ms to define a delay before XP can be gained again in milliseconds (200 by default)
+  - Add damagers option to define a list of valid damagers
+- Add job selection cooldown option (jobs.selection.cooldown_sec)
+
+### Changes
+- Update German, Polish, and Italian messages
+- Make all region loading async
+
+### Bug Fixes
+- Fix error loading menu on Spigot 1.21
+- Fix typos in excavation loot file
+- Implement error handling for global requirement material names
+- Fix trait_experience_bonus placeholder not working
+- Fix boss bar progress must be between error
+
 ## 2.2.2
 
 ### New Features
