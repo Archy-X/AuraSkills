@@ -23,12 +23,30 @@ public interface DamageXpSource extends XpSource {
 
     /**
      * Gets the damager of the source. This is only applicable if the
-     * player was damaged by an entity.
+     * player was damaged by an entity. If there are multiple valid damagers,
+     * it returns the first one.
      *
      * @return The damager, or null if not applicable.
      */
     @Nullable
     String getDamager();
+
+    /**
+     * Gets the valid damagers of the source. This is only applicable if the
+     * player was damaged by an entity.
+     *
+     * @return the damager, or null if not defined.
+     */
+    @Nullable
+    String[] getDamagers();
+
+    /**
+     * Gets the excluded damagers of the source.
+     *
+     * @return the excluded damagers, or null if not defined.
+     */
+    @Nullable
+    String[] getExcludedDamagers();
 
     /**
      * Gets whether the player must survive to be granted xp.
@@ -51,6 +69,14 @@ public interface DamageXpSource extends XpSource {
      * @return Whether projectiles shot from the damager gives XP
      */
     boolean includeProjectiles();
+
+    /**
+     * Gets the cooldown of gaining XP again in milliseconds. The cooldown applies
+     * globally to all damage source instances.
+     *
+     * @return the cooldown in milliseconds
+     */
+    int getCooldownMs();
 
     enum DamageCause {
         CONTACT,

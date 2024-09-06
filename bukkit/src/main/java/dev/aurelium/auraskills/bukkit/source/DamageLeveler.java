@@ -15,7 +15,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 public class DamageLeveler extends SourceLeveler {
+
+    private final Map<UUID, Long> lastGainTime = new HashMap<>();
 
     public DamageLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.DAMAGE);
@@ -36,6 +43,13 @@ public class DamageLeveler extends SourceLeveler {
 
         DamageXpSource source = skillSource.source();
         Skill skill = skillSource.skill();
+
+        // Check cooldown
+        long lastGain = lastGainTime.getOrDefault(player.getUniqueId(), 0L);
+        int cooldownMs = source.getCooldownMs();
+        if (lastGain + cooldownMs > System.currentTimeMillis()) {
+            return;
+        }
 
         // Disregard self inflected damage
         if (event instanceof EntityDamageByEntityEvent entityEvent) {
@@ -81,6 +95,9 @@ public class DamageLeveler extends SourceLeveler {
 
         plugin.getLevelManager().addDamageXp(user, skill, source, xp,
                 DamageCause.valueOf(event.getCause().name()), damager, event);
+
+        // Mark last gained time
+        lastGainTime.put(player.getUniqueId(), System.currentTimeMillis());
     }
 
     private boolean isSelfInflicted(Entity damager, Player player) {
@@ -126,10 +143,22 @@ public class DamageLeveler extends SourceLeveler {
                     continue;
                 }
             }
-            // Check damager
-            if (source.getDamager() != null) {
+            // Check excluded damagers
+            if (source.getExcludedDamagers() != null) {
                 if (event instanceof EntityDamageByEntityEvent entityEvent) {
-                    if (!damagerMatches(source, entityEvent.getDamager(), source.getDamager())) {
+                    if (Arrays.stream(source.getExcludedDamagers())
+                            .anyMatch(excludedDamager -> damagerMatches(source, entityEvent.getDamager(), excludedDamager))) {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+            }
+            // Check damager
+            if (source.getDamagers() != null) {
+                if (event instanceof EntityDamageByEntityEvent entityEvent) {
+                    if (Arrays.stream(source.getDamagers())
+                            .noneMatch(damagerName -> damagerMatches(source, entityEvent.getDamager(), damagerName))) {
                         continue;
                     }
                 } else {
