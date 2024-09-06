@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Błąd: Konsola nie może używać współrzędnych względnych dla lokalizacji."
 commands:
   prefix: "<dark_gray>[<aqua>Umiejętności<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} nie udał się sprawdzanie anty-AFK {check} <gray>(Liczba: {count})"
+    logs:
+      header: "<gray>Anty-AFK logi dla <red>{player} <gray>({count} łącznie) <dark_gray>| <gray>Strona {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Znaleziono modyfikatory pancerza:"
       removeall:
         removed: "<gray>Wszystkie modyfikatory zbroi zostały usunięte z twojego przedmiotu"
+    trait:
+      add:
+        already_exists: "<yellow>Modyfikator zbroi ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk armor trait remove"
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
-        already_exists: "<yellow>Modyfikator przedmiotu ze satystyką {color}{stat} <yellow>już istnieje! Usuń go najpierw za pomocą komendy /sk item modifier remove"
+        already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {color}{stat} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z twojego przedmiotu"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Znaleziono modyfikatory przedmiotu:"
       removeall:
         removed: "<gray>Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu"
+    trait:
+      add:
+        already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item trait remove"
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Odrejestrowano przedmiot z kluczem {key}"
       not_registered: "<yellow>Nie ma przedmiotu zarejestrowanego z kluczem {key}"
+    ignore:
+      add: "<gray>Twój przedmiot zostanie teraz zignorowany przez interakcje pomiędzy zdolnością many"
+      remove: "<gray>Twój przedmiot nie będzie już ignorowany przez interakcje pomiędzy zdolnością many"
+  jobs:
+    add:
+      added: "<white>Praca {job} została pomyślnie dodana do gracza {player}"
+      limited: "<yellow>Nie można dodać tej pracy, ponieważ gracz {player} osiągnął limit pracy"
+      existing: "<yellow>Gracz {player} ma już pracę {job}"
+    remove:
+      removed: "<white>Usunięto pracę {job} z gracza {player}"
+      unchanged: "<yellow>Nic nie zostało zmienione, ponieważ gracz {player} nie ma pracy {job}"
+    removeall:
+      removed: "<white>Usunięto wszystkie prace z gracza {player}"
   lang:
     set: "<gray>Język ustawiony na <aqua>{lang}"
     not_found: "<yellow>Język nie został znaleziony!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Usunięto <aqua>{num} <gray>statystyk modyfikatory z gracza <gold>{player}"
       removed_one_stat: "<gray>Usunięto modyfikatory <aqua>{num} {color}{stat} <gray>gracza <gold>{player}"
       players_only: "<yellow>Tylko gracze mogą usunąć własne modyfikatory! Spróbuj określić gracza"
+  trait:
+    add:
+      already_exists: "<yellow>Modyfikator o nazwie {name} już istnieje dla gracza <gold>{player}<yellow>! Usuń go za pomocą <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Modyfikatory statystyk dla gracza <gold>{player}:"
+      one_trait_header: "<gray>Modyfikatory statystyk ({color}{trait}<gray>) dla gracza <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Usunięto <aqua>{num} <gray>statystyk modyfikatorów z gracza <gold>{player}"
   multiplier:
     global: Globalne
     list: "<white>Globalny mnożnik XP dla <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Nieznana umiejętność!"
   unknown_mana_ability: "<yellow>Nieznana zdolność many!"
   unknown_stat: "<yellow>Nieznana statystyka!"
+  unknown_trait: "<yellow>Nieznana statystyka!"
   no_profile: "<yellow>Gracz nie ma profilu umiejętności. Spróbuj dołączyć ponownie do gry lub uruchomić ponownie serwer."
 leveler:
   level_up: "Nowy Poziom {skill}"
@@ -568,6 +601,7 @@ menus:
     stats: "Statystyki"
     stats_desc: "Zdobywaj bonusy do statystyk poprzez podnoszenie poziomu umiejętności"
     stats_click: "Kliknij, aby dowiedzieć się więcej lub zobaczyć swoje statystyki"
+    active_job: Aktywna praca
   level_progression:
     level_progression_title: "Poziomy {skill} - Strona {page}"
     your_ranking: "Twój Ranking Umiejętności"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Zdolności</2> <1>są biernymi umiejętnościami, które odblokowujesz i ulepszasz w miarę podnoszenia umiejętności.</1>"
     mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę.</1>"
     abilities_click: "Kliknij, aby zobaczyć zdolności {skill}"
+    job: Praca
+    job_desc: Wybranie {skill} jako Twojej pracy pozwala zarabiać pieniądze podczas zdobywania XP.
+    job_select: Kliknij lewym przyciskiem myszy, aby wybrać {skill} jako swoją pracę
+    job_active: Aktywnie wykonujesz tę pracę
+    job_quit: Kliknij prawym przyciskiem myszy, aby zakończyć tę pracę
+    job_limit: Osiągnąłeś limit prac. Zakończ aktywną pracę, aby wybrać tę pracę.
+    job_cooldown: Wybór pracy jest odnawialny. Możesz wybrać ponownie za {time}.
   stats:
     stats_title: Twoje Statystyki
     skills: "Umiejętności"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 32
+file_version: 35
