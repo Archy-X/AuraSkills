@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>错误: 控制台不能使用相对坐标来确定位置。"
 commands:
   prefix: "<dark_gray>[<aqua>技能插件<dark_gray>] "
+  antiafk:
+    failed: "<red>{player} 未能通过反挂机检查 {check} <gray>(计数: {count})"
+    logs:
+      header: "<red>{player} <gray>的反挂机日志 <gray>({count} 总共) <dark_gray>| <gray>页 {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -446,7 +451,7 @@ commands:
     add:
       added: "<white>职业 {job} 已成功给予玩家 {player}"
       limited: "<yellow>不能将该职业给予玩家 {player}，因为该玩家不能拥有更多职业了"
-      existing: "<yellow>玩家 {player} 已拥有执业 {job}"
+      existing: "<yellow>玩家 {player} 已拥有职业 {job}"
     remove:
       removed: "<white>成功将玩家 {player} 拥有的职业 {job} 移除"
       unchanged: "<yellow>无任何改动，因为玩家 {player} 尚未拥有职业 {job}"
@@ -620,6 +625,7 @@ menus:
     job_active: 你当前为该职业
     job_quit: 右键点击退出该职业
     job_limit: 你不能申请更多职业。请先退出其他职业再选择该职业。
+    job_cooldown: 职业选择正在冷却中。请在 {time} 秒后再次选择。
   stats:
     stats_title: 你的属性
     skills: "技能"
@@ -884,4 +890,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 34
+file_version: 35
