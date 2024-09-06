@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Errore: La console non può usare coordinate relative per la posizione."
 commands:
   prefix: "<dark_gray>[<aqua>Abilità<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} ha fallito in check anti-AFK {check} <gray>(Numero: {count})"
+    logs:
+      header: "<gray>Registro Anti-AFK di <red>{player} <gray>({count} totale) <dark_gray>| <gray>Pagina {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Modificatori armatura trovati:"
       removeall:
         removed: "<gray>Tutti i modificatori armatura sono stati rimossi dall'oggetto"
+    trait:
+      add:
+        already_exists: "<yellow>Un modificatore di armatura col tratto {trait} <yellow>esiste già sul tuo oggetto! Rimuovilo prima con /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>moltiplicatore con valore <aqua>{value} <gray>è stato aggiunto al tuo oggetto"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modificatore con livello <aqua>{value} <gray>é stato aggiunto all'oggetto"
-        already_exists: "<yellow>Un modificatore d'oggetto con statistica {color}{stat} <yellow>gia c'è nella tua armatura! Prima rimuovilo con /sk item modifier remove"
+        already_exists: "<yellow>Un modificatore d'oggetto con la statistica {color}{stat} <yellow>esiste già sul tuo oggetto! Rimuovilo prima con /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>aIl tuo oggetto non ha un {color}{stat} <yellow>modificatore!"
         removed: "{color}{stat} <gray>modificatore è stato rimosso dall'oggetto"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Modificatori oggetto trovati:"
       removeall:
         removed: "<gray>Tutti i modificatori oggetto sono stati rimossi dal tuo oggetto"
+    trait:
+      add:
+        already_exists: "<yellow>Un modificatore d'oggetto col tratto {trait} <yellow>esiste già sul tuo oggetto! Rimuovilo prima con /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>moltiplicatore con valore <aqua>{value} <gray>è stato aggiunto al tuo oggetto"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Elimina oggetto con la chiave {key}"
       not_registered: "<yellow>Non ci sono oggetti registrati con la chiave {key}"
+    ignore:
+      add: "<gray>Il tuo oggetto sarà adesso ignorato dalle interazioni relative ad abilità con mana"
+      remove: "<gray>Il tuo oggetto non sarà più ignorato dalle interazioni relative ad abilità con mana"
+  jobs:
+    add:
+      added: "<white>Il lavoro {job} è stato aggiunto con successo al giocatore {player}"
+      limited: "<yellow>Impossibile aggiungere questo lavoro al giocatore {player} in quanto ha raggiunto il limite di lavori ammessi"
+      existing: "<yellow>Giocatore {player} già ha il lavoro {job}"
+    remove:
+      removed: "<white>Rimosso lavoro {job} dal giocatore {player}"
+      unchanged: "<yellow>Niente è stato cambiato in quanto il giocatore {player} non ha il lavoro {job}"
+    removeall:
+      removed: "<white>Rimossi tutti i lavori al giocatore {player}"
   lang:
     set: "<gray>Lingua impostata a <aqua>{lang}"
     not_found: "<yellow>Lingua non trovata!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Rimosso <aqua>{num} <gray>modificatore statistiche per il giocatore <gold>{player}"
       removed_one_stat: "<gray>Rimosso <aqua>{num} {color}{stat} <gray>modificatore dal giocatore <gold>{player}"
       players_only: "<yellow>Solo i giocatori possono rimuovere i loro modificatori! Prova specificando un giocatore"
+  trait:
+    add:
+      already_exists: "<yellow>Modificatore col nome {name} è già presente sul giocatore <gold>{player}<yellow>! Rimuovilo con <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Modificatori di tratti del giocatore <gold>{player}:"
+      one_trait_header: "<gray>Modificatori di tratti ({color}{trait}<gray>) per il giocatore <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Rimossi <aqua>{num} <gray>modificatori di tratti dal giocatore <gold>{player}"
   multiplier:
     global: Globale
     list: "<white>Moltiplicatori XP per <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -519,10 +551,11 @@ commands:
     set: "<gray>Impostati <aqua>{skill} <gray>XP per il giocatore <gray>{player} <gray>a {amount}"
     remove: "<gray>Rimossi <aqua>{amount} {skill} <gray>XP dal giocatore <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>Cooldown di <aqua>{ability} <gray>è stato azzerato per il giocatore <gold>{player}"
   unknown_skill: "<yellow>Abilità sconosciuta!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Abilità mana sconosciuta!"
   unknown_stat: "<yellow>Statistica sconosciuta!"
+  unknown_trait: "<yellow>Tratto Sconosciuto!"
   no_profile: "<yellow>Il giocatore non ha un'abilità nel profilo."
 leveler:
   level_up: "{skill} Incremeto di Livello"
@@ -568,6 +601,7 @@ menus:
     stats: "Statistiche"
     stats_desc: "Guadagna potenziamenti delle statistiche livellando le abilità"
     stats_click: "Clicca per saperne di più o vedere le tue statistiche"
+    active_job: Lavoro Attivo
   level_progression:
     level_progression_title: "{skill} Livelli - Pagina {page}"
     your_ranking: "Classifica delle tue abilità"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Le abilità</2> <1>sono dei vantaggi passivi che sblocchi e migliori quando livelli le tue abilità.</1>"
     mana_abilities_desc: "<3>Le abilità mana</3> <1> sono un tipo di capacità che per l'attivazione richiedono un consumo di mana </1>"
     abilities_click: "Clicca per vedere l'abilità {skill}"
+    job: Lavoro
+    job_desc: Scegliendo {skill} come il tuo lavoro di permetterà di guadagnare soldi mentre guadagni XP.
+    job_select: Tasto sinistro per selezionare {skill} come il tuo lavoro
+    job_active: Stai lavorando attivamente su questo lavoro
+    job_quit: Tasto destro per abbandonare questo lavoro
+    job_limit: Hai raggiunto il limite di lavori consessi. Abbandona un lavoro attivo prima di scegliere questo.
+    job_cooldown: Selezione del lavoro è in cooldown. Puoi riscegliere un lavoro in {time}.
   stats:
     stats_title: Le tue abilità
     skills: "Abilità"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: PS
   xp: XP
-file_version: 32
+file_version: 35
