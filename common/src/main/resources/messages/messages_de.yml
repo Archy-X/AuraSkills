@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Fehler: Konsole darf keine relativen Koordinaten für den Standort verwenden."
 commands:
   prefix: "<dark_gray>[<aqua>Fertigkeiten<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -620,6 +625,7 @@ menus:
     job_active: Du arbeitest aktiv in diesem Job
     job_quit: Rechtsklicke um diesen Job zu verlassen
     job_limit: Du hast dein Job-Limit erreicht. Verlasse einen aktiven Job um diesen Job auswählen zu können.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Deine Werte
     skills: "Fähigkeiten"
@@ -884,4 +890,4 @@ units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 34
+file_version: 35
