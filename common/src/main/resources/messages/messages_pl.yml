@@ -338,7 +338,7 @@ commands:
     modifier:
       add:
         added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
-        already_exists: "<yellow>Modyfikator zbroi ze satystyką {color}{stat} <yellow>już istnieje na twojej zbroi! Usuń go najpierw za pomocą modyfikatora zbroi /sk"
+        already_exists: "<yellow>Modyfikator zbroi ze statystyką {color}{stat} <yellow>już istnieje na twojej zbroi! Usuń go najpierw za pomocą /sk armor modifier remove"
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z Twojego przedmiotu"
