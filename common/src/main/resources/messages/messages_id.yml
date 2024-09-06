@@ -20,7 +20,7 @@ abilities:
     desc: "Meningkatkan Kekenyangan yang didapat dari tanaman yang dimakan sebanyak {value}."
     info: "+{value} Kekenyangan"
   growth_aura:
-    name: Growth Aura
+    name: Pertumbuhan Aura
     desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
     info: "+{value}% Pertumbuhan"
   lumberjack:
@@ -104,7 +104,7 @@ abilities:
     desc: "{value}% kesempatan mendapatkan barang sangat langka dari menggali."
     info: "{value}% Barang sangat langka"
   retrieval:
-    name: Retrieval
+    name: Pengambilan
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Jarak"
   archer:
@@ -144,7 +144,7 @@ abilities:
     desc: "{value}% kesempatan untuk tidak menerima efek yang merugikan dari ramuan."
     info: "{value}% Tidak ada efek buruk"
   parry:
-    name: Parry
+    name: Menangkis
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
     info: "{value}% Pengurangan Kerusakan"
     parried: "<red>Attack parried"
@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Kesalahan: Konsol tidak bisa menggunakan kordinat yang relatif."
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Modifikasi yang ditemukan:"
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
-        already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}!"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Modifikasi yang ditemukan:"
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Bahasa disetel ke <aqua>{lang}"
     not_found: "<yellow>Bahasa tidak ditemukan!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Menghapus <aqua>{num} <gray>modifikasi untuk pemain <gold>{player}"
       removed_one_stat: "<gray>Menghapus <aqua>{num} {color}{stat} <gray>modifikasi untuk pemain <gold>{player}"
       players_only: "<yellow>Hanya pemain yang bisa menghapus modifikasi pemain! Coba spesifikan pemain"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Pengganda EXP untuk pemain <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -513,7 +545,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Papan Peringkat Sudah diperbarui!"
     updated: "<green>Papan peringkat diperbarui!"
-  version: "<white>You are on Aurelium Skills version <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
   xp:
     add: "<gray>Menambahkan <aqua>{amount} {skill} <gray>EXP untuk pemain <gray>{player}"
     set: "<gray>Menyetel <aqua>{skill} <gray>EXP untuk pemain <gray>{player} <gray>ke {amount}"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Skill tidak ditemukan!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} Level Up"
@@ -568,6 +601,7 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Levels - Page {page}"
     your_ranking: "Your Skill Ranking"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Your Stats
     skills: "Skills"
@@ -849,4 +890,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: XP
-file_version: 32
+file_version: 35
