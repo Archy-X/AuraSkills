@@ -101,12 +101,27 @@ public class HpTrait extends TraitImpl {
 
     private void setWorldChange(PlayerChangedWorldEvent event, Player player, User user) {
         setHealth(player, user);
-        if (plugin.getWorldManager().isDisabledWorld(event.getFrom().getName()) && !plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            if (worldChangeHealth.containsKey(player.getUniqueId())) {
-                player.setHealth(worldChangeHealth.get(player.getUniqueId()));
-                worldChangeHealth.remove(player.getUniqueId());
-            }
+
+        var worldManager = plugin.getWorldManager();
+        if (!worldManager.isDisabledWorld(event.getFrom().getName()) || worldManager.isInDisabledWorld(player.getLocation())) {
+            return;
         }
+
+        var playerID = player.getUniqueId();
+        if (!worldChangeHealth.containsKey(playerID)) {
+            return;
+        }
+
+        var attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        double maxHealth = attribute == null ? 20.0 : attribute.getValue();
+
+        double newHealth = worldChangeHealth.get(playerID);
+        if (newHealth > maxHealth) {
+            newHealth = maxHealth;
+        }
+
+        player.setHealth(newHealth);
+        worldChangeHealth.remove(playerID);
     }
 
     @SuppressWarnings("deprecation")
