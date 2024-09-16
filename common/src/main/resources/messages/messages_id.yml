@@ -20,8 +20,8 @@ abilities:
     desc: "Meningkatkan Kekenyangan yang didapat dari tanaman yang dimakan sebanyak {value}."
     info: "+{value} Kekenyangan"
   growth_aura:
-    name: Pertumbuhan Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    name: Aura Pertumbuhan
+    desc: "Tanaman dengan tahap pertumbuhan dalam radius {radius} blok darimu tumbuh {value}% lebih cepat."
     info: "+{value}% Pertumbuhan"
   lumberjack:
     name: Penebang
@@ -105,7 +105,7 @@ abilities:
     info: "{value}% Barang sangat langka"
   retrieval:
     name: Pengambilan
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    desc: "Anak panah yang kamu lewatkan akan langsung diambil kembali setelah {time} detik hingga {value} blok jauhnya."
     info: "{value} Jarak"
   archer:
     name: Pemanah
@@ -120,7 +120,7 @@ abilities:
     desc: "{value}% kesempatan anak panah untuk menembus mobs."
     info: "{value}% Tembus"
   stun:
-    name: Stun
+    name: Lumpuh
     desc: "{value}% kesempatan untuk membuat kecepatan lawan menurun sebanyak 20% untuk 2 detik."
     info: "{value}% Kesempatan"
   shielding:
@@ -145,9 +145,9 @@ abilities:
     info: "{value}% Tidak ada efek buruk"
   parry:
     name: Menangkis
-    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    desc: "Melewatkan ayunan pedang dalam {time} detik sebelum terkena serangan mengurangi kerusakan sebesar {value}% dan membatalkan knockback."
     info: "{value}% Pengurangan Kerusakan"
-    parried: "<red>Attack parried"
+    parried: "<red>Serangan ditangkis!"
   fighter:
     name: Petinju
     desc: "Mendapatkan {value}% EXP lebih banyak untuk skill meninju."
@@ -163,7 +163,7 @@ abilities:
     dealt: "<red>Serangan pertama diluncurkan!"
   bleed:
     name: Pendarahan
-    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    desc: "{value}% kesempatan untuk membuat musuh berdarah selama {base_ticks} tick pendarahan, memberikan {value_2} kerusakan per tick. {added_ticks} tick ditambahkan ke musuh yang sudah berdarah."
     info: "{value}% Kesempatan, {value_2} Kerusakan"
     enemy_bleeding: "<red>Musuh Berdarah!"
     self_bleeding: "<red>Awas Kamu berdarah!"
@@ -330,9 +330,9 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
   antiafk:
-    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    failed: "<red>{player} gagal dalam pemeriksaan anti-AFK {check} <gray>(Hitungan: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: "<gray>Log anti-AFK untuk <red>{player} <gray>({count} total) <dark_gray>| <gray>Halaman {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
@@ -348,22 +348,22 @@ commands:
         removed: "<gray>semua modifikasi telah di hapus"
     trait:
       add:
-        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        already_exists: "<yellow>Modifikasi armor dengan sifat {trait} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk armor trait remove"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
-        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
-        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
-        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+        added: "<aqua>{target} <gray>pengganda dengan nilai <aqua>{value} <gray>telah ditambahkan ke item Anda"
+        already_exists: "<yellow>Pengganda armor dengan target <aqua>{target} <yellow>sudah ada di armor Anda! Hapus terlebih dahulu dengan /sk armor multiplier remove"
+        skill_lore: "<gray>Saat dikenakan: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Saat dikenakan: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Saat dikenakan: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>Saat dikenakan: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
-        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
+        does_not_exist: "<yellow>Item Anda tidak memiliki pengganda armor <aqua>{target}<yellow>!"
+        removed: "<aqua>{target} <gray>pengganda armor telah dihapus dari item Anda"
       list:
-        header: "<white>Armor multipliers found:"
+        header: "<white>Pengganda armor yang ditemukan:"
       removeall:
-        removed: "<gray>All armor multipliers have been removed from your item"
+        removed: "<gray>Semua pengganda armor telah dihapus dari item Anda"
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Armor requirement with level <aqua>{level}<gray> telah ditambahkan ke itemmu"
@@ -379,26 +379,26 @@ commands:
       equip: "<yellow>Kamu tidak memenuhi persyaratan untuk memakai item ini: {requirements}"
   backup:
     load:
-      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
-      loading: "<white>Loading backup..."
-      loaded: "<green>Successfully loaded backup"
-      error: "<red>Error loading backup: {error}"
-      must_be_yaml: "<yellow>File must be a .yml file!"
-      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
+      confirm: "<red>Memuat cadangan akan mengembalikan semua data skill pemain. Tindakan ini permanen dan tidak dapat dibatalkan. Anda mungkin ingin menyimpan cadangan sebelum memuat. Ketik perintah lagi untuk mengonfirmasi tindakan ini"
+      loading: "<white>Memuat cadangan..."
+      loaded: "<green>Berhasil memuat cadangan"
+      error: "<red>Kesalahan memuat cadangan: {error}"
+      must_be_yaml: "<yellow>File harus berupa file .yml!"
+      file_not_found: "<yellow>Cadangan dengan nama file ini tidak ada di folder cadangan!"
     save:
-      saving: "<white>Saving backup..."
-      saved: "<white>Backed up {type} data as {file}"
-      error: "<red>Error backing up {type} data! See error in console/below for details"
+      saving: "<white>Menyimpan cadangan..."
+      saved: "<white>Data {type} dicadangkan sebagai {file}"
+      error: "<red>Kesalahan mencadangkan data {type}! Lihat kesalahan di konsol/di bawah untuk detailnya"
   claimitems:
-    no_items: "<yellow>You have no items to claim"
+    no_items: "<yellow>Anda tidak memiliki item untuk diklaim"
   item:
     give:
-      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
-      receiver: "<white>You were given <aqua>{amount}x {key}"
+      sender: "<white>Memberikan <aqua>{amount}x {key} <white>ke {player}"
+      receiver: "<white>Anda diberi <aqua>{amount}x {key}"
     modifier:
       add:
         added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>Modifikasi item dengan statistik {color}{stat} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}!"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
@@ -408,26 +408,26 @@ commands:
         removed: "<gray>semua modifikasi telah di hapus"
     trait:
       add:
-        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        already_exists: "<yellow>Modifikasi item dengan sifat {trait} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk item trait remove"
     multiplier:
       add:
-        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
-        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
-        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
-        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
-        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
-        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
+        added: "<aqua>{target} <gray>pengganda dengan nilai <aqua>{value} <gray>telah ditambahkan ke item Anda"
+        already_exists: "<yellow>Pengganda item dengan target <aqua>{target} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk item multiplier remove"
+        skill_lore: "<gray>Saat dipegang: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Saat dipegang: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Saat dipegang: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>Saat dipegang: <blue>-{value}% Skill XP"
       remove:
-        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
-        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
+        does_not_exist: "<yellow>Item Anda tidak memiliki pengganda item <aqua>{target}<yellow>!"
+        removed: "<aqua>{target} <gray>pengganda item telah dihapus dari item Anda"
       list:
-        header: "<white>Item multipliers found:"
+        header: "<white>Pengganda item yang ditemukan:"
       removeall:
-        removed: "<gray>All item multipliers have been removed from your item"
+        removed: "<gray>Semua pengganda item telah dihapus dari item Anda"
     register:
-      registered: "<white>Registered held item to key {key}"
-      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
-      no_spaces: "<yellow>Item key cannot contain spaces!"
+      registered: "<white>Item yang dipegang terdaftar ke kunci {key}"
+      already_registered: "<yellow>Sudah ada item yang terdaftar ke kunci <white>{key}<yellow>, gunakan <white>/skills item unregister <yellow>untuk membatalkan pendaftarannya terlebih dahulu"
+      no_spaces: "<yellow>Kunci item tidak boleh berisi spasi!"
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Persyaratan armor dengan level <aqua>{level}<gray> telah ditambahkan ke itemmu"
@@ -442,21 +442,21 @@ commands:
         removed: "<gray>semua persyaratan armor telah di hapus"
       use: "<yellow>Kamu tidak memenuhi persyaratan untuk menggunakan item ini: {requirements}"
     unregister:
-      unregistered: "<white>Unregistered item with key {key}"
-      not_registered: "<yellow>There is no item registered with key {key}"
+      unregistered: "<white>Item dengan kunci {key} tidak terdaftar"
+      not_registered: "<yellow>Tidak ada item yang terdaftar dengan kunci {key}"
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add: "<gray>Item Anda sekarang akan diabaikan oleh interaksi kemampuan mana"
+      remove: "<gray>Item Anda tidak akan lagi diabaikan oleh interaksi kemampuan mana"
   jobs:
     add:
-      added: "<white>The job {job} was successfully added to player {player}"
-      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
-      existing: "<yellow>Player {player} already has the job {job}"
+      added: "<white>Pekerjaan {job} berhasil ditambahkan ke pemain {player}"
+      limited: "<yellow>Tidak dapat menambahkan pekerjaan ini karena pemain {player} telah mencapai batas pekerjaan"
+      existing: "<yellow>Pemain {player} sudah memiliki pekerjaan {job}"
     remove:
-      removed: "<white>Removed job {job} from player {player}"
-      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      removed: "<white>Menghapus pekerjaan {job} dari pemain {player}"
+      unchanged: "<yellow>Tidak ada yang diubah karena pemain {player} tidak memiliki pekerjaan {job}"
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
+      removed: "<white>Menghapus semua pekerjaan dari pemain {player}"
   lang:
     set: "<gray>Bahasa disetel ke <aqua>{lang}"
     not_found: "<yellow>Bahasa tidak ditemukan!"
@@ -487,35 +487,35 @@ commands:
       players_only: "<yellow>Hanya pemain yang bisa menghapus modifikasi pemain! Coba spesifikan pemain"
   trait:
     add:
-      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      already_exists: "<yellow>Modifikasi dengan nama {name} sudah ada di pemain <gold>{player}<yellow>! Hapus dengan <gold>/sk trait remove {player} {name}"
     list:
-      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
-      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      all_traits_header: "<gray>Modifikasi sifat untuk pemain <gold>{player}:"
+      one_trait_header: "<gray>Modifikasi sifat ({color}{trait}<gray>) untuk pemain <gold>{player}:"
     removeall:
-      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      removed_all_traits: "<gray>Menghapus <aqua>{num} <gray>modifikasi sifat dari pemain <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Pengganda EXP untuk pemain <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
-    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>Pengganda XP: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Hanya pemain yang bisa melihat pengganda Exp! Spesifikasikan pemain!"
   preset:
     load:
-      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
-      loaded: Successfully loaded preset {name}, restart the server now.
-      created: Created files
-      modified: Modified files
-      replaced: Replaced files
-      deleted: Deleted files
-      skipped: Skipped files
+      confirm: "<red>Memuat preset akan menimpa file konfigurasi Anda! File berikut akan terpengaruh <gray>(<aqua>Ditambahkan<gray>, <yellow>Digabungkan<gray>, <red>Diganti<gray>, <dark_red>Dihapus<gray>): {entries} <red>Tindakan ini tidak dapat dibatalkan, cadangkan file yang diperlukan secara manual. Ketik perintah lagi untuk mengonfirmasi."
+      loaded: Berhasil memuat preset {name}, mulai ulang server sekarang.
+      created: File yang dibuat
+      modified: File yang dimodifikasi
+      replaced: File yang diganti
+      deleted: File yang dihapus
+      skipped: File yang dilewati
   profile:
-    skills: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+    skills: "Profil skill untuk <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skill:{skill_entries}"
     skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+    stats: "Profil statistik untuk <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statistik:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Level Dasar: <white>{base_level}<gray>, Level Modifikasi: <white>{modified_level}"
   rank:
     header: "<aqua><bold>Peringkat Skill Kamu"
-    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
-    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+    power: "<yellow>Kekuatan <gray>(Semua Skill): <white>#{rank} dari {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} dari {total}"
   reload: "<green>Config dimuat ulang!"
   save:
     already_saving: "<yellow>Data sudah tersimpan!"
@@ -526,7 +526,7 @@ commands:
       set: "<gray>Semua level skill diatur ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
     setlevel:
       set: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
-    at_least: "<yellow>Level must be at least {level}!"
+    at_least: "<yellow>Level minimal harus {level}!"
   toggle:
     enabled: "<green>Mengaktifkan Actionbar"
     disabled: "<red>Menonaktifkan Actionbar"
@@ -536,124 +536,124 @@ commands:
     power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>(Halaman {page})==--"
     skill_header: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>==--"
     skill_header_page: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>(Halaman {page})==--"
-    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
-    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Papan Peringkat Rata-rata Skill</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Papan Peringkat Rata-rata Skill</bold><white>(Halaman {page})==--"
     usage: "<yellow>Perintah: <green>/sk top <white><page> <gray>atau <green>/sk top <white>[skill] <page>"
   transfer:
-    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
-    error: "<red>There was an error transferring player data. Check console for errors."
+    success: "<green>Berhasil mentransfer data pemain dari <gray>{from} <green>ke <gray>{to}"
+    error: "<red>Terjadi kesalahan saat mentransfer data pemain. Periksa konsol untuk kesalahan."
   updateleaderboards:
     already_updating: "<yellow>Papan Peringkat Sudah diperbarui!"
     updated: "<green>Papan peringkat diperbarui!"
-  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version: "<white>Anda menggunakan AuraSkills <aqua>{current_version}<white>. Versi terbaru adalah <aqua>{latest_version}"
   xp:
     add: "<gray>Menambahkan <aqua>{amount} {skill} <gray>EXP untuk pemain <gray>{player}"
     set: "<gray>Menyetel <aqua>{skill} <gray>EXP untuk pemain <gray>{player} <gray>ke {amount}"
     remove: "<gray>Menghapus <aqua>{amount} {skill} <gray>EXP dari pemain <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>Cooldown untuk <aqua>{ability} <gray>telah diatur ulang untuk pemain <gold>{player}"
   unknown_skill: "<yellow>Skill tidak ditemukan!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
-  unknown_stat: "<yellow>Unknown stat!"
-  unknown_trait: "<yellow>Unknown trait!"
-  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
+  unknown_mana_ability: "<yellow>Kemampuan mana tidak dikenal!"
+  unknown_stat: "<yellow>Statistik tidak dikenal!"
+  unknown_trait: "<yellow>Sifat tidak dikenal!"
+  no_profile: "<yellow>Pemain tidak memiliki profil skill. Silakan coba bergabung kembali ke dalam game atau mulai ulang server."
 leveler:
-  level_up: "{skill} Level Up"
-  skill_level_up: Skill Level Up
-  rewards: Rewards
-  ability_unlock: Ability Unlock
-  ability_level_up: Ability Level Up
-  mana_ability_unlock: Mana Ability Unlock
-  mana_ability_level_up: Mana Ability Level Up
-  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  level_up: "{skill} Naik Level"
+  skill_level_up: Skill Naik Level
+  rewards: Hadiah
+  ability_unlock: Kemampuan Terbuka
+  ability_level_up: Kemampuan Naik Level
+  mana_ability_unlock: Kemampuan Mana Terbuka
+  mana_ability_level_up: Kemampuan Mana Naik Level
+  unclaimed_item: "<red>Anda memiliki item yang belum diklaim karena inventaris Anda penuh, gunakan <yellow>/skills claimitems <red>untuk mengklaimnya"
 menus:
   common:
-    close: "Close"
+    close: "Tutup"
     level: "Level"
-    progress_to_level: "Progress to Level"
-    max_level: "MAX LEVEL"
-    ability_levels: "Ability Levels"
-    stats_leveled: "Stats Leveled"
-    mana_ability: "Mana Ability"
-    duration: "Duration"
-    mana_cost: "Mana Cost"
+    progress_to_level: "Kemajuan ke Level"
+    max_level: "LEVEL MAKSIMAL"
+    ability_levels: "Level Kemampuan"
+    stats_leveled: "Statistik Naik Level"
+    mana_ability: "Kemampuan Mana"
+    duration: "Durasi"
+    mana_cost: "Biaya Mana"
     cooldown: "Cooldown"
-    damage: "Damage"
-    max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
-    back: "Go Back"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
-    next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
-    previous_page_click: "Click to go to previous page"
+    damage: "Kerusakan"
+    max_mana_cost: "Biaya Mana Maksimal"
+    attack_speed: "Kecepatan Serangan"
+    back: "Kembali"
+    back_click: "Kembali ke Menu {menu_name}"
+    unlocked: "TERBUKA"
+    in_progress: "SEDANG BERLANGSUNG"
+    locked: "TERKUNCI"
+    your_level: "Level Anda"
+    next_page: "Halaman Berikutnya"
+    next_page_click: "Klik untuk pergi ke halaman berikutnya"
+    previous_page: "Halaman Sebelumnya"
+    previous_page_click: "Klik untuk pergi ke halaman sebelumnya"
   skills:
-    skills_title: "Your Skills"
-    your_skills: "Your Skills"
-    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
-    your_skills_hover: "Hover over a Skill for more information!"
-    your_skills_click: "Click on a Skill to view level progression!"
-    skill_click: "Click to view Level Progression!"
-    stats: "Stats"
-    stats_desc: "Earn stat buffs by leveling up skills"
-    stats_click: "Click to learn more or view your stats"
-    active_job: Active Job
+    skills_title: "Skill Anda"
+    your_skills: "Skill Anda"
+    your_skills_desc: "Tingkatkan Skill dengan melakukan berbagai tugas untuk membuka peningkatan statistik, kemampuan, dan banyak lagi!"
+    your_skills_hover: "Arahkan kursor ke Skill untuk informasi lebih lanjut!"
+    your_skills_click: "Klik pada Skill untuk melihat perkembangan level!"
+    skill_click: "Klik untuk melihat Perkembangan Level!"
+    stats: "Statistik"
+    stats_desc: "Dapatkan buff statistik dengan menaikkan level skill"
+    stats_click: "Klik untuk mempelajari lebih lanjut atau melihat statistik Anda"
+    active_job: Pekerjaan Aktif
   level_progression:
-    level_progression_title: "{skill} Levels - Page {page}"
-    your_ranking: "Your Skill Ranking"
-    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
-    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
-    rewards: "Rewards"
-    ability_unlock: "Ability Unlock"
-    mana_ability_unlock: "Mana Ability Unlock"
-    progress: "Progress"
-    leaderboard_click: "Click to view the {skill} leaderboard"
-    sources: "XP Sources"
-    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
-    sources_click: "Click to view {skill} sources"
-    abilities: "Abilities"
-    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
-    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
-    abilities_click: "Click to view {skill} abilities"
-    job: Job
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    level_progression_title: "Level {skill} - Halaman {page}"
+    your_ranking: "Peringkat Skill Anda"
+    rank_out_of: "<1>Anda berada di peringkat <2>{rank}</2> dari {total} pemain</1>"
+    rank_percent: "<1>Anda berada di <2>{percent}%</2> pemain teratas</1>"
+    rewards: "Hadiah"
+    ability_unlock: "Kemampuan Terbuka"
+    mana_ability_unlock: "Kemampuan Mana Terbuka"
+    progress: "Kemajuan"
+    leaderboard_click: "Klik untuk melihat papan peringkat {skill}"
+    sources: "Sumber XP"
+    sources_desc: "Menu sumber menunjukkan semua cara Anda dapat memperoleh XP dalam skill, serta berapa banyak XP yang diberikan setiap sumber."
+    sources_click: "Klik untuk melihat sumber {skill}"
+    abilities: "Kemampuan"
+    abilities_desc: "<2>Kemampuan</2> <1>adalah fasilitas pasif yang Anda buka dan tingkatkan saat Anda menaikkan level skill.</1>"
+    mana_abilities_desc: "<3>Kemampuan Mana</3> <1>adalah jenis kemampuan khusus yang membutuhkan aktivasi dan mengkonsumsi mana.</1>"
+    abilities_click: "Klik untuk melihat kemampuan {skill}"
+    job: Pekerjaan
+    job_desc: Memilih {skill} sebagai pekerjaan Anda memungkinkan Anda untuk mendapatkan uang sambil mendapatkan XP.
+    job_select: Klik kiri untuk memilih {skill} sebagai pekerjaan Anda
+    job_active: Anda sedang aktif mengerjakan pekerjaan ini
+    job_quit: Klik kanan untuk keluar dari pekerjaan ini
+    job_limit: Anda telah mencapai batas pekerjaan Anda. Keluar dari pekerjaan aktif terlebih dahulu untuk memilih yang ini.
+    job_cooldown: Pemilihan pekerjaan sedang cooldown. Anda dapat memilih lagi dalam {time}.
   stats:
-    stats_title: Your Stats
-    skills: "Skills"
+    stats_title: Statistik Anda
+    skills: "Skill"
     added_drop: "+{value} Drop"
-    added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    added_drops: "+{value} Drop"
+    chance_drop: "{chance}% untuk +{value} Drop"
+    chance_drops: "{chance}% untuk +{value} Drop"
   unclaimed_items:
-    unclaimed_items_title: "Claim Items"
-    inventory_full: "You do not have enough space in your inventory to claim that item"
-    click_to_claim: "Click to claim!"
+    unclaimed_items_title: "Klaim Item"
+    inventory_full: "Anda tidak memiliki cukup ruang di inventaris Anda untuk mengklaim item itu"
+    click_to_claim: "Klik untuk mengklaim!"
   leaderboard:
-    leaderboard_title: "{skill} Leaderboard"
+    leaderboard_title: "Papan Peringkat {skill}"
   sources:
-    sources_title: "{skill} XP Sources"
-    sorter: "Sort XP Sources"
-    descending: "Highest to Lowest"
-    ascending: "Lowest to Highest"
-    alphabetical: "Name (A-Z)"
-    reverse_alphabetical: "Name (Z-A)"
-    sort_click: "Click to cycle sort type"
-    multiplied_xp: "Multiplied {xp_unit}"
-    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+    sources_title: "Sumber XP {skill}"
+    sorter: "Urutkan Sumber XP"
+    descending: "Tertinggi ke Terendah"
+    ascending: "Terendah ke Tertinggi"
+    alphabetical: "Nama (A-Z)"
+    reverse_alphabetical: "Nama (Z-A)"
+    sort_click: "Klik untuk mengubah jenis pengurutan"
+    multiplied_xp: "{xp_unit} Dikalikan"
+    multiplied_desc: "Ini adalah XP yang sebenarnya akan Anda peroleh berdasarkan pengganda XP Anda saat ini"
   abilities:
-    abilities_title: "{skill} Abilities"
-    description: "Description"
-    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
-    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+    abilities_title: "Kemampuan {skill}"
+    description: "Deskripsi"
+    unlocked_at: "<1>Terbuka di <2>{skill} {level}"
+    next_upgrade_at: "<1>Peningkatan berikutnya di <2>{skill} {level}"
 mana_abilities:
   replenish:
     name: Penanaman Kembali
@@ -664,7 +664,7 @@ mana_abilities:
     end: "<gray>Durasi Penanaman Kembali Sudah Selesai"
   treecapitator:
     name: Treecapitator
-    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    desc: "Menghancurkan seluruh pohon secara instan selama {value} detik. <1>[Klik kanan kapak dan hancurkan kayu untuk mengaktifkan]"
     raise: "<gray>Kamu mengaktifkan kapakmu"
     lower: "<gray>Kamu menonaktifkan kapakmu"
     start: "<gold>Treecapitator Active! <gray>(-{mana} {mana_unit})"
@@ -685,7 +685,7 @@ mana_abilities:
     end: "<gray>Durasi Kekebalan Sudah Selesai"
   terraform:
     name: Terraform
-    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    desc: "Saat menggali, hancurkan blok yang terhubung secara instan dalam radius {radius} blok secara horizontal selama {value} detik. <1>[Klik kanan sekop dan gali blok untuk mengaktifkan]"
     raise: "<gray>Kamu mengatifkan sekopmu"
     lower: "<gray>Kamu menonaktifkan sekopmu"
     start: "<gold>Terraform Active! <gray>(-{mana} {mana_unit})"
@@ -696,17 +696,17 @@ mana_abilities:
     use: "<gold>Menggunakan Kail Tajam! <gray>(-{mana} {mana_unit})"
   charged_shot:
     name: Tembakan bermuatan
-    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    desc: "Anak panah yang Anda tembak akan memberikan lebih banyak kerusakan berdasarkan seberapa jauh busur ditarik ke belakang, mengkonsumsi mana dalam prosesnya. Memberikan {value}% lebih banyak kerusakan per mana yang dikonsumsi. <1>[Klik kiri busur untuk mengaktifkan/menonaktifkan mode tembakan bermuatan]"
     enable: "<gray>Tembakaan bermuatan aktif"
     disable: "<gray>Tembakan bermuatan nonaktif"
     shoot: "<gold>Tembakan bermuatan dipakai! <light_purple>+{percent}% Kerusakan <gray>(-{mana} {mana_unit})"
   lightning_blade:
-    name: Lightning Blade
-    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
-    raise: "<gray>You ready your sword"
-    lower: "<gray>You lower your sword"
-    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
-    end: "<gray>Lightning Blade has worn off"
+    name: Pedang Petir
+    desc: Meningkatkan kecepatan serangan sebesar {value}% selama {duration} detik. <1>[Klik kanan pedang dan serang mob untuk mengaktifkan]"
+    raise: "<gray>Anda menyiapkan pedang Anda"
+    lower: "<gray>Anda menurunkan pedang Anda"
+    start: "<gold>Pedang Petir Diaktifkan! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Pedang Petir telah habis"
   not_ready: "<red>Kemampuan sedang cooldown! <gray>({cooldown}s)"
   not_enough_mana: "<yellow>Sihir tidak cukup! <gray>({mana} {mana_unit} required)"
 skills:
@@ -724,7 +724,7 @@ skills:
     desc: "Tangkap ikan untuk mendapatkan skill Nelayan {xp_unit}"
   excavation:
     name: Penggali
-    desc: "Dig with a shovel to earn Excavation {xp_unit}"
+    desc: "Gali dengan sekop untuk mendapatkan {xp_unit} skill Menggali"
   archery:
     name: Pemanah
     desc: "Tembak mobs dengan busu untuk mendaptakan earn skill Pemanah {xp_unit}"
@@ -739,13 +739,13 @@ skills:
     desc: "Berjalan dan Berlarilah untuk meningkatkan skill Petualang {xp_unit}"
   agility:
     name: Kelincahan
-    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+    desc: "Bergerak dan terima kerusakan jatuh untuk mendapatkan {xp_unit} skill Kelincahan"
   alchemy:
     name: Alkemi
-    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+    desc: "Racik dan percikkan ramuan untuk mendapatkan {xp_unit} skill Alkimia"
   enchanting:
     name: Sihir
-    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+    desc: "Enchant, gabungkan, dan grindstone item untuk mendapatkan {xp_unit} skill Sihir"
   sorcery:
     name: Penyihir
     desc: "Gunakan sihir untuk mendapatkan {xp_unit} EXP Sorcery"
@@ -757,66 +757,66 @@ skills:
     desc: "Gabungkan buku sihir untu meningkatkan skill Penempa {xp_unit}"
 sources:
   fishing:
-    cod: Cod
-    salmon: Salmon
-    tropical_fish: Tropical Fish
-    pufferfish: Pufferfish
-    treasure: Treasure Items
-    junk: Junk Items
-    rare: Rare Loot
-    epic: Epic Loot
+    cod: Ikan Kod
+    salmon: Ikan Salmon
+    tropical_fish: Ikan Tropis
+    pufferfish: Ikan Buntal
+    treasure: Item Harta Karun
+    junk: Item Sampah
+    rare: Jarahan Langka
+    epic: Jarahan Epik
   damage:
-    mob_damage: Damage from Mobs
-    player_damage: Damage from Players
-    fall_damage: Taking Fall Damage
+    mob_damage: Kerusakan dari Mob
+    player_damage: Kerusakan dari Pemain
+    fall_damage: Menerima Kerusakan Jatuh
   statistic:
-    walk_per_meter: Walking
-    sprint_per_meter: Sprinting
-    swim_per_meter: Swimming
+    walk_per_meter: Berjalan
+    sprint_per_meter: Berlari Cepat
+    swim_per_meter: Berenang
   jumping:
-    jump_per_100: Jumping
+    jump_per_100: Melompat
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: Racik Ramuan Aneh
+    regular: Racik Ramuan Biasa
+    extended: Racik Ramuan Durasi Diperpanjang
+    upgraded: Racik Ramuan Ditingkatkan
+    splash: Racik Ramuan Percikan
+    lingering: Racik Ramuan Bertahan Lama
   enchanting:
-    weapon_per_level: Enchant Weapon
+    weapon_per_level: Enchant Senjata
     armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    tool_per_level: Enchant Alat
+    book_per_level: Enchant Buku
   mana_ability_use:
-    mana_ability_use: Using Mana Abilities
+    mana_ability_use: Menggunakan Kemampuan Mana
   item_consume:
-    drink_regular: Drink Regular Potion
-    drink_extended: Drink Extended Duration Potion
-    drink_upgraded: Drink Upgraded Potion
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    drink_regular: Minum Ramuan Biasa
+    drink_extended: Minum Ramuan Durasi Diperpanjang
+    drink_upgraded: Minum Ramuan Ditingkatkan
+    golden_apple: Konsumsi Apel Emas
+    enchanted_golden_apple: Konsumsi Apel Emas Tersihir
   potion_splash:
-    splash_regular: Splash Regular Potion
-    splash_extended: Splash Extended Duration Potion
-    splash_upgraded: Splash Upgraded Potion
-    lingering_regular: Use Regular Lingering Potion
-    lingering_extended: Use Extended Duration Lingering Potion
-    lingering_upgraded: Use Upgraded Lingering Potion
+    splash_regular: Percikan Ramuan Biasa
+    splash_extended: Percikan Ramuan Durasi Diperpanjang
+    splash_upgraded: Percikan Ramuan Ditingkatkan
+    lingering_regular: Gunakan Ramuan Bertahan Lama Biasa
+    lingering_extended: Gunakan Ramuan Bertahan Lama Durasi Diperpanjang
+    lingering_upgraded: Gunakan Ramuan Bertahan Lama Ditingkatkan
   anvil:
-    combine_books_per_level: Combine Enchanted Books
-    combine_weapon_per_level: Combine Weapon with Book
-    combine_armor_per_level: Combine Armor with Book
-    combine_tool_per_level: Combine Tool with Book
+    combine_books_per_level: Gabungkan Buku Tersihir
+    combine_weapon_per_level: Gabungkan Senjata dengan Buku
+    combine_armor_per_level: Gabungkan Armor dengan Buku
+    combine_tool_per_level: Gabungkan Alat dengan Buku
   grindstone:
-    grindstone_per_level: Disenchant Item with Grindstone
+    grindstone_per_level: Disenchant Item dengan Grindstone
   units:
-    damage: Damage
+    damage: Kerusakan
     meter: Meter
-    100_jumps: 100 Jumps
-    mana: Mana Consumed
-    combine_level: Anvil Cost Experience
-    grindstone_level: Level of Enchant on Item
-    enchant_level: Level of Enchant Received
+    100_jumps: 100 Lompatan
+    mana: Mana Dikonsumsi
+    combine_level: Pengalaman Biaya Anvil
+    grindstone_level: Level Enchant pada Item
+    enchant_level: Level Enchant Diterima
 stats:
   strength:
     name: Kekuatan
@@ -829,7 +829,7 @@ stats:
     desc: "Meningkatkan kecepatan beregenerasi memulihkan darah dan sihir."
   luck:
     name: Keberuntungan
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    desc: "Keberuntungan meningkatkan kemungkinan drop tambahan dari blok dalam skill pengumpulan."
   wisdom:
     name: Kepintaran
     desc: "Kepintaran meningkatkan kapasitas sihirmu, menigkatkan pengalaman yang didapatkan, dan mengurangi baharan untuk anvil."
@@ -837,55 +837,55 @@ stats:
     name: Ketahanan
     desc: "Meningkatkan pengurangan kerusakan yang diterima dari musuh."
   crit_chance:
-    name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit."
+    name: Peluang Kritis
+    desc: "Peluang Kritis adalah peluang Anda untuk memberikan serangan kritis."
   crit_damage:
-    name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+    name: Kerusakan Kritis
+    desc: "Kerusakan Kritis adalah persentase peningkatan kerusakan saat memberikan serangan kritis."
   speed:
-    name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    name: Kecepatan
+    desc: "Kecepatan meningkatkan seberapa cepat Anda dapat berjalan dan berlari."
 traits:
   attack_damage:
-    name: Attack Damage
+    name: Kerusakan Serangan
   hp:
     name: HP
   saturation_regen:
-    name: Saturation Regen
+    name: Regenerasi Rasa Kenyang
   hunger_regen:
-    name: Hunger Regen
+    name: Regenerasi Rasa Lapar
   mana_regen:
-    name: Mana Regen
+    name: Regenerasi Mana
   luck:
-    name: Luck Attribute
+    name: Atribut Keberuntungan
   double_drop:
-    name: Double Drop
+    name: Drop Ganda
   experience_bonus:
-    name: Experience Bonus
+    name: Bonus Pengalaman
   anvil_discount:
-    name: Anvil Discount
+    name: Diskon Anvil
   max_mana:
-    name: Max Mana
+    name: Mana Maksimal
   damage_reduction:
-    name: Damage Reduction
+    name: Pengurangan Kerusakan
   crit_chance:
-    name: Crit Chance
+    name: Peluang Kritis
   crit_damage:
-    name: Crit Damage
+    name: Kerusakan Kritis
   movement_speed:
-    name: Movement Speed
+    name: Kecepatan Gerakan
   farming_luck:
-    name: Farming Luck
+    name: Keberuntungan Bertani
   foraging_luck:
-    name: Foraging Luck
+    name: Keberuntungan Menebang Kayu
   mining_luck:
-    name: Mining Luck
+    name: Keberuntungan Menambang
   excavation_luck:
-    name: Excavation Luck
+    name: Keberuntungan Menggali
   fishing_luck:
-    name: Fishing Luck
+    name: Keberuntungan Memancing
 ui:
-  maxed: MAXED
+  maxed: MAKSIMAL
 units:
   mana: Sihir
   hp: Darah
