@@ -19,6 +19,7 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    maven("https://repo.helpch.at/releases")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://repo.maven.apache.org/maven2/")
@@ -37,7 +38,7 @@ dependencies {
     implementation("net.kyori:adventure-platform-bukkit:4.3.3")
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.21-R0.1-SNAPSHOT")
-    compileOnly("me.clip:placeholderapi:2.11.2")
+    compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") {
         exclude("org.spigotmc", "spigot-api")
     }

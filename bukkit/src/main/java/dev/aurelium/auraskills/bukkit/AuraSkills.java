@@ -41,7 +41,7 @@ import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
 import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
-import dev.aurelium.auraskills.bukkit.modifier.ModifierManager;
+import dev.aurelium.auraskills.bukkit.modifier.BukkitModifierManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitRegionManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
@@ -149,7 +149,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitRegionManager regionManager;
     private BukkitWorldManager worldManager;
     private LootTableManager lootTableManager;
-    private ModifierManager modifierManager;
+    private BukkitModifierManager modifierManager;
     private RequirementManager requirementManager;
     private BackupProvider backupProvider;
     private InventoryManager inventoryManager;
@@ -222,7 +222,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         xpRequirements = new XpRequirements(this);
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
-        modifierManager = new ModifierManager(this);
+        modifierManager = new BukkitModifierManager(this);
         inventoryManager = new InventoryManager(this);
         inventoryManager.init();
         rewardManager = new BukkitRewardManager(this); // Loaded later
@@ -428,10 +428,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return lootTableManager;
     }
 
-    public ModifierManager getModifierManager() {
-        return modifierManager;
-    }
-
     public RequirementManager getRequirementManager() {
         return requirementManager;
     }
@@ -624,6 +620,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public ApiProvider getApiProvider() {
         return apiProvider;
+    }
+
+    @Override
+    public BukkitModifierManager getModifierManager() {
+        return modifierManager;
     }
 
     public ItemManager getItemManager() {

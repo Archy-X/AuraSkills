@@ -6,6 +6,8 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.api.skill.Multiplier;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.common.modifier.ModifierManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,11 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ModifierManager {
+public class BukkitModifierManager implements ModifierManager {
 
     private final AuraSkills plugin;
 
-    public ModifierManager(AuraSkills plugin) {
+    public BukkitModifierManager(AuraSkills plugin) {
         this.plugin = plugin;
     }
 
@@ -102,4 +104,11 @@ public class ModifierManager {
         }
     }
 
+    @Override
+    public void reloadUser(User user) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            reloadPlayer(player);
+        }
+    }
 }

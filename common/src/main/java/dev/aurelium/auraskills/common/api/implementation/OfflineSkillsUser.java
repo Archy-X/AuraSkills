@@ -71,6 +71,11 @@ public class OfflineSkillsUser implements SkillsUser {
     }
 
     @Override
+    public void setSkillLevel(Skill skill, int level, boolean refresh) {
+
+    }
+
+    @Override
     public double getSkillAverage() {
         return 0;
     }

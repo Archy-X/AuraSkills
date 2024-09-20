@@ -95,6 +95,15 @@ public interface SkillsUser {
     void setSkillLevel(Skill skill, int level);
 
     /**
+     * Sets the level of a skill.
+     *
+     * @param skill the skill to set the level of
+     * @param level the level to set to
+     * @param refresh whether to refresh stats, permissions, rewards, and item modifiers to account for the change in skill level
+     */
+    void setSkillLevel(Skill skill, int level, boolean refresh);
+
+    /**
      * Gets the user's average skill level of all enabled skills.
      *
      * @return the skill average
