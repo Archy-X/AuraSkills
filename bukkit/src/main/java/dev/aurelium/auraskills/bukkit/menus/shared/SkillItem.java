@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus.shared;
 
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.mana.CustomManaAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
@@ -174,7 +175,7 @@ public class SkillItem {
                         }
                         case "cooldown_entry" ->
                                 builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
-                        case "damage_entry", "damage_per_mana_entry", "attack_speed_entry" ->
+                        default ->
                                 builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
                     }
                 }
@@ -250,6 +251,8 @@ public class SkillItem {
             return List.of("damage_per_mana_entry", "max_mana_cost_entry");
         } else if (manaAbility.equals(ManaAbilities.LIGHTNING_BLADE)) {
             return List.of("attack_speed_entry", "duration_entry", "mana_cost_entry", "cooldown_entry");
+        } else if (manaAbility instanceof CustomManaAbility custom && !custom.getInfoFormats().isEmpty()) {
+            return custom.getInfoFormats();
         } else {
             return List.of("duration_entry", "mana_cost_entry", "cooldown_entry");
         }

@@ -3,7 +3,9 @@ package dev.aurelium.auraskills.api.mana;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,6 +35,11 @@ public class CustomManaAbility implements ManaAbility {
 
     public Defined getDefined() {
         return defined;
+    }
+
+    @NotNull
+    public List<String> getInfoFormats() {
+        return defined.infoFormats;
     }
 
     @Override
@@ -259,6 +266,11 @@ public class CustomManaAbility implements ManaAbility {
             return this;
         }
 
+        public CustomManaAbilityBuilder infoFormats(List<String> infoFormats) {
+            defined.setInfoFormats(infoFormats);
+            return this;
+        }
+
         public CustomManaAbility build() {
             return new CustomManaAbility(id, defined);
         }
@@ -278,6 +290,7 @@ public class CustomManaAbility implements ManaAbility {
         private int levelUp = 6;
         private String displayName;
         private String description;
+        private List<String> infoFormats = new ArrayList<>();
 
         public double getBaseValue() {
             return baseValue;
@@ -365,6 +378,14 @@ public class CustomManaAbility implements ManaAbility {
 
         public void setDescription(String description) {
             this.description = description;
+        }
+
+        public List<String> getInfoFormats() {
+            return infoFormats;
+        }
+
+        public void setInfoFormats(List<String> infoFormats) {
+            this.infoFormats = infoFormats;
         }
     }
 
