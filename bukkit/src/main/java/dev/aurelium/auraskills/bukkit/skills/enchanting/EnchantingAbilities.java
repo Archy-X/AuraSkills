@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -22,6 +23,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.view.AnvilView;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -145,6 +147,7 @@ public class EnchantingAbilities extends AbilityImpl {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
+    @SuppressWarnings("removal")
     public void anvilMaster(InventoryOpenEvent event) {
         var ability = Abilities.ANVIL_MASTER;
 
@@ -166,7 +169,14 @@ public class EnchantingAbilities extends AbilityImpl {
         User user = plugin.getUser(player);
 
         int maxCost = (int) Math.round(getValue(ability, user));
-        anvil.setMaximumRepairCost(maxCost);
+
+        if (VersionUtils.isAtLeastVersion(21)) {
+            if (event.getView() instanceof AnvilView view) {
+                view.setMaximumRepairCost(maxCost);
+            }
+        } else {
+            anvil.setMaximumRepairCost(maxCost);
+        }
     }
 
 }

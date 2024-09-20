@@ -5,12 +5,14 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
+import org.bukkit.inventory.view.AnvilView;
 
 import java.util.Locale;
 
@@ -31,6 +33,7 @@ public class AnvilDiscountTrait extends TraitImpl {
     }
 
     @EventHandler
+    @SuppressWarnings("removal")
     public void onAnvilPrepare(PrepareAnvilEvent event) {
         User user = null;
         // Finds the viewer with the highest wisdom level
@@ -49,13 +52,24 @@ public class AnvilDiscountTrait extends TraitImpl {
             }
         }
         if (user != null) {
-            AnvilInventory anvil = event.getInventory();
             double wisdom = user.getEffectiveTraitLevel(Traits.ANVIL_DISCOUNT);
-            int cost = (int) Math.round(anvil.getRepairCost() * (1 - getDiscount(wisdom)));
-            if (cost > 0) {
-                anvil.setRepairCost(cost);
+            if (VersionUtils.isAtLeastVersion(21)) {
+                AnvilView view = event.getView();
+                int repairCost = view.getRepairCost();
+                int cost = (int) Math.round(repairCost * (1 - getDiscount(wisdom)));
+                if (cost > 0) {
+                    view.setRepairCost(cost);
+                } else {
+                    view.setRepairCost(1);
+                }
             } else {
-                anvil.setRepairCost(1);
+                AnvilInventory anvil = event.getInventory();
+                int cost = (int) Math.round(anvil.getRepairCost() * (1 - getDiscount(wisdom)));
+                if (cost > 0) {
+                    anvil.setRepairCost(cost);
+                } else {
+                    anvil.setRepairCost(1);
+                }
             }
         }
     }

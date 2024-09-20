@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.type.AnvilXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -19,6 +20,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.view.AnvilView;
 import org.jetbrains.annotations.Nullable;
 
 public class AnvilLeveler extends SourceLeveler {
@@ -61,17 +63,26 @@ public class AnvilLeveler extends SourceLeveler {
         if (failsChecks(event, player, location, skill)) return;
 
         AnvilInventory anvil = (AnvilInventory) inventory;
-        double multiplier = getRepairCostMultiplier(source, anvil, skill);
+        double multiplier = getRepairCostMultiplier(source, anvil, skill, event);
 
         plugin.getLevelManager().addXp(user, skill, source, multiplier * source.getXp());
     }
 
-    private double getRepairCostMultiplier(AnvilXpSource source, AnvilInventory anvil, Skill skill) {
+    @SuppressWarnings("removal")
+    private double getRepairCostMultiplier(AnvilXpSource source, AnvilInventory anvil, Skill skill, InventoryClickEvent event) {
+        int repairCost = 1;
+        if (VersionUtils.isAtLeastVersion(21)) {
+            if (event.getView() instanceof AnvilView view) {
+                repairCost = view.getRepairCost();
+            }
+        } else {
+            repairCost = anvil.getRepairCost();
+        }
         // Get the repair cost multiplier from placeholder
         double multiplier = 1;
         String multiplierString = source.getMultiplier();
         if (multiplierString != null) {
-            multiplierString = TextUtil.replace(multiplierString, "{repair_cost}", String.valueOf(anvil.getRepairCost()));
+            multiplierString = TextUtil.replace(multiplierString, "{repair_cost}", String.valueOf(repairCost));
             Expression expression = new Expression(multiplierString);
             try {
                 multiplier = expression.evaluate().getNumberValue().doubleValue();
