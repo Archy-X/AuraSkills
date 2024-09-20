@@ -113,21 +113,23 @@ tasks {
 val supportedVersions = (project.property("supportedMCVersions") as String).split(",").map { it.trim() }
 
 if (project.hasProperty("hangarApiKey")) {
-    hangarPublish {
-        publications.register("AuraSkills") {
-            val projectVersion = project.version as String
+    if (!(project.version as String).endsWith("-SNAPSHOT")) {
+        hangarPublish {
+            publications.register("AuraSkills") {
+                val projectVersion = project.version as String
 
-            version.set(projectVersion)
-            id.set("AuraSkills")
-            channel.set("Release")
-            changelog.set(extractChangelog(projectVersion))
+                version.set(projectVersion)
+                id.set("AuraSkills")
+                channel.set("Release")
+                changelog.set(extractChangelog(projectVersion))
 
-            apiKey.set(project.property("hangarApiKey") as String)
+                apiKey.set(project.property("hangarApiKey") as String)
 
-            platforms {
-                paper {
-                    jar.set(tasks.shadowJar.flatMap { it.archiveFile })
-                    platformVersions.set(supportedVersions)
+                platforms {
+                    paper {
+                        jar.set(tasks.shadowJar.flatMap { it.archiveFile })
+                        platformVersions.set(supportedVersions)
+                    }
                 }
             }
         }
@@ -135,18 +137,20 @@ if (project.hasProperty("hangarApiKey")) {
 }
 
 if (project.hasProperty("modrinthToken")) {
-    modrinth {
-        val projectVersion = project.version as String
+    if (!(project.version as String).endsWith("-SNAPSHOT")) {
+        modrinth {
+            val projectVersion = project.version as String
 
-        token.set(project.property("modrinthToken") as String)
+            token.set(project.property("modrinthToken") as String)
 
-        projectId.set("auraskills")
-        versionNumber.set(projectVersion)
-        versionType.set("release")
-        changelog.set(extractChangelog(projectVersion))
-        uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile }.get())
-        gameVersions.set(supportedVersions)
-        loaders.set(listOf("paper", "purpur", "spigot"))
+            projectId.set("auraskills")
+            versionNumber.set(projectVersion)
+            versionType.set("release")
+            changelog.set(extractChangelog(projectVersion))
+            uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile }.get())
+            gameVersions.set(supportedVersions)
+            loaders.set(listOf("paper", "purpur", "spigot"))
+        }
     }
 }
 
