@@ -187,8 +187,9 @@ public class HpTrait extends TraitImpl {
         applyScaling(player);
     }
 
+    @SuppressWarnings("deprecation")
     private boolean isSkillsHealthModifier(AttributeModifier am) {
-        if (am.getName().equals("skillsHealth")) {
+        if (am.getName().equals("skillsHealth") || am.getUniqueId().equals(ATTRIBUTE_ID)) {
             return true;
         }
         if (VersionUtils.isAtLeastVersion(21)) {
