@@ -124,7 +124,7 @@ public class HpTrait extends TraitImpl {
         worldChangeHealth.remove(playerID);
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("removal")
     private void setHealth(Player player, User user) {
         Trait trait = Traits.HP;
 
@@ -187,9 +187,8 @@ public class HpTrait extends TraitImpl {
         applyScaling(player);
     }
 
-    @SuppressWarnings("deprecation")
     private boolean isSkillsHealthModifier(AttributeModifier am) {
-        if (am.getName().equals("skillsHealth") || am.getUniqueId().equals(ATTRIBUTE_ID)) {
+        if (am.getName().equals("skillsHealth")) {
             return true;
         }
         if (VersionUtils.isAtLeastVersion(21)) {

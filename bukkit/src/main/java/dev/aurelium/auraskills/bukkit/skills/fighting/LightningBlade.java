@@ -36,7 +36,7 @@ public class LightningBlade extends ReadiedManaAbility {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("removal")
     public void onActivate(Player player, User user) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
         if (attribute == null) return;

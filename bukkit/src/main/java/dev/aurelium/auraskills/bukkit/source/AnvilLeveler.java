@@ -71,7 +71,7 @@ public class AnvilLeveler extends SourceLeveler {
     @SuppressWarnings("removal")
     private double getRepairCostMultiplier(AnvilXpSource source, AnvilInventory anvil, Skill skill, InventoryClickEvent event) {
         int repairCost = 1;
-        if (VersionUtils.isAtLeastVersion(21)) {
+        if (VersionUtils.isAtLeastVersion(21, 1)) {
             if (event.getView() instanceof AnvilView view) {
                 repairCost = view.getRepairCost();
             }

@@ -53,7 +53,7 @@ public class AnvilDiscountTrait extends TraitImpl {
         }
         if (user != null) {
             double wisdom = user.getEffectiveTraitLevel(Traits.ANVIL_DISCOUNT);
-            if (VersionUtils.isAtLeastVersion(21)) {
+            if (VersionUtils.isAtLeastVersion(21, 1)) {
                 AnvilView view = event.getView();
                 int repairCost = view.getRepairCost();
                 int cost = (int) Math.round(repairCost * (1 - getDiscount(wisdom)));

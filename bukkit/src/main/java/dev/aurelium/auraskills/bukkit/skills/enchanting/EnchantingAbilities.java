@@ -170,7 +170,7 @@ public class EnchantingAbilities extends AbilityImpl {
 
         int maxCost = (int) Math.round(getValue(ability, user));
 
-        if (VersionUtils.isAtLeastVersion(21)) {
+        if (VersionUtils.isAtLeastVersion(21, 1)) {
             if (event.getView() instanceof AnvilView view) {
                 view.setMaximumRepairCost(maxCost);
             }

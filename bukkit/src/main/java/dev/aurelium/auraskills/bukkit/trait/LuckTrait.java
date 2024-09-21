@@ -58,7 +58,7 @@ public class LuckTrait extends TraitImpl {
         setLuck(event.getPlayer());
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("removal")
     private void setLuck(Player player) {
         AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
         if (attribute == null) {
