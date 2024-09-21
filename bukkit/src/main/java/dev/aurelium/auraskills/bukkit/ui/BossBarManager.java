@@ -167,12 +167,18 @@ public class BossBarManager implements Listener {
         float progressNew = (float) (currentXp / levelXp);
         progressNew = Math.min(progressNew, 1.0f);
         progressNew = Math.max(progressNew, 0.0f);
+        if (levelXp == 0) {
+            progressNew = 1.0f;
+        }
         // If player does not have a boss bar in that skill
         if (bossBar == null) {
             // Calculate progress before gaining xp, for boss bar animation
             float progressOld = (float) (Math.max(currentXp - xpGained, 0) / levelXp);
             progressOld = Math.min(progressOld, 1.0f);
             progressOld = Math.max(progressOld, 0.0f);
+            if (levelXp == 0) {
+                progressOld = 1.0f;
+            }
             bossBar = handleNewBossBar(player, skill, progressOld, progressNew, text);
         }
         // Use existing one
