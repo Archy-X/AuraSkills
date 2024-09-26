@@ -200,11 +200,14 @@ public class BossBarManager implements Listener {
 
         Component name = tf.toComponent(text);
 
-        BossBar bossBar = BossBar.bossBar(name, progressOld, color, overlay);
+        float sanitizedOld = handleInvalidFloat(progressOld);
+        float sanitizedNew = handleInvalidFloat(progressNew);
+
+        BossBar bossBar = BossBar.bossBar(name, sanitizedOld, color, overlay);
         if (!ANIMATE_PROGRESS) {  // If the config option is disabled, immediately show new progress
-            bossBar.progress(progressNew);
+            bossBar.progress(sanitizedNew);
         } else {  // Update the progress later to display its animation from progressOld to progressNew
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> bossBar.progress(sanitizedNew), 2 * 50, TimeUnit.MILLISECONDS);
         }
         plugin.getAudiences().player(player).showBossBar(bossBar);
 
@@ -215,6 +218,22 @@ public class BossBarManager implements Listener {
             bossBars.get(player.getUniqueId()).put(skill, bossBar);
         }
         return bossBar;
+    }
+
+    private float handleInvalidFloat(float f) {
+        if (Float.isNaN(f)) {
+            return 0f;
+        }
+
+        if (Float.isInfinite(f)) {
+            if (f > 0) {
+                return 1f;
+            } else {
+                return 0f;
+            }
+        }
+
+        return f;
     }
 
     private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, float progress, String text) {
