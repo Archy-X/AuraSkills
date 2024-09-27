@@ -330,9 +330,9 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>技能插件<dark_gray>] "
   antiafk:
-    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    failed: "<red>{player} 未能通过反挂机检查 {check} <gray>(计数: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: "<red>{player} <gray>的反挂机日志 <gray>({count} 总共) <dark_gray>| <gray>页 {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
@@ -625,7 +625,7 @@ menus:
     job_active: 你当前为该职业
     job_quit: 右键点击退出该职业
     job_limit: 你不能申请更多职业。请先退出其他职业再选择该职业。
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    job_cooldown: 职业选择正在冷却中。请在 {time} 秒后再次选择。
   stats:
     stats_title: 你的属性
     skills: "技能"
