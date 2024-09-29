@@ -53,7 +53,7 @@ permissions:
         default: true
 
     auraskills.command.itemmaker:
-        description: All permissions related to the creation of items using Auraskills modifier
+        description: All permissions related to the creation of items using AuraSkills modifier
         children:
             auraskills.command.armor.modifier: true
             auraskills.command.armor.requirement: true
