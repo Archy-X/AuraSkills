@@ -52,12 +52,9 @@ permissions:
             auraskills.skill.forging: true
         default: true
 
-    auraskills.command.itemmaker:
-        description: All permissions related to the creation of items using AuraSkills modifier
+    auraskills.command.item.*:
+        description: All permissions related to the creation of items using AuraSkills modifiers
         children:
-            auraskills.command.armor.modifier: true
-            auraskills.command.armor.requirement: true
-            auraskills.command.armor.multiplier: true
             auraskills.command.item.modifier: true
             auraskills.command.item.requirement: true
             auraskills.command.item.multiplier: true
@@ -66,10 +63,19 @@ permissions:
             auraskills.command.item.ignore: true
         default: false
 
+    auraskills.command.armor.*:
+        description: All permissions related to the creation of armors using AuraSkills modifiers
+        children:
+            auraskills.command.armor.modifier: true
+            auraskills.command.armor.requirement: true
+            auraskills.command.armor.multiplier: true
+        default: false
+
     auraskills.command.admin:
         description: Permission to use all admin/op commands
         children:
-            auraskills.command.itemmaker: true
+            auraskills.command.item.*: true
+            auraskills.command.armor.*: true
             auraskills.command.save: true
             auraskills.command.version: true
             auraskills.command.multiplier: true
