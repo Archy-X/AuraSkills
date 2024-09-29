@@ -108,6 +108,8 @@ public class ProfileCommand extends BaseCommand {
         skillList.sort(Comparator.comparing(Skill::name));
 
         for (Skill skill : skillList) {
+            if (!plugin.getSkillManager().isLoaded(skill)) continue;
+
             skillEntries.append(TextUtil.replace(plugin.getMsg(CommandMessage.PROFILE_SKILL_ENTRY, locale),
                     "{skill}", TextUtil.capitalize(skill.name().toLowerCase(Locale.ROOT)),
                     "{level}", String.valueOf(skillLevels.get(skill)),
@@ -150,6 +152,8 @@ public class ProfileCommand extends BaseCommand {
         statList.sort(Comparator.comparing(Stat::name));
 
         for (Stat stat : statList) {
+            if (!plugin.getStatManager().isLoaded(stat)) continue;
+
             statEntries.append(TextUtil.replace(plugin.getMsg(CommandMessage.PROFILE_STAT_ENTRY, locale),
                     "{stat}", TextUtil.capitalize(stat.name().toLowerCase(Locale.ROOT)),
                     "{total_level}", NumberUtil.format1(totalStats.getOrDefault(stat, 0.0)),
