@@ -505,7 +505,7 @@ commands:
       created: 建立的檔案
       modified: 修改的檔案
       replaced: 取代的檔案
-      deleted: 已刪除的檔案
+      deleted: 已刪除的文件
       skipped: 跳過的檔案
   profile:
     skills: "玩家 <gold>{name} 的技能資料:\n<gray>UUID: <white>{uuid}\n<gray>技能: {skill_entries}"
@@ -545,7 +545,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>排行榜已經更新過了!"
     updated: "<green>排行榜已更新!"
-  version: "<white>您使用的是 Aurelium Skills 版本 <aqua>{current_version} <white>。最新版本是 <aqua>{latest_version}"
+  version: "<white>您使用的是 AuraSkills 版本 <aqua>{current_version} <white>。最新版本是 <aqua>{latest_version}"
   xp:
     add: "<gray>已增加玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
     set: "<gray>已設定玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
