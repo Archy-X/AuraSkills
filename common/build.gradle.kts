@@ -33,11 +33,15 @@ dependencies {
     testImplementation("org.yaml:snakeyaml:2.2")
 }
 
+val compiler = javaToolchains.compilerFor {
+    languageVersion = JavaLanguageVersion.of(17)
+}
+
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
     options.isFork = true
-    options.forkOptions.executable = System.getProperty("java.home") + "/bin/javac"
+    options.forkOptions.executable = compiler.map { it.executablePath }.get().toString()
 }
 
 tasks {
