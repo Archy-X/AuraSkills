@@ -559,8 +559,8 @@ public class SqlStorageProvider extends StorageProvider {
                             traitModifiers = Collections.emptyMap();
                         }
 
-                        Map<Skill, Integer> skillLevelMap = loadedSkillLevels.get(userId);
-                        Map<Skill, Double> skillXpMap = loadedSkillXp.get(userId);
+                        Map<Skill, Integer> skillLevelMap = loadedSkillLevels.getOrDefault(userId, new HashMap<>());
+                        Map<Skill, Double> skillXpMap = loadedSkillXp.getOrDefault(userId, new HashMap<>());
 
                         UserState state = new UserState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
                         states.add(state);

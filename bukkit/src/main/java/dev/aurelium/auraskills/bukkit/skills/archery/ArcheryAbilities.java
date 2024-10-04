@@ -122,7 +122,7 @@ public class ArcheryAbilities extends AbilityImpl {
         }
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("removal")
     private @NotNull AttributeModifier getAttributeModifier(AttributeInstance speed, double STUN_SPEED_REDUCTION) {
         double reducedSpeed = speed.getValue() * STUN_SPEED_REDUCTION;
         double attributeValue = -1 * reducedSpeed;
