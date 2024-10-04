@@ -2,8 +2,6 @@ package dev.aurelium.auraskills.api.util;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
-
 public abstract class AuraSkillsModifier<T> {
 
     protected final String name;
