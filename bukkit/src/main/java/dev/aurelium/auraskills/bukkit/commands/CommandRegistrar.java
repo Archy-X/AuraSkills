@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
@@ -215,6 +216,8 @@ public class CommandRegistrar {
             return typeNames;
         });
         completions.registerAsyncCompletion("menu_names", c -> plugin.getSlate().getLoadedMenus().keySet());
+        completions.registerAsyncCompletion("modifier_operations", c ->
+                Arrays.stream(Operation.values()).map(s -> s.name().toLowerCase(Locale.ROOT)).toList());
     }
 
     private void registerBaseCommands(PaperCommandManager manager) {

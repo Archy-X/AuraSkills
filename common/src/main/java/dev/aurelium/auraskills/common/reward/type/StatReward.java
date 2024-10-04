@@ -17,8 +17,8 @@ public class StatReward extends SkillReward {
     private final Stat stat;
     private final double value;
 
-    public StatReward(AuraSkillsPlugin plugin, Stat stat, double value) {
-        super(plugin);
+    public StatReward(AuraSkillsPlugin plugin, Skill skill, Stat stat, double value) {
+        super(plugin, skill);
         this.stat = stat;
         this.value = value;
     }

@@ -80,7 +80,10 @@ public class LevelUpMessenger {
     private String getRewardMessage() {
         StringBuilder rewardMessage = new StringBuilder();
         for (SkillReward reward : rewards) {
-            rewardMessage.append(reward.getChatMessage(user, locale, skill, level));
+            String msg = reward.getChatMessage(user, locale, skill, level);
+            if (msg != null) {
+                rewardMessage.append(msg);
+            }
         }
         return rewardMessage.toString();
     }

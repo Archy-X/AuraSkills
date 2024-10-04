@@ -41,7 +41,7 @@ public abstract class AuraSkillsModifier<T> {
 
         ADD,
         MULTIPLY,
-        SCALE
+        ADD_PERCENT
 
     }
 

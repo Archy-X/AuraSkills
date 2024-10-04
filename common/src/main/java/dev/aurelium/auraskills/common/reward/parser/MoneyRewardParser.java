@@ -1,22 +1,23 @@
 package dev.aurelium.auraskills.common.reward.parser;
 
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.builder.MoneyRewardBuilder;
-
-import java.util.Map;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class MoneyRewardParser extends RewardParser {
 
-    public MoneyRewardParser(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public MoneyRewardParser(AuraSkillsPlugin plugin, Skill skill) {
+        super(plugin, skill);
     }
 
     @Override
-    public SkillReward parse(Map<?, ?> map) {
+    public SkillReward parse(ConfigurationNode config) {
         return new MoneyRewardBuilder(plugin)
-                .amount(getDoubleOrDefault(map, "amount", 0.0))
-                .formula(getStringOrDefault(map, "formula", null))
+                .amount(config.node("amount").getDouble())
+                .formula(config.node("formula").getString())
+                .skill(skill)
                 .build();
     }
 }

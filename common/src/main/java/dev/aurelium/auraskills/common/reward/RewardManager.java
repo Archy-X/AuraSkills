@@ -4,11 +4,14 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.reward.RewardTable.Index;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
+import dev.aurelium.auraskills.common.reward.type.StatReward;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.common.util.data.DataUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -17,50 +20,66 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class RewardManager {
 
     protected final AuraSkillsPlugin plugin;
-    protected final Map<Skill, RewardTable> rewardTables;
+    private final Map<Skill, RewardTable> rewardTables;
+    // Cache for faster access to all rewards of a certain type and key such as specific stats
+    private final Map<Index<?>, Map<Integer, List<SkillReward>>> indexedRewards;
 
     public RewardManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.rewardTables = new HashMap<>();
+        this.indexedRewards = new HashMap<>();
     }
 
+    @NotNull
     public RewardTable getRewardTable(Skill skill) {
-        return rewardTables.getOrDefault(skill, new RewardTable(plugin));
+        return rewardTables.getOrDefault(skill, new RewardTable(plugin, this));
     }
 
     public abstract void loadRewards();
 
-    protected int loadPatterns(RewardTable rewardTable, List<Map<?, ?>> patterns, File rewardsFile, int maxLevel) {
+    protected void clearRewardTables() {
+        rewardTables.clear();
+        indexedRewards.clear();
+    }
+
+    protected void registerRewardTable(Skill skill, RewardTable table) {
+        rewardTables.put(skill, table);
+        // Add to index
+        for (Entry<Integer, List<SkillReward>> entry : table.getRewardsMap().entrySet()) {
+            int level = entry.getKey();
+            var list = entry.getValue();
+            for (SkillReward reward : list) {
+                if (reward instanceof StatReward statReward) {
+                    Index<Stat> index = Index.of(statReward.getStat());
+                    var indexMap = indexedRewards.computeIfAbsent(index, k -> new HashMap<>());
+                    var levelList = indexMap.computeIfAbsent(level, k -> new ArrayList<>());
+                    levelList.add(reward);
+                }
+            }
+        }
+    }
+
+    protected int loadPatterns(Skill skill, RewardTable rewardTable, ConfigurationNode patterns, File rewardsFile, int maxLevel) {
         // Load patterns section
         int patternsLoaded = 0;
-        for (int index = 0; index < patterns.size(); index++) {
-            Map<?, ?> rewardMap = patterns.get(index);
+        var patternsList = patterns.childrenList();
+        for (int index = 0; index < patternsList.size(); index++) {
+            ConfigurationNode rewardMap = patternsList.get(index);
             try {
-                SkillReward reward = parseReward(rewardMap);
+                SkillReward reward = parseReward(rewardMap, skill);
                 if (reward == null) {
                     continue;
                 }
                 // Load pattern info
-                Object patternObj = DataUtil.getElement(rewardMap, "pattern");
-                if (!(patternObj instanceof Map<?, ?> patternMap)) {
-                    throw new IllegalArgumentException("Pattern must be a section");
-                }
-                int start;
-                if (patternMap.containsKey("start")) {
-                    start = DataUtil.getInt(patternMap, "start");
-                } else {
-                    start = plugin.configInt(Option.START_LEVEL) + 1;
-                }
-                int interval = DataUtil.getInt(patternMap, "interval");
+                int start = rewardMap.node("pattern", "start").getInt(plugin.configInt(Option.START_LEVEL) + 1);
+                int interval = rewardMap.node("pattern", "interval").getInt(1);
                 // Get stop interval and check it is not above max skill level
-                int stop = maxLevel;
-                if (patternMap.containsKey("stop")) {
-                    stop = DataUtil.getInt(patternMap, "stop");
-                }
+                int stop = rewardMap.node("pattern", "stop").getInt(maxLevel);
                 if (stop > maxLevel) {
                     stop = maxLevel;
                 }
@@ -77,15 +96,15 @@ public abstract class RewardManager {
     }
 
     @Nullable
-    protected SkillReward parseReward(Map<?, ?> map) {
+    protected SkillReward parseReward(ConfigurationNode config, Skill skill) {
         // Get type of reward
-        String type = DataUtil.getString(map, "type");
+        String type = config.node("type").getString("");
         // Parse the type
         for (RewardType rewardType : RewardType.values()) {
             if (rewardType.getKey().equalsIgnoreCase(type)) {
                 try {
-                    Constructor<? extends RewardParser> constructor = rewardType.getParser().getConstructor(AuraSkillsPlugin.class);
-                    return constructor.newInstance(plugin).parse(map);
+                    Constructor<? extends RewardParser> constructor = rewardType.getParser().getConstructor(AuraSkillsPlugin.class, Skill.class);
+                    return constructor.newInstance(plugin, skill).parse(config);
                 } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }

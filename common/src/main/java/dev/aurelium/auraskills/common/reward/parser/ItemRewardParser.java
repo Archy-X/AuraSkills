@@ -1,40 +1,38 @@
 package dev.aurelium.auraskills.common.reward.parser;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.type.RewardMessage;
 import dev.aurelium.auraskills.common.reward.SkillReward;
-import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.auraskills.common.reward.builder.ItemRewardBuilder;
-
-import java.util.Map;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class ItemRewardParser extends RewardParser {
 
-    public ItemRewardParser(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public ItemRewardParser(AuraSkillsPlugin plugin, Skill skill) {
+        super(plugin, skill);
     }
 
     @Override
-    public SkillReward parse(Map<?, ?> map) {
-        String key = getString(map, "key");
+    public SkillReward parse(ConfigurationNode config) {
+        String key = config.node("key").getString("");
         NamespacedId itemKey = NamespacedId.fromDefault(key);
-        ItemRewardBuilder builder = new ItemRewardBuilder(plugin).itemKey(itemKey);
 
-        int amount = 1;
-        if (map.containsKey("amount")) {
-            int definedAmount = getInt(map, "amount");
-            builder.amount(definedAmount);
-            amount = definedAmount;
+        int amount;
+        if (config.node("amount").empty()) {
+            amount = plugin.getItemRegistry().getItemAmount(itemKey);
         } else {
-            int registryAmount = plugin.getItemRegistry().getItemAmount(itemKey);
-            if (registryAmount != 0) {
-                amount = registryAmount;
-            }
+            amount = config.node("amount").getInt(-1);
         }
 
-        if (map.containsKey("menu_message")) {
-            builder.menuMessage(getString(map, "menu_message"));
+        var builder = new ItemRewardBuilder(plugin)
+                .itemKey(itemKey)
+                .amount(amount);
+
+        if (!config.node("menu_message").empty()) {
+            builder.menuMessage(config.node("menu_message").getString());
         } else {
             // Use default menu message
             String effectiveName = plugin.getItemRegistry().getEffectiveItemName(itemKey);
@@ -52,8 +50,8 @@ public class ItemRewardParser extends RewardParser {
             }
         }
 
-        if (map.containsKey("chat_message")) {
-            builder.chatMessage(getString(map, "chat_message"));
+        if (!config.node("chat_message").empty()) {
+            builder.chatMessage(config.node("chat_message").getString());
         } else {
             // Use default chat message
             String effectiveName = plugin.getItemRegistry().getEffectiveItemName(itemKey);
@@ -71,11 +69,11 @@ public class ItemRewardParser extends RewardParser {
             }
         }
 
-        if (map.containsKey("message")) {
-            String message = getString(map, "message");
+        if (!config.node("message").empty()) {
+            String message = config.node("message").getString();
             builder.chatMessage(message).menuMessage(message);
         }
 
-        return builder.build();
+        return builder.skill(skill).build();
     }
 }

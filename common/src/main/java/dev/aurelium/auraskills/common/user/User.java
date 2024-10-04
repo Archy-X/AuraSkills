@@ -37,9 +37,12 @@ public abstract class User {
     private final Map<Skill, Integer> skillLevels;
     private final Map<Skill, Double> skillXp;
 
-    private final Map<Stat, Double> statLevels;
+    private final Map<Stat, Double> statLevels; // Current stat levels
+    private final Map<Stat, Double> baseStatLevels; // Stat levels from skill rewards only
     private final Map<String, StatModifier> statModifiers;
 
+    private final Map<Trait, Double> traitValues; // Current trait values
+    private final Map<Trait, Double> baseTraitValues; // Trait values from trait base and stats only
     private final Map<String, TraitModifier> traitModifiers;
 
     private double mana;
@@ -70,7 +73,10 @@ public abstract class User {
         this.skillLevels = new ConcurrentHashMap<>();
         this.skillXp = new ConcurrentHashMap<>();
         this.statLevels = new ConcurrentHashMap<>();
+        this.baseStatLevels = new ConcurrentHashMap<>();
         this.statModifiers = new ConcurrentHashMap<>();
+        this.traitValues = new ConcurrentHashMap<>();
+        this.baseTraitValues = new ConcurrentHashMap<>();
         this.traitModifiers = new ConcurrentHashMap<>();
         this.abilityData = new ConcurrentHashMap<>();
         this.manaAbilityData = new ConcurrentHashMap<>();
@@ -190,13 +196,7 @@ public abstract class User {
     }
 
     public double getBaseStatLevel(Stat stat) {
-        double level = getStatLevel(stat);
-        for (StatModifier modifier : statModifiers.values()) {
-            if (modifier.stat() == stat) {
-                level -= modifier.value();
-            }
-        }
-        return level;
+        return baseStatLevels.getOrDefault(stat, 0.0);
     }
 
     @Nullable
@@ -286,13 +286,23 @@ public abstract class User {
         map.put(modifier.name(), modifier);
         if (levels != null) {
             double updatedLevel = 0.0;
+            double current = levels.getOrDefault(modifier.type(), 0.0);
             switch (modifier.operation()) {
-                case ADD -> updatedLevel = levels.getOrDefault(modifier.type(), 0.0) + modifier.value();
-                case MULTIPLY -> updatedLevel = levels.getOrDefault(modifier.type(), 0.0) * modifier.value();
-                case SCALE -> {
-                    double current = levels.getOrDefault(modifier.type(), 0.0);
-                    updatedLevel = current + current * modifier.value();
+                case ADD, ADD_PERCENT -> {
+                    // Fully recalculate the value
+                    double addModSum = 0.0;
+                    double multiplyModProduct = 1.0;
+                    double addPercentSum = 0.0;
+                    for (T mapModifier : map.values()) {
+                        switch (mapModifier.operation()) {
+                            case ADD -> addModSum += mapModifier.value();
+                            case MULTIPLY -> addModSum *= mapModifier.value();
+                            case ADD_PERCENT -> addPercentSum += mapModifier.value();
+                        }
+                    }
+                    updatedLevel = addModSum * multiplyModProduct * (1 + addPercentSum / 100);
                 }
+                case MULTIPLY -> updatedLevel = current * modifier.value();
             }
             levels.put(modifier.type(), updatedLevel);
         }
@@ -307,7 +317,12 @@ public abstract class User {
         AuraSkillsModifier<V> modifier = map.get(name);
         if (modifier == null) return false;
         if (levels != null) {
-            levels.put(modifier.type(), levels.get(modifier.type()) - modifier.value());
+            double updatedLevel = 0.0;
+            double current = levels.getOrDefault(modifier.type(), 0.0);
+            switch (modifier.operation()) {
+                case MULTIPLY -> updatedLevel = current / modifier.value();
+            }
+            levels.put(modifier.type(), updatedLevel);
         }
         map.remove(name);
         // Reloads modifier type
@@ -315,6 +330,24 @@ public abstract class User {
             plugin.getStatManager().reload(this, modifier.type());
         }
         return true;
+    }
+
+    private <T extends AuraSkillsModifier<V>, V> double recalculateStatLevel(double baseLevel, Map<String, T> modifiers) {
+        double addModSum = 0.0;
+        double multiplyModProduct = 1.0;
+        double addPercentSum = 0.0;
+        for (T mapModifier : modifiers.values()) {
+            switch (mapModifier.operation()) {
+                case ADD -> addModSum += mapModifier.value();
+                case MULTIPLY -> addModSum *= mapModifier.value();
+                case ADD_PERCENT -> addPercentSum += mapModifier.value();
+            }
+        }
+        return (baseLevel + addModSum) * multiplyModProduct * (1 + addPercentSum / 100);
+    }
+
+    private <T extends AuraSkillsModifier<V>, V> void recalculateModifiers(Map<String, T> map, Map<V, Double> levels) {
+        // TODO recalculate modifiers as such: (add + add) * (1 + scale + scale) * multiply * multiply
     }
 
     public double getMana() {

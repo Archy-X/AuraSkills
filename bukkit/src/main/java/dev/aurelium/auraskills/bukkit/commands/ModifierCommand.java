@@ -2,8 +2,10 @@ package dev.aurelium.auraskills.bukkit.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import com.google.common.base.Enums;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -31,12 +33,15 @@ public class ModifierCommand extends BaseCommand {
 
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
-    @CommandCompletion("@players @stats @nothing @nothing true true")
+    @CommandCompletion("@players @stats @nothing @nothing true|false true|false @modifier_operations")
     @Description("Adds a stat modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack, @Default("add") String operation) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        StatModifier modifier = new StatModifier(name, stat, value);
+
+        var operationVal = Enums.getIfPresent(Operation.class, operation.toUpperCase(Locale.ROOT)).or(Operation.ADD);
+
+        StatModifier modifier = new StatModifier(name, stat, value, operationVal);
         if (!user.getStatModifiers().containsKey(name)) {
             user.addStatModifier(modifier);
             if (!silent) {
