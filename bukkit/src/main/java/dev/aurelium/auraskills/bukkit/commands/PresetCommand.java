@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.preset.ConfigPreset;
@@ -28,6 +29,7 @@ public class PresetCommand extends BaseCommand {
 
     @Subcommand("load")
     @CommandPermission("auraskills.command.preset")
+    @Description("%desc_preset_load")
     public void onLoad(CommandIssuer issuer, String file) {
         Locale locale = plugin.getLocale(issuer);
 
