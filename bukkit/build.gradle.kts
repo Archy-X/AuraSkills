@@ -8,7 +8,11 @@ plugins {
     id("com.modrinth.minotaur") version "2.+"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
@@ -100,7 +104,7 @@ tasks {
         options.encoding = "UTF-8"
         options.compilerArgs.add("-parameters")
         options.isFork = true
-        options.forkOptions.executable = "javac"
+        options.forkOptions.executable = System.getProperty("java.home") + "/bin/javac"
     }
 
     processResources {

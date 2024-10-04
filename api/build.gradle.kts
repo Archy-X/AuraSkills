@@ -14,7 +14,7 @@ dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
 }
 
-tasks.withType<JavaCompile>() {
+tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
 }
@@ -34,7 +34,9 @@ tasks {
 java {
     withJavadocJar()
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
 }
 
 if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePassword")) {
