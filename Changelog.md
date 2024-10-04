@@ -2,6 +2,32 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.4
+
+### New Features
+- Add more permission nodes with child permissions
+  - auraskills.* contains permissions for all commands
+  - auraskills.command.user contains permissions users have by default
+  - auraskills.skill.* contains permissions to use all skills
+  - auraskills.command.item.* contains permissions related to item modifier creation
+  - auraskills.command.armor.* contains permissions related to armor modifier creation
+  - auraskills.command.admin contains permissions for all admin/op commands
+
+### Changes
+- Respect cancelled drops when applying block luck
+- Only show loaded skills in profile command
+- Update Chinese Simplified, Chinese Traditional, and Indonesian messages
+
+### Bug Fixes
+- Fix health value must be between error when changing worlds
+- Fix boss bar progress must be between error when max skill level
+- Fix NPE when updating leaderboards on MySQL
+
+### API Changes
+- SkillsUser#setSkillLevel will now refresh stats, permissions, rewards, and item modifiers
+- Add setSkillLevel method with boolean parameter to control whether to refresh stats
+- Add CustomManaAbilityBuilder#infoFormats to set the list of menu format names to use in the menu description
+
 ## 2.2.3
 
 ### New Features
