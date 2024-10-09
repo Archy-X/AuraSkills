@@ -8,7 +8,11 @@ plugins {
     id("com.modrinth.minotaur") version "2.+"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 repositories {
     mavenCentral()
@@ -56,6 +60,10 @@ dependencies {
     compileOnly("io.th0rgal:oraxen:1.173.0")
 }
 
+val compiler = javaToolchains.compilerFor {
+    languageVersion = JavaLanguageVersion.of(17)
+}
+
 tasks {
     withType<ShadowJar> {
         val projectVersion: String by project
@@ -100,7 +108,7 @@ tasks {
         options.encoding = "UTF-8"
         options.compilerArgs.add("-parameters")
         options.isFork = true
-        options.forkOptions.executable = "javac"
+        options.forkOptions.executable = compiler.map { it.executablePath }.get().toString()
     }
 
     processResources {
