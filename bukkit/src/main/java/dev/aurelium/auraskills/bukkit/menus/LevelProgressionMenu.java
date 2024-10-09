@@ -49,7 +49,9 @@ public class LevelProgressionMenu {
                 "start_level", 1,
                 "track", SkillLevelItem.getDefaultTrack()));
 
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
+        menu.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
+        menu.replace("skill_key", p -> ((Skill) p.menu().getProperty("skill")).getId().getKey());
+
         menu.replaceTitle("page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
 
         menu.properties(m -> {
@@ -111,8 +113,6 @@ public class LevelProgressionMenu {
         });
 
         menu.item("sources", item -> {
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
-
             item.onClick(c -> {
                 BuiltMenu sourcesMenu = plugin.getSlate().getBuiltMenu("sources");
                 MenuInfo info = new MenuInfo(plugin.getSlate(), c.player(), c.menu());
@@ -121,8 +121,6 @@ public class LevelProgressionMenu {
         });
 
         menu.item("abilities", item -> {
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
-
             item.onClick(c -> {
                 BuiltMenu abilitiesMenu = plugin.getSlate().getBuiltMenu("abilities");
                 MenuInfo info = new MenuInfo(plugin.getSlate(), c.player(), c.menu());
@@ -144,7 +142,6 @@ public class LevelProgressionMenu {
         });
 
         menu.item("job", item -> {
-            item.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
             // Hide if jobs are disabled
             item.modify(i -> {
                 Skill skill = (Skill) i.menu().getProperty("skill");
@@ -180,8 +177,6 @@ public class LevelProgressionMenu {
         });
 
         menu.component("job_select", null, component -> {
-            component.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
-
             component.shouldShow(t -> {
                 User user = plugin.getUser(t.player());
                 Skill skill = (Skill) t.menu().getProperty("skill");
