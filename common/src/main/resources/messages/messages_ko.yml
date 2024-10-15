@@ -330,7 +330,7 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>스킬<dark_gray>]<reset> "
   antiafk:
-    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    failed: ""
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
