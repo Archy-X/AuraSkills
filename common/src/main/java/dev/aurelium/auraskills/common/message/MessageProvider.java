@@ -56,6 +56,8 @@ public abstract class MessageProvider implements PolyglotProvider {
                 .build();
         this.polyglot = new Polyglot(this, config);
         this.manager = this.polyglot.getMessageManager();
+        // Register message updates
+        Arrays.stream(MessageUpdates.values()).forEach(this.manager::registerMessageUpdate);
         this.defaultLanguage = null;
     }
 

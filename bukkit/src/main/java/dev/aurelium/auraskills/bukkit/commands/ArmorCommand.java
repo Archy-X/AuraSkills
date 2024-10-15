@@ -38,7 +38,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("modifier add")
     @CommandCompletion("@stats @nothing false|true")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Adds an armor stat modifier to the item held, along with lore by default.")
+    @Description("%desc_armor_modifier_add")
     public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -62,7 +62,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("modifier remove")
     @CommandCompletion("@stats false|true")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Removes an armor stat modifier from the item held, and the lore associated with it by default.")
+    @Description("%desc_armor_modifier_remove")
     public void onArmorModifierRemove(@Flags("itemheld") Player player, Stat stat, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -90,7 +90,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("modifier list")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Lists all armor stat modifiers on the item held.")
+    @Description("%desc_armor_modifier_list")
     public void onArmorModifierList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -104,7 +104,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("modifier removeall")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Removes all armor stat modifiers from the item held.")
+    @Description("%desc_armor_modifier_removeall")
     public void onArmorModifierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
@@ -117,7 +117,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("trait add")
     @CommandCompletion("@traits @nothing false|true")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Adds an armor trait modifier to the item held, along with lore by default.")
+    @Description("%desc_armor_trait_add")
     public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -142,7 +142,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("trait remove")
     @CommandCompletion("@traits")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Removes an armor trait modifier from the item held.")
+    @Description("%desc_armor_trait_remove")
     public void onItemTraitRemove(@Flags("itemheld") Player player, Trait trait) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -167,7 +167,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("trait list")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Lists all item trait modifiers on the item held.")
+    @Description("%desc_armor_trait_list")
     public void onItemTraitList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -181,7 +181,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("trait removeall")
     @CommandPermission("auraskills.command.armor.modifier")
-    @Description("Removes all armor trait modifiers from the item held.")
+    @Description("%desc_armor_trait_removeall")
     public void onItemTraitRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
 
@@ -198,7 +198,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("requirement add")
     @CommandPermission("auraskills.command.armor.requirement")
     @CommandCompletion("@skills @nothing false|true")
-    @Description("Adds an armor requirement to the item held, along with lore by default")
+    @Description("%desc_armor_requirement_add")
     public void onArmorRequirementAdd(@Flags("itemheld") Player player, Skill skill, int level, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -222,7 +222,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("requirement remove")
     @CommandPermission("auraskills.command.armor.requirement")
     @CommandCompletion("@skills false|true")
-    @Description("Removes an armor requirement from the item held, along with the lore associated it by default.")
+    @Description("%desc_armor_requirement_remove")
     public void onArmorRequirementRemove(@Flags("itemheld") Player player, Skill skill, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -245,7 +245,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("requirement list")
     @CommandPermission("auraskills.command.armor.requirement")
-    @Description("Lists the armor requirements on the item held.")
+    @Description("%desc_armor_requirement_list")
     public void onArmorRequirementList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         player.sendMessage(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_LIST_HEADER, locale));
@@ -259,7 +259,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("requirement removeall")
     @CommandPermission("auraskills.command.armor.requirement")
-    @Description("Removes all armor requirements from the item held.")
+    @Description("%desc_armor_requirement_removeall")
     public void onArmorRequirementRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);
@@ -272,7 +272,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("multiplier add")
     @CommandCompletion("@skills_global @nothing true|false")
     @CommandPermission("auraskills.command.armor.multiplier")
-    @Description("Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.")
+    @Description("%desc_armor_multiplier_add")
     public void onArmorMultiplierAdd(@Flags("itemheld") Player player, String target, double value, @Default("true") boolean lore) {
         ItemStack item = player.getInventory().getItemInMainHand();
         Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(target));
@@ -320,7 +320,7 @@ public class ArmorCommand extends BaseCommand {
     @Subcommand("multiplier remove")
     @CommandCompletion("@skills_global")
     @CommandPermission("auraskills.command.armor.multiplier")
-    @Description("Removes an armor multiplier of a the specified skill or global from the held item.")
+    @Description("%desc_armor_multiplier_remove")
     public void onArmorMultiplierRemove(@Flags("itemheld") Player player, String target) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -357,7 +357,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("multiplier list")
     @CommandPermission("auraskills.command.armor.multiplier")
-    @Description("Lists all armor multipliers on the held item.")
+    @Description("%desc_armor_multiplier_list")
     public void onArmorMultiplierList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
@@ -378,7 +378,7 @@ public class ArmorCommand extends BaseCommand {
 
     @Subcommand("multiplier removeall")
     @CommandPermission("auraskills.command.armor.multiplier")
-    @Description("Removes all armor multipliers from the item held.")
+    @Description("%desc_armor_multiplier_removeall")
     public void onArmorMultiplierRemoveAll(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         SkillsItem skillsItem = new SkillsItem(player.getInventory().getItemInMainHand(), plugin);

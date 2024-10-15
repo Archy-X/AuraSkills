@@ -50,7 +50,7 @@ public class ReloadExecutor {
             plugin.getHookManager().getHook(HologramsHook.class).loadConfig();
         }
         reloadPlayers();
-        sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD, locale));
+        sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD_RELOADED, locale));
     }
 
     private void reloadPlayers() {
