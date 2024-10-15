@@ -328,11 +328,11 @@ acf:
     location_please_specify_xyz: "<red>ข้อผิดพลาด: กรุณาระบุพิกัด x, y, and z. ตัวอย่าง: <yellow>world:x,y,z."
     location_console_not_relative: "<red>ข้อผิดพลาด: คอนโซลไม่สามารถใช้พิกัดสัมพัทธ์สำหรับตำแหน่งได้"
 commands:
-  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  prefix: ""
   antiafk:
     failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: ""
       entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
