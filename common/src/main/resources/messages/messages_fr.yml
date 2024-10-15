@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Erreur: La console ne peut pas utiliser de coordonnées relatives pour l'emplacement."
 commands:
   prefix: "<dark_gray>[<aqua>Compétences<dark_gray>] "
+  antiafk:
+    failed: "<red>Le joueur {player} a échoué la vérification anti-afk {check} <gray>(Compte: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Les modificateurs d'armure suivant ont été trouvés :"
       removeall:
         removed: "<gray>Tous les modificateurs d'armure ont été supprimés de votre objet"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplicateur avec la valeur <aqua>{value} <gray>a été ajouté à votre article"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "<gray>Le modificateur de {color}{stat} <gray>avec le niveau <aqua>{value} <gray>a été ajouté à votre objet"
-        already_exists: "<yellow>Un modificateur d'item avec la stat {color}{stat} <yellow>existe déjà sur votre item ! Supprimez-le d'abord avec /sk item modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Votre objet n'a pas de modificateur de {color}{stat}!"
         removed: "<gray>Le modificateur de {color}{stat} <gray>a été retiré de votre objet"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Modificateur d'objet trouvé:"
       removeall:
         removed: "<gray>Tout les modificateurs ont été supprimés de votre objet"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplicateur avec la valeur <aqua>{value} <gray>a été ajouté à votre article"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Élément non enregistré avec la clé {key}"
       not_registered: "<yellow>Il n'y a aucun élément enregistré avec la clé {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Langue définie sur <aqua>{lang}"
     not_found: "<yellow>LLangue introuvable!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<aqua>{num} <gray>modificateurs de statistiques ont été supprimé du joueur <gold>{player}"
       removed_one_stat: "<aqua>{num} <gray>modificateurs de {color}{stat} <gray>ont été supprimé du jiueur <gold>{player}"
       players_only: "<yellow>Seul un joueur peut supprimer ses propre modificateurs! Essayez de spécifier un joueur."
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Globale
     list: "<white>Multiplicateur d'XP de <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Compétence inconnue!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Statistiques inconnues !"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Le joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur."
 leveler:
   level_up: "{skill} Niveau supérieur"
@@ -568,6 +601,7 @@ menus:
     stats: "Stats"
     stats_desc: "Gagnez des buffs de stats en augmentant le niveau de compétences"
     stats_click: "Cliquez pour en savoir plus ou voir vos statistiques"
+    active_job: Active Job
   level_progression:
     level_progression_title: "Niveau {skill} - Page {page}"
     your_ranking: "Votre classement de compétences"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Les aptitudes</2> <1>sont des compétences passives que vous débloquez et améliorez au fur et à mesure que vous améliorez vos compétences.</1>"
     mana_abilities_desc: "<3>Les capacités de mana</3> <1>sont un type spécial de capacité qui nécessite l'activation et consomme de la mana.</1>"
     abilities_click: "Cliquez pour voir les capacités de {skill}"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Vos statistiques
     skills: "Compétences"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: PV
   xp: XP
-file_version: 32
+file_version: 35
