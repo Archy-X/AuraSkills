@@ -138,7 +138,7 @@ public class BrewingLeveler extends SourceLeveler {
         if (ingredient == null) return;
         ItemStack clonedIngredient = ingredient.clone();
         ItemStack[] beforeItems = Arrays.copyOf(before.getContents(), 3); // Items in result slots before
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtLocation(event.getBlock().getLocation(), () -> {
             BlockState blockState = event.getBlock().getState();
             if (blockState instanceof BrewingStand brewingStand) {
                 BrewerInventory after = brewingStand.getInventory();

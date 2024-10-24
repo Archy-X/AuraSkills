@@ -140,7 +140,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private LeaderboardManager leaderboardManager;
     private BukkitUiProvider uiProvider;
     private RewardManager rewardManager;
-    private Scheduler scheduler;
+    private BukkitScheduler scheduler;
     private StorageProvider storageProvider;
     private Slate slate;
     private MenuFileManager menuFileManager;
@@ -578,7 +578,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public Scheduler getScheduler() {
+    public BukkitScheduler getScheduler() {
         return scheduler;
     }
 

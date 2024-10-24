@@ -311,7 +311,7 @@ public class SkillsRootCommand extends BaseCommand {
 			player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.CLAIMITEMS_NO_ITEMS, locale));
 			return;
 		}
-		UnclaimedItemsMenu.getInventory(plugin, user).open(player);
+		plugin.getScheduler().executeAtEntity(player, (t) -> UnclaimedItemsMenu.getInventory(plugin, user).open(player));
 	}
 
 	@Subcommand("version")

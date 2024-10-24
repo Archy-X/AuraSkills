@@ -115,8 +115,10 @@ public class BukkitLevelManager extends LevelManager {
     @Override
     public void reloadModifiers(User user) {
         Player player = ((BukkitUser) user).getPlayer();
-        if (player != null) {
-            plugin.getModifierManager().reloadPlayer(player);
-        }
+        plugin.getScheduler().executeAtEntity(player, t -> {
+            if (player != null) {
+                plugin.getModifierManager().reloadPlayer(player);
+            }
+        });
     }
 }
