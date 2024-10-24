@@ -25,7 +25,7 @@ public class SkillCommands {
         
         protected void openMenu(Player player) {
             if (skill.isEnabled()) {
-                plugin.getScheduler().executeAtEntity(player, (t) -> new LevelProgressionOpener(plugin).open(player, skill));
+                new LevelProgressionOpener(plugin).open(player, skill);
             } else {
                 player.sendMessage(plugin.getCommandManager().formatMessage(plugin.getCommandManager().getCommandIssuer(player), MessageType.ERROR, MessageKeys.UNKNOWN_COMMAND));
             }
