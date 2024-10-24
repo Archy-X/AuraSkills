@@ -26,7 +26,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -393,17 +392,14 @@ public class SkillsRootCommand extends BaseCommand {
 				future.complete(null);
 			}
 		} else {
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					try {
-						future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
-					} catch (Exception e) {
-						future.complete(null);
-						e.printStackTrace();
-					}
+			plugin.getScheduler().executeAsync(() -> {
+				try {
+					future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
+				} catch (Exception e) {
+					future.complete(null);
+					e.printStackTrace();
 				}
-			}.runTaskAsynchronously(plugin);
+			});
 		}
 		return future;
 	}

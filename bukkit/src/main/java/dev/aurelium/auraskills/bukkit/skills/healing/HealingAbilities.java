@@ -15,9 +15,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class HealingAbilities extends AbilityImpl {
 
@@ -52,6 +52,7 @@ public class HealingAbilities extends AbilityImpl {
 
     @EventHandler
     public void revival(PlayerRespawnEvent event) {
+        // TODO: PlayerRespawnEvent doesn't exists on Folia
         var ability = Abilities.REVIVAL;
 
         if (isDisabled(ability)) return;
@@ -76,13 +77,11 @@ public class HealingAbilities extends AbilityImpl {
                     , "{value}", NumberUtil.format1(healthBonus)
                     , "{value_2}", NumberUtil.format1(regenerationBonus)));
         }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                user.removeStatModifier(REVIVAL_HEALTH_MODIFIER_NAME);
-                user.removeStatModifier(REVIVAL_REGEN_MODIFIER_NAME);
-            }
-        }.runTaskLater(plugin, 30 * 20);
+
+        plugin.getScheduler().scheduleAtEntity(player, () -> {
+            user.removeStatModifier(REVIVAL_HEALTH_MODIFIER_NAME);
+            user.removeStatModifier(REVIVAL_REGEN_MODIFIER_NAME);
+        }, 30, TimeUnit.SECONDS);
     }
 
     @EventHandler(priority = EventPriority.LOW)
