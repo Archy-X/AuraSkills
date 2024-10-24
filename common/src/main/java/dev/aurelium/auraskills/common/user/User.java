@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.common.user;
 
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -67,22 +69,23 @@ public abstract class User {
     public User(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.skillLevels = new ConcurrentHashMap<>();
-        this.skillXp = new ConcurrentHashMap<>();
-        this.statLevels = new ConcurrentHashMap<>();
-        this.statModifiers = new ConcurrentHashMap<>();
-        this.traitModifiers = new ConcurrentHashMap<>();
-        this.abilityData = new ConcurrentHashMap<>();
-        this.manaAbilityData = new ConcurrentHashMap<>();
-        this.metadata = new ConcurrentHashMap<>();
-        this.actionBarSettings = new ConcurrentHashMap<>();
+        this.skillLevels = Maps.newConcurrentMap();
+        this.skillXp = Maps.newConcurrentMap();
+        this.statLevels = Maps.newConcurrentMap();
+        this.statModifiers = Maps.newConcurrentMap();
+        this.traitModifiers = Maps.newConcurrentMap();
+        this.abilityData = Maps.newConcurrentMap();
+        this.manaAbilityData = Maps.newConcurrentMap();
+        this.metadata = Maps.newConcurrentMap();
+        this.actionBarSettings = Maps.newConcurrentMap();
         this.unclaimedItems = new LinkedList<>();
         this.saving = false;
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
-        this.multipliers = new HashMap<>();
-        this.jobs = new HashSet<>();
+        this.multipliers = Maps.newConcurrentMap();
+        this.jobs = Sets.newConcurrentHashSet();
         this.jobsBatchData = new JobsBatchData();
+        // This should be fine as a regular list
         this.sessionAntiAfkLogs = new ArrayList<>();
         this.lastJobSelectTime = 0;
     }
