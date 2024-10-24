@@ -647,14 +647,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void runConsoleCommand(String command) {
-        getServer().dispatchCommand(getServer().getConsoleSender(), command);
+        // Console commands need to be run on the global region scheduler
+        scheduler.executeSync(() -> getServer().dispatchCommand(getServer().getConsoleSender(), command));
     }
 
     @Override
     public void runPlayerCommand(User user, String command) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player != null) {
-            getServer().dispatchCommand(player, command);
+            // Use performCommand and redirect it to the proper thread
+            scheduler.executeAtEntity(player, (t) -> player.performCommand(command));
         }
     }
 
