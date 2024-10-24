@@ -330,7 +330,7 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>Khả năng<dark_gray>]<reset> "
   antiafk:
-    failed: ""
+    failed: "<red>{player} không vượt qua lần kiểm tra anti-AFK {check}<gray>(Số lần: {count})"
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
@@ -553,7 +553,7 @@ commands:
   manaability:
     cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Khả năng không khả dụng!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Kĩ năng Ma pháp không khả dụng!"
   unknown_stat: "<yellow>Chỉ số không khả dụng!"
   unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Người chơi không có hồ sơ Khả năng. Hãy thử thoát ra và vào lại hoặc khởi động lại máy chủ."
@@ -601,7 +601,7 @@ menus:
     stats: "Chỉ số"
     stats_desc: "Tăng Chỉ số khi thăng cấp Khả năng"
     stats_click: "Nhấn để xem Chỉ số của bạn"
-    active_job: Active Job
+    active_job: Nghề hiện tại
   level_progression:
     level_progression_title: "Cấp độ của {skill} - Trang {page}"
     your_ranking: "Xếp hạng Khả năng của bạn"
@@ -619,13 +619,13 @@ menus:
     abilities_desc: "<2>Kĩ năng bị động</2> <1>có thể được mở khóa và thăng cấp khi bạn thăng cấp Kĩ năng.</1>"
     mana_abilities_desc: "<3>Kĩ năng Ma pháp</3> <1>là một dạng Kĩ năng đặc biệt, có thể được kích hoạt chủ động và tiêu tốn Mana.</1>"
     abilities_click: "Nhấn để xem Kĩ năng của {skill}"
-    job: Job
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    job: Nghề nghiệp
+    job_desc: Chọn nghề {skill} giúp bạn nhận thêm tiền khi nhận XP.
+    job_select: Chuột trái để chọn nghề {skill}
+    job_active: Bạn đang làm nghề này rồi
+    job_quit: Chuột phải để nghỉ việc này
+    job_limit: Số nghề nghiệp của bạn đã đạt giới hạn. Bỏ một nghề đang làm để chọn thêm.
+    job_cooldown: Bạn vừa đổi nghề gần đây. Bạn có thể chọn lại trong {time}.
   stats:
     stats_title: Chỉ số của bạn
     skills: "Khả năng"
