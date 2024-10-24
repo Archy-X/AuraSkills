@@ -49,6 +49,7 @@ public class UnclaimedItemsMenu implements InventoryProvider {
                 item.setAmount(amount);
                 contents.set(row, column, ClickableItem.from(getDisplayItem(item), data -> {
                     // Give item on click
+                    // This should be running already on the thread that owns the player entity
                     ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
                     if (leftoverItem == null) { // All items were added
                         user.getUnclaimedItems().remove(keyIntPair);
