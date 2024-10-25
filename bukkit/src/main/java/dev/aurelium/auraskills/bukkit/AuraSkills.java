@@ -78,7 +78,6 @@ import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.migration.MigrationManager;
 import dev.aurelium.auraskills.common.reward.RewardManager;
-import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
@@ -97,6 +96,7 @@ import dev.aurelium.auraskills.common.util.PlatformUtil;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.slate.Slate;
 import dev.aurelium.slate.inv.InventoryManager;
+import dev.aurelium.slate.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -223,7 +223,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
         modifierManager = new BukkitModifierManager(this);
-        inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
+        inventoryManager = new InventoryManager(this, Scheduler.createScheduler(this));
         inventoryManager.init();
         rewardManager = new BukkitRewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
