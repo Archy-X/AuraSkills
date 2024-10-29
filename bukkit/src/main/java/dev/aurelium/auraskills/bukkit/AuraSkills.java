@@ -223,7 +223,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager = new LeaderboardManager(this);
         uiProvider = new BukkitUiProvider(this);
         modifierManager = new BukkitModifierManager(this);
-        inventoryManager = new InventoryManager(this);
+        inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
         inventoryManager.init();
         rewardManager = new BukkitRewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
