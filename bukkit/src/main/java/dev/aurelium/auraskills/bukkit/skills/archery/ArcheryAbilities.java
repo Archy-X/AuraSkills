@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
@@ -16,7 +17,6 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
@@ -106,7 +106,7 @@ public class ArcheryAbilities extends AbilityImpl {
         if (failsChecks(player, ability)) return;
 
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
-            AttributeInstance speed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            AttributeInstance speed = entity.getAttribute(AttributeCompat.MOVEMENT_SPEED);
             if (speed == null) return;
             // Check if there already is a stun modifier
             for (AttributeModifier existingModifier : speed.getModifiers()) {
@@ -139,7 +139,7 @@ public class ArcheryAbilities extends AbilityImpl {
 
     private void scheduleStunRemoval(LivingEntity entity) {
         plugin.getScheduler().scheduleSync(() -> {
-            AttributeInstance newSpeed = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+            AttributeInstance newSpeed = entity.getAttribute(AttributeCompat.MOVEMENT_SPEED);
             if (newSpeed == null) return;
             for (AttributeModifier attributeModifier : newSpeed.getModifiers()) {
                 if (isStunModifier(attributeModifier)) {
@@ -152,7 +152,7 @@ public class ArcheryAbilities extends AbilityImpl {
     @EventHandler
     public void removeStun(PlayerQuitEvent event) {
         // Removes stun on logout
-        AttributeInstance speed = event.getPlayer().getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        AttributeInstance speed = event.getPlayer().getAttribute(AttributeCompat.MOVEMENT_SPEED);
         if (speed == null) return;
 
         for (AttributeModifier attributeModifier : speed.getModifiers()) {

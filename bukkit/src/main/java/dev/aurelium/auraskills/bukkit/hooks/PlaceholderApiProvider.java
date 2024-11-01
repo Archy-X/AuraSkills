@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.User;
@@ -20,7 +21,6 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -104,7 +104,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
         //Gets max hp
         if (identifier.equals("hp_max")) {
-            AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
             if (attribute != null) {
                 return String.valueOf(Math.round(attribute.getValue() * Traits.HP.optionDouble("action_bar_scaling")));
             } else {
@@ -119,7 +119,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
         //Gets HP Percent as an integer
         if (identifier.equals("hp_percent")) {
-            AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
             if (attribute != null) {
                 return String.valueOf(Math.round(player.getHealth() / attribute.getValue()));
             } else {

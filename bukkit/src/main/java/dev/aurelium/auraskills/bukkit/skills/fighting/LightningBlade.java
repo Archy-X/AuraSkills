@@ -3,12 +3,12 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ReadiedManaAbility;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
@@ -38,7 +38,7 @@ public class LightningBlade extends ReadiedManaAbility {
     @Override
     @SuppressWarnings("removal")
     public void onActivate(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
         if (attribute == null) return;
 
         // Remove existing modifier if exists
@@ -61,7 +61,7 @@ public class LightningBlade extends ReadiedManaAbility {
 
     @Override
     public void onStop(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
         if (attribute == null) return;
 
         for (AttributeModifier modifier : attribute.getModifiers()) {
@@ -125,7 +125,7 @@ public class LightningBlade extends ReadiedManaAbility {
             return;
         }
         // Remove attack speed attribute modifier
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
         if (attribute == null) return;
         for (AttributeModifier modifier : attribute.getModifiers()) {
             if (modifier.getName().equals("AureliumSkills-LightningBlade")) {

@@ -5,11 +5,11 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
@@ -53,7 +53,7 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return 0.0;
         double current = attribute.getValue();
         // Subtract skills attribute value
@@ -112,7 +112,7 @@ public class HpTrait extends TraitImpl {
             return;
         }
 
-        var attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        var attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         double maxHealth = attribute == null ? 20.0 : attribute.getValue();
 
         double newHealth = worldChangeHealth.get(playerID);
@@ -129,7 +129,7 @@ public class HpTrait extends TraitImpl {
         Trait trait = Traits.HP;
 
         double modifier = user.getBonusTraitLevel(trait);
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
         double originalMaxHealth = attribute.getValue();
         boolean hasChange = true;
@@ -206,7 +206,7 @@ public class HpTrait extends TraitImpl {
     }
 
     private void applyScaling(Player player) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
 
         if (Traits.HP.isEnabled() && Traits.HP.optionBoolean("health_scaling", true)) {

@@ -4,10 +4,10 @@ import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
@@ -29,7 +29,7 @@ public class LuckTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.LUCK);
         if (attribute == null) {
             return 0.0;
         }
@@ -60,7 +60,7 @@ public class LuckTrait extends TraitImpl {
 
     @SuppressWarnings("removal")
     private void setLuck(Player player) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_LUCK);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.LUCK);
         if (attribute == null) {
             return;
         }

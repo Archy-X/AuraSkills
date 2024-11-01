@@ -5,8 +5,8 @@ import dev.aurelium.auraskills.api.event.trait.CustomRegenEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,7 +64,7 @@ public class EnduranceAbilities extends AbilityImpl {
             if (isDisabled(ability)) return;
             if (failsChecks(player, ability)) return;
             // Gets health
-            AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
             if (attribute == null) return;
 
             double currentHealth = player.getHealth();
@@ -89,7 +89,7 @@ public class EnduranceAbilities extends AbilityImpl {
 
         User user = plugin.getUser(player);
         // Gets health
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
 
         double currentHealth = player.getHealth();

@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.loot.entity;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -32,14 +32,14 @@ public class VanillaEntitySupplier extends EntitySupplier {
 
         if (entity instanceof LivingEntity livingEntity) {
             if (getEntityProperties().health() != null) {
-                AttributeInstance attribute = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.MAX_HEALTH);
                 if (attribute != null) {
                     attribute.setBaseValue(getEntityProperties().health());
                     livingEntity.setHealth(Math.min(getEntityProperties().health(), attribute.getValue()));
                 }
             }
             if (properties.damage() != null) {
-                AttributeInstance attribute = livingEntity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.ATTACK_DAMAGE);
                 if (attribute != null) {
                     attribute.setBaseValue(getEntityProperties().damage());
                 }

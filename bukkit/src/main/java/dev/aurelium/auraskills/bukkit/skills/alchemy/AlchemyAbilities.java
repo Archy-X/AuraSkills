@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
@@ -19,7 +20,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -367,7 +367,7 @@ public class AlchemyAbilities extends AbilityImpl {
 
         User user = plugin.getUser(player);
 
-        AttributeInstance entityAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance entityAttribute = entity.getAttribute(AttributeCompat.MAX_HEALTH);
         if (entityAttribute == null) return;
 
         // Get the health to regen from a percent of the mob's health
@@ -375,7 +375,7 @@ public class AlchemyAbilities extends AbilityImpl {
         double percent = getValue(ability, user) / 100;
         double healthRegen = maxHealth * percent;
 
-        AttributeInstance playerAttribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance playerAttribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (playerAttribute == null) return;
 
         player.setHealth(player.getHealth() + Math.min(healthRegen, playerAttribute.getValue() - player.getHealth()));

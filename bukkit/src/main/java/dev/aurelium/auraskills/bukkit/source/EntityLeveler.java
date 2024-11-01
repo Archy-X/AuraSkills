@@ -10,13 +10,13 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource.EntityTriggers;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.MythicMobsHook;
 import dev.aurelium.auraskills.bukkit.skills.fighting.FightingAbilities;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -317,7 +317,7 @@ public class EntityLeveler extends SourceLeveler {
     private double getDamageMultiplier(LivingEntity entity, EntityXpSource source, EntityDamageEvent event) {
         double damageDealt = Math.min(entity.getHealth(), event.getFinalDamage());
         if (source.scaleXpWithHealth()) {
-            AttributeInstance healthAttribute = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance healthAttribute = entity.getAttribute(AttributeCompat.MAX_HEALTH);
             if (healthAttribute != null) {
                 double maxHealth = healthAttribute.getValue();
                 return damageDealt / maxHealth; // XP gain is damage/maxHealth * sourceXp

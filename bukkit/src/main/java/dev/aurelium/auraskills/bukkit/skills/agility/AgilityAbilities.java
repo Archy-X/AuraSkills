@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
+import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
@@ -17,7 +18,6 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -167,7 +167,7 @@ public class AgilityAbilities extends AbilityImpl {
         if (isDisabled(ability)) return;
         if (failsChecks(player, ability)) return;
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
 
         double maxHealth = attribute.getValue();
@@ -196,7 +196,7 @@ public class AgilityAbilities extends AbilityImpl {
     }
 
     public void removeFleeting(Player player) {
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
 
         if (attribute == null) return;
 
@@ -227,7 +227,7 @@ public class AgilityAbilities extends AbilityImpl {
 
         if (failsChecks(player, ability)) return;
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
 
         double maxHealth = attribute.getValue();
@@ -265,7 +265,7 @@ public class AgilityAbilities extends AbilityImpl {
 
         if (failsChecks(player, ability)) return;
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
         if (attribute == null) return;
 
         if (player.getHealth() < getFleetingHealthRequired() * attribute.getValue()) {
