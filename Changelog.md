@@ -2,6 +2,17 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.5
+
+### New Features
+- Add 1.21.3 support
+
+### Changes
+- The `{skill}` and `{skill_key}` placeholders can now be used anywhere in the level progression menu
+
+### Bug Fixes
+- Prevent errors from abnormal server version strings
+
 ## 2.2.4
 
 ### New Features
