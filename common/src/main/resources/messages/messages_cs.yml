@@ -25,7 +25,7 @@ abilities:
     info: "+{value}% Growth"
   lumberjack:
     name: Dřevorubec
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    desc: "Přidá +{value} štěstí při získávání jídla, které zvyšuje pravděpodobnost mimořádných dropů."
     info: "+{value} Foraging Luck"
   forager:
     name: Lesník
@@ -45,8 +45,8 @@ abilities:
     info: "{value}% 3x Poškození Odolnosti"
   lucky_miner:
     name: Horník Štěstěny
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Přidá +{value} štěstí při těžení, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při těžení"
   miner:
     name: Horník
     desc: "Získej o {value}% více XP při těžení."
@@ -65,8 +65,8 @@ abilities:
     info: "{value}% Bez ztráty životnosti"
   lucky_catch:
     name: Úlovek štěstěny
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Přidá +{value} štěstí při rybaření, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při rybaření"
   fisher:
     name: Rybář
     desc: "Získejte o {value}% více XP k rybaření"
