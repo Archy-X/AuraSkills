@@ -5,12 +5,12 @@
 abilities:
   bountiful_harvest:
     name: Bohatá Sklizeň
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Přidá +{value} štěstí při farmaření, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při farmaření"
   farmer:
     name: Farmář
     desc: "Získejte o {value}% více XP při farmaření."
-    info: "+{value}% XP"
+    info: "+{value} % XP"
   scythe_master:
     name: Mistr kosy
     desc: "Zvýší poškození motykou o {value}%"
@@ -20,13 +20,13 @@ abilities:
     desc: "Zvyšuje nárůst nasycení pomocí rostlinných potravin o {value}."
     info: "+{value} Sytosti"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura Růstu
+    desc: "Plodiny s růstovými stadii v okruhu {radius} bloků rostou o {value} % rychleji."
+    info: "+{value} % Růstu"
   lumberjack:
     name: Dřevorubec
     desc: "Přidá +{value} štěstí při získávání jídla, které zvyšuje pravděpodobnost mimořádných dropů."
-    info: "+{value} Foraging Luck"
+    info: "+{value} štěstí při získávání jídla"
   forager:
     name: Lesník
     desc: "Získejte o {value}% více XP při lesnictví."
@@ -70,7 +70,7 @@ abilities:
   fisher:
     name: Rybář
     desc: "Získejte o {value}% více XP k rybaření"
-    info: "+{value}% XP"
+    info: "+{value} % XP"
   treasure_hunter:
     name: Lovec pokladů
     desc: "O {value}% vyšší šance na získání vzácné kořisti při rybolovu."
@@ -97,16 +97,16 @@ abilities:
     info: "+{value}% Poškození lopatou"
   bigger_scoop:
     name: Větší Naběračka
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Přidá +{value} štěstí při kopání, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} % štěstí při kopání"
   lucky_spades:
     name: Rýče štěstěny
     desc: "O {value}% vyšší šance na získání epické kořisti z kopání."
     info: "+{value}% Epická kořist"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Znovunabytí
+    desc: "Šípy, s nimiž mineš, budou okamžitě získány zpět po {time} s v okruhu {value} bloků."
+    info: "{value} vzdálenost"
   archer:
     name: Střelec
     desc: "Získej o {value}% více XP k farmaření."
@@ -144,10 +144,10 @@ abilities:
     desc: "{value}% šance na zrušení škodlivého účinku lektvaru."
     info: "{value}% No Debuff"
   parry:
-    name: Parry
+    name: Odražení
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    info: "{value} % snížení poškození"
+    parried: "<red>Útok odražen"
   fighter:
     name: Bojovník
     desc: "Získej o {value}% více XP k bojování"
