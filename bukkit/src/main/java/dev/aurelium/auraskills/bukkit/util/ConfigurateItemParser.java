@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.util;
 
 import de.tr7zw.changeme.nbtapi.NBT;
-import de.tr7zw.changeme.nbtapi.NBTContainer;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -382,7 +381,7 @@ public class ConfigurateItemParser {
     }
 
     private void parseNBTString(ItemStack item, String nbtString) {
-        NBTContainer container = new NBTContainer(nbtString);
+        ReadWriteNBT container = NBT.parseNBT(nbtString);
         NBT.modify(item, nbt -> {
             nbt.mergeCompound(container);
         });

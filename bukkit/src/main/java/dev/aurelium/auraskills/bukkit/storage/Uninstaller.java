@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.storage;
 
-import de.tr7zw.changeme.nbtapi.NBTCompoundList;
-import de.tr7zw.changeme.nbtapi.NBTFile;
+import de.tr7zw.changeme.nbtapi.NBT;
+import de.tr7zw.changeme.nbtapi.iface.NBTFileHandle;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBTCompoundList;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
@@ -26,7 +26,7 @@ public class Uninstaller {
                 File playerFile = new File(playerDataFolder, player.getUniqueId() + ".dat");
                 if (playerFile.exists() && playerFile.canWrite()) {
                     try {
-                        NBTFile nbtFile = new NBTFile(playerFile);
+                        NBTFileHandle nbtFile = NBT.getFileHandle(playerFile);
                         if (VersionUtils.isAtLeastVersion(21)) {
                             if (removePlayer(nbtFile)) {
                                 successful++;
@@ -45,8 +45,8 @@ public class Uninstaller {
         sender.sendMessage("Searched " + total + " offline players. Successfully removed attributes from " + successful + " players. Failed to remove on " + error + " players.");
     }
 
-    private boolean removePlayer(NBTFile nbtFile) throws IOException {
-        NBTCompoundList compoundList = nbtFile.getCompoundList("attributes");
+    private boolean removePlayer(NBTFileHandle nbtFile) throws IOException {
+        ReadWriteNBTCompoundList compoundList = nbtFile.getCompoundList("attributes");
         if (compoundList == null) {
             return false;
         }
@@ -75,8 +75,8 @@ public class Uninstaller {
         return false;
     }
 
-    private boolean removeLegacyPlayer(NBTFile nbtFile) throws IOException  {
-        NBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
+    private boolean removeLegacyPlayer(NBTFileHandle nbtFile) throws IOException  {
+        ReadWriteNBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
         if (compoundList == null) {
             return false;
         }

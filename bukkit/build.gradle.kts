@@ -40,7 +40,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.3")
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") {
         exclude("org.spigotmc", "spigot-api")
