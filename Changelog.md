@@ -2,6 +2,11 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.6
+
+### Bug Fixes
+- Fix IncompatibleClassChangeError on 1.21.1 and below caused by 2.2.5 update
+
 ## 2.2.5
 
 ### New Features
