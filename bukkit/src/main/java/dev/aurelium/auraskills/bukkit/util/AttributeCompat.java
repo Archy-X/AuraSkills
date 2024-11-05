@@ -13,21 +13,20 @@ public class AttributeCompat {
     public static Attribute LUCK;
 
     static {
-        /*
-        Saved for updating to spigot-api 1.21.3+
+
         if (VersionUtils.isAtLeastVersion(21, 2)) {
-            MAX_HEALTH = Attribute.MAX_HEALTH;
-            MOVEMENT_SPEED = Attribute.MOVEMENT_SPEED;
-            ATTACK_DAMAGE = Attribute.ATTACK_DAMAGE;
-            ATTACK_SPEED = Attribute.ATTACK_SPEED;
-            LUCK = Attribute.LUCK;
+            MAX_HEALTH = fromRegistry("max_health");
+            MOVEMENT_SPEED = fromRegistry("movement_speed");
+            ATTACK_DAMAGE = fromRegistry("attack_damage");
+            ATTACK_SPEED = fromRegistry("attack_speed");
+            LUCK = fromRegistry("luck");
         } else {
-         */
-        MAX_HEALTH = fromRegistry("generic.max_health");
-        MOVEMENT_SPEED = fromRegistry("generic.movement_speed");
-        ATTACK_DAMAGE = fromRegistry("generic.attack_damage");
-        ATTACK_SPEED = fromRegistry("generic.attack_speed");
-        LUCK = fromRegistry("generic.luck");
+            MAX_HEALTH = fromRegistry("generic.max_health");
+            MOVEMENT_SPEED = fromRegistry("generic.movement_speed");
+            ATTACK_DAMAGE = fromRegistry("generic.attack_damage");
+            ATTACK_SPEED = fromRegistry("generic.attack_speed");
+            LUCK = fromRegistry("generic.luck");
+        }
     }
 
     private static Attribute fromRegistry(String key) {
