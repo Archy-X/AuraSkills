@@ -202,7 +202,7 @@ abilities:
     info: "{value}% Dlouhotrvající Rychlost"
   fleeting:
     name: Doznívání
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "Získáš +{value} Rychlost, pokud máš méně než 20 % zdraví."
     info: "+{value}% Rychlost"
     start: "<white>Právě jsi získal doznívající zvýšení rychlosti pohybu! <gray>(+{value}% Rychlost)"
     end: "<gray>Zvýšení rychlosti pohybu odeznělo"
