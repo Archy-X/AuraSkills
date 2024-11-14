@@ -37,7 +37,7 @@ public class MythicMobsHook extends Hook implements Listener {
                 plugin.getLootTableManager().getLootManager().registerCustomEntityParser(new MythicEntityLootParser(plugin)));
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onMythicSkillDamage(MythicDamageEvent event) {
         // This is always some sort of skill/mechanic damage.
 
