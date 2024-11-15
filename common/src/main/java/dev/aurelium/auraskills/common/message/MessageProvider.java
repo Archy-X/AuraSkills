@@ -84,6 +84,24 @@ public abstract class MessageProvider implements PolyglotProvider {
         return componentToString(converted);
     }
 
+    @Nullable
+    public String getOrNull(MessageKey key, Locale locale) {
+        // Check if the converted component is already cached
+        LocalizedKey localizedKey = new LocalizedKey(key, locale);
+        Component cached = componentCache.get(localizedKey);
+        if (cached != null) {
+            return componentToString(cached);
+        }
+        // Otherwise load and store to cache
+        String message = manager.get(locale, convertKey(key));
+        if (!message.equals(key.getPath())) {
+            Component converted = stringToComponent(message);
+            componentCache.put(localizedKey, converted);
+            return componentToString(converted);
+        }
+        return null;
+    }
+
     public Component getComponent(MessageKey key, Locale locale) {
         LocalizedKey localizedKey = new LocalizedKey(key, locale);
         Component cached = componentCache.get(localizedKey);

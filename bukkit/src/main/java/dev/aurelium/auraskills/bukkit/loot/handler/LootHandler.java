@@ -226,12 +226,15 @@ public abstract class LootHandler {
         Locale locale = user.getLocale();
         // Try to get message as message key
         MessageKey messageKey = MessageKey.of(message);
-        String finalMessage = plugin.getMsg(messageKey, locale);
+        String keyedMessage = plugin.getMessageProvider().getOrNull(messageKey, locale);
+        if (keyedMessage != null) {
+            message = keyedMessage;
+        }
         // Replace placeholders
         if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
-            finalMessage = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, finalMessage);
+            message = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
         }
-        user.sendMessage(tf.toComponent(finalMessage));
+        user.sendMessage(tf.toComponent(message));
     }
 
     public double getCommonChance(LootPool pool, User user) {
