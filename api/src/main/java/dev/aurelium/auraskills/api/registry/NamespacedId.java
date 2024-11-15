@@ -7,10 +7,12 @@ public class NamespacedId {
 
     public static final String AURASKILLS = "auraskills";
     private final String namespace;
+    private final String originalKey;
     private final String key;
 
     private NamespacedId(String namespace, String key) {
         this.namespace = namespace.toLowerCase(Locale.ROOT);
+        this.originalKey = key;
         this.key = key.toLowerCase(Locale.ROOT);
     }
 
@@ -31,6 +33,15 @@ public class NamespacedId {
      */
     public String getKey() {
         return key;
+    }
+
+    /**
+     * Gets the original key portion of the NamespacedId, which is the key in the case it was created with.
+     *
+     * @return the original key
+     */
+    public String getOriginalKey() {
+        return originalKey;
     }
 
     /**

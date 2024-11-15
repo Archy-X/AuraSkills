@@ -58,9 +58,14 @@ public class BukkitItemRegistry implements ItemRegistry {
         ItemStack item = items.get(key);
         if (item != null) {
             return item.clone();
-        } else {
-            return null;
         }
+
+        ExternalItemProvider provider = externalItemProviders.get(key.getNamespace());
+        if (provider != null) {
+            return provider.getItem(key.getOriginalKey());
+        }
+
+        return null;
     }
 
     public Map<NamespacedId, ItemStack> getItems() {
