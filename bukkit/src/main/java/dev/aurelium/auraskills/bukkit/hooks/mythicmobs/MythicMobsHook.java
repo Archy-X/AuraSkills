@@ -32,9 +32,16 @@ public class MythicMobsHook extends Hook implements Listener {
         this.plugin = plugin;
         this.damageHandler = new DamageHandler();
 
+        registerItemProvider();
+
         // Wait for loot manager to be created, but add parser before it is loaded
         plugin.getScheduler().executeSync(() ->
                 plugin.getLootTableManager().getLootManager().registerCustomEntityParser(new MythicEntityLootParser(plugin)));
+    }
+
+    private void registerItemProvider() {
+        plugin.getItemRegistry().registerExternalItemProvider("mythicmobs",
+                (id) -> MythicBukkit.inst().getItemManager().getItemStack(id));
     }
 
     @EventHandler
