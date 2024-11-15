@@ -61,8 +61,8 @@ public class BukkitItemRegistry implements ItemRegistry {
         }
 
         ExternalItemProvider provider = externalItemProviders.get(key.getNamespace());
-        if(provider != null) {
-            return provider.getItem(key.getKey());
+        if (provider != null) {
+            return provider.getItem(key.getOriginalKey());
         }
 
         return null;
