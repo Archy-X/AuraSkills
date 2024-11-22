@@ -19,6 +19,7 @@ import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
+import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -46,8 +47,13 @@ public class FishingLootHandler extends LootHandler implements Listener {
         if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
             return;
         }
-        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(player.getLocation(), player, FlagKey.CUSTOM_LOOT);
+
+        HookManager hookManager = plugin.getHookManager();
+        if (hookManager.isRegistered(WorldGuardHook.class)) {
+            WorldGuardHook wgHook = hookManager.getHook(WorldGuardHook.class);
+            if (wgHook.isBlocked(player.getLocation(), player, FlagKey.CUSTOM_LOOT)) {
+                return;
+            }
         }
 
         if (!(event.getCaught() instanceof Item)) return;
