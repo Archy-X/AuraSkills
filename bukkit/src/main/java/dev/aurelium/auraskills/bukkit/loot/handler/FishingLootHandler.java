@@ -44,10 +44,6 @@ public class FishingLootHandler extends LootHandler implements Listener {
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
-            return;
-        }
-
         if (failsChecks(player, player.getLocation())) return;
 
         if (!(event.getCaught() instanceof Item)) return;
