@@ -48,13 +48,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
             return;
         }
 
-        HookManager hookManager = plugin.getHookManager();
-        if (hookManager.isRegistered(WorldGuardHook.class)) {
-            WorldGuardHook wgHook = hookManager.getHook(WorldGuardHook.class);
-            if (wgHook.isBlocked(player.getLocation(), player, FlagKey.CUSTOM_LOOT)) {
-                return;
-            }
-        }
+        if (failsChecks(player, player.getLocation())) return;
 
         if (!(event.getCaught() instanceof Item)) return;
         if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) return;
