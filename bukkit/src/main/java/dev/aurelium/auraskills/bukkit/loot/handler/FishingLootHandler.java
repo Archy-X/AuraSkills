@@ -8,8 +8,6 @@ import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
-import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootPool;
 import dev.aurelium.auraskills.api.loot.LootTable;
@@ -43,12 +41,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getWorldManager().isInBlockedWorld(player.getLocation())) {
-            return;
-        }
-        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(player.getLocation(), player, FlagKey.CUSTOM_LOOT);
-        }
+        if (failsChecks(player, player.getLocation())) return;
 
         if (!(event.getCaught() instanceof Item)) return;
         if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) return;

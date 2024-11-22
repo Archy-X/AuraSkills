@@ -194,6 +194,13 @@ public abstract class LootHandler {
     }
 
     private void giveXp(Player player, Loot loot, @Nullable XpSource source, Skill skill) {
+        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
+            // Check generic xp-gain and skill-specific flags
+            if (plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(player.getLocation(), player, skill)) {
+                return;
+            }
+        }
+
         User user = plugin.getUser(player);
         Object xpObj = loot.getValues().getOptions().get("xp");
 
