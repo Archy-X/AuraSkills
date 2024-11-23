@@ -88,8 +88,8 @@ public class NexoHook extends Hook implements Listener {
                     continue;
                 }
 
-                String oraxenBlockId = blockId.substring(NEXO_PREFIX.length());
-                BlockData blockData = NexoBlocks.blockData(oraxenBlockId);
+                String nextBlockId = blockId.substring(NEXO_PREFIX.length());
+                BlockData blockData = NexoBlocks.blockData(nextBlockId);
                 if (blockData == null) continue;
 
                 String blockDataString = blockData.getAsString(true);
