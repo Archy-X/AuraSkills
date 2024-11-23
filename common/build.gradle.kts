@@ -34,7 +34,7 @@ dependencies {
 }
 
 val compiler = javaToolchains.compilerFor {
-    languageVersion = JavaLanguageVersion.of(17)
+    languageVersion = JavaLanguageVersion.of(21)
 }
 
 tasks.withType<JavaCompile> {
@@ -52,6 +52,6 @@ tasks {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
