@@ -58,6 +58,8 @@ hooks:
     handle_damage_increase: true
     handle_damage_reduction: true
     prevent_regular_xp: false
+  Nexo:
+    enabled: true
 action_bar:
   enabled: true
   idle: true
