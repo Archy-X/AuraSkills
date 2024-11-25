@@ -4,12 +4,14 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.slate.builder.MenuBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 
 import java.util.Map;
 import java.util.UUID;
@@ -25,7 +27,7 @@ public class LeaderboardMenu {
     }
 
     public void build(MenuBuilder menu) {
-        menu.replaceTitle("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
+        menu.replace("skill", p -> ((Skill) p.menu().getProperty("skill")).getDisplayName(p.locale(), false));
 
         menu.properties(m -> Map.of(
                 "skill", m.menu().getProperty("skill", Skills.FARMING),
@@ -55,11 +57,14 @@ public class LeaderboardMenu {
                 SkillValue value = lb.getSkillValue(skill, t.value());
                 if (value == null) return null;
                 if (t.item().getItemMeta() instanceof SkullMeta meta) {
-                    OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(value.id());
-                    if (offlinePlayer.getName() != null) {
+                    if (VersionUtils.isAtLeastVersion(18, 1)) {
+                        PlayerProfile profile = Bukkit.createPlayerProfile(value.id());
+                        meta.setOwnerProfile(profile);
+                    } else {
+                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(value.id());
                         meta.setOwningPlayer(offlinePlayer);
-                        t.item().setItemMeta(meta);
                     }
+                    t.item().setItemMeta(meta);
                 }
                 return t.item();
             });
