@@ -110,6 +110,8 @@ public class StatsMenu {
         });
 
         menu.component("leveled_by", Stat.class, component -> {
+            component.replace("color", p -> p.value().getColor(p.locale()));
+
             component.replace("skills", p -> {
                 Locale locale = p.locale();
                 ListBuilder builder = new ListBuilder(p.data().listData());
