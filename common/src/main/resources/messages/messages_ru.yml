@@ -330,9 +330,9 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>Навыки<dark_gray>] "
   antiafk:
-    failed: "<red>{player} не прошёл анти-AFK проверку {check} <gray>(Счет: {count})"
+    failed: "<red>Игрок {player} не прошёл анти-AFK проверку {check} <gray>(Счет: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: "<gray>Анти-AFK логи для игрока <red>{player} <gray>({count} В целом) <dark_gray>| <gray> Страница {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
@@ -348,7 +348,7 @@ commands:
         removed: "<gray>Все модификаторы брони были удалены с вашего предмета"
     trait:
       add:
-        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        already_exists: "<yellow>Модификатор брони со статистикой {trait} <yellow>уже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor modifier remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>Модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему предмету"
@@ -398,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>модификатор с уровнем <aqua>{value} <gray>был добавлен в ваш товар"
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>Модификатор брони со статистикой {color}{stat} <yellow>уже существует на вашей броне! Сначала удалите его с помощью модификатора брони /sk armor modifier remove"
       remove:
         does_not_exist: "<yellow>У вашего товара нет {color}{stat} <yellow>модификатора!"
         removed: "{color}{stat} <gray>модификатор был удален из вашего предмета"
@@ -408,7 +408,7 @@ commands:
         removed: "<gray>Все модификаторы предметов удалены из вашего предмета"
     trait:
       add:
-        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        already_exists: "<yellow>Модификатор предмета со статистикой {trait} <yellow>уже есть на вашем предмете! Сначала удалите его с помощью /sk item modifier remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>Модификатор с уровнем <aqua>{value} <gray>был добавлен к вашему предмету"
@@ -445,18 +445,18 @@ commands:
       unregistered: "<white>Незарегистрированный элемент с ключом {key}"
       not_registered: "<yellow>Нет элемента с ключом {key}"
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add: "<gray>Ваша вещь больше не будет игнорироваться взаимодействием маны"
+      remove: "<gray>Ваша вещь больше не будет игнорироваться взаимодействием мана"
   jobs:
     add:
-      added: "<white>The job {job} was successfully added to player {player}"
-      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
-      existing: "<yellow>Player {player} already has the job {job}"
+      added: "<white>Работа {job} была успешно добавлена игроку {player}"
+      limited: "<yellow>Невозможно добавить эту работу, потому что игрок {player} достиг лимит по работам"
+      existing: "<yellow>Игрок {player} уже имеет работу {job}"
     remove:
-      removed: "<white>Removed job {job} from player {player}"
-      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      removed: "<white>Удалена задача {job} у игрока {player}"
+      unchanged: "<yellow>Ничего не изменилось, поскольку игрок {player} не имеет работы {job}"
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
+      removed: "<white>Удалены все задачи с игрока {player}"
   lang:
     set: "<gray>Язык установлен на <aqua>{lang}"
     not_found: "<yellow>Язык не найден!"
@@ -487,12 +487,12 @@ commands:
       players_only: "<yellow>Только игроки могут удалять свои собственные модификаторы! Попробуйте указать игрока"
   trait:
     add:
-      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      already_exists: "<yellow>Модификатор с именем {name} уже существует на игроке <gold>{player}<yellow>! Удалите его с помощью <gold>/sk trait remove {player} {name}"
     list:
-      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
-      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      all_traits_header: "<gray>Модификаторы характеристик для игрока <gold>{player}:"
+      one_trait_header: "<gray>Модификаторы характеристик ({color}{trait}<gray>) для игрока <gold>{player}:"
     removeall:
-      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      removed_all_traits: "<gray>Удалены <aqua>{num} <gray>модификаторы характеристик у игрока <gold>{player}"
   multiplier:
     global: Общее
     list: "<white>Множитель опыта для <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -551,11 +551,11 @@ commands:
     set: "<gray>Установить <aqua>{skill} <gray>XP для игрока <gray>{player} <gray>на {amount}"
     remove: "<gray>Удалить <aqua>{amount} {skill} <gray>XP у игрока <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Перезарядка для <aqua>{ability} <gray>было сброшено для игрока <gold>{player}"
+    cooldown_reset: "<gray>Перезарядка для <aqua>{ability} <gray>была сброшена для игрока <gold>{player}"
   unknown_skill: "<yellow>Неизвестный навык!"
   unknown_mana_ability: "<yellow>Неизвестная способность, использующая ману!"
   unknown_stat: "<yellow>Неизвестная статистика!"
-  unknown_trait: "<yellow>Unknown trait!"
+  unknown_trait: "<yellow>Неизвестный навык!"
   no_profile: "<yellow>Игрок не имеет профиля навыков. Пожалуйста, попробуйте переподключиться к игре или перезапустить сервер."
 leveler:
   level_up: "{skill} уровень повышен"
@@ -625,7 +625,7 @@ menus:
     job_active: Вы активно работаете на этой работе
     job_quit: Нажмите правой кнопкой мыши, чтобы покинуть эту работу
     job_limit: Вы исчерпали свой лимит по количеству заданий. Сначала закройте текущее задание, чтобы выбрать это.
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    job_cooldown: Выбор работы находится в откате. Вы можете выбрать его через {time}.
   stats:
     stats_title: Ваша статистика
     skills: "Навыки"
