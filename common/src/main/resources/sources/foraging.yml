@@ -124,6 +124,26 @@ sources:
   red_mushroom_block:
     block: red_mushroom_block
     xp: 2.0
+  creaking_heart:
+    block: creaking_heart
+    xp: 480.0
+    state:
+      natural: true
+  pale_moss_block:
+    block: pale_moss_block
+    xp: 2.0
+  pale_moss_carpet:
+    block: pale_moss_carpet
+    xp: 0.5
+    support_block: below
+  pale_oak_log:
+    block: pale_oak_log
+    xp: 8.0
+    trunk: true
+  pale_oak_leaves:
+    block: pale_oak_leaves
+    xp: 0.8
+    leaf: true
 tags:
   foraging_luck_applicable:
     - '*'
