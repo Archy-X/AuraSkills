@@ -362,7 +362,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private void initializeNbtApi() {
         // Check if NBT API is supported for the version
         if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
-            getLogger().warning("NBT API is not yet supported for your Minecraft version, item modifier, requirement, and some other functionality is disabled!");
+            getLogger().warning("NBT API is not yet supported for your Minecraft version, some legacy conversion and item nbt parsing functionality may be disabled!");
             nbtApiEnabled = false;
         } else {
             nbtApiEnabled = true;
