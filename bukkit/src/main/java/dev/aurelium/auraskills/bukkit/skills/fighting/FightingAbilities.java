@@ -95,7 +95,7 @@ public class FightingAbilities extends AbilityImpl {
         int id = abilityData.getInt("counter");
         // Schedules metadata removal
         long cooldown = ability.optionInt("cooldown_ticks", 6000);
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtEntity(player, () -> {
             if (user.getAbilityData(ability).containsKey("counter")) {
                 if (user.getAbilityData(ability).getInt("counter") == id) {
                     player.removeMetadata("AureliumSkills-FirstStrike", plugin);
@@ -308,7 +308,7 @@ public class FightingAbilities extends AbilityImpl {
 
         Vector velBefore = player.getVelocity();
         // Disable knockback
-        plugin.getScheduler().scheduleSync(() -> player.setVelocity(velBefore),
+        plugin.getScheduler().scheduleAtEntity(player, () -> player.setVelocity(velBefore),
                 50, TimeUnit.MILLISECONDS);
 
         return new DamageModifier((1 - value / 100) - 1, DamageModifier.Operation.MULTIPLY);

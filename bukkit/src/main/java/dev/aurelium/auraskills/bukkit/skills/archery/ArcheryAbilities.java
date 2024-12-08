@@ -138,7 +138,7 @@ public class ArcheryAbilities extends AbilityImpl {
     }
 
     private void scheduleStunRemoval(LivingEntity entity) {
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtEntity(entity, () -> {
             AttributeInstance newSpeed = entity.getAttribute(AttributeCompat.MOVEMENT_SPEED);
             if (newSpeed == null) return;
             for (AttributeModifier attributeModifier : newSpeed.getModifiers()) {
@@ -234,7 +234,7 @@ public class ArcheryAbilities extends AbilityImpl {
         if (failsChecks(player, ability)) return;
 
         ItemStack item = getArrowItem(arrow);
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtEntity(arrow, () -> {
             if (!arrow.isValid()) return; // Ignore if the arrow has de-spawned or was picked up
             if (!arrow.getWorld().equals(player.getWorld())) return;
 
@@ -246,14 +246,19 @@ public class ArcheryAbilities extends AbilityImpl {
 
             item.setAmount(1);
             // Abort if the player doesn't have enough inventory space
-            if (!player.getInventory().addItem(item).isEmpty()) {
-                return;
-            }
+            plugin.getScheduler().executeAtEntity(player, (t) -> {
+                if (!player.getInventory().addItem(item).isEmpty()) {
+                    return;
+                }
 
-            arrow.getWorld().spawnParticle(CompatUtil.witchParticle(), arrow.getLocation(), 5, 0, 0, 0);
-            player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.4f, 1.9f);
+                plugin.getScheduler().executeAtEntity(arrow, (t2) -> {
+                    arrow.getWorld().spawnParticle(CompatUtil.witchParticle(), arrow.getLocation(), 5, 0, 0, 0);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.4f, 1.9f);
 
-            arrow.remove();
+                    arrow.remove();
+                });
+            });
+
         }, Math.round(ability.optionDouble("delay_sec", 3) * 1000), TimeUnit.MILLISECONDS);
     }
 
@@ -308,7 +313,8 @@ public class ArcheryAbilities extends AbilityImpl {
             Method setBasePotionData = PotionMeta.class.getDeclaredMethod("setBasePotionData", potionDataClass);
 
             setBasePotionData.invoke(meta, potionData);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException e) {
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException |
+                 ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

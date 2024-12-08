@@ -23,5 +23,5 @@ public class StatsCommand extends BaseCommand {
 	public void onStats(Player player) {
 		plugin.getSlate().openMenu(player, "stats");
 	}
-	
+
 }

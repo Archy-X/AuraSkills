@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.util;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,16 +10,16 @@ import java.util.function.Consumer;
 
 public class UpdateChecker {
 
-    private final Plugin plugin;
+    private final AuraSkills plugin;
     private final int resourceId;
 
-    public UpdateChecker(Plugin plugin, int resourceId) {
+    public UpdateChecker(AuraSkills plugin, int resourceId) {
         this.plugin = plugin;
         this.resourceId = resourceId;
     }
 
     public void getVersion(final Consumer<String> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        plugin.getScheduler().executeAsync(() -> {
             try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.nextLine());
