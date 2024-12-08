@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Lỗi: Bảng điều khiển có thể xác định không chính xác tọa độ của người chơi."
 commands:
   prefix: "<dark_gray>[<aqua>Khả năng<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} không vượt qua lần kiểm tra anti-AFK {check}<gray>(Số lần: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Đã tìm thấy nâng cấp của giáp:"
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "<gray>Nâng cấp {color}{stat} <gray>với cấp <aqua>{value} <gray>đã được thêm"
-        already_exists: "<yellow>Nâng cấp với chỉ số của {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk item modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat}<yellow>!"
         removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Nâng cấp vật phẩm đã được tìm thấy:"
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Đã huỷ đăng kí vật phẩm có chìa khoá {key}"
       not_registered: "<yellow>Không có vật phẩm đăng kí thành chìa khoá {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Ngôn ngữ đã đặt thành <aqua>{lang}"
     not_found: "<yellow>Không tìm thấy ngôn ngữ này!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray> Đã xóa <aqua>{num} nâng cấp <gray>của <gold>{player}"
       removed_one_stat: "<gray>Đã xóa <aqua>{num} <gray>nâng cấp {color}{stat} <gray>của <gold>{player}"
       players_only: "<yellow>Chỉ có thể xóa nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Tổng quát
     list: "<white>XP thưởng thêm cho người chơi <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -521,8 +553,9 @@ commands:
   manaability:
     cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
   unknown_skill: "<yellow>Khả năng không khả dụng!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Kĩ năng Ma pháp không khả dụng!"
   unknown_stat: "<yellow>Chỉ số không khả dụng!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Người chơi không có hồ sơ Khả năng. Hãy thử thoát ra và vào lại hoặc khởi động lại máy chủ."
 leveler:
   level_up: "Lên cấp Khả năng {skill}"
@@ -568,6 +601,7 @@ menus:
     stats: "Chỉ số"
     stats_desc: "Tăng Chỉ số khi thăng cấp Khả năng"
     stats_click: "Nhấn để xem Chỉ số của bạn"
+    active_job: Nghề hiện tại
   level_progression:
     level_progression_title: "Cấp độ của {skill} - Trang {page}"
     your_ranking: "Xếp hạng Khả năng của bạn"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Kĩ năng bị động</2> <1>có thể được mở khóa và thăng cấp khi bạn thăng cấp Kĩ năng.</1>"
     mana_abilities_desc: "<3>Kĩ năng Ma pháp</3> <1>là một dạng Kĩ năng đặc biệt, có thể được kích hoạt chủ động và tiêu tốn Mana.</1>"
     abilities_click: "Nhấn để xem Kĩ năng của {skill}"
+    job: Nghề nghiệp
+    job_desc: Chọn nghề {skill} giúp bạn nhận thêm tiền khi nhận XP.
+    job_select: Chuột trái để chọn nghề {skill}
+    job_active: Bạn đang làm nghề này rồi
+    job_quit: Chuột phải để nghỉ việc này
+    job_limit: Số nghề nghiệp của bạn đã đạt giới hạn. Bỏ một nghề đang làm để chọn thêm.
+    job_cooldown: Bạn vừa đổi nghề gần đây. Bạn có thể chọn lại trong {time}.
   stats:
     stats_title: Chỉ số của bạn
     skills: "Khả năng"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 32
+file_version: 35

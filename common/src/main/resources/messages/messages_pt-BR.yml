@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Erro: Console não pode usar coordenadas relativas para a localização."
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
+  antiafk:
+    failed: "<red>{player} Não foi possível verificar o anti-AFK {check} <gray>(Valor: {count})"
+    logs:
+      header: "<gray>Registros de Anti-AFK para <red>{player} <gray>({count} total) <dark_gray> <gray>Página {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Modificadores de armadura encontrados:"
       removeall:
         removed: "<gray>Todos os modificadores de armadura foram removidos do seu item"
+    trait:
+      add:
+        already_exists: "<yellow>Um modificador de armadura com o atributo {trait} <yellow>já existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk"
     multiplier:
       add:
         added: "<aqua>Multiplicador de {target} <gray>com valor <aqua>{value} <gray>foi adicionado ao seu item"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Item modificador encontrado:"
       removeall:
         removed: "<gray>Todos os modificadores de itens foram removidos do seu item"
+    trait:
+      add:
+        already_exists: "<yellow>Um modificador de item com o atributo {trait} <yellow>já existe em sua armadura! Remova-o primeiro com /sk item modificador"
     multiplier:
       add:
         added: "<gray>Multiplicador de <aqua>{target} <gray>com valor <aqua>{value} <gray>foi adicionado ao seu item"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Item não registrado com chave {key}"
       not_registered: "<yellow>Não há nenhum item registrado com a chave {key}"
+    ignore:
+      add: "Seu item agora será ignorado pelas interações de habilidade de mana"
+      remove: "Seu item não será mais ignorado pelas interações de habilidade de mana"
+  jobs:
+    add:
+      added: "<white>O trabalho {job} foi adicionado ao jogador {player} com sucesso"
+      limited: "Não é possível adicionar este trabalho porque o jogador {player} atingiu o limite de trabalhos"
+      existing: "<yellow>Jogador {player} já possui o trabalho {job}"
+    remove:
+      removed: "<white>O trabalho {job} foi removido do jogador {player}"
+      unchanged: "<yellow>Nada foi alterado, já que o jogador {player} não tem o trabalho {job}"
+    removeall:
+      removed: "<white>Todos os trabalhos foram removidos do jogador {player}"
   lang:
     set: "<gray>Idioma definido para <aqua>{lang}"
     not_found: "<yellow>Idioma não encontrado!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Removido <aqua>{num} <gray>stat modificadores do jogador <gold>{player}"
       removed_one_stat: "<gray>Removido <aqua>{num} {color}{stat} <gray>modificadores do jogador <gold>{player}"
       players_only: "<yellow>Somente jogadores podem remover seus próprios modificadores! Tente especificar um jogador"
+  trait:
+    add:
+      already_exists: "<yellow>Modificador com o nome {name} já existe no jogador <gold>{player}<yellow>! Remover-o com modificador de <gold>/sk modifier remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Modificadores de status para o jogador <gold>{player}:"
+      one_trait_header: "<gray>Modificadores de status ({color}{trait}<gray>) para o jogador <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removidos <aqua>{num} <gray>modificadores de característica do jogador <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Multiplicador de XP global para <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -519,10 +551,11 @@ commands:
     set: "<gray>Definido <aqua>{skill} <gray>XP do jogador <gray>{player} <gray>para {amount}"
     remove: "<gray>Removido <aqua>{amount} {skill} <gray>XP do jogador <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>O tempo de espera para <aqua>{ability} <gray>foi redefinido para o jogador <gold>{player}"
   unknown_skill: "<yellow>Habilidade desconhecida!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Habilidade desconhecida!"
   unknown_stat: "<yellow>Habilidade desconhecida!"
+  unknown_trait: "<yellow>Habilidade desconhecida!"
   no_profile: "<yellow>Jogador não tem um perfil de habilidades. Por favor, tente reentrar no jogo ou reiniciar o servidor."
 leveler:
   level_up: "{skill} Level Up"
@@ -568,6 +601,7 @@ menus:
     stats: "Estatísticas"
     stats_desc: "Ganhe atributos de bônus ao evoluir habilidades"
     stats_click: "Clique para saber mais ou ver suas estatísticas"
+    active_job: Trabalho ativo
   level_progression:
     level_progression_title: "Níveis de {skill} - Página {page}"
     your_ranking: "Sua Classificação de Habilidade"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Habilidades</2> <1>são habilidades passivas que você desbloqueia e atualiza conforme você aumenta o nível das habilidades.</1>"
     mana_abilities_desc: "<3>Habilidades da Mana</3> <1>são um tipo especial de habilidade que requer ativação e consumo de mana.</1>"
     abilities_click: "Clique para ver habilidades de {skill}"
+    job: Trabalho
+    job_desc: Selecionar {skill} como seu trabalho permite ganhar dinheiro enquanto ganha XP.
+    job_select: Clique esquerdo para selecionar {skill} como seu trabalho
+    job_active: Você está trabalhando ativamente neste trabalho
+    job_quit: Clique direito para sair deste trabalho
+    job_limit: Você atingiu seu limite de trabalhos. Saia de um trabalho ativo antes de selecionar este.
+    job_cooldown: Seleção de trabalho está em espera. Você pode selecionar novamente em {time}.
   stats:
     stats_title: Suas Estatísticas
     skills: "Habilidades"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 32
+file_version: 35
