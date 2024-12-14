@@ -63,7 +63,6 @@ public class DamageLeveler extends SourceLeveler {
             // Check shield blocking option
             if (skill.equals(Skills.DEFENSE)
                     && !Skills.DEFENSE.optionBoolean("allow_shield_blocking", false)
-                    && player.isBlocking()
                     && isShieldingSuccessful(entityEvent.getDamager(), player)) {
                 return;
             }
@@ -205,14 +204,13 @@ public class DamageLeveler extends SourceLeveler {
 
     private boolean isShieldingSuccessful(Entity source, Player subject) {
 
-        boolean flag = false;
         if (source instanceof AbstractArrow entityarrow) {
             if (entityarrow.getPierceLevel() > 0) {
-                flag = true;
+                return false;
             }
         }
 
-        if (flag) {
+        if (!subject.isBlocking()) {
             return false;
         }
 
