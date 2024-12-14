@@ -204,6 +204,18 @@ public class DamageLeveler extends SourceLeveler {
     }
 
     private boolean isShieldingSuccessful(Entity source, Player subject) {
+
+        boolean flag = false;
+        if (source instanceof AbstractArrow entityarrow) {
+            if (entityarrow.getPierceLevel() > 0) {
+                flag = true;
+            }
+        }
+
+        if (flag) {
+            return false;
+        }
+
         Vector vec3d = source.getLocation().toVector();
         Location location = subject.getLocation();
 
