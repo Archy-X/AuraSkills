@@ -8,17 +8,21 @@ import dev.aurelium.auraskills.api.source.type.DamageXpSource.DamageCause;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Location;
+import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class DamageLeveler extends SourceLeveler {
 
@@ -53,15 +57,20 @@ public class DamageLeveler extends SourceLeveler {
 
         // Disregard self inflected damage
         if (event instanceof EntityDamageByEntityEvent entityEvent) {
-            if (isSelfInflicted(entityEvent.getDamager(), player)) return;
+            if (isSelfInflicted(entityEvent.getDamager(), player)) {
+                return;
+            }
+
+            // Check shield blocking option
+            if (skill.equals(Skills.DEFENSE)
+                    && !Skills.DEFENSE.optionBoolean("allow_shield_blocking", false)
+                    && player.isBlocking()
+                    && isShieldingSuccessful(entityEvent.getDamager(), player)) {
+                return;
+            }
         }
 
         if (failsChecks(event, player, player.getLocation(), skill)) return;
-
-        // Check shield blocking option
-        if (skill.equals(Skills.DEFENSE) && !Skills.DEFENSE.optionBoolean("allow_shield_blocking", false) && player.isBlocking()) {
-            return;
-        }
 
         double damage;
         if (source.useOriginalDamage()) {
@@ -194,5 +203,48 @@ public class DamageLeveler extends SourceLeveler {
         }
         return false;
     }
+
+    private boolean isShieldingSuccessful(Entity source, Player subject) {
+        Vector vec3d = source.getLocation().toVector();
+        Location location = subject.getLocation();
+
+        Vector vec3d1 = this.calculateViewVector(0.0F, location.getYaw());
+        Vector vec3d2 = vec3d.subtract( location.toVector() );
+
+        vec3d2 = new Vector(vec3d2.getX(), 0.0D, vec3d2.getY()).normalize();
+        return vec3d2.dot(vec3d1) < 0.0D;
+    }
+
+    public final Vector calculateViewVector(float pitch, float yaw) {
+        float f2 = pitch * 0.017453292F;
+        float f3 = -yaw * 0.017453292F;
+        float f4 = cos(f3);
+        float f5 = sin(f3);
+        float f6 = cos(f2);
+        float f7 = sin(f2);
+
+        return new Vector(f5 * f6, -f7, (double) (f4 * f6));
+    }
+
+    //region match minecraft implementation, might need to be moved to a more appropriate package
+    private static final float[] SIN = make(new float[65536], sineTable -> {
+        for (int ix = 0; ix < sineTable.length; ix++) {
+            sineTable[ix] = (float)Math.sin((double)ix * Math.PI * 2.0 / 65536.0);
+        }
+    });
+
+    private static <T> T make(T object, Consumer<? super T> initializer) {
+        initializer.accept(object);
+        return object;
+    }
+
+    private static float sin(float value) {
+        return SIN[(int)(value * 10430.378F) & 65535];
+    }
+
+    private static float cos(float value) {
+        return SIN[(int)(value * 10430.378F + 16384.0F) & 65535];
+    }
+    //endregion
 
 }
