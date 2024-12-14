@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.HologramsHook;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
+import dev.aurelium.auraskills.bukkit.trait.AnvilDiscountTrait;
 import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
 import dev.aurelium.auraskills.bukkit.trait.HpTrait;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -40,6 +41,7 @@ public class ReloadExecutor {
         plugin.getRewardManager().loadRewards();
         plugin.getLootTableManager().loadLootTables();
         plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class).resetFormula();
+        plugin.getTraitManager().getTraitImpl(AnvilDiscountTrait.class).resetFormula();
         plugin.getLevelManager().getLeveler(BlockLeveler.class).clearSourceCache();
         // Load menus
         plugin.getMenuFileManager().generateDefaultFiles();

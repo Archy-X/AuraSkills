@@ -114,6 +114,7 @@ traits:
     enabled: true
   auraskills/anvil_discount:
     enabled: true
+    formula: -1 * 1.025^(-1 * value) + 1
   auraskills/max_mana:
     enabled: true
     allow_overflow: false
@@ -135,4 +136,4 @@ traits:
   auraskills/double_drop:
     enabled: true
     max_percent: 100
-file_version: 3
+file_version: 4

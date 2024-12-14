@@ -58,13 +58,14 @@ public class DamageReductionTrait extends TraitImpl {
 
     private double getReductionValue(double value) {
         Trait trait = Traits.DAMAGE_REDUCTION;
-        if (formula == null) {
-            formula = new Expression(trait.optionString("formula"));
-        }
-        formula.with("value", value);
         try {
+            if (formula == null) {
+                formula = new Expression(trait.optionString("formula"));
+            }
+            formula.with("value", value);
+
             return formula.evaluate().getNumberValue().doubleValue();
-        } catch (EvaluationException | ParseException e) {
+        } catch (EvaluationException | ParseException | UnsupportedOperationException e) {
             plugin.logger().warn("Failed to evaluate formula for trait auraskills/damage_reduction: " + e.getMessage());
         }
         // Default formula
