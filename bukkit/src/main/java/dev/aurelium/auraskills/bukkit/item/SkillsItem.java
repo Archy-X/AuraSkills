@@ -291,6 +291,9 @@ public class SkillsItem {
             } else {
                 formatValue = NumberUtil.format1(Math.abs(value));
             }
+            if (formatValue.startsWith("+")) { // Prevent double plus sign in lore
+                formatValue = formatValue.substring(1);
+            }
             lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
                     "{stat}", trait.getDisplayName(locale),
                     "{value}", formatValue,
