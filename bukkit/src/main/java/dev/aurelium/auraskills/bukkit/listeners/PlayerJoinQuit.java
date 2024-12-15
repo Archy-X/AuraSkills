@@ -7,7 +7,6 @@ import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -105,12 +104,7 @@ public class PlayerJoinQuit implements Listener {
             }
             // Check for updates
             UpdateChecker updateChecker = new UpdateChecker(plugin);
-            updateChecker.getVersion(version -> {
-                if (updateChecker.isOutdated(plugin.getDescription().getVersion(), version)) {
-                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
-                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Modrinth: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "https://modrinth.com/plugin/auraskills/version/latest");
-                }
-            });
+            updateChecker.sendUpdateMessageAsync(player);
         }, 40L);
     }
 

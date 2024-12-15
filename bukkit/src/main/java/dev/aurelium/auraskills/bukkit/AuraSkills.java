@@ -40,8 +40,8 @@ import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
 import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
-import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.modifier.BukkitModifierManager;
+import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
 import dev.aurelium.auraskills.bukkit.region.BukkitRegionManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
@@ -58,6 +58,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
 import dev.aurelium.auraskills.bukkit.util.MetricsUtil;
+import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -260,6 +261,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             leaderboardManager.startLeaderboardUpdater(); // 5 minute interval
             // bStats custom charts
             new MetricsUtil(getInstance()).registerCustomCharts(metrics);
+
+            if (this.configBoolean(Option.CHECK_FOR_UPDATES)) {
+                UpdateChecker updateChecker = new UpdateChecker(this);
+                updateChecker.sendUpdateMessageAsync(Bukkit.getConsoleSender());
+            }
         });
     }
 

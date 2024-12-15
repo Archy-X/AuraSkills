@@ -3,28 +3,58 @@ package dev.aurelium.auraskills.bukkit.util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class UpdateChecker {
 
-    private final Plugin plugin;
-    private final String slug;
+    public static final String MODRINTH_ID = "uDdZAVls";
 
-    public UpdateChecker(Plugin plugin) {
+    private final AuraSkills plugin;
+    private final String projectId;
+
+    public UpdateChecker(AuraSkills plugin) {
         this.plugin = plugin;
-        this.slug = "auraskills";
+        this.projectId = MODRINTH_ID;
     }
 
-    public void getVersion(final Consumer<String> consumer) {
+    public void sendUpdateMessageAsync(CommandSender sender) {
+        getVersion((version, loader) -> {
+            if (isOutdated(plugin.getDescription().getVersion(), version)) {
+                final String prefix = sender instanceof Player ? plugin.getPrefix(plugin.getDefaultLanguage()) : "[AuraSkills] ";
+                final String downloadLink = "https://modrinth.com/plugin/" + UpdateChecker.MODRINTH_ID + "/version/" + version + "?loader=" + loader;
+
+                sender.sendMessage(prefix + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
+                sender.sendMessage(prefix + ChatColor.WHITE + "Download it on Modrinth: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + downloadLink);
+            }
+        });
+    }
+
+    // Consumer accepts versionNumber and loader
+    public void getVersion(final BiConsumer<String, String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
-            final String url = "https://api.modrinth.com/v2/project/" + slug + "/version";
+            String loader;
+            String serverName = Bukkit.getServer().getName();
+            if (serverName.equalsIgnoreCase("CraftBukkit") || serverName.equalsIgnoreCase("Spigot")) {
+                loader = "spigot";
+            } else {
+                loader = "paper";
+            }
+
+            final String baseUrl = "https://api.modrinth.com/v2/project/" + projectId + "/version";
+
+            final String gameVersion = VersionUtils.getVersionString(Bukkit.getBukkitVersion());
+            final String query = "loaders=%5B%22" + loader + "%22%5D&game_versions=%5B%22" + gameVersion + "%22%5D";
+            final String url = baseUrl + "?" + query;
             try {
                 HttpClient client = HttpClient.newHttpClient();
 
@@ -37,13 +67,20 @@ public class UpdateChecker {
 
                 if (response.statusCode() == 200) {
                     String responseBody = response.body();
+                    if (responseBody == null || responseBody.trim().isEmpty()) {
+                        return;
+                    }
 
                     // Parse the JSON response using Gson
                     JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+                    if (jsonArray.isEmpty()) {
+                        return;
+                    }
+
                     JsonObject firstElement = jsonArray.get(0).getAsJsonObject();
                     String versionNumber = firstElement.get("version_number").getAsString();
 
-                    consumer.accept(versionNumber);
+                    consumer.accept(versionNumber, loader);
                 } else {
                     this.plugin.getLogger().info("Cannot look for updates: Request failed with status code " + response.statusCode());
                 }
@@ -53,7 +90,7 @@ public class UpdateChecker {
         });
     }
 
-    public boolean isOutdated(String localVersion, String resourceVersion) {
+    private boolean isOutdated(String localVersion, String resourceVersion) {
         if (localVersion.equalsIgnoreCase(resourceVersion)) { // Versions match exactly
             return false;
         }
