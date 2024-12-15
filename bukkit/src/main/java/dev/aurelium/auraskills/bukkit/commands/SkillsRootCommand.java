@@ -318,7 +318,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandPermission("auraskills.command.version")
 	public void onVersion(CommandSender sender) {
 		Locale locale = plugin.getLocale(sender);
-		new UpdateChecker(plugin, plugin.getResourceId()).getVersion(latestVersion -> sender.sendMessage(plugin.getPrefix(locale) +
+		new UpdateChecker(plugin).getVersion(latestVersion -> sender.sendMessage(plugin.getPrefix(locale) +
 				TextUtil.replace(plugin.getMsg(CommandMessage.VERSION, locale),
 						"{current_version}", plugin.getDescription().getVersion(),
 						"{latest_version}", latestVersion)));

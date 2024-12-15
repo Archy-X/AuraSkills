@@ -1,32 +1,54 @@
 package dev.aurelium.auraskills.bukkit.util;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Scanner;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.function.Consumer;
 
 public class UpdateChecker {
 
     private final Plugin plugin;
-    private final int resourceId;
+    private final String slug;
 
-    public UpdateChecker(Plugin plugin, int resourceId) {
+    public UpdateChecker(Plugin plugin) {
         this.plugin = plugin;
-        this.resourceId = resourceId;
+        this.slug = "auraskills";
     }
 
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
-            try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
-                if (scanner.hasNext()) {
-                    consumer.accept(scanner.nextLine());
+            final String url = "https://api.modrinth.com/v2/project/" + slug + "/version";
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .GET()
+                        .build();
+
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    String responseBody = response.body();
+
+                    // Parse the JSON response using Gson
+                    JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
+                    JsonObject firstElement = jsonArray.get(0).getAsJsonObject();
+                    String versionNumber = firstElement.get("version_number").getAsString();
+
+                    consumer.accept(versionNumber);
+                } else {
+                    this.plugin.getLogger().info("Cannot look for updates: Request failed with status code " + response.statusCode());
                 }
-            } catch (IOException exception) {
-                this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
+            } catch (Exception e) {
+                this.plugin.getLogger().info("Cannot look for updates: " + e.getMessage());
             }
         });
     }

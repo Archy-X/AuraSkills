@@ -104,11 +104,11 @@ public class PlayerJoinQuit implements Listener {
                 return;
             }
             // Check for updates
-            UpdateChecker updateChecker = new UpdateChecker(plugin, plugin.getResourceId());
+            UpdateChecker updateChecker = new UpdateChecker(plugin);
             updateChecker.getVersion(version -> {
                 if (updateChecker.isOutdated(plugin.getDescription().getVersion(), version)) {
                     player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
-                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Spigot: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "https://spigotmc.org/resources/" + plugin.getResourceId());
+                    player.sendMessage(plugin.getPrefix(plugin.getDefaultLanguage()) + ChatColor.WHITE + "Download it on Modrinth: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "https://modrinth.com/plugin/auraskills/version/latest");
                 }
             });
         }, 40L);
