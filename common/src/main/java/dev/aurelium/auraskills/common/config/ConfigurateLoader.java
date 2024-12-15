@@ -118,14 +118,27 @@ public class ConfigurateLoader {
 
     public void saveConfigIfUpdated(File file, ConfigurationNode embedded, ConfigurationNode user, ConfigurationNode merged) throws IOException {
         // Save if the number of config values in embedded is greater than user file
-        int embeddedCount = countChildren(embedded);
-        int userCount = countChildren(user);
-        if (embeddedCount > userCount) {
+        int missing = countMissing(embedded, user);
+        if (missing > 0) {
             FileUtil.saveYamlFile(file, merged);
             String path = plugin.getPluginFolder().toPath().relativize(file.toPath()).toString();
-            int updated = embeddedCount - userCount;
-            plugin.logger().info("Updated " + path + " with " + updated + " new key" + (updated != 1 ? "s" : ""));
+            plugin.logger().info("Updated " + path + " with " + missing + " new key" + (missing != 1 ? "s" : ""));
         }
+    }
+
+    public int countMissing(ConfigurationNode embedded, ConfigurationNode user) {
+        int count = 0;
+        Stack<ConfigurationNode> stack = new Stack<>();
+        stack.addAll(embedded.childrenMap().values());
+        while (!stack.isEmpty()) {
+            ConfigurationNode node = stack.pop();
+            if (node.isMap()) { // A section node, push children to search
+                stack.addAll(node.childrenMap().values());
+            } else if (user.node(node.path()).virtual()) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public int countChildren(ConfigurationNode root) {

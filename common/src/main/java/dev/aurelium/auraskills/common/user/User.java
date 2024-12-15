@@ -63,6 +63,7 @@ public abstract class User {
     private final JobsBatchData jobsBatchData;
     @Nullable
     private List<AntiAfkLog> storedAntiAfkLogs;
+    private double currentOriginalDamage;
 
     public User(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -533,6 +534,14 @@ public abstract class User {
 
     public void setStoredAntiAfkLogs(@NotNull List<AntiAfkLog> logs) {
         this.storedAntiAfkLogs = logs;
+    }
+
+    public double getCurrentOriginalDamage() {
+        return currentOriginalDamage;
+    }
+
+    public void setCurrentOriginalDamage(double currentOriginalDamage) {
+        this.currentOriginalDamage = currentOriginalDamage;
     }
 
     /**

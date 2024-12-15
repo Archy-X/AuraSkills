@@ -1,9 +1,11 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
+import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
-import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.bukkit.damage.DamageResult;
+import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -61,6 +63,22 @@ public class DamageListener implements Listener {
             event.setCancelled(true);
         } else {
             event.setDamage(result.damage());
+            // Correct last damage to fix repeated attacks that bypass the invulnerable frame
+            if (event.getEntity() instanceof Player damaged && plugin.configBoolean(Option.DAMAGE_CORRECT_LAST_DAMAGE)) {
+                plugin.getScheduler().executeSync(() -> {
+                    User user = plugin.getUser(damaged);
+                    double lastDamage = Math.max(event.getFinalDamage(), user.getCurrentOriginalDamage());
+                    damaged.setLastDamage(lastDamage);
+                });
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onDamageLow(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player player && plugin.configBoolean(Option.DAMAGE_CORRECT_LAST_DAMAGE)) {
+            User user = plugin.getUser(player);
+            user.setCurrentOriginalDamage(event.getDamage());
         }
     }
 

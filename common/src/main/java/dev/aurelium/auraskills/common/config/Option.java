@@ -141,6 +141,8 @@ public enum Option {
     REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE("requirement.item.prevent_block_place", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_INTERACT("requirement.item.prevent_interact", OptionType.BOOLEAN),
     REQUIREMENT_ARMOR_PREVENT_ARMOR_EQUIP("requirement.armor.prevent_armor_equip", OptionType.BOOLEAN),
+    // Damage options
+    DAMAGE_CORRECT_LAST_DAMAGE("damage.correct_last_damage", OptionType.BOOLEAN),
     // Critical options
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),
     CRITICAL_ENABLED_BOW("critical.enabled.bow", OptionType.BOOLEAN),

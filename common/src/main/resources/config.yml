@@ -235,6 +235,8 @@ requirement:
   armor:
     prevent_armor_equip: true
     global: [ ]
+damage:
+  correct_last_damage: true
 critical:
   enabled:
     sword: true
