@@ -2,6 +2,26 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.7
+
+### New Features
+- Add 1.21.4 support
+- Add pale garden blocks to Foraging sources
+- Add support for external items anywhere that accepts an item key
+
+### Changes
+- Change MythicDamageEvent priority from high to normal
+- Support {color} placeholder in leveled_by component of stats menu
+- Make anvil discount trait formula configurable in stats.yml
+- Change update checker to use Modrinth with loader and version filters
+
+### Bug Fixes
+- Fix slimes and groups of mobs attacking rapidly with no cooldown
+- Fix hex colors not working in loot entry message
+- Fix xp-gain and custom-loot WorldGuard flags with Fishing loot
+- Fix offline player skins not working in leaderboard menu
+- Fix double plus in lore when adding some trait modifiers
+
 ## 2.2.6
 
 ### Bug Fixes

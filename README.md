@@ -18,7 +18,46 @@ The ultra-versatile Minecraft RPG skills plugin
 
 ## About
 
-**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds skills, stats, abilities, and other RPG-related features. The plugin is fully configurable and customizable, enabling use on a wide-range of server types from small SMPs to large, custom MMORPG networks.
+**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds skills, stats, abilities, and other RPG-related features. The plugin is fully configurable and customizable, enabling usage on a wide range of server types.
+
+Features include:
+- **Skills** - Gain skill XP to level skills through general Minecraft tasks, such as Farming or Mining.
+- **Stats** - Get player buffs like increased health and damage by leveling skills, which can be as independent modifiers and on items.
+- **Abilities** - Skills have passive and active abilities that add gameplay mechanics, plus a full mana system.
+- **Menus** - Players can see everything related to skills in fully-configurable inventory GUIs.
+- **Rewards** - Customize rewards given for leveling skills, such as running commands or giving items.
+- **Loot** - Create custom loot tables for fishing, blocks, and mobs.
+
+See the [official website](https://aurelium.dev/auraskills) and [wiki](https://wiki.aurelium.dev/auraskills) for a more complete list of features. The wiki also contains the list of [server requirements](https://wiki.aurelium.dev/auraskills/server-requirements) to run the plugin.
+
+## Building
+
+AuraSkills uses Gradle for dependencies and building.
+
+#### Compiling from source
+
+First, clone the project (requires Git to be installed):
+
+```
+git clone https://github.com/Archy-X/AuraSkills.git
+cd AuraSkills/
+```
+
+Then build depending on your operating system:
+
+Linux / macOS
+
+```
+./gradlew clean build
+```
+
+Windows
+
+```
+.\gradlew.bat clean build
+```
+
+The output jar can be found in the `build/libs` directory.
 
 ## API
 

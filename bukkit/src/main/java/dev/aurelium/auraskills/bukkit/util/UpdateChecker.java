@@ -28,10 +28,10 @@ public class UpdateChecker {
     }
 
     public void sendUpdateMessageAsync(CommandSender sender) {
-        getVersion((version, loader) -> {
+        getVersion((version, id) -> {
             if (isOutdated(plugin.getDescription().getVersion(), version)) {
                 final String prefix = sender instanceof Player ? plugin.getPrefix(plugin.getDefaultLanguage()) : "[AuraSkills] ";
-                final String downloadLink = "https://modrinth.com/plugin/" + UpdateChecker.MODRINTH_ID + "/version/" + version + "?loader=" + loader;
+                final String downloadLink = "https://modrinth.com/plugin/" + UpdateChecker.MODRINTH_ID + "/version/" + id;
 
                 sender.sendMessage(prefix + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
                 sender.sendMessage(prefix + ChatColor.WHITE + "Download it on Modrinth: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + downloadLink);
@@ -80,7 +80,9 @@ public class UpdateChecker {
                     JsonObject firstElement = jsonArray.get(0).getAsJsonObject();
                     String versionNumber = firstElement.get("version_number").getAsString();
 
-                    consumer.accept(versionNumber, loader);
+                    String id = firstElement.get("id").getAsString();
+
+                    consumer.accept(versionNumber, id);
                 } else {
                     this.plugin.getLogger().info("Cannot look for updates: Request failed with status code " + response.statusCode());
                 }
