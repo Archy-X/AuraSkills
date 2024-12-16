@@ -620,11 +620,11 @@ menus:
     mana_abilities_desc: "<3>Las habilidades</3> <1>de maná son un tipo especial de habilidad que requieren activación y consume maná.</1>"
     abilities_click: "Clic para ver las habilidades de {skill}"
     job: Trabajo
-    job_desc: Seleccionando {skill} como tu trabajo te permite ganar dinero mientras ganas XP.
+    job_desc: Seleccionar {skill} como tu trabajo te permite ganar dinero mientras ganas XP.
     job_select: Clic Izquierdo para seleccionar {skill} como trabajo
     job_active: Estás trabajando actualmente en este trabajo
-    job_quit: Clic Derecho para renunciar
-    job_limit: Has alcanzado el límite de trabajos. Sal de algún trabajo actual primero para seleccionar este.
+    job_quit: Clic derecho para dejar este trabajo
+    job_limit: Has alcanzado el límite de trabajos. Deja alguno de tus trabajos actuales para seleccionar este.
     job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Tus estadísticas
