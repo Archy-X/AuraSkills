@@ -42,7 +42,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Default
 	@CommandPermission("auraskills.command.skills")
-	@Description("Opens the Skills menu, where you can browse skills, progress, and abilities.")
+	@Description("%desc_skills")
 	public void onSkills(Player player) {
 		if (plugin.getUserManager().hasUser(player.getUniqueId())) {
 			plugin.getSlate().openMenu(player, "skills");
@@ -53,7 +53,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("reload")
 	@CommandPermission("auraskills.command.reload")
-	@Description("Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.")
+	@Description("%desc_reload")
 	public void reload(CommandSender sender) {
 		new ReloadExecutor(plugin).reload(sender);
 	}
@@ -68,7 +68,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandAlias("skilltop")
 	@CommandCompletion("@skill_top")
 	@CommandPermission("auraskills.command.top")
-	@Description("Shows the top players in a skill")
+	@Description("%desc_top")
 	@Syntax("Usage: /sk top <page> or /sk top [skill] <page>")
 	public void onTop(CommandSender sender, String[] args) {
 		Locale locale = plugin.getLocale(sender);
@@ -168,7 +168,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("save")
 	@CommandPermission("auraskills.command.save")
-	@Description("Saves skill data")
+	@Description("%desc_save")
 	public void onSave(CommandSender sender) {
 		plugin.getScheduler().executeAsync(() -> {
 			Locale locale = plugin.getLocale(sender);
@@ -185,7 +185,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("updateleaderboards")
 	@CommandPermission("auraskills.command.updateleaderboards")
-	@Description("Updates and sorts the leaderboards")
+	@Description("%desc_updateleaderboards")
 	public void onUpdateLeaderboards(CommandSender sender) {
 		Locale locale = plugin.getLocale(sender);
 		if (plugin.getLeaderboardManager().isNotSorting()) {
@@ -202,7 +202,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("toggle")
 	@CommandAlias("abtoggle")
 	@CommandPermission("auraskills.command.abtoggle")
-	@Description("Toggle your own action bar")
+	@Description("%desc_toggle")
 	public void onActionBarToggle(Player player) {
 		User user = plugin.getUser(player);
 		Locale locale = user.getLocale();
@@ -222,7 +222,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("rank")
 	@CommandAlias("skillrank")
 	@CommandPermission("auraskills.command.rank")
-	@Description("Shows your skill rankings")
+	@Description("%desc_rank")
 	public void onRank(Player player) {
 		Locale locale = plugin.getLocale(player);
 		player.sendMessage(plugin.getMsg(CommandMessage.RANK_HEADER, locale));
@@ -240,7 +240,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("lang")
 	@CommandCompletion("@lang")
 	@CommandPermission("auraskills.command.lang")
-	@Description("Changes your player language")
+	@Description("%desc_lang")
 	public void onLanguage(Player player, String language) {
 		Locale locale = new Locale(language.toLowerCase(Locale.ROOT));
 		if (plugin.getMessageProvider().hasLocale(locale)) {
@@ -258,7 +258,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("multiplier")
 	@CommandCompletion("@players")
 	@CommandPermission("auraskills.command.multiplier")
-	@Description("Shows a player's current XP multiplier based on their permissions.")
+	@Description("%desc_multiplier")
 	public void onMultiplier(CommandSender sender, @Optional @Flags("other") Player player) {
 		Player target;
 		if (player == null) {
@@ -292,7 +292,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("resethealth")
 	@CommandPermission("auraskills.command.resethealth")
-	@Description("Removes all attribute modifiers by Aurelium Skills for easy uninstalling. This only works on offline players.")
+	@Description("%desc_resethealth")
 	public void onResetHealth(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender || sender instanceof RemoteConsoleCommandSender) {
 			Uninstaller uninstaller = new Uninstaller();
