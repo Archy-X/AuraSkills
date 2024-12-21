@@ -168,9 +168,8 @@ public class RequirementListener implements Listener {
     }
 
     private void checkBlockRequirements(Player player, Material material, Cancellable event) {
-        BlockRequirement blockRequirement = manager.getBlocks().get(material);
+        BlockRequirement blockRequirement = manager.getBlocks().stream().filter(b -> b.getMaterial() == material).findFirst().orElse(null);
         if (blockRequirement != null) {
-
             if (event instanceof BlockBreakEvent) {
                 if (!blockRequirement.checksBreaking()) return;
             } else if (event instanceof BlockPlaceEvent) {

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class RequirementManager implements Listener {
 
     private Set<GlobalRequirement> globalRequirements;
-    private Map<Material, BlockRequirement> blockRequirements;
+    private List<BlockRequirement> blockRequirements;
     private final Map<UUID, Integer> errorMessageTimer;
     private final AuraSkills plugin;
 
@@ -83,7 +83,7 @@ public class RequirementManager implements Listener {
         try {
             ConfigurationNode config = loader.loadUserFile("config.yml");
 
-            this.blockRequirements = new HashMap<>();
+            this.blockRequirements = new ArrayList<>();
             List<? extends ConfigurationNode> blockNodes = config.node("requirements", "blocks").childrenList();
             for (ConfigurationNode blockNode : blockNodes) {
                 Material material = Material.valueOf(blockNode.node("material").getString().toUpperCase(Locale.ROOT));
@@ -120,8 +120,8 @@ public class RequirementManager implements Listener {
                     }
                 }
 
-                BlockRequirement blockRequirement = new BlockRequirement(allowPlace, allowBreak, nodes);
-                blockRequirements.put(material, blockRequirement);
+                BlockRequirement blockRequirement = new BlockRequirement(material, allowPlace, allowBreak, nodes);
+                blockRequirements.add(blockRequirement);
             }
             if (!blockRequirements.isEmpty()) {
                 plugin.logger().info("Loaded " + blockRequirements.size() + " global requirement" + (blockRequirements.size() != 1 ? "s" : ""));
@@ -136,7 +136,7 @@ public class RequirementManager implements Listener {
         return globalRequirements;
     }
 
-    public Map<Material, BlockRequirement> getBlocks() {
+    public List<BlockRequirement> getBlocks() {
         return blockRequirements;
     }
 
