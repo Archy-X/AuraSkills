@@ -84,7 +84,7 @@ public class RequirementManager implements Listener {
             ConfigurationNode config = loader.loadUserFile("config.yml");
 
             this.blockRequirements = new ArrayList<>();
-            List<? extends ConfigurationNode> blockNodes = config.node("requirements", "blocks").childrenList();
+            List<? extends ConfigurationNode> blockNodes = config.node("requirement", "blocks").childrenList();
             for (ConfigurationNode blockNode : blockNodes) {
                 Material material = Material.valueOf(blockNode.node("material").getString().toUpperCase(Locale.ROOT));
                 boolean allowPlace = blockNode.node("allow_place").getBoolean();
