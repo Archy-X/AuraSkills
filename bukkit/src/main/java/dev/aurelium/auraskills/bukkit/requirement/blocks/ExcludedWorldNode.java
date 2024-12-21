@@ -6,12 +6,10 @@ import org.bukkit.entity.Player;
 public class ExcludedWorldNode extends RequirementNode {
 
     private final String[] worlds;
-    private final String message;
 
     public ExcludedWorldNode(AuraSkills plugin, String[] worlds, String message) {
-        super(plugin);
+        super(plugin, message);
         this.worlds = worlds;
-        this.message = message;
     }
 
     @Override
@@ -22,10 +20,5 @@ public class ExcludedWorldNode extends RequirementNode {
             }
         }
         return true;
-    }
-
-    @Override
-    public String getDenyMessage() {
-        return message;
     }
 }

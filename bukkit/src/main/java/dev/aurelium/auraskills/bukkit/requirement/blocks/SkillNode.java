@@ -8,20 +8,15 @@ public class SkillNode extends RequirementNode {
 
     private final Skill skill;
     private final int level;
-    private final String message;
 
     public SkillNode(AuraSkills plugin, Skill skill, int level, String message) {
-        super(plugin);
+        super(plugin, message);
         this.skill = skill;
         this.level = level;
-        this.message = message;
     }
 
+    @Override
     public boolean check(Player player) {
         return plugin.getUser(player).getSkillLevel(skill) >= level;
-    }
-
-    public String getDenyMessage() {
-        return message;
     }
 }

@@ -89,8 +89,9 @@ public class RequirementManager implements Listener {
                 Material material = Material.valueOf(blockNode.node("material").getString().toUpperCase(Locale.ROOT));
                 boolean allowPlace = blockNode.node("allow_place").getBoolean();
                 boolean allowBreak = blockNode.node("allow_break").getBoolean();
+                boolean allowHarvest = blockNode.node("allow_harvest").getBoolean();
                 List<? extends ConfigurationNode> requirementNodes = blockNode.node("requirements").childrenList();
-                LinkedList<RequirementNode> nodes = new LinkedList<>();
+                List<RequirementNode> nodes = new ArrayList<>();
 
                 for (ConfigurationNode requirementNode : requirementNodes) {
                     String type = requirementNode.node("type").getString();
@@ -120,7 +121,7 @@ public class RequirementManager implements Listener {
                     }
                 }
 
-                BlockRequirement blockRequirement = new BlockRequirement(material, allowPlace, allowBreak, nodes);
+                BlockRequirement blockRequirement = new BlockRequirement(material, allowPlace, allowBreak, allowHarvest, nodes);
                 blockRequirements.add(blockRequirement);
             }
             if (!blockRequirements.isEmpty()) {

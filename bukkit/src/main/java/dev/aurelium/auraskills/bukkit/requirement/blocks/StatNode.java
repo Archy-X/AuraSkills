@@ -8,20 +8,15 @@ public class StatNode extends RequirementNode {
 
     private final Stat stat;
     private final int value;
-    private final String message;
 
     public StatNode(AuraSkills plugin, Stat stat, int value, String message) {
-        super(plugin);
+        super(plugin, message);
         this.stat = stat;
         this.value = value;
-        this.message = message;
     }
 
+    @Override
     public boolean check(Player player) {
         return plugin.getUser(player).getStatLevel(stat) >= value;
-    }
-
-    public String getDenyMessage() {
-        return message;
     }
 }

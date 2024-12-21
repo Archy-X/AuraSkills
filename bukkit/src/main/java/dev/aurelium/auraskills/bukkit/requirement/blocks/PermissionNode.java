@@ -6,19 +6,14 @@ import org.bukkit.entity.Player;
 public class PermissionNode extends RequirementNode {
 
     private final String permission;
-    private final String message;
 
     public PermissionNode(AuraSkills plugin, String permission, String message) {
-        super(plugin);
+        super(plugin, message);
         this.permission = permission;
-        this.message = message;
     }
 
+    @Override
     public boolean check(Player player) {
         return player.hasPermission(permission);
-    }
-
-    public String getDenyMessage() {
-        return message;
     }
 }

@@ -2,19 +2,21 @@ package dev.aurelium.auraskills.bukkit.requirement.blocks;
 
 import org.bukkit.Material;
 
-import java.util.LinkedList;
+import java.util.List;
 
 public class BlockRequirement {
 
     private final Material material;
     private final boolean checksPlace;
     private final boolean checksBreak;
-    private final LinkedList<RequirementNode> nodes;
+    private final boolean checksHarvest;
+    private final List<RequirementNode> nodes;
 
-    public BlockRequirement(Material material, boolean checksPlace, boolean checksBreak, LinkedList<RequirementNode> nodes) {
+    public BlockRequirement(Material material, boolean checksPlace, boolean checksBreak, boolean checksHarvest, List<RequirementNode> nodes) {
         this.material = material;
         this.checksPlace = checksPlace;
         this.checksBreak = checksBreak;
+        this.checksHarvest = checksHarvest;
         this.nodes = nodes;
     }
 
@@ -30,7 +32,11 @@ public class BlockRequirement {
         return checksBreak;
     }
 
-    public LinkedList<RequirementNode> getNodes() {
+    public boolean checksHarvesting() {
+        return checksHarvest;
+    }
+
+    public List<RequirementNode> getNodes() {
         return nodes;
     }
 }

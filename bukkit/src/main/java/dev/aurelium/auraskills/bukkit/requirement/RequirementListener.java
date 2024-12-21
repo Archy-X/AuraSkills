@@ -19,6 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -114,6 +115,13 @@ public class RequirementListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
+    public void onHarvest(PlayerHarvestBlockEvent event) {
+        if (event.isCancelled()) return;
+        checkBlockRequirements(event.getPlayer(), event.getHarvestedBlock().getType(), event);
+    }
+
+
+    @EventHandler(priority = EventPriority.HIGH)
     public void onAttack(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (plugin.configBoolean(Option.REQUIREMENT_ITEM_PREVENT_WEAPON_USE)) {
@@ -168,7 +176,15 @@ public class RequirementListener implements Listener {
     }
 
     private void checkBlockRequirements(Player player, Material material, Cancellable event) {
-        BlockRequirement blockRequirement = manager.getBlocks().stream().filter(b -> b.getMaterial() == material).findFirst().orElse(null);
+        BlockRequirement blockRequirement = null;
+
+        for (BlockRequirement block : manager.getBlocks()) {
+            if (block.getMaterial() == material) {
+                blockRequirement = block;
+                break;
+            }
+        }
+
         if (blockRequirement != null) {
             if (event instanceof BlockBreakEvent) {
                 if (!blockRequirement.checksBreaking()) return;
@@ -180,7 +196,7 @@ public class RequirementListener implements Listener {
                 if (!node.check(player)) {
                     event.setCancelled(true);
                     String message = node.getDenyMessage();
-                    if(!message.isEmpty()) player.sendMessage(message);
+                    if (!message.isEmpty()) player.sendMessage(message);
                 }
             }
         }
