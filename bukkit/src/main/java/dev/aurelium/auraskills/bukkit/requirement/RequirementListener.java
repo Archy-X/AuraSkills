@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
+import dev.aurelium.auraskills.bukkit.requirement.blocks.BlockRequirement;
+import dev.aurelium.auraskills.bukkit.requirement.blocks.RequirementNode;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorEquipEvent;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageKey;
@@ -96,6 +98,7 @@ public class RequirementListener implements Listener {
             if (item.getType() == Material.AIR) return;
             checkItemRequirements(player, item, event);
         }
+        checkBlockRequirements(event.getPlayer(), event.getBlock().getType(), event);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -107,6 +110,7 @@ public class RequirementListener implements Listener {
             if (item.getType() == Material.AIR) return;
             checkItemRequirements(player, item, event);
         }
+        checkBlockRequirements(event.getPlayer(), event.getBlock().getType(), event);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -163,4 +167,22 @@ public class RequirementListener implements Listener {
         }
     }
 
+    private void checkBlockRequirements(Player player, Material material, Cancellable event) {
+        BlockRequirement blockRequirement = manager.getBlocks().get(material);
+        if (blockRequirement != null) {
+
+            if (event instanceof BlockBreakEvent) {
+                if (!blockRequirement.checksBreaking()) return;
+            } else if (event instanceof BlockPlaceEvent) {
+                if (!blockRequirement.checksPlacing()) return;
+            }
+
+            for (RequirementNode node : blockRequirement.getNodes()) {
+                if (!node.check(player)) {
+                    event.setCancelled(true);
+                    player.sendMessage(plugin.getPrefix(plugin.getUser(player).getLocale()) + node.getDenyMessage());
+                }
+            }
+        }
+    }
 }
