@@ -236,6 +236,7 @@ requirement:
     prevent_armor_equip: true
     global: [ ]
   blocks:
+    enabled: true
 damage:
   correct_last_damage: true
 critical:
