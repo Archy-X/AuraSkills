@@ -179,7 +179,8 @@ public class RequirementListener implements Listener {
             for (RequirementNode node : blockRequirement.getNodes()) {
                 if (!node.check(player)) {
                     event.setCancelled(true);
-                    player.sendMessage(plugin.getPrefix(plugin.getUser(player).getLocale()) + node.getDenyMessage());
+                    String message = node.getDenyMessage();
+                    if(!message.isEmpty()) player.sendMessage(message);
                 }
             }
         }
