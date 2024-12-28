@@ -174,7 +174,7 @@ public class SkillsRootCommand extends BaseCommand {
 			Locale locale = plugin.getLocale(sender);
 			for (User user : plugin.getUserManager().getOnlineUsers()) {
 				try {
-					plugin.getStorageProvider().save(user);
+					plugin.getStorageProvider().saveSafely(user);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

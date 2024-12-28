@@ -44,7 +44,7 @@ public class BackupProvider {
         // Save online players
         if (savePlayerData) {
             for (User user : plugin.getUserManager().getOnlineUsers()) {
-                plugin.getStorageProvider().save(user);
+                plugin.getStorageProvider().saveSafely(user);
             }
         }
 

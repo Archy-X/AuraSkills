@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class OfflineSkillsUser implements SkillsUser {
@@ -223,5 +224,12 @@ public class OfflineSkillsUser implements SkillsUser {
     @Override
     public void pauseActionBar(int duration, TimeUnit timeUnit) {
 
+    }
+
+    @Override
+    public CompletableFuture<Boolean> save(boolean removeFromMemory) {
+        var future = new CompletableFuture<Boolean>();
+        future.complete(false);
+        return future;
     }
 }

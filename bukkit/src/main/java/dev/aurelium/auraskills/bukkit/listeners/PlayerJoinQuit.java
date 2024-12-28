@@ -57,7 +57,7 @@ public class PlayerJoinQuit implements Listener {
 
         plugin.getScheduler().executeAsync(() -> {
             try {
-                plugin.getStorageProvider().save(user);
+                plugin.getStorageProvider().saveSafely(user);
                 plugin.getUserManager().removeUser(player.getUniqueId());
             } catch (Exception e) {
                 e.printStackTrace();

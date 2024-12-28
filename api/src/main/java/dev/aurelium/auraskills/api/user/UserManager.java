@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api.user;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface UserManager {
 
@@ -16,5 +17,16 @@ public interface UserManager {
      * @return the SkillsUser object
      */
     SkillsUser getUser(UUID playerId);
+
+    /**
+     * Loads an offline user from storage, or gets a user from memory if the player is online. When loading offline users,
+     * the returned {@link SkillsUser} may become out of date at any point if the user logs in, since joining will always
+     * load from storage. If the UUID doesn't represent a user that exists in either memory or storage, an empty
+     * {@link SkillsUser} object will be returned where {@link SkillsUser#isLoaded()} will return false.
+     *
+     * @param playerId the UUID of the player
+     * @return a future with the SkillsUser, which is provided after the user is loaded asynchronously
+     */
+    CompletableFuture<SkillsUser> loadUser(UUID playerId);
 
 }

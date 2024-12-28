@@ -19,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ApiSkillsUser implements SkillsUser {
@@ -253,6 +254,24 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public void pauseActionBar(int duration, TimeUnit timeUnit) {
         plugin.getUiProvider().getActionBarManager().setPaused(user, duration, timeUnit);
+    }
+
+    @Override
+    public CompletableFuture<Boolean> save(boolean removeFromMemory) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                plugin.getStorageProvider().saveSafely(user);
+                if (removeFromMemory) {
+                    plugin.getUserManager().removeUser(user.getUuid());
+                }
+                future.complete(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                future.complete(false);
+            }
+        });
+        return future;
     }
 
 }

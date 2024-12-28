@@ -12,12 +12,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public abstract class StorageProvider {
 
+    private static final long SAVE_TIMEOUT_MS = 2000;
+    private static final long LOAD_TIMEOUT_MS = 2000;
+
     public final AuraSkillsPlugin plugin;
     public final UserManager userManager;
+    private final ConcurrentHashMap<UUID, ReentrantReadWriteLock> userLocks = new ConcurrentHashMap<>();
 
     public StorageProvider(AuraSkillsPlugin plugin) {
         this.userManager = plugin.getUserManager();
@@ -25,19 +31,34 @@ public abstract class StorageProvider {
     }
 
     public void load(UUID uuid) throws Exception {
-        User user = loadRaw(uuid);
-        fixInvalidData(user);
+        ReentrantReadWriteLock lock = getUserLock(uuid);
+        boolean lockAcquired = false;
+        try {
+            lockAcquired = lock.readLock().tryLock(LOAD_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            if (!lockAcquired) {
+                plugin.logger().warn("Load timout exceeded for user " + uuid);
+            }
 
-        plugin.getUserManager().addUser(user);
+            User user = loadRaw(uuid);
+            fixInvalidData(user);
 
-        // Update stats
-        plugin.getStatManager().updateStats(user);
+            plugin.getUserManager().addUser(user);
 
-        // Call event
-        plugin.getScheduler().executeSync(() -> plugin.getEventHandler().callUserLoadEvent(user));
+            plugin.getScheduler().executeSync(() -> {
+                plugin.getStatManager().updateStats(user); // Update stats
+                plugin.getEventHandler().callUserLoadEvent(user); // Call event
+            });
 
-        // Update permissions
-        plugin.getRewardManager().updatePermissions(user);
+            // Update permissions
+            plugin.getRewardManager().updatePermissions(user);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            if (lockAcquired) {
+                lock.readLock().unlock();
+            }
+            removeUserLock(uuid, lock);
+        }
     }
 
     protected abstract User loadRaw(UUID uuid) throws Exception;
@@ -59,6 +80,26 @@ public abstract class StorageProvider {
      */
     public abstract void applyState(UserState state) throws Exception;
 
+    public void saveSafely(@NotNull User user) {
+        ReentrantReadWriteLock lock = getUserLock(user.getUuid());
+        boolean lockAcquired = false;
+        try {
+            lockAcquired = lock.writeLock().tryLock(SAVE_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+            if (!lockAcquired) {
+                plugin.logger().warn("Save timeout exceeded for user " + user.getUuid());
+                return;
+            }
+            save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (lockAcquired) {
+                lock.writeLock().unlock();
+            }
+            removeUserLock(user.getUuid(), lock);
+        }
+    }
+
     public abstract void save(@NotNull User user) throws Exception;
 
     public abstract void delete(UUID uuid) throws Exception;
@@ -77,12 +118,8 @@ public abstract class StorageProvider {
             public void run() {
                 for (User user : userManager.getOnlineUsers()) {
                     try {
-                        if (user.isSaving()) {
-                            continue;
-                        }
-                        save(user);
+                        saveSafely(user);
                     } catch (Exception e) {
-                        user.setSaving(false);
                         plugin.logger().warn("Error running auto-save on user data:");
                         e.printStackTrace();
                     }
@@ -108,6 +145,16 @@ public abstract class StorageProvider {
                     user.setSkillLevel(skill, maxLevel);
                 }
             }
+        }
+    }
+
+    protected ReentrantReadWriteLock getUserLock(UUID uuid) {
+        return userLocks.computeIfAbsent(uuid, id -> new ReentrantReadWriteLock());
+    }
+
+    protected void removeUserLock(UUID uuid, ReentrantReadWriteLock lock) {
+        if (lock.getReadLockCount() == 0 && !lock.isWriteLocked()) {
+            userLocks.remove(uuid);
         }
     }
 

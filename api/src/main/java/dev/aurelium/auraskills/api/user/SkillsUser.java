@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public interface SkillsUser {
@@ -335,5 +336,15 @@ public interface SkillsUser {
      * @param timeUnit the time unit of the duration
      */
     void pauseActionBar(int duration, TimeUnit timeUnit);
+
+    /**
+     * Saves the user to persistent storage asynchronously. This is only recommended if the SkillsUser represents an
+     * offline user, as changes for online users are saved automatically on logout.
+     *
+     * @param removeFromMemory Whether to remove the user from memory after saving. Will not work if the user is online.
+     * @return A future signaling when the saving is complete. The future's value is true if successful, and false if an
+     * exception was thrown.
+     */
+    CompletableFuture<Boolean> save(boolean removeFromMemory);
 
 }

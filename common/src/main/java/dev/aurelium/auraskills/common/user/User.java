@@ -54,7 +54,6 @@ public abstract class User {
     private long lastJobSelectTime;
     private final List<AntiAfkLog> sessionAntiAfkLogs;
 
-    private boolean saving;
     private boolean shouldSave;
     private boolean blank = true;
 
@@ -78,7 +77,6 @@ public abstract class User {
         this.metadata = new ConcurrentHashMap<>();
         this.actionBarSettings = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
-        this.saving = false;
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
         this.multipliers = new HashMap<>();
@@ -463,14 +461,6 @@ public abstract class User {
     }
 
     public abstract boolean canSelectJob(@NotNull Skill skill);
-
-    public boolean isSaving() {
-        return saving;
-    }
-
-    public void setSaving(boolean saving) {
-        this.saving = saving;
-    }
 
     public boolean shouldNotSave() {
         return !shouldSave;
