@@ -30,7 +30,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @traits @nothing @nothing true true")
-    @Description("Adds a trait modifier to a player.")
+    @Description("%desc_trait_add")
     public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -57,7 +57,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @modifiers true")
-    @Description("Removes a specific trait modifier from a player.")
+    @Description("%desc_trait_remove")
     public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -75,7 +75,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("list")
     @CommandCompletion("@players @traits")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Lists all or a specific trait's modifiers for a player.")
+    @Description("%desc_trait_list")
     public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Trait trait) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {
@@ -113,7 +113,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("removeall")
     @CommandCompletion("@players @traits")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Removes all trait modifiers from a player.")
+    @Description("%desc_trait_removeall")
     public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Trait trait, @Default("false") boolean silent) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {
