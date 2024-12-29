@@ -10,6 +10,9 @@ import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.bukkit.util.BlockFaceUtil;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -20,6 +23,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class Treecapitator extends ReadiedManaAbility {
@@ -91,23 +95,53 @@ public class Treecapitator extends ReadiedManaAbility {
         breakBlock(user, block, new TreecapitatorTree(plugin, block, source));
     }
 
+    // Store locations to avoid infinte loop
+    private final ConcurrentHashMap<Location, Boolean> visitedBlocks = new ConcurrentHashMap<>();
+
+    // Initiate BlockBreak Event on Every Regen
     private void breakBlock(User user, Block block, TreecapitatorTree tree) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
             return;
         }
+
+        // Check if this block has already been processed
+        if (visitedBlocks.putIfAbsent(block.getLocation(), true) != null) {
+            return; // Already visited
+        }
+
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
             BlockXpSource adjSource = getSource(adjacentBlock);
             boolean isTrunk = isTrunk(adjSource);
             boolean isLeaf = isLeaf(adjSource);
+
             if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
+
             // Make sure block was not placed
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
             }
-            adjacentBlock.breakNaturally();
-            tree.incrementBlocksBroken();
-            if (adjSource != null && GIVE_XP) {
-                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
+            // Skip air blocks but continue searching adjacent blocks
+            if (adjacentBlock.getType() == Material.AIR) {
+                plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+                continue;
+            }
+            // Trigger BlockBreakEvent manually
+            if (user.getUuid() != null) {
+                Player player = Bukkit.getPlayer(user.getUuid());
+                if (player != null) {
+                    BlockBreakEvent breakEvent = new BlockBreakEvent(adjacentBlock, player);
+                    Bukkit.getServer().getPluginManager().callEvent(breakEvent);
+
+                    if (!breakEvent.isCancelled()) {
+                        adjacentBlock.breakNaturally();
+                        tree.incrementBlocksBroken();
+
+                        // Add XP if applicable
+                        if (adjSource != null && GIVE_XP) {
+                            plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
+                        }
+                    }
+                }
             }
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
@@ -117,7 +151,9 @@ public class Treecapitator extends ReadiedManaAbility {
             // Break the next blocks
             plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
         }
+        visitedBlocks.clear();
     }
+
 
     @Nullable
     private BlockXpSource getSource(Block block) {
