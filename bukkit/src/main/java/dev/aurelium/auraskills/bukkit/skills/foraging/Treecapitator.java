@@ -92,20 +92,35 @@ public class Treecapitator extends ReadiedManaAbility {
     }
 
     private void breakBlock(User user, Block block, TreecapitatorTree tree) {
-        if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
+        boolean brokenEnoughTrunks = tree.getTrunkBroken() > tree.getMaxTrunkBlocks();
+        boolean brokenEnoughLeaves = tree.getLeavesBroken() > tree.getMaxLeavesBlock();
+
+        if (brokenEnoughTrunks && brokenEnoughLeaves) {
             return;
         }
+
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
             BlockXpSource adjSource = getSource(adjacentBlock);
             boolean isTrunk = isTrunk(adjSource);
             boolean isLeaf = isLeaf(adjSource);
             if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
+
+            if (brokenEnoughTrunks && isTrunk || brokenEnoughLeaves && isLeaf) {
+                continue;
+            }
+
             // Make sure block was not placed
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
             }
             adjacentBlock.breakNaturally();
-            tree.incrementBlocksBroken();
+
+            if (isTrunk) {
+                tree.incrementTrunkBroken();
+            } else {
+                tree.incrementLeavesBroken();
+            }
+
             if (adjSource != null && GIVE_XP) {
                 plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
             }
@@ -141,8 +156,10 @@ public class Treecapitator extends ReadiedManaAbility {
 
         private final AuraSkills plugin;
         private final Block originalBlock;
-        private int blocksBroken;
-        private int maxBlocks;
+        private int trunkBroken;
+        private int leavesBroken;
+        private int maxTrunkBlocks;
+        private int maxLeavesBlock;
 
         public TreecapitatorTree(AuraSkills plugin, Block originalBlock, BlockXpSource source) {
             this.plugin = plugin;
@@ -154,16 +171,28 @@ public class Treecapitator extends ReadiedManaAbility {
             return originalBlock;
         }
 
-        public int getBlocksBroken() {
-            return blocksBroken;
+        public int getTrunkBroken() {
+            return trunkBroken;
         }
 
-        public void incrementBlocksBroken() {
-            blocksBroken++;
+        public void incrementTrunkBroken() {
+            trunkBroken++;
         }
 
-        public int getMaxBlocks() {
-            return maxBlocks;
+        public void incrementLeavesBroken() {
+            leavesBroken++;
+        }
+
+        public int getMaxTrunkBlocks() {
+            return maxTrunkBlocks;
+        }
+
+        public int getMaxLeavesBlock() {
+            return maxLeavesBlock;
+        }
+
+        public int getLeavesBroken() {
+            return leavesBroken;
         }
 
         private void setMaxBlocks(XpSource source) {
@@ -183,19 +212,24 @@ public class Treecapitator extends ReadiedManaAbility {
             }
             if (source != null) {
                 if (matName.contains("OAK") || matName.contains("BIRCH") || matName.contains("ACACIA") || matName.contains("CHERRY")) {
-                    maxBlocks = 100;
+                    maxTrunkBlocks = 100;
+                    maxLeavesBlock = 200;
                 } else if (matName.contains("SPRUCE") || matName.contains("CRIMSON") || matName.contains("WARPED") || matName.contains("MANGROVE")) {
-                    maxBlocks = 125;
+                    maxTrunkBlocks = 120;
+                    maxLeavesBlock = 400;
                 } else if (matName.contains("JUNGLE")) {
-                    maxBlocks = 220;
+                    maxTrunkBlocks = 200;
+                    maxLeavesBlock = 400;
                 } else if (matName.contains("DARK_OAK")) {
-                    maxBlocks = 150;
+                    maxTrunkBlocks = 100;
+                    maxLeavesBlock = 250;
                 }
             } else {
-                maxBlocks = 100;
+                maxTrunkBlocks = 100;
+                maxLeavesBlock = 200;
             }
             double multiplier = ManaAbilities.TREECAPITATOR.optionDouble("max_blocks_multiplier", 1.0);
-            maxBlocks = (int) (maxBlocks * multiplier);
+            maxTrunkBlocks = (int) (maxTrunkBlocks * multiplier);
         }
 
     }
