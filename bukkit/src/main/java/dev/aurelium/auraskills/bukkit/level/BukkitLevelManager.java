@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class BukkitLevelManager extends LevelManager {
 
@@ -114,9 +115,13 @@ public class BukkitLevelManager extends LevelManager {
 
     @Override
     public void reloadModifiers(User user) {
-        Player player = ((BukkitUser) user).getPlayer();
-        if (player != null) {
-            plugin.getModifierManager().reloadPlayer(player);
-        }
+        plugin.getScheduler().scheduleSync(() -> {
+            Player player = ((BukkitUser) user).getPlayer();
+            if (player != null) {
+                double currentHealth = player.getHealth();
+                plugin.getModifierManager().reloadPlayer(player);
+                player.setHealth(currentHealth);
+            }
+        }, 5L, TimeUnit.MILLISECONDS);
     }
 }
