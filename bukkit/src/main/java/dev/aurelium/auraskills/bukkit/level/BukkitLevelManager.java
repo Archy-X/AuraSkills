@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -21,8 +22,9 @@ import org.bukkit.event.entity.EntityEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
+
 
 public class BukkitLevelManager extends LevelManager {
 
@@ -115,13 +117,11 @@ public class BukkitLevelManager extends LevelManager {
 
     @Override
     public void reloadModifiers(User user) {
-        plugin.getScheduler().scheduleSync(() -> {
-            Player player = ((BukkitUser) user).getPlayer();
-            if (player != null) {
-                double currentHealth = player.getHealth();
-                plugin.getModifierManager().reloadPlayer(player);
-                player.setHealth(currentHealth);
-            }
-        }, 5L, TimeUnit.MILLISECONDS);
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            double currentHealth = player.getHealth();
+            plugin.getModifierManager().reloadPlayer(player);
+            player.setHealth(Math.min(currentHealth, (Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MAX_HEALTH))).getValue()));
+        }
     }
 }
