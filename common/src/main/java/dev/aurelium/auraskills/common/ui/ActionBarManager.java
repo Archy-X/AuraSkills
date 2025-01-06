@@ -185,6 +185,7 @@ public abstract class ActionBarManager {
         timer.clear();
         currentAction.clear();
         isPaused.clear();
+        clearMessageCache();
     }
 
     public void resetActionBar(User user) {
@@ -300,6 +301,10 @@ public abstract class ActionBarManager {
             return plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
         }
         return message;
+    }
+
+    public void clearMessageCache() {
+        idleMessageCache.clear();
     }
 
 }
