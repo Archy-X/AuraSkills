@@ -15,6 +15,7 @@ import org.bukkit.profile.PlayerProfile;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -59,15 +60,34 @@ public class LeaderboardMenu {
                 if (t.item().getItemMeta() instanceof SkullMeta meta) {
                     if (VersionUtils.isAtLeastVersion(18, 1)) {
                         PlayerProfile profile = Bukkit.createPlayerProfile(value.id());
-                        meta.setOwnerProfile(profile);
+                        if (profile.isComplete()) {
+                            meta.setOwnerProfile(profile);
+                        } else {
+                            profile.update()
+                                    .thenAcceptAsync(updated -> {
+                                        if (profile.isComplete()) {
+                                            meta.setOwnerProfile(updated);
+                                            t.item().setItemMeta(meta);
+                                        } else {
+                                            setLegacySkullPlayer(meta, value);
+                                            t.item().setItemMeta(meta);
+                                        }
+                                    }, r -> plugin.getScheduler().executeSync(r))
+                                    .orTimeout(4000, TimeUnit.MILLISECONDS)
+                                    .exceptionally(e -> null);
+                        }
                     } else {
-                        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(value.id());
-                        meta.setOwningPlayer(offlinePlayer);
+                        setLegacySkullPlayer(meta, value);
                     }
                     t.item().setItemMeta(meta);
                 }
                 return t.item();
             });
         });
+    }
+
+    private void setLegacySkullPlayer(SkullMeta meta, SkillValue value) {
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(value.id());
+        meta.setOwningPlayer(offlinePlayer);
     }
 }
