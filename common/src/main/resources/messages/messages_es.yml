@@ -330,7 +330,7 @@ acf:
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>] "
   antiafk:
-    failed: "<red>{player} falló anti-AFK cheque {check} <gray>(Count: {count})"
+    failed: "<red>{player} falló el chequeo anti-AFK {check} <gray>(Contador: {count})"
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
@@ -890,4 +890,4 @@ units:
   mana: Maná
   hp: HP
   xp: XP
-file_version: 35
+file_version: 0
