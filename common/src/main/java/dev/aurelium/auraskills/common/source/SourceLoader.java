@@ -228,7 +228,8 @@ public class SourceLoader {
                 return null;
             }
         } catch (RuntimeException e) {
-            throw new IllegalArgumentException("Error deserializing source of type " + type);
+            e.printStackTrace();
+            throw new IllegalArgumentException("Error deserializing source of type " + type + ": " + e.getMessage());
         }
     }
 
