@@ -51,7 +51,7 @@ public class ConfigurateSourceContext extends SourceContext {
             try {
                 list = source.node(pluralKey).getList(type);
             } catch (SerializationException e) {
-                throw new IllegalArgumentException("Failed to convert value of key "  + pluralKey + " to a list of type " + type.getName());
+                throw new IllegalArgumentException("Failed to convert value of key "  + pluralKey + " to a list of type " + type.getName() + " from input: " + source.node(pluralKey).getString());
             }
             if (list != null) {
                 array = list.toArray((V[]) Array.newInstance(type, list.size()));
@@ -63,7 +63,7 @@ public class ConfigurateSourceContext extends SourceContext {
             try {
                 array[0] = source.node(key).get(type);
             } catch (SerializationException e) {
-                throw new IllegalArgumentException("Failed to convert value of key " + key + " to type " + type.getName());
+                throw new IllegalArgumentException("Failed to convert value of key " + key + " to type " + type.getName() + " from input: " + source.node(key).getString());
             }
         } else {
             array = null;

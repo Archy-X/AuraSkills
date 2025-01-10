@@ -93,11 +93,16 @@ public class DamageLeveler extends SourceLeveler {
             damager = entityEvent.getDamager();
         }
 
-        plugin.getLevelManager().addDamageXp(user, skill, source, xp,
-                DamageCause.valueOf(event.getCause().name()), damager, event);
+        try {
+            DamageCause skillsCause = DamageCause.valueOf(event.getCause().name());
 
-        // Mark last gained time
-        lastGainTime.put(player.getUniqueId(), System.currentTimeMillis());
+            plugin.getLevelManager().addDamageXp(user, skill, source, xp, skillsCause, damager, event);
+
+            // Mark last gained time
+            lastGainTime.put(player.getUniqueId(), System.currentTimeMillis());
+        } catch (IllegalArgumentException e) {
+            plugin.logger().warn("Bukkit DamageCause " + event.getCause().name() + " is missing in AuraSkills DamageCause enum");
+        }
     }
 
     private boolean isSelfInflicted(Entity damager, Player player) {

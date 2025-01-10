@@ -79,6 +79,7 @@ public interface DamageXpSource extends XpSource {
     int getCooldownMs();
 
     enum DamageCause {
+        CAMPFIRE,
         CONTACT,
         ENTITY_ATTACK,
         ENTITY_SWEEP_ATTACK,
@@ -87,6 +88,7 @@ public interface DamageXpSource extends XpSource {
         FALL,
         FIRE,
         FIRE_TICK,
+        KILL,
         MELTING,
         LAVA,
         DROWNING,
@@ -108,6 +110,7 @@ public interface DamageXpSource extends XpSource {
         CRAMMING,
         DRYOUT,
         FREEZE,
-        SONIC_BOOM
+        SONIC_BOOM,
+        WORLD_BORDER
     }
 }
