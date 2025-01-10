@@ -223,7 +223,7 @@ public class ItemListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        User playerData = plugin.getUser(player);
+        User user = plugin.getUser(player);
 
         // Get items switched
         ItemStack itemOffHand = event.getOffHandItem();
@@ -243,22 +243,22 @@ public class ItemListener implements Listener {
             // For each modifier on the item
             for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the old modifier from main hand
-                StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
-                playerData.removeStatModifier(modifier.name(), false);
+                StatModifier offHandModifier = modifier.withName(modifier.name() + ".Offhand");
+                user.removeStatModifier(modifier.name(), false);
                 // Add new one if meets requirements
                 if (meetsRequirements) {
-                    playerData.addStatModifier(offHandModifier, false);
+                    user.addStatModifier(offHandModifier, false);
                 }
                 // Reload check stuff
                 offHandModifiers.add(offHandModifier.name());
                 statsToReload.add(modifier.stat());
             }
             for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
-                TraitModifier offHandModifier = new TraitModifier(modifier.name() + ".Offhand", modifier.trait(), modifier.value());
-                playerData.removeTraitModifier(modifier.name(), false);
+                TraitModifier offHandModifier = modifier.withName(modifier.name() + ".Offhand");
+                user.removeTraitModifier(modifier.name(), false);
                 // Add new one if meets requirements
                 if (meetsRequirements) {
-                    playerData.addTraitModifier(offHandModifier, false);
+                    user.addTraitModifier(offHandModifier, false);
                 }
                 // Reload check stuff
                 offHandModifiers.add(offHandModifier.name());
@@ -266,9 +266,9 @@ public class ItemListener implements Listener {
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 Multiplier offHandMultiplier = new Multiplier(multiplier.name() + ".Offhand", multiplier.skill(), multiplier.value());
-                playerData.removeMultiplier(multiplier.name());
+                user.removeMultiplier(multiplier.name());
                 if (meetsRequirements) {
-                    playerData.addMultiplier(offHandMultiplier);
+                    user.addMultiplier(offHandMultiplier);
                 }
                 offHandMultipliers.add(offHandMultiplier.name());
             }
@@ -281,11 +281,11 @@ public class ItemListener implements Listener {
             for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
                 // Removes the offhand modifier if wasn't already added
                 if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
-                    playerData.removeStatModifier(modifier.name() + ".Offhand", false);
+                    user.removeStatModifier(modifier.name() + ".Offhand", false);
                 }
                 // Add if meets requirements
                 if (meetsRequirements) {
-                    playerData.addStatModifier(modifier, false);
+                    user.addStatModifier(modifier, false);
                 }
                 // Reload check stuff
                 statsToReload.add(modifier.stat());
@@ -294,21 +294,21 @@ public class ItemListener implements Listener {
             for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
                 // Removes the offhand modifier if wasn't already added
                 if (!offHandModifiers.contains(modifier.name() + ".Offhand")) {
-                    playerData.removeTraitModifier(modifier.name() + ".Offhand", false);
+                    user.removeTraitModifier(modifier.name() + ".Offhand", false);
                 }
                 // Add if meets requirements
                 if (meetsRequirements) {
-                    playerData.addTraitModifier(modifier, false);
+                    user.addTraitModifier(modifier, false);
                 }
                 // Reload check stuff
                 traitsToReload.add(modifier.trait());
             }
             for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {
                 if (!offHandMultipliers.contains(multiplier.name() + ".Offhand")) {
-                    playerData.removeMultiplier(multiplier.name() + ".Offhand");
+                    user.removeMultiplier(multiplier.name() + ".Offhand");
                 }
                 if (meetsRequirements) {
-                    playerData.addMultiplier(multiplier);
+                    user.addMultiplier(multiplier);
                 }
             }
         }
@@ -367,11 +367,11 @@ public class ItemListener implements Listener {
     private void applyOffhandModifiers(ItemStack held, User user) {
         SkillsItem skillsItem = new SkillsItem(held, plugin);
         for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
-            StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
+            StatModifier offHandModifier = modifier.withName(modifier.name() + ".Offhand");
             user.addStatModifier(offHandModifier);
         }
         for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ITEM)) {
-            TraitModifier offHandModifier = new TraitModifier(modifier.name() + ".Offhand", modifier.trait(), modifier.value());
+            TraitModifier offHandModifier = modifier.withName(modifier.name() + ".Offhand");
             user.addTraitModifier(offHandModifier);
         }
         for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ITEM)) {

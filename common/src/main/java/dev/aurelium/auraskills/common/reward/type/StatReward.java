@@ -25,7 +25,7 @@ public class StatReward extends SkillReward {
 
     @Override
     public void giveReward(User user, Skill skill, int level) {
-        user.addStatLevel(stat, value);
+        user.getUserStats().recalculateStat(stat);
         plugin.getStatManager().reloadStat(user, stat);
     }
 

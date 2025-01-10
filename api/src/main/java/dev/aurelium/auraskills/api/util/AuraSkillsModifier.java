@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.api.util;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public abstract class AuraSkillsModifier<T> {
 
     protected final String name;
@@ -41,7 +43,17 @@ public abstract class AuraSkillsModifier<T> {
 
         ADD,
         MULTIPLY,
-        ADD_PERCENT
+        ADD_PERCENT;
+
+        @NotNull
+        public static Operation parse(String name) {
+            if (name == null) return Operation.ADD;
+            try {
+                return Operation.valueOf(name.toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                return Operation.ADD;
+            }
+        }
 
     }
 

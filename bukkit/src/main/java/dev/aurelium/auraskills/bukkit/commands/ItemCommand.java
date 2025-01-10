@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
@@ -44,7 +45,7 @@ public class ItemCommand extends BaseCommand {
     @CommandCompletion("@stats @nothing false|true")
     @CommandPermission("auraskills.command.item.modifier")
     @Description("Adds an item stat modifier to the item held, along with lore by default.")
-    public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
+    public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -58,7 +59,7 @@ public class ItemCommand extends BaseCommand {
         if (lore) {
             skillsItem.addModifierLore(ModifierType.ITEM, stat, value, locale);
         }
-        skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ITEM, stat, value);
+        skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ITEM, stat, value, operation);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ITEM_MODIFIER_ADD_ADDED, locale), stat, value, locale));
@@ -126,7 +127,7 @@ public class ItemCommand extends BaseCommand {
     @CommandCompletion("@traits @nothing false|true")
     @CommandPermission("auraskills.command.item.modifier")
     @Description("Adds an item trait modifier to the item held, along with lore by default.")
-    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, @Default("true") boolean lore) {
+    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -140,7 +141,7 @@ public class ItemCommand extends BaseCommand {
         if (lore) {
             skillsItem.addModifierLore(ModifierType.ITEM, trait, value, locale);
         }
-        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ITEM, trait, value);
+        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ITEM, trait, value, operation);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) +

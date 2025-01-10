@@ -12,7 +12,6 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.user.SkillsUser;
-import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
@@ -37,13 +36,7 @@ public abstract class User {
     private final Map<Skill, Integer> skillLevels;
     private final Map<Skill, Double> skillXp;
 
-    private final Map<Stat, Double> statLevels; // Current stat levels
-    private final Map<Stat, Double> baseStatLevels; // Stat levels from skill rewards only
-    private final Map<String, StatModifier> statModifiers;
-
-    private final Map<Trait, Double> traitValues; // Current trait values
-    private final Map<Trait, Double> baseTraitValues; // Trait values from trait base and stats only
-    private final Map<String, TraitModifier> traitModifiers;
+    private final UserStats userStats;
 
     private double mana;
     private Locale locale;
@@ -72,12 +65,7 @@ public abstract class User {
         this.uuid = uuid;
         this.skillLevels = new ConcurrentHashMap<>();
         this.skillXp = new ConcurrentHashMap<>();
-        this.statLevels = new ConcurrentHashMap<>();
-        this.baseStatLevels = new ConcurrentHashMap<>();
-        this.statModifiers = new ConcurrentHashMap<>();
-        this.traitValues = new ConcurrentHashMap<>();
-        this.baseTraitValues = new ConcurrentHashMap<>();
-        this.traitModifiers = new ConcurrentHashMap<>();
+        this.userStats = new UserStats(plugin, this);
         this.abilityData = new ConcurrentHashMap<>();
         this.manaAbilityData = new ConcurrentHashMap<>();
         this.metadata = new ConcurrentHashMap<>();
@@ -177,177 +165,74 @@ public abstract class User {
         return startLevel;
     }
 
+    public UserStats getUserStats() {
+        return userStats;
+    }
+
     public double getStatLevel(Stat stat) {
-        return statLevels.getOrDefault(stat, 0.0);
-    }
-
-    public void setStatLevel(Stat stat, double level) {
-        statLevels.put(stat, level);
-        if (level > 0.0) { // Mark as modified
-            blank = false;
-        }
-    }
-
-    public void addStatLevel(Stat stat, double level) {
-        statLevels.merge(stat, level, Double::sum);
-        if (level > 0.0) { // Mark as modified
-            blank = false;
-        }
+        return userStats.getStatLevel(stat);
     }
 
     public double getBaseStatLevel(Stat stat) {
-        return baseStatLevels.getOrDefault(stat, 0.0);
+        return userStats.getBaseStatLevel(stat);
     }
 
     @Nullable
     public StatModifier getStatModifier(String name) {
-        return statModifiers.get(name);
+        return userStats.getStatModifier(name);
     }
 
     public Map<String, StatModifier> getStatModifiers() {
-        return statModifiers;
+        return userStats.getStatModifiers();
     }
 
     public void addStatModifier(StatModifier modifier) {
-        addStatModifier(modifier, true);
+        userStats.addStatModifier(modifier, true);
     }
 
     public void addStatModifier(StatModifier modifier, boolean reload) {
-        addModifier(modifier, reload, statModifiers, statLevels);
+        userStats.addStatModifier(modifier, reload);
     }
 
     public boolean removeStatModifier(String name) {
-        return removeStatModifier(name, true);
+        return userStats.removeStatModifier(name, true);
     }
 
     public boolean removeStatModifier(String name, boolean reload) {
-        return removeModifier(name, reload, statModifiers, statLevels);
+        return userStats.removeStatModifier(name, reload);
     }
 
     public double getEffectiveTraitLevel(Trait trait) {
-        double base = plugin.getTraitManager().getBaseLevel(this, trait);
-        return base + getBonusTraitLevel(trait);
+        return userStats.getEffectiveTraitLevel(trait);
     }
 
     public double getBonusTraitLevel(Trait trait) {
-        if (!trait.isEnabled()) {
-            return 0.0;
-        }
-
-        double level = 0.0;
-        for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
-            level += getStatLevel(stat) * stat.getTraitModifier(trait);
-        }
-        // Add modifiers
-        for (TraitModifier modifier : traitModifiers.values()) {
-            if (modifier.trait().getId().equals(trait.getId())) {
-                level += modifier.value();
-            }
-        }
-        return level;
+        return userStats.getBonusTraitLevel(trait);
     }
 
     @Nullable
     public TraitModifier getTraitModifier(String name) {
-        return traitModifiers.get(name);
+        return userStats.getTraitModifier(name);
     }
 
     public Map<String, TraitModifier> getTraitModifiers() {
-        return traitModifiers;
+        return userStats.getTraitModifiers();
     }
 
     public void addTraitModifier(TraitModifier modifier) {
-        addTraitModifier(modifier, true);
+        userStats.addTraitModifier(modifier, true);
     }
 
     public void addTraitModifier(TraitModifier modifier, boolean reload) {
-        addModifier(modifier, reload, traitModifiers, null);
+        userStats.addTraitModifier(modifier, reload);
     }
 
     public boolean removeTraitModifier(String name) {
-        return removeTraitModifier(name, true);
+        return userStats.removeTraitModifier(name, true);
     }
 
     public boolean removeTraitModifier(String name, boolean reload) {
-        return removeModifier(name, reload, traitModifiers, null);
-    }
-
-    private <T extends AuraSkillsModifier<V>, V> void addModifier(T modifier, boolean reload, Map<String, T> map, @Nullable Map<V, Double> levels) {
-        if (map.containsKey(modifier.name())) {
-            AuraSkillsModifier<V> oldModifier = map.get(modifier.name());
-            if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
-                return;
-            }
-            // Do not reload on remove since that would reset health and other stuff (mainly for 3rd party plugins)
-            // Reload will happen at the end of this method if it was true either way.
-            // So here we are just preventing double stat reload.
-            removeModifier(modifier.name(), false, map, levels);
-        }
-        map.put(modifier.name(), modifier);
-        if (levels != null) {
-            double updatedLevel = 0.0;
-            double current = levels.getOrDefault(modifier.type(), 0.0);
-            switch (modifier.operation()) {
-                case ADD, ADD_PERCENT -> {
-                    // Fully recalculate the value
-                    double addModSum = 0.0;
-                    double multiplyModProduct = 1.0;
-                    double addPercentSum = 0.0;
-                    for (T mapModifier : map.values()) {
-                        switch (mapModifier.operation()) {
-                            case ADD -> addModSum += mapModifier.value();
-                            case MULTIPLY -> addModSum *= mapModifier.value();
-                            case ADD_PERCENT -> addPercentSum += mapModifier.value();
-                        }
-                    }
-                    updatedLevel = addModSum * multiplyModProduct * (1 + addPercentSum / 100);
-                }
-                case MULTIPLY -> updatedLevel = current * modifier.value();
-            }
-            levels.put(modifier.type(), updatedLevel);
-        }
-        // Reloads modifier type
-        if (reload) {
-            plugin.getStatManager().reload(this, modifier.type());
-        }
-        blank = false;
-    }
-
-    private <T extends AuraSkillsModifier<V>, V> boolean removeModifier(String name, boolean reload, Map<String, T> map, @Nullable Map<V, Double> levels) {
-        AuraSkillsModifier<V> modifier = map.get(name);
-        if (modifier == null) return false;
-        if (levels != null) {
-            double updatedLevel = 0.0;
-            double current = levels.getOrDefault(modifier.type(), 0.0);
-            switch (modifier.operation()) {
-                case MULTIPLY -> updatedLevel = current / modifier.value();
-            }
-            levels.put(modifier.type(), updatedLevel);
-        }
-        map.remove(name);
-        // Reloads modifier type
-        if (reload) {
-            plugin.getStatManager().reload(this, modifier.type());
-        }
-        return true;
-    }
-
-    private <T extends AuraSkillsModifier<V>, V> double recalculateStatLevel(double baseLevel, Map<String, T> modifiers) {
-        double addModSum = 0.0;
-        double multiplyModProduct = 1.0;
-        double addPercentSum = 0.0;
-        for (T mapModifier : modifiers.values()) {
-            switch (mapModifier.operation()) {
-                case ADD -> addModSum += mapModifier.value();
-                case MULTIPLY -> addModSum *= mapModifier.value();
-                case ADD_PERCENT -> addPercentSum += mapModifier.value();
-            }
-        }
-        return (baseLevel + addModSum) * multiplyModProduct * (1 + addPercentSum / 100);
-    }
-
-    private <T extends AuraSkillsModifier<V>, V> void recalculateModifiers(Map<String, T> map, Map<V, Double> levels) {
-        // TODO recalculate modifiers as such: (add + add) * (1 + scale + scale) * multiply * multiply
+        return userStats.removeTraitModifier(name, reload);
     }
 
     public double getMana() {
@@ -594,22 +479,17 @@ public abstract class User {
                 return false;
             }
         }
-        for (double statLevel : statLevels.values()) {
-            if (statLevel > 0.0) {
-                return false;
-            }
-        }
         if (!jobs.isEmpty()) {
             return false;
         }
-        return statModifiers.isEmpty() && traitModifiers.isEmpty() && unclaimedItems.isEmpty();
+        return userStats.getStatModifiers().isEmpty() && userStats.getTraitModifiers().isEmpty() && unclaimedItems.isEmpty();
     }
 
     public UserState getState() {
         Map<Skill, Integer> copiedLevels = new HashMap<>(skillLevels);
         Map<Skill, Double> copiedXp = new HashMap<>(skillXp);
-        Map<String, StatModifier> copiedStatModifiers = new HashMap<>(statModifiers);
-        Map<String, TraitModifier> copiedTraitModifiers = new HashMap<>(traitModifiers);
+        Map<String, StatModifier> copiedStatModifiers = new HashMap<>(userStats.getStatModifiers());
+        Map<String, TraitModifier> copiedTraitModifiers = new HashMap<>(userStats.getTraitModifiers());
         return new UserState(uuid, copiedLevels, copiedXp, copiedStatModifiers, copiedTraitModifiers, mana);
     }
 
@@ -620,11 +500,11 @@ public abstract class User {
         this.skillXp.clear();
         this.skillXp.putAll(state.skillXp());
 
-        this.statModifiers.clear();
-        this.statModifiers.putAll(state.statModifiers());
+        this.userStats.getStatModifiers().clear();
+        this.userStats.getStatModifiers().putAll(state.statModifiers());
 
-        this.traitModifiers.clear();
-        this.traitModifiers.putAll(state.traitModifiers());
+        this.userStats.getTraitModifiers().clear();
+        this.userStats.getTraitModifiers().putAll(state.traitModifiers());
 
         this.mana = state.mana();
 

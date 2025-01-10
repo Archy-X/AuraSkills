@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
@@ -51,62 +52,141 @@ public class SkillsItem {
     }
 
     public List<StatModifier> getStatModifiers(ModifierType type) {
-        PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
         List<StatModifier> modifiers = new ArrayList<>();
+        if (isContainerList(MetaType.MODIFIER, type)) {
+            List<PersistentDataContainer> containers = getContainerList(MetaType.MODIFIER, type);
 
-        for (NamespacedKey key : container.getKeys()) {
-            double value = container.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
-            if (value == 0.0) continue;
+            for (PersistentDataContainer container : containers) {
+                double value = container.getOrDefault(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, 0.0);
+                if (value == 0.0) continue;
 
-            Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
-            if (stat == null) {
-                continue;
+                String statName = container.get(new NamespacedKey(plugin, "stat"), PersistentDataType.STRING);
+                if (statName == null) continue;
+
+                Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(statName));
+                if (stat == null) continue;
+
+                String operationName = container.getOrDefault(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
+                Operation operation = Operation.parse(operationName);
+
+                String modifierName;
+                if (type == ModifierType.ITEM) {
+                    modifierName = "AuraSkills.Modifiers.Item." + getName(stat);
+                } else {
+                    modifierName = "AuraSkills.Modifiers.Armor." + getSlotName() + "." + getName(stat);
+                }
+                modifiers.add(new StatModifier(modifierName, stat, value, operation));
             }
+        } else {
+            PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
 
-            if (type == ModifierType.ITEM) {
-                modifiers.add(new StatModifier("AuraSkills.Modifiers.Item." + getName(stat), stat, value));
-            } else if (type == ModifierType.ARMOR) {
-                modifiers.add(new StatModifier("AuraSkills.Modifiers.Armor." + getSlotName() + "." + getName(stat), stat, value));
+            for (NamespacedKey key : container.getKeys()) {
+                double value = container.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
+                if (value == 0.0) continue;
+
+                Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
+                if (stat == null) {
+                    continue;
+                }
+
+                if (type == ModifierType.ITEM) {
+                    modifiers.add(new StatModifier("AuraSkills.Modifiers.Item." + getName(stat), stat, value, Operation.ADD));
+                } else if (type == ModifierType.ARMOR) {
+                    modifiers.add(new StatModifier("AuraSkills.Modifiers.Armor." + getSlotName() + "." + getName(stat), stat, value, Operation.ADD));
+                }
             }
         }
         return modifiers;
     }
 
     public List<TraitModifier> getTraitModifiers(ModifierType type) {
-        PersistentDataContainer container = getContainer(MetaType.TRAIT_MODIFIER, type);
         List<TraitModifier> modifiers = new ArrayList<>();
+        if (isContainerList(MetaType.TRAIT_MODIFIER, type)) {
+            List<PersistentDataContainer> containers = getContainerList(MetaType.TRAIT_MODIFIER, type);
 
-        for (NamespacedKey key : container.getKeys()) {
-            double value = container.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
-            if (value == 0.0) continue;
+            for (PersistentDataContainer container : containers) {
+                double value = container.getOrDefault(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, 0.0);
+                if (value == 0.0) continue;
 
-            Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
-            if (trait == null) continue;
+                String traitName = container.get(new NamespacedKey(plugin, "trait"), PersistentDataType.STRING);
+                if (traitName == null) continue;
 
-            if (type == ModifierType.ITEM) {
-                modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Item." + getName(trait), trait, value));
-            } else if (type == ModifierType.ARMOR) {
-                modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait), trait, value));
+                Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(traitName));
+                if (trait == null) continue;
+
+                String operationName = container.getOrDefault(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
+                Operation operation = Operation.parse(operationName);
+
+                String modifierName;
+                if (type == ModifierType.ITEM) {
+                    modifierName = "AuraSkills.TraitModifiers.Item." + getName(trait);
+                } else {
+                    modifierName = "AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait);
+                }
+                modifiers.add(new TraitModifier(modifierName, trait, value, operation));
+            }
+        } else {
+            PersistentDataContainer container = getContainer(MetaType.TRAIT_MODIFIER, type);
+
+            for (NamespacedKey key : container.getKeys()) {
+                double value = container.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
+                if (value == 0.0) continue;
+
+                Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
+                if (trait == null) continue;
+
+                if (type == ModifierType.ITEM) {
+                    modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Item." + getName(trait), trait, value, Operation.ADD));
+                } else if (type == ModifierType.ARMOR) {
+                    modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait), trait, value, Operation.ADD));
+                }
             }
         }
         return modifiers;
     }
 
     // MetaType must be MODIFIER or TRAIT_MODIFIER
-    public void addModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified, double value) {
-        PersistentDataContainer container = getContainer(metaType, modifierType);
-        NamespacedKey key = new NamespacedKey(plugin, identified.getId().toString());
-        container.set(key, PersistentDataType.DOUBLE, value);
-        saveTagContainer(container, metaType, modifierType);
+    public void addModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified, double value, Operation operation) {
+        if (!isContainerList(metaType, modifierType)) {
+            // TODO convert from old format
+        }
+
+        List<PersistentDataContainer> containers = getContainerList(metaType, modifierType);
+        PersistentDataContainer container = meta.getPersistentDataContainer().getAdapterContext().newPersistentDataContainer();
+
+        container.set(getTypeKey(metaType), PersistentDataType.STRING, identified.getId().toString());
+
+        container.set(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, value);
+        container.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, operation.toString());
+
+        containers.add(container);
+        saveContainerList(containers, metaType, modifierType);
     }
 
     // MetaType must be MODIFIER or TRAIT_MODIFIER
     public void removeModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified) {
-        PersistentDataContainer container = getContainer(metaType, modifierType);
-        NamespacedKey key = new NamespacedKey(plugin, identified.getId().toString());
-        container.remove(key);
-        saveTagContainer(container, metaType, modifierType);
-        removeEmpty(container, metaType, modifierType);
+        if (!isContainerList(metaType, modifierType)) {
+            // TODO convert from old format
+        }
+
+        List<PersistentDataContainer> containers = getContainerList(metaType, modifierType);
+        containers.removeIf(c -> {
+            @Nullable String typeName = c.get(getTypeKey(metaType), PersistentDataType.STRING);
+            return typeName == null || typeName.equals(identified.getId().toString());
+        });
+
+        saveContainerList(containers, metaType, modifierType);
+        removeEmpty(containers, metaType, modifierType);
+    }
+
+    private NamespacedKey getTypeKey(MetaType metaType) {
+        String key = "stat";
+        if (metaType == MetaType.MODIFIER) {
+            key = "stat";
+        } else if (metaType == MetaType.TRAIT_MODIFIER) {
+            key = "trait";
+        }
+        return new NamespacedKey(plugin, key);
     }
 
     public void removeAll(MetaType metaType, ModifierType modifierType) {
@@ -201,7 +281,7 @@ public class SkillsItem {
             if (legacy.isEmpty()) continue;
 
             for (StatModifier modifier : legacy) {
-                addModifier(MetaType.MODIFIER, type, modifier.stat(), modifier.value());
+                addModifier(MetaType.MODIFIER, type, modifier.stat(), modifier.value(), Operation.ADD);
             }
         }
         // Convert multipliers
@@ -392,10 +472,34 @@ public class SkillsItem {
         return metaContainer;
     }
 
+    private List<PersistentDataContainer> getContainerList(MetaType metaType, ModifierType modifierType) {
+        var container = meta.getPersistentDataContainer();
+        String name = getContainerName(metaType, modifierType);
+        NamespacedKey metaKey = new NamespacedKey(plugin, name);
+        List<PersistentDataContainer> metaContainerList = container.get(metaKey, PersistentDataType.LIST.dataContainers());
+        if (metaContainerList == null) {
+            metaContainerList = new ArrayList<>();
+        }
+        return metaContainerList;
+    }
+
+    private boolean isContainerList(MetaType metaType, ModifierType modifierType) {
+        var container = meta.getPersistentDataContainer();
+        String name = getContainerName(metaType, modifierType);
+        NamespacedKey metaKey = new NamespacedKey(plugin, name);
+        return container.has(metaKey, PersistentDataType.LIST.dataContainers());
+    }
+
     private void saveTagContainer(PersistentDataContainer container, MetaType metaType, ModifierType modifierType) {
         PersistentDataContainer parent = meta.getPersistentDataContainer();
         String name = getContainerName(metaType, modifierType);
         parent.set(new NamespacedKey(plugin, name), PersistentDataType.TAG_CONTAINER, container);
+    }
+
+    private void saveContainerList(List<PersistentDataContainer> containers, MetaType metaType, ModifierType modifierType) {
+        PersistentDataContainer parent = meta.getPersistentDataContainer();
+        String name = getContainerName(metaType, modifierType);
+        parent.set(new NamespacedKey(plugin, name), PersistentDataType.LIST.dataContainers(), containers);
     }
 
     private void removeEmpty(PersistentDataContainer container, MetaType metaType, ModifierType modifierType) {
@@ -404,6 +508,16 @@ public class SkillsItem {
         }
 
         PersistentDataContainer parent = meta.getPersistentDataContainer();
+        NamespacedKey metaKey = new NamespacedKey(plugin, getContainerName(metaType, modifierType));
+        parent.remove(metaKey);
+    }
+
+    private void removeEmpty(List<PersistentDataContainer> containers, MetaType metaType, ModifierType modifierType) {
+        if (!containers.isEmpty()) {
+            return;
+        }
+
+        var parent = meta.getPersistentDataContainer();
         NamespacedKey metaKey = new NamespacedKey(plugin, getContainerName(metaType, modifierType));
         parent.remove(metaKey);
     }

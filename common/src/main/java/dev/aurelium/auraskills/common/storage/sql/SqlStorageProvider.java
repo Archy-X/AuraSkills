@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.config.Option;
@@ -45,7 +46,7 @@ public class SqlStorageProvider extends StorageProvider {
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
         this.pool = pool;
-        this.userLoader = new SqlUserLoader(plugin);
+        this.userLoader = new SqlUserLoader(plugin, this);
         attemptTableCreation();
     }
 
@@ -108,9 +109,12 @@ public class SqlStorageProvider extends StorageProvider {
                     try {
                         Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(categoryId));
                         String keyName = resultSet.getString("key_name");
+                        if (keyName == null) continue;
+
+                        NameOperationPair pair = parseNameAndOperation(keyName);
                         double value = resultSet.getDouble("value");
 
-                        StatModifier modifier = new StatModifier(keyName, stat, value);
+                        StatModifier modifier = new StatModifier(pair.name(), stat, value, pair.operation());
                         modifiers.put(keyName, modifier);
                     } catch (IllegalArgumentException e) {
                         plugin.logger().warn("Failed to load stat modifier for player " + uuid + " because " + categoryId + " is not a registered stat");
@@ -133,9 +137,12 @@ public class SqlStorageProvider extends StorageProvider {
                     try {
                         Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(categoryId));
                         String keyName = resultSet.getString("key_name");
+                        if (keyName == null) continue;
+
+                        NameOperationPair pair = parseNameAndOperation(keyName);
                         double value = resultSet.getDouble("value");
 
-                        TraitModifier modifier = new TraitModifier(keyName, trait, value);
+                        TraitModifier modifier = new TraitModifier(pair.name(), trait, value, pair.operation());
                         modifiers.put(keyName, modifier);
                     } catch (IllegalArgumentException e) {
                         plugin.logger().warn("Failed to load trait modifier for player " + uuid + " because " + categoryId + " is not a registered trait");
@@ -145,6 +152,15 @@ public class SqlStorageProvider extends StorageProvider {
         }
         return modifiers;
     }
+
+    public NameOperationPair parseNameAndOperation(@NotNull String keyName) {
+        String[] splitKeyName = keyName.split("\\|\\|"); // Name and operation stored together as name||operation
+        String modifierName = splitKeyName[0];
+        String operationName = splitKeyName.length > 1 ? splitKeyName[1] : Operation.ADD.toString();
+        return new NameOperationPair(modifierName, Operation.parse(operationName));
+    }
+
+    public record NameOperationPair(String name, Operation operation) {}
 
     @Override
     public @NotNull UserState loadState(UUID uuid) throws Exception {
@@ -385,7 +401,8 @@ public class SqlStorageProvider extends StorageProvider {
         }
         for (StatModifier modifier : modifiers.values()) {
             String categoryId = modifier.stat().getId().toString();
-            var row = new KeyValueRow(STAT_MODIFIER_ID, categoryId, modifier.name(), String.valueOf(modifier.value()));
+            String keyName = modifier.name() + "||" + modifier.operation().toString();
+            var row = new KeyValueRow(STAT_MODIFIER_ID, categoryId, keyName, String.valueOf(modifier.value()));
             rows.add(row);
         }
         return rows;
@@ -399,7 +416,8 @@ public class SqlStorageProvider extends StorageProvider {
 
         for (TraitModifier modifier : modifiers.values()) {
             String categoryId = modifier.trait().getId().toString();
-            var row = new KeyValueRow(TRAIT_MODIFIER_ID, categoryId, modifier.name(), String.valueOf(modifier.value()));
+            String keyName = modifier.name() + "||" + modifier.operation().toString();
+            var row = new KeyValueRow(TRAIT_MODIFIER_ID, categoryId, keyName, String.valueOf(modifier.value()));
             rows.add(row);
         }
         return rows;

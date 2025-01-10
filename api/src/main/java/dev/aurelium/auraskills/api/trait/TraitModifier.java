@@ -8,12 +8,17 @@ public class TraitModifier extends AuraSkillsModifier<Trait> {
         super(name, trait, value, operation);
     }
 
+    @Deprecated
     public TraitModifier(String name, Trait trait, double value) {
         this(name, trait, value, Operation.ADD);
     }
 
     public Trait trait() {
         return type;
+    }
+
+    public TraitModifier withName(String newName) {
+        return new TraitModifier(newName, type, value, operation);
     }
 
 }

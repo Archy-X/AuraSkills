@@ -17,13 +17,11 @@ import java.util.Map;
 public class RewardTable {
 
     private final AuraSkillsPlugin plugin;
-    private final RewardManager rewardManager;
     private final List<Stat> statsLeveled;
     private final Map<Integer, List<SkillReward>> rewards;
 
-    public RewardTable(AuraSkillsPlugin plugin, RewardManager rewardManager) {
+    public RewardTable(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.rewardManager = rewardManager;
         this.rewards = new HashMap<>();
         this.statsLeveled = new ArrayList<>();
     }
@@ -82,19 +80,7 @@ public class RewardTable {
         return ImmutableList.copyOf(rewardList);
     }
 
-    public void applyStats(User user, int level) {
-        Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
-        for (int i = plugin.config().getStartLevel() + 1; i <= level; i++) {
-            ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
-            if (statRewardList != null) {
-                for (StatReward statReward : statRewardList) {
-                    user.addStatLevel(statReward.getStat(), statReward.getValue());
-                }
-            }
-        }
-    }
-
-    public Map<Stat, Double> applyStats(int level) {
+    public Map<Stat, Double> getStatLevels(int level) {
         Map<Stat, Double> statsMap = new HashMap<>();
         Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = plugin.config().getStartLevel() + 1; i <= level; i++) {
@@ -124,14 +110,6 @@ public class RewardTable {
                 }
             }
         }
-    }
-
-    public record Index<T>(T key) {
-
-        public static <T> Index<T> of(T key) {
-            return new Index<>(key);
-        }
-
     }
 
 }

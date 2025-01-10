@@ -4,10 +4,8 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.reward.RewardTable.Index;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
-import dev.aurelium.auraskills.common.reward.type.StatReward;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,48 +18,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public abstract class RewardManager {
 
     protected final AuraSkillsPlugin plugin;
     private final Map<Skill, RewardTable> rewardTables;
-    // Cache for faster access to all rewards of a certain type and key such as specific stats
-    private final Map<Index<?>, Map<Integer, List<SkillReward>>> indexedRewards;
 
     public RewardManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.rewardTables = new HashMap<>();
-        this.indexedRewards = new HashMap<>();
     }
 
     @NotNull
     public RewardTable getRewardTable(Skill skill) {
-        return rewardTables.getOrDefault(skill, new RewardTable(plugin, this));
+        return rewardTables.getOrDefault(skill, new RewardTable(plugin));
     }
 
     public abstract void loadRewards();
 
     protected void clearRewardTables() {
         rewardTables.clear();
-        indexedRewards.clear();
     }
 
     protected void registerRewardTable(Skill skill, RewardTable table) {
         rewardTables.put(skill, table);
-        // Add to index
-        for (Entry<Integer, List<SkillReward>> entry : table.getRewardsMap().entrySet()) {
-            int level = entry.getKey();
-            var list = entry.getValue();
-            for (SkillReward reward : list) {
-                if (reward instanceof StatReward statReward) {
-                    Index<Stat> index = Index.of(statReward.getStat());
-                    var indexMap = indexedRewards.computeIfAbsent(index, k -> new HashMap<>());
-                    var levelList = indexMap.computeIfAbsent(level, k -> new ArrayList<>());
-                    levelList.add(reward);
-                }
-            }
-        }
     }
 
     protected int loadPatterns(Skill skill, RewardTable rewardTable, ConfigurationNode patterns, File rewardsFile, int maxLevel) {

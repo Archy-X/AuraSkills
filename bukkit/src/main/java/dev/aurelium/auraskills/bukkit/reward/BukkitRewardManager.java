@@ -38,7 +38,7 @@ public class BukkitRewardManager extends RewardManager {
             int globalLevelsLoaded = 0;
             for (Skill skill : plugin.getSkillManager().getSkillValues()) {
                 File rewardsDirectory = getRewardsDir(skill);
-                RewardTable rewardTable = new RewardTable(plugin, this);
+                RewardTable rewardTable = new RewardTable(plugin);
 
                 File rewardsFile = new File(rewardsDirectory + "/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
                 if (!rewardsFile.exists()) {

@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
@@ -196,7 +197,7 @@ public class SqlUserMigrator {
             if (name != null && statName != null) {
                 Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(statName.toLowerCase(Locale.ROOT)));
                 if (stat != null) {
-                    StatModifier modifier = new StatModifier(name, stat, value);
+                    StatModifier modifier = new StatModifier(name, stat, value, Operation.ADD);
                     list.add(modifier);
                 }
             }
