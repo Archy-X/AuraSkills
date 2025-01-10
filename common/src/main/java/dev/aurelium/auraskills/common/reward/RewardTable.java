@@ -17,13 +17,11 @@ import java.util.Map;
 public class RewardTable {
 
     private final AuraSkillsPlugin plugin;
-    private final RewardManager rewardManager;
     private final List<Stat> statsLeveled;
     private final Map<Integer, List<SkillReward>> rewards;
 
-    public RewardTable(AuraSkillsPlugin plugin, RewardManager rewardManager) {
+    public RewardTable(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.rewardManager = rewardManager;
         this.rewards = new HashMap<>();
         this.statsLeveled = new ArrayList<>();
     }
@@ -112,14 +110,6 @@ public class RewardTable {
                 }
             }
         }
-    }
-
-    public record Index<T>(T key) {
-
-        public static <T> Index<T> of(T key) {
-            return new Index<>(key);
-        }
-
     }
 
 }

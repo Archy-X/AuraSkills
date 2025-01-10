@@ -4,10 +4,8 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import dev.aurelium.auraskills.common.reward.RewardTable.Index;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
-import dev.aurelium.auraskills.common.reward.type.StatReward;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public abstract class RewardManager {
 
@@ -30,12 +27,11 @@ public abstract class RewardManager {
     public RewardManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.rewardTables = new HashMap<>();
-        this.indexedRewards = new HashMap<>();
     }
 
     @NotNull
     public RewardTable getRewardTable(Skill skill) {
-        return rewardTables.getOrDefault(skill, new RewardTable(plugin, this));
+        return rewardTables.getOrDefault(skill, new RewardTable(plugin));
     }
 
     public abstract void loadRewards();
