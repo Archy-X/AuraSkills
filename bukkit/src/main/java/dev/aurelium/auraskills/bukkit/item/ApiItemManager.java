@@ -38,7 +38,7 @@ public class ApiItemManager implements ItemManager {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         skillsItem.addModifier(MetaType.MODIFIER, type, stat, value, operation);
         if (lore) {
-            skillsItem.addModifierLore(type, stat, value, plugin.getDefaultLanguage());
+            skillsItem.addModifierLore(type, stat, value, operation, plugin.getDefaultLanguage());
         }
         return skillsItem.getItem();
     }
@@ -53,7 +53,7 @@ public class ApiItemManager implements ItemManager {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         skillsItem.addModifier(MetaType.TRAIT_MODIFIER, type, trait, value, operation);
         if (lore) {
-            skillsItem.addModifierLore(type, trait, value, plugin.getDefaultLanguage());
+            skillsItem.addModifierLore(type, trait, value, operation, plugin.getDefaultLanguage());
         }
         return skillsItem.getItem();
     }

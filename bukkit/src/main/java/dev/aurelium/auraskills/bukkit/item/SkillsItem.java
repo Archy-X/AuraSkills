@@ -147,8 +147,8 @@ public class SkillsItem {
 
     // MetaType must be MODIFIER or TRAIT_MODIFIER
     public void addModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified, double value, Operation operation) {
-        if (!isContainerList(metaType, modifierType)) {
-            // TODO convert from old format
+        if (isTagContainer(metaType, modifierType)) {
+            convertModifiersToContainerList();
         }
 
         List<PersistentDataContainer> containers = getContainerList(metaType, modifierType);
@@ -157,7 +157,7 @@ public class SkillsItem {
         container.set(getTypeKey(metaType), PersistentDataType.STRING, identified.getId().toString());
 
         container.set(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, value);
-        container.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, operation.toString());
+        container.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, operation.toString().toLowerCase(Locale.ROOT));
 
         containers.add(container);
         saveContainerList(containers, metaType, modifierType);
@@ -165,8 +165,8 @@ public class SkillsItem {
 
     // MetaType must be MODIFIER or TRAIT_MODIFIER
     public void removeModifier(MetaType metaType, ModifierType modifierType, NamespaceIdentified identified) {
-        if (!isContainerList(metaType, modifierType)) {
-            // TODO convert from old format
+        if (isTagContainer(metaType, modifierType)) {
+            convertModifiersToContainerList();
         }
 
         List<PersistentDataContainer> containers = getContainerList(metaType, modifierType);
@@ -177,6 +177,54 @@ public class SkillsItem {
 
         saveContainerList(containers, metaType, modifierType);
         removeEmpty(containers, metaType, modifierType);
+    }
+
+    private void convertModifiersToContainerList() {
+        for (MetaType metaType : new MetaType[] {MetaType.MODIFIER, MetaType.TRAIT_MODIFIER}) {
+            for (ModifierType modifierType : ModifierType.values()) {
+                if (isContainerList(metaType, modifierType)) continue; // Skip if already converted
+
+                var oldContainer = meta.getPersistentDataContainer();
+                String name = getContainerName(metaType, modifierType);
+                NamespacedKey metaKey = new NamespacedKey(plugin, name);
+                var metaContainer = oldContainer.get(metaKey, PersistentDataType.TAG_CONTAINER);
+
+                if (metaContainer == null) continue; // Skip if no container exists
+
+                List<PersistentDataContainer> migratedList = convertContainerToList(oldContainer, metaType);
+
+                saveContainerList(migratedList, metaType, modifierType);
+                removeEmpty(migratedList, metaType, modifierType);
+            }
+        }
+    }
+
+    private List<PersistentDataContainer> convertContainerToList(PersistentDataContainer oldContainer, MetaType metaType) {
+        List<PersistentDataContainer> list = new ArrayList<>();
+        for (NamespacedKey key : oldContainer.getKeys()) {
+            double value = oldContainer.getOrDefault(key, PersistentDataType.DOUBLE, 0.0);
+            if (value == 0.0) continue;
+
+            // Get either the stat or trait instance of the existing modifier
+            NamespaceIdentified identified;
+            if (metaType == MetaType.MODIFIER) {
+                identified = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
+            } else {
+                identified = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
+            }
+            if (identified == null) continue;
+
+            PersistentDataContainer created = meta.getPersistentDataContainer().getAdapterContext().newPersistentDataContainer();
+
+            created.set(getTypeKey(metaType), PersistentDataType.STRING, identified.getId().toString());
+
+            created.set(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, value);
+            // All existing modifiers are Operation.ADD
+            created.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
+
+            list.add(created);
+        }
+        return list;
     }
 
     private NamespacedKey getTypeKey(MetaType metaType) {
@@ -340,7 +388,7 @@ public class SkillsItem {
         return requirements;
     }
 
-    public void addModifierLore(ModifierType type, NamespaceIdentified identified, double value, Locale locale) {
+    public void addModifierLore(ModifierType type, NamespaceIdentified identified, double value, Operation operation, Locale locale) {
         List<String> lore;
         if (meta.getLore() != null) {
             if (!meta.getLore().isEmpty()) lore = meta.getLore();
@@ -350,15 +398,25 @@ public class SkillsItem {
             lore = new LinkedList<>();
         }
         CommandMessage message;
-        if (value >= 0) {
-            message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");
+        if (operation == Operation.ADD_PERCENT) {
+            if (value >= 0) {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_ADD_PERCENT");
+            } else {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT_PERCENT");
+            }
+        } else if (operation == Operation.MULTIPLY) {
+            message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_MULTIPLY");
         } else {
-            message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
+            if (value >= 0) {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE");
+            } else {
+                message = CommandMessage.valueOf(type.name() + "_MODIFIER_ADD_LORE_SUBTRACT");
+            }
         }
         if (identified instanceof Stat stat) {
             lore.add(0, plugin.getMessageProvider().applyFormatting(TextUtil.replace(plugin.getMsg(message, locale),
                     "{stat}", stat.getDisplayName(locale),
-                    "{value}", NumberUtil.format1(Math.abs(value)),
+                    "{value}", NumberUtil.format2(Math.abs(value)),
                     "{color}", stat.getColor(locale),
                     "{symbol}", stat.getSymbol(locale))));
         } else if (identified instanceof Trait trait) {
@@ -366,10 +424,10 @@ public class SkillsItem {
             BukkitTraitHandler impl = plugin.getTraitManager().getTraitImpl(trait);
             String formatValue;
             // Don't use menu display for gathering luck traits (farming_luck, etc.) because it has extra info
-            if (impl != null && !trait.getId().getKey().contains("_luck")) {
+            if (impl != null && !trait.getId().getKey().contains("_luck") && operation == Operation.ADD) {
                 formatValue = impl.getMenuDisplay(value, trait, locale);
             } else {
-                formatValue = NumberUtil.format1(Math.abs(value));
+                formatValue = NumberUtil.format2(Math.abs(value));
             }
             if (formatValue.startsWith("+")) { // Prevent double plus sign in lore
                 formatValue = formatValue.substring(1);
@@ -479,6 +537,8 @@ public class SkillsItem {
         List<PersistentDataContainer> metaContainerList = container.get(metaKey, PersistentDataType.LIST.dataContainers());
         if (metaContainerList == null) {
             metaContainerList = new ArrayList<>();
+        } else {
+            metaContainerList = new ArrayList<>(metaContainerList); // Create a copy since the returned list is unmodifiable
         }
         return metaContainerList;
     }
@@ -488,6 +548,13 @@ public class SkillsItem {
         String name = getContainerName(metaType, modifierType);
         NamespacedKey metaKey = new NamespacedKey(plugin, name);
         return container.has(metaKey, PersistentDataType.LIST.dataContainers());
+    }
+
+    private boolean isTagContainer(MetaType metaType, ModifierType modifierType) {
+        var container = meta.getPersistentDataContainer();
+        String name = getContainerName(metaType, modifierType);
+        NamespacedKey metaKey = new NamespacedKey(plugin, name);
+        return container.has(metaKey, PersistentDataType.TAG_CONTAINER);
     }
 
     private void saveTagContainer(PersistentDataContainer container, MetaType metaType, ModifierType modifierType) {

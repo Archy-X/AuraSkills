@@ -42,7 +42,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("modifier add")
-    @CommandCompletion("@stats @nothing false|true")
+    @CommandCompletion("@stats @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.item.modifier")
     @Description("Adds an item stat modifier to the item held, along with lore by default.")
     public void onItemModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, Operation operation, @Default("true") boolean lore) {
@@ -57,7 +57,7 @@ public class ItemCommand extends BaseCommand {
             }
         }
         if (lore) {
-            skillsItem.addModifierLore(ModifierType.ITEM, stat, value, locale);
+            skillsItem.addModifierLore(ModifierType.ITEM, stat, value, operation, locale);
         }
         skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ITEM, stat, value, operation);
         ItemStack newItem = skillsItem.getItem();
@@ -124,7 +124,7 @@ public class ItemCommand extends BaseCommand {
     }
 
     @Subcommand("trait add")
-    @CommandCompletion("@traits @nothing false|true")
+    @CommandCompletion("@traits @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.item.modifier")
     @Description("Adds an item trait modifier to the item held, along with lore by default.")
     public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, Operation operation, @Default("true") boolean lore) {
@@ -139,7 +139,7 @@ public class ItemCommand extends BaseCommand {
             }
         }
         if (lore) {
-            skillsItem.addModifierLore(ModifierType.ITEM, trait, value, locale);
+            skillsItem.addModifierLore(ModifierType.ITEM, trait, value, operation, locale);
         }
         skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ITEM, trait, value, operation);
         ItemStack newItem = skillsItem.getItem();

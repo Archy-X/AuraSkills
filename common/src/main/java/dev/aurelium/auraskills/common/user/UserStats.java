@@ -24,6 +24,7 @@ public class UserStats {
     private final Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
 
     private final Map<Trait, Double> traitLevels = new ConcurrentHashMap<>();
+    private final Map<Trait, Double> bonusTraitLevels = new ConcurrentHashMap<>();
     private final Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
 
     public UserStats(AuraSkillsPlugin plugin, User user) {
@@ -61,10 +62,7 @@ public class UserStats {
     }
 
     public double getBonusTraitLevel(Trait trait) {
-        double effective = getEffectiveTraitLevel(trait);
-        double base = plugin.getTraitManager().getBaseLevel(user, trait);
-
-        return Math.max(effective - base, 0);
+        return bonusTraitLevels.getOrDefault(trait, 0.0);
     }
 
     @Nullable
@@ -99,6 +97,8 @@ public class UserStats {
 
         if (modifier instanceof StatModifier statModifier) {
             recalculateStat(statModifier.stat());
+        } else if (modifier instanceof TraitModifier traitModifier) {
+            recalculateTrait(traitModifier.trait());
         }
         // Reloads modifier type
         if (reload) {
@@ -110,12 +110,14 @@ public class UserStats {
         AuraSkillsModifier<V> modifier = map.get(name);
         if (modifier == null) return false;
         map.remove(name);
-        // Reloads modifier type
 
         if (modifier instanceof StatModifier statModifier) {
             recalculateStat(statModifier.stat());
+        } else if (modifier instanceof TraitModifier traitModifier) {
+            recalculateTrait(traitModifier.trait());
         }
 
+        // Reloads modifier type
         if (reload) {
             plugin.getStatManager().reload(user, modifier.type());
         }
@@ -141,9 +143,11 @@ public class UserStats {
 
     public void recalculateTrait(Trait trait) {
         double level = plugin.getTraitManager().getBaseLevel(user, trait);
+        double base = level;
 
         if (!trait.isEnabled()) {
             traitLevels.put(trait, level);
+            bonusTraitLevels.put(trait, 0.0);
             return;
         }
 
@@ -153,6 +157,7 @@ public class UserStats {
         level = calculateModifiers(level, traitModifiers.values(), trait);
 
         traitLevels.put(trait, level);
+        bonusTraitLevels.put(trait, level - base);
     }
 
     private <T> double calculateModifiers(double base, Collection<? extends AuraSkillsModifier<T>> modifiers, T filter) {
@@ -165,7 +170,7 @@ public class UserStats {
 
             switch (modifier.operation()) {
                 case ADD -> addModSum += modifier.value();
-                case MULTIPLY -> addModSum *= modifier.value();
+                case MULTIPLY -> multiplyModProduct *= modifier.value();
                 case ADD_PERCENT -> addPercentSum += modifier.value();
             }
         }
