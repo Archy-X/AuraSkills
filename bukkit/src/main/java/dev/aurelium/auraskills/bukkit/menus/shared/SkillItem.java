@@ -9,8 +9,10 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.ModifiersMenu.ModifierInstance;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
@@ -20,12 +22,15 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.builder.TemplateBuilder;
 import dev.aurelium.slate.info.TemplateInfo;
+import dev.aurelium.slate.item.MenuItem;
+import dev.aurelium.slate.item.TemplateItem;
 import dev.aurelium.slate.item.provider.ListBuilder;
 import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.List;
@@ -256,6 +261,32 @@ public class SkillItem {
         } else {
             return List.of("duration_entry", "mana_cost_entry", "cooldown_entry");
         }
+    }
+
+    @NotNull
+    public static ItemStack getBaseItem(Skill skill, AuraSkillsPlugin pluginAbs) {
+        ItemStack item = null;
+
+        if (!(pluginAbs instanceof AuraSkills plugin)) {
+            return ModifierInstance.getFallbackItem();
+        }
+
+        LoadedMenu loadedMenu = plugin.getSlate().getLoadedMenu("skills");
+        if (loadedMenu != null) {
+            MenuItem menuItem = loadedMenu.items().get("skill");
+            if (menuItem instanceof TemplateItem<?> template) {
+                ItemStack baseItem = template.getBaseItems().get(skill);
+                if (baseItem == null) {
+                    baseItem = template.getDefaultBaseItem();
+                }
+                item = baseItem;
+            }
+        }
+
+        if (item == null) {
+            item = ModifierInstance.getFallbackItem();
+        }
+        return item;
     }
 
 }

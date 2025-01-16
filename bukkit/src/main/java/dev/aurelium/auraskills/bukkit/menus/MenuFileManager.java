@@ -17,7 +17,7 @@ import java.util.List;
 public class MenuFileManager {
 
     private final AuraSkills plugin;
-    public static final String[] MENU_NAMES = {"abilities", "leaderboard", "level_progression", "skills", "sources", "stats"};
+    public static final String[] MENU_NAMES = {"abilities", "leaderboard", "level_progression", "skills", "sources", "stats", "modifiers"};
 
     public MenuFileManager(AuraSkills plugin) {
         this.plugin = plugin;

@@ -1,0 +1,112 @@
+title: '{stat_name} Stat Details'
+size: 6
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    material: arrow
+    pos: 5,0
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
+templates:
+  stat:
+    pos: 1,1
+    contexts:
+      strength:
+        material: red_stained_glass_pane
+      health:
+        material: orange_stained_glass_pane
+      regeneration:
+        material: yellow_stained_glass_pane
+      luck:
+        material: green_stained_glass_pane
+      wisdom:
+        material: blue_stained_glass_pane
+      toughness:
+        material: purple_stained_glass_pane
+      crit_chance:
+        material: lime_stained_glass_pane
+      crit_damage:
+        material: cyan_stained_glass_pane
+      speed:
+        material: white_stained_glass_pane
+    display_name: '{color}{stat_name}'
+    lore:
+    - '<dark_gray>Stat'
+    - ' '
+    - text: '{stat_desc}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>Stat Level: {color}{level}'
+    - '  <dark_gray>Base: {base_level}'
+    - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
+    - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
+    - ' '
+    - '<gray>Traits Leveled {color}→'
+    - '<gray>Stat Breakdown {color}↓'
+  trait:
+    options:
+      slots:
+      - 1,2
+      - 1,3
+      - 1,4
+      - 1,5
+      - 1,6
+      - 1,7
+      - 1,8
+    contexts:
+      attack_damage:
+        material: red_dye
+      hp:
+        material: orange_dye
+      saturation_regen:
+        material: golden_carrot
+      hunger_regen:
+        material: bread
+      mana_regen:
+        material: light_blue_dye
+      luck:
+        material: green_dye
+      farming_luck:
+        material: golden_hoe
+      foraging_luck:
+        material: golden_axe
+      mining_luck:
+        material: golden_pickaxe
+      fishing_luck:
+        material: fishing_rod
+      excavation_luck:
+        material: golden_shovel
+      double_drop:
+        material: lime_dye
+      experience_bonus:
+        material: experience_bottle
+      anvil_discount:
+        material: anvil
+      max_mana:
+        material: magenta_dye
+      damage_reduction:
+        material: chainmail_chestplate
+      crit_chance:
+        material: golden_sword
+      crit_damage:
+        material: iron_sword
+      movement_speed:
+        material: sugar
+    display_name: '{color}{trait_name}'
+    lore:
+    - '<dark_gray>Trait'
+    - ' '
+    - text: 'You gain {color}{level_modifier} {trait_name} <gray>trait level <gray>per {color}1 {stat_name} <gray>stat level.'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>Trait Level: {color}{level}'
+    - '  <dark_gray>Base: {base_level}'
+    - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
+    - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
+    - ' '
+    - '<gray>Trait Breakdown {color}↓'
