@@ -20,4 +20,6 @@ public interface ItemFilterMeta {
     // Returns Integer.MIN_VALUE if not defined
     int customModelData();
 
+    boolean ignoreCustomModelData();
+
 }
