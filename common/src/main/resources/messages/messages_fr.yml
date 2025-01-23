@@ -348,7 +348,7 @@ commands:
         removed: "<gray>Tous les modificateurs d'armure ont été supprimés de votre objet"
     trait:
       add:
-        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        already_exists: "<yellow>Un modificateur d'armure avec la stat {trait} <yellow>existe déjà sur votre armure ! Supprimez-le d'abord avec /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplicateur avec la valeur <aqua>{value} <gray>a été ajouté à votre article"
@@ -451,7 +451,7 @@ commands:
     add:
       added: "<white>The job {job} was successfully added to player {player}"
       limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
-      existing: "<yellow>Player {player} already has the job {job}"
+      existing: "<yellow>Le joueur {player} a déjà la profession {job}"
     remove:
       removed: "<white>Removed job {job} from player {player}"
       unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
@@ -490,7 +490,7 @@ commands:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
     list:
       all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
-      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      one_trait_header: "<gray>Modificateurs de statistiques ({color}{trait}<gray>) pour le joueur <gold>{player}:"
     removeall:
       removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
@@ -551,11 +551,11 @@ commands:
     set: "<gray>XP de <aqua>{skill} <gray>pour le joueur {player} <gray>défini sur {amount}"
     remove: "<aqua>{amount} <gray>XP de <aqua>{skill} <gray>ont été supprimé du joueur <gold>{player}"
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    cooldown_reset: "<gray>Le délai de récupération de <aqua>{ability} <gray>a été réinitialisé pour le joueur <gold>{player}"
   unknown_skill: "<yellow>Compétence inconnue!"
-  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_mana_ability: "<yellow>Compétence de mana inconnue !"
   unknown_stat: "<yellow>Statistiques inconnues !"
-  unknown_trait: "<yellow>Unknown trait!"
+  unknown_trait: "<yellow>Statistiques inconnues !"
   no_profile: "<yellow>Le joueur n’a pas de profil de compétences. Veuillez essayer de rejoindre le jeu ou de redémarrer le serveur."
 leveler:
   level_up: "{skill} Niveau supérieur"
@@ -601,7 +601,7 @@ menus:
     stats: "Stats"
     stats_desc: "Gagnez des buffs de stats en augmentant le niveau de compétences"
     stats_click: "Cliquez pour en savoir plus ou voir vos statistiques"
-    active_job: Active Job
+    active_job: Métier actif
   level_progression:
     level_progression_title: "Niveau {skill} - Page {page}"
     your_ranking: "Votre classement de compétences"
@@ -619,13 +619,13 @@ menus:
     abilities_desc: "<2>Les aptitudes</2> <1>sont des compétences passives que vous débloquez et améliorez au fur et à mesure que vous améliorez vos compétences.</1>"
     mana_abilities_desc: "<3>Les capacités de mana</3> <1>sont un type spécial de capacité qui nécessite l'activation et consomme de la mana.</1>"
     abilities_click: "Cliquez pour voir les capacités de {skill}"
-    job: Job
-    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
-    job_select: Left click to select {skill} as your job
-    job_active: You are actively working this job
-    job_quit: Right click to quit this job
-    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
-    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+    job: Métier
+    job_desc: Choisir {skill} comme métier vous permet de gagner de l'argent tout en gagnant de l'xp.
+    job_select: Clic gauche pour sélectionner le métier {skill} comme actif
+    job_active: Vous travaillez actuellement sur ce métier
+    job_quit: Clic droit pour quitter ce métier
+    job_limit: Vous avez atteint votre limite de métier. Quittez d'abord un métier actif pour sélectionner celui-ci.
+    job_cooldown: La sélection des métiers est en attente. Vous pouvez la sélectionner à nouveau dans {time}.
   stats:
     stats_title: Vos statistiques
     skills: "Compétences"
