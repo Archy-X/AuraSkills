@@ -14,8 +14,10 @@ import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
+import dev.aurelium.auraskills.common.commands.Command;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -35,14 +37,29 @@ public class CommandRegistrar {
         var manager = new PaperCommandManager(plugin);
         manager.enableUnstableAPI("help");
         manager.usePerIssuerLocale(true, false);
-        manager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
 
+        registerReplacements(manager);
         registerConditions(manager);
         registerContexts(manager);
         registerCompletions(manager);
         registerBaseCommands(manager);
         registerSkillCommands(manager);
         return manager;
+    }
+
+    private void registerReplacements(PaperCommandManager manager) {
+        var replacements = manager.getCommandReplacements();
+        replacements.addReplacement("skills_alias", "skills|sk|skill");
+        // Add description replacements for each command
+        for (Command command : Command.values()) {
+            String lower = command.name().toLowerCase(Locale.ROOT);
+            String placeholder = "desc_" + lower;
+
+            var messageKey = MessageKey.of("commands." + lower.replace("_", ".") + ".desc");
+            String message = plugin.getMsg(messageKey, plugin.getDefaultLanguage());
+
+            replacements.addReplacement(placeholder, message);
+        }
     }
 
     private void registerConditions(PaperCommandManager manager) {

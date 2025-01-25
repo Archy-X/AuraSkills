@@ -28,7 +28,7 @@ public class ManaAbilityCommand extends BaseCommand {
     @Subcommand("resetcooldown")
     @CommandCompletion("@players @mana_abilities false|true")
     @CommandPermission("auraskills.command.manaability.resetcooldown")
-    @Description("Resets a specific mana ability cooldown for a player with optionally filling up the player mana")
+    @Description("%desc_manaability_resetcooldown")
     public void onResetCooldown(CommandSender sender, @Flags("other") Player player, ManaAbility ability, @Default("false") boolean fillMana) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -48,7 +48,7 @@ public class ManaAbilityCommand extends BaseCommand {
 
             sender.sendMessage(MessageBuilder.create(plugin).locale(locale)
                     .prefix()
-                    .message(CommandMessage.MANA_ABILITY_COOLDOWN_RESET, "player", player.getName(), "ability", ability.getDisplayName(locale))
+                    .message(CommandMessage.MANAABILITY_RESETCOOLDOWN_COOLDOWN_RESET, "player", player.getName(), "ability", ability.getDisplayName(locale))
                     .toString());
         } else {
             sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_MANA_ABILITY, locale));
