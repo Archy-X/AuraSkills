@@ -37,7 +37,7 @@ public abstract class MessageProvider implements PolyglotProvider {
     protected final MessageManager manager;
     @Nullable
     private Locale defaultLanguage; // Lazy loaded by getDefaultLanguage
-    private final Map<LocalizedKey, Component> componentCache = new HashMap<>();
+    private final Map<LocalizedKey, Component> componentCache = new WeakHashMap<>();
 
     public MessageProvider(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
