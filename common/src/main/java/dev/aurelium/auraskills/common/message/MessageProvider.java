@@ -7,6 +7,9 @@ import com.archyx.polyglot.config.PolyglotConfig;
 import com.archyx.polyglot.config.PolyglotConfigBuilder;
 import com.archyx.polyglot.lang.LangMessages;
 import com.archyx.polyglot.lang.MessageManager;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -21,11 +24,14 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.UnitMessage;
 import net.kyori.adventure.text.Component;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Interface that provides messages for the plugin.
@@ -37,7 +43,26 @@ public abstract class MessageProvider implements PolyglotProvider {
     protected final MessageManager manager;
     @Nullable
     private Locale defaultLanguage; // Lazy loaded by getDefaultLanguage
-    private final Map<LocalizedKey, Component> componentCache = new WeakHashMap<>();
+    private final CacheLoader<LocalizedKey, Component> componentCacheLoader = new CacheLoader<>() {
+        @Override
+        public @NotNull Component load(LocalizedKey mapKey) throws CacheLoader.InvalidCacheLoadException {
+            // Check if the converted component is already cached
+            MessageKey key = mapKey.key();
+            Locale locale = mapKey.locale();
+
+            String message = manager.get(locale, convertKey(key));
+            if (message == null) {
+                throw new CacheLoader.InvalidCacheLoadException("No message found for key: " + mapKey.key());
+            }
+
+            return stringToComponent(message);
+        }
+    };
+
+    private final LoadingCache<LocalizedKey, Component> componentCache = CacheBuilder.newBuilder()
+            .maximumSize(1024)
+            .expireAfterAccess(5, TimeUnit.MINUTES)
+            .build(componentCacheLoader);
 
     public MessageProvider(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -73,45 +98,32 @@ public abstract class MessageProvider implements PolyglotProvider {
     public String get(MessageKey key, Locale locale) {
         // Check if the converted component is already cached
         LocalizedKey localizedKey = new LocalizedKey(key, locale);
-        Component cached = componentCache.get(localizedKey);
-        if (cached != null) {
-            return componentToString(cached);
+        try {
+            Component component = componentCache.get(localizedKey);
+            return componentToString(component);
+        } catch (ExecutionException cache) {
+            throw new RuntimeException(cache);
         }
-        // Otherwise load and store to cache
-        String message = manager.get(locale, convertKey(key));
-        Component converted = stringToComponent(message);
-        componentCache.put(localizedKey, converted);
-        return componentToString(converted);
     }
 
     @Nullable
     public String getOrNull(MessageKey key, Locale locale) {
-        // Check if the converted component is already cached
         LocalizedKey localizedKey = new LocalizedKey(key, locale);
-        Component cached = componentCache.get(localizedKey);
-        if (cached != null) {
+        try {
+            Component cached = componentCache.get(localizedKey);
             return componentToString(cached);
+        } catch (ExecutionException e) {
+            return null;
         }
-        // Otherwise load and store to cache
-        String message = manager.get(locale, convertKey(key));
-        if (!message.equals(key.getPath())) {
-            Component converted = stringToComponent(message);
-            componentCache.put(localizedKey, converted);
-            return componentToString(converted);
-        }
-        return null;
     }
 
     public Component getComponent(MessageKey key, Locale locale) {
         LocalizedKey localizedKey = new LocalizedKey(key, locale);
-        Component cached = componentCache.get(localizedKey);
-        if (cached != null) {
-            return cached;
+        try {
+            return componentCache.get(localizedKey);
+        } catch (ExecutionException cache) {
+            throw new RuntimeException(cache);
         }
-        String message = manager.get(locale, convertKey(key));
-        Component converted = stringToComponent(message);
-        componentCache.put(localizedKey, converted);
-        return converted;
     }
 
     /**
@@ -268,7 +280,7 @@ public abstract class MessageProvider implements PolyglotProvider {
     }
 
     private void clearComponentCache() {
-        componentCache.clear();
+        componentCache.cleanUp();
     }
 
     @Override
