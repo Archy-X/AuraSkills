@@ -108,7 +108,7 @@ public class StatsMenu {
 
             template.onClick(c -> {
                 Map<String, Object> properties = Map.of("stat", c.value(), "previous_menu", "stats");
-                plugin.getSlate().openMenu(c.player(), "modifiers", properties);
+                plugin.getSlate().openMenu(c.player(), "stat_info", properties);
             });
         });
 

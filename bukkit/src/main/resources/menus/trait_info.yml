@@ -1,62 +1,18 @@
-title: '{stat_name} Stat Details'
-size: 6
+title: '{trait_name} Trait Details'
+size: 5
 fill:
   enabled: true
   material: black_stained_glass_pane
 items:
   back:
     material: arrow
-    pos: 5,0
+    pos: 4,0
     display_name: '<green>{{back}}'
     lore:
     - '<gray>{{back_click}}'
 templates:
-  stat:
-    pos: 1,1
-    contexts:
-      strength:
-        material: red_stained_glass_pane
-      health:
-        material: orange_stained_glass_pane
-      regeneration:
-        material: yellow_stained_glass_pane
-      luck:
-        material: green_stained_glass_pane
-      wisdom:
-        material: blue_stained_glass_pane
-      toughness:
-        material: purple_stained_glass_pane
-      crit_chance:
-        material: lime_stained_glass_pane
-      crit_damage:
-        material: cyan_stained_glass_pane
-      speed:
-        material: white_stained_glass_pane
-    display_name: '{color}{stat_name}'
-    lore:
-    - '<dark_gray>Stat'
-    - ' '
-    - text: '{stat_desc}'
-      wrap: true
-      style: '<gray>'
-    - ' '
-    - '<gray>Stat Level: {color}{level}'
-    - '  <dark_gray>Base: {base_level}'
-    - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
-    - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
-    - ' '
-    - '<gray>Traits Leveled {color}→'
-    - '<gray>Stat Breakdown {color}↓'
   trait:
-    options:
-      slots:
-      - 1,2
-      - 1,3
-      - 1,4
-      - 1,5
-      - 1,6
-      - 1,7
-      - 1,8
+    pos: 1,1
     contexts:
       attack_damage:
         material: red_dye
@@ -109,4 +65,19 @@ templates:
     - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
     - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
     - ' '
-    - '<gray>Trait Breakdown {color}↓'
+    - '<gray>Trait Modifiers ({modifier_count}) {color}↓'
+  trait_modifier:
+    options:
+      start: 3,1
+      end: 3,7
+    material: gray_dye
+    display_name: '<white>{display_name}'
+    lore:
+    - '<gray>{description}'
+    - ' '
+    - '{color}{value_format} {trait_name}'
+formats:
+  value_add: '+{value}'
+  value_multiply: '{value}x'
+  value_add_percent: '+{value}%'
+

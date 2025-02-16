@@ -9,7 +9,6 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.ModifiersMenu.ModifierInstance;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;

@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus.contexts;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.menus.ModifiersMenu.ModifierInstance;
+import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstance;
 import dev.aurelium.slate.context.ContextProvider;
 import org.jetbrains.annotations.Nullable;
 

@@ -654,6 +654,11 @@ menus:
     description: "Description"
     unlocked_at: "<1>Unlocked at <2>{skill} {level}"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+  stat_info:
+    stat_reward_desc: "Granted by your {skill} skill level."
+  trait_info:
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_desc: "Granted by the {ability} ability."
 mana_abilities:
   replenish:
     name: Replenish
@@ -890,4 +895,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 36
