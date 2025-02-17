@@ -384,6 +384,9 @@ public class SkillsItem {
         var container = meta.getPersistentDataContainer();
         String name = getContainerName(metaType, modifierType);
         NamespacedKey metaKey = new NamespacedKey(plugin, name); // Key for identifying meta type, like auraskills:modifiers
+        if (!container.has(metaKey, PersistentDataType.TAG_CONTAINER)) {
+            return container.getAdapterContext().newPersistentDataContainer();
+        }
         var metaContainer = container.get(metaKey, PersistentDataType.TAG_CONTAINER);
         // Create and set new meta container if missing
         if (metaContainer == null) {
