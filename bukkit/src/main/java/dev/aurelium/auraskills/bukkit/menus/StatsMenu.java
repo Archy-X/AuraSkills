@@ -21,9 +21,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class StatsMenu {
 
@@ -106,6 +104,11 @@ public class StatsMenu {
                     }
                 }
                 return t.item();
+            });
+
+            template.onClick(c -> {
+                Map<String, Object> properties = Map.of("stat", c.value(), "previous_menu", "stats");
+                plugin.getSlate().openMenu(c.player(), "stat_info", properties);
             });
         });
 

@@ -55,6 +55,19 @@ public abstract class AuraSkillsModifier<T> {
             }
         }
 
+        public String getDisplayName() {
+            switch (this) {
+                case ADD:
+                    return "Base";
+                case MULTIPLY:
+                    return "Multiplicative";
+                case ADD_PERCENT:
+                    return "Additive";
+                default:
+                    return this.toString();
+            }
+        }
+
     }
 
 }
