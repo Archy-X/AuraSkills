@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Помилка: консоль не може використовувати відносні координати для розташування."
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>модефікатор броні знайдено:"
       removeall:
         removed: "<gray>Усі модифікатори броні були видалені з Вашого елементу"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
-        already_exists: "<yellow>The modifier з характеристиками {color}{stat} <yellow>already існує на вашому обладунку! Спочатку видаліть його з модифікатором елементів/sk"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
@@ -398,6 +406,9 @@ commands:
         header: "<white>предмет модифікатори знайдено:"
       removeall:
         removed: "<gray>Усі модифікатори елементу були видалені з Вашого елементу"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Незареєстрований елемент з ключем {key}"
       not_registered: "<yellow>Елемент не зареєстровано з ключем {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Мова встановлена на <aqua>{lang}"
     not_found: "<yellow>Мова не знайдена!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Видалено модифікаторів <aqua>{num} <gray>stat з гравця <gold>{player}"
       removed_one_stat: "<gray>Видалено <aqua>{num} {color}{stat} <gray>модифікаторів з гравця <gold>{player}"
       players_only: "<yellow>Тільки гравці можуть видаляти свої модифікатори! Спробуйте вказати гравця"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Глобальний
     list: "<white>Глобальний XP множник для <gold>{player}<white>: <aqua>{multiplier}x / +{percent}"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Невідома навичка!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>У гравця немає профілю навичок. Будь ласка, спробуйте ще раз під'єднатися до гри або перезавантажте сервер."
 leveler:
   level_up: "{skill} Level Up"
@@ -568,6 +601,7 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Levels - Page {page}"
     your_ranking: "Your Skill Ranking"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Your Stats
     skills: "Skills"
@@ -849,4 +890,4 @@ units:
   mana: Мана
   hp: HP
   xp: XP
-file_version: 32
+file_version: 35
