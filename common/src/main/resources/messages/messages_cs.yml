@@ -5,12 +5,12 @@
 abilities:
   bountiful_harvest:
     name: Bohatá Sklizeň
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
-    info: "+{value} Farming Luck"
+    desc: "Přidá +{value} štěstí při farmaření, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při farmaření"
   farmer:
     name: Farmář
     desc: "Získejte o {value}% více XP při farmaření."
-    info: "+{value}% XP"
+    info: "+{value} % XP"
   scythe_master:
     name: Mistr kosy
     desc: "Zvýší poškození motykou o {value}%"
@@ -20,13 +20,13 @@ abilities:
     desc: "Zvyšuje nárůst nasycení pomocí rostlinných potravin o {value}."
     info: "+{value} Sytosti"
   growth_aura:
-    name: Growth Aura
-    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
-    info: "+{value}% Growth"
+    name: Aura Růstu
+    desc: "Plodiny s růstovými stadii v okruhu {radius} bloků rostou o {value} % rychleji."
+    info: "+{value} % Růstu"
   lumberjack:
     name: Dřevorubec
-    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
-    info: "+{value} Foraging Luck"
+    desc: "Přidá +{value} štěstí při získávání jídla, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při získávání jídla"
   forager:
     name: Lesník
     desc: "Získejte o {value}% více XP při lesnictví."
@@ -45,8 +45,8 @@ abilities:
     info: "{value}% 3x Poškození Odolnosti"
   lucky_miner:
     name: Horník Štěstěny
-    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
-    info: "+{value} Mining Luck"
+    desc: "Přidá +{value} štěstí při těžení, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při těžení"
   miner:
     name: Horník
     desc: "Získej o {value}% více XP při těžení."
@@ -65,12 +65,12 @@ abilities:
     info: "{value}% Bez ztráty životnosti"
   lucky_catch:
     name: Úlovek štěstěny
-    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
-    info: "+{value} Fishing Luck"
+    desc: "Přidá +{value} štěstí při rybaření, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} štěstí při rybaření"
   fisher:
     name: Rybář
     desc: "Získejte o {value}% více XP k rybaření"
-    info: "+{value}% XP"
+    info: "+{value} % XP"
   treasure_hunter:
     name: Lovec pokladů
     desc: "O {value}% vyšší šance na získání vzácné kořisti při rybolovu."
@@ -97,16 +97,16 @@ abilities:
     info: "+{value}% Poškození lopatou"
   bigger_scoop:
     name: Větší Naběračka
-    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
-    info: "+{value}% Excavation Luck"
+    desc: "Přidá +{value} štěstí při kopání, které zvyšuje pravděpodobnost mimořádných dropů."
+    info: "+{value} % štěstí při kopání"
   lucky_spades:
     name: Rýče štěstěny
     desc: "O {value}% vyšší šance na získání epické kořisti z kopání."
     info: "+{value}% Epická kořist"
   retrieval:
-    name: Retrieval
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
-    info: "{value} Distance"
+    name: Znovunabytí
+    desc: "Šípy, s nimiž mineš, budou okamžitě získány zpět po {time} s v okruhu {value} bloků."
+    info: "{value} vzdálenost"
   archer:
     name: Střelec
     desc: "Získej o {value}% více XP k farmaření."
@@ -144,10 +144,10 @@ abilities:
     desc: "{value}% šance na zrušení škodlivého účinku lektvaru."
     info: "{value}% No Debuff"
   parry:
-    name: Parry
+    name: Odražení
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    info: "{value} % snížení poškození"
+    parried: "<red>Útok odražen"
   fighter:
     name: Bojovník
     desc: "Získej o {value}% více XP k bojování"
@@ -202,7 +202,7 @@ abilities:
     info: "{value}% Dlouhotrvající Rychlost"
   fleeting:
     name: Doznívání
-    desc: "Gain +{value} Speed when below 20% health."
+    desc: "Získáš +{value} Rychlost, pokud máš méně než 20 % zdraví."
     info: "+{value}% Rychlost"
     start: "<white>Právě jsi získal doznívající zvýšení rychlosti pohybu! <gray>(+{value}% Rychlost)"
     end: "<gray>Zvýšení rychlosti pohybu odeznělo"
@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Chyba: Konzole nesmí použít relativní souřadnice pro umístění."
 commands:
   prefix: "<dark_gray>[<aqua>Dovednosti<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Nalezené modifikátory brnění:"
       removeall:
         removed: "<gray>Z tvého itemů byly odstraněny všechny modifikátory brnění"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplikátor s hodnotou <aqua>{value} <gray>byl přidán na tvůj item"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modifikátor s úrovní <aqua>{value} <gray>byl přidán k tvému itemu"
-        already_exists: "<yellow>Modifikátor itemů se statem {color}{stat} <yellow>již existuje tvém brnění! Nejprv to musíš odstranit pomocí /sk item modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "&Tvůj item nemá {color}{stat} <yellow>modifikátor!"
         removed: "{color}{stat} <gray>modifikátor byl z tvého itemu odstraněn"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Nalezená modifikace pro item:"
       removeall:
         removed: "<gray>Z tvého itemu byly odstraněny všechny modifikace na itemu"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplikátor s hodnotou <aqua>{value} <aqua>yl přidán k tvému itemu"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Neregistrovaná položka s klíčem {key}"
       not_registered: "<yellow>S klíčem není registrována žádná položka {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Jazyk nastaven na <aqua>{lang}"
     not_found: "<yellow>Jazyk nenalezen!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Odstraněno <aqua>{num} <gray>statistiky modifikatoru hrace<gold>{player}"
       removed_one_stat: "<gray>Odsraněno <aqua>{num} {color}{stat} <gray>modifier pro hráče <gold>{player}"
       players_only: "<yellow>Pouze hráči mohou odstranit své vlastní modifikátory! Zkus zadat hráče"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Global XP multiplikátor pro <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Neznamá Dovednost!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Hráč nemá profil dovedností!"
 leveler:
   level_up: "{skill} Level Up"
@@ -568,6 +601,7 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Levely - Strana {page}"
     your_ranking: "Tvoje hodnocená dovednost"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Tvé statistiky
     skills: "Dovednosti"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 31
+file_version: 35
