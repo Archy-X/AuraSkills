@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
+import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.PotionUtil;
@@ -39,8 +40,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AgilityAbilities extends AbilityImpl {
-
-    public static final String FLEETING_ID = "auraskills/fleeting";
 
     public AgilityAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LIGHT_FALL, Abilities.JUMPER, Abilities.SUGAR_RUSH, Abilities.FLEETING, Abilities.THUNDER_FALL);
@@ -174,11 +173,11 @@ public class AgilityAbilities extends AbilityImpl {
         double maxHealth = attribute.getValue();
 
         if (player.getHealth() - event.getFinalDamage() < getFleetingHealthRequired() * maxHealth) {
-            if (user.getTraitModifier(FLEETING_ID) != null) {
+            if (user.getTraitModifier(TraitModifiers.FLEETING.getId()) != null) {
                 return;
             }
             double percent = getValue(ability, user);
-            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent, Operation.ADD));
+            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
 
             Locale locale = user.getLocale();
             plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
@@ -240,9 +239,9 @@ public class AgilityAbilities extends AbilityImpl {
     private void removeFleetingMetadata(Player player) {
         User user = plugin.getUser(player);
 
-        if (user.getTraitModifier(FLEETING_ID) == null) return;
+        if (user.getTraitModifier(TraitModifiers.FLEETING.getId()) == null) return;
         // Returns if there was no modifier to remove
-        if (!user.removeTraitModifier(FLEETING_ID)) {
+        if (!user.removeTraitModifier(TraitModifiers.FLEETING.getId())) {
             return;
         }
 
@@ -253,7 +252,7 @@ public class AgilityAbilities extends AbilityImpl {
     @EventHandler
     public void fleetingLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        plugin.getUser(player).removeTraitModifier(FLEETING_ID);
+        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getId());
     }
 
     @EventHandler
@@ -274,7 +273,7 @@ public class AgilityAbilities extends AbilityImpl {
 
             double percent = getValue(ability, user);
 
-            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent, Operation.ADD));
+            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
         }
     }
 
@@ -282,7 +281,7 @@ public class AgilityAbilities extends AbilityImpl {
     public void fleetingDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        plugin.getUser(player).removeTraitModifier(FLEETING_ID);
+        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getId());
     }
 
     private double getFleetingHealthRequired() {

@@ -86,29 +86,30 @@ public enum MenuMessage implements MessageKey {
     ABILITIES_TITLE(7),
     DESCRIPTION(7),
     UNLOCKED_AT(7),
-    NEXT_UPGRADE_AT(7);
+    NEXT_UPGRADE_AT(7),
+    // Stat info menu
+    STAT_REWARD_DESC(8),
+    // Trait info menu
+    LINKED_STAT_DESC(9),
+    ABILITY_MODIFIER_DESC(9),
+    ;
 
-    private String path;
+    private final String path;
     
     MenuMessage(int section) {
         String key = this.name().toLowerCase(Locale.ROOT);
-        if (section == 0) {
-            this.path = "menus.common." + key;
-        } else if (section == 1) {
-            this.path = "menus.skills." + key;
-        } else if (section == 2) {
-            this.path = "menus.level_progression." + key;
-        } else if (section == 3) {
-            this.path = "menus.stats." + key;
-        } else if (section == 4) {
-            this.path = "menus.unclaimed_items." + key;
-        } else if (section == 5) {
-            this.path = "menus.leaderboard." + key;
-        } else if (section == 6) {
-            this.path = "menus.sources." + key;
-        } else if (section == 7) {
-            this.path = "menus.abilities." + key;
-        }
+        this.path = "menus." + switch (section) {
+            case 1 -> "skills";
+            case 2 -> "level_progression";
+            case 3 -> "stats";
+            case 4 -> "unclaimed_items";
+            case 5 -> "leaderboard";
+            case 6 -> "sources";
+            case 7 -> "abilities";
+            case 8 -> "stat_info";
+            case 9 -> "trait_info";
+            default -> "common";
+        } + "." + key;
     }
 
     @Override

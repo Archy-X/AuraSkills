@@ -16,6 +16,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
+import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
@@ -93,7 +94,8 @@ public class GatheringLuckTraits extends TraitImpl {
         if (ability == null) return;
         if (!ability.isEnabled()) return;
 
-        String modifierName = trait.name().toLowerCase(Locale.ROOT) + "_ability";
+        TraitModifiers label = getModifierLabel(ability);
+        String modifierName = label != null ? label.getId() : trait.name().toLowerCase(Locale.ROOT) + "_ability";
         // Get the luck trait value from the ability value
         double value = ability.getValue(user.getAbilityLevel(ability));
 
@@ -102,6 +104,21 @@ public class GatheringLuckTraits extends TraitImpl {
         } else {
             user.removeTraitModifier(modifierName);
         }
+    }
+
+    private static @Nullable TraitModifiers getModifierLabel(Ability ability) {
+        TraitModifiers label = null;
+        if (ability instanceof Abilities builtIn) {
+            label = switch (builtIn) {
+                case BOUNTIFUL_HARVEST -> TraitModifiers.BOUNTIFUL_HARVEST;
+                case LUMBERJACK -> TraitModifiers.LUMBERJACK;
+                case LUCKY_MINER -> TraitModifiers.LUCKY_MINER;
+                case LUCKY_CATCH -> TraitModifiers.LUCKY_CATCH;
+                case BIGGER_SCOOP -> TraitModifiers.BIGGER_SCOOP;
+                default -> null;
+            };
+        }
+        return label;
     }
 
     @EventHandler

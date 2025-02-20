@@ -1,12 +1,14 @@
 package dev.aurelium.auraskills.bukkit.menus.shared;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.LevelProgressionOpener;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.builder.ItemBuilder;
 import dev.aurelium.slate.info.ItemInfo;
+import dev.aurelium.slate.inv.content.SlotPos;
 import dev.aurelium.slate.menu.ActiveMenu;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -60,6 +62,18 @@ public class GlobalItems {
             item.setItemMeta(meta);
         }
         return item;
+    }
+
+    public static SlotPos parseSlot(String slotString) {
+        String[] split = slotString.split(",", 2);
+        if (split.length == 2) {
+            return SlotPos.of(NumberUtil.toInt(split[0]), NumberUtil.toInt(split[1]));
+        } else {
+            int num = NumberUtil.toInt(split[0]);
+            int row = num / 9;
+            int column = num % 9;
+            return SlotPos.of(row, column);
+        }
     }
 
 }
