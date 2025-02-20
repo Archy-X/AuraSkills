@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>오류: 콘솔으로는 상대 좌표를 사용할 수 없습니다."
 commands:
   prefix: "<dark_gray>[<aqua>스킬<dark_gray>]<reset> "
+  antiafk:
+    failed: ""
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>방어구 효과 찾음:"
       removeall:
         removed: "<gray>아이템에서 모든 방어구 효과가 제거되었습니다."
+    trait:
+      add:
+        already_exists: "<yellow>방어구에 {trait} 이 가 이미 존재합니다. <yellow>/sk armor modifier remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
     multiplier:
       add:
         added: "<aqua>{target} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
@@ -398,6 +406,9 @@ commands:
         header: "<white>아이템 효과 찾음:"
       removeall:
         removed: "<gray>모든 효과가 아이템에서 제거되었습니다."
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>{key} 등록 해제되었습니다."
       not_registered: "<yellow>{key}로 등록되어 있는 아이템이 없습니다."
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>언어를 <aqua>{lang}<gray>로 설정합니다."
     not_found: "<yellow>언어를 찾을 수 없습니다.!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>사용자 <gold>{player} <gray>의 <aqua>{num} <gray>능력치 효과가 제거되었습니다"
       removed_one_stat: "<gray>사용자 <gold>{player} <gray>의 <aqua>{color}{stat} {num} <gray>효과가 제거되었습니다."
       players_only: "<yellow>사용자만 본인의 효과를 제거 할 수 있습니다! 사용자 지정 후 재시도하십시오."
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: 글로벌
     list: "<white>사용자 <gold>{player}<white>의 경험치 배율: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>알 수 없는 스킬!"
   unknown_mana_ability: "<yellow>알 수 없는 마나 능력!"
   unknown_stat: "<yellow>알 수 없는 통계입니다!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>플레이어에게 스킬 프로필이 없습니다. 게임에 다시 참여하거나 서버를 다시 시작해 보세요."
 leveler:
   level_up: "{skill} 레벨 업"
@@ -568,6 +601,7 @@ menus:
     stats: "스탯"
     stats_desc: "스킬 레벨을 올려 능력치 버프를 획득하세요"
     stats_click: "자세히 알아보거나 통계를 보려면 클릭하세요."
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} 레벨 - 페이지 {page}"
     your_ranking: "당신의 스킬 순위"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>능력</2> <1>기술 레벨을 올리면서 잠금 해제하고 업그레이드할 수 있는 수동적 특혜입니다.</1>"
     mana_abilities_desc: "<3>마나 능력</3> <1>은 활성화가 필요하고 마나를 소모하는 특별한 유형의 능력입니다.</1>"
     abilities_click: "{skill} 능력을 보려면 클릭하세요."
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: 나의 능력치
     skills: "스킬"
@@ -849,4 +890,4 @@ units:
   mana: 마나
   hp: 체력
   xp: 경험치
-file_version: 33
+file_version: 35
