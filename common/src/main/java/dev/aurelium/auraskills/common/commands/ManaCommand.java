@@ -23,7 +23,7 @@ public class ManaCommand extends BaseCommand {
 
     @Default
     @CommandPermission("auraskills.command.mana")
-    @Description("Display your or another player's current and max mana")
+    @Description("%desc_mana")
     public void onMana(CommandIssuer issuer, @Flags("other") @CommandPermission("auraskills.command.mana.other") @Optional User user) {
         if (issuer.isPlayer()) { // Get issuer's own mana
             // Get the PlayerData of the issuer
@@ -60,7 +60,7 @@ public class ManaCommand extends BaseCommand {
     @Subcommand("add")
     @CommandPermission("auraskills.command.mana.add")
     @CommandCompletion("@players @nothing false|true")
-    @Description("Adds mana to a player")
+    @Description("%desc_mana_add")
     public void onManaAdd(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
         Locale locale = user.getLocale();
         if (amount < 0) { // Validate amount
@@ -83,7 +83,7 @@ public class ManaCommand extends BaseCommand {
         if (!silent) { // Send message
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
-                    .message(CommandMessage.MANA_ADD,
+                    .message(CommandMessage.MANA_ADD_ADDED,
                             "amount", NumberUtil.format2(manaToAdd),
                             "player", user.getUsername())
                     .send(issuer);
@@ -93,7 +93,7 @@ public class ManaCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("auraskills.command.mana.remove")
     @CommandCompletion("@players")
-    @Description("Removes mana from a player")
+    @Description("%desc_mana_remove")
     public void onManaRemove(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("false") boolean silent) {
         Locale locale = user.getLocale();
         if (amount < 0) { // Validate amount
@@ -114,7 +114,7 @@ public class ManaCommand extends BaseCommand {
         if (!silent) { // Send message
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
-                    .message(CommandMessage.MANA_REMOVE,
+                    .message(CommandMessage.MANA_REMOVE_REMOVED,
                             "amount", NumberUtil.format2(manaToRemove),
                             "player", user.getUsername())
                     .send(issuer);
@@ -124,7 +124,7 @@ public class ManaCommand extends BaseCommand {
     @Subcommand("set")
     @CommandPermission("auraskills.command.mana.set")
     @CommandCompletion("@players @nothing false|true")
-    @Description("Sets the mana of player")
+    @Description("%desc_mana_set")
     public void onManaSet(CommandIssuer issuer, @Flags("other") User user, double amount, @Default("true") boolean allowOverMax, @Default("false") boolean silent) {
         if (user == null) return;
         Locale locale = user.getLocale();
@@ -147,7 +147,7 @@ public class ManaCommand extends BaseCommand {
         if (!silent) {
             MessageBuilder.create(plugin).locale(locale)
                     .prefix()
-                    .message(CommandMessage.MANA_SET,
+                    .message(CommandMessage.MANA_SET_SET,
                             "amount", NumberUtil.format2(manaToSet),
                             "player", user.getUsername())
                     .send(issuer);
