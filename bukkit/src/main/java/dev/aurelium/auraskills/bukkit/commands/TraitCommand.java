@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
@@ -29,12 +30,12 @@ public class TraitCommand extends BaseCommand {
 
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
-    @CommandCompletion("@players @traits @nothing @nothing true true")
+    @CommandCompletion("@players @traits @nothing @nothing @modifier_operations true true")
     @Description("Adds a trait modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        TraitModifier modifier = new TraitModifier(name, trait, value);
+        TraitModifier modifier = new TraitModifier(name, trait, value, operation);
         if (!user.getTraitModifiers().containsKey(name)) {
             user.addTraitModifier(modifier);
             if (!silent) {
@@ -42,7 +43,7 @@ public class TraitCommand extends BaseCommand {
             }
         } else if (stack) { // Stack modifier by using a numbered name
             String newModifierName = ModifierCommand.getStackedName(user.getTraitModifiers().keySet(), name);
-            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value);
+            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value, operation);
             user.addTraitModifier(newModifier);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));

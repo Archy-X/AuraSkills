@@ -9,8 +9,6 @@ public abstract class MessagedRewardBuilder extends RewardBuilder {
 
     public MessagedRewardBuilder(AuraSkillsPlugin plugin) {
         super(plugin);
-        this.menuMessage = "";
-        this.chatMessage = "";
     }
 
     public MessagedRewardBuilder menuMessage(String menuMessage) {

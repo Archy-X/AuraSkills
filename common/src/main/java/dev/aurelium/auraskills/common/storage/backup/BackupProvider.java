@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
@@ -79,18 +80,20 @@ public class BackupProvider {
             // Save mana
             userNode.node("mana").set(state.mana());
             // Save stat modifiers
-            for (StatModifier statModifier : state.statModifiers().values()) {
+            for (StatModifier modifier : state.statModifiers().values()) {
                 ConfigurationNode modifierNode = userNode.node("stat_modifiers").appendListNode();
-                modifierNode.node("name").set(statModifier.name());
-                modifierNode.node("stat").set(statModifier.stat().getId().toString());
-                modifierNode.node("value").set(statModifier.value());
+                modifierNode.node("name").set(modifier.name());
+                modifierNode.node("stat").set(modifier.stat().getId().toString());
+                modifierNode.node("operation").set(modifier.operation().toString());
+                modifierNode.node("value").set(modifier.value());
             }
             // Save trait modifiers
-            for (TraitModifier statModifier : state.traitModifiers().values()) {
+            for (TraitModifier modifier : state.traitModifiers().values()) {
                 ConfigurationNode modifierNode = userNode.node("trait_modifiers").appendListNode();
-                modifierNode.node("name").set(statModifier.name());
-                modifierNode.node("trait").set(statModifier.trait().getId().toString());
-                modifierNode.node("value").set(statModifier.value());
+                modifierNode.node("name").set(modifier.name());
+                modifierNode.node("trait").set(modifier.trait().getId().toString());
+                modifierNode.node("operation").set(modifier.operation().toString());
+                modifierNode.node("value").set(modifier.value());
             }
         }
         // Save the backup file
@@ -131,10 +134,11 @@ public class BackupProvider {
                 String statName = modifierNode.node("stat").getString();
                 if (statName == null) continue;
                 Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(statName));
+                String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
 
                 double value = modifierNode.node("value").getDouble();
 
-                StatModifier statModifier = new StatModifier(name, stat, value);
+                StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
                 statModifiers.put(name, statModifier);
             }
             Map<String, TraitModifier> traitModifiers = new HashMap<>();
@@ -144,10 +148,11 @@ public class BackupProvider {
                 String traitName = modifierNode.node("trait").getString();
                 if (traitName == null) continue;
                 Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(traitName));
+                String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
 
                 double value = modifierNode.node("value").getDouble();
 
-                TraitModifier traitModifier = new TraitModifier(name, trait, value);
+                TraitModifier traitModifier = new TraitModifier(name, trait, value, Operation.parse(operationName));
                 traitModifiers.put(name, traitModifier);
             }
             double mana = userNode.node("mana").getDouble();
