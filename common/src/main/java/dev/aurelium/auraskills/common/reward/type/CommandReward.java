@@ -6,18 +6,29 @@ import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class CommandReward extends MessagedReward {
 
+    @NotNull
     private final CommandExecutor executor;
+    @NotNull
     private final String command;
+    @Nullable
     private final CommandExecutor revertExecutor;
+    @Nullable
     private final String revertCommand;
 
-    public CommandReward(AuraSkillsPlugin plugin, String menuMessage, String chatMessage, CommandExecutor executor, String command, CommandExecutor revertExecutor, String revertCommand) {
-        super(plugin, menuMessage, chatMessage);
+    public CommandReward(AuraSkillsPlugin plugin, Skill skill, String menuMessage, String chatMessage,
+                         @NotNull CommandExecutor executor,
+                         @NotNull String command,
+                         @Nullable CommandExecutor revertExecutor,
+                         @Nullable String revertCommand
+    ) {
+        super(plugin, skill, menuMessage, chatMessage);
         this.executor = executor;
         this.command = command;
         this.revertExecutor = revertExecutor;

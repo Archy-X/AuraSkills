@@ -4,11 +4,12 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,12 +32,13 @@ public class ModifierCommand extends BaseCommand {
 
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
-    @CommandCompletion("@players @stats @nothing @nothing true true")
+    @CommandCompletion("@players @stats @nothing @nothing @modifier_operations true|false true|false")
     @Description("Adds a stat modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        StatModifier modifier = new StatModifier(name, stat, value);
+
+        StatModifier modifier = new StatModifier(name, stat, value, operation);
         if (!user.getStatModifiers().containsKey(name)) {
             user.addStatModifier(modifier);
             if (!silent) {
@@ -44,7 +46,7 @@ public class ModifierCommand extends BaseCommand {
             }
         } else if (stack) { // Stack modifier by using a numbered name
             String newModifierName = getStackedName(user.getStatModifiers().keySet(), name);
-            StatModifier newModifier = new StatModifier(newModifierName, stat, value);
+            StatModifier newModifier = new StatModifier(newModifierName, stat, value, operation);
             user.addStatModifier(newModifier);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));

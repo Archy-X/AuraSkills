@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
@@ -36,10 +37,10 @@ public class ArmorCommand extends BaseCommand {
     }
 
     @Subcommand("modifier add")
-    @CommandCompletion("@stats @nothing false|true")
+    @CommandCompletion("@stats @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.armor.modifier")
     @Description("Adds an armor stat modifier to the item held, along with lore by default.")
-    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("true") boolean lore) {
+    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -50,9 +51,9 @@ public class ArmorCommand extends BaseCommand {
             }
         }
         if (lore) {
-            skillsItem.addModifierLore(ModifierType.ARMOR, stat, value, locale);
+            skillsItem.addModifierLore(ModifierType.ARMOR, stat, value, operation, locale);
         }
-        skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ARMOR, stat, value);
+        skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ARMOR, stat, value, operation);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, locale));
@@ -115,10 +116,10 @@ public class ArmorCommand extends BaseCommand {
     }
 
     @Subcommand("trait add")
-    @CommandCompletion("@traits @nothing false|true")
+    @CommandCompletion("@traits @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.armor.modifier")
     @Description("Adds an armor trait modifier to the item held, along with lore by default.")
-    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, @Default("true") boolean lore) {
+    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -130,9 +131,9 @@ public class ArmorCommand extends BaseCommand {
             }
         }
         if (lore) {
-            skillsItem.addModifierLore(ModifierType.ARMOR, trait, value, locale);
+            skillsItem.addModifierLore(ModifierType.ARMOR, trait, value, operation, locale);
         }
-        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ARMOR, trait, value);
+        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, ModifierType.ARMOR, trait, value, operation);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) +
