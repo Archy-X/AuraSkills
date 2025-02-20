@@ -237,6 +237,7 @@ requirement:
     global: [ ]
   blocks:
     enabled: true
+    list:
 damage:
   correct_last_damage: true
 critical:
