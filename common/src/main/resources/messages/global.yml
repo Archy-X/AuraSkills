@@ -31,6 +31,9 @@ commands:
       add:
         lore: "<gray>{stat}: {color}+{value}"
         lore_subtract: "<gray>{stat}: {color}-{value}"
+        lore_add_percent: "<gray>{stat}: {color}+{value}%"
+        lore_subtract_percent: "<gray>{stat}: {color}-{value}%"
+        lore_multiply: "<gray>{stat}: {color}{value}x"
       list:
         entry: "  {color}{stat}<white> - {value}"
     multiplier:
@@ -45,6 +48,9 @@ commands:
       add:
         lore: "<gray>{stat}: {color}+{value}"
         lore_subtract: "<gray>{stat}: {color}-{value}"
+        lore_add_percent: "<gray>{stat}: {color}+{value}%"
+        lore_subtract_percent: "<gray>{stat}: {color}-{value}%"
+        lore_multiply: "<gray>{stat}: {color}{value}x"
       list:
         entry: "  {color}{stat}<white> - {value}"
     multiplier:
@@ -115,4 +121,4 @@ stats:
   speed:
     color: "<white>"
     symbol: "➤"
-file_version: 2
+file_version: 3

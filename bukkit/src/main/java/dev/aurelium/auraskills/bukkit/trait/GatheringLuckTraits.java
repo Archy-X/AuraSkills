@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
@@ -97,7 +98,7 @@ public class GatheringLuckTraits extends TraitImpl {
         double value = ability.getValue(user.getAbilityLevel(ability));
 
         if (value != 0) {
-            user.addTraitModifier(new TraitModifier(modifierName, trait, value), false);
+            user.addTraitModifier(new TraitModifier(modifierName, trait, value, Operation.ADD), false);
         } else {
             user.removeTraitModifier(modifierName);
         }

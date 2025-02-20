@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 
@@ -28,7 +29,7 @@ public class Modifiers {
             Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(key.toLowerCase(Locale.ROOT)));
             if (stat != null) {
                 double value = compound.getDouble(key);
-                modifiers.add(new StatModifier(key, stat, value));
+                modifiers.add(new StatModifier(key, stat, value, Operation.ADD));
             }
         }
         return modifiers;
