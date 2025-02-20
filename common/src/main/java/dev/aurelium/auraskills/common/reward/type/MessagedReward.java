@@ -7,26 +7,31 @@ import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public abstract class MessagedReward extends SkillReward {
 
+    @Nullable
     protected final String menuMessage;
+    @Nullable
     protected final String chatMessage;
 
-    public MessagedReward(AuraSkillsPlugin plugin, String menuMessage, String chatMessage) {
-        super(plugin);
+    public MessagedReward(AuraSkillsPlugin plugin, Skill skill, @Nullable String menuMessage, @Nullable String chatMessage) {
+        super(plugin, skill);
         this.menuMessage = menuMessage;
         this.chatMessage = chatMessage;
     }
 
     @Override
+    @Nullable
     public String getMenuMessage(User user, Locale locale, Skill skill, int level) {
         return attemptAsMessageKey(menuMessage, user, locale, skill, level, true);
     }
 
     @Override
+    @Nullable
     public String getChatMessage(User user, Locale locale, Skill skill, int level) {
         return attemptAsMessageKey(chatMessage, user, locale, skill, level, true);
     }
@@ -35,7 +40,8 @@ public abstract class MessagedReward extends SkillReward {
      * Attempts to use the input as a message key. If a matching translation for the key is found, it will return the translation.
      * Otherwise it will return the key.
      */
-    private String attemptAsMessageKey(String potentialKey, User user, Locale locale, Skill skill, int level, boolean raw) {
+    private String attemptAsMessageKey(@Nullable String potentialKey, User user, Locale locale, Skill skill, int level, boolean raw) {
+        if (potentialKey == null) return null;
         String message;
         if (raw) {
             message = plugin.getMessageProvider().getRaw(MessageKey.of(potentialKey), locale);

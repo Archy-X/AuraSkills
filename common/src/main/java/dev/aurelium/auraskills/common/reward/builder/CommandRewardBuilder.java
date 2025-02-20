@@ -15,7 +15,6 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
 
     public CommandRewardBuilder(AuraSkillsPlugin plugin) {
         super(plugin);
-        this.executor = CommandExecutor.CONSOLE;
     }
 
     public CommandRewardBuilder executor(CommandExecutor executor) {
@@ -40,7 +39,10 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
 
     @Override
     public SkillReward build() {
-        Validate.notNull(command, "You must specify a command");
-        return new CommandReward(plugin, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
+        Validate.allNotNull(
+                "executor", executor,
+                "command", command
+        );
+        return new CommandReward(plugin, skill, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
     }
 }

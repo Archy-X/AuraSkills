@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
@@ -177,7 +178,7 @@ public class AgilityAbilities extends AbilityImpl {
                 return;
             }
             double percent = getValue(ability, user);
-            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent));
+            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent, Operation.ADD));
 
             Locale locale = user.getLocale();
             plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
@@ -273,7 +274,7 @@ public class AgilityAbilities extends AbilityImpl {
 
             double percent = getValue(ability, user);
 
-            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent));
+            user.addTraitModifier(new TraitModifier(FLEETING_ID, Traits.MOVEMENT_SPEED, percent, Operation.ADD));
         }
     }
 

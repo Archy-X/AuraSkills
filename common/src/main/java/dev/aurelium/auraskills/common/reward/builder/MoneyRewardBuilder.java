@@ -26,6 +26,6 @@ public class MoneyRewardBuilder extends RewardBuilder {
 
     @Override
     public SkillReward build() {
-        return new MoneyReward(plugin, amount, formula);
+        return new MoneyReward(plugin, skill, amount, formula);
     }
 }

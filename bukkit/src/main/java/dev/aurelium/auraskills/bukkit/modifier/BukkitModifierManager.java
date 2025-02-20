@@ -61,7 +61,7 @@ public class BukkitModifierManager implements ModifierManager {
             }
             if (skillsItem.meetsRequirements(ModifierType.ITEM, player)) {
                 for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ITEM)) {
-                    StatModifier offHandModifier = new StatModifier(modifier.name() + ".Offhand", modifier.stat(), modifier.value());
+                    StatModifier offHandModifier = modifier.withName(modifier.name() + ".Offhand");
                     user.addStatModifier(offHandModifier, false);
                     statsToReload.add(modifier.stat());
                 }
