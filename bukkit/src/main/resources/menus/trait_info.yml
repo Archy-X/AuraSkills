@@ -1,0 +1,83 @@
+title: '{trait_name} Trait Details'
+size: 5
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    material: arrow
+    pos: 4,0
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
+templates:
+  trait:
+    pos: 1,1
+    contexts:
+      attack_damage:
+        material: red_dye
+      hp:
+        material: orange_dye
+      saturation_regen:
+        material: golden_carrot
+      hunger_regen:
+        material: bread
+      mana_regen:
+        material: light_blue_dye
+      luck:
+        material: green_dye
+      farming_luck:
+        material: golden_hoe
+      foraging_luck:
+        material: golden_axe
+      mining_luck:
+        material: golden_pickaxe
+      fishing_luck:
+        material: fishing_rod
+      excavation_luck:
+        material: golden_shovel
+      double_drop:
+        material: lime_dye
+      experience_bonus:
+        material: experience_bottle
+      anvil_discount:
+        material: anvil
+      max_mana:
+        material: magenta_dye
+      damage_reduction:
+        material: chainmail_chestplate
+      crit_chance:
+        material: golden_sword
+      crit_damage:
+        material: iron_sword
+      movement_speed:
+        material: sugar
+    display_name: '{color}{trait_name}'
+    lore:
+    - '<dark_gray>Trait'
+    - ' '
+    - text: 'You gain {color}{level_modifier} {trait_name} <gray>trait level <gray>per {color}1 {stat_name} <gray>stat level.'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>Trait Level: {color}{level}'
+    - '  <dark_gray>Base: {base_level}'
+    - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
+    - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
+    - ' '
+    - '<gray>Trait Modifiers ({modifier_count}) {color}↓'
+  trait_modifier:
+    options:
+      start: 3,1
+      end: 3,7
+    material: gray_dye
+    display_name: '<white>{display_name}'
+    lore:
+    - '<gray>{description}'
+    - ' '
+    - '{color}{value_format} {trait_name}'
+formats:
+  value_add: '+{value}'
+  value_multiply: '{value}x'
+  value_add_percent: '+{value}%'
+
