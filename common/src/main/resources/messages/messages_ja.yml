@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>エラー：コンソールは、座標を相対的に使用できません。"
 commands:
   prefix: "<dark_gray>[<aqua>スキル<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>見つかったアーマーモディファイヤー:"
       removeall:
         removed: "<gray>アイテムから全てのアーマーモディファイヤーが削除されました"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "<gray>{value}レベルの{color}{stat} <gray>モディファイヤがアイテムに追加されました"
-        already_exists: "<yellow>アイテムにはすでに{color}{stat} <yellow>スタッツを持つモディファイヤが存在しています！/sk item modifier removeで削除してください"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>モディファイヤが存在しません！"
         removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
@@ -398,6 +406,9 @@ commands:
         header: "<white>以下のアイテムモディファイヤが見つかりました："
       removeall:
         removed: "<gray>すべてのアイテムモディファイヤがアイテムから削除されました"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>キーが{key}のアイテムが登録解除されました"
       not_registered: "<yellow>キーが{key}のアイテムは登録されていません"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>言語が<aqua>{lang}<gray>に設定されました"
     not_found: "<yellow>言語が見つかりません！"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gold>{player}<gray>から<aqua>{num}<gray>個のステータスモディファイヤを削除しました"
       removed_one_stat: "<gold>{player}<gray>から<aqua>{num}個の{color}{stat}<gray>ステータスモディファイヤを削除しました"
       players_only: "<yellow>プレイヤーのみ自分のモディファイヤを削除できます！プレイヤーを指定してください"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: グローバル
     list: "<gold>{player}<white>のグローバルXP乗数: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>未知のスキルです！"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>プレイヤーにスキルプロファイルがありません。ゲームから抜けて、再度入り直すか、サーバーを再起動してください。"
 leveler:
   level_up: "{skill} レベルアップ"
@@ -568,6 +601,7 @@ menus:
     stats: "統計"
     stats_desc: "スキルのレベルアップでステータスバフを獲得"
     stats_click: "クリックすると詳細が表示されます。"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} レベル - ページ {page}"
     your_ranking: "あなたのスキルランキング"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>アビリティ</2> <1>スキルのレベルアップに伴ってアンロック、アップグレードされるパッシブな特典。"
     mana_abilities_desc: "<3>マナ能力</3> <1>は起動を必要とし、マナを消費する特殊な能力である。"
     abilities_click: "{skill}の能力を見るにはクリックしてください。"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: あなたの統計
     skills: "スキル"
@@ -849,4 +890,4 @@ units:
   mana: マナ
   hp: 体力
   xp: 経験値
-file_version: 32
+file_version: 35
