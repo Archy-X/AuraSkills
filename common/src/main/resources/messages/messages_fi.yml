@@ -329,6 +329,11 @@ acf:
     location_console_not_relative: "<red>Virhe: Konsoli ei välttämättä käytä suhteellisia koordinaatteja sijaintiin."
 commands:
   prefix: "<dark_gray>[<aqua>Taidot<dark_gray>] <reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Panssarimodifikaattorit löydetty:"
       removeall:
         removed: "<gray>Kaikki panssarimodifikaattorit on poistettu esineestäsi."
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>kerroin arvolla <aqua>{value} <gray>lisättiin kohteeseesi"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modifioija, jonka taso on <aqua>{value} <gray>, lisättiin esineeseesi."
-        already_exists: "<yellow>Panssarissasi on {color} {stat} <yellow> jo olemassa kohteen muokkaaja, jolla on tilasto! Poista se ensin /sk-kohteen muokkaimella poista"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Tuotteessasi ei ole {color}{stat}<yellow> muuntaja!"
         removed: "{color}{stat}<gray>muokkaaja poistettiin tuotteestasi"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Löytyi kohteen muokkaajia:"
       removeall:
         removed: "<gray>Kaikki kohteen muokkaajat on poistettu tuotteestasi"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target}<gray>kerroin arvon kanssa<aqua>{value}<gray> lisättiin tuotteeseesi"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Rekisteröimätön tuote avaimella{key}"
       not_registered: "<yellow>Avaimella ei ole rekisteröity tuotetta{key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Kieli asetettu<aqua>{lang}"
     not_found: "<yellow>Kieltä ei löydy!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Poistettu<aqua>{num}<gray> stat-muuntimet pelaajalta<gold>{player}"
       removed_one_stat: "<gray>Poistettu<aqua>{num}{color}{stat}<gray> modifikaatioita pelaajalta<gold>{player}"
       players_only: "<yellow>Vain pelaajat voivat poistaa omat muokkaajansa! Yritä määrittää pelaaja"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Maailmanlaajuinen
     list: "<white>Globaali XP-kerroin pelaajalle <gold> {player} <white><aqua> {multiplier} x/+{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Tuntematon taito!"
   unknown_mana_ability: "<yellow>Tuntematon manakyky!"
   unknown_stat: "<yellow>Tuntematon taito!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Pelaajalla ei ole taitoprofiilia. Yritä liittyä peliin uudelleen tai käynnistää palvelin uudelleen."
 leveler:
   level_up: "{skill} Taitosi Nousi"
@@ -568,6 +601,7 @@ menus:
     stats: "Tilastot"
     stats_desc: "Ansaitse buffeja kehittämällä taitoja"
     stats_click: "Napsauta saadaksesi lisätietoja tai tarkastellaksesi tilastojasi"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Tasot - Sivu {page}"
     your_ranking: "Taitosi sijoitus"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>Kyvyt </2><1>ovat passiivisia etuja, joita avaat ja päivität nostaessasi taito tasoja.</1>"
     mana_abilities_desc: "<3>Mana-kyvyt </3><1>ovat erityisiä kykyjä, jotka vaativat aktivointia ja kuluttaa manaa.</1>"
     abilities_click: "Napsauta nähdäksesi {skill} kykyjä"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Tilastosi
     skills: "Taidot"
@@ -849,4 +890,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 33
+file_version: 35
