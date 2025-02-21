@@ -52,7 +52,7 @@ templates:
       - ' '
       - '{traits[\n]}'
       - ' '
-      - '<yellow>{{stats_click}}'
+      - '<yellow>{{stat_info_click}}'
 components:
   leveled_by:
     context: Stat

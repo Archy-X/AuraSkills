@@ -69,6 +69,22 @@ public record ModifierInstance(
                 index++;
             }
         } else if (parent instanceof Trait trait) {
+            // Base value if it exists
+            double base = plugin.getTraitManager().getBaseLevel(user, trait);
+            if (base >= 0.00001) {
+                instances.add(new ModifierInstance(
+                        trait,
+                        "trait_base_level",
+                        base,
+                        Operation.ADD,
+                        ModifierInstance.getFallbackItem(),
+                        plugin.getMsg(MenuMessage.BASE_LEVEL, user.getLocale()),
+                        plugin.getMsg(MenuMessage.BASE_LEVEL_DESC, user.getLocale()),
+                        index
+                ));
+                index++;
+            }
+            // Linked stats
             for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
                 double modifier = stat.getTraitModifier(trait);
                 double level = user.getStatLevel(stat);
@@ -86,6 +102,7 @@ public record ModifierInstance(
                 ));
                 index++;
             }
+            // Modifiers
             for (TraitModifier modifier : user.getTraitModifiers().values()) {
                 if (!modifier.trait().equals(trait) || modifier.value() == 0.0) continue;
 
