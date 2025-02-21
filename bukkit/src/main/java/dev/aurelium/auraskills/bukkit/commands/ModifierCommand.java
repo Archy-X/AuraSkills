@@ -34,7 +34,7 @@ public class ModifierCommand extends BaseCommand {
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @stats @nothing @nothing @modifier_operations true|false true|false")
     @Description("Adds a stat modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
 

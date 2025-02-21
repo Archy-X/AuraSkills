@@ -32,7 +32,7 @@ public class TraitCommand extends BaseCommand {
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @traits @nothing @nothing @modifier_operations true true")
     @Description("Adds a trait modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         TraitModifier modifier = new TraitModifier(name, trait, value, operation);

@@ -40,7 +40,7 @@ public class ArmorCommand extends BaseCommand {
     @CommandCompletion("@stats @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.armor.modifier")
     @Description("Adds an armor stat modifier to the item held, along with lore by default.")
-    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, Operation operation, @Default("true") boolean lore) {
+    public void onArmorModifierAdd(@Flags("itemheld") Player player, Stat stat, double value, @Default("add") Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -119,7 +119,7 @@ public class ArmorCommand extends BaseCommand {
     @CommandCompletion("@traits @nothing @modifier_operations false|true")
     @CommandPermission("auraskills.command.armor.modifier")
     @Description("Adds an armor trait modifier to the item held, along with lore by default.")
-    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, Operation operation, @Default("true") boolean lore) {
+    public void onItemTraitAdd(@Flags("itemheld") Player player, Trait trait, double value, @Default("add") Operation operation, @Default("true") boolean lore) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
