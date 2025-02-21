@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageProvider;
@@ -23,24 +24,22 @@ public class StatFormat {
 
     public String applyPlaceholders(String input, StatModifier modifier, Locale locale) {
         Stat stat = modifier.stat();
-        double value = modifier.value();
         String name = modifier.name();
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale, false))
-                .replace("{value}", NumberUtil.format1(value))
+                .replace("{value}", formatValue(modifier))
                 .replace("{name}", name));
     }
 
     public String applyPlaceholders(String input, TraitModifier modifier, Locale locale) {
         Trait trait = modifier.trait();
-        double value = modifier.value();
         String name = modifier.name();
         Stat stat = plugin.getTraitManager().getLinkedStats(trait).stream().findFirst().orElse(null);
         return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false))
-                .replace("{value}", NumberUtil.format1(value))
+                .replace("{value}", formatValue(modifier))
                 .replace("{name}", name));
     }
 
@@ -49,7 +48,7 @@ public class StatFormat {
         return provider.applyFormatting(input.replace("{color}", stat.getColor(locale))
                 .replace("{symbol}", stat.getSymbol(locale))
                 .replace("{stat}", stat.getDisplayName(locale, false))
-                .replace("{value}", NumberUtil.format1(modifier.value()))
+                .replace("{value}", formatValue(modifier))
                 .replace("{name}", modifier.name())
                 .replace("{player}", player.getName()));
     }
@@ -60,9 +59,17 @@ public class StatFormat {
         return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false))
-                .replace("{value}", NumberUtil.format1(modifier.value()))
+                .replace("{value}", formatValue(modifier))
                 .replace("{name}", modifier.name())
                 .replace("{player}", player.getName()));
+    }
+
+    private String formatValue(AuraSkillsModifier<?> modifier) {
+        return switch (modifier.operation()) {
+            case ADD -> (modifier.value() >= 0.0 ? "+" : "") + NumberUtil.format2(modifier.value());
+            case ADD_PERCENT -> (modifier.value() >= 0.0 ? "+" : "") + NumberUtil.format2(modifier.value()) + "%";
+            case MULTIPLY -> NumberUtil.format2(modifier.value()) + "x";
+        };
     }
 
     public String applyPlaceholders(String input, Stat stat, Player player, Locale locale) {

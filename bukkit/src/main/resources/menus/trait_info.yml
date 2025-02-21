@@ -74,7 +74,9 @@ templates:
     material: gray_dye
     display_name: '<white>{display_name}'
     lore:
-    - '<gray>{description}'
+    - text: '{description}'
+      wrap: true
+      style: '<gray>'
     - ' '
     - '{color}{value_format} {trait_name}'
 formats:

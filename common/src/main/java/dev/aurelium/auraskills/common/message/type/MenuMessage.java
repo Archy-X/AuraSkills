@@ -30,6 +30,12 @@ public enum MenuMessage implements MessageKey {
     NEXT_PAGE_CLICK(0),
     PREVIOUS_PAGE(0),
     PREVIOUS_PAGE_CLICK(0),
+    TRAIT(0),
+    TRAIT_GAIN(0),
+    TRAIT_LEVEL(0),
+    BASE(0),
+    MODIFIERS_ADDITIVE(0),
+    MODIFIERS_MULTIPLICATIVE(0),
     // Skills Menu
     SKILLS_TITLE(1),
     YOUR_SKILLS(1),
@@ -40,6 +46,7 @@ public enum MenuMessage implements MessageKey {
     STATS(1),
     STATS_DESC(1),
     STATS_CLICK(1),
+    ACTIVE_JOB(1),
     // Level Progression Menu
     LEVEL_PROGRESSION_TITLE(2),
     YOUR_RANKING(2),
@@ -57,6 +64,13 @@ public enum MenuMessage implements MessageKey {
     ABILITIES_DESC(2),
     MANA_ABILITIES_DESC(2),
     ABILITIES_CLICK(2),
+    JOB(2),
+    JOB_DESC(2),
+    JOB_SELECT(2),
+    JOB_ACTIVE(2),
+    JOB_QUIT(2),
+    JOB_LIMIT(2),
+    JOB_COOLDOWN(2),
     // Stats Menu
     STATS_TITLE(3),
     SKILLS(3),
@@ -64,6 +78,7 @@ public enum MenuMessage implements MessageKey {
     ADDED_DROPS(3),
     CHANCE_DROP(3),
     CHANCE_DROPS(3),
+    STAT_INFO_CLICK(3),
     // Unclaimed items menu
     UNCLAIMED_ITEMS_TITLE(4),
     INVENTORY_FULL(4),
@@ -88,8 +103,18 @@ public enum MenuMessage implements MessageKey {
     UNLOCKED_AT(7),
     NEXT_UPGRADE_AT(7),
     // Stat info menu
+    STAT_DETAILS(8),
+    STAT(8),
+    STAT_LEVEL(8),
+    TRAITS_LEVELED(8),
+    STAT_MODIFIERS(8),
     STAT_REWARD_DESC(8),
+    TRAIT_MODIFIERS_CLICK(8),
     // Trait info menu
+    TRAIT_DETAILS(9),
+    TRAIT_MODIFIERS(9),
+    BASE_LEVEL(9),
+    BASE_LEVEL_DESC(9),
     LINKED_STAT_DESC(9),
     ABILITY_MODIFIER_DESC(9),
     ;
