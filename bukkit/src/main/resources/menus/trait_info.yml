@@ -1,4 +1,4 @@
-title: '{trait_name} Trait Details'
+title: '{{trait_details}}'
 size: 5
 fill:
   enabled: true
@@ -54,18 +54,19 @@ templates:
         material: sugar
     display_name: '{color}{trait_name}'
     lore:
-    - '<dark_gray>Trait'
+    - '<dark_gray>{{trait}}'
     - ' '
-    - text: 'You gain {color}{level_modifier} {trait_name} <gray>trait level <gray>per {color}1 {stat_name} <gray>stat level.'
+    - text: '{{trait_gain}}'
       wrap: true
-      style: '<gray>'
+      styles:
+        1: '<gray>'
     - ' '
-    - '<gray>Trait Level: {color}{level}'
-    - '  <dark_gray>Base: {base_level}'
-    - '  <dark_gray>Modifiers (Additive): +{add_percent_modifiers}%'
-    - '  <dark_gray>Modifiers (Multiplicative): {multiply_modifiers}x'
+    - '<gray>{{trait_level}}: {color}{level}'
+    - '  <dark_gray>{{base}}: {base_level}'
+    - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
+    - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
     - ' '
-    - '<gray>Trait Modifiers ({modifier_count}) {color}↓'
+    - '<gray>{{trait_modifiers}} ({modifier_count}) {color}↓'
   trait_modifier:
     options:
       start: 3,1
