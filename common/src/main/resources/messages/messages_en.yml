@@ -639,7 +639,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
     chance_drops: "{chance}% for +{value} Drops"
-    stats_click: "Click to view stat details"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -672,6 +672,8 @@ menus:
   trait_info:
     trait_details: "{trait_name} Trait Details"
     trait_modifiers: "Trait Modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
     linked_stat_desc: "Granted by your {stat} stat level."
     ability_modifier_desc: "Granted by the {ability} ability."
 mana_abilities:

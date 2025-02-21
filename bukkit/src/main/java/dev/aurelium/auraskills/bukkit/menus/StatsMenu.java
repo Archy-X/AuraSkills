@@ -21,7 +21,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class StatsMenu {
 
@@ -147,7 +150,7 @@ public class StatsMenu {
     }
 
     private String getDisplayLevel(Stat stat, User user) {
-        if (isOneToOneWithTrait(stat) && plugin.configBoolean(Option.MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY)) {
+        if (stat.isDirectlyProportional() && plugin.configBoolean(Option.MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY)) {
             // Displays the trait value directly instead of the stat level if the stat has exactly one trait and its modifier is 1
             Trait trait = stat.getTraits().get(0);
             double value = user.getEffectiveTraitLevel(trait);
@@ -161,11 +164,6 @@ public class StatsMenu {
         } else {
             return NumberUtil.format1(user.getStatLevel(stat));
         }
-    }
-
-    private boolean isOneToOneWithTrait(Stat stat) {
-        if (stat.getTraits().size() > 1) return false;
-        return stat.getTraitModifier(stat.getTraits().get(0)) == 1.0;
     }
 
 }
