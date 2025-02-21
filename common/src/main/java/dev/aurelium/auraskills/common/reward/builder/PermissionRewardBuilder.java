@@ -28,7 +28,7 @@ public class PermissionRewardBuilder extends MessagedRewardBuilder {
     @Override
     public SkillReward build() {
         Validate.notNull(permission, "You must specify a permission");
-        return new PermissionReward(plugin, menuMessage, chatMessage, permission, value);
+        return new PermissionReward(plugin, skill, menuMessage, chatMessage, permission, value);
     }
     
 

@@ -11,8 +11,8 @@ public class PermissionReward extends MessagedReward {
     private final String permission;
     private final boolean value;
 
-    public PermissionReward(AuraSkillsPlugin plugin, String menuMessage, String chatMessage, String permission, boolean value) {
-        super(plugin, menuMessage, chatMessage);
+    public PermissionReward(AuraSkillsPlugin plugin, Skill skill, String menuMessage, String chatMessage, String permission, boolean value) {
+        super(plugin, skill, menuMessage, chatMessage);
         this.permission = permission;
         this.value = value;
     }

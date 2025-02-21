@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.region.BlockPosition;
@@ -122,13 +123,14 @@ public class FileStorageProvider extends StorageProvider {
             String name = modifierNode.node("name").getString();
             String statName = modifierNode.node("stat").getString();
             double value = modifierNode.node("value").getDouble();
+            String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
 
             if (name != null && statName != null) {
                 NamespacedId statId = NamespacedId.fromString(statName);
                 Stat stat = plugin.getStatRegistry().getOrNull(statId);
                 if (stat == null) return;
 
-                StatModifier statModifier = new StatModifier(name, stat, value);
+                StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
                 statModifiers.put(name, statModifier);
             }
         });
@@ -141,13 +143,14 @@ public class FileStorageProvider extends StorageProvider {
             String name = modifierNode.node("name").getString();
             String traitName = modifierNode.node("trait").getString();
             double value = modifierNode.node("value").getDouble();
+            String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
 
             if (name != null && traitName != null) {
                 NamespacedId traitId = NamespacedId.fromString(traitName);
                 Trait trait = plugin.getTraitRegistry().getOrNull(traitId);
                 if (trait == null) return;
 
-                TraitModifier traitModifier = new TraitModifier(name, trait, value);
+                TraitModifier traitModifier = new TraitModifier(name, trait, value, Operation.parse(operationName));
                 traitModifiers.put(name, traitModifier);
             }
         });
@@ -402,6 +405,7 @@ public class FileStorageProvider extends StorageProvider {
             ConfigurationNode modifierNode = node.node(String.valueOf(index));
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("stat").set(modifier.stat().getId().toString());
+            modifierNode.node("operation").set(modifier.operation().toString());
             modifierNode.node("value").set(modifier.value());
             index++;
         }
@@ -413,6 +417,7 @@ public class FileStorageProvider extends StorageProvider {
             ConfigurationNode modifierNode = node.node(String.valueOf(index));
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("trait").set(modifier.trait().getId().toString());
+            modifierNode.node("operation").set(modifier.operation().toString());
             modifierNode.node("value").set(modifier.value());
             index++;
         }

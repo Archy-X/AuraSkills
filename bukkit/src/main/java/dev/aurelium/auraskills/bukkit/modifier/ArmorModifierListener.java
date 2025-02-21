@@ -77,6 +77,20 @@ public class ArmorModifierListener implements Listener {
         if (plugin.configBoolean(Option.MODIFIER_ARMOR_TIMER_ENABLED)) return; // Don't use if timer is enabled
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
+        // Un-equip
+        if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR) {
+            ItemStack item = event.getOldArmorPiece();
+            SkillsItem skillsItem = new SkillsItem(item, plugin);
+            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
+                user.removeStatModifier(modifier.name());
+            }
+            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
+                user.removeTraitModifier(modifier.name());
+            }
+            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
+                user.removeMultiplier(multiplier.name());
+            }
+        }
         // Equip
         if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR) {
             ItemStack item = event.getNewArmorPiece();
@@ -91,20 +105,6 @@ public class ArmorModifierListener implements Listener {
                 for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
                     user.addMultiplier(multiplier);
                 }
-            }
-        }
-        // Un-equip
-        if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR) {
-            ItemStack item = event.getOldArmorPiece();
-            SkillsItem skillsItem = new SkillsItem(item, plugin);
-            for (StatModifier modifier : skillsItem.getStatModifiers(ModifierType.ARMOR)) {
-                user.removeStatModifier(modifier.name());
-            }
-            for (TraitModifier modifier : skillsItem.getTraitModifiers(ModifierType.ARMOR)) {
-                user.removeTraitModifier(modifier.name());
-            }
-            for (Multiplier multiplier : skillsItem.getMultipliers(ModifierType.ARMOR)) {
-                user.removeMultiplier(multiplier.name());
             }
         }
     }

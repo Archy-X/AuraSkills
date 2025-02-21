@@ -456,7 +456,10 @@ public class LevelProgressionMenu {
         StringBuilder message = new StringBuilder();
         double totalMoney = 0;
         for (SkillReward reward : rewards) {
-            message.append(reward.getMenuMessage(plugin.getUser(info.player()), info.locale(), skill, level));
+            String rewardMsg = reward.getMenuMessage(plugin.getUser(info.player()), info.locale(), skill, level);
+            if (rewardMsg != null) {
+                message.append(rewardMsg);
+            }
             if (reward instanceof MoneyReward) {
                 totalMoney += ((MoneyReward) reward).getAmount(level);
             }

@@ -1,56 +1,36 @@
 package dev.aurelium.auraskills.common.reward.parser;
 
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.builder.CommandRewardBuilder;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.Locale;
-import java.util.Map;
 
 public class CommandRewardParser extends RewardParser {
 
-    public CommandRewardParser(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public CommandRewardParser(AuraSkillsPlugin plugin, Skill skill) {
+        super(plugin, skill);
     }
 
     @Override
-    public SkillReward parse(Map<?, ?> map) {
-        CommandRewardBuilder builder = new CommandRewardBuilder(plugin);
+    public SkillReward parse(ConfigurationNode config) {
+        var builder = new CommandRewardBuilder(plugin)
+                .executor(CommandExecutor.valueOf(config.node("executor").getString("CONSOLE").toUpperCase(Locale.ROOT)))
+                .command(config.node("command").getString())
+                .revertCommand(config.node("revert_command").getString())
+                .revertExecutor(CommandExecutor.valueOf(config.node("revert_executor").getString("CONSOLE").toUpperCase(Locale.ROOT)))
+                .menuMessage(config.node("menu_message").getString())
+                .chatMessage(config.node("chat_message").getString());
 
-        CommandExecutor executor;
-        if (map.containsKey("executor")) {
-            executor = CommandExecutor.valueOf(getString(map, "executor").toUpperCase(Locale.ROOT));
-        } else {
-            executor = CommandExecutor.CONSOLE;
-        }
-        builder.executor(executor);
-
-        String command = getString(map, "command");
-        builder.command(command);
-
-        if (map.containsKey("revert_command")) {
-            builder.revertCommand(getString(map, "revert_command"));
-        }
-
-        if (map.containsKey("revert_executor")) {
-            builder.revertExecutor(CommandExecutor.valueOf(getString(map, "revert_executor").toUpperCase(Locale.ROOT)));
-        }
-
-        if (map.containsKey("menu_message")) {
-            builder.menuMessage(getString(map, "menu_message"));
-        }
-
-        if (map.containsKey("chat_message")) {
-            builder.chatMessage(getString(map, "chat_message"));
-        }
-
-        if (map.containsKey("message")) {
-            String message = getString(map, "message");
+        String message = config.node("message").getString();
+        if (message != null) {
             builder.chatMessage(message).menuMessage(message);
         }
 
-        return builder.build();
+        return builder.skill(skill).build();
     }
     
 }

@@ -79,8 +79,8 @@ public class ProfileCommand extends BaseCommand {
         }
         UUID uuid = offlinePlayer.getUniqueId();
         if (offlinePlayer.isOnline()) { // Online players
-            User playerData = plugin.getUser(Bukkit.getPlayer(uuid));
-            sendStatsMessage(sender, player, uuid, playerData.getSkillLevelMap(), playerData.getStatModifiers());
+            User user = plugin.getUser(Bukkit.getPlayer(uuid));
+            sendStatsMessage(sender, player, uuid, user.getSkillLevelMap(), user.getStatModifiers());
         } else { // Offline players
             plugin.getScheduler().executeAsync(() -> {
                 try {
@@ -126,7 +126,7 @@ public class ProfileCommand extends BaseCommand {
 
         Map<Stat, Double> baseStats = new HashMap<>();
         for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
-            Map<Stat, Double> skillRewardedStats = plugin.getRewardManager().getRewardTable(skill).applyStats(skillLevels.getOrDefault(skill, 1));
+            Map<Stat, Double> skillRewardedStats = plugin.getRewardManager().getRewardTable(skill).getStatLevels(skillLevels.getOrDefault(skill, plugin.config().getStartLevel()));
             for (Map.Entry<Stat, Double> entry : skillRewardedStats.entrySet()) {
                 double existing = baseStats.getOrDefault(entry.getKey(), 0.0);
                 baseStats.put(entry.getKey(), existing + entry.getValue());

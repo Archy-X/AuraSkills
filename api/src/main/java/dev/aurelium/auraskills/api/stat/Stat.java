@@ -101,4 +101,16 @@ public interface Stat extends Optioned, NamespaceIdentified {
      */
     String name();
 
+    /**
+     * Returns true if this stat has exactly one linked trait and the trait's
+     * modifier is configured as 1. In this case the stat and trait are directly
+     * proportional. Returns false otherwise.
+     *
+     * @return whether the stat is directly proportional to its trait
+     */
+    default boolean isDirectlyProportional() {
+        if (getTraits().size() > 1) return false;
+        return getTraitModifier(getTraits().get(0)) == 1.0;
+    }
+
 }

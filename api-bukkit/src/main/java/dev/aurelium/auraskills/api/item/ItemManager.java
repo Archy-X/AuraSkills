@@ -10,6 +10,8 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -33,6 +35,12 @@ public interface ItemManager {
      * @param lore whether to add lore
      * @return a new ItemStack with the static modifier
      */
+    ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, AuraSkillsModifier.Operation operation, boolean lore);
+
+    /**
+     * @deprecated use {@link #addStatModifier(ItemStack, ModifierType, Stat, double, Operation, boolean)}
+     */
+    @Deprecated
     ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore);
 
     /**
@@ -46,6 +54,12 @@ public interface ItemManager {
      * @param lore whether to add lore
      * @return a new ItemStack with the trait modifier
      */
+    ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, Operation operation, boolean lore);
+
+    /**
+     * @deprecated use {@link #addTraitModifier(ItemStack, ModifierType, Trait, double, Operation, boolean)}
+     */
+    @Deprecated
     ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, boolean lore);
 
     /**

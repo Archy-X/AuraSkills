@@ -1,8 +1,6 @@
 package dev.aurelium.auraskills.common.stat;
 
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
-import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
@@ -66,17 +64,9 @@ public abstract class StatManager {
 
     public void updateStats(User user) {
         if (user == null) return;
+
         for (Stat stat : plugin.getStatRegistry().getValues()) {
-            user.setStatLevel(stat, 0);
-        }
-        for (Skill skill : plugin.getSkillManager().getSkillValues()) {
-            if (!user.hasSkillPermission(skill)) continue;
-            plugin.getRewardManager().getRewardTable(skill).applyStats(user, user.getSkillLevel(skill));
-        }
-        // Reloads modifiers
-        for (String key : user.getStatModifiers().keySet()) {
-            StatModifier modifier = user.getStatModifiers().get(key);
-            user.addStatLevel(modifier.stat(), modifier.value());
+            user.getUserStats().recalculateStat(stat);
         }
         reloadStats(user);
     }
