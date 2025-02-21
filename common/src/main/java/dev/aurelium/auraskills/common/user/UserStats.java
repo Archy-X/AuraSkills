@@ -22,9 +22,6 @@ public class UserStats {
     private final Map<Stat, Double> statLevels = new ConcurrentHashMap<>();
     private final Map<Stat, Double> baseStatLevels = new ConcurrentHashMap<>();
     private final Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
-
-    private final Map<Trait, Double> traitLevels = new ConcurrentHashMap<>();
-    private final Map<Trait, Double> bonusTraitLevels = new ConcurrentHashMap<>();
     private final Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
 
     public UserStats(AuraSkillsPlugin plugin, User user) {
@@ -58,11 +55,18 @@ public class UserStats {
     }
 
     public double getEffectiveTraitLevel(Trait trait) {
-        return traitLevels.getOrDefault(trait, 0.0);
+        double base = plugin.getTraitManager().getBaseLevel(user, trait);
+        return base + getBonusTraitLevel(trait);
     }
 
     public double getBonusTraitLevel(Trait trait) {
-        return bonusTraitLevels.getOrDefault(trait, 0.0);
+        if (!trait.isEnabled()) {
+            return 0.0;
+        }
+
+        double level = getTraitLevelFromStats(trait, 0.0);
+        level = calculateModifiers(level, traitModifiers.values(), trait);
+        return level;
     }
 
     @Nullable
@@ -97,8 +101,6 @@ public class UserStats {
 
         if (modifier instanceof StatModifier statModifier) {
             recalculateStat(statModifier.stat());
-        } else if (modifier instanceof TraitModifier traitModifier) {
-            recalculateTrait(traitModifier.trait());
         }
         // Reloads modifier type
         if (reload) {
@@ -113,8 +115,6 @@ public class UserStats {
 
         if (modifier instanceof StatModifier statModifier) {
             recalculateStat(statModifier.stat());
-        } else if (modifier instanceof TraitModifier traitModifier) {
-            recalculateTrait(traitModifier.trait());
         }
 
         // Reloads modifier type
@@ -135,27 +135,6 @@ public class UserStats {
 
         statLevels.put(stat, level);
         baseStatLevels.put(stat, base);
-
-        for (Trait trait : stat.getTraits()) {
-            recalculateTrait(trait);
-        }
-    }
-
-    public void recalculateTrait(Trait trait) {
-        double level = plugin.getTraitManager().getBaseLevel(user, trait);
-        double base = level;
-
-        if (!trait.isEnabled()) {
-            traitLevels.put(trait, level);
-            bonusTraitLevels.put(trait, 0.0);
-            return;
-        }
-
-        level = getTraitLevelFromStats(trait, level);
-        level = calculateModifiers(level, traitModifiers.values(), trait);
-
-        traitLevels.put(trait, level);
-        bonusTraitLevels.put(trait, level - base);
     }
 
     private <T> double calculateModifiers(double base, Collection<? extends AuraSkillsModifier<T>> modifiers, T filter) {

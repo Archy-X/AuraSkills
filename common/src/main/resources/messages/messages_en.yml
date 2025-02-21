@@ -591,6 +591,12 @@ menus:
     next_page_click: "Click to go to next page"
     previous_page: "Previous Page"
     previous_page_click: "Click to go to previous page"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Your Skills"
     your_skills: "Your Skills"
@@ -633,6 +639,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
     chance_drops: "{chance}% for +{value} Drops"
+    stats_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -655,8 +662,16 @@ menus:
     unlocked_at: "<1>Unlocked at <2>{skill} {level}"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
   stat_info:
+    stat_details: "{stat_name} Stat Details"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
     stat_reward_desc: "Granted by your {skill} skill level."
+    trait_modifiers_click: "Click to view trait modifiers"
   trait_info:
+    trait_details: "{trait_name} Trait Details"
+    trait_modifiers: "Trait Modifiers"
     linked_stat_desc: "Granted by your {stat} stat level."
     ability_modifier_desc: "Granted by the {ability} ability."
 mana_abilities:
