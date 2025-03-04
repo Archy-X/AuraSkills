@@ -65,7 +65,18 @@ public class UserStats {
         }
 
         double level = getTraitLevelFromStats(trait, 0.0);
-        level = calculateModifiers(level, traitModifiers.values(), trait);
+
+        List<AuraSkillsModifier<?>> modifiers = new ArrayList<>(traitModifiers.values());
+        for (var statMod : statModifiers.values()) {
+            // If the trait is linked to a direct stat, add the "multiply" and "add_percent" stat modifiers for that stat
+            if (statMod.stat().hasDirectTrait() && trait.equals(statMod.stat().getTraits().get(0))) {
+                if (statMod.operation() == Operation.MULTIPLY || statMod.operation() == Operation.ADD_PERCENT) {
+                    modifiers.add(statMod);
+                }
+            }
+        }
+
+        level = calculateModifiers(level, modifiers, trait);
         return level;
     }
 
@@ -137,18 +148,38 @@ public class UserStats {
         baseStatLevels.put(stat, base);
     }
 
-    private <T> double calculateModifiers(double base, Collection<? extends AuraSkillsModifier<T>> modifiers, T filter) {
+    private <T> double calculateModifiers(double base, Collection<? extends AuraSkillsModifier<?>> modifiers, T filter) {
         double addModSum = 0.0;
         double multiplyModProduct = 1.0;
         double addPercentSum = 0.0;
 
-        for (AuraSkillsModifier<T> modifier : modifiers) {
-            if (!modifier.type().equals(filter)) continue;
+        // If stat has a direct trait, we apply the "multiply" and "add_percent" modifiers to the trait instead
+        boolean skipPercents = filter instanceof Stat stat && stat.hasDirectTrait();
+
+        for (AuraSkillsModifier<?> modifier : modifiers) {
+            if (!modifier.type().equals(filter)) {
+                // Allow modifiers with type stat for trait filter if stat is direct and its linked trait is the filter
+                if (modifier.type() instanceof Stat stat && stat.hasDirectTrait()) {
+                    if (!filter.equals(stat.getTraits().get(0))) {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+            }
 
             switch (modifier.operation()) {
                 case ADD -> addModSum += modifier.value();
-                case MULTIPLY -> multiplyModProduct *= modifier.value();
-                case ADD_PERCENT -> addPercentSum += modifier.value();
+                case MULTIPLY -> {
+                    if (!skipPercents) {
+                        multiplyModProduct *= modifier.value();
+                    }
+                }
+                case ADD_PERCENT -> {
+                    if (!skipPercents) {
+                        addPercentSum += modifier.value();
+                    }
+                }
             }
         }
 
