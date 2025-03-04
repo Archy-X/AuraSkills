@@ -108,7 +108,7 @@ public interface Stat extends Optioned, NamespaceIdentified {
      *
      * @return whether the stat is directly proportional to its trait
      */
-    default boolean isDirectlyProportional() {
+    default boolean hasDirectTrait() {
         if (getTraits().size() > 1) return false;
         return getTraitModifier(getTraits().get(0)) == 1.0;
     }

@@ -150,7 +150,7 @@ public class StatsMenu {
     }
 
     private String getDisplayLevel(Stat stat, User user) {
-        if (stat.isDirectlyProportional() && plugin.configBoolean(Option.MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY)) {
+        if (stat.hasDirectTrait() && plugin.configBoolean(Option.MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY)) {
             // Displays the trait value directly instead of the stat level if the stat has exactly one trait and its modifier is 1
             Trait trait = stat.getTraits().get(0);
             double value = user.getEffectiveTraitLevel(trait);

@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -33,58 +34,71 @@ public record ModifierInstance(
         int index
 ) {
 
+    public ModifierInstance withIndex(int index) {
+        return new ModifierInstance(this.parent, this.id, this.value, this.operation, this.item, this.displayName, this.description, index);
+    }
+
     public static List<ModifierInstance> getInstances(AuraSkills plugin, User user, NamespaceIdentified parent) {
+        return getInstances(plugin, user, parent, false);
+    }
+
+    public static List<ModifierInstance> getInstances(AuraSkills plugin, User user, NamespaceIdentified parent, boolean excludeLinkedStats) {
+        if (parent instanceof Stat stat) {
+            return getStatInstances(plugin, user, stat);
+        } else if (parent instanceof Trait trait) {
+            return getTraitInstances(plugin, user, excludeLinkedStats, trait);
+        }
+        return new ArrayList<>();
+    }
+
+    public static List<ModifierInstance> sortAndReindex(List<ModifierInstance> instances) {
+        List<ModifierInstance> sortedList = new ArrayList<>(instances);
+
+        // Sort the list:
+        // 1. First by the custom order for Operation: ADD, ADD_PERCENT, MULTIPLY.
+        // 2. Then by descending value within the same operation.
+        sortedList.sort(Comparator
+                .comparingInt((ModifierInstance m) -> {
+                    // Map each Operation to an int representing its priority. Lower numbers come first.
+                    return switch (m.operation()) {
+                        case ADD -> 0;
+                        case ADD_PERCENT -> 1;
+                        case MULTIPLY -> 2;
+                    };
+                })
+                .thenComparing(Comparator.comparingDouble(ModifierInstance::value).reversed())
+        );
+
+        // Reindex the sorted ModifierInstance objects
+        List<ModifierInstance> reindexedList = new ArrayList<>();
+        for (int i = 0; i < sortedList.size(); i++) {
+            // Use withIndex to create a new instance with the new index
+            reindexedList.add(sortedList.get(i).withIndex(i));
+        }
+
+        return reindexedList;
+    }
+
+    private static List<ModifierInstance> getTraitInstances(AuraSkills plugin, User user, boolean excludeLinkedStats, Trait trait) {
         List<ModifierInstance> instances = new ArrayList<>();
         int index = 0;
-        if (parent instanceof Stat stat) {
-            // Add instances for each skill that gives the stat as a reward
-            for (Entry<Skill, Double> entry : user.getUserStats().getLevelRewardedBySkill(stat).entrySet()) {
-                if (entry.getValue() == 0.0) continue;
-                instances.add(new ModifierInstance(
-                        stat,
-                        "stat_reward_" + entry.getKey().getId().toString(),
-                        entry.getValue(),
-                        Operation.ADD,
-                        SkillItem.getBaseItem(entry.getKey(), user.getPlugin()),
-                        entry.getKey().getDisplayName(user.getLocale()),
-                        plugin.getMsg(MenuMessage.STAT_REWARD_DESC, user.getLocale()).replace("{skill}",
-                                entry.getKey().getDisplayName(user.getLocale())),
-                        index
-                ));
-                index++;
-            }
-            for (StatModifier modifier : user.getStatModifiers().values()) {
-                if (modifier.value() == 0.0) continue;
-                if (!modifier.stat().equals(stat)) continue;
-                instances.add(new ModifierInstance(
-                        stat,
-                        "stat_modifier_" + modifier.name(),
-                        modifier.value(),
-                        modifier.operation(),
-                        ModifierInstance.getFallbackItem(),
-                        modifier.name(),
-                        "",
-                        index
-                ));
-                index++;
-            }
-        } else if (parent instanceof Trait trait) {
-            // Base value if it exists
-            double base = plugin.getTraitManager().getBaseLevel(user, trait);
-            if (base >= 0.00001) {
-                instances.add(new ModifierInstance(
-                        trait,
-                        "trait_base_level",
-                        base,
-                        Operation.ADD,
-                        ModifierInstance.getFallbackItem(),
-                        plugin.getMsg(MenuMessage.BASE_LEVEL, user.getLocale()),
-                        plugin.getMsg(MenuMessage.BASE_LEVEL_DESC, user.getLocale()),
-                        index
-                ));
-                index++;
-            }
-            // Linked stats
+        // Base value if it exists
+        double base = plugin.getTraitManager().getBaseLevel(user, trait);
+        if (base >= 0.00001) {
+            instances.add(new ModifierInstance(
+                    trait,
+                    "trait_base_level",
+                    base,
+                    Operation.ADD,
+                    ModifierInstance.getFallbackItem(),
+                    plugin.getMsg(MenuMessage.BASE_LEVEL, user.getLocale()),
+                    plugin.getMsg(MenuMessage.BASE_LEVEL_DESC, user.getLocale()),
+                    index
+            ));
+            index++;
+        }
+        // Linked stats
+        if (!excludeLinkedStats) {
             for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
                 double modifier = stat.getTraitModifier(trait);
                 double level = user.getStatLevel(stat);
@@ -102,25 +116,62 @@ public record ModifierInstance(
                 ));
                 index++;
             }
-            // Modifiers
-            for (TraitModifier modifier : user.getTraitModifiers().values()) {
-                if (!modifier.trait().equals(trait) || modifier.value() == 0.0) continue;
+        }
+        // Modifiers
+        for (TraitModifier modifier : user.getTraitModifiers().values()) {
+            if (!modifier.trait().equals(trait) || modifier.value() == 0.0) continue;
 
-                // Name and description info for known static trait modifiers (e.g. from abilities)
-                TraitModifiers builtIn = TraitModifiers.fromId(modifier.name());
+            // Name and description info for known static trait modifiers (e.g. from abilities)
+            TraitModifiers builtIn = TraitModifiers.fromId(modifier.name());
 
-                instances.add(new ModifierInstance(
-                        trait,
-                        "trait_modifier_" + modifier.name(),
-                        modifier.value(),
-                        modifier.operation(),
-                        ModifierInstance.getFallbackItem(),
-                        builtIn != null ? builtIn.getNameMessage(plugin, user.getLocale()) : modifier.name(),
-                        builtIn != null ? builtIn.getDescriptionMessage(plugin, user.getLocale()) : "",
-                        index
-                ));
-                index++;
-            }
+            instances.add(new ModifierInstance(
+                    trait,
+                    "trait_modifier_" + modifier.name(),
+                    modifier.value(),
+                    modifier.operation(),
+                    ModifierInstance.getFallbackItem(),
+                    builtIn != null ? builtIn.getNameMessage(plugin, user.getLocale()) : modifier.name(),
+                    builtIn != null ? builtIn.getDescriptionMessage(plugin, user.getLocale()) : "",
+                    index
+            ));
+            index++;
+        }
+        return instances;
+    }
+
+    private static List<ModifierInstance> getStatInstances(AuraSkills plugin, User user, Stat stat) {
+        List<ModifierInstance> instances = new ArrayList<>();
+        int index = 0;
+        // Add instances for each skill that gives the stat as a reward
+        for (Entry<Skill, Double> entry : user.getUserStats().getLevelRewardedBySkill(stat).entrySet()) {
+            if (entry.getValue() == 0.0) continue;
+            instances.add(new ModifierInstance(
+                    stat,
+                    "stat_reward_" + entry.getKey().getId().toString(),
+                    entry.getValue(),
+                    Operation.ADD,
+                    SkillItem.getBaseItem(entry.getKey(), user.getPlugin()),
+                    entry.getKey().getDisplayName(user.getLocale()),
+                    plugin.getMsg(MenuMessage.STAT_REWARD_DESC, user.getLocale()).replace("{skill}",
+                            entry.getKey().getDisplayName(user.getLocale())),
+                    index
+            ));
+            index++;
+        }
+        for (StatModifier modifier : user.getStatModifiers().values()) {
+            if (modifier.value() == 0.0) continue;
+            if (!modifier.stat().equals(stat)) continue;
+            instances.add(new ModifierInstance(
+                    stat,
+                    "stat_modifier_" + modifier.name(),
+                    modifier.value(),
+                    modifier.operation(),
+                    ModifierInstance.getFallbackItem(),
+                    modifier.name(),
+                    "",
+                    index
+            ));
+            index++;
         }
         return instances;
     }
