@@ -33,11 +33,38 @@ public class StatInfoMenu {
         this.plugin = plugin;
     }
 
+    private boolean isDirectTrait(ActiveMenu menu) {
+        return menu.property("direct_trait", false);
+    }
+
     public void build(MenuBuilder menu) {
         menu.onOpen(m -> {
             Stat stat = (Stat) m.menu().getProperty("stat");
-            HashSet<ModifierInstance> set = new HashSet<>(ModifierInstance.getInstances(plugin, plugin.getUser(m.player()), stat));
-            m.menu().setProperty("modifiers", set);
+            var statMods = ModifierInstance.getInstances(plugin, plugin.getUser(m.player()), stat);
+            List<ModifierInstance> modList = new ArrayList<>(statMods);
+            if (stat.hasDirectTrait()) {
+                m.menu().setProperty("direct_trait", true);
+                Trait trait = stat.getTraits().get(0);
+                m.menu().setProperty("trait", trait);
+                // Add trait modifiers to modifiers set
+                List<ModifierInstance> traitMods = ModifierInstance.getInstances(plugin, plugin.getUser(m.player()), trait, true);
+                // Reindex trait modifier instances so indices don't collide
+                if (!traitMods.isEmpty()) {
+                    if (!statMods.isEmpty()) {
+                        List<ModifierInstance> indexed = new ArrayList<>();
+                        int index = statMods.get(statMods.size() - 1).index() + 1; // Start with last index of stats + 1
+                        for (ModifierInstance instance : traitMods) {
+                            indexed.add(instance.withIndex(index));
+                            index++;
+                        }
+                        modList.addAll(indexed);
+                    } else {
+                        modList.addAll(traitMods);
+                    }
+                }
+            }
+            List<ModifierInstance> sortedModifiers = ModifierInstance.sortAndReindex(modList);
+            m.menu().setProperty("modifiers", new HashSet<>(sortedModifiers));
         });
 
         menu.replace("color", p -> stat(p).getColor(p.locale()));
@@ -47,10 +74,40 @@ public class StatInfoMenu {
 
         menu.template("stat", Stat.class, template -> {
             template.replace("stat_desc", p -> stat(p).getDescription(p.locale(), false));
-            template.replace("level", p -> NumberUtil.format1(user(p).getStatLevel(stat(p))));
-            template.replace("base_level", p -> NumberUtil.format1(user(p).getUserStats().getStatBaseAddSum(stat(p))));
-            template.replace("add_percent_modifiers", p -> NumberUtil.format1(user(p).getUserStats().getStatAddPercentSum(stat(p))));
-            template.replace("multiply_modifiers", p -> NumberUtil.format2(user(p).getUserStats().getStatMultiplyProduct(stat(p))));
+            template.replace("level", p -> {
+                if (isDirectTrait(p.menu())) {
+                    return NumberUtil.format1(user(p).getEffectiveTraitLevel(p.menu().property("trait")));
+                } else {
+                    return NumberUtil.format1(user(p).getStatLevel(stat(p)));
+                }
+            });
+            template.replace("base_level", p -> {
+                if (isDirectTrait(p.menu())) {
+                    return NumberUtil.format1(user(p).getUserStats().getTraitBaseAddSum(p.menu().property("trait")));
+                } else {
+                    return NumberUtil.format1(user(p).getUserStats().getStatBaseAddSum(stat(p)));
+                }
+            });
+            template.replace("add_percent_modifiers", p -> {
+                if (isDirectTrait(p.menu())) {
+                    Trait trait = p.menu().property("trait");
+                    double traitSum = user(p).getUserStats().getTraitAddPercentSum(trait);
+                    double statSum = user(p).getUserStats().getStatAddPercentSum(stat(p));
+                    return NumberUtil.format1(traitSum + statSum);
+                } else {
+                    return NumberUtil.format1(user(p).getUserStats().getStatAddPercentSum(stat(p)));
+                }
+            });
+            template.replace("multiply_modifiers", p -> {
+                if (isDirectTrait(p.menu())) {
+                    Trait trait = p.menu().property("trait");
+                    double traitProd = user(p).getUserStats().getTraitMultiplyProduct(trait);
+                    double statProd = user(p).getUserStats().getStatMultiplyProduct(stat(p));
+                    return NumberUtil.format2(traitProd * statProd);
+                } else {
+                    return NumberUtil.format2(user(p).getUserStats().getStatMultiplyProduct(stat(p)));
+                }
+            });
             template.replace("modifier_count", p -> String.valueOf(((Set<?>) p.menu().property("modifiers")).size()));
 
             template.definedContexts(m -> Set.of(((Stat) m.menu().property("stat"))));
@@ -72,7 +129,15 @@ public class StatInfoMenu {
 
             template.slotPos(t -> getTraitSlot(t.menu(), t.value()));
 
-            template.modify(StatInfoMenu::hideAttributes);
+            template.modify(t -> {
+                Stat stat = t.menu().property("stat");
+                if (stat.hasDirectTrait()) { // Hide the trait item if stat has direct trait
+                    return null;
+                } else {
+                    return StatInfoMenu.hideAttributes(t);
+                }
+            });
+
         });
 
         menu.template("stat_modifier", ModifierInstance.class, template -> {
@@ -84,21 +149,18 @@ public class StatInfoMenu {
                 var instance = t.value();
                 SlotPos start;
                 SlotPos end;
-                if (instance.parent() instanceof Stat) {
-                    Object startObj = t.menu().getItemOption("stat_modifier", "start");
-                    if (startObj != null) {
-                        start = GlobalItems.parseSlot(String.valueOf(startObj));
-                    } else {
-                        start = SlotPos.of(2, 1);
-                    }
-                    Object endObj = t.menu().getItemOption("stat_modifier", "end");
-                    if (endObj != null) {
-                        end = GlobalItems.parseSlot(String.valueOf(endObj));
-                    } else {
-                        end = SlotPos.of(4, 1);
-                    }
+
+                Object startObj = t.menu().getItemOption("stat_modifier", "start");
+                if (startObj != null) {
+                    start = GlobalItems.parseSlot(String.valueOf(startObj));
                 } else {
-                    return null;
+                    start = SlotPos.of(2, 1);
+                }
+                Object endObj = t.menu().getItemOption("stat_modifier", "end");
+                if (endObj != null) {
+                    end = GlobalItems.parseSlot(String.valueOf(endObj));
+                } else {
+                    end = SlotPos.of(4, 1);
                 }
 
                 return getRectangleIndex(start, end, instance.index());
