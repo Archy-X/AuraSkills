@@ -6,6 +6,7 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstance;
+import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstances;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.DataUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -28,9 +29,11 @@ import java.util.*;
 public class StatInfoMenu {
 
     private final AuraSkills plugin;
+    private final ModifierInstances instances;
 
     public StatInfoMenu(AuraSkills plugin) {
         this.plugin = plugin;
+        this.instances = new ModifierInstances(plugin);
     }
 
     private boolean isDirectTrait(ActiveMenu menu) {
@@ -40,31 +43,16 @@ public class StatInfoMenu {
     public void build(MenuBuilder menu) {
         menu.onOpen(m -> {
             Stat stat = (Stat) m.menu().getProperty("stat");
-            var statMods = ModifierInstance.getInstances(plugin, plugin.getUser(m.player()), stat);
-            List<ModifierInstance> modList = new ArrayList<>(statMods);
+            Map<String, ModifierInstance> modifiers = instances.getInstances(plugin.getUser(m.player()), stat);
             if (stat.hasDirectTrait()) {
                 m.menu().setProperty("direct_trait", true);
                 Trait trait = stat.getTraits().get(0);
                 m.menu().setProperty("trait", trait);
                 // Add trait modifiers to modifiers set
-                List<ModifierInstance> traitMods = ModifierInstance.getInstances(plugin, plugin.getUser(m.player()), trait, true);
-                // Reindex trait modifier instances so indices don't collide
-                if (!traitMods.isEmpty()) {
-                    if (!statMods.isEmpty()) {
-                        List<ModifierInstance> indexed = new ArrayList<>();
-                        int index = statMods.get(statMods.size() - 1).index() + 1; // Start with last index of stats + 1
-                        for (ModifierInstance instance : traitMods) {
-                            indexed.add(instance.withIndex(index));
-                            index++;
-                        }
-                        modList.addAll(indexed);
-                    } else {
-                        modList.addAll(traitMods);
-                    }
-                }
+                modifiers.putAll(instances.getInstances(plugin.getUser(m.player()), trait, true));
             }
-            List<ModifierInstance> sortedModifiers = ModifierInstance.sortAndReindex(modList);
-            m.menu().setProperty("modifiers", new HashSet<>(sortedModifiers));
+            Map<String, ModifierInstance> sortedModifiers = instances.sortAndReindex(modifiers);
+            m.menu().setProperty("modifiers", sortedModifiers);
         });
 
         menu.replace("color", p -> stat(p).getColor(p.locale()));
@@ -108,7 +96,7 @@ public class StatInfoMenu {
                     return NumberUtil.format2(user(p).getUserStats().getStatMultiplyProduct(stat(p)));
                 }
             });
-            template.replace("modifier_count", p -> String.valueOf(((Set<?>) p.menu().property("modifiers")).size()));
+            template.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
 
             template.definedContexts(m -> Set.of(((Stat) m.menu().property("stat"))));
             template.modify(StatInfoMenu::hideAttributes);
@@ -140,13 +128,16 @@ public class StatInfoMenu {
 
         });
 
-        menu.template("stat_modifier", ModifierInstance.class, template -> {
-            ModifierInstance.setPlaceholders(template);
+        menu.template("stat_modifier", String.class, template -> {
+            instances.setPlaceholders(template);
 
-            template.definedContexts(m -> m.menu().property("modifiers"));
+            template.definedContexts(m -> {
+                Map<String, ModifierInstance> map = m.menu().property("modifiers");
+                return new HashSet<>(map.keySet());
+            });
 
             template.slotPos(t -> {
-                var instance = t.value();
+                var instance = instances.instance(t.menu(), t.value());
                 SlotPos start;
                 SlotPos end;
 
@@ -166,10 +157,7 @@ public class StatInfoMenu {
                 return getRectangleIndex(start, end, instance.index());
             });
 
-            template.modify(t -> {
-                ItemStack item = t.value().item();
-                return Objects.requireNonNullElseGet(item, ModifierInstance::getFallbackItem);
-            });
+            template.modify(instances::modifyItem);
         });
     }
 

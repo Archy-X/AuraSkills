@@ -116,13 +116,18 @@ templates:
       start: 3,1
       end: 3,7
     material: gray_dye
+    contexts:
+      base_level_hp:
+        material: orange_dye
+      base_level_movement_speed:
+        material: white_dye
     display_name: '<white>{display_name}'
     lore:
     - text: '{description}'
       wrap: true
       style: '<gray>'
     - ' '
-    - '{color}{value_format} {stat_name}'
+    - '<gray>Value: {color}{value_format} {stat_name}'
 formats:
   value_add: '+{value}'
   value_multiply: '{value}x'

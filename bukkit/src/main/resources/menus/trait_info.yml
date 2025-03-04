@@ -72,13 +72,36 @@ templates:
       start: 3,1
       end: 3,7
     material: gray_dye
+    contexts:
+      linked_stat_strength:
+        material: red_stained_glass
+      linked_stat_regeneration:
+        material: yellow_stained_glass
+      base_level_mana_regen:
+        material: potion
+        potion_data:
+          type: water
+      linked_stat_luck:
+        material: green_stained_glass
+      trait_modifier_farming_luck_ability:
+        material: wheat
+      trait_modifier_foraging_luck_ability:
+        material: oak_log
+      trait_modifier_mining_luck_ability:
+        material: stone
+      trait_modifier_fishing_luck_ability:
+        material: cod
+      trait_modifier_excavation_luck_ability:
+        material: sand
+      linked_stat_toughness:
+        material: purple_stained_glass
     display_name: '<white>{display_name}'
     lore:
     - text: '{description}'
       wrap: true
       style: '<gray>'
     - ' '
-    - '{color}{value_format} {trait_name}'
+    - '<gray>Value: {color}{value_format} {trait_name}'
 formats:
   value_add: '+{value}'
   value_multiply: '{value}x'
