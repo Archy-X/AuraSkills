@@ -170,6 +170,6 @@ fun extractChangelog(version: String): String {
     val result = headingPattern.find(fullChangelog)
 
     return result?.groupValues?.get(1)?.trim()
-        ?: throw IllegalArgumentException("Failed to extract changelog section for version $version")
+        ?: ""
 }
 

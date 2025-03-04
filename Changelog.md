@@ -2,6 +2,23 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.2.8
+
+### Changes
+- Update French, Russian, and Brazilian Portuguese messages
+
+### Bug Fixes
+- Fix Jumper and Runner abilities applying to the wrong skill
+- Fix error when parsing some damage source cause values
+- Fix idle action bar message not updating on reload
+- Fix skull profile missing error when opening leaderboard menu
+- Update stats on join on the main thread to fix errors
+
+### API Changes
+- Add api methods to load and save offline users
+  - Use UserManager#loadUser to load a user into memory
+  - Use SkillsUser#save to save the user to storage asynchronously
+
 ## 2.2.7
 
 ### New Features
