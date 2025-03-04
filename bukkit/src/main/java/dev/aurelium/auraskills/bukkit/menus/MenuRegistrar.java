@@ -2,15 +2,12 @@ package dev.aurelium.auraskills.bukkit.menus;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.api.implementation.ApiMenuManager;
-import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstance;
 import dev.aurelium.auraskills.bukkit.menus.contexts.*;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.common.util.text.Replacer;
 import dev.aurelium.slate.Slate;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.context.ContextManager;
-import dev.aurelium.slate.context.ContextProvider;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -36,17 +33,6 @@ public class MenuRegistrar {
         cm.registerContext("Ability", new AbilityContext(plugin));
         cm.registerContext("ManaAbility", new ManaAbilityContext(plugin));
         cm.registerContext("Trait", new TraitContext(plugin));
-        cm.registerContext("ModifierInstance", new ContextProvider<ModifierInstance>() {
-            @Override
-            public Class<ModifierInstance> getType() {
-                return ModifierInstance.class;
-            }
-
-            @Override
-            public @Nullable ModifierInstance parse(String menuName, String input) {
-                return null; // Cannot make a modifier instance literal
-            }
-        });
 
         // Build menus
         buildMenus();

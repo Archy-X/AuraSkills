@@ -6,29 +6,31 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.shared.GlobalItems;
 import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstance;
+import dev.aurelium.auraskills.bukkit.menus.shared.ModifierInstances;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.builder.TemplateBuilder;
 import dev.aurelium.slate.info.PlaceholderInfo;
 import dev.aurelium.slate.inv.content.SlotPos;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Set;
 
 public class TraitInfoMenu {
 
     private final AuraSkills plugin;
+    private final ModifierInstances instances;
 
     public TraitInfoMenu(AuraSkills plugin) {
         this.plugin = plugin;
+        this.instances = new ModifierInstances(plugin);
     }
 
     public void build(MenuBuilder menu) {
         menu.onOpen(m -> {
-            var modifiers = new HashSet<>(ModifierInstance.getInstances(plugin, plugin.getUser(m.player()),
-                    m.menu().property("trait")));
-            m.menu().setProperty("modifiers", modifiers);
+            var modifiers = instances.getInstances(plugin.getUser(m.player()), m.menu().property("trait"));
+            Map<String, ModifierInstance> sortedModifiers = instances.sortAndReindex(modifiers);
+            m.menu().setProperty("modifiers", sortedModifiers);
         });
 
         menu.replace("color", p -> stat(p).getColor(p.locale()));
@@ -40,19 +42,22 @@ public class TraitInfoMenu {
         menu.template("trait", Trait.class, template -> {
             setTraitPlaceholders(template, plugin);
 
-            template.replace("modifier_count", p -> String.valueOf(((Set<?>) p.menu().property("modifiers")).size()));
+            template.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
 
             template.definedContexts(m -> Set.of((Trait) m.menu().property("trait")));
             template.modify(StatInfoMenu::hideAttributes);
         });
 
-        menu.template("trait_modifier", ModifierInstance.class, template -> {
-            ModifierInstance.setPlaceholders(template);
+        menu.template("trait_modifier", String.class, template -> {
+            instances.setPlaceholders(template);
 
-            template.definedContexts(m -> new HashSet<>(m.menu().property("modifiers")));
+            template.definedContexts(m -> {
+                Map<String, ModifierInstance> map = m.menu().property("modifiers");
+                return new HashSet<>(map.keySet());
+            });
 
             template.slotPos(t -> {
-                var instance = t.value();
+                var instance = instances.instance(t.menu(), t.value());
                 SlotPos start;
                 SlotPos end;
                 if (instance.parent() instanceof Trait) {
@@ -75,10 +80,7 @@ public class TraitInfoMenu {
                 return StatInfoMenu.getRectangleIndex(start, end, instance.index());
             });
 
-            template.modify(t -> {
-                ItemStack item = t.value().item();
-                return Objects.requireNonNullElseGet(item, ModifierInstance::getFallbackItem);
-            });
+            template.modify(instances::modifyItem);
         });
     }
 
