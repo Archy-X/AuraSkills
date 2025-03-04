@@ -267,7 +267,7 @@ public class SkillItem {
         ItemStack item = null;
 
         if (!(pluginAbs instanceof AuraSkills plugin)) {
-            return ModifierInstance.getFallbackItem();
+            return ModifierInstances.getFallbackItem();
         }
 
         LoadedMenu loadedMenu = plugin.getSlate().getLoadedMenu("skills");
@@ -283,7 +283,7 @@ public class SkillItem {
         }
 
         if (item == null) {
-            item = ModifierInstance.getFallbackItem();
+            item = ModifierInstances.getFallbackItem();
         }
         return item;
     }

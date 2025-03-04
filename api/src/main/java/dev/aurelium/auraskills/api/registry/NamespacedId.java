@@ -36,6 +36,20 @@ public class NamespacedId {
     }
 
     /**
+     * Gets the string representation of the ID in the namespace/key format, or just the key if the namespace
+     * is the default auraskills namespace.
+     *
+     * @return the simple name
+     */
+    public String getSimpleName() {
+        if (namespace.equals(AURASKILLS)) {
+            return key;
+        } else {
+            return toString();
+        }
+    }
+
+    /**
      * Gets the original key portion of the NamespacedId, which is the key in the case it was created with.
      *
      * @return the original key
