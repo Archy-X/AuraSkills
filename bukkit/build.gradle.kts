@@ -28,7 +28,7 @@ repositories {
     maven("https://repo.maven.apache.org/maven2/")
     maven("https://mvn.lumine.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
-    maven("https://repo.oraxen.com/releases")
+    maven("https://repo.oraxen.com/releases/")
 }
 
 dependencies {
