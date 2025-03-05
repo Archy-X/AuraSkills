@@ -328,7 +328,12 @@ acf:
     location_please_specify_xyz: "<red>ข้อผิดพลาด: กรุณาระบุพิกัด x, y, and z. ตัวอย่าง: <yellow>world:x,y,z."
     location_console_not_relative: "<red>ข้อผิดพลาด: คอนโซลไม่สามารถใช้พิกัดสัมพัทธ์สำหรับตำแหน่งได้"
 commands:
-  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  prefix: ""
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: ""
+      entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
       add:
@@ -341,6 +346,9 @@ commands:
         header: "<white>Armor modifiers found:"
       removeall:
         removed: "<gray>All armor modifiers have been removed from your item"
+    trait:
+      add:
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -390,7 +398,7 @@ commands:
     modifier:
       add:
         added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
-        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk item modifier remove"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
       remove:
         does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier was removed from your item"
@@ -398,6 +406,9 @@ commands:
         header: "<white>Item modifiers found:"
       removeall:
         removed: "<gray>All item modifiers have been removed from your item"
+    trait:
+      add:
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
@@ -433,6 +444,19 @@ commands:
     unregister:
       unregistered: "<white>Unregistered item with key {key}"
       not_registered: "<yellow>There is no item registered with key {key}"
+    ignore:
+      add: "<gray>Your item will now be ignored by mana ability interactions"
+      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
   lang:
     set: "<gray>Language set to <aqua>{lang}"
     not_found: "<yellow>Language not found!"
@@ -461,6 +485,14 @@ commands:
       removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
       removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
       players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
   multiplier:
     global: Global
     list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
@@ -523,6 +555,7 @@ commands:
   unknown_skill: "<yellow>Unknown skill!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
 leveler:
   level_up: "{skill} ยกระดับ"
@@ -568,6 +601,7 @@ menus:
     stats: "สถิติ"
     stats_desc: "รับบัฟสถิติโดยการอัพเลเวลทักษะ"
     stats_click: "คลิกเพื่อเรียนรู้เพิ่มเติมหรือดูสถิติของคุณ"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} ระดับ - หน้า {page}"
     your_ranking: "การจัดอันดับทักษะของคุณ"
@@ -585,6 +619,13 @@ menus:
     abilities_desc: "<2>ความสามารถ</2> <1>เป็นสิทธิพิเศษที่คุณปลดล็อคและอัปเกรดเมื่อคุณเลเวลอัพทักษะ </1>"
     mana_abilities_desc: "<3>ความสามารถของมานา</3> <1>เป็นความสามารถพิเศษที่ต้องเปิดใช้งานและใช้มานา</1>"
     abilities_click: "คลิกเพื่อดู {skill} ความสามารถ"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: สถิติของคุณ
     skills: "ทักษะ"
@@ -849,4 +890,4 @@ units:
   mana: มานา
   hp: HP
   xp: XP
-file_version: 32
+file_version: 35
