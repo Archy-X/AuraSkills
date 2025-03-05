@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageBuilder;
@@ -27,6 +28,7 @@ public class BackupCommand extends BaseCommand {
 
     @Subcommand("save")
     @CommandPermission("auraskills.command.backup.save")
+    @Description("%desc_backup_save")
     public void onBackupSave(CommandIssuer issuer) {
         BackupProvider backupProvider = plugin.getBackupProvider();
         if (backupProvider != null) {
@@ -50,6 +52,7 @@ public class BackupCommand extends BaseCommand {
 
     @Subcommand("load")
     @CommandPermission("auraskills.command.backup.load")
+    @Description("%desc_backup_load")
     public void onBackupLoad(CommandIssuer issuer, String fileName) {
         StorageProvider storageProvider = plugin.getStorageProvider();
         Locale locale = plugin.getLocale(issuer);
