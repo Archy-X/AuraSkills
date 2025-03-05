@@ -65,10 +65,16 @@ AuraSkills has an extensive developer API.
 
 Read the full API documentation on the [wiki](https://wiki.aurelium.dev/auraskills/api), or view the [Javadocs](https://docs.aurelium.dev/auraskills-api-bukkit/).
 
-Release versions are published to the Maven central repository.
+Release versions are published to the Maven central repository. Snapshot versions require adding the Sonatype OSS repository.
 
 ### Maven
 
+```xml
+<repository>
+    <id>sonatype-oss-snapshots1</id>
+    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+</repository>
+```
 ```xml
 <dependency>
     <groupId>dev.aurelium</groupId>
@@ -83,6 +89,7 @@ Release versions are published to the Maven central repository.
 ```gradle
 repositories {
     mavenCentral()
+    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
 }
 
 dependencies {
@@ -93,6 +100,7 @@ dependencies {
 ```Gradle Kotlin DSL
 repositories { 
     mavenCentral()
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies { 
