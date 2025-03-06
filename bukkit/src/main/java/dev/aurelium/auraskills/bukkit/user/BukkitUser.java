@@ -6,7 +6,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.antiafk.CheckData;
 import dev.aurelium.auraskills.bukkit.antiafk.CheckType;
 import dev.aurelium.auraskills.bukkit.hooks.BukkitLuckPermsHook;
-import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
+import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
@@ -213,6 +213,6 @@ public class BukkitUser extends User {
     public void cleanUp() {
         super.cleanUp();
         // Remove fleeting
-        removeTraitModifier(AgilityAbilities.FLEETING_ID);
+        removeTraitModifier(TraitModifiers.FLEETING.getId());
     }
 }

@@ -3,7 +3,9 @@ package dev.aurelium.auraskills.bukkit.requirement;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.requirement.blocks.*;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import org.bukkit.Material;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class RequirementManager implements Listener {
 
     private Set<GlobalRequirement> globalRequirements;
+    private List<BlockRequirement> blockRequirements;
     private final Map<UUID, Integer> errorMessageTimer;
     private final AuraSkills plugin;
 
@@ -27,6 +30,7 @@ public class RequirementManager implements Listener {
         errorMessageTimer = new HashMap<>();
         this.plugin = plugin;
         load();
+        loadBlocks();
         tickTimer();
     }
 
@@ -74,8 +78,67 @@ public class RequirementManager implements Listener {
         }
     }
 
+    public void loadBlocks() {
+        ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
+        try {
+            ConfigurationNode config = loader.loadUserFile("config.yml");
+
+            this.blockRequirements = new ArrayList<>();
+            List<? extends ConfigurationNode> blockNodes = config.node("requirement.blocks", "list").childrenList();
+            for (ConfigurationNode blockNode : blockNodes) {
+                Material material = Material.valueOf(blockNode.node("material").getString().toUpperCase(Locale.ROOT));
+                boolean allowPlace = blockNode.node("allow_place").getBoolean();
+                boolean allowBreak = blockNode.node("allow_break").getBoolean();
+                boolean allowHarvest = blockNode.node("allow_harvest").getBoolean();
+                List<? extends ConfigurationNode> requirementNodes = blockNode.node("requirements").childrenList();
+                List<RequirementNode> nodes = new ArrayList<>();
+
+                for (ConfigurationNode requirementNode : requirementNodes) {
+                    String type = requirementNode.node("type").getString();
+                    String message = requirementNode.node("message").getString("");
+
+                    switch (type) {
+                        case "skill_level" -> {
+                            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementNode.node("skill").getString().toLowerCase(Locale.ROOT)));
+                            int level = requirementNode.node("level").getInt();
+                            nodes.add(new SkillNode(plugin, skill, level, message));
+                        }
+                        case "permission" -> {
+                            String permission = requirementNode.node("permission").getString();
+                            nodes.add(new PermissionNode(plugin, permission, message));
+                        }
+                        case "excluded_world" -> {
+                            String[] worlds = (String[]) requirementNode.node("world").getList(String.class).toArray();
+                            nodes.add(new ExcludedWorldNode(plugin, worlds, message));
+                        }
+                        case "stat" -> {
+                            Stat stat = plugin.getStatManager().getEnabledStats().stream().filter(s -> s.getId().equals(NamespacedId.fromDefault(requirementNode.node("stat").getString().toLowerCase(Locale.ROOT)))).findFirst().orElse(null);
+                            int value = requirementNode.node("value").getInt();
+                            nodes.add(new StatNode(plugin, stat, value, message));
+                        }
+                        default ->
+                            plugin.logger().warn("Unknown requirement type: " + type);
+                    }
+                }
+
+                BlockRequirement blockRequirement = new BlockRequirement(material, allowPlace, allowBreak, allowHarvest, nodes);
+                blockRequirements.add(blockRequirement);
+            }
+            if (!blockRequirements.isEmpty()) {
+                plugin.logger().info("Loaded " + blockRequirements.size() + " global requirement" + (blockRequirements.size() != 1 ? "s" : ""));
+            }
+        } catch (IOException e) {
+            plugin.logger().warn("Error loading block requirements: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public Set<GlobalRequirement> getGlobalRequirements() {
         return globalRequirements;
+    }
+
+    public List<BlockRequirement> getBlocks() {
+        return blockRequirements;
     }
 
     public Set<GlobalRequirement> getGlobalRequirementsType(ModifierType type) {

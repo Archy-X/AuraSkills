@@ -32,6 +32,7 @@ import static dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider.*;
 public class SqlUserLoader {
 
     private final AuraSkillsPlugin plugin;
+    private final SqlStorageProvider provider;
     private static final String LOAD_QUERY = """
         SELECT u.*,
             (
@@ -59,8 +60,9 @@ public class SqlUserLoader {
             u.player_uuid = ?;
         """;
 
-    public SqlUserLoader(AuraSkillsPlugin plugin) {
+    public SqlUserLoader(AuraSkillsPlugin plugin, SqlStorageProvider provider) {
         this.plugin = plugin;
+        this.provider = provider;
     }
 
     public void loadUser(UUID uuid, User user, Connection connection) {
@@ -116,6 +118,7 @@ public class SqlUserLoader {
                 int dataId = keyValueObj.get("data_id").getAsInt();
                 String categoryId = getString(keyValueObj, "category_id");
                 String keyName = getString(keyValueObj, "key_name");
+                if (keyName == null) continue;
                 String value = getString(keyValueObj, "value");
 
                 switch (dataId) {
@@ -143,24 +146,26 @@ public class SqlUserLoader {
 
     private void applyStatModifier(User user, String categoryId, String keyName, String valueStr) {
         try {
+            NameOperationPair pair = provider.parseNameAndOperation(keyName);
             double valueDouble = Double.parseDouble(valueStr);
 
             Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromString(categoryId));
             if (stat == null) return;
 
-            StatModifier modifier = new StatModifier(keyName, stat, valueDouble);
+            StatModifier modifier = new StatModifier(pair.name(), stat, valueDouble, pair.operation());
             user.addStatModifier(modifier, false);
         } catch (NumberFormatException ignored) {}
     }
 
     private void applyTraitModifier(User user, String categoryId, String keyName, String valueStr) {
         try {
+            NameOperationPair pair = provider.parseNameAndOperation(keyName);
             double valueDouble = Double.parseDouble(valueStr);
 
             Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromString(categoryId));
             if (trait == null) return;
 
-            TraitModifier modifier = new TraitModifier(keyName, trait, valueDouble);
+            TraitModifier modifier = new TraitModifier(pair.name(), trait, valueDouble, pair.operation());
             user.addTraitModifier(modifier, false);
         } catch (NumberFormatException ignored) {}
     }

@@ -30,6 +30,12 @@ public enum MenuMessage implements MessageKey {
     NEXT_PAGE_CLICK(0),
     PREVIOUS_PAGE(0),
     PREVIOUS_PAGE_CLICK(0),
+    TRAIT(0),
+    TRAIT_GAIN(0),
+    TRAIT_LEVEL(0),
+    BASE(0),
+    MODIFIERS_ADDITIVE(0),
+    MODIFIERS_MULTIPLICATIVE(0),
     // Skills Menu
     SKILLS_TITLE(1),
     YOUR_SKILLS(1),
@@ -40,6 +46,7 @@ public enum MenuMessage implements MessageKey {
     STATS(1),
     STATS_DESC(1),
     STATS_CLICK(1),
+    ACTIVE_JOB(1),
     // Level Progression Menu
     LEVEL_PROGRESSION_TITLE(2),
     YOUR_RANKING(2),
@@ -57,6 +64,13 @@ public enum MenuMessage implements MessageKey {
     ABILITIES_DESC(2),
     MANA_ABILITIES_DESC(2),
     ABILITIES_CLICK(2),
+    JOB(2),
+    JOB_DESC(2),
+    JOB_SELECT(2),
+    JOB_ACTIVE(2),
+    JOB_QUIT(2),
+    JOB_LIMIT(2),
+    JOB_COOLDOWN(2),
     // Stats Menu
     STATS_TITLE(3),
     SKILLS(3),
@@ -64,6 +78,7 @@ public enum MenuMessage implements MessageKey {
     ADDED_DROPS(3),
     CHANCE_DROP(3),
     CHANCE_DROPS(3),
+    STAT_INFO_CLICK(3),
     // Unclaimed items menu
     UNCLAIMED_ITEMS_TITLE(4),
     INVENTORY_FULL(4),
@@ -86,29 +101,40 @@ public enum MenuMessage implements MessageKey {
     ABILITIES_TITLE(7),
     DESCRIPTION(7),
     UNLOCKED_AT(7),
-    NEXT_UPGRADE_AT(7);
+    NEXT_UPGRADE_AT(7),
+    // Stat info menu
+    STAT_DETAILS(8),
+    STAT(8),
+    STAT_LEVEL(8),
+    TRAITS_LEVELED(8),
+    STAT_MODIFIERS(8),
+    STAT_REWARD_DESC(8),
+    TRAIT_MODIFIERS_CLICK(8),
+    // Trait info menu
+    TRAIT_DETAILS(9),
+    TRAIT_MODIFIERS(9),
+    BASE_LEVEL(9),
+    BASE_LEVEL_DESC(9),
+    LINKED_STAT_DESC(9),
+    ABILITY_MODIFIER_DESC(9),
+    ;
 
-    private String path;
+    private final String path;
     
     MenuMessage(int section) {
         String key = this.name().toLowerCase(Locale.ROOT);
-        if (section == 0) {
-            this.path = "menus.common." + key;
-        } else if (section == 1) {
-            this.path = "menus.skills." + key;
-        } else if (section == 2) {
-            this.path = "menus.level_progression." + key;
-        } else if (section == 3) {
-            this.path = "menus.stats." + key;
-        } else if (section == 4) {
-            this.path = "menus.unclaimed_items." + key;
-        } else if (section == 5) {
-            this.path = "menus.leaderboard." + key;
-        } else if (section == 6) {
-            this.path = "menus.sources." + key;
-        } else if (section == 7) {
-            this.path = "menus.abilities." + key;
-        }
+        this.path = "menus." + switch (section) {
+            case 1 -> "skills";
+            case 2 -> "level_progression";
+            case 3 -> "stats";
+            case 4 -> "unclaimed_items";
+            case 5 -> "leaderboard";
+            case 6 -> "sources";
+            case 7 -> "abilities";
+            case 8 -> "stat_info";
+            case 9 -> "trait_info";
+            default -> "common";
+        } + "." + key;
     }
 
     @Override

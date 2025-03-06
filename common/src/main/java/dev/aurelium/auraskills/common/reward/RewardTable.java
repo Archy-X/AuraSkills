@@ -80,19 +80,7 @@ public class RewardTable {
         return ImmutableList.copyOf(rewardList);
     }
 
-    public void applyStats(User user, int level) {
-        Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
-        for (int i = plugin.config().getStartLevel() + 1; i <= level; i++) {
-            ImmutableList<StatReward> statRewardList = statRewardMap.get(i);
-            if (statRewardList != null) {
-                for (StatReward statReward : statRewardList) {
-                    user.addStatLevel(statReward.getStat(), statReward.getValue());
-                }
-            }
-        }
-    }
-
-    public Map<Stat, Double> applyStats(int level) {
+    public Map<Stat, Double> getStatLevels(int level) {
         Map<Stat, Double> statsMap = new HashMap<>();
         Map<Integer, ImmutableList<StatReward>> statRewardMap = searchRewards(StatReward.class);
         for (int i = plugin.config().getStartLevel() + 1; i <= level; i++) {

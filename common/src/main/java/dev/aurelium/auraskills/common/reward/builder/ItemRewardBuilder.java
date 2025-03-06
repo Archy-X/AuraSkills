@@ -13,7 +13,6 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
 
     public ItemRewardBuilder(AuraSkillsPlugin plugin) {
         super(plugin);
-        this.amount = -1;
     }
 
     public ItemRewardBuilder itemKey(NamespacedId itemKey) {
@@ -28,7 +27,7 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
 
     @Override
     public SkillReward build() {
-        Validate.notNull(itemKey, "You must specify an item key");
-        return new ItemReward(plugin, menuMessage, chatMessage, itemKey, amount);
+        Validate.allNotNull("key", itemKey);
+        return new ItemReward(plugin, skill, menuMessage, chatMessage, itemKey, amount);
     }
 }

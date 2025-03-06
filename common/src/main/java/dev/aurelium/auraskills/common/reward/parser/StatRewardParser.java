@@ -1,24 +1,22 @@
 package dev.aurelium.auraskills.common.reward.parser;
 
-import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.reward.builder.StatRewardBuilder;
-
-import java.util.Map;
+import org.spongepowered.configurate.ConfigurationNode;
 
 public class StatRewardParser extends RewardParser {
     
-    public StatRewardParser(AuraSkillsPlugin plugin) {
-        super(plugin);
+    public StatRewardParser(AuraSkillsPlugin plugin, Skill skill) {
+        super(plugin, skill);
     }
 
     @Override
-    public SkillReward parse(Map<?, ?> map) {
-        StatRewardBuilder builder = new StatRewardBuilder(plugin);
-
-        String statName = getString(map, "stat");
+    public SkillReward parse(ConfigurationNode config) {
+        String statName = config.node("stat").getString("");
         Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromDefault(statName));
         if (stat == null) {
             throw new IllegalArgumentException("Unknown stat with name: " + statName);
@@ -27,10 +25,11 @@ public class StatRewardParser extends RewardParser {
         if (!stat.isEnabled()) {
             return null;
         }
-        builder.stat(stat);
 
-        builder.value(getDouble(map, "value"));
-
-        return builder.build();
+        return new StatRewardBuilder(plugin)
+                .stat(stat)
+                .value(config.node("value").getDouble())
+                .skill(skill)
+                .build();
     }
 }
