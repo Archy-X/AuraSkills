@@ -37,6 +37,7 @@ public class AntiAfkCommand extends BaseCommand {
     @CommandPermission("auraskills.command.antiafk.logs")
     @CommandCompletion("@players")
     @SuppressWarnings("deprecation")
+    @Description("%desc_antiafk_logs")
     public void onLogs(CommandSender sender,
                        @Flags("other") String player,
                        @Default("1") @Conditions("limits:min=1") Integer page,

@@ -26,14 +26,14 @@ public class XpCommand extends BaseCommand {
     @Subcommand("add")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.xp.add")
-    @Description("Adds skill XP to a player for a certain skill.")
+    @Description("%desc_xp_add")
     public void onXpAdd(CommandSender sender, @Flags("other") Player player, Skill skill, double amount, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         if (skill.isEnabled()) {
             plugin.getLevelManager().addXp(user, skill, null, amount);
             if (!silent) {
-                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_ADD, locale),
+                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_ADD_ADDED, locale),
                         "{amount}", String.valueOf(amount),
                         "{skill}", skill.getDisplayName(locale),
                         "{player}", player.getName()));
@@ -46,14 +46,14 @@ public class XpCommand extends BaseCommand {
     @Subcommand("set")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.xp.set")
-    @Description("Sets a player's skill XP for a certain skill to an amount.")
+    @Description("%desc_xp_set")
     public void onXpSet(CommandSender sender, @Flags("other") Player player, Skill skill, double amount, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
         if (skill.isEnabled()) {
             plugin.getLevelManager().setXp(user, skill, amount);
             if (!silent) {
-                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_SET, locale),
+                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_SET_SET, locale),
                         "{amount}", String.valueOf(amount),
                         "{skill}", skill.getDisplayName(locale),
                         "{player}", player.getName()));
@@ -66,7 +66,7 @@ public class XpCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.xp.remove")
-    @Description("Removes skill XP from a player in a certain skill.")
+    @Description("%desc_xp_remove")
     public void onXpRemove(CommandSender sender, @Flags("other") Player player, Skill skill, double amount, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -74,14 +74,14 @@ public class XpCommand extends BaseCommand {
             if (user.getSkillXp(skill) - amount >= 0) {
                 plugin.getLevelManager().setXp(user, skill, user.getSkillXp(skill) - amount);
                 if (!silent) {
-                    sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_REMOVE, locale),
+                    sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_REMOVE_REMOVED, locale),
                             "{amount}", String.valueOf(amount),
                             "{skill}", skill.getDisplayName(locale),
                             "{player}", player.getName()));
                 }
             } else {
                 if (!silent) {
-                    sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_REMOVE, locale),
+                    sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.XP_REMOVE_REMOVED, locale),
                             "{amount}", String.valueOf(user.getSkillXp(skill)),
                             "{skill}", skill.getDisplayName(locale),
                             "{player}", player.getName()));
