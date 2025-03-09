@@ -27,6 +27,7 @@ public class JobsCommand extends BaseCommand {
     @Subcommand("add")
     @CommandCompletion("@skills @players")
     @CommandPermission("auraskills.command.jobs")
+    @Description("%desc_jobs_add")
     public void onAddOther(CommandIssuer issuer, Skill job, @Flags("other") @CommandPermission("auraskills.command.jobs.other") @Optional User user) {
         Locale locale = plugin.getLocale(issuer);
         if (user == null) {
@@ -65,6 +66,7 @@ public class JobsCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandCompletion("@skills @players")
     @CommandPermission("auraskills.command.jobs")
+    @Description("%desc_jobs_remove")
     public void onRemove(CommandIssuer issuer, Skill job, @Flags("other") @CommandPermission("auraskills.command.jobs.other") @Optional User user) {
         Locale locale = plugin.getLocale(issuer);
         if (user == null) {
@@ -97,6 +99,7 @@ public class JobsCommand extends BaseCommand {
     @Subcommand("removeall")
     @CommandCompletion("@players")
     @CommandPermission("auraskills.command.jobs")
+    @Description("%desc_jobs_removeall")
     public void onRemoveAll(CommandIssuer issuer, @Flags("other") @CommandPermission("auraskills.command.jobs.other") @Optional User user) {
         Locale locale = plugin.getLocale(issuer);
         if (user == null) {

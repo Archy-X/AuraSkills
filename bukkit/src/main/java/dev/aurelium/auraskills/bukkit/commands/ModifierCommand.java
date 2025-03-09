@@ -33,7 +33,7 @@ public class ModifierCommand extends BaseCommand {
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @stats @nothing @nothing @modifier_operations true|false true|false")
-    @Description("Adds a stat modifier to a player.")
+    @Description("%desc_modifier_add")
     public void onAdd(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -79,7 +79,7 @@ public class ModifierCommand extends BaseCommand {
     @Subcommand("remove")
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @modifiers true")
-    @Description("Removes a specific stat modifier from a player.")
+    @Description("%desc_modifier_remove")
     public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -97,7 +97,7 @@ public class ModifierCommand extends BaseCommand {
     @Subcommand("list")
     @CommandCompletion("@players @stats")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Lists all or a specific stat's modifiers for a player.")
+    @Description("%desc_modifier_list")
     public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {
@@ -135,7 +135,7 @@ public class ModifierCommand extends BaseCommand {
     @Subcommand("removeall")
     @CommandCompletion("@players @stats")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Removes all stat modifiers from a player.")
+    @Description("%desc_modifier_removeall")
     public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Stat stat, @Default("false") boolean silent) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {
