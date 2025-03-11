@@ -95,7 +95,7 @@ public class ItemCommand extends BaseCommand {
 
     @Subcommand("modifier list")
     @CommandPermission("auraskills.command.item.modifier")
-    @Description("%desc_item_modifer_list")
+    @Description("%desc_item_modifier_list")
     public void onItemModifierList(@Flags("itemheld") Player player) {
         Locale locale = plugin.getUser(player).getLocale();
         ItemStack item = player.getInventory().getItemInMainHand();
