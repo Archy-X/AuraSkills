@@ -223,6 +223,9 @@ modifier:
   multiplier:
     enabled: true
   auto_convert_from_legacy: false
+  temporary:
+    enabled: true
+    check_period: 20
 requirement:
   enabled: true
   override_global: false

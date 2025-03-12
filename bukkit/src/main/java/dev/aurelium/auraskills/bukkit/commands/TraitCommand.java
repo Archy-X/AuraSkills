@@ -9,9 +9,11 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.DurationParser;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +49,37 @@ public class TraitCommand extends BaseCommand {
             user.addTraitModifier(newModifier);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));
+            }
+        } else {
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADD_ALREADY_EXISTS, locale), modifier, player, locale));
+            }
+        }
+    }
+
+    @Subcommand("addtemp")
+    @CommandPermission("auraskills.command.modifier")
+    @CommandCompletion("@players @traits @nothing @nothing @nothing @modifier_operations true|false true|false")
+    @Description("%desc_trait_addtemp")
+    public void addTemp(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, Duration duration,
+                        @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
+        User user = plugin.getUser(player);
+        Locale locale = user.getLocale();
+
+        TraitModifier modifier = new TraitModifier(name, trait, value, operation);
+        if (!user.getTraitModifiers().containsKey(name)) {
+            user.getUserStats().addTemporaryTraitModifier(modifier, true, duration.toMillis());
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), modifier, player, locale)
+                        .replace("{duration}", DurationParser.toString(duration)));
+            }
+        } else if (stack) { // Stack modifier by using a numbered name
+            String newModifierName = ModifierCommand.getStackedName(user.getStatModifiers().keySet(), name);
+            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value, operation);
+            user.getUserStats().addTemporaryTraitModifier(newModifier, true, duration.toMillis());
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), newModifier, player, locale)
+                        .replace("{duration}", DurationParser.toString(duration)));
             }
         } else {
             if (!silent) {

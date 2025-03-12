@@ -133,6 +133,8 @@ public enum Option {
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable_off_hand", OptionType.BOOLEAN),
     MODIFIER_MULTIPLIER_ENABLED("modifier.multiplier.enabled", OptionType.BOOLEAN),
     MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto_convert_from_legacy", OptionType.BOOLEAN),
+    MODIFIER_TEMPORARY_ENABLED("modifier.temporary.enabled", OptionType.BOOLEAN),
+    MODIFIER_TEMPORARY_CHECK_PERIOD("modifier.temporary.check_period", OptionType.INT),
     // Requirement options
     REQUIREMENT_ENABLED("requirement.enabled", OptionType.BOOLEAN),
     REQUIREMENT_OVERRIDE_GLOBAL("requirement.override_global", OptionType.BOOLEAN),

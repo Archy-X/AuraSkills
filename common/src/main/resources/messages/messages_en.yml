@@ -532,6 +532,9 @@ commands:
       added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
       desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
       removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
@@ -552,6 +555,9 @@ commands:
     add:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
       desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
     remove:
       desc: Removes a specific trait modifier from a player.
     list:

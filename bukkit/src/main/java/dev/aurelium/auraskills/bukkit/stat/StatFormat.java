@@ -59,6 +59,7 @@ public class StatFormat {
         return provider.applyFormatting(input.replace("{color}", stat != null ? stat.getColor(locale) : "")
                 .replace("{symbol}", "")
                 .replace("{stat}", trait.getDisplayName(locale, false))
+                .replace("{trait}", trait.getDisplayName(locale, false))
                 .replace("{value}", formatValue(modifier))
                 .replace("{name}", modifier.name())
                 .replace("{player}", player.getName()));
