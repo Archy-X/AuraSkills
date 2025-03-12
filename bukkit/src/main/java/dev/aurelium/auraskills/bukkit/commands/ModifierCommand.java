@@ -10,9 +10,11 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.DurationParser;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -58,17 +60,51 @@ public class ModifierCommand extends BaseCommand {
         }
     }
 
+    @Subcommand("addtemp")
+    @CommandPermission("auraskills.command.modifier")
+    @CommandCompletion("@players @stats @nothing @nothing @nothing @modifier_operations true|false true|false")
+    @Description("%desc_modifier_addtemp")
+    public void addTemp(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value, Duration duration,
+                        @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
+        User user = plugin.getUser(player);
+        Locale locale = user.getLocale();
+
+        StatModifier modifier = new StatModifier(name, stat, value, operation);
+        if (!user.getStatModifiers().containsKey(name)) {
+            user.getUserStats().addTemporaryStatModifier(modifier, true, duration.toMillis());
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADDTEMP_ADDED, locale), modifier, player, locale)
+                        .replace("{duration}", DurationParser.toString(duration)));
+            }
+        } else if (stack) { // Stack modifier by using a numbered name
+            String newModifierName = getStackedName(user.getStatModifiers().keySet(), name);
+            StatModifier newModifier = new StatModifier(newModifierName, stat, value, operation);
+            user.getUserStats().addTemporaryStatModifier(newModifier, true, duration.toMillis());
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADDTEMP_ADDED, locale), newModifier, player, locale)
+                        .replace("{duration}", DurationParser.toString(duration)));
+            }
+        } else {
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ALREADY_EXISTS, locale), modifier, player, locale));
+            }
+        }
+    }
+
     public static String getStackedName(Set<String> modifierNames, String name) {
         int lastStackNumber = 1;
+
         for (String modifierName : modifierNames) { // Find the previous highest stack number
-            if (modifierName.startsWith(name)) {
-                String endName = modifierName.substring(name.length()); // Get the part of the string after name
-                if (endName.startsWith("(") && endName.endsWith(")")) {
-                    String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
-                    int stackNumber = NumberUtil.toInt(numberString);
-                    if (stackNumber > lastStackNumber) {
-                        lastStackNumber = stackNumber;
-                    }
+            if (!modifierName.startsWith(name)) {
+                continue;
+            }
+
+            String endName = modifierName.substring(name.length()); // Get the part of the string after name
+            if (endName.startsWith("(") && endName.endsWith(")")) {
+                String numberString = endName.substring(1, endName.length() - 1); // String without first and last chars
+                int stackNumber = NumberUtil.toInt(numberString);
+                if (stackNumber > lastStackNumber) {
+                    lastStackNumber = stackNumber;
                 }
             }
         }

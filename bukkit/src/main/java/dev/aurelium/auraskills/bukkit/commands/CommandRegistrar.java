@@ -21,9 +21,11 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.DurationParser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.*;
 
 public class CommandRegistrar {
@@ -129,7 +131,7 @@ public class CommandRegistrar {
             try {
                 return UUID.fromString(input);
             } catch (IllegalArgumentException e) {
-                throw new InvalidCommandArgument(input + "is not a valid UUID!");
+                throw new InvalidCommandArgument(input + " is not a valid UUID!");
             }
         });
         contexts.registerContext(JsonArg.class, c -> {
@@ -149,6 +151,14 @@ public class CommandRegistrar {
                 sb.append(c.popFirstArg());
             }
             return new JsonArg(sb.toString());
+        });
+        contexts.registerContext(Duration.class, c -> {
+            String input = c.popFirstArg();
+            try {
+                return DurationParser.parse(input);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidCommandArgument(input + " is not a valid duration");
+            }
         });
     }
 

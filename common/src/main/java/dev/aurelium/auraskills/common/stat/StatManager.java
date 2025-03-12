@@ -2,10 +2,13 @@ package dev.aurelium.auraskills.common.stat;
 
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Interface with methods to manage player stats.
@@ -79,6 +82,23 @@ public abstract class StatManager {
 
     public boolean isLoaded(Stat stat) {
         return statMap.containsKey(stat);
+    }
+
+    public void scheduleTemporaryModifierTask() {
+        if (!plugin.configBoolean(Option.MODIFIER_TEMPORARY_ENABLED)) {
+            return;
+        }
+
+        var task = new TaskRunnable() {
+            @Override
+            public void run() {
+                for (User user : plugin.getUserManager().getOnlineUsers()) {
+                    user.getUserStats().removeExpiredModifiers();
+                }
+            }
+        };
+        plugin.getScheduler().timerSync(task, 0L, plugin.configInt(Option.MODIFIER_TEMPORARY_CHECK_PERIOD) * 50L,
+                TimeUnit.MILLISECONDS);
     }
 
 }

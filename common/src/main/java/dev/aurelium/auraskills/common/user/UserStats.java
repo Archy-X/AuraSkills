@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.modifier.TemporaryModifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -23,10 +24,25 @@ public class UserStats {
     private final Map<Stat, Double> baseStatLevels = new ConcurrentHashMap<>();
     private final Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
     private final Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
+    private final PriorityQueue<TemporaryModifier> tempModExpiryQueue = new PriorityQueue<>();
 
     public UserStats(AuraSkillsPlugin plugin, User user) {
         this.plugin = plugin;
         this.user = user;
+    }
+
+    public void removeExpiredModifiers() {
+        long now = System.currentTimeMillis();
+        while (!tempModExpiryQueue.isEmpty() && tempModExpiryQueue.peek().expirationTime() <= now) {
+            TemporaryModifier expired = tempModExpiryQueue.poll();
+
+            var modifier = expired.modifier();
+            if (modifier instanceof StatModifier) {
+                removeStatModifier(modifier.name(), true);
+            } else if (modifier instanceof TraitModifier) {
+                removeTraitModifier(modifier.name(), true);
+            }
+        }
     }
 
     public double getStatLevel(Stat stat) {
@@ -48,6 +64,12 @@ public class UserStats {
 
     public void addStatModifier(StatModifier modifier, boolean reload) {
         addModifier(modifier, reload, statModifiers);
+    }
+
+    public void addTemporaryStatModifier(StatModifier modifier, boolean reload, long durationMillis) {
+        addModifier(modifier, reload, statModifiers);
+        long expirationTime = System.currentTimeMillis() + durationMillis;
+        tempModExpiryQueue.add(new TemporaryModifier(modifier, expirationTime));
     }
 
     public boolean removeStatModifier(String name, boolean reload) {
@@ -91,6 +113,12 @@ public class UserStats {
 
     public void addTraitModifier(TraitModifier modifier, boolean reload) {
         addModifier(modifier, reload, traitModifiers);
+    }
+
+    public void addTemporaryTraitModifier(TraitModifier modifier, boolean reload, long durationMillis) {
+        addModifier(modifier, reload, traitModifiers);
+        long expirationTime = System.currentTimeMillis() + durationMillis;
+        tempModExpiryQueue.add(new TemporaryModifier(modifier, expirationTime));
     }
 
     public boolean removeTraitModifier(String name, boolean reload) {
