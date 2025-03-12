@@ -57,8 +57,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
-    compileOnly("io.th0rgal:oraxen:1.173.0")
-    compileOnly("com.nexomc:nexo:0.1.0-dev.0")
+    compileOnly("com.nexomc:nexo:1.1.0-dev.21")
 }
 
 val compiler = javaToolchains.compilerFor {
