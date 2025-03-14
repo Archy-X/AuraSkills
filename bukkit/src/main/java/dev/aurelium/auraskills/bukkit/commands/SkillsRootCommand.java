@@ -242,7 +242,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@CommandPermission("auraskills.command.lang")
 	@Description("%desc_lang")
 	public void onLanguage(Player player, String language) {
-		Locale locale = new Locale(language.toLowerCase(Locale.ROOT));
+		Locale locale = Locale.forLanguageTag(language.toLowerCase(Locale.ROOT));
 		if (plugin.getMessageProvider().hasLocale(locale)) {
 			User user = plugin.getUser(player);
 			user.setLocale(locale);

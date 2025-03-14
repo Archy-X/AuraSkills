@@ -15,7 +15,7 @@ public enum Hooks {
     VAULT(VaultHook.class, "Vault"),
     WORLD_GUARD(WorldGuardHook.class, "WorldGuard"),
     MYTHIC_MOBS(MythicMobsHook.class, "MythicMobs"),
-    ORAXEN(OraxenHook.class, "Oraxen");
+    NEXO(NexoHook.class, "Nexo");
 
     private final Class<? extends Hook> hookClass;
     private final String pluginName;

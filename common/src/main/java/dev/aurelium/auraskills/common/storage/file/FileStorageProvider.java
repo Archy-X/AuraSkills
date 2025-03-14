@@ -65,7 +65,7 @@ public class FileStorageProvider extends StorageProvider {
         // Load locale
         String localeString = root.node("locale").getString();
         if (localeString != null) {
-            Locale locale = new Locale(localeString);
+            Locale locale = Locale.forLanguageTag(localeString);
             user.setLocale(locale);
         }
 

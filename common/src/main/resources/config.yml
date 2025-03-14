@@ -35,8 +35,6 @@ hooks:
   LuckPerms:
     enabled: true
     use_permission_cache: true
-  Oraxen:
-    enabled: true
   PlaceholderAPI:
     enabled: true
   ProtocolLib:
@@ -58,6 +56,8 @@ hooks:
     handle_damage_increase: true
     handle_damage_reduction: true
     prevent_regular_xp: false
+  Nexo:
+    enabled: true
 action_bar:
   enabled: true
   idle: true

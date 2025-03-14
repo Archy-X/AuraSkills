@@ -27,6 +27,7 @@ dependencies {
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
     options.compilerArgs.add("-parameters")
+    options.release.set(8)
 }
 
 tasks {
@@ -46,7 +47,9 @@ tasks {
 java {
     withJavadocJar()
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePassword")) {
