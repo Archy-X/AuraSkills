@@ -250,7 +250,7 @@ public abstract class MessageProvider implements PolyglotProvider {
     }
 
     public void loadDefaultLanguageOption() {
-        Locale locale = new Locale(plugin.configString(Option.DEFAULT_LANGUAGE));
+        Locale locale = Locale.forLanguageTag(plugin.configString(Option.DEFAULT_LANGUAGE));
         if (manager.getLoadedLanguages().contains(locale)) {
             defaultLanguage = locale;
         } else {
