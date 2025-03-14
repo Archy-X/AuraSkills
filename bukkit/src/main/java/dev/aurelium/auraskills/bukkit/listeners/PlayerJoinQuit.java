@@ -86,7 +86,7 @@ public class PlayerJoinQuit implements Listener {
         }
 
         try {
-            Locale locale = new Locale(player.getLocale().split("_")[0].toLowerCase(Locale.ROOT));
+            Locale locale = Locale.forLanguageTag(player.getLocale().split("_")[0].toLowerCase(Locale.ROOT));
             if (plugin.getMessageProvider().getLoadedLanguages().contains(locale)) {
                 user.setLocale(locale);
             }

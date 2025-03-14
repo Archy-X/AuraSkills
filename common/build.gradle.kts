@@ -29,6 +29,7 @@ dependencies {
     compileOnly("com.google.code.gson:gson:2.10")
     compileOnly("net.luckperms:api:5.4")
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation(platform("org.junit:junit-bom:5.11.0-M1"))
     testImplementation("org.yaml:snakeyaml:2.2")
 }

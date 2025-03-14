@@ -35,8 +35,6 @@ hooks:
   LuckPerms:
     enabled: true
     use_permission_cache: true
-  Oraxen:
-    enabled: true
   PlaceholderAPI:
     enabled: true
   ProtocolLib:

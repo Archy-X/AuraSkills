@@ -15,7 +15,6 @@ softdepend:
 - Slimefun
 - Towny
 - MythicMobs
-- Oraxen
 - Nexo
 api-version: '1.13'
 prefix: AuraSkills
