@@ -21,6 +21,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class SourcesMenu {
@@ -29,6 +31,7 @@ public class SourcesMenu {
     public static final String DEF_SOURCE_START = "1,1";
     public static final String DEF_SOURCE_END = "4,8";
     private final List<Integer> track;
+    private NumberFormat xpFormat = new DecimalFormat("#.##");
 
     private final AuraSkills plugin;
 
@@ -39,12 +42,18 @@ public class SourcesMenu {
 
     private void initTrack() {
         LoadedMenu menu = plugin.getSlate().getLoadedMenu("sources");
-        if (menu != null) {
-            Object trackObj = menu.options().get("track");
-            if (trackObj != null) {
-                this.track.clear();
-                this.track.addAll(DataUtil.castIntegerList(trackObj));
-            }
+        if (menu == null) {
+            return;
+        }
+
+        Object trackObj = menu.options().get("track");
+        if (trackObj != null) {
+            this.track.clear();
+            this.track.addAll(DataUtil.castIntegerList(trackObj));
+        }
+        Object xpFormatObj = menu.options().get("xp_format");
+        if (xpFormatObj instanceof String s) {
+            this.xpFormat = new DecimalFormat(s);
         }
     }
 
@@ -56,7 +65,8 @@ public class SourcesMenu {
                 "source_end", SourcesMenu.DEF_SOURCE_END,
                 "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE,
                 "use_track", false,
-                "track", new int[0]));
+                "track", new int[0],
+                "xp_format", "#.##"));
 
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
@@ -114,7 +124,7 @@ public class SourcesMenu {
                 XpSource source = p.value();
                 String unitName = source.getUnitName(p.locale());
                 return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
-                        "{xp}", NumberUtil.format2(source.getXp()),
+                        "{xp}", xpFormat.format(source.getXp()),
                         "{unit}", unitName);
             });
 
@@ -174,7 +184,7 @@ public class SourcesMenu {
                 double multiplier = getMultiplier(p.player(), (Skill) p.menu().getProperty("skill"));
                 String unitName = p.value().getUnitName(p.locale());
                 return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
-                        "{xp}", NumberUtil.format2(p.value().getXp() * multiplier),
+                        "{xp}", xpFormat.format(p.value().getXp() * multiplier),
                         "{unit}", unitName);
             });
             component.shouldShow(t -> getMultiplier(t.player(), (Skill) t.menu().getProperty("skill")) > 1.0);
