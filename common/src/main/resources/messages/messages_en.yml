@@ -775,10 +775,10 @@ menus:
     traits_leveled: "Traits Leveled"
     stat_modifiers: "Stat Modifiers"
     stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
     trait_modifiers_click: "Click to view trait modifiers"
-  trait_info:
-    trait_details: "{trait_name} Trait"
-    trait_modifiers: "Trait Modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
     base_level: "Base Level"
     base_level_desc: "Base level from Minecraft and external sources."
     linked_stat_desc: "Granted by your {stat} stat level."

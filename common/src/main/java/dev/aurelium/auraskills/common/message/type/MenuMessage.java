@@ -110,13 +110,10 @@ public enum MenuMessage implements MessageKey {
     STAT_MODIFIERS(8),
     STAT_REWARD_DESC(8),
     TRAIT_MODIFIERS_CLICK(8),
-    // Trait info menu
-    TRAIT_DETAILS(9),
-    TRAIT_MODIFIERS(9),
-    BASE_LEVEL(9),
-    BASE_LEVEL_DESC(9),
-    LINKED_STAT_DESC(9),
-    ABILITY_MODIFIER_DESC(9),
+    BASE_LEVEL(8),
+    BASE_LEVEL_DESC(8),
+    LINKED_STAT_DESC(8),
+    ABILITY_MODIFIER_DESC(8),
     ;
 
     private final String path;

@@ -18,13 +18,17 @@ import dev.aurelium.slate.inv.content.SlotPos;
 import dev.aurelium.slate.menu.ActiveMenu;
 import dev.aurelium.slate.util.VersionUtil;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class StatInfoMenu {
 
@@ -46,11 +50,18 @@ public class StatInfoMenu {
             Map<String, ModifierInstance> modifiers = instances.getInstances(plugin.getUser(m.player()), stat);
             if (stat.hasDirectTrait()) {
                 m.menu().setProperty("direct_trait", true);
-                Trait trait = stat.getTraits().get(0);
+                Trait trait = stat.getTraits().getFirst();
                 m.menu().setProperty("trait", trait);
                 // Add trait modifiers to modifiers set
                 modifiers.putAll(instances.getInstances(plugin.getUser(m.player()), trait, true));
             }
+            if (m.menu().property("selected") instanceof Trait trait) {
+                m.menu().setProperty("trait", trait);
+                // Add trait modifiers instead
+                modifiers.clear();
+                modifiers.putAll(instances.getInstances(plugin.getUser(m.player()), trait));
+            }
+
             Map<String, ModifierInstance> sortedModifiers = instances.sortAndReindex(modifiers);
             m.menu().setProperty("modifiers", sortedModifiers);
         });
@@ -58,7 +69,7 @@ public class StatInfoMenu {
         menu.replace("color", p -> stat(p).getColor(p.locale()));
         menu.replace("stat_name", p -> stat(p).getDisplayName(p.locale(), false));
 
-        menu.item("back", item -> StatInfoMenu.getBackItem(plugin, item, "skills"));
+        menu.item("back", item -> getBackItem(plugin, item));
 
         menu.template("stat", Stat.class, template -> {
             template.replace("stat_desc", p -> stat(p).getDescription(p.locale(), false));
@@ -96,21 +107,44 @@ public class StatInfoMenu {
                     return NumberUtil.format2(user(p).getUserStats().getStatMultiplyProduct(stat(p)));
                 }
             });
-            template.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
 
             template.definedContexts(m -> Set.of(((Stat) m.menu().property("stat"))));
-            template.modify(StatInfoMenu::hideAttributes);
+            template.modify(t -> {
+                ItemStack item = hideAttributes(t);
+                // Glow if selected
+                if (!(t.menu().property("selected") instanceof Trait)) {
+                    ItemMeta meta = item.getItemMeta();
+                    if (meta != null) {
+                        meta.addEnchant(Enchantment.MENDING, 1, true);
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        item.setItemMeta(meta);
+                    }
+                }
+                return item;
+            });
+
+            template.onClick(t -> {
+                Map<String, Object> props = Map.of(
+                        "stat", t.menu().property("stat"),
+                        "previous_menu", t.menu().property("previous_menu"));
+                plugin.getSlate().openMenu(t.player(), "stat_info", props);
+            });
         });
 
         menu.template("trait", Trait.class, template -> {
-            TraitInfoMenu.setTraitPlaceholders(template, plugin);
+            template.replace("trait_name", p -> p.value().getDisplayName(p.locale()));
+            template.replace("level_modifier", p -> NumberUtil.format2(((Stat) p.menu().property("stat")).getTraitModifier(p.value())));
+            template.replace("level", p -> NumberUtil.format1(plugin.getUser(p.player()).getEffectiveTraitLevel(p.value())));
+            template.replace("base_level", p -> NumberUtil.format1(plugin.getUser(p.player()).getUserStats().getTraitBaseAddSum(p.value())));
+            template.replace("add_percent_modifiers", p -> NumberUtil.format1(plugin.getUser(p.player()).getUserStats().getTraitAddPercentSum(p.value())));
+            template.replace("multiply_modifiers", p -> NumberUtil.format2(plugin.getUser(p.player()).getUserStats().getTraitMultiplyProduct(p.value())));
 
             template.onClick(t -> {
                 var props = Map.of(
                         "stat", t.menu().property("stat"),
-                        "trait", t.value(),
-                        "previous_menu", "stat_info");
-                plugin.getSlate().openMenu(t.player(), "trait_info", props);
+                        "selected", t.value(),
+                        "previous_menu", (String) t.menu().property("previous_menu"));
+                plugin.getSlate().openMenu(t.player(), "stat_info", props);
             });
 
             template.definedContexts(m -> new HashSet<>(((Stat) m.menu().property("stat")).getTraits()));
@@ -121,14 +155,24 @@ public class StatInfoMenu {
                 Stat stat = t.menu().property("stat");
                 if (stat.hasDirectTrait()) { // Hide the trait item if stat has direct trait
                     return null;
-                } else {
-                    return StatInfoMenu.hideAttributes(t);
                 }
+
+                ItemStack item = hideAttributes(t);
+                // Glow if selected
+                if (t.menu().property("selected") instanceof Trait trait && t.value().equals(trait)) {
+                    ItemMeta meta = item.getItemMeta();
+                    if (meta != null) {
+                        meta.addEnchant(Enchantment.MENDING, 1, true);
+                        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        item.setItemMeta(meta);
+                    }
+                }
+                return item;
             });
 
         });
 
-        menu.template("stat_modifier", String.class, template -> {
+        menu.template("modifier", String.class, template -> {
             instances.setPlaceholders(template);
 
             template.definedContexts(m -> {
@@ -141,13 +185,13 @@ public class StatInfoMenu {
                 SlotPos start;
                 SlotPos end;
 
-                Object startObj = t.menu().getItemOption("stat_modifier", "start");
+                Object startObj = t.menu().getItemOption("modifier", "start");
                 if (startObj != null) {
                     start = GlobalItems.parseSlot(String.valueOf(startObj));
                 } else {
                     start = SlotPos.of(2, 1);
                 }
-                Object endObj = t.menu().getItemOption("stat_modifier", "end");
+                Object endObj = t.menu().getItemOption("modifier", "end");
                 if (endObj != null) {
                     end = GlobalItems.parseSlot(String.valueOf(endObj));
                 } else {
@@ -159,20 +203,38 @@ public class StatInfoMenu {
 
             template.modify(instances::modifyItem);
         });
+
+        menu.component("stat_modifiers_click", Stat.class, component ->
+                component.shouldShow(c -> c.menu().property("selected") instanceof Trait));
+
+        menu.component("showing_stat_modifiers", Stat.class, component -> {
+            component.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
+
+            component.shouldShow(c -> !(c.menu().property("selected") instanceof Trait));
+        });
+
+        menu.component("trait_modifiers_click", Trait.class, component ->
+                component.shouldShow(c -> !(c.menu().property("selected") instanceof Trait) && !c.value().equals(c.menu().property("selected"))));
+
+        menu.component("showing_trait_modifiers", Trait.class, component -> {
+            component.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
+
+            component.shouldShow(c -> c.menu().property("selected") instanceof Trait trait && c.value().equals(trait));
+        });
     }
 
-    public static void getBackItem(AuraSkills plugin, ItemBuilder item, String previousMenu) {
+    private void getBackItem(AuraSkills plugin, ItemBuilder item) {
         item.replace("menu_name", p -> TextUtil.capitalizeWord(TextUtil.replace((String) p.menu().getProperty("previous_menu"), "_", " ")));
         item.onClick(c -> {
             Map<String, Object> props = Map.of(
                     "stat", c.menu().property("stat"),
-                    "previous_menu", previousMenu);
+                    "previous_menu", "skills");
             plugin.getSlate().openMenu(c.player(), (String) c.menu().getProperty("previous_menu"), props);
         });
         item.modify(i -> i.menu().getProperty("previous_menu") == null ? null : i.item());
     }
 
-    public static ItemStack hideAttributes(TemplateInfo<?> t) {
+    private ItemStack hideAttributes(TemplateInfo<?> t) {
         ItemMeta meta = t.item().getItemMeta();
         if (meta == null) return t.item();
         if (VersionUtil.isAtLeastVersion(20, 5)) {
@@ -184,7 +246,7 @@ public class StatInfoMenu {
     }
 
     @Nullable
-    public static SlotPos getRectangleIndex(SlotPos topLeft, SlotPos bottomRight, int index) {
+    private SlotPos getRectangleIndex(SlotPos topLeft, SlotPos bottomRight, int index) {
         int topRow = topLeft.getRow();
         int leftColumn = topLeft.getColumn();
         int bottomRow = bottomRight.getRow();
