@@ -1,18 +1,21 @@
 title: '{{stat_details}}'
-size: 5
+size: 6
 fill:
   enabled: true
   material: black_stained_glass_pane
+  shapes:
+  - shape: border
+  - column: 7
 items:
   back:
     material: arrow
-    pos: 4,0
+    pos: 5,0
     display_name: '<green>{{back}}'
     lore:
     - '<gray>{{back_click}}'
 templates:
   stat:
-    pos: 1,1
+    pos: 0,8
     contexts:
       strength:
         material: red_stained_glass_pane
@@ -45,18 +48,18 @@ templates:
     - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
     - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
     - ' '
-    - '<gray>{{traits_leveled}} {color}→'
-    - '<gray>{{stat_modifiers}} ({modifier_count}) {color}↓'
+    - '<gray>{{traits_leveled}} {color}↓'
+    - ''
+    - component: stat_modifiers_click
+    - component: showing_stat_modifiers
   trait:
     options:
       slots:
-      - 1,2
-      - 1,3
-      - 1,4
-      - 1,5
-      - 1,6
-      - 1,7
       - 1,8
+      - 2,8
+      - 3,8
+      - 4,8
+      - 5,8
     contexts:
       attack_damage:
         material: red_dye
@@ -110,11 +113,12 @@ templates:
     - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
     - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
     - ' '
-    - '<yellow>{{trait_modifiers_click}}'
-  stat_modifier:
+    - component: trait_modifiers_click
+    - component: showing_trait_modifiers
+  modifier:
     options:
-      start: 3,1
-      end: 3,7
+      start: 1,1
+      end: 4,6
     material: gray_dye
     contexts:
       base_level_hp:
@@ -128,6 +132,23 @@ templates:
       style: '<gray>'
     - ' '
     - '<gray>Value: {color}{value_format} {stat_name}'
+components:
+  stat_modifiers_click:
+    context: Stat
+    lore:
+    - '<yellow>{{stat_modifiers_click}}'
+  trait_modifiers_click:
+    context: Trait
+    lore:
+    - '<yellow>{{trait_modifiers_click}}'
+  showing_stat_modifiers:
+    context: Stat
+    lore:
+    - '<green>← {{showing_stat_modifiers}} <gray>({modifier_count})'
+  showing_trait_modifiers:
+    context: Trait
+    lore:
+    - '<green>← {{showing_trait_modifiers}} <gray>({modifier_count})'
 formats:
   value_add: '+{value}'
   value_multiply: '{value}x'
