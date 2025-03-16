@@ -57,3 +57,4 @@ options:
   items_per_page: 28
   use_track: false
   track: []
+  xp_format: '#.##'
