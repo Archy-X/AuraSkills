@@ -47,8 +47,7 @@ templates:
     - '  <dark_gray>{{base}}: {base_level}'
     - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
     - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
-    - ' '
-    - '<gray>{{traits_leveled}} {color}↓'
+    - component: traits_leveled
     - ''
     - component: stat_modifiers_click
     - component: showing_stat_modifiers
@@ -133,6 +132,11 @@ templates:
     - ' '
     - '<gray>Value: {color}{value_format} {stat_name}'
 components:
+  traits_leveled:
+    context: Stat
+    lore:
+    - ' '
+    - '<gray>{{traits_leveled}} {color}↓'
   stat_modifiers_click:
     context: Stat
     lore:

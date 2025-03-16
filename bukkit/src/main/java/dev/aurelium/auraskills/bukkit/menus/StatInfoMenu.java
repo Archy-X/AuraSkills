@@ -204,6 +204,12 @@ public class StatInfoMenu {
             template.modify(instances::modifyItem);
         });
 
+        menu.component("traits_leveled", Stat.class, component -> {
+            component.replace("color", p -> stat(p).getColor(p.locale()));
+
+            component.shouldShow(c -> !c.value().hasDirectTrait() && !c.value().getTraits().isEmpty());
+        });
+
         menu.component("stat_modifiers_click", Stat.class, component ->
                 component.shouldShow(c -> c.menu().property("selected") instanceof Trait));
 
@@ -214,7 +220,7 @@ public class StatInfoMenu {
         });
 
         menu.component("trait_modifiers_click", Trait.class, component ->
-                component.shouldShow(c -> !(c.menu().property("selected") instanceof Trait) && !c.value().equals(c.menu().property("selected"))));
+                component.shouldShow(c -> !c.value().equals(c.menu().property("selected"))));
 
         menu.component("showing_trait_modifiers", Trait.class, component -> {
             component.replace("modifier_count", p -> String.valueOf(((Map<?, ?>) p.menu().property("modifiers")).size()));
