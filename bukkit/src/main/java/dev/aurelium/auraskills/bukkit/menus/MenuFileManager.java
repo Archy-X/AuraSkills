@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.menus;
 
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -42,6 +43,10 @@ public class MenuFileManager {
         }
 
         int menusLoaded = plugin.getSlate().loadMenus();
+
+        // Post load operations
+        SkillItem.loadFormats(plugin);
+
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");
     }
 
