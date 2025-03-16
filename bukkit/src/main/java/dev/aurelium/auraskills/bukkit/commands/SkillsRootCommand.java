@@ -304,6 +304,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("claimitems")
 	@CommandPermission("auraskills.command.claimitems")
+	@Description("%desc_claimitems")
 	public void onClaimItems(Player player) {
 		User user = plugin.getUser(player);
 		Locale locale = user.getLocale();
@@ -316,10 +317,11 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("version")
 	@CommandPermission("auraskills.command.version")
+	@Description("%desc_version")
 	public void onVersion(CommandSender sender) {
 		Locale locale = plugin.getLocale(sender);
 		new UpdateChecker(plugin).getVersion((latestVersion, id) -> sender.sendMessage(plugin.getPrefix(locale) +
-				TextUtil.replace(plugin.getMsg(CommandMessage.VERSION, locale),
+				TextUtil.replace(plugin.getMsg(CommandMessage.VERSION_VERSION, locale),
 						"{current_version}", plugin.getDescription().getVersion(),
 						"{latest_version}", latestVersion)));
 	}
@@ -327,6 +329,7 @@ public class SkillsRootCommand extends BaseCommand {
 	@Subcommand("sources")
 	@CommandPermission("auraskills.command.sources")
 	@CommandCompletion("@skills @sort_types")
+	@Description("%desc_sources")
 	public void onSources(Player player, Skill skill, @Optional SortType sortType) {
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("skill", skill);
@@ -340,6 +343,7 @@ public class SkillsRootCommand extends BaseCommand {
 
 	@Subcommand("transfer")
 	@CommandPermission("auraskills.command.transfer")
+	@Description("%desc_transfer")
 	public void onTransfer(CommandSender sender, UUID playerFrom, UUID playerTo) {
 		OfflinePlayer offPlayerFrom = Bukkit.getOfflinePlayer(playerFrom);
 		OfflinePlayer offPlayerTo = Bukkit.getOfflinePlayer(playerTo);

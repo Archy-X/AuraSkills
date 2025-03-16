@@ -25,7 +25,9 @@ public enum MessageUpdates implements MessageUpdate {
     COMMANDS_PROFILE_SKILLS(36, "commands.profile.skills", "Key commands.profile.skills has been converted to a mapping. " +
             "The message has been reset and moved to commands.profile.skills.header"),
     COMMANDS_PROFILE_STATS(36, "commands.profile.stats", "Key commands.profile.stats has been converted to a mapping. " +
-            "The message has been reset and moved to commands.profile.stats.header");
+            "The message has been reset and moved to commands.profile.stats.header"),
+    COMMANDS_VERSION(37, "commands.version", "Key commands.version has been converted to a mapping. " +
+            "The message has been reset and moved to commands.version.version");
 
     private final int version;
     private final String path;
