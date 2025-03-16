@@ -190,4 +190,6 @@ formats:
   bar_remaining: '<gray>■'
 options:
   bar_length: 20
+  percent_format: '#.##'
+  current_xp_format: '#.##'
 file_version: 1

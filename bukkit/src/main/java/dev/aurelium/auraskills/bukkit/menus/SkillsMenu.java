@@ -27,7 +27,10 @@ public class SkillsMenu {
     }
 
     public void build(MenuBuilder menu) {
-        menu.defaultOptions(Map.of("bar_length", 20));
+        menu.defaultOptions(Map.of(
+                "bar_length", 20,
+                "percent_format", "#.##",
+                "current_xp_format", "#.##"));
 
         var globalItems = new GlobalItems(plugin);
         menu.item("close", globalItems::close); // Close item

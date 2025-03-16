@@ -32,6 +32,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,10 +41,28 @@ public class SkillItem {
 
     private final AuraSkills plugin;
     private final PlaceholderHelper helper;
+    private static NumberFormat percentFormat = new DecimalFormat("#.##");
+    private static NumberFormat currentXpFormat = new DecimalFormat("#.##");
 
     public SkillItem(AuraSkills plugin) {
         this.plugin = plugin;
         this.helper = new PlaceholderHelper(plugin);
+    }
+
+    public static void loadFormats(AuraSkills plugin) {
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("skills");
+        if (menu == null) {
+            return;
+        }
+
+        Object percentFormatObj = menu.options().get("percent_format");
+        if (percentFormatObj instanceof String s) {
+            percentFormat = new DecimalFormat(s);
+        }
+        Object currentXpFormatObj = menu.options().get("current_xp_format");
+        if (currentXpFormatObj instanceof String s) {
+            currentXpFormat = new DecimalFormat(s);
+        }
     }
 
     /**
@@ -202,8 +222,8 @@ public class SkillItem {
 
                 return switch (p.placeholder()) {
                     case "next_level" -> RomanNumber.toRoman(skillLevel + 1, plugin);
-                    case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
-                    case "current_xp" -> NumberUtil.format2(currentXp);
+                    case "percent" -> percentFormat.format(currentXp / xpToNext * 100);
+                    case "current_xp" -> currentXpFormat.format(currentXp);
                     case "level_xp" -> String.valueOf((int) xpToNext);
                     case "bar" -> getBar(plugin, currentXp, xpToNext);
                     default -> null;
