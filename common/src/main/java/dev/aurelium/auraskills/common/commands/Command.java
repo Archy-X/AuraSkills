@@ -70,6 +70,7 @@ public enum Command {
     SKILL_SETLEVEL,
     SKILLS,
     STATS,
+    SOURCES,
     TOGGLE,
     TOP,
     TRAIT_ADD,
@@ -80,6 +81,7 @@ public enum Command {
     TRANSFER,
     CLAIMITEMS,
     UPDATELEADERBOARDS,
+    VERSION,
     XP_ADD,
     XP_SET,
     XP_REMOVE

@@ -412,6 +412,7 @@ commands:
       error: "<red>Error backing up {type} data! See error in console/below for details"
       desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>You have no items to claim"
   item:
     give:
@@ -620,9 +621,11 @@ commands:
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level must be at least {level}!"
   skills:
-    desc: Opens the Skills menu, where you can browse skills, progress, and abilities.
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
   stats:
     desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Your skills action bar has been enabled"
     disabled: "<red>Your skills action bar has been disabled"
@@ -640,11 +643,15 @@ commands:
   transfer:
     success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
     error: "<red>There was an error transferring player data. Check console for errors."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Leaderboard is already updating!"
     updated: "<green>Leaderboard updated!"
     desc: Updates and sorts the leaderboards.
-  version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
     add:
       added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
@@ -1019,4 +1026,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 36
+file_version: 37
