@@ -282,19 +282,25 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void onDisable() {
-        scheduler.shutdown();
-        // Save users
-        for (User user : userManager.getUserMap().values()) {
-            user.cleanUp(); // Remove Fleeting
-            try {
-                storageProvider.save(user);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (scheduler != null) {
+            scheduler.shutdown();
         }
-        userManager.getUserMap().clear();
-        regionManager.saveAllRegions(false, true);
-        regionManager.clearRegionMap();
+        if (userManager != null) {
+            // Save users
+            for (User user : userManager.getUserMap().values()) {
+                user.cleanUp(); // Remove Fleeting
+                try {
+                    storageProvider.save(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            userManager.getUserMap().clear();
+        }
+        if (regionManager != null) {
+            regionManager.saveAllRegions(false, true);
+            regionManager.clearRegionMap();
+        }
         try {
             backupAutomatically();
         } catch (Exception e) {
@@ -305,7 +311,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         if (storageProvider instanceof SqlStorageProvider sqlStorageProvider) {
             sqlStorageProvider.getPool().disable();
         }
-        itemRegistry.getStorage().save();
+        if (itemRegistry != null) {
+            itemRegistry.getStorage().save();
+        }
     }
 
     private void backupAutomatically() throws Exception {

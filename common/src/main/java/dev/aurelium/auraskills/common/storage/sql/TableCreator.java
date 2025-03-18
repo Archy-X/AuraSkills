@@ -17,14 +17,15 @@ public class TableCreator {
         this.tablePrefix = tablePrefix;
     }
 
-    public void createTables() {
+    public void createTables() throws IllegalStateException{
         try (Connection connection = pool.getConnection()) {
             createUsersTable(connection);
             createSkillLevelsTable(connection);
             createKeyValuesTable(connection);
             createLogsTable(connection);
+            createModifiersTable(connection);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Failed to create SQL tables. Please report this!", e);
         }
     }
 
@@ -111,6 +112,38 @@ public class TableCreator {
                     "other_data    json         null" +
                     ")");
             plugin.logger().info("Created table " + tablePrefix + "logs");
+        }
+    }
+
+    private void createModifiersTable(Connection connection) throws SQLException {
+        DatabaseMetaData dbm = connection.getMetaData();
+        ResultSet tables = dbm.getTables(pool.getDatabaseName(), null, tablePrefix + "modifiers", null);
+        if (tables.next()) {
+            return;
+        }
+
+        try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
+            statement.execute("""
+            create table %smodifiers
+            (
+                modifier_id        int auto_increment
+                    primary key,
+                user_id            int          not null,
+                modifier_type      varchar(128) not null,
+                type_id            varchar(512) null,
+                modifier_name      varchar(512) not null,
+                modifier_value     double       not null,
+                modifier_operation tinyint      not null,
+                expiration_time    bigint       null,
+                remaining_duration bigint       null,
+                metadata           text         null,
+                constraint modifiers_uk
+                    unique (user_id, modifier_type, modifier_name),
+                constraint modifiers_users_user_id_fk
+                    foreign key (user_id) references %susers (user_id)
+            )
+            """.formatted(tablePrefix, tablePrefix));
+            plugin.logger().info("Created table " + tablePrefix + "modifiers");
         }
     }
 
