@@ -360,7 +360,7 @@ public class SkillsRootCommand extends BaseCommand {
 				return;
 			}
 			// Create a new PlayerDataStat with the UUID changed to the playerTo UUID
-			UserState newState = new UserState(playerTo, oldState.skillLevels(), oldState.skillXp(), oldState.statModifiers(), oldState.traitModifiers(), oldState.mana());
+			UserState newState = oldState.withUuid(playerTo);
 
 			if (offPlayerTo.isOnline()) { // Handle online transfer
 				User user = plugin.getUserManager().getUser(playerTo);

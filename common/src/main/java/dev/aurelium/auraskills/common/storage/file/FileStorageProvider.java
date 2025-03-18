@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -74,10 +76,22 @@ public class FileStorageProvider extends StorageProvider {
         user.setMana(mana);
 
         // Load stat modifiers
-        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> user.addStatModifier(modifier, false));
+        loadStatModifiers(root.node("stat_modifiers")).forEach((name, modifier) -> {
+            if (modifier.isTemporary()) {
+                user.getUserStats().addTemporaryStatModifier(modifier, false, modifier.getExpirationTime());
+            } else {
+                user.addStatModifier(modifier, false);
+            }
+        });
 
         // Load trait modifiers
-        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> user.addTraitModifier(modifier, false));
+        loadTraitModifiers(root.node("trait_modifiers")).forEach((name, modifier) -> {
+            if (modifier.isTemporary()) {
+                user.getUserStats().addTemporaryTraitModifier(modifier, false, modifier.getExpirationTime());
+            } else {
+                user.addTraitModifier(modifier, false);
+            }
+        });
 
         // Load ability data
         loadAbilityData(root.node("ability_data"), user);
@@ -119,6 +133,7 @@ public class FileStorageProvider extends StorageProvider {
 
     private Map<String, StatModifier> loadStatModifiers(ConfigurationNode node) {
         Map<String, StatModifier> statModifiers = new HashMap<>();
+
         node.childrenMap().forEach((index, modifierNode) -> {
             String name = modifierNode.node("name").getString();
             String statName = modifierNode.node("stat").getString();
@@ -132,6 +147,8 @@ public class FileStorageProvider extends StorageProvider {
 
                 StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
                 statModifiers.put(name, statModifier);
+
+                loadTemporary(statModifier, modifierNode);
             }
         });
         return statModifiers;
@@ -152,9 +169,22 @@ public class FileStorageProvider extends StorageProvider {
 
                 TraitModifier traitModifier = new TraitModifier(name, trait, value, Operation.parse(operationName));
                 traitModifiers.put(name, traitModifier);
+
+                loadTemporary(traitModifier, modifierNode);
             }
         });
         return traitModifiers;
+    }
+
+    private void loadTemporary(AuraSkillsModifier<?> modifier, ConfigurationNode modifierNode) {
+        long expirationTime = modifierNode.node("expiration_time").getLong(0);
+        if (expirationTime != 0) {
+            modifier.makeTemporary(expirationTime, false);
+        }
+        long remainingDuration = modifierNode.node("remaining_duration").getLong(0);
+        if (remainingDuration != 0) {
+            modifier.makeTemporary(System.currentTimeMillis() + remainingDuration, true);
+        }
     }
 
     private void loadAbilityData(ConfigurationNode node, User user) {
@@ -407,6 +437,7 @@ public class FileStorageProvider extends StorageProvider {
             modifierNode.node("stat").set(modifier.stat().getId().toString());
             modifierNode.node("operation").set(modifier.operation().toString());
             modifierNode.node("value").set(modifier.value());
+            applyTemporaryModifier(modifier, modifierNode);
             index++;
         }
     }
@@ -419,7 +450,18 @@ public class FileStorageProvider extends StorageProvider {
             modifierNode.node("trait").set(modifier.trait().getId().toString());
             modifierNode.node("operation").set(modifier.operation().toString());
             modifierNode.node("value").set(modifier.value());
+            applyTemporaryModifier(modifier, modifierNode);
             index++;
+        }
+    }
+
+    private void applyTemporaryModifier(AuraSkillsModifier<?> modifier, ConfigurationNode modifierNode) throws SerializationException {
+        if (modifier.isTemporary()) {
+            if (modifier.isPauseOffline()) { // Pause counting when offline, store remaining duration
+                modifierNode.node("remaining_duration").set(modifier.getExpirationTime() - System.currentTimeMillis());
+            } else { // Keep counting down while offline, store expiration time
+                modifierNode.node("expiration_time").set(modifier.getExpirationTime());
+            }
         }
     }
 

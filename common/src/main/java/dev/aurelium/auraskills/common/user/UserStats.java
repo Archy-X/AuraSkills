@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.user;
 
+import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -66,9 +67,11 @@ public class UserStats {
         addModifier(modifier, reload, statModifiers);
     }
 
-    public void addTemporaryStatModifier(StatModifier modifier, boolean reload, long durationMillis) {
+    public void addTemporaryStatModifier(StatModifier modifier, boolean reload, long expirationTime) {
+        if (!modifier.isTemporary()) {
+            throw new IllegalArgumentException("Stat modifier is not a temporary stat modifier");
+        }
         addModifier(modifier, reload, statModifiers);
-        long expirationTime = System.currentTimeMillis() + durationMillis;
         tempModExpiryQueue.add(new TemporaryModifier(modifier, expirationTime));
     }
 
@@ -115,9 +118,11 @@ public class UserStats {
         addModifier(modifier, reload, traitModifiers);
     }
 
-    public void addTemporaryTraitModifier(TraitModifier modifier, boolean reload, long durationMillis) {
+    public void addTemporaryTraitModifier(TraitModifier modifier, boolean reload, long expirationTime) {
+        if (!modifier.isTemporary()) {
+            throw new IllegalArgumentException("Trait modifier is not a temporary trait modifier");
+        }
         addModifier(modifier, reload, traitModifiers);
-        long expirationTime = System.currentTimeMillis() + durationMillis;
         tempModExpiryQueue.add(new TemporaryModifier(modifier, expirationTime));
     }
 
@@ -125,7 +130,7 @@ public class UserStats {
         return removeModifier(name, reload, traitModifiers);
     }
 
-    private <T extends AuraSkillsModifier<V>, V> void addModifier(T modifier, boolean reload, Map<String, T> map) {
+    private <T extends AuraSkillsModifier<V>, V extends NamespaceIdentified> void addModifier(T modifier, boolean reload, Map<String, T> map) {
         if (map.containsKey(modifier.name())) {
             AuraSkillsModifier<V> oldModifier = map.get(modifier.name());
             if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
@@ -147,7 +152,7 @@ public class UserStats {
         }
     }
 
-    private <T extends AuraSkillsModifier<V>, V> boolean removeModifier(String name, boolean reload, Map<String, T> map) {
+    private <T extends AuraSkillsModifier<V>, V extends NamespaceIdentified> boolean removeModifier(String name, boolean reload, Map<String, T> map) {
         AuraSkillsModifier<V> modifier = map.get(name);
         if (modifier == null) return false;
         map.remove(name);

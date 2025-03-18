@@ -70,8 +70,10 @@ public class ModifierCommand extends BaseCommand {
         Locale locale = user.getLocale();
 
         StatModifier modifier = new StatModifier(name, stat, value, operation);
+        long expirationTime = System.currentTimeMillis() + duration.toMillis();
+        modifier.makeTemporary(expirationTime, false);
         if (!user.getStatModifiers().containsKey(name)) {
-            user.getUserStats().addTemporaryStatModifier(modifier, true, duration.toMillis());
+            user.getUserStats().addTemporaryStatModifier(modifier, true, expirationTime);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADDTEMP_ADDED, locale), modifier, player, locale)
                         .replace("{duration}", DurationParser.toString(duration)));
@@ -79,7 +81,8 @@ public class ModifierCommand extends BaseCommand {
         } else if (stack) { // Stack modifier by using a numbered name
             String newModifierName = getStackedName(user.getStatModifiers().keySet(), name);
             StatModifier newModifier = new StatModifier(newModifierName, stat, value, operation);
-            user.getUserStats().addTemporaryStatModifier(newModifier, true, duration.toMillis());
+            newModifier.makeTemporary(expirationTime, false);
+            user.getUserStats().addTemporaryStatModifier(newModifier, true, expirationTime);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADDTEMP_ADDED, locale), newModifier, player, locale)
                         .replace("{duration}", DurationParser.toString(duration)));

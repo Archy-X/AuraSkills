@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
@@ -15,6 +16,7 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
+import dev.aurelium.auraskills.common.storage.sql.migration.SqlMigrator;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
 import dev.aurelium.auraskills.common.user.AntiAfkLog;
@@ -31,14 +33,15 @@ public class SqlStorageProvider extends StorageProvider {
 
     private final ConnectionPool pool;
     private final SqlUserLoader userLoader;
-    private final String tablePrefix = "auraskills_";
+    public static final String TABLE_PREFIX = "auraskills_";
 
-    public static final int STAT_MODIFIER_ID = 1;
-    public static final int TRAIT_MODIFIER_ID = 2;
+    public static final int STAT_MODIFIER_ID = 1; // Deprecated, only used in SqlUserMigrator
     public static final int ABILITY_DATA_ID = 3;
     public static final int UNCLAIMED_ITEMS_ID = 4;
     public static final int ACTION_BAR_ID = 5;
     public static final int JOBS_ID = 6;
+    public static final String MODIFIER_TYPE_STAT = "stat";
+    public static final String MODIFIER_TYPE_TRAIT = "trait";
     public static final String LOG_TYPE_ANTI_AFK = "anti_afk";
     public static final int LOG_LEVEL_WARN = 2;
     public static final String JOBS_LAST_SELECT_TIME = "last_select_time";
@@ -46,8 +49,15 @@ public class SqlStorageProvider extends StorageProvider {
     public SqlStorageProvider(AuraSkillsPlugin plugin, ConnectionPool pool) {
         super(plugin);
         this.pool = pool;
-        this.userLoader = new SqlUserLoader(plugin, this);
+        this.userLoader = new SqlUserLoader(plugin);
         attemptTableCreation();
+
+        try {
+            SqlMigrator migrator = new SqlMigrator(plugin, pool);
+            migrator.runMigrations();
+        } catch (Exception e) {
+            throw new IllegalStateException("Failed to migrate SQL tables. Please report this!", e);
+        }
     }
 
     public ConnectionPool getPool() {
@@ -55,7 +65,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     public void attemptTableCreation() {
-        TableCreator tableCreator = new TableCreator(plugin, pool, tablePrefix);
+        TableCreator tableCreator = new TableCreator(plugin, pool, TABLE_PREFIX);
         tableCreator.createTables();
     }
 
@@ -73,7 +83,7 @@ public class SqlStorageProvider extends StorageProvider {
         Map<Skill, Integer> levelsMap = new HashMap<>();
         Map<Skill, Double> xpMap = new HashMap<>();
 
-        String loadQuery = "SELECT * FROM " + tablePrefix + "skill_levels WHERE user_id=?";
+        String loadQuery = "SELECT * FROM " + TABLE_PREFIX + "skill_levels WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
             statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -99,26 +109,31 @@ public class SqlStorageProvider extends StorageProvider {
 
     private Map<String, StatModifier> loadStatModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
         Map<String, StatModifier> modifiers = new HashMap<>();
-        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?";
+        String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
+                TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
-            statement.setInt(2, STAT_MODIFIER_ID);
+            statement.setString(2, MODIFIER_TYPE_STAT);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    String categoryId = resultSet.getString("category_id");
-                    try {
-                        Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(categoryId));
-                        String keyName = resultSet.getString("key_name");
-                        if (keyName == null) continue;
+                    String typeId = resultSet.getString("type_id");
+                    if (typeId == null) continue;
 
-                        NameOperationPair pair = parseNameAndOperation(keyName);
-                        double value = resultSet.getDouble("value");
-
-                        StatModifier modifier = new StatModifier(pair.name(), stat, value, pair.operation());
-                        modifiers.put(keyName, modifier);
-                    } catch (IllegalArgumentException e) {
-                        plugin.logger().warn("Failed to load stat modifier for player " + uuid + " because " + categoryId + " is not a registered stat");
+                    Stat stat = plugin.getStatRegistry().getOrNull(NamespacedId.fromString(typeId));
+                    if (stat == null) {
+                        plugin.logger().warn("Failed to load stat modifier for player " + uuid + " because " + typeId + " is not a registered stat");
+                        continue;
                     }
+
+                    String modifierName = resultSet.getString("modifier_name");
+                    double value = resultSet.getDouble("modifier_value");
+                    Operation operation = Operation.fromSqlId(resultSet.getByte("modifier_operation"));
+
+                    StatModifier modifier = new StatModifier(modifierName, stat, value, operation);
+
+                    loadTemporary(resultSet, modifier);
+
+                    modifiers.put(modifierName, modifier);
                 }
             }
         }
@@ -127,44 +142,54 @@ public class SqlStorageProvider extends StorageProvider {
 
     private Map<String, TraitModifier> loadTraitModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
         Map<String, TraitModifier> modifiers = new HashMap<>();
-        String query = "SELECT category_id, key_name, value FROM " + tablePrefix + "key_values WHERE user_id=? AND data_id=?";
+        String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
+                TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
-            statement.setInt(2, TRAIT_MODIFIER_ID);
+            statement.setString(2, MODIFIER_TYPE_TRAIT);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    String categoryId = resultSet.getString("category_id");
-                    try {
-                        Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(categoryId));
-                        String keyName = resultSet.getString("key_name");
-                        if (keyName == null) continue;
+                    String typeId = resultSet.getString("type_id");
+                    if (typeId == null) continue;
 
-                        NameOperationPair pair = parseNameAndOperation(keyName);
-                        double value = resultSet.getDouble("value");
-
-                        TraitModifier modifier = new TraitModifier(pair.name(), trait, value, pair.operation());
-                        modifiers.put(keyName, modifier);
-                    } catch (IllegalArgumentException e) {
-                        plugin.logger().warn("Failed to load trait modifier for player " + uuid + " because " + categoryId + " is not a registered trait");
+                    Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromString(typeId));
+                    if (trait == null) {
+                        plugin.logger().warn("Failed to load trait modifier for player " + uuid + " because " + typeId + " is not a registered trait");
+                        continue;
                     }
+
+                    String modifierName = resultSet.getString("modifier_name");
+                    double value = resultSet.getDouble("modifier_value");
+                    Operation operation = Operation.fromSqlId(resultSet.getByte("modifier_operation"));
+
+                    TraitModifier modifier = new TraitModifier(modifierName, trait, value, operation);
+
+                    loadTemporary(resultSet, modifier);
+
+                    modifiers.put(modifierName, modifier);
                 }
             }
         }
         return modifiers;
     }
 
-    public NameOperationPair parseNameAndOperation(@NotNull String keyName) {
-        String[] splitKeyName = keyName.split("\\|\\|"); // Name and operation stored together as name||operation
-        String modifierName = splitKeyName[0];
-        String operationName = splitKeyName.length > 1 ? splitKeyName[1] : Operation.ADD.toString();
-        return new NameOperationPair(modifierName, Operation.parse(operationName));
-    }
+    private void loadTemporary(ResultSet resultSet, AuraSkillsModifier<?> modifier) throws SQLException {
+        long expirationTime = resultSet.getLong("expiration_time");
+        long remainingDuration = resultSet.getLong("remaining_duration");
+        boolean pauseOffline = false;
+        if (remainingDuration != 0) {
+            expirationTime = System.currentTimeMillis() + remainingDuration;
+            pauseOffline = true;
+        }
 
-    public record NameOperationPair(String name, Operation operation) {}
+        if (expirationTime != 0) {
+            modifier.makeTemporary(expirationTime, pauseOffline);
+        }
+    }
 
     @Override
     public @NotNull UserState loadState(UUID uuid) throws Exception {
-        String query = "SELECT * FROM " + tablePrefix + "users WHERE player_uuid=?";
+        String query = "SELECT * FROM " + TABLE_PREFIX + "users WHERE player_uuid=?";
         try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, uuid.toString());
@@ -192,7 +217,7 @@ public class SqlStorageProvider extends StorageProvider {
     @Override
     public void applyState(UserState state) throws Exception {
         // Insert into users database
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?";
+        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?";
         try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
                 statement.setString(1, state.uuid().toString());
@@ -202,7 +227,7 @@ public class SqlStorageProvider extends StorageProvider {
             }
             // Insert into skill_levels database
             int userId = getUserId(connection, state.uuid());
-            String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
+            String skillLevelsQuery = "INSERT INTO " + TABLE_PREFIX + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
             try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
                 statement.setInt(1, userId);
                 for (Map.Entry<Skill, Integer> entry : state.skillLevels().entrySet()) {
@@ -217,17 +242,17 @@ public class SqlStorageProvider extends StorageProvider {
                     statement.executeUpdate();
                 }
             }
-            List<KeyValueRow> rows = new ArrayList<>();
-            rows.addAll(getStatModifierRows(state.statModifiers()));
-            rows.addAll(getTraitModifierRows(state.traitModifiers()));
+            Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+            modifiers.putAll(state.statModifiers());
+            modifiers.putAll(state.traitModifiers());
 
-            saveKeyValueRows(connection, userId, rows);
+            saveModifierRows(connection, userId, getModifierRows(modifiers));
         }
     }
 
     public int getUserId(Connection connection, UUID uuid) throws SQLException {
         // Get user_id from users database
-        String query = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?";
+        String query = "SELECT user_id FROM " + TABLE_PREFIX + "users WHERE player_uuid=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, uuid.toString());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -259,13 +284,15 @@ public class SqlStorageProvider extends StorageProvider {
         try (Connection connection = pool.getConnection()) {
             saveUsersTable(connection, user);
             saveSkillLevelsTable(connection, user);
-            saveKeyValuesTable(connection, user);
+            int userId = getUserId(connection, user.getUuid());
+            saveKeyValuesTable(connection, user, userId);
+            saveModifiersTable(connection, user, userId);
             saveLogsTable(connection, user);
         }
     }
 
     private void saveUsersTable(Connection connection, User user) throws SQLException {
-        String usersQuery = "INSERT INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?";
+        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?";
         try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
             statement.setString(1, user.getUuid().toString());
             int curr = 2; // Current index to set
@@ -283,7 +310,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private void saveSkillLevelsTable(Connection connection, User user) throws SQLException {
         int userId = getUserId(connection, user.getUuid());
-        String skillLevelsQuery = "INSERT INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
+        String skillLevelsQuery = "INSERT INTO " + TABLE_PREFIX + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE skill_level=?, skill_xp=?";
         try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
             statement.setInt(1, userId);
             for (Map.Entry<Skill, Integer> entry : user.getSkillLevelMap().entrySet()) {
@@ -300,14 +327,11 @@ public class SqlStorageProvider extends StorageProvider {
         }
     }
 
-    private void saveKeyValuesTable(Connection connection, User user) throws SQLException {
-        int userId = getUserId(connection, user.getUuid());
+    private void saveKeyValuesTable(Connection connection, User user, int userId) throws SQLException {
         // Delete existing key values
         deleteKeyValues(connection, userId);
         // Save key values
         List<KeyValueRow> rows = new ArrayList<>();
-        rows.addAll(getStatModifierRows(user.getStatModifiers()));
-        rows.addAll(getTraitModifierRows(user.getTraitModifiers()));
         rows.addAll(getAbilityDataRows(user.getAbilityDataMap(), user.getManaAbilityDataMap()));
         rows.addAll(getUnclaimedItemsRow(user.getUnclaimedItems()));
         rows.addAll(getActionBarRow(user));
@@ -316,13 +340,24 @@ public class SqlStorageProvider extends StorageProvider {
         saveKeyValueRows(connection, userId, rows);
     }
 
+    private void saveModifiersTable(Connection connection, User user, int userId) throws SQLException {
+        deleteModifiers(connection, userId);
+
+        Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+        modifiers.putAll(user.getStatModifiers());
+        modifiers.putAll(user.getTraitModifiers());
+
+        List<ModifierRow> rows = getModifierRows(modifiers);
+
+        saveModifierRows(connection, userId, rows);
+    }
+
     private void saveLogsTable(Connection connection, User user) throws SQLException {
         saveAntiAfkLogs(user.getSessionAntiAfkLogs(), connection, user);
     }
 
     private void saveKeyValueRows(Connection connection, int userId, List<KeyValueRow> rows) throws SQLException {
-        connection.setAutoCommit(false);
-        final String query = "INSERT INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
+        final String query = "INSERT INTO " + TABLE_PREFIX + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE value=?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             for (KeyValueRow row : rows) {
                 ps.setInt(1, userId);
@@ -334,24 +369,66 @@ public class SqlStorageProvider extends StorageProvider {
                 ps.addBatch();
             }
             ps.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.setAutoCommit(true);
+        }
+    }
+
+    private void saveModifierRows(Connection connection, int userId, List<ModifierRow> rows) throws SQLException {
+        String sql = """
+        INSERT INTO auraskills_modifiers (
+            user_id,
+            modifier_type,
+            type_id,
+            modifier_name,
+            modifier_value,
+            modifier_operation,
+            expiration_time,
+            remaining_duration,
+            metadata
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            modifier_value = VALUES(modifier_value),
+            expiration_time = VALUES(expiration_time),
+            remaining_duration = VALUES(remaining_duration),
+            metadata = VALUES(metadata)
+        """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            for (ModifierRow row : rows) {
+                ps.setInt(1, userId);
+                ps.setString(2, row.modifierType());
+                if (row.typeId() != null) {
+                    ps.setString(3, row.typeId());
+                } else {
+                    ps.setNull(3, Types.VARCHAR);
+                }
+                ps.setString(4, row.modifierName());
+                ps.setDouble(5, row.modifierValue());
+                ps.setByte(6, row.modifierOperation());
+                ps.setLong(7, row.expirationTime());
+                ps.setLong(8, row.remainingDuration());
+                if (row.metadata() != null) {
+                    ps.setString(9, row.metadata());
+                } else {
+                    ps.setNull(9, Types.LONGVARCHAR);
+                }
+
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
         }
     }
 
     private void deleteUser(Connection connection, User user) throws SQLException {
         connection.setAutoCommit(false);
-        String getUserIdQuery = "SELECT user_id FROM " + tablePrefix + "users WHERE player_uuid=?";
+        String getUserIdQuery = "SELECT user_id FROM " + TABLE_PREFIX + "users WHERE player_uuid=?";
         try (PreparedStatement statement = connection.prepareStatement(getUserIdQuery)) {
             statement.setString(1, user.getUuid().toString());
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
                     int userId = rs.getInt("user_id");
 
-                    String deleteKeyValuesQuery = "DELETE FROM " + tablePrefix + "key_values WHERE user_id=?;";
+                    String deleteKeyValuesQuery = "DELETE FROM " + TABLE_PREFIX + "key_values WHERE user_id=?;";
                     try (PreparedStatement delStatement = connection.prepareStatement(deleteKeyValuesQuery)) {
                         delStatement.setInt(1, userId);
                         delStatement.executeUpdate();
@@ -373,13 +450,13 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private void deleteSkillLevelsUsers(Connection connection, int userId) throws SQLException {
-        String deleteSkillLevelsQuery = "DELETE FROM " + tablePrefix + "skill_levels WHERE user_id=?;";
+        String deleteSkillLevelsQuery = "DELETE FROM " + TABLE_PREFIX + "skill_levels WHERE user_id=?;";
         try (PreparedStatement delStatement = connection.prepareStatement(deleteSkillLevelsQuery)) {
             delStatement.setInt(1, userId);
             delStatement.executeUpdate();
         }
 
-        String deleteUsersQuery = "DELETE FROM " + tablePrefix + "users WHERE user_id=?;";
+        String deleteUsersQuery = "DELETE FROM " + TABLE_PREFIX + "users WHERE user_id=?;";
         try (PreparedStatement delStatement = connection.prepareStatement(deleteUsersQuery)) {
             delStatement.setInt(1, userId);
             delStatement.executeUpdate();
@@ -387,37 +464,44 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private void deleteKeyValues(Connection connection, int userId) throws SQLException {
-        String query = "DELETE FROM " + tablePrefix + "key_values WHERE user_id=?";
+        String query = "DELETE FROM " + TABLE_PREFIX + "key_values WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.executeUpdate();
         }
     }
 
-    private List<KeyValueRow> getStatModifierRows(Map<String, StatModifier> modifiers) {
-        List<KeyValueRow> rows = new ArrayList<>();
-        if (modifiers.isEmpty()) {
-            return rows;
+    private void deleteModifiers(Connection connection, int userId) throws SQLException {
+        String query = "DELETE FROM " + TABLE_PREFIX + "modifiers WHERE user_id=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
         }
-        for (StatModifier modifier : modifiers.values()) {
-            String categoryId = modifier.stat().getId().toString();
-            String keyName = modifier.name() + "||" + modifier.operation().toString();
-            var row = new KeyValueRow(STAT_MODIFIER_ID, categoryId, keyName, String.valueOf(modifier.value()));
-            rows.add(row);
-        }
-        return rows;
     }
 
-    private List<KeyValueRow> getTraitModifierRows(Map<String, TraitModifier> modifiers) {
-        List<KeyValueRow> rows = new ArrayList<>();
+    private List<ModifierRow> getModifierRows(Map<String, AuraSkillsModifier<?>> modifiers) {
+        List<ModifierRow> rows = new ArrayList<>();
         if (modifiers.isEmpty()) {
             return rows;
         }
-
-        for (TraitModifier modifier : modifiers.values()) {
-            String categoryId = modifier.trait().getId().toString();
-            String keyName = modifier.name() + "||" + modifier.operation().toString();
-            var row = new KeyValueRow(TRAIT_MODIFIER_ID, categoryId, keyName, String.valueOf(modifier.value()));
+        for (var modifier : modifiers.values()) {
+            String statId = modifier.type().getId().toString();
+            byte operationId = modifier.operation().getSqlId();
+            long expTime = modifier.getExpirationTime();
+            long remainingDuration = 0;
+            if (modifier.isTemporary() && modifier.isPauseOffline()) {
+                remainingDuration = modifier.getExpirationTime() - System.currentTimeMillis();
+            }
+            var row = new ModifierRow(
+                    modifier instanceof StatModifier ? MODIFIER_TYPE_STAT : MODIFIER_TYPE_TRAIT,
+                    statId,
+                    modifier.name(),
+                    modifier.value(),
+                    operationId,
+                    expTime,
+                    remainingDuration,
+                    null
+            );
             rows.add(row);
         }
         return rows;
@@ -499,7 +583,7 @@ public class SqlStorageProvider extends StorageProvider {
 
     private void saveAntiAfkLogs(List<AntiAfkLog> logs, Connection connection, User user) throws SQLException {
         connection.setAutoCommit(false);
-        final String query = "INSERT IGNORE INTO " + tablePrefix + "logs (log_type, log_time, log_level, log_message, player_uuid, player_coords, world_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT IGNORE INTO " + TABLE_PREFIX + "logs (log_type, log_time, log_level, log_message, player_uuid, player_coords, world_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             for (AntiAfkLog log : logs) {
                 ps.setString(1, LOG_TYPE_ANTI_AFK);
@@ -530,14 +614,14 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception {
+    public List<UserState> loadStates(boolean ignoreOnline, boolean skipModifiers) throws Exception {
         List<UserState> states = new ArrayList<>();
 
         Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
         Map<Integer, Map<Skill, Double>> loadedSkillXp = new HashMap<>();
 
         try (Connection connection = pool.getConnection()) {
-            String skillLevelsQuery = "SELECT user_id, skill_name, skill_level, skill_xp FROM " + tablePrefix + "skill_levels;";
+            String skillLevelsQuery = "SELECT user_id, skill_name, skill_level, skill_xp FROM " + TABLE_PREFIX + "skill_levels;";
             try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -554,7 +638,7 @@ public class SqlStorageProvider extends StorageProvider {
                     }
                 }
             }
-            String usersQuery = "SELECT user_id, player_uuid, mana FROM " + tablePrefix + "users;";
+            String usersQuery = "SELECT user_id, player_uuid, mana FROM " + TABLE_PREFIX + "users;";
             try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -569,7 +653,7 @@ public class SqlStorageProvider extends StorageProvider {
 
                         Map<String, StatModifier> statModifiers;
                         Map<String, TraitModifier> traitModifiers;
-                        if (!skipKeyValues) {
+                        if (!skipModifiers) {
                             statModifiers = loadStatModifiers(connection, uuid, userId);
                             traitModifiers = loadTraitModifiers(connection, uuid, userId);
                         } else {
@@ -592,7 +676,7 @@ public class SqlStorageProvider extends StorageProvider {
     @Override
     public List<AntiAfkLog> loadAntiAfkLogs(UUID uuid) {
         try (Connection connection = pool.getConnection()) {
-            String query = "SELECT log_time, log_message, player_coords, world_name FROM " + tablePrefix + "logs WHERE player_uuid=? AND log_type=?";
+            String query = "SELECT log_time, log_message, player_coords, world_name FROM " + TABLE_PREFIX + "logs WHERE player_uuid=? AND log_type=?";
 
             List<AntiAfkLog> logs = new ArrayList<>();
 

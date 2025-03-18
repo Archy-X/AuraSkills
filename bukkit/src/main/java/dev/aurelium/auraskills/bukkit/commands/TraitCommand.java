@@ -67,8 +67,10 @@ public class TraitCommand extends BaseCommand {
         Locale locale = user.getLocale();
 
         TraitModifier modifier = new TraitModifier(name, trait, value, operation);
+        long expirationTime = System.currentTimeMillis() + duration.toMillis();
+        modifier.makeTemporary(expirationTime, false);
         if (!user.getTraitModifiers().containsKey(name)) {
-            user.getUserStats().addTemporaryTraitModifier(modifier, true, duration.toMillis());
+            user.getUserStats().addTemporaryTraitModifier(modifier, true, expirationTime);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), modifier, player, locale)
                         .replace("{duration}", DurationParser.toString(duration)));
@@ -76,7 +78,8 @@ public class TraitCommand extends BaseCommand {
         } else if (stack) { // Stack modifier by using a numbered name
             String newModifierName = ModifierCommand.getStackedName(user.getStatModifiers().keySet(), name);
             TraitModifier newModifier = new TraitModifier(newModifierName, trait, value, operation);
-            user.getUserStats().addTemporaryTraitModifier(newModifier, true, duration.toMillis());
+            newModifier.makeTemporary(expirationTime, false);
+            user.getUserStats().addTemporaryTraitModifier(newModifier, true, expirationTime);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), newModifier, player, locale)
                         .replace("{duration}", DurationParser.toString(duration)));
