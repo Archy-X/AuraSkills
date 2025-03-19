@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.DurationParser;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -59,35 +60,37 @@ public class TraitCommand extends BaseCommand {
 
     @Subcommand("addtemp")
     @CommandPermission("auraskills.command.modifier")
-    @CommandCompletion("@players @traits @nothing @nothing @nothing @modifier_operations true|false true|false")
+    @CommandCompletion("@players @traits @nothing @nothing @nothing true|false @modifier_operations true|false true|false")
     @Description("%desc_trait_addtemp")
-    public void addTemp(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, Duration duration,
-                        @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
+    public void addTemp(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value,
+                        Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
+                        @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
 
-        TraitModifier modifier = new TraitModifier(name, trait, value, operation);
-        long expirationTime = System.currentTimeMillis() + duration.toMillis();
-        modifier.makeTemporary(expirationTime, false);
+        String modifierName;
         if (!user.getTraitModifiers().containsKey(name)) {
-            user.getUserStats().addTemporaryTraitModifier(modifier, true, expirationTime);
-            if (!silent) {
-                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), modifier, player, locale)
-                        .replace("{duration}", DurationParser.toString(duration)));
-            }
-        } else if (stack) { // Stack modifier by using a numbered name
-            String newModifierName = ModifierCommand.getStackedName(user.getStatModifiers().keySet(), name);
-            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value, operation);
-            newModifier.makeTemporary(expirationTime, false);
-            user.getUserStats().addTemporaryTraitModifier(newModifier, true, expirationTime);
-            if (!silent) {
-                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), newModifier, player, locale)
-                        .replace("{duration}", DurationParser.toString(duration)));
-            }
+            modifierName = name;
+        } else if (stack) {
+            modifierName = ModifierCommand.getStackedName(user.getTraitModifiers().keySet(), name);
         } else {
             if (!silent) {
-                sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADD_ALREADY_EXISTS, locale), modifier, player, locale));
+                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.TRAIT_ADD_ALREADY_EXISTS, locale),
+                        "{name}", name,
+                        "{player}", player.getName()));
             }
+            return;
+        }
+
+        TraitModifier modifier = new TraitModifier(modifierName, trait, value, operation);
+
+        long expirationTime = System.currentTimeMillis() + duration.toMillis();
+        modifier.makeTemporary(expirationTime, pauseOffline);
+        user.getUserStats().addTemporaryTraitModifier(modifier, true, expirationTime);
+
+        if (!silent) {
+            sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), modifier, player, locale)
+                    .replace("{duration}", DurationParser.toString(duration)));
         }
     }
 
