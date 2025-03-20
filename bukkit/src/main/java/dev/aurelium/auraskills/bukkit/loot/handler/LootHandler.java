@@ -259,8 +259,8 @@ public abstract class LootHandler {
         return chance;
     }
 
-    protected boolean failsChecks(Player player, Location location) {
-        if (player.getGameMode() == GameMode.CREATIVE) { // Only drop loot in survival mode
+    protected boolean failsChecks(Player player, Location location, boolean disableInCreative) {
+        if (disableInCreative && player.getGameMode() == GameMode.CREATIVE) { // Only drop loot in survival mode
             return true;
         }
 

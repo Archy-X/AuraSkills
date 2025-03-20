@@ -41,7 +41,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
     public void onFish(PlayerFishEvent event) {
         Player player = event.getPlayer();
 
-        if (failsChecks(player, player.getLocation())) return;
+        if (failsChecks(player, player.getLocation(), false)) return;
 
         if (!(event.getCaught() instanceof Item)) return;
         if (!event.getState().equals(PlayerFishEvent.State.CAUGHT_FISH)) return;

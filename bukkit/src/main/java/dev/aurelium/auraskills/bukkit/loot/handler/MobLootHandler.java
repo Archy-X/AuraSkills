@@ -46,7 +46,7 @@ public class MobLootHandler extends LootHandler implements Listener {
         Player player = damagerPair.first();
         EntityXpSource.EntityDamagers damager = damagerPair.second();
 
-        if (failsChecks(player, entity.getLocation())) return;
+        if (failsChecks(player, entity.getLocation(), true)) return;
 
         User user = plugin.getUser(player);
 

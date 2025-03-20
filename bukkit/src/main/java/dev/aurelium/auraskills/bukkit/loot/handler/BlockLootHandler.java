@@ -89,7 +89,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         Player player = event.getPlayer();
 
-        if (failsChecks(player, block.getLocation())) return;
+        if (failsChecks(player, block.getLocation(), true)) return;
 
         if (plugin.getHookManager().isRegistered(SlimefunHook.class)) {
             if (plugin.getHookManager().getHook(SlimefunHook.class).hasBlockInfo(block.getLocation())) {
