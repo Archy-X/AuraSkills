@@ -12,6 +12,10 @@ import java.util.UUID;
 public record UserState(UUID uuid, Map<Skill, Integer> skillLevels, Map<Skill, Double> skillXp,
                         Map<String, StatModifier> statModifiers, Map<String, TraitModifier> traitModifiers, double mana) {
 
+    public UserState withUuid(UUID newUuid) {
+        return new UserState(newUuid, skillLevels, skillXp, statModifiers, traitModifiers, mana);
+    }
+
     public static UserState createEmpty(UUID uuid, AuraSkillsPlugin plugin) {
         // Fill maps with registered skills and default levels
         Map<Skill, Integer> levels = new HashMap<>();

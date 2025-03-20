@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
@@ -33,23 +34,33 @@ public class ApiItemManager implements ItemManager {
     }
 
     @Override
-    public ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
+    public ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, Operation operation, boolean lore) {
         SkillsItem skillsItem = new SkillsItem(item, plugin);
-        skillsItem.addModifier(MetaType.MODIFIER, type, stat, value);
+        skillsItem.addModifier(MetaType.MODIFIER, type, stat, value, operation);
         if (lore) {
-            skillsItem.addModifierLore(type, stat, value, plugin.getDefaultLanguage());
+            skillsItem.addModifierLore(type, stat, value, operation, plugin.getDefaultLanguage());
+        }
+        return skillsItem.getItem();
+    }
+
+    @Override
+    public ItemStack addStatModifier(ItemStack item, ModifierType type, Stat stat, double value, boolean lore) {
+        return addStatModifier(item, type, stat, value, Operation.ADD, lore);
+    }
+
+    @Override
+    public ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, Operation operation, boolean lore) {
+        SkillsItem skillsItem = new SkillsItem(item, plugin);
+        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, type, trait, value, operation);
+        if (lore) {
+            skillsItem.addModifierLore(type, trait, value, operation, plugin.getDefaultLanguage());
         }
         return skillsItem.getItem();
     }
 
     @Override
     public ItemStack addTraitModifier(ItemStack item, ModifierType type, Trait trait, double value, boolean lore) {
-        SkillsItem skillsItem = new SkillsItem(item, plugin);
-        skillsItem.addModifier(MetaType.TRAIT_MODIFIER, type, trait, value);
-        if (lore) {
-            skillsItem.addModifierLore(type, trait, value, plugin.getDefaultLanguage());
-        }
-        return skillsItem.getItem();
+        return addTraitModifier(item, type, trait, value, Operation.ADD, lore);
     }
 
     @Override

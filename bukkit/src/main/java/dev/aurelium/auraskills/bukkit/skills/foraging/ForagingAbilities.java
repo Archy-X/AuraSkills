@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -96,7 +97,7 @@ public class ForagingAbilities extends AbilityImpl {
 
         if (user.getAbilityLevel(ability) == 0) return;
 
-        user.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(ability, user)));
+        user.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(ability, user), Operation.ADD));
     }
 
     public void removeValor(User user) {

@@ -1,6 +1,13 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
 import com.google.common.collect.ImmutableMap;
+import com.nexomc.nexo.api.NexoBlocks;
+import com.nexomc.nexo.api.NexoItems;
+import com.nexomc.nexo.api.events.custom_block.noteblock.NexoNoteBlockBreakEvent;
+import com.nexomc.nexo.api.events.custom_block.noteblock.NexoNoteBlockPlaceEvent;
+import com.nexomc.nexo.items.ItemBuilder;
+import com.nexomc.nexo.utils.drops.Drop;
+import com.nexomc.nexo.utils.drops.Loot;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource.BlockXpSourceState;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
@@ -8,13 +15,6 @@ import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.source.type.BlockSource.BlockSourceState;
-import io.th0rgal.oraxen.api.OraxenBlocks;
-import io.th0rgal.oraxen.api.OraxenItems;
-import io.th0rgal.oraxen.api.events.noteblock.OraxenNoteBlockBreakEvent;
-import io.th0rgal.oraxen.api.events.noteblock.OraxenNoteBlockPlaceEvent;
-import io.th0rgal.oraxen.items.ItemBuilder;
-import io.th0rgal.oraxen.utils.drops.Drop;
-import io.th0rgal.oraxen.utils.drops.Loot;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
@@ -27,13 +27,13 @@ import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.*;
 
-public class OraxenHook extends Hook implements Listener {
+public class NexoHook extends Hook implements Listener {
 
     private final AuraSkills plugin;
     @Nullable
     private BlockLeveler blockLeveler;
 
-    public OraxenHook(AuraSkills plugin, ConfigurationNode config) {
+    public NexoHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
         this.plugin = plugin;
         registerExternalItemProvider();
@@ -42,17 +42,17 @@ public class OraxenHook extends Hook implements Listener {
 
     @Override
     public Class<? extends Hook> getTypeClass() {
-        return OraxenHook.class;
+        return NexoHook.class;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onNoteBlockPlace(OraxenNoteBlockPlaceEvent event) {
+    public void onNoteBlockPlace(NexoNoteBlockPlaceEvent event) {
         Block block = event.getBlock();
         plugin.getRegionManager().handleBlockPlace(block);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onNoteBlockBreak(OraxenNoteBlockBreakEvent event) {
+    public void onNoteBlockBreak(NexoNoteBlockBreakEvent event) {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
@@ -60,13 +60,13 @@ public class OraxenHook extends Hook implements Listener {
         if (blockLeveler == null) {
             blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
         }
-        blockLeveler.handleBreak(player, block, event, trait -> getUniqueOraxenDrops(player, event.getDrop()));
+        blockLeveler.handleBreak(player, block, event, trait -> getUniqueNexoDrops(player, event.getDrop()));
     }
 
     public void registerExternalItemProvider() {
-        plugin.getItemRegistry().registerExternalItemProvider("oraxen", key -> {
-            ItemBuilder builder = OraxenItems.getItemById(key);
-            return builder.build();
+        plugin.getItemRegistry().registerExternalItemProvider("nexo", key -> {
+            ItemBuilder builder = NexoItems.itemFromId(key);
+            return builder != null ? builder.build() : null;
         });
     }
 
@@ -80,16 +80,16 @@ public class OraxenHook extends Hook implements Listener {
             @Nullable BlockXpSourceState[] states = block.getStates();
             List<BlockXpSourceState> stateBuilder = new ArrayList<>();
             // Modify states
-            final String ORAXEN_PREFIX = "oraxen:";
+            final String NEXO_PREFIX = "nexo:";
 
             for (int i = 0; i < blocks.length; i++) {
                 String blockId = blocks[i];
-                if (!blockId.startsWith(ORAXEN_PREFIX)) {
+                if (!blockId.startsWith(NEXO_PREFIX)) {
                     continue;
                 }
 
-                String oraxenBlockId = blockId.substring(ORAXEN_PREFIX.length());
-                BlockData blockData = OraxenBlocks.getOraxenBlockData(oraxenBlockId);
+                String nextBlockId = blockId.substring(NEXO_PREFIX.length());
+                BlockData blockData = NexoBlocks.blockData(nextBlockId);
                 if (blockData == null) continue;
 
                 String blockDataString = blockData.getAsString(true);
@@ -98,7 +98,7 @@ public class OraxenHook extends Hook implements Listener {
 
                 stateBuilder.add(new BlockSourceState(ImmutableMap.copyOf(blockDataMap)));
 
-                // Replace oraxen: prefixed block name with actual material name
+                // Replace nexo: prefixed block name with actual material name
                 blocks[i] = blockData.getMaterial().getKey().getKey().toLowerCase(Locale.ROOT);
             }
             // Convert stateBuilder List to states array and assign
@@ -113,9 +113,9 @@ public class OraxenHook extends Hook implements Listener {
         });
     }
 
-    private Set<ItemStack> getUniqueOraxenDrops(Player player, Drop drop) {
+    private Set<ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
         Set<ItemStack> unique = new HashSet<>();
-        for (Loot loot : drop.getLootToDrop(player)) {
+        for (Loot loot : drop.lootToDrop(player)) {
             ItemStack item = loot.getItemStack();
 
             boolean alreadyAdded = false;

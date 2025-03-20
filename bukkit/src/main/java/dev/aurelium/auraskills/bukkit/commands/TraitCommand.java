@@ -4,13 +4,17 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.DurationParser;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -29,12 +33,12 @@ public class TraitCommand extends BaseCommand {
 
     @Subcommand("add")
     @CommandPermission("auraskills.command.modifier")
-    @CommandCompletion("@players @traits @nothing @nothing true true")
-    @Description("Adds a trait modifier to a player.")
-    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, @Default("false") boolean silent, @Default("false") boolean stack) {
+    @CommandCompletion("@players @traits @nothing @nothing @modifier_operations true true")
+    @Description("%desc_trait_add")
+    public void onAdd(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value, @Default("add") Operation operation, @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
-        TraitModifier modifier = new TraitModifier(name, trait, value);
+        TraitModifier modifier = new TraitModifier(name, trait, value, operation);
         if (!user.getTraitModifiers().containsKey(name)) {
             user.addTraitModifier(modifier);
             if (!silent) {
@@ -42,7 +46,7 @@ public class TraitCommand extends BaseCommand {
             }
         } else if (stack) { // Stack modifier by using a numbered name
             String newModifierName = ModifierCommand.getStackedName(user.getTraitModifiers().keySet(), name);
-            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value);
+            TraitModifier newModifier = new TraitModifier(newModifierName, trait, value, operation);
             user.addTraitModifier(newModifier);
             if (!silent) {
                 sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.MODIFIER_ADD_ADDED, locale), newModifier, player, locale));
@@ -54,10 +58,46 @@ public class TraitCommand extends BaseCommand {
         }
     }
 
+    @Subcommand("addtemp")
+    @CommandPermission("auraskills.command.modifier")
+    @CommandCompletion("@players @traits @nothing @nothing @nothing true|false @modifier_operations true|false true|false")
+    @Description("%desc_trait_addtemp")
+    public void addTemp(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value,
+                        Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
+                        @Default("false") boolean silent, @Default("false") boolean stack) {
+        User user = plugin.getUser(player);
+        Locale locale = user.getLocale();
+
+        String modifierName;
+        if (!user.getTraitModifiers().containsKey(name)) {
+            modifierName = name;
+        } else if (stack) {
+            modifierName = ModifierCommand.getStackedName(user.getTraitModifiers().keySet(), name);
+        } else {
+            if (!silent) {
+                sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.TRAIT_ADD_ALREADY_EXISTS, locale),
+                        "{name}", name,
+                        "{player}", player.getName()));
+            }
+            return;
+        }
+
+        TraitModifier modifier = new TraitModifier(modifierName, trait, value, operation);
+
+        long expirationTime = System.currentTimeMillis() + duration.toMillis();
+        modifier.makeTemporary(expirationTime, pauseOffline);
+        user.getUserStats().addTemporaryTraitModifier(modifier, true, expirationTime);
+
+        if (!silent) {
+            sender.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.TRAIT_ADDTEMP_ADDED, locale), modifier, player, locale)
+                    .replace("{duration}", DurationParser.toString(duration)));
+        }
+    }
+
     @Subcommand("remove")
     @CommandPermission("auraskills.command.modifier")
     @CommandCompletion("@players @modifiers true")
-    @Description("Removes a specific trait modifier from a player.")
+    @Description("%desc_trait_remove")
     public void onRemove(CommandSender sender, @Flags("other") Player player, String name, @Default("false") boolean silent) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
@@ -75,7 +115,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("list")
     @CommandCompletion("@players @traits")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Lists all or a specific trait's modifiers for a player.")
+    @Description("%desc_trait_list")
     public void onList(CommandSender sender, @Flags("other") @Optional Player player, @Optional Trait trait) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {
@@ -113,7 +153,7 @@ public class TraitCommand extends BaseCommand {
     @Subcommand("removeall")
     @CommandCompletion("@players @traits")
     @CommandPermission("auraskills.command.modifier")
-    @Description("Removes all trait modifiers from a player.")
+    @Description("%desc_trait_removeall")
     public void onRemoveAll(CommandSender sender, @Flags("other") @Optional Player player, @Optional Trait trait, @Default("false") boolean silent) {
         Locale locale = plugin.getLocale(sender);
         if (player == null) {

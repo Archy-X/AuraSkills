@@ -4,8 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.message.type.CommandMessage;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -33,8 +34,15 @@ public class UpdateChecker {
                 final String prefix = sender instanceof Player ? plugin.getPrefix(plugin.getDefaultLanguage()) : "[AuraSkills] ";
                 final String downloadLink = "https://modrinth.com/plugin/" + UpdateChecker.MODRINTH_ID + "/version/" + id;
 
-                sender.sendMessage(prefix + ChatColor.WHITE + "New update available! You are on version " + ChatColor.AQUA + plugin.getDescription().getVersion() + ChatColor.WHITE + ", latest version is " + ChatColor.AQUA + version);
-                sender.sendMessage(prefix + ChatColor.WHITE + "Download it on Modrinth: " + ChatColor.YELLOW + "" + ChatColor.UNDERLINE + downloadLink);
+                String msg = TextUtil.replace(plugin.getMsg(CommandMessage.VERSION_NEW_UPDATE, plugin.getLocale(sender)),
+                        "{current_version}", plugin.getDescription().getVersion(),
+                        "{latest_version}", version,
+                        "{link}", downloadLink,
+                        "{prefix}", prefix);
+
+                if (!msg.isEmpty()) {
+                    sender.sendMessage(msg);
+                }
             }
         });
     }
@@ -55,8 +63,7 @@ public class UpdateChecker {
             final String gameVersion = VersionUtils.getVersionString(Bukkit.getBukkitVersion());
             final String query = "loaders=%5B%22" + loader + "%22%5D&game_versions=%5B%22" + gameVersion + "%22%5D";
             final String url = baseUrl + "?" + query;
-            try {
-                HttpClient client = HttpClient.newHttpClient();
+            try (HttpClient client = HttpClient.newHttpClient()) {
 
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create(url))

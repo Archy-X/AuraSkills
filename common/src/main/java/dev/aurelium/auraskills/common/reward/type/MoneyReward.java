@@ -18,8 +18,8 @@ public class MoneyReward extends SkillReward {
     @Nullable
     private final String formula;
 
-    public MoneyReward(AuraSkillsPlugin plugin, double amount, @Nullable String formula) {
-        super(plugin);
+    public MoneyReward(AuraSkillsPlugin plugin, Skill skill, double amount, @Nullable String formula) {
+        super(plugin, skill);
         this.amount = amount;
         this.formula = formula;
     }

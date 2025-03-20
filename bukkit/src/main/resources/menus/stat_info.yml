@@ -1,0 +1,160 @@
+title: '{{stat_details}}'
+size: 6
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+  shapes:
+  - shape: border
+  - column: 7
+items:
+  back:
+    material: arrow
+    pos: 5,0
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
+templates:
+  stat:
+    pos: 0,8
+    contexts:
+      strength:
+        material: red_stained_glass_pane
+      health:
+        material: orange_stained_glass_pane
+      regeneration:
+        material: yellow_stained_glass_pane
+      luck:
+        material: green_stained_glass_pane
+      wisdom:
+        material: blue_stained_glass_pane
+      toughness:
+        material: purple_stained_glass_pane
+      crit_chance:
+        material: lime_stained_glass_pane
+      crit_damage:
+        material: cyan_stained_glass_pane
+      speed:
+        material: white_stained_glass_pane
+    display_name: '{color}{stat_name}'
+    lore:
+    - '<dark_gray>{{stat}}'
+    - ' '
+    - text: '{stat_desc}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>{{stat_level}}: {color}{level}'
+    - '  <dark_gray>{{base}}: {base_level}'
+    - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
+    - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
+    - component: traits_leveled
+    - ''
+    - component: stat_modifiers_click
+    - component: showing_stat_modifiers
+  trait:
+    options:
+      slots:
+      - 1,8
+      - 2,8
+      - 3,8
+      - 4,8
+      - 5,8
+    contexts:
+      attack_damage:
+        material: red_dye
+      hp:
+        material: orange_dye
+      saturation_regen:
+        material: golden_carrot
+      hunger_regen:
+        material: bread
+      mana_regen:
+        material: light_blue_dye
+      luck:
+        material: green_dye
+      farming_luck:
+        material: golden_hoe
+      foraging_luck:
+        material: golden_axe
+      mining_luck:
+        material: golden_pickaxe
+      fishing_luck:
+        material: fishing_rod
+      excavation_luck:
+        material: golden_shovel
+      double_drop:
+        material: lime_dye
+      experience_bonus:
+        material: experience_bottle
+      anvil_discount:
+        material: anvil
+      max_mana:
+        material: magenta_dye
+      damage_reduction:
+        material: chainmail_chestplate
+      crit_chance:
+        material: golden_sword
+      crit_damage:
+        material: iron_sword
+      movement_speed:
+        material: sugar
+    display_name: '{color}{trait_name}'
+    lore:
+    - '<dark_gray>{{trait}}'
+    - ' '
+    - text: '{{trait_gain}}'
+      wrap: true
+      styles:
+        1: '<gray>'
+    - ' '
+    - '<gray>{{trait_level}}: {color}{level}'
+    - '  <dark_gray>{{base}}: {base_level}'
+    - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
+    - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
+    - ' '
+    - component: trait_modifiers_click
+    - component: showing_trait_modifiers
+  modifier:
+    options:
+      start: 1,1
+      end: 4,6
+    material: gray_dye
+    contexts:
+      base_level_hp:
+        material: orange_dye
+      base_level_movement_speed:
+        material: white_dye
+    display_name: '<white>{display_name}'
+    lore:
+    - text: '{description}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>Value: {color}{value_format} {stat_name}'
+components:
+  traits_leveled:
+    context: Stat
+    lore:
+    - ' '
+    - '<gray>{{traits_leveled}} {color}↓'
+  stat_modifiers_click:
+    context: Stat
+    lore:
+    - '<yellow>{{stat_modifiers_click}}'
+  trait_modifiers_click:
+    context: Trait
+    lore:
+    - '<yellow>{{trait_modifiers_click}}'
+  showing_stat_modifiers:
+    context: Stat
+    lore:
+    - '<green>← {{showing_stat_modifiers}} <gray>({modifier_count})'
+  showing_trait_modifiers:
+    context: Trait
+    lore:
+    - '<green>← {{showing_trait_modifiers}} <gray>({modifier_count})'
+formats:
+  value_add: '+{value}'
+  value_multiply: '{value}x'
+  value_add_percent: '+{value}%'
+

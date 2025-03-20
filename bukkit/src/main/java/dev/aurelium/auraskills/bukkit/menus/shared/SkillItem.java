@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.PlaceholderHelper;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
@@ -20,14 +21,19 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.builder.TemplateBuilder;
 import dev.aurelium.slate.info.TemplateInfo;
+import dev.aurelium.slate.item.MenuItem;
+import dev.aurelium.slate.item.TemplateItem;
 import dev.aurelium.slate.item.provider.ListBuilder;
 import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,10 +41,28 @@ public class SkillItem {
 
     private final AuraSkills plugin;
     private final PlaceholderHelper helper;
+    private static NumberFormat percentFormat = new DecimalFormat("#.##");
+    private static NumberFormat currentXpFormat = new DecimalFormat("#.##");
 
     public SkillItem(AuraSkills plugin) {
         this.plugin = plugin;
         this.helper = new PlaceholderHelper(plugin);
+    }
+
+    public static void loadFormats(AuraSkills plugin) {
+        LoadedMenu menu = plugin.getSlate().getLoadedMenu("skills");
+        if (menu == null) {
+            return;
+        }
+
+        Object percentFormatObj = menu.options().get("percent_format");
+        if (percentFormatObj instanceof String s) {
+            percentFormat = new DecimalFormat(s);
+        }
+        Object currentXpFormatObj = menu.options().get("current_xp_format");
+        if (currentXpFormatObj instanceof String s) {
+            currentXpFormat = new DecimalFormat(s);
+        }
     }
 
     /**
@@ -198,8 +222,8 @@ public class SkillItem {
 
                 return switch (p.placeholder()) {
                     case "next_level" -> RomanNumber.toRoman(skillLevel + 1, plugin);
-                    case "percent" -> NumberUtil.format2(currentXp / xpToNext * 100);
-                    case "current_xp" -> NumberUtil.format2(currentXp);
+                    case "percent" -> percentFormat.format(currentXp / xpToNext * 100);
+                    case "current_xp" -> currentXpFormat.format(currentXp);
                     case "level_xp" -> String.valueOf((int) xpToNext);
                     case "bar" -> getBar(plugin, currentXp, xpToNext);
                     default -> null;
@@ -256,6 +280,32 @@ public class SkillItem {
         } else {
             return List.of("duration_entry", "mana_cost_entry", "cooldown_entry");
         }
+    }
+
+    @NotNull
+    public static ItemStack getBaseItem(Skill skill, AuraSkillsPlugin pluginAbs) {
+        ItemStack item = null;
+
+        if (!(pluginAbs instanceof AuraSkills plugin)) {
+            return ModifierInstances.getFallbackItem();
+        }
+
+        LoadedMenu loadedMenu = plugin.getSlate().getLoadedMenu("skills");
+        if (loadedMenu != null) {
+            MenuItem menuItem = loadedMenu.items().get("skill");
+            if (menuItem instanceof TemplateItem<?> template) {
+                ItemStack baseItem = template.getBaseItems().get(skill);
+                if (baseItem == null) {
+                    baseItem = template.getDefaultBaseItem();
+                }
+                item = baseItem;
+            }
+        }
+
+        if (item == null) {
+            item = ModifierInstances.getFallbackItem();
+        }
+        return item;
     }
 
 }

@@ -51,6 +51,8 @@ templates:
       - '<gray>{{your_level}}: {color}{level}'
       - ' '
       - '{traits[\n]}'
+      - ' '
+      - '<yellow>{{stat_info_click}}'
 components:
   leveled_by:
     context: Stat

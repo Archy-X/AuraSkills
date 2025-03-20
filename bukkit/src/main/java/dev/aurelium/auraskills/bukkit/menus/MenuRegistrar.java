@@ -32,6 +32,7 @@ public class MenuRegistrar {
         cm.registerContext("SortType", new SortTypeContext());
         cm.registerContext("Ability", new AbilityContext(plugin));
         cm.registerContext("ManaAbility", new ManaAbilityContext(plugin));
+        cm.registerContext("Trait", new TraitContext(plugin));
 
         // Build menus
         buildMenus();
@@ -52,6 +53,7 @@ public class MenuRegistrar {
         buildMenu("leaderboard", menu -> new LeaderboardMenu(plugin).build(menu));
         buildMenu("sources", menu -> new SourcesMenu(plugin).build(menu));
         buildMenu("abilities", menu -> new AbilitiesMenu(plugin).build(menu));
+        buildMenu("stat_info", menu -> new StatInfoMenu(plugin).build(menu));
 
         for (String nonDefault : ((ApiMenuManager) plugin.getApiBukkit().getMenuManager()).getNonDefaultMenuNames()) {
             buildMenu(nonDefault, menu -> {}); // Empty consumer passed since custom builder is applied in buildMenu

@@ -10,8 +10,8 @@ public class ItemReward extends MessagedReward {
     protected final NamespacedId itemKey;
     protected final int amount; // Amount of -1 means no amount was specified and should use amount of registered item
 
-    public ItemReward(AuraSkillsPlugin plugin, String menuMessage, String chatMessage, NamespacedId itemKey, int amount) {
-        super(plugin, menuMessage, chatMessage);
+    public ItemReward(AuraSkillsPlugin plugin, Skill skill, String menuMessage, String chatMessage, NamespacedId itemKey, int amount) {
+        super(plugin, skill, menuMessage, chatMessage);
         this.itemKey = itemKey;
         this.amount = amount;
     }

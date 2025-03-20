@@ -133,6 +133,8 @@ public enum Option {
     MODIFIER_ITEM_ENABLE_OFF_HAND("modifier.item.enable_off_hand", OptionType.BOOLEAN),
     MODIFIER_MULTIPLIER_ENABLED("modifier.multiplier.enabled", OptionType.BOOLEAN),
     MODIFIER_AUTO_CONVERT_FROM_LEGACY("modifier.auto_convert_from_legacy", OptionType.BOOLEAN),
+    MODIFIER_TEMPORARY_ENABLED("modifier.temporary.enabled", OptionType.BOOLEAN),
+    MODIFIER_TEMPORARY_CHECK_PERIOD("modifier.temporary.check_period", OptionType.INT),
     // Requirement options
     REQUIREMENT_ENABLED("requirement.enabled", OptionType.BOOLEAN),
     REQUIREMENT_OVERRIDE_GLOBAL("requirement.override_global", OptionType.BOOLEAN),
@@ -141,6 +143,7 @@ public enum Option {
     REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE("requirement.item.prevent_block_place", OptionType.BOOLEAN),
     REQUIREMENT_ITEM_PREVENT_INTERACT("requirement.item.prevent_interact", OptionType.BOOLEAN),
     REQUIREMENT_ARMOR_PREVENT_ARMOR_EQUIP("requirement.armor.prevent_armor_equip", OptionType.BOOLEAN),
+    REQUIREMENT_BLOCKS_ENABLED("requirement.blocks.enabled", OptionType.BOOLEAN),
     // Damage options
     DAMAGE_CORRECT_LAST_DAMAGE("damage.correct_last_damage", OptionType.BOOLEAN),
     // Critical options

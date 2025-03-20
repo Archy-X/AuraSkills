@@ -32,6 +32,7 @@ public class ReloadExecutor {
         plugin.config().loadOptions();
         plugin.getMessageProvider().loadDefaultLanguageOption();
         plugin.getRequirementManager().load();
+        plugin.getRequirementManager().loadBlocks();
         // Load blocked/disabled worlds lists
         plugin.getWorldManager().loadWorlds();
         // Load skills
@@ -52,7 +53,7 @@ public class ReloadExecutor {
             plugin.getHookManager().getHook(HologramsHook.class).loadConfig();
         }
         reloadPlayers();
-        sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD, locale));
+        sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.RELOAD_RELOADED, locale));
     }
 
     private void reloadPlayers() {

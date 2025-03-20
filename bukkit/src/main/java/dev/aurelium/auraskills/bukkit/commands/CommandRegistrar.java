@@ -12,15 +12,20 @@ import dev.aurelium.auraskills.api.stat.CustomStat;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.CustomTrait;
 import dev.aurelium.auraskills.api.trait.Trait;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.SourcesMenu.SortType;
+import dev.aurelium.auraskills.common.commands.Command;
 import dev.aurelium.auraskills.common.commands.ManaCommand;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.DurationParser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.time.Duration;
 import java.util.*;
 
 public class CommandRegistrar {
@@ -35,14 +40,29 @@ public class CommandRegistrar {
         var manager = new PaperCommandManager(plugin);
         manager.enableUnstableAPI("help");
         manager.usePerIssuerLocale(true, false);
-        manager.getCommandReplacements().addReplacement("skills_alias", "skills|sk|skill");
 
+        registerReplacements(manager);
         registerConditions(manager);
         registerContexts(manager);
         registerCompletions(manager);
         registerBaseCommands(manager);
         registerSkillCommands(manager);
         return manager;
+    }
+
+    private void registerReplacements(PaperCommandManager manager) {
+        var replacements = manager.getCommandReplacements();
+        replacements.addReplacement("skills_alias", "skills|sk|skill");
+        // Add description replacements for each command
+        for (Command command : Command.values()) {
+            String lower = command.name().toLowerCase(Locale.ROOT);
+            String placeholder = "desc_" + lower;
+
+            var messageKey = MessageKey.of("commands." + lower.replace("_", ".") + ".desc");
+            String message = plugin.getMsg(messageKey, plugin.getDefaultLanguage());
+
+            replacements.addReplacement(placeholder, message);
+        }
     }
 
     private void registerConditions(PaperCommandManager manager) {
@@ -111,7 +131,7 @@ public class CommandRegistrar {
             try {
                 return UUID.fromString(input);
             } catch (IllegalArgumentException e) {
-                throw new InvalidCommandArgument(input + "is not a valid UUID!");
+                throw new InvalidCommandArgument(input + " is not a valid UUID!");
             }
         });
         contexts.registerContext(JsonArg.class, c -> {
@@ -131,6 +151,14 @@ public class CommandRegistrar {
                 sb.append(c.popFirstArg());
             }
             return new JsonArg(sb.toString());
+        });
+        contexts.registerContext(Duration.class, c -> {
+            String input = c.popFirstArg();
+            try {
+                return DurationParser.parse(input);
+            } catch (IllegalArgumentException e) {
+                throw new InvalidCommandArgument(input + " is not a valid duration");
+            }
         });
     }
 
@@ -215,6 +243,8 @@ public class CommandRegistrar {
             return typeNames;
         });
         completions.registerAsyncCompletion("menu_names", c -> plugin.getSlate().getLoadedMenus().keySet());
+        completions.registerAsyncCompletion("modifier_operations", c ->
+                Arrays.stream(Operation.values()).map(s -> s.name().toLowerCase(Locale.ROOT)).toList());
     }
 
     private void registerBaseCommands(PaperCommandManager manager) {

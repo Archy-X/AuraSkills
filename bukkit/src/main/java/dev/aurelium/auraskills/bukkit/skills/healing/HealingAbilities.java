@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.skills.healing;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
@@ -65,8 +66,8 @@ public class HealingAbilities extends AbilityImpl {
         double healthBonus = getValue(ability, user);
         double regenerationBonus = getSecondaryValue(ability, user);
 
-        StatModifier healthModifier = new StatModifier(REVIVAL_HEALTH_MODIFIER_NAME, Stats.HEALTH, healthBonus);
-        StatModifier regenerationModifier = new StatModifier(REVIVAL_REGEN_MODIFIER_NAME, Stats.REGENERATION, regenerationBonus);
+        StatModifier healthModifier = new StatModifier(REVIVAL_HEALTH_MODIFIER_NAME, Stats.HEALTH, healthBonus, Operation.ADD);
+        StatModifier regenerationModifier = new StatModifier(REVIVAL_REGEN_MODIFIER_NAME, Stats.REGENERATION, regenerationBonus, Operation.ADD);
 
         user.addStatModifier(healthModifier);
         user.addStatModifier(regenerationModifier);

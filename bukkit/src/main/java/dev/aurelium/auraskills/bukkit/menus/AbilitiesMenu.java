@@ -225,7 +225,7 @@ public class AbilitiesMenu {
                 }
                 if (slots.size() > index) {
                     String slot = slots.get(index);
-                    return parseSlot(slot);
+                    return GlobalItems.parseSlot(slot);
                 }
             }
             // Default slots
@@ -238,18 +238,6 @@ public class AbilitiesMenu {
             int index = abilityList.indexOf(t.value());
             return SlotPos.of(1, 2 + index);
         };
-    }
-
-    private SlotPos parseSlot(String slotString) {
-        String[] split = slotString.split(",", 2);
-        if (split.length == 2) {
-            return SlotPos.of(NumberUtil.toInt(split[0]), NumberUtil.toInt(split[1]));
-        } else {
-            int num = NumberUtil.toInt(split[0]);
-            int row = num / 9;
-            int column = num % 9;
-            return SlotPos.of(row, column);
-        }
     }
 
 }
