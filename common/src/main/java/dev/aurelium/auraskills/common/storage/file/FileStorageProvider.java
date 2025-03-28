@@ -250,6 +250,7 @@ public class FileStorageProvider extends StorageProvider {
         Path path = Path.of(dataDirectory, uuid.toString() + ".yml");
 
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .defaultOptions(opts -> opts.shouldCopyDefaults(false))
                 .path(path)
                 .build();
 
@@ -422,6 +423,7 @@ public class FileStorageProvider extends StorageProvider {
         // Create a Yaml loader
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(Path.of(dataDirectory, uuid.toString() + ".yml"))
+                .defaultOptions(opts -> opts.shouldCopyDefaults(false))
                 .nodeStyle(NodeStyle.BLOCK)
                 .indent(2)
                 .build();

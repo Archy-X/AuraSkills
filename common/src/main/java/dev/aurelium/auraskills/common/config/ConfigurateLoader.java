@@ -63,7 +63,7 @@ public class ConfigurateLoader {
             YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                     .path(Path.of(uri))
                     .defaultOptions(opts ->
-                            opts.serializers(build -> build.registerAll(serializers))
+                            opts.shouldCopyDefaults(false).serializers(build -> build.registerAll(serializers))
                     )
                     .build();
 
@@ -93,8 +93,7 @@ public class ConfigurateLoader {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
                 .path(file.toPath())
                 .defaultOptions(opts ->
-                        opts.serializers(build -> build.registerAll(serializers))
-                )
+                        opts.shouldCopyDefaults(false).serializers(build -> build.registerAll(serializers)))
                 .build();
 
         return loader.load();

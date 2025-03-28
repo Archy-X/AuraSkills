@@ -54,7 +54,9 @@ public class BackupProvider {
         File backupFile = new File(plugin.getPluginFolder() + "/backups/backup-" + LocalDate.now()
                 + "_" + time.getHour() + "-" + time.getMinute() + "-" + time.getSecond() + ".yml");
 
-        YamlConfigurationLoader loader = YamlConfigurationLoader.builder().path(backupFile.toPath()).build();
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .defaultOptions(opts -> opts.shouldCopyDefaults(false))
+                .path(backupFile.toPath()).build();
 
         ConfigurationNode config = BasicConfigurationNode.root(); // Create empty node
 
@@ -102,7 +104,9 @@ public class BackupProvider {
     }
 
     public void loadBackup(File file) throws Exception {
-        ConfigurationNode root = YamlConfigurationLoader.builder().path(file.toPath()).build().load();
+        ConfigurationNode root = YamlConfigurationLoader.builder()
+                .defaultOptions(opts -> opts.shouldCopyDefaults(false))
+                .path(file.toPath()).build().load();
 
         int version = root.node("backup_version").getInt(0);
 

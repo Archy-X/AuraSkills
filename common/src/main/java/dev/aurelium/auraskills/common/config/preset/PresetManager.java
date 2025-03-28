@@ -146,6 +146,7 @@ public class PresetManager {
 
     private ConfigurationNode loadInputStream(InputStream inputStream) throws ConfigurateException {
         YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .defaultOptions(opts -> opts.shouldCopyDefaults(false))
                 .source(() -> new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
                 .nodeStyle(NodeStyle.BLOCK)
                 .build();

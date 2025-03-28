@@ -7,8 +7,6 @@ import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
-import org.spongepowered.configurate.yaml.NodeStyle;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,12 +95,7 @@ public class MenuFileManager {
         user.node("file_version").set(embVersion);
 
         try {
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .file(userFile)
-                    .nodeStyle(NodeStyle.BLOCK)
-                    .indent(2)
-                    .build();
-            loader.save(user);
+            FileUtil.saveYamlFile(userFile, user);
 
             plugin.logger().info("Menu file " + userFile.getName() + " was updated: " + changed + " new sections added");
         } catch (IOException e) {
