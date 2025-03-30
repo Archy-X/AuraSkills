@@ -42,6 +42,8 @@ public class AnvilDiscountTrait extends TraitImpl {
     @EventHandler
     @SuppressWarnings("removal")
     public void onAnvilPrepare(PrepareAnvilEvent event) {
+        if (!Traits.ANVIL_DISCOUNT.isEnabled()) return;
+
         User user = null;
         // Finds the viewer with the highest wisdom level
         for (HumanEntity entity : event.getViewers()) {
