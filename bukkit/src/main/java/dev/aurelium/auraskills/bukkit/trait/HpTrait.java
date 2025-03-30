@@ -19,7 +19,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
+import org.jetbrains.annotations.Nullable;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -77,10 +79,16 @@ public class HpTrait extends TraitImpl {
         plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
     }
 
+    public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
+        double scaling = trait.optionDouble("action_bar_scaling", 1);
+        double display = scaling * value;
+
+        return format != null ? format.format(display) : NumberUtil.format1(display);
+    }
+
     @Override
     public String getMenuDisplay(double value, Trait trait, Locale locale) {
-        double scaling = trait.optionDouble("action_bar_scaling", 1);
-        return NumberUtil.format1(scaling * value);
+        return getMenuDisplay(value, trait, (NumberFormat) null);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

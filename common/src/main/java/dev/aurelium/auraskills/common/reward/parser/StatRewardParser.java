@@ -29,6 +29,7 @@ public class StatRewardParser extends RewardParser {
         return new StatRewardBuilder(plugin)
                 .stat(stat)
                 .value(config.node("value").getDouble())
+                .format(config.node("format").getString())
                 .skill(skill)
                 .build();
     }

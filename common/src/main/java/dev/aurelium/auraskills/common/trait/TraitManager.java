@@ -6,7 +6,9 @@ import dev.aurelium.auraskills.api.trait.TraitHandler;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.text.NumberFormat;
 import java.util.*;
 
 public abstract class TraitManager {
@@ -70,5 +72,5 @@ public abstract class TraitManager {
 
     public abstract void registerTraitHandler(TraitHandler traitHandler);
 
-    public abstract String getMenuDisplay(Trait trait, double value, Locale locale);
+    public abstract String getMenuDisplay(Trait trait, double value, Locale locale, @Nullable NumberFormat format);
 }

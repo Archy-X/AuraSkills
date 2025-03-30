@@ -16,19 +16,18 @@ java {
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.aikar.co/content/groups/aikar/")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.helpch.at/releases")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
-    maven("https://repo.maven.apache.org/maven2/")
     maven("https://mvn.lumine.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.nexomc.com/snapshots/")
+    mavenLocal()
 }
 
 dependencies {

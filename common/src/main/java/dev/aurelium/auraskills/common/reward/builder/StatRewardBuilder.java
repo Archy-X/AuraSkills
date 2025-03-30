@@ -5,11 +5,13 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.reward.SkillReward;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import dev.aurelium.auraskills.common.reward.type.StatReward;
+import org.jetbrains.annotations.Nullable;
 
 public class StatRewardBuilder extends RewardBuilder {
 
     private Stat stat;
     private double value = 1.0;
+    private String format;
 
     public StatRewardBuilder(AuraSkillsPlugin plugin) {
         super(plugin);
@@ -25,9 +27,14 @@ public class StatRewardBuilder extends RewardBuilder {
         return this;
     }
 
+    public StatRewardBuilder format(@Nullable String format) {
+        this.format = format;
+        return this;
+    }
+
     @Override
     public SkillReward build() {
         Validate.notNull(stat, "You must specify a stat");
-        return new StatReward(plugin, skill, stat, value);
+        return new StatReward(plugin, skill, stat, value, format);
     }
 }
