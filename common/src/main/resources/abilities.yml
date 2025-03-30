@@ -215,6 +215,7 @@ abilities:
     unlock: '{start}+5'
     level_up: 5
     max_level: 0
+    speed_reduction: 0.2
   auraskills/shielding:
     enabled: true
     base_value: 2.0
@@ -526,4 +527,4 @@ abilities:
     unlock: '{start}+5'
     level_up: 5
     max_level: 0
-file_version: 2
+file_version: 3

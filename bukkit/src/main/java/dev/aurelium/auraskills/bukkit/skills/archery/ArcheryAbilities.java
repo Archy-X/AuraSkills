@@ -101,7 +101,7 @@ public class ArcheryAbilities extends AbilityImpl {
 
     public void stun(Player player, User user, LivingEntity entity) {
         var ability = Abilities.STUN;
-        double STUN_SPEED_REDUCTION = 0.2;
+        double STUN_SPEED_REDUCTION = ability.optionDouble("speed_reduction", 0.2);
 
         if (failsChecks(player, ability)) return;
 
