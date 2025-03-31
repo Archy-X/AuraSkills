@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.NumberFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -70,6 +71,10 @@ public class BukkitTraitManager extends TraitManager {
             }
         }
         return null;
+    }
+
+    public Collection<BukkitTraitHandler> getAllTraitImpls() {
+        return traitImpls.values();
     }
 
     @Override

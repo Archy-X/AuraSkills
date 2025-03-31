@@ -47,8 +47,6 @@ public abstract class LevelManager {
 
     public abstract void playLevelUpSound(@NotNull User user);
 
-    public abstract void reloadModifiers(User user);
-
     public void addXp(User user, Skill skill, @Nullable XpSource source, double amount) {
         if (amount == 0) return; // Ignore if source amount is 0
 
@@ -179,7 +177,7 @@ public abstract class LevelManager {
         }
 
         // Reload items and armor to check for newly met requirements
-        reloadModifiers(user);
+        plugin.getModifierManager().applyModifiers(user, true);
         // Calls event
         plugin.getEventHandler().callSkillLevelUpEvent(user, skill, level);
 

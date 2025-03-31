@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.modifier;
+package dev.aurelium.auraskills.bukkit.item;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.message.MessageKey;

@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -15,8 +16,6 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
-import dev.aurelium.auraskills.bukkit.modifier.Modifiers;
-import dev.aurelium.auraskills.bukkit.modifier.Multipliers;
 import dev.aurelium.auraskills.bukkit.requirement.GlobalRequirement;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
 import dev.aurelium.auraskills.common.config.Option;
@@ -52,6 +51,10 @@ public class SkillsItem {
     }
 
     public List<StatModifier> getStatModifiers(ModifierType type) {
+        return getStatModifiers(type, false);
+    }
+
+    public List<StatModifier> getStatModifiers(ModifierType type, boolean offhand) {
         List<StatModifier> modifiers = new ArrayList<>();
         if (isContainerList(MetaType.MODIFIER, type)) {
             List<PersistentDataContainer> containers = getContainerList(MetaType.MODIFIER, type);
@@ -69,13 +72,11 @@ public class SkillsItem {
                 String operationName = container.getOrDefault(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
                 Operation operation = Operation.parse(operationName);
 
-                String modifierName;
-                if (type == ModifierType.ITEM) {
-                    modifierName = "AuraSkills.Modifiers.Item." + getName(stat);
-                } else {
-                    modifierName = "AuraSkills.Modifiers.Armor." + getSlotName() + "." + getName(stat);
-                }
-                modifiers.add(new StatModifier(modifierName, stat, value, operation));
+                String modifierName = getModifierName(stat, type, offhand);
+
+                var modifier = new StatModifier(modifierName, stat, value, operation);
+                modifier.setNonPersistent();
+                modifiers.add(modifier);
             }
         } else {
             PersistentDataContainer container = getContainer(MetaType.MODIFIER, type);
@@ -89,17 +90,21 @@ public class SkillsItem {
                     continue;
                 }
 
-                if (type == ModifierType.ITEM) {
-                    modifiers.add(new StatModifier("AuraSkills.Modifiers.Item." + getName(stat), stat, value, Operation.ADD));
-                } else if (type == ModifierType.ARMOR) {
-                    modifiers.add(new StatModifier("AuraSkills.Modifiers.Armor." + getSlotName() + "." + getName(stat), stat, value, Operation.ADD));
-                }
+                String modifierName = getModifierName(stat, type, offhand);
+
+                var modifier = new StatModifier(modifierName, stat, value, Operation.ADD);
+                modifier.setNonPersistent();
+                modifiers.add(modifier);
             }
         }
         return modifiers;
     }
 
     public List<TraitModifier> getTraitModifiers(ModifierType type) {
+        return getTraitModifiers(type, false);
+    }
+
+    public List<TraitModifier> getTraitModifiers(ModifierType type, boolean offhand) {
         List<TraitModifier> modifiers = new ArrayList<>();
         if (isContainerList(MetaType.TRAIT_MODIFIER, type)) {
             List<PersistentDataContainer> containers = getContainerList(MetaType.TRAIT_MODIFIER, type);
@@ -117,13 +122,11 @@ public class SkillsItem {
                 String operationName = container.getOrDefault(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
                 Operation operation = Operation.parse(operationName);
 
-                String modifierName;
-                if (type == ModifierType.ITEM) {
-                    modifierName = "AuraSkills.TraitModifiers.Item." + getName(trait);
-                } else {
-                    modifierName = "AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait);
-                }
-                modifiers.add(new TraitModifier(modifierName, trait, value, operation));
+                String modifierName = getModifierName(trait, type, offhand);
+
+                var modifier = new TraitModifier(modifierName, trait, value, operation);
+                modifier.setNonPersistent();
+                modifiers.add(modifier);
             }
         } else {
             PersistentDataContainer container = getContainer(MetaType.TRAIT_MODIFIER, type);
@@ -135,14 +138,23 @@ public class SkillsItem {
                 Trait trait = plugin.getTraitRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
                 if (trait == null) continue;
 
-                if (type == ModifierType.ITEM) {
-                    modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Item." + getName(trait), trait, value, Operation.ADD));
-                } else if (type == ModifierType.ARMOR) {
-                    modifiers.add(new TraitModifier("AuraSkills.TraitModifiers.Armor." + getSlotName() + "." + getName(trait), trait, value, Operation.ADD));
-                }
+                String modifierName = getModifierName(trait, type, offhand);
+
+                var modifier = new TraitModifier(modifierName, trait, value, Operation.ADD);
+                modifier.setNonPersistent();
+                modifiers.add(modifier);
             }
         }
         return modifiers;
+    }
+
+    private String getModifierName(ReloadableIdentifier identifier, ModifierType type, boolean offhand) {
+        final String prefix = identifier instanceof Stat ? StatModifier.ITEM_PREFIX : TraitModifier.ITEM_PREFIX;
+        if (type == ModifierType.ITEM) {
+            return prefix + "Item." + getName(identifier) + (offhand ? ".Offhand" : "");
+        } else {
+            return prefix + "Armor." + getSlotName() + "." + getName(identifier);
+        }
     }
 
     // MetaType must be MODIFIER or TRAIT_MODIFIER
@@ -243,6 +255,10 @@ public class SkillsItem {
     }
 
     public List<Multiplier> getMultipliers(ModifierType type) {
+        return getMultipliers(type, false);
+    }
+
+    public List<Multiplier> getMultipliers(ModifierType type, boolean offhand) {
         PersistentDataContainer container = getContainer(MetaType.MULTIPLIER, type);
         List<Multiplier> multipliers = new ArrayList<>();
 
@@ -253,7 +269,7 @@ public class SkillsItem {
             Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(key.getKey()));
 
             if (type == ModifierType.ITEM) {
-                multipliers.add(new Multiplier("AuraSkills.Modifiers.Item." + getMultiplierName(skill), skill, value));
+                multipliers.add(new Multiplier("AuraSkills.Modifiers.Item." + getMultiplierName(skill) + (offhand ? ".Offhand" : ""), skill, value));
             } else if (type == ModifierType.ARMOR) {
                 multipliers.add(new Multiplier("AuraSkills.Modifiers.Armor." + getSlotName() + "." + getMultiplierName(skill), skill, value));
             }
@@ -596,12 +612,8 @@ public class SkillsItem {
         return modifierType.toString().toLowerCase(Locale.ROOT) + "_" + metaType.getKey();
     }
 
-    private String getName(Stat stat) {
-        return TextUtil.capitalize(stat.name().toLowerCase(Locale.ROOT));
-    }
-
-    private String getName(Trait trait) {
-        return TextUtil.capitalize(trait.name().toLowerCase(Locale.ROOT));
+    private String getName(ReloadableIdentifier identifier) {
+        return TextUtil.capitalize(identifier.name().toLowerCase(Locale.ROOT));
     }
 
     private String getMultiplierName(@Nullable Skill skill) {

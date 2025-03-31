@@ -29,6 +29,7 @@ public class PlayerDeath implements Listener {
                     user.setSkillXp(skill, 0);
                 }
             }
+            plugin.getModifierManager().applyModifiers(player, true);
         }
     }
 

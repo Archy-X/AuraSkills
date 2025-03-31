@@ -7,15 +7,10 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
+import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.slate.builder.TemplateBuilder;
-import dev.aurelium.slate.info.TemplateInfo;
-import dev.aurelium.slate.info.TemplatePlaceholderInfo;
-import dev.aurelium.slate.menu.ActiveMenu;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -153,39 +148,6 @@ public class ModifierInstances {
             index++;
         }
         return instances;
-    }
-
-    public void setPlaceholders(TemplateBuilder<String> template) {
-        template.replace("display_name", t -> instance(t.menu(), t.value()).displayName());
-        template.replace("id", t -> instance(t.menu(), t.value()).id());
-        template.replace("description", t -> instance(t.menu(), t.value()).description());
-        template.replace("operation", t -> instance(t.menu(), t.value()).operation().getDisplayName());
-        template.replace("value", t -> NumberUtil.format2(instance(t.menu(), t.value()).value()));
-        template.replace("value_format", t -> switch (instance(t.menu(), t.value()).operation()) {
-            case ADD -> formatValue(t, "value_add");
-            case MULTIPLY -> formatValue(t, "value_multiply");
-            case ADD_PERCENT -> formatValue(t, "value_add_percent");
-        });
-
-    }
-
-    public ModifierInstance instance(ActiveMenu menu, String id) {
-        Map<String, ModifierInstance> map = menu.property("modifiers");
-        return map.get(id);
-    }
-
-    public ItemStack modifyItem(TemplateInfo<String> t) {
-        if (t.item().equals(ModifierInstances.getFallbackItem())) {
-            ItemStack item = instance(t.menu(), t.value()).item();
-            return Objects.requireNonNullElseGet(item, ModifierInstances::getFallbackItem);
-        } else {
-            return t.item();
-        }
-    }
-
-    private String formatValue(TemplatePlaceholderInfo<String> t, String format) {
-        return t.menu().getFormat(format).replace("{value}",
-                NumberUtil.format2(instance(t.menu(), t.value()).value()));
     }
 
     public static ItemStack getFallbackItem() {

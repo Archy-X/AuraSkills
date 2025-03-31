@@ -39,9 +39,9 @@ import dev.aurelium.auraskills.bukkit.menus.MenuOptions;
 import dev.aurelium.auraskills.bukkit.menus.MenuRegistrar;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
 import dev.aurelium.auraskills.bukkit.message.BukkitMessageProvider;
-import dev.aurelium.auraskills.bukkit.modifier.ArmorModifierListener;
-import dev.aurelium.auraskills.bukkit.modifier.BukkitModifierManager;
-import dev.aurelium.auraskills.bukkit.modifier.ItemListener;
+import dev.aurelium.auraskills.bukkit.item.ArmorModifierListener;
+import dev.aurelium.auraskills.bukkit.item.BukkitModifierManager;
+import dev.aurelium.auraskills.bukkit.item.ItemListener;
 import dev.aurelium.auraskills.bukkit.region.BukkitRegionManager;
 import dev.aurelium.auraskills.bukkit.region.BukkitWorldManager;
 import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
@@ -457,10 +457,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public AntiAfkManager getAntiAfkManager() {
         return antiAfkManager;
-    }
-
-    public int getResourceId() {
-        return 81069;
     }
 
     public AuraSkillsBukkit getApiBukkit() {

@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.api.trait;
 
 import dev.aurelium.auraskills.api.option.Optioned;
-import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 
 import java.util.Locale;
 
-public interface Trait extends Optioned, NamespaceIdentified {
+public interface Trait extends Optioned, ReloadableIdentifier {
 
     /**
      * Gets whether the trait is enabled. Disabled traits will have no effect
@@ -46,6 +46,7 @@ public interface Trait extends Optioned, NamespaceIdentified {
      *
      * @return the trait name in all upper case
      */
+    @Override
     String name();
 
 }

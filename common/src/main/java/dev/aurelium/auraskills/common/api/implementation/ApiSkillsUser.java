@@ -89,12 +89,12 @@ public class ApiSkillsUser implements SkillsUser {
         user.setSkillLevel(skill, level);
 
         if (refresh) {
-            plugin.getStatManager().updateStats(user);
+            plugin.getStatManager().recalculateStats(user);
             plugin.getRewardManager().updatePermissions(user);
             plugin.getRewardManager().applyRevertCommands(user, skill, oldLevel, level);
             plugin.getRewardManager().applyLevelUpCommands(user, skill, oldLevel, level);
             // Reload items and armor to check for newly met requirements
-            this.plugin.getModifierManager().reloadUser(user);
+            this.plugin.getModifierManager().applyModifiers(user, true);
         }
     }
 

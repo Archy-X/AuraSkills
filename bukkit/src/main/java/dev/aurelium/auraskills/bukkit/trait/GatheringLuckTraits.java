@@ -16,7 +16,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.menus.util.SlateMenuHelper;
-import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
+import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
@@ -92,17 +92,24 @@ public class GatheringLuckTraits extends TraitImpl {
 
         Ability ability = getAbility(trait);
         if (ability == null) return;
-        if (!ability.isEnabled()) return;
 
         TraitModifiers label = getModifierLabel(ability);
         String modifierName = label != null ? label.getId() : trait.name().toLowerCase(Locale.ROOT) + "_ability";
+
+        if (!ability.isEnabled()) {
+            user.removeTraitModifier(modifierName, false);
+            return;
+        }
+
         // Get the luck trait value from the ability value
         double value = ability.getValue(user.getAbilityLevel(ability));
 
         if (value != 0) {
-            user.addTraitModifier(new TraitModifier(modifierName, trait, value, Operation.ADD), false);
+            var modifier = new TraitModifier(modifierName, trait, value, Operation.ADD);
+            modifier.setNonPersistent();
+            user.addTraitModifier(modifier, false);
         } else {
-            user.removeTraitModifier(modifierName);
+            user.removeTraitModifier(modifierName, false);
         }
     }
 

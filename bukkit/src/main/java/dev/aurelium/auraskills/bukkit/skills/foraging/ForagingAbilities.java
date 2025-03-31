@@ -3,11 +3,16 @@ package dev.aurelium.auraskills.bukkit.skills.foraging;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
+import dev.aurelium.auraskills.api.event.item.ItemDisableEvent;
+import dev.aurelium.auraskills.api.event.item.ItemEnableEvent;
+import dev.aurelium.auraskills.api.event.item.ItemToggleEvent;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
@@ -91,7 +96,12 @@ public class ForagingAbilities extends AbilityImpl {
         }
     }
 
-    public void applyValor(User user) {
+    @EventHandler
+    public void applyValor(ItemEnableEvent event) {
+        if (isNotValor(event)) return;
+
+        User user = BukkitUser.getUser(event.getUser());
+
         var ability = Abilities.VALOR;
         if (isDisabled(ability)) return;
 
@@ -100,8 +110,19 @@ public class ForagingAbilities extends AbilityImpl {
         user.addStatModifier(new StatModifier("foraging-valor", Stats.STRENGTH, (int) getValue(ability, user), Operation.ADD));
     }
 
-    public void removeValor(User user) {
+    @EventHandler
+    public void removeValor(ItemDisableEvent event) {
+        if (isNotValor(event)) return;
+
+        User user = BukkitUser.getUser(event.getUser());
         user.removeStatModifier("foraging-valor");
+    }
+
+    private boolean isNotValor(ItemToggleEvent event) {
+        if (!ItemUtils.isAxe(event.getItem().getType())) {
+            return true;
+        }
+        return event.getType() != ModifierType.ITEM;
     }
 
 }

@@ -3,11 +3,16 @@ package dev.aurelium.auraskills.bukkit.skills.mining;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
+import dev.aurelium.auraskills.api.event.item.ItemDisableEvent;
+import dev.aurelium.auraskills.api.event.item.ItemEnableEvent;
+import dev.aurelium.auraskills.api.event.item.ItemToggleEvent;
+import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
@@ -86,7 +91,13 @@ public class MiningAbilities extends AbilityImpl {
         }
     }
 
-    public void applyStamina(Player player, User user) {
+    @EventHandler
+    public void applyStamina(ItemEnableEvent event) {
+        if (isNotStamina(event)) return;
+
+        Player player = event.getPlayer();
+        User user = BukkitUser.getUser(event.getUser());
+
         var ability = Abilities.STAMINA;
 
         if (isDisabled(ability)) return;
@@ -98,8 +109,19 @@ public class MiningAbilities extends AbilityImpl {
         user.addStatModifier(new StatModifier("mining-stamina", Stats.TOUGHNESS, (int) getValue(ability, user), Operation.ADD));
     }
 
-    public void removeStamina(User user) {
+    @EventHandler
+    public void removeStamina(ItemDisableEvent event) {
+        if (isNotStamina(event)) return;
+
+        User user = BukkitUser.getUser(event.getUser());
         user.removeStatModifier("mining-stamina");
+    }
+
+    private boolean isNotStamina(ItemToggleEvent event) {
+        if (!ItemUtils.isPickaxe(event.getItem().getType())) {
+            return true;
+        }
+        return event.getType() != ModifierType.ITEM;
     }
 
 }

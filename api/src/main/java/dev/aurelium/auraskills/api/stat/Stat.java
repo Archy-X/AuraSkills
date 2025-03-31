@@ -1,13 +1,12 @@
 package dev.aurelium.auraskills.api.stat;
 
 import dev.aurelium.auraskills.api.option.Optioned;
-import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.trait.Trait;
 
 import java.util.List;
 import java.util.Locale;
 
-public interface Stat extends Optioned, NamespaceIdentified {
+public interface Stat extends Optioned, ReloadableIdentifier {
 
     /**
      * Gets whether the stat is enabled in the configuration. Disabled stats
@@ -99,6 +98,7 @@ public interface Stat extends Optioned, NamespaceIdentified {
      *
      * @return the stat name in all upper case
      */
+    @Override
     String name();
 
     /**

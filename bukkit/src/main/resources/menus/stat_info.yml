@@ -18,23 +18,23 @@ templates:
     pos: 0,8
     contexts:
       strength:
-        material: red_stained_glass_pane
+        material: red_stained_glass
       health:
-        material: orange_stained_glass_pane
+        material: orange_stained_glass
       regeneration:
-        material: yellow_stained_glass_pane
+        material: yellow_stained_glass
       luck:
-        material: green_stained_glass_pane
+        material: green_stained_glass
       wisdom:
-        material: blue_stained_glass_pane
+        material: blue_stained_glass
       toughness:
-        material: purple_stained_glass_pane
+        material: purple_stained_glass
       crit_chance:
-        material: lime_stained_glass_pane
+        material: lime_stained_glass
       crit_damage:
-        material: cyan_stained_glass_pane
+        material: cyan_stained_glass
       speed:
-        material: white_stained_glass_pane
+        material: white_stained_glass
     display_name: '{color}{stat_name}'
     lore:
     - '<dark_gray>{{stat}}'
@@ -130,7 +130,7 @@ templates:
       wrap: true
       style: '<gray>'
     - ' '
-    - '<gray>Value: {color}{value_format} {stat_name}'
+    - '<gray>Value: {color}{value_format} {type_name}'
 components:
   traits_leveled:
     context: Stat

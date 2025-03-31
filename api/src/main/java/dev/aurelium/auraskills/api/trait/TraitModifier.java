@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 
 public class TraitModifier extends AuraSkillsModifier<Trait> {
 
+    public static final String ITEM_PREFIX = "AuraSkills.TraitModifiers.";
+
     public TraitModifier(String name, Trait trait, double value, Operation operation) {
         super(name, trait, value, operation);
     }
@@ -15,10 +17,6 @@ public class TraitModifier extends AuraSkillsModifier<Trait> {
 
     public Trait trait() {
         return type;
-    }
-
-    public TraitModifier withName(String newName) {
-        return new TraitModifier(newName, type, value, operation);
     }
 
 }

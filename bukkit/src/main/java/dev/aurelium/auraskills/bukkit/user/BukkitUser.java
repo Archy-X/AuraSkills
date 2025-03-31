@@ -6,7 +6,8 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.antiafk.CheckData;
 import dev.aurelium.auraskills.bukkit.antiafk.CheckType;
 import dev.aurelium.auraskills.bukkit.hooks.BukkitLuckPermsHook;
-import dev.aurelium.auraskills.bukkit.modifier.TraitModifiers;
+import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
+import dev.aurelium.auraskills.bukkit.item.UserEquipment;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
 import net.kyori.adventure.text.Component;
@@ -25,12 +26,14 @@ public class BukkitUser extends User {
     private final AuraSkills plugin;
     // Non-persistent data
     private final Map<CheckType, CheckData> checkData;
+    private final UserEquipment equipment;
 
     public BukkitUser(UUID uuid, @Nullable Player player, AuraSkills plugin) {
         super(uuid, plugin);
         this.player = player;
         this.plugin = plugin;
         this.checkData = new HashMap<>();
+        this.equipment = UserEquipment.empty();
     }
 
     @Nullable
@@ -45,6 +48,11 @@ public class BukkitUser extends User {
     @NotNull
     public CheckData getCheckData(CheckType type) {
         return checkData.computeIfAbsent(type, t -> new CheckData());
+    }
+
+    @NotNull
+    public UserEquipment getEquipment() {
+        return equipment;
     }
 
     @Nullable

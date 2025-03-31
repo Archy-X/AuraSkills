@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.user;
 
-import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -130,10 +130,10 @@ public class UserStats {
         return removeModifier(name, reload, traitModifiers);
     }
 
-    private <T extends AuraSkillsModifier<V>, V extends NamespaceIdentified> void addModifier(T modifier, boolean reload, Map<String, T> map) {
+    private <T extends AuraSkillsModifier<V>, V extends ReloadableIdentifier> void addModifier(T modifier, boolean reload, Map<String, T> map) {
         if (map.containsKey(modifier.name())) {
             AuraSkillsModifier<V> oldModifier = map.get(modifier.name());
-            if (oldModifier.type() == modifier.type() && oldModifier.value() == modifier.value()) {
+            if (oldModifier.equals(modifier)) {
                 return;
             }
             // Do not reload on remove since that would reset health and other stuff (mainly for 3rd party plugins)
@@ -152,7 +152,7 @@ public class UserStats {
         }
     }
 
-    private <T extends AuraSkillsModifier<V>, V extends NamespaceIdentified> boolean removeModifier(String name, boolean reload, Map<String, T> map) {
+    private <T extends AuraSkillsModifier<V>, V extends ReloadableIdentifier> boolean removeModifier(String name, boolean reload, Map<String, T> map) {
         AuraSkillsModifier<V> modifier = map.get(name);
         if (modifier == null) return false;
         map.remove(name);

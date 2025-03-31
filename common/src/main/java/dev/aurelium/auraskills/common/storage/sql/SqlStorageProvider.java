@@ -485,6 +485,10 @@ public class SqlStorageProvider extends StorageProvider {
             return rows;
         }
         for (var modifier : modifiers.values()) {
+            if (modifier.isNonPersistent()) {
+                continue;
+            }
+
             String statId = modifier.type().getId().toString();
             byte operationId = modifier.operation().getSqlId();
             long expTime = modifier.getExpirationTime();

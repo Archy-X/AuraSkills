@@ -4,6 +4,6 @@ import dev.aurelium.auraskills.common.user.User;
 
 public interface ModifierManager {
 
-    void reloadUser(User user);
+    void applyModifiers(User user, boolean reload);
 
 }

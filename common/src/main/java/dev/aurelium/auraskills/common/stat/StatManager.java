@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.stat;
 
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
@@ -59,24 +60,22 @@ public abstract class StatManager {
         statMap.clear();
     }
 
-    public abstract void reloadPlayer(User user);
+    public abstract <T extends ReloadableIdentifier> void reload(User user, T type);
 
-    public abstract <T> void reload(User user, T type);
+    public abstract void reloadAllTraits(User user);
 
-    public abstract void reloadStat(User user, Stat stat);
+    public void recalculateStats(User user) {
+        recalculateStats(user, true);
+    }
 
-    public void updateStats(User user) {
+    public void recalculateStats(User user, boolean reload) {
         if (user == null) return;
 
         for (Stat stat : plugin.getStatRegistry().getValues()) {
             user.getUserStats().recalculateStat(stat);
         }
-        reloadStats(user);
-    }
-
-    private void reloadStats(User user) {
-        for (Stat stat : getEnabledStats()) {
-            reloadStat(user, stat);
+        if (reload) {
+            reloadAllTraits(user);
         }
     }
 

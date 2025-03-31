@@ -14,6 +14,7 @@ import dev.aurelium.slate.builder.ItemBuilder;
 import dev.aurelium.slate.builder.MenuBuilder;
 import dev.aurelium.slate.info.PlaceholderInfo;
 import dev.aurelium.slate.info.TemplateInfo;
+import dev.aurelium.slate.info.TemplatePlaceholderInfo;
 import dev.aurelium.slate.inv.content.SlotPos;
 import dev.aurelium.slate.menu.ActiveMenu;
 import dev.aurelium.slate.util.VersionUtil;
@@ -25,10 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class StatInfoMenu {
 
@@ -173,7 +171,25 @@ public class StatInfoMenu {
         });
 
         menu.template("modifier", String.class, template -> {
-            instances.setPlaceholders(template);
+            template.replace("display_name", t -> instance(t.menu(), t.value()).displayName());
+            template.replace("id", t -> instance(t.menu(), t.value()).id());
+            template.replace("description", t -> instance(t.menu(), t.value()).description());
+            template.replace("operation", t -> instance(t.menu(), t.value()).operation().getDisplayName());
+            template.replace("value", t -> NumberUtil.format2(instance(t.menu(), t.value()).value()));
+            template.replace("value_format", t -> switch (instance(t.menu(), t.value()).operation()) {
+                case ADD -> formatValue(t, "value_add");
+                case MULTIPLY -> formatValue(t, "value_multiply");
+                case ADD_PERCENT -> formatValue(t, "value_add_percent");
+            });
+            template.replace("type_name", t -> {
+                var type = instance(t.menu(), t.value()).parent();
+                if (type instanceof Stat || stat(t).hasDirectTrait()) {
+                    return stat(t).getDisplayName(t.locale());
+                } else if (type instanceof Trait trait) {
+                    return trait.getDisplayName(t.locale());
+                }
+                return t.placeholder();
+            });
 
             template.definedContexts(m -> {
                 Map<String, ModifierInstance> map = m.menu().property("modifiers");
@@ -181,7 +197,7 @@ public class StatInfoMenu {
             });
 
             template.slotPos(t -> {
-                var instance = instances.instance(t.menu(), t.value());
+                var instance = instance(t.menu(), t.value());
                 SlotPos start;
                 SlotPos end;
 
@@ -201,7 +217,14 @@ public class StatInfoMenu {
                 return getRectangleIndex(start, end, instance.index());
             });
 
-            template.modify(instances::modifyItem);
+            template.modify(t -> {
+                if (t.item().equals(ModifierInstances.getFallbackItem())) {
+                    ItemStack item = instance(t.menu(), t.value()).item();
+                    return Objects.requireNonNullElseGet(item, ModifierInstances::getFallbackItem);
+                } else {
+                    return t.item();
+                }
+            });
         });
 
         menu.component("traits_leveled", Stat.class, component -> {
@@ -227,6 +250,16 @@ public class StatInfoMenu {
 
             component.shouldShow(c -> c.menu().property("selected") instanceof Trait trait && c.value().equals(trait));
         });
+    }
+
+    private ModifierInstance instance(ActiveMenu menu, String id) {
+        Map<String, ModifierInstance> map = menu.property("modifiers");
+        return map.get(id);
+    }
+
+    private String formatValue(TemplatePlaceholderInfo<String> t, String format) {
+        return t.menu().getFormat(format).replace("{value}",
+                NumberUtil.format2(instance(t.menu(), t.value()).value()));
     }
 
     private void getBackItem(AuraSkills plugin, ItemBuilder item) {

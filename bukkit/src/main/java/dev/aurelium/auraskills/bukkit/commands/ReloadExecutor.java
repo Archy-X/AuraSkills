@@ -1,12 +1,10 @@
 package dev.aurelium.auraskills.bukkit.commands;
 
-import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.HologramsHook;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.bukkit.trait.AnvilDiscountTrait;
 import dev.aurelium.auraskills.bukkit.trait.DamageReductionTrait;
-import dev.aurelium.auraskills.bukkit.trait.HpTrait;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -57,11 +55,9 @@ public class ReloadExecutor {
     }
 
     private void reloadPlayers() {
-        HpTrait hpTrait = plugin.getTraitManager().getTraitImpl(HpTrait.class);
         for (Player player : Bukkit.getOnlinePlayers()) {
             User user = plugin.getUser(player);
-            plugin.getStatManager().updateStats(user);
-            hpTrait.reload(player, Traits.HP); // Recalculate player HP
+            plugin.getStatManager().recalculateStats(user);
         }
     }
 

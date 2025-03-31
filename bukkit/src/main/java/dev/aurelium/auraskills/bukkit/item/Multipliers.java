@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.modifier;
+package dev.aurelium.auraskills.bukkit.item;
 
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import dev.aurelium.auraskills.api.item.ModifierType;

@@ -434,6 +434,9 @@ public class FileStorageProvider extends StorageProvider {
     private void applyStatModifiers(ConfigurationNode node, Map<String, StatModifier> modifiers) throws Exception {
         int index = 0;
         for (StatModifier modifier : modifiers.values()) {
+            if (modifier.isNonPersistent()) {
+                continue;
+            }
             ConfigurationNode modifierNode = node.node(String.valueOf(index));
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("stat").set(modifier.stat().getId().toString());
@@ -447,6 +450,9 @@ public class FileStorageProvider extends StorageProvider {
     private void applyTraitModifiers(ConfigurationNode node, Map<String, TraitModifier> modifiers) throws Exception {
         int index = 0;
         for (TraitModifier modifier : modifiers.values()) {
+            if (modifier.isNonPersistent()) {
+                continue;
+            }
             ConfigurationNode modifierNode = node.node(String.valueOf(index));
             modifierNode.node("name").set(modifier.name());
             modifierNode.node("trait").set(modifier.trait().getId().toString());

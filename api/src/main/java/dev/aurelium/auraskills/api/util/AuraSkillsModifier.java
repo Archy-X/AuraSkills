@@ -1,11 +1,12 @@
 package dev.aurelium.auraskills.api.util;
 
-import dev.aurelium.auraskills.api.registry.NamespaceIdentified;
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.Objects;
 
-public abstract class AuraSkillsModifier<T extends NamespaceIdentified> {
+public abstract class AuraSkillsModifier<T extends ReloadableIdentifier> {
 
     protected final String name;
     protected final T type;
@@ -13,6 +14,7 @@ public abstract class AuraSkillsModifier<T extends NamespaceIdentified> {
     protected final Operation operation;
     private long expirationTime;
     private boolean pauseOffline;
+    private boolean nonPersistent;
 
     public AuraSkillsModifier(String name, T type, double value, @NotNull Operation operation) {
         this.name = name;
@@ -52,6 +54,26 @@ public abstract class AuraSkillsModifier<T extends NamespaceIdentified> {
 
     public boolean isPauseOffline() {
         return pauseOffline;
+    }
+
+    public boolean isNonPersistent() {
+        return nonPersistent;
+    }
+
+    public void setNonPersistent() {
+        this.nonPersistent = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AuraSkillsModifier<?> that = (AuraSkillsModifier<?>) o;
+        return Double.compare(value, that.value) == 0 && expirationTime == that.expirationTime && pauseOffline == that.pauseOffline && nonPersistent == that.nonPersistent && Objects.equals(name, that.name) && Objects.equals(type, that.type) && operation == that.operation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, value, operation, expirationTime, pauseOffline, nonPersistent);
     }
 
     @Override
