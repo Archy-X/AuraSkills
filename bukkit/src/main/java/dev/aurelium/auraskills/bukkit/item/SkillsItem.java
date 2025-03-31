@@ -191,7 +191,7 @@ public class SkillsItem {
 
                 if (metaContainer == null) continue; // Skip if no container exists
 
-                List<PersistentDataContainer> migratedList = convertContainerToList(oldContainer, metaType);
+                List<PersistentDataContainer> migratedList = convertContainerToList(metaContainer, metaType);
 
                 saveContainerList(migratedList, metaType, modifierType);
                 removeEmpty(migratedList, metaType, modifierType);
@@ -220,7 +220,7 @@ public class SkillsItem {
 
             created.set(new NamespacedKey(plugin, "value"), PersistentDataType.DOUBLE, value);
             // All existing modifiers are Operation.ADD
-            created.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString());
+            created.set(new NamespacedKey(plugin, "operation"), PersistentDataType.STRING, Operation.ADD.toString().toLowerCase(Locale.ROOT));
 
             list.add(created);
         }

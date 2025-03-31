@@ -32,12 +32,13 @@ public class BukkitStatManager extends StatManager {
 
     @Override
     public <T> void reload(User user, T type) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return;
+
         if (type instanceof Stat stat) {
             reloadStat(user, stat);
         } else if (type instanceof Trait trait) {
-            for (Stat stat : plugin.getTraitManager().getLinkedStats(trait)) {
-                reloadStat(user, stat);
-            }
+            reloadTrait(user, player, trait);
         }
     }
 
@@ -48,10 +49,14 @@ public class BukkitStatManager extends StatManager {
         if (player == null) return;
         // Reload traits
         for (Trait trait : stat.getTraits()) {
-            BukkitTraitHandler traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);
-            if (traitImpl == null) continue;
-
-            traitImpl.onReload(player, user.toApi(), trait);
+            reloadTrait(user, player, trait);
         }
+    }
+
+    private void reloadTrait(User user, Player player, Trait trait) {
+        BukkitTraitHandler traitImpl = ((BukkitTraitManager) plugin.getTraitManager()).getTraitImpl(trait);
+        if (traitImpl == null) return;
+
+        traitImpl.onReload(player, user.toApi(), trait);
     }
 }
