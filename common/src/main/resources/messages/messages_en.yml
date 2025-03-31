@@ -338,7 +338,7 @@ commands:
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
         desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
@@ -353,6 +353,7 @@ commands:
         desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
         desc: Adds an armor trait modifier to the item held, along with lore by default.
       remove:
@@ -421,7 +422,7 @@ commands:
       desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>modifier with level <aqua>{value} <gray>was added to your item"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
         desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
@@ -436,6 +437,7 @@ commands:
         desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
         desc: Adds an item trait modifier to the item held, along with lore by default.
       remove:
@@ -534,7 +536,7 @@ commands:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
       desc: Adds a stat modifier to a player.
     addtemp:
-      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}"
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
       desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
@@ -1026,4 +1028,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 37
+file_version: 38

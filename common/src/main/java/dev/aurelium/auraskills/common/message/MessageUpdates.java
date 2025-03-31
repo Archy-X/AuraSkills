@@ -27,7 +27,9 @@ public enum MessageUpdates implements MessageUpdate {
     COMMANDS_PROFILE_STATS(36, "commands.profile.stats", "Key commands.profile.stats has been converted to a mapping. " +
             "The message has been reset and moved to commands.profile.stats.header"),
     COMMANDS_VERSION(37, "commands.version", "Key commands.version has been converted to a mapping. " +
-            "The message has been reset and moved to commands.version.version");
+            "The message has been reset and moved to commands.version.version"),
+    COMMANDS_ARMOR_MODIFIER_ADD_ADDED(38, "commands.armor.modifier.add.added", "Key commands.armor.modifier.add.added was reset because the {operation} placeholder was added."),
+    COMMANDS_ITEM_MODIFIER_ADD_ADDED(38, "commands.item.modifier.add.added", "Key commands.item.modifier.add.added was reset because the {operation} placeholder was added.");
 
     private final int version;
     private final String path;

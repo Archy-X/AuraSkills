@@ -56,8 +56,7 @@ public class ArmorCommand extends BaseCommand {
         skillsItem.addModifier(MetaType.MODIFIER, ModifierType.ARMOR, stat, value, operation);
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
-        player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, locale));
-
+        player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), stat, value, operation, locale));
     }
 
     @Subcommand("modifier remove")
@@ -137,7 +136,7 @@ public class ArmorCommand extends BaseCommand {
         ItemStack newItem = skillsItem.getItem();
         player.getInventory().setItemInMainHand(newItem);
         player.sendMessage(plugin.getPrefix(locale) +
-                format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_ADD_ADDED, locale), trait, value, locale));
+                format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_TRAIT_ADD_ADDED, locale), trait, value, operation, locale));
     }
 
     @Subcommand("trait remove")

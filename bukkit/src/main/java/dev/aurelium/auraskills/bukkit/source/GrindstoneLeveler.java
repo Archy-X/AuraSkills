@@ -97,6 +97,7 @@ public class GrindstoneLeveler extends SourceLeveler {
         return totalLevel;
     }
 
+    @SuppressWarnings("deprecation")
     public boolean isDisenchantable(Enchantment enchant) {
         // Block vanilla curses
         if (enchant.equals(Enchantment.BINDING_CURSE) || enchant.equals(Enchantment.VANISHING_CURSE)) {

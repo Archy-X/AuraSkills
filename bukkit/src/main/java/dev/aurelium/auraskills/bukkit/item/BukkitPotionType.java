@@ -24,6 +24,7 @@ public class BukkitPotionType {
         this.upgraded = upgraded;
     }
 
+    @SuppressWarnings("deprecation")
     public BukkitPotionType(PotionMeta meta) {
         if (VersionUtils.isAtLeastVersion(20, 2)) {
             type = meta.getBasePotionType();

@@ -70,6 +70,7 @@ public class NexoHook extends Hook implements Listener {
         });
     }
 
+    @SuppressWarnings("deprecation")
     public void registerBlockParsingExtension() {
         plugin.getSourceTypeRegistry().registerParsingExtension(SourceTypes.BLOCK, source -> {
             BlockSource block = (BlockSource) source;

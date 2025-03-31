@@ -51,6 +51,7 @@ public class ItemUtils {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public static boolean hasTelekinesis(ItemStack item) {
 		if (item == null || item.getType() == Material.AIR) return false;
 		for (Enchantment enchant : item.getEnchantments().keySet()) {

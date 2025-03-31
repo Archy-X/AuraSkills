@@ -87,6 +87,7 @@ public class EnchantingAbilities extends AbilityImpl {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void enchantedStrength() {
         var ability = Abilities.ENCHANTED_STRENGTH;
         String MODIFIER_NAME = "AbilityModifier-EnchantedStrength";

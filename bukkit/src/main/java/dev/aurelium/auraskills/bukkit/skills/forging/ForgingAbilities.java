@@ -38,6 +38,7 @@ public class ForgingAbilities extends AbilityImpl {
         super(plugin, Abilities.DISENCHANTER, Abilities.FORGER, Abilities.REPAIRING, Abilities.ANVIL_MASTER, Abilities.SKILL_MENDER);
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.MONITOR)
     public void disenchanter(InventoryClickEvent event) {
         var ability = Abilities.DISENCHANTER;
