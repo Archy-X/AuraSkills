@@ -42,7 +42,7 @@ public class ItemStateManager {
      * @param userObj the user
      * @param player the player
      * @param afterItem the new item to add modifiers from
-     * @param slot the slot that change
+     * @param slot the slot that changed
      * @param reloadIds whether to reload identifiers (stats and traits) after the operation
      * @param force whether to reload even if the existing known item is the same (such as when requirements change)
      * @return the set of reloaded identifiers if {@code reloadIds} is true, or the set of identifiers that were affected but
