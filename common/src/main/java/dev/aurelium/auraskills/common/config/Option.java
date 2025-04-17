@@ -162,6 +162,7 @@ public enum Option {
     // Menu options
     MENUS_LORE_WRAPPING_WIDTH("menus.lore_wrapping_width", OptionType.INT),
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
+    MENUS_REMOVAL_PROTECTION("menus.removal_protection", OptionType.BOOLEAN),
     MENUS_STATS_SHOW_TRAIT_VALUES_DIRECTLY("menus.stats.show_trait_values_directly", OptionType.BOOLEAN),
     LOOT_UPDATE_LOOT_TABLES("loot.update_loot_tables", OptionType.BOOLEAN),
     LOOT_DIRECTLY_TO_INVENTORY("loot.directly_to_inventory", OptionType.BOOLEAN),

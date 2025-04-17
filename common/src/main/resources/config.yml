@@ -265,6 +265,7 @@ source:
 menus:
   lore_wrapping_width: 43
   placeholder_api: true
+  removal_protection: false
   stats:
     show_trait_values_directly: true
 loot:

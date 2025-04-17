@@ -26,6 +26,7 @@ public class MenuOptions {
                 .mainDirectory(new File(plugin.getDataFolder(), "menus"))
                 .loreWrappingWidth(plugin.configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .itemMetaParsers(getMetaParsers())
+                .removalProtection(plugin.configBoolean(Option.MENUS_REMOVAL_PROTECTION))
                 .build();
     }
 
