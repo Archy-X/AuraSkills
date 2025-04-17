@@ -94,7 +94,7 @@ public class GatheringLuckTraits extends TraitImpl {
         if (ability == null) return;
 
         TraitModifiers label = getModifierLabel(ability);
-        String modifierName = label != null ? label.getId() : trait.name().toLowerCase(Locale.ROOT) + "_ability";
+        String modifierName = label != null ? label.getModifierId() : trait.name().toLowerCase(Locale.ROOT) + "_ability";
 
         if (!ability.isEnabled()) {
             user.removeTraitModifier(modifierName, false);

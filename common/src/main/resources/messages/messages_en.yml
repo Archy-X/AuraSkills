@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Pierce Chance"
   stun:
     name: Stun
-    desc: "{value}% chance to decreases enemy movement speed by 20% for 2 seconds."
+    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Stun Chance"
   shielding:
     name: Shielding
@@ -791,7 +791,15 @@ menus:
     base_level: "Base Level"
     base_level_desc: "Base level from Minecraft and external sources."
     linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
     ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Replenish

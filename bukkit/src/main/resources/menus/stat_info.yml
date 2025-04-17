@@ -124,6 +124,48 @@ templates:
         material: orange_dye
       base_level_movement_speed:
         material: white_dye
+      base_level_mana_regen:
+        material: light_blue_dye
+      base_level_max_mana:
+        material: magenta_dye
+      linked_stat_strength:
+        material: red_stained_glass
+      linked_stat_regeneration:
+        material: yellow_stained_glass
+      linked_stat_luck:
+        material: green_stained_glass
+      linked_stat_wisdom:
+        material: blue_stained_glass
+      linked_stat_toughness:
+        material: purple_stained_glass
+      ability_valor:
+        material: stone_axe
+        flags:
+        - hide_attributes
+      ability_stamina:
+        material: stone_pickaxe
+        flags:
+        - hide_attributes
+      ability_bountiful_harvest:
+        material: wheat
+      ability_lumberjack:
+        material: oak_log
+      ability_lucky_miner:
+        material: stone
+      ability_lucky_catch:
+        material: cod
+      ability_bigger_scoop:
+        material: sand
+      ability_fleeting:
+        material: feather
+      ability_enchanted_strength:
+        material: enchanted_book
+      ability_wise_effect:
+        material: potion
+        potion_data:
+          type: turtle_master
+        flags:
+        - hide_potion_effects
     display_name: '<white>{display_name}'
     lore:
     - text: '{description}'

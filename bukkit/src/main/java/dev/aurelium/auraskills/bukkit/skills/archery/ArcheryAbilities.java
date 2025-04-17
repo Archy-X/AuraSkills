@@ -215,6 +215,8 @@ public class ArcheryAbilities extends AbilityImpl {
     public String replaceDescPlaceholders(String input, Ability ability, User user) {
         if (ability.equals(Abilities.RETRIEVAL)) {
             return TextUtil.replace(input, "{time}", NumberUtil.format1(ability.optionDouble("delay_sec", 3)));
+        } else if (ability.equals(Abilities.STUN)) {
+            return TextUtil.replace(input, "{reduction_percent}", NumberUtil.format1(ability.optionDouble("speed_reduction", 0.2) * 100.0));
         }
         return input;
     }

@@ -113,7 +113,15 @@ public enum MenuMessage implements MessageKey {
     BASE_LEVEL(8),
     BASE_LEVEL_DESC(8),
     LINKED_STAT_DESC(8),
+    ABILITY_MODIFIER_NAME(8),
     ABILITY_MODIFIER_DESC(8),
+    CUSTOM_MODIFIER_DESC(8),
+    ITEM_HAND_DESC(8),
+    ITEM_OFF_HAND_DESC(8),
+    HELMET_DESC(8),
+    CHESTPLATE_DESC(8),
+    LEGGINGS_DESC(8),
+    BOOTS_DESC(8)
     ;
 
     private final String path;

@@ -6,18 +6,33 @@ import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
+import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.item.BuiltInModifier;
+import dev.aurelium.auraskills.bukkit.item.StatModifiers;
 import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
+import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.type.MenuMessage;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.Map.Entry;
 
 public class ModifierInstances {
+
+    private static final String STAT_PREFIX = "stat_modifier_";
+    private static final String TRAIT_PREFIX = "trait_modifier_";
 
     private final AuraSkills plugin;
 
@@ -106,13 +121,8 @@ public class ModifierInstances {
             // Name and description info for known static trait modifiers (e.g. from abilities)
             TraitModifiers builtIn = TraitModifiers.fromId(modifier.name());
 
-            String id = "trait_modifier_" + modifier.name();
-            instances.put(id, new ModifierInstance(trait, id, modifier.value(), modifier.operation(),
-                    getFallbackItem(),
-                    builtIn != null ? builtIn.getNameMessage(plugin, user.getLocale()) : modifier.name(),
-                    builtIn != null ? builtIn.getDescriptionMessage(plugin, user.getLocale()) : "",
-                    index
-            ));
+            String id = builtIn != null ? "ability_" + builtIn.getMessageName() : TRAIT_PREFIX + modifier.name();
+            instances.put(id, createInstance(trait, id, modifier, builtIn, user, index));
             index++;
         }
         return instances;
@@ -136,18 +146,128 @@ public class ModifierInstances {
             index++;
         }
         for (StatModifier modifier : user.getStatModifiers().values()) {
-            if (modifier.value() == 0.0) continue;
-            if (!modifier.stat().equals(stat)) continue;
-            String id = "stat_modifier_" + modifier.name();
-            instances.put(id, new ModifierInstance(stat, id, modifier.value(), modifier.operation(),
-                    getFallbackItem(),
-                    modifier.name(),
-                    "",
-                    index
-            ));
+            if (!modifier.stat().equals(stat) || modifier.value() == 0.0) continue;
+
+            // Name and description info for known static trait modifiers (e.g. from abilities)
+            StatModifiers builtIn = StatModifiers.fromId(modifier.name());
+
+            String id = builtIn != null ? "ability_" + builtIn.getMessageName() : STAT_PREFIX + modifier.name();
+            instances.put(id, createInstance(stat, id, modifier, builtIn, user, index));
             index++;
         }
         return instances;
+    }
+
+    private ModifierInstance createInstance(NamespaceIdentified identified, String id, AuraSkillsModifier<?> modifier, BuiltInModifier builtIn, User user, int index) {
+        @Nullable ItemModifierData itemData = getItemModifierData(user, id);
+
+        String displayName;
+        if (builtIn != null) {
+            displayName = builtIn.getDisplayName(plugin, user.getLocale());
+        } else if (itemData != null) {
+            displayName = itemData.displayName();
+        } else {
+            displayName = modifier.name();
+        }
+
+        String desc;
+        if (builtIn != null) {
+            desc = builtIn.getDescriptionMessage(plugin, user);
+        } else if (itemData != null) {
+            desc = itemData.description();
+        } else {
+            desc = getFallbackDescription(id, user.getLocale());
+        }
+
+        return new ModifierInstance(
+                identified,
+                id,
+                modifier.value(),
+                modifier.operation(),
+                itemData != null ? itemData.item() : getFallbackItem(),
+                displayName,
+                desc,
+                index
+        );
+    }
+
+    @Nullable
+    private ItemModifierData getItemModifierData(User user, String id) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) {
+            return null;
+        }
+        MenuMessage descKey;
+        @Nullable ItemStack item;
+
+        if (id.startsWith(STAT_PREFIX + StatModifier.ITEM_PREFIX + "Item.") || id.startsWith(TRAIT_PREFIX + TraitModifier.ITEM_PREFIX + "Item.")) {
+            if (id.endsWith(".Offhand")) {
+                descKey = MenuMessage.ITEM_OFF_HAND_DESC;
+                item = player.getInventory().getItemInOffHand();
+            } else {
+                descKey = MenuMessage.ITEM_HAND_DESC;
+                item = player.getInventory().getItemInMainHand();
+            }
+        } else if (id.startsWith(STAT_PREFIX + StatModifier.ITEM_PREFIX + "Armor.") || id.startsWith(TRAIT_PREFIX + TraitModifier.ITEM_PREFIX + "Armor.")) {
+            String withoutPrefix = TextUtil.replace(id,
+                    STAT_PREFIX, "",
+                    TRAIT_PREFIX, "",
+                    StatModifier.ITEM_PREFIX, "",
+                    TraitModifier.ITEM_PREFIX, "",
+                    "Armor.", "");
+            String slotName = withoutPrefix.split("\\.", 2)[0];
+            try {
+                descKey = MenuMessage.valueOf(slotName.toUpperCase(Locale.ROOT) + "_DESC");
+                item = switch (slotName.toLowerCase(Locale.ROOT)) {
+                    case "helmet" -> player.getInventory().getHelmet();
+                    case "chestplate" -> player.getInventory().getChestplate();
+                    case "leggings" -> player.getInventory().getLeggings();
+                    case "boots" -> player.getInventory().getBoots();
+                    default -> null;
+                };
+            } catch (IllegalArgumentException ignored) {
+                return null;
+            }
+        } else {
+            return null;
+        }
+
+        if (item == null) {
+            item = getFallbackItem();
+        }
+        item = item.clone();
+        // Hide attributes and enchants and clear lore
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null) {
+            if (VersionUtils.isAtLeastVersion(20, 5)) {
+                meta.setAttributeModifiers(Material.IRON_SWORD.getDefaultAttributeModifiers(EquipmentSlot.HAND));
+            }
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            meta.setLore(null); // Clear existing lore
+            item.setItemMeta(meta);
+        }
+
+        return new ItemModifierData(getDisplayName(item), plugin.getMsg(descKey, user.getLocale()), item);
+    }
+
+    private String getDisplayName(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        return meta == null || !meta.hasDisplayName() ? "!!REMOVE!!" : meta.getDisplayName();
+    }
+
+    record ItemModifierData(String displayName, String description, ItemStack item) {
+
+    }
+
+    private String getFallbackDescription(String modifierName, Locale locale) {
+        String path = "menus.stat_info.modifiers." + modifierName;
+        String customMsg = plugin.getMsg(MessageKey.of(path), locale);
+        if (!customMsg.equals(path)) {
+            return customMsg;
+        }
+        // Fallback default description
+        return plugin.getMsg(MenuMessage.CUSTOM_MODIFIER_DESC, locale);
     }
 
     public static ItemStack getFallbackItem() {

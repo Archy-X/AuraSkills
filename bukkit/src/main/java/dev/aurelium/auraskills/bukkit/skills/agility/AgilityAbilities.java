@@ -173,11 +173,11 @@ public class AgilityAbilities extends AbilityImpl {
         double maxHealth = attribute.getValue();
 
         if (player.getHealth() - event.getFinalDamage() < getFleetingHealthRequired() * maxHealth) {
-            if (user.getTraitModifier(TraitModifiers.FLEETING.getId()) != null) {
+            if (user.getTraitModifier(TraitModifiers.FLEETING.getModifierId()) != null) {
                 return;
             }
             double percent = getValue(ability, user);
-            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
+            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getModifierId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
 
             Locale locale = user.getLocale();
             plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(AbilityMessage.FLEETING_START, locale), "{value}", String.valueOf((int) percent)));
@@ -239,9 +239,9 @@ public class AgilityAbilities extends AbilityImpl {
     private void removeFleetingMetadata(Player player) {
         User user = plugin.getUser(player);
 
-        if (user.getTraitModifier(TraitModifiers.FLEETING.getId()) == null) return;
+        if (user.getTraitModifier(TraitModifiers.FLEETING.getModifierId()) == null) return;
         // Returns if there was no modifier to remove
-        if (!user.removeTraitModifier(TraitModifiers.FLEETING.getId())) {
+        if (!user.removeTraitModifier(TraitModifiers.FLEETING.getModifierId())) {
             return;
         }
 
@@ -252,7 +252,7 @@ public class AgilityAbilities extends AbilityImpl {
     @EventHandler
     public void fleetingLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getId());
+        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
     }
 
     @EventHandler
@@ -273,7 +273,7 @@ public class AgilityAbilities extends AbilityImpl {
 
             double percent = getValue(ability, user);
 
-            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
+            user.addTraitModifier(new TraitModifier(TraitModifiers.FLEETING.getModifierId(), Traits.MOVEMENT_SPEED, percent, Operation.ADD));
         }
     }
 
@@ -281,7 +281,7 @@ public class AgilityAbilities extends AbilityImpl {
     public void fleetingDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getId());
+        plugin.getUser(player).removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
     }
 
     private double getFleetingHealthRequired() {
