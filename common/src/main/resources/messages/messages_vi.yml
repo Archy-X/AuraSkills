@@ -332,7 +332,7 @@ commands:
   antiafk:
     failed: "<red>{player} không vượt qua lần kiểm tra anti-AFK {check}<gray>(Số lần: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: "<gray>Bản ghi Anti-AFK của <red>{player} <gray>({count} tổng cộng) <dark_gray>| <gray>Trang {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
   armor:
     modifier:
@@ -456,7 +456,7 @@ commands:
       removed: "<white>Removed job {job} from player {player}"
       unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
+      removed: "<white> Đã xóa tất cả nghề nghiệp của {player}"
   lang:
     set: "<gray>Ngôn ngữ đã đặt thành <aqua>{lang}"
     not_found: "<yellow>Không tìm thấy ngôn ngữ này!"
