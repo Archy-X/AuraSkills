@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Szansy Przebicia"
   stun:
     name: Ogłuszenie
-    desc: "{value}% szans na zmniejszenie prędkości ruchu wroga o 20% na 2 sekundy."
+    desc: "{value}% szans na zmniejszenie szybkości ruchu wroga o {reduction_percent}% na 2 sekundy."
     info: "{value}% Szans Ogłuszenia"
   shielding:
     name: Osłona
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Anty-AFK logi dla <red>{player} <gray>({count} łącznie) <dark_gray>| <gray>Strona {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Pokaż logi anty-AFK dla danego gracza.
   armor:
     modifier:
       add:
-        added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
+        added: "Dodano modyfikator statystyk do zbroi ze statystyką: {stat}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator zbroi ze statystyką {color}{stat} <yellow>już istnieje na twojej zbroi! Usuń go najpierw za pomocą /sk armor modifier remove"
+        desc: Dodaje modyfikator statystyk zbroi do posiadanego przedmiotu, wraz z domyślnie z lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z Twojego przedmiotu"
+        desc: Usuwa modyfikator statystyk pancerza z trzymanego przedmiotu i domyślnie powiązaną z nim lor.
       list:
         header: "<white>Znaleziono modyfikatory pancerza:"
+        desc: Wyświetla wszystkie modyfikatory statystyk zbroi na trzymanym przedmiotu.
       removeall:
         removed: "<gray>Wszystkie modyfikatory zbroi zostały usunięte z twojego przedmiotu"
+        desc: Usuwa wszystkie modyfikatory statystyk pancerza z trzymanym przedmiotu.
     trait:
       add:
+        added: "Dodano modyfikator cech do zbroi z cechą: {trait}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator zbroi ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk armor trait remove"
+        desc: Dodaje modyfikator cechy zbroi do trzymanym przedmiotu, wraz z domyślnym lorem.
+      remove:
+        desc: Usuwa modyfikator cechy zbroi z trzymanym przedmiotu.
+      list:
+        desc: Wyświetla wszystkie modyfikatory cech przedmiotu trzymanego.
+      removeall:
+        desc: Usuwa wszystkie modyfikatory cech zbroi z przedmiotu trzymanego.
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Gdy jest używany: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Gdy jest używany: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Gdy jest używany: <blue>-{value}% Doświadczenia Umiejętności"
+        desc: Dodaje mnożnik zbroi do trzymanego przedmiotu dla wszystkich lub określonej umiejętności, gdzie wartością jest procent uzyskanego XP.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>zbroi!"
         removed: "<gray>Mnożnik zbroi <aqua>{target} <gray>został usunięty z twojego przedmiotu"
+        desc: Usuwa z trzymanego przedmiotu mnożnik zbroi określonej umiejętności lub globalnego mnożnika.
       list:
         header: "<white>Znalezione mnożniki zbroi:"
+        desc: Wyświetla wszystkie mnożniki zbroi na utrzymywanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie mnożniki zbroi zostały usunięte z twojego przedmiotu"
+        desc: Usuwa wszystkie mnożniki zbroi z trzymanego przedmiotu.
     requirement:
       add:
         added: "<gray>Wymóg zbroi <dark_aqua>{skill}<gray> z poziomem <aqua>{level}<gray> został dodany do przedmiotu"
         already_exists: "<yellow>Zbroja już ma wymóg <dark_aqua>{skill}<yellow>! Usuń go przez <gold>/sk armor requirement remove"
         lore: "<red>Wymaga <dark_aqua>{skill} {level}"
+        desc: Dodaje wymóg zbroi do trzymanego przedmiotu, wraz z domyślnym lordem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma wymagania zbroi <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Wymóg zbroi <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
+        desc: Usuwa wymóg zbroi z trzymanego przedmiotu, wraz z domyślnym mu lorem.
       list:
         header: "<white>Znaleziono wymagania zbroi:"
+        desc: Wyświetla wymagania dotyczące zbroi na trzymanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie wymagania zbroi zostały usunięte z twojego przedmiotu"
+        desc: Usuwa wszystkie wymagania dotyczące zbroi na trzymanego przedmiotu.
       equip: "<yellow>Nie spełniasz wymagań do wyposażenia tego przedmiotu: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Błąd podczas ładowania kopii zapasowej: {error}"
       must_be_yaml: "<yellow>Plik musi być plikiem .yml!"
       file_not_found: "<yellow>Kopia zapasowa tej nazwy pliku nie istnieje w folderze kopii zapasowych!"
+      desc: Ładuje kopię zapasową z danego pliku.
     save:
       saving: "<white>Zapisywanie kopii zapasowej..."
       saved: "<white>Wykonano kopię zapasową danych {type} jako {file}"
       error: "<red>Błąd podczas tworzenia kopii zapasowej danych {type}! Zobacz błąd w konsoli/poniżej, aby uzyskać szczegóły"
+      desc: Zapisuje kopię zapasową bieżących danych w folderze kopii zapasowych.
   claimitems:
+    desc: Otwiera menu umożliwiające odebranie nieodebranych przedmiotów.
     no_items: "<yellow>Nie masz żadnych przedmiotów do odebrania"
   item:
     give:
       sender: "<white>Dostarcz <aqua>{amount}x {key} <white>do {player}"
       receiver: "<white>Otrzymałeś <aqua>{amount}x {key}"
+      desc: Daje przedmiot z kluczem z rejestru przedmiotów graczowi.
     modifier:
       add:
-        added: "<gray>Modyfikator {color}{stat} <gray>z poziomem <aqua>{value} <gray>został dodany do twojego przedmiotu"
+        added: "Dodano modyfikator statystyk do przedmiotu ze statystyką: {stat}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {color}{stat} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item modifier remove"
+        desc: Dodaje modyfikator statystyk przedmiotu do trzymanego przedmiotu, wraz z domyślną lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z twojego przedmiotu"
+        desc: Usuwa modyfikator statystyk przedmiotu z trzymanego przedmiotu, wraz z domyślnie z lorem.
       list:
         header: "<white>Znaleziono modyfikatory przedmiotu:"
+        desc: Wyświetla wszystkie modyfikatory statystyk trzymanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu"
+        desc: Usuwa wszystkie modyfikatory statystyk z trzymanego elementu.
     trait:
       add:
+        added: "Dodano modyfikator cechy do elementu z cechą: {trait}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item trait remove"
+        desc: Dodaje modyfikator cechy przedmiotu do przedmiotu trzymany, wraz z domyślnie z lorem.
+      remove:
+        desc: Usuwa modyfikator cechy elementu z utrzymywanego przedmiotu.
+      list:
+        desc: Wyświetla wszystkie modyfikatory cech elementu na trzymany przedmiotu.
+      removeall:
+        desc: Usuwa wszystkie modyfikatory cech elementu z utrzymywanego przedmiotu.
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Podczas trzymania: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Podczas trzymania: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Podczas trzymania: <blue>-{value}% Doświadczenia Umiejętności"
+        desc: Dodaje mnożnik przedmiotu do trzymanego przedmiotu dla wszystkich lub wybranych umiejętności, którego wartość jest procentem zdobytych punktów XP.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>przedmiotu!"
         removed: "<gray>Mnożnik przedmiotu <aqua>{target} <gray>został usunięty z twojego przedmiotu"
+        desc: Usuwa mnożnik przedmiotu określonej umiejętności lub mnożnik globalny z trzymanego przedmiotu.
       list:
         header: "<white>Znalezione mnożniki przedmiotów:"
+        desc: Wyświetla mnożniki wszystkich pozycji w utrzymywanych przedmiotu.
       removeall:
         removed: "<gray>Wszystkie mnożniki przedmiotów zostały usunięte z Twojego przedmiotu"
+        desc: Usuwa wszystkie mnożniki przedmiotów z trzymanym przedmiotu.
     register:
       registered: "<white>Zarejestrowano przedmiot do klucza {key}"
       already_registered: "<yellow>Istnieje już przedmiot zarejestrowany do klucza <white>{key}<yellow>, użyj <white>/skills item unregister <yellow>aby najpierw go wyrejestrować"
       no_spaces: "<yellow>Klucz przedmiotu nie może zawierać spacji!"
+      desc: Rejestruje przedmiot w rejestrze przedmiotów z określonym kluczem, do którego można odwoływać się w konfiguracji pluginu.
     requirement:
       add:
         added: "<gray>Wymóg przedmiotu <dark_aqua>{skill}<gray> z poziomem <aqua>{level}<gray> został dodany do przedmiotu"
         already_exists: "<yellow>Przedmiot już ma wymóg <dark_aqua>{skill}<yellow>! Usuń go przez <gold>/sk item requirement remove"
         lore: "<red>Wymaga <dark_aqua>{skill} {level}"
+        desc: Dodaje wymóg przedmiotu do przedmiotu trzymanym, wraz z domyślnym lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma wymagania przedmiotu <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Wymóg przedmiotu <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
+        desc: Usuwa wymóg przedmiotu z przedmiotu trzymanym i domyślnie powiązany z nim lor.
       list:
         header: "<white>Znaleziono wymagania przedmiotu:"
+        desc: Wyświetla wymagania dotyczące przedmiotów na przedmiot trzymany.
       removeall:
         removed: "<gray>Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu"
+        desc: Usuwa wszystkie wymagania dotyczące przedmiotów z przedmiot trzymany.
       use: "<yellow>Nie spełniasz wymagań do użycia tego przedmiotu: {requirements}"
     unregister:
       unregistered: "<white>Odrejestrowano przedmiot z kluczem {key}"
       not_registered: "<yellow>Nie ma przedmiotu zarejestrowanego z kluczem {key}"
+      desc: Usuwa element z rejestru przedmiotów z podanym kluczem
     ignore:
-      add: "<gray>Twój przedmiot zostanie teraz zignorowany przez interakcje pomiędzy zdolnością many"
-      remove: "<gray>Twój przedmiot nie będzie już ignorowany przez interakcje pomiędzy zdolnością many"
+      add:
+        added: "<gray>Twój przedmiot zostanie teraz zignorowany przez interakcje pomiędzy zdolnością many"
+        desc: Dodaje tag, który ignoruje trzymany przedmiot z interakcji zdolnością many.
+      remove:
+        removed: "<gray>Twój przedmiot nie będzie już ignorowany przez interakcje pomiędzy zdolnością many"
+        desc: Twój przedmiot nie będzie już ignorowany przez interakcje pomiędzy zdolnością many.
   jobs:
     add:
       added: "<white>Praca {job} została pomyślnie dodana do gracza {player}"
       limited: "<yellow>Nie można dodać tej pracy, ponieważ gracz {player} osiągnął limit pracy"
       existing: "<yellow>Gracz {player} ma już pracę {job}"
+      desc: Dodaje umiejętność jako zadanie dla siebie lub określonego gracza.
     remove:
       removed: "<white>Usunięto pracę {job} z gracza {player}"
       unchanged: "<yellow>Nic nie zostało zmienione, ponieważ gracz {player} nie ma pracy {job}"
+      desc: Usuwa umiejętność jako zadanie dla siebie lub określonego gracza.
     removeall:
       removed: "<white>Usunięto wszystkie prace z gracza {player}"
+      desc: Usuwa wszystkie zadania dołączone dla siebie lub określonego gracza.
   lang:
     set: "<gray>Język ustawiony na <aqua>{lang}"
     not_found: "<yellow>Język nie został znaleziony!"
+    desc: Zmienia język gracza.
   mana:
     display: "<white>Twoja {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} {player}: <aqua>{current}/{max}"
-    add: "<gray>Dodano <aqua>{amount} {mana_unit} <gray>do gracza <gold>{player}"
-    remove: "<gray>Usunięto <aqua>{amount} {mana_unit} <gray>z gracza <gold>{player}"
-    set: "<gray>Ustaw gracza <gold>{player} <gray>na <aqua>{amount} {mana_unit}"
+    desc: Wyświetlaj aktualną i maksymalną manę swojego lub innego gracza
+    add:
+      added: "<gray>Dodano <aqua>{amount} {mana_unit} <gray>do gracza <gold>{player}"
+      desc: Dodaje manę do gracza
+    remove:
+      removed: "<gray>Usunięto <aqua>{amount} {mana_unit} <gray>z gracza <gold>{player}"
+      desc: Usuwa manę z gracza
+    set:
+      set: "<gray>Ustaw gracza <gold>{player} <gray>na <aqua>{amount} {mana_unit}"
+      desc: Ustawia manę gracza
     at_least_zero: "<yellow>{mana_unit} musi wynosić co najmniej zero!"
     console_specify_player: "<yellow>Konsola musi określić gracza!"
   modifier:
     add:
       added: "<gray>Modyfikator poziomu {color}{stat} <aqua>{value} <gray>o nazwie <white>{name} <gray>dodany graczowi <gold>{player}"
       already_exists: "<yellow>Modyfikator o nazwie {name} już istnieje dla gracza <gold>{player}<yellow>! Usuń go za pomocą modyfikatora <gold>/sk remove {player} {name}"
+      desc: Dodaje modyfikator statystyk do gracza.
+    addtemp:
+      added: "Dodano tymczasowy modyfikator statystyk do {player} ze statystyką: {stat}, nazwa: {name}, wartość: {value}, czas trwania: {duration}, operacja: {operation}"
+      desc: Dodaje tymczasowy modyfikator statystyk do gracza.
     remove:
       not_found: "<yellow>Modyfikator {name} nie został znaleziony dla gracza <gold>{player}"
       removed: "<gray>Modyfikator <white>{name} <gray>usunięty graczowi <gold>{player}"
+      desc: Usuwa określony modyfikator statystyk z gracza.
     list:
       all_stats_header: "<gray>Modyfikatory statystyk dla gracza <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Poziom <gold>{value}"
       one_stat_header: "<gray>Modyfikatory statystyk ({color}{stat}<gray>) dla gracza <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Poziom <gold>{value}"
       players_only: "<yellow>Tylko gracze mogą wyświetlić własne modyfikatory! Spróbuj określić gracza"
+      desc: Wyświetla wszystkie lub określone modyfikatory statystyk dla gracza.
     removeall:
       removed_all_stats: "<gray>Usunięto <aqua>{num} <gray>statystyk modyfikatory z gracza <gold>{player}"
       removed_one_stat: "<gray>Usunięto modyfikatory <aqua>{num} {color}{stat} <gray>gracza <gold>{player}"
       players_only: "<yellow>Tylko gracze mogą usunąć własne modyfikatory! Spróbuj określić gracza"
+      desc: Usuwa wszystkie modyfikatory statystyk z gracza.
   trait:
     add:
       already_exists: "<yellow>Modyfikator o nazwie {name} już istnieje dla gracza <gold>{player}<yellow>! Usuń go za pomocą <gold>/sk trait remove {player} {name}"
+      desc: Dodaje modyfikator cechy do gracza.
+    addtemp:
+      added: "Dodano tymczasowy modyfikator cech do {player} z cechą: {trait}, nazwa: {name}, wartość: {value}, czas trwania: {duration}"
+      desc: Dodaje tymczasowy modyfikator cechy do gracza.
+    remove:
+      desc: Usuwa określony modyfikator cechy z gracza.
     list:
       all_traits_header: "<gray>Modyfikatory statystyk dla gracza <gold>{player}:"
       one_trait_header: "<gray>Modyfikatory statystyk ({color}{trait}<gray>) dla gracza <gold>{player}:"
+      desc: Wyświetla wszystkie lub określone modyfikatory cech dla gracza.
     removeall:
       removed_all_traits: "<gray>Usunięto <aqua>{num} <gray>statystyk modyfikatorów z gracza <gold>{player}"
+      desc: Usuwa wszystkie modyfikatory cechy z gracza.
   multiplier:
     global: Globalne
     list: "<white>Globalny mnożnik XP dla <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<white>Mnożnik XP <aqua>{skill} <white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Tylko gracze mogą wyświetlić własny mnożnik! Określ gracza!"
+    desc: Pokazuje bieżący mnożnik XP gracza na podstawie jego uprawnień.
+  openmenu:
+    desc: Otwiera menu pluginów dla odtwarzacza z opcjonalnymi właściwościami JSON i numerem strony.
   preset:
     load:
       confirm: "<red>Ładowanie ustawień zastąpi twoje pliki konfiguracyjne! Następujące pliki zostaną dotknięte <gray>(<aqua>Dołączone<gray>, <yellow>Scalone<gray>, <red>Zastąpione<gray>, <dark_red>Usunięte<gray>): {entries} <red>Tej akcji nie można cofnąć, ręcznie wykonaj kopię zapasową wszystkich potrzebnych plików. Wpisz polecenie ponownie, aby potwierdzić."
@@ -507,31 +587,54 @@ commands:
       replaced: Zastąpione pliki
       deleted: Usunięte pliki
       skipped: Pominięte pliki
+      desc: Ładuje ustawienie konfiguracji z folderu ustawień wstępnych.
   profile:
-    skills: "Profil Aurelium Skills dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Profil statystyk Aurelium Skills dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statystyki:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Całkowity poziom: <white>{total_level}<gray>, Podstawowy poziom: <white>{base_level}<gray>, Zmodyfikowany poziom: <white>{modified_level}"
+    skills:
+      header: "Profil umiejętności dla <gold>{name}:\n<gray>UUUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Pokazuje poziom umiejętności i XP dowolnego gracza, także graczy offline.
+    stats:
+      header: "Profil statystyk dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statystyki:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Całkowity poziom: <white>{total_level}<gray>, Poziom podstawowy: <white>{base_level}<gray>, Zmodyfikowany poziom: <white>{modified_level}"
+      desc: Pokazuje poziomy statystyk dowolnego gracza, także graczy offline.
   rank:
     header: "<aqua><bold>Twój Ranking Umiejętności</bold>"
     power: "<yellow>Moc <gray>(Wszystkie Umiejętności): <white>#{rank} z {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} z {total}"
-  reload: "<green>Konfiguracja przeładowana!"
+    desc: Pokazuje twoje rankingi umiejętności.
+  reload:
+    reloaded: "<green>Konfiguracja przeładowana!"
+    desc: Odświeża konfigurację, wiadomości, menu, tablice lootów, paski akcji, paski bossa oraz statystyki zdrowia i szczęścia.
+  resethealth:
+    desc: Usuwa wszystkie modyfikatory atrybutów przez AuraSkills w celu łatwego odinstalowania. Działa to tylko na graczy offline.
   save:
     already_saving: "<yellow>Dane już się zapisują!"
     mysql_not_enabled: "<yellow>MySQL nie był włączony przy starcie serwera, zapisuję zamiast niego do pliku!"
     saved: "<green>Dane o umiejętnościach zapisane!"
+    desc: Zapisuje dane umiejętności.
   skill:
     setall:
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
+      desc: Ustawia wszystkie umiejętności gracza na określonym poziomie.
     setlevel:
       set: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
+      desc: Ustawia konkretną umiejętność na określonym poziomie dla gracza.
+    reset:
+      desc: Resetuje wszystkie umiejętności lub określone umiejętności do poziomu startowego gracza.
     at_least: "<yellow>Poziom musi wynosić co najmniej {level}!"
+  skills:
+    desc: Otwiera menu Umiejętności, w którym możesz przeglądać umiejętności, postęp i umiejętności.
+  stats:
+    desc: Otwiera menu Statystyk, w którym możesz zobaczyć aktualne poziomy statystyk i opisy.
+  sources:
+    desc: Otwiera menu Źródła, aby zobaczyć wszystkie źródła XP dla umiejętności.
   toggle:
     enabled: "<green>Twój pasek umiejętności został włączony"
     disabled: "<red>Twój pasek umiejętności został wyłączony"
     not_enabled: "<yellow>Pasek umiejętności nie jest włączony na serwerze!"
+    desc: Przełącza swój własny pasek umiejętności.
   top:
+    desc: Pokazuje najlepszych graczy w umiejętności
     power_header: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności </bold><white>(Strona {page})==--"
     skill_header: "<white>--==<aqua><bold>Tabela {skill}</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Pomyślnie przeniesiono dane gracza z <gray>{from} <green>do <gray>{to}"
     error: "<red>Wystąpił błąd podczas przenoszenia danych gracza. Sprawdź konsolę w poszukiwaniu błędów."
+    desc: Przenosi dane od jednego użytkownika do drugiego, podając UUID.
   updateleaderboards:
     already_updating: "<yellow>Tablica wyników jest już aktualizowana!"
     updated: "<green>Tablica wyników zaktualizowana!"
-  version: "<white>Jesteś na wersji <aqua>{current_version}<white>AuraSkills. Najnowsza wersja to <aqua>{latest_version}"
+    desc: Aktualizuje i sortuje tablice wyników.
+  version:
+    version: "<white>Jesteś na AuraSkills <aqua>{current_version}<white>. Najnowszą wersją jest <aqua>{latest_version}"
+    new_update: "{prefix}<white>Dostępna jest nowa aktualizacja! Jesteś na wersji <aqua>{current_version}<white>, najnowsza wersja to <aqua>{latest_version}\n{prefix}<white>Pobierz ją na Modrinth: <yellow><underlined>{link}"
+    desc: Pokazuje aktualnie zainstalowaną i najnowszą dostępną wersję pluginu.
   xp:
-    add: "<gray>Dodano <aqua>{amount} {skill} <gray>XP graczowi <gray>{player}"
-    set: "<gray>Ustawiono XP <aqua>{skill} <gray>graczowi <gray>{player} <gray>na {amount}"
-    remove: "<gray>Usunięto <aqua>{amount} <gray>XP <aqua>{skill} <gray>graczowi <gold>{player}"
+    add:
+      added: "<gray>Dodano <aqua>{amount} {skill} <gray>XP do gracza <gray>{player}"
+      desc: Dodaje XP umiejętności graczowi dla określonej umiejętności.
+    set:
+      set: "<gray>Ustaw <aqua>{skill} <gray>XP dla gracza <gray>{player} <gray>do {amount}"
+      desc: Ustawia umiejętność gracza XP dla określonej umiejętności do ilości.
+    remove:
+      removed: "<gray>Usunięto <aqua>{amount} {skill} <gray>XP z gracza <gold>{player}"
+      desc: Usuwa XP umiejętności graczowi w określonej umiejętności.
   manaability:
-    cooldown_reset: "<gray>Czas odnowienia dla <aqua>{ability} <gray>został zresetowany dla gracza <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Czas odnowienia dla <aqua>{ability} <gray>został zresetowany dla gracza <gold>{player}"
+      desc: Resetuje konkretny czas odnowienia umiejętności many gracza, opcjonalnie uzupełniając manę.
   unknown_skill: "<yellow>Nieznana umiejętność!"
   unknown_mana_ability: "<yellow>Nieznana zdolność many!"
   unknown_stat: "<yellow>Nieznana statystyka!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Kliknij aby przejść do następnej strony"
     previous_page: "Poprzednia Strona"
     previous_page_click: "Kliknij aby przejść do poprzedniej strony"
+    trait: "Cecha"
+    trait_gain: "<1>Zyskujesz {color}{level_modifier} {trait_name} <1>poziom cechy na {color}1 {stat_name} <1>poziom statystyku."
+    trait_level: "Poziom cechy"
+    base: "Podstawowy"
+    modifiers_additive: "Modyfikatory (Dodatek)"
+    modifiers_multiplicative: "Modyfikatory (multiplikacyjne)"
   skills:
     skills_title: "Twoje Umiejętności"
     your_skills: "Twoje Umiejętności"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Dropy"
     chance_drop: "{chance}% na +{value} Drop"
     chance_drops: "{chance}% na +{value} Dropy"
+    stat_info_click: "Kliknij, aby zobaczyć szczegóły statystyk"
   unclaimed_items:
     unclaimed_items_title: "Odbierz Przedmioty"
     inventory_full: "Nie masz wystarczająco miejsca w swoim ekwipunku, aby odebrać ten przedmiot"
@@ -654,6 +777,29 @@ menus:
     description: "Opis"
     unlocked_at: "<1>Odblokowanie: <2>{skill} {level}"
     next_upgrade_at: "<1>Następne ulepszenie na <2>{skill} {level}"
+  stat_info:
+    stat_details: "Statystyka {stat_name}"
+    stat: "Statystyka"
+    stat_level: "Poziom statystyki"
+    traits_leveled: "Poziomowane cechy"
+    stat_modifiers: "Modyfikatory statystyk"
+    stat_reward_desc: "Przyznane przez twój poziom umiejętności {skill}."
+    stat_modifiers_click: "Kliknij, aby zobaczyć modyfikatory statystyk"
+    trait_modifiers_click: "Kliknij, aby wyświetlić modyfikatory cech"
+    showing_stat_modifiers: "Wyświetlanie modyfikatorów statystyk"
+    showing_trait_modifiers: "Wyświetlanie modyfikatorów cech"
+    base_level: "Poziom podstawowy"
+    base_level_desc: "Poziom podstawowy z Minecraft i źródeł zewnętrznych."
+    linked_stat_desc: "Przyznane przez twój poziom statystyki {stat}."
+    ability_modifier_name: "Umiejętność {name}"
+    ability_modifier_desc: "Przyznane przez umiejętność {ability}."
+    custom_modifier_desc: "Przyznane przez niestandardowego modyfikatora."
+    item_hand_desc: "Przyznane przez przedmiot w ręce."
+    item_off_hand_desc: "Przyznane przez przedmiot w drugiej ręce."
+    helmet_desc: "Przyznane przez hełm."
+    chestplate_desc: "Przyznany przez napierśnik."
+    leggings_desc: "Przyznane przez spodnie."
+    boots_desc: "Przyznane przez buty."
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -890,4 +1036,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 38
