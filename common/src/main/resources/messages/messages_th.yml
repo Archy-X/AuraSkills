@@ -121,7 +121,7 @@ abilities:
     info: "+{value}% โอกาสในการติดคริ"
   stun:
     name: มึนงง
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "+{value}% โอกาสในการติดมึนงง"
   shielding:
     name: การป้องกัน
