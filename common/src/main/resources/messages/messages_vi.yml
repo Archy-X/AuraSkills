@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Xuyên thủng"
   stun:
     name: Choáng
-    desc: "{value}% tỉ lệ giảm tốc độ di chuyển của kẻ địch đi 20% trong 2 giây."
+    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Cơ hội làm chậm"
   shielding:
     name: Lá chắn
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Bản ghi Anti-AFK của <red>{player} <gray>({count} tổng cộng) <dark_gray>| <gray>Trang {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp độ <aqua>{value} <gray>đã được thêm vào vật phẩm của bạn"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Nâng cấp cho giáp với chỉ số {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor modifier remove"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat} <yellow>!"
         removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Đã tìm thấy nâng cấp của giáp:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Khi mặc: <aqua>-{value}% XP {skill}"
         global_lore: "<gray>Khi mặc: <blue>+{value}% XP Khả năng"
         global_lore_subtract: "<gray>Khi mặc: <blue>-{value}% XP Khả năng"
+        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
         removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ khỏi giáp của bạn"
+        desc: Removes an armor multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Chỉ số giáp cộng thêm đã được tìm thấy:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Tất cả chỉ số giáp cộng thêm đã được gỡ"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
         already_exists: "<yellow>Vật phẩm đã có yêu cầu giáp <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk armor requirement remove"
         lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu giáp <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>đã được gỡ"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Yêu cầu giáp đã được tìm thấy:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>Tất cả yêu cầu giáp đã được gỡ"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Bạn không đủ điều kiện để trang bị vật phẩm này: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Lỗi khi áp dụng sao lưu: {error}"
       must_be_yaml: "<yellow>Phải là một tệp .yml !"
       file_not_found: "<yellow>Bản sao lưu cho tệp này không có trong thư mục sao lưu!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Đang lưu sao lưu..."
       saved: "<white>Đã sao lưu dữ liệu {type} dưới dạng {file}"
       error: "<red>Lỗi khi sao lưu dữ liệu {type}! Xem lỗi trên bảng điều khiển/các dòng dưới để xem chi tiết"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>Bạn không có vật phẩm để nhận"
   item:
     give:
       sender: "<white>Đã đưa <aqua>{amount}x {key} <white>cho {player}"
       receiver: "<white>Bạn đã nhận <aqua>{amount}x {key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp <aqua>{value} <gray>đã được thêm"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat}<yellow>!"
         removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Nâng cấp vật phẩm đã được tìm thấy:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Tất cả nâng cấp đã được gỡ"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Khi cầm: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Khi cầm: <blue>+{value}% XP Kĩ năng"
         global_lore_subtract: "<gray>Khi cầm: <blue>-{value}% XP Kĩ năng"
+        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
         removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ"
+        desc: Removes an item multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Chỉ số cộng thêm đã được tìm thấy:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Toàn bộ chỉ số cộng thêm đã được gỡ khỏi vật phẩm của bạn"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>Đã đăng kí vật phẩm đang cầm thành chìa khoá {key}"
       already_registered: "<yellow>Đã có vật phẩm được đăng kí thành chìa khoá <white>{key}<yellow>, dùng lệnh <white>/skills item unregister <yellow>để huỷ nó trước"
       no_spaces: "<yellow>Tên chìa khoá không được có khoảng cách!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<gray>Yêu cầu <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
         already_exists: "<yellow>Vật phẩm đã có yêu cầu <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk item requirement remove"
         lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Yêu cầu <dark_aqua>{skill} <gray>đã được gỡ"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Yêu cầu vật phẩm được tìm thấy:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>Tất cả các yêu cầu về vật phẩm đã được gỡ khỏi vật phẩm của bạn"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Bạn không đủ điều kiện để dùng vật phẩm này: {requirements}"
     unregister:
       unregistered: "<white>Đã huỷ đăng kí vật phẩm có chìa khoá {key}"
       not_registered: "<yellow>Không có vật phẩm đăng kí thành chìa khoá {key}"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>The job {job} was successfully added to player {player}"
       limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
       existing: "<yellow>Player {player} already has the job {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>Removed job {job} from player {player}"
       unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white> Đã xóa tất cả nghề nghiệp của {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Ngôn ngữ đã đặt thành <aqua>{lang}"
     not_found: "<yellow>Không tìm thấy ngôn ngữ này!"
+    desc: Changes your player language.
   mana:
     display: "<white>{mana_unit} của bạn: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} của {player}: <aqua>{current}/{max}"
-    add: "<gray>Đã thêm <aqua>{amount} {mana_unit} <gray>cho <gold>{player}"
-    remove: "<gray>Đã xóa bỏ <aqua>{amount} {mana_unit} <gray>từ <gold>{player}"
-    set: "<gray>Đã đặt <gold>{player} <gray> thành <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} tối thiểu là 0!"
     console_specify_player: "<yellow>Bảng điều khiển phải chỉ định một người chơi!"
   modifier:
     add:
       added: "<gray>Nâng cấp {color}{stat} <gray>cấp <aqua>{value} <gray>tên <white>{name} <gray>đã được thêm cho <gold>{player}"
       already_exists: "<yellow>Nâng cấp tên {name} đã tồn tại trên <gold>{player}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk modifier remove {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Nâng cấp {name} không được tìm thấy ở <gold>{player}"
       removed: "<gray>Đã gỡ nâng cấp <white>{name} <gray>khỏi <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Nâng cấp chỉ số của <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Cấp <gold>{value}"
       one_stat_header: "<gray>Nâng cấp chỉ số ({color}{stat}<gray>) của <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
       players_only: "<yellow>Chỉ có thể liệt kê nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray> Đã xóa <aqua>{num} nâng cấp <gray>của <gold>{player}"
       removed_one_stat: "<gray>Đã xóa <aqua>{num} <gray>nâng cấp {color}{stat} <gray>của <gold>{player}"
       players_only: "<yellow>Chỉ có thể xóa nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
       one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Tổng quát
     list: "<white>XP thưởng thêm cho người chơi <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white> XP thưởng: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Chỉ người chơi mới có thể liệt kê danh sách XP thưởng! Hãy nhập tên một người chơi cụ thể!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Tải thiết lập trước sẽ ghi đè lên thiết lập hiện tại! Những tệp sau đây sẽ bị ảnh hưởng <gray>(<aqua>Đã thêm<gray>, <yellow>Đã gộp<gray>, <red>Đã thay thế<gray>, <dark_red>Đã xóa<gray>):{entries} <red> Hành động này sẽ không thể trở lại như cũ, hãy sao lưu thủ công những tệp quan trọng. Nhập lại lệnh để xác nhận."
@@ -507,31 +587,54 @@ commands:
       replaced: Tệp đã thay thế
       deleted: Tệp đã xóa
       skipped: Tệp bị bỏ qua
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Khả năng cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Khả năng:{skill_entries}"
-    skill_entry: "\n<dark_aqua>{skill}<gray>- Cấp độ: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Chỉ số cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Chỉ số: {stat_entries}"
-    stat_entry: "\n<dark_aqua>{stat} <gray>- Tổng cấp độ: <white>{total_level}<gray>, Cấp độ cơ bản: <white>{base_level}<gray>, Cấp độ chỉnh sửa: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Xếp hạng Khả năng của bạn"
     power: "<yellow>Sức mạnh <gray>(Tất cả Khả năng): <white>#{rank} trên {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} trên {total}"
-  reload: "<green>Đã tải lại thiết lập!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Dữ liệu đã được lưu!"
     mysql_not_enabled: "<yellow>MySQL không được kích hoạt khi khởi động máy chủ, thay vào đó hãy lưu vào một tệp!"
     saved: "<green>Dữ liệu về Khả năng đã được lưu lại!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>Tất cả Khả năng đã được thành cấp <aqua>{level} <gray>cho người chơi <gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Khả năng <aqua>{skill} <gray>của người chơi <gold>{player} đã được đặt thành cấp độ <aqua>{level} <gray>"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Cấp độ tối thiểu là {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Thanh Kĩ năng của bạn đã được bật"
     disabled: "<red>Thanh Kĩ năng của bạn đã được tắt"
     not_enabled: "<yellow>Thanh Kĩ năng không được bật trong máy chủ này!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>(Trang{page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Chuyển đổi dữ liệu người chơi từ <gray>{from} <green>to <gray>{to} thành công"
     error: "<red>Có lỗi xảy ra khi chuyển dữ liệu người chơi. Xem lỗi trong bảng điều khiển."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Bảng xếp hạng đã đang được cập nhật!"
     updated: "<green>Đã cập nhật bảng xếp hạng!"
-  version: "<white>Bạn đang dùng AuraSkills phiên bản <aqua>{current_version}<white>. Phiên bản mới nhất là <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>Đã thêm <aqua>{amount} XP {skill}<gray> cho <gray>{player}"
-    set: "<gray> Đã đặt XP <aqua>{skill} <gray>cho người chơi <gray>{player} <gray>thành {amount}"
-    remove: "<gray>Đã xóa bỏ <aqua>{amount} {skill} <gray>XP từ người chơi <gold>{player}"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>Hồi chiêu cho <aqua>{ability} <gray>đã được đặt lại cho người chơi <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Khả năng không khả dụng!"
   unknown_mana_ability: "<yellow>Kĩ năng Ma pháp không khả dụng!"
   unknown_stat: "<yellow>Chỉ số không khả dụng!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Nhấn để qua trang tiếp theo"
     previous_page: "Trang trước"
     previous_page_click: "Nhấn để trở lại trang trước"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Khả năng của bạn"
     your_skills: "Khả năng của bạn"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Rơi"
     chance_drop: "{chance}% cho +{value} Rơi"
     chance_drops: "{chance}% cho +{value} Rơi"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Nhận vật phẩm"
     inventory_full: "Bạn không đủ chỗ trống trong kho đồ để nhận vật phẩm này"
@@ -654,6 +777,29 @@ menus:
     description: "Mô tả"
     unlocked_at: "<1>Mở khóa khi đạt <2>{skill} {level}"
     next_upgrade_at: "<1>Nâng cấp tiếp theo ở <2>{skill}{level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Tái tạo
@@ -890,4 +1036,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 38
