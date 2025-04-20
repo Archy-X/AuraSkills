@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Pierce Kans"
   stun:
     name: Verstijven
-    desc: "{value}% kans om vijand bewegingssnelheid met 20% te verlagen gedurende 2 seconden."
+    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Stun Kans"
   shielding:
     name: Beschermd
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier is verwijderd van je item"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Armor modifiers gevonden:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>Alle armor modifiers zijn verwijderd van je voorwerp"
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Wanneer versleten: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wanneer versleten: <blue>+{value}% Vaardigheid XP"
         global_lore_subtract: "<gray>Wanneer versleten: <blue>-{value}% Vaardigheid XP"
+        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Jouw item heeft geen <aqua>{target} <yellow>armor vermenigvuldiger!"
         removed: "<aqua>{target} <gray>armor vermenigvuldiger is verwijderd uit je item"
+        desc: Removes an armor multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Armor vermenigvuldigers gevonden:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Alle harnasvermenigvuldigers zijn verwijderd uit je item"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> harnas vereiste met level <aqua>{level}<gray> is toegevoegd aan je voorwerp"
         already_exists: "<yellow>voorwerp heeft al een <dark_aqua>{skill}<yellow> harnas vereist! Verwijder het eerst met <gold>/sk uitrusting vereiste verwijderen"
         lore: "<red>Vereist <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Je voorwerp heeft geen <dark_aqua>{skill}<yellow> armor vereist!"
         removed: "<dark_aqua>{skill}<gray> harnaseis is verwijderd uit je artikel"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Armor vereisten gevonden:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>Alle harnas vereisten zijn verwijderd uit je voorwerp"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Je voldoet niet aan de vereisten om dit voorwerp uit te rusten: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Fout tijdens laden back-up: {error}"
       must_be_yaml: "<yellow>File moet een .yml bestand zijn!"
       file_not_found: "<yellow>A back-up van deze bestandsnaam bestaat niet in de backups map!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Backup opslaan..."
       saved: "<yellow>en back-up gemaakt van {type} als {file}"
       error: "<red>Fout bij het back-uppen van {type} gegevens! Bekijk de fout in console/beneden voor details"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>Je hebt geen items om te claimen"
   item:
     give:
       sender: "<white>Gaf <aqua>{amount}x {key} <white>to {player}"
       receiver: "<white>Je hebt <aqua>{amount}x {key} gekregen"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier is verwijderd van je item"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Item wijzigers gevonden:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Alle item modifiers zijn verwijderd uit je item"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Wanneer verwijderd: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wanneer verwijderd: <blue>+{value}% Vaardigheid XP"
         global_lore_subtract: "<gray>Wanneer verwijderd: <blue>-{value}% Vaardigheid XP"
+        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Je item heeft geen <aqua>{target} <yellow>item multiplier!"
         removed: "<aqua>{target} <gray>item vermenigvuldiger is verwijderd uit je item"
+        desc: Removes an item multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Item multipliers gevonden:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Alle item vermenigvuldigers zijn verwijderd uit je item"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>Geregistreerd vastgehouden item naar sleutel {key}"
       already_registered: "<yellow>Er is al een item geregistreerd voor de sleutel{key}<yellow>, gebruik <white>/vaardigheden item deregister <yellow>to deregistreren eerst"
       no_spaces: "<yellow>Item sleutel kan geen spaties bevatten!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> item vereiste met level <aqua>{level}<gray> is toegevoegd aan uw item"
         already_exists: "<yellow>Item heeft al een <dark_aqua>{skill}<yellow> item vereist! Verwijder het eerst met <gold>/sk item vereiste verwijderen"
         lore: "<red>Vereist <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Je item heeft geen <dark_aqua>{skill}<yellow> vereiste artikel!"
         removed: "<dark_aqua>{skill}<gray> artikelvereiste is verwijderd van uw artikel"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Item vereisten gevonden:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>Alle item vereisten zijn verwijderd uit je artikel"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Je voldoet niet aan de vereisten om dit item te gebruiken: {requirements}"
     unregister:
       unregistered: "<white>Ongeregistreerd item met sleutel {key}"
       not_registered: "<yellow>Er is geen item geregistreerd met sleutel {key}"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>The job {job} was successfully added to player {player}"
       limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
       existing: "<yellow>Player {player} already has the job {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>Removed job {job} from player {player}"
       unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white>Removed all jobs from player {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Taal ingesteld op <aqua>{lang}"
     not_found: "<yellow>Taal niet gevonden!"
+    desc: Changes your player language.
   mana:
     display: "<white>Jouw {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} van {player}: <aqua>{current}/{max}"
-    add: "<gray>Toegevoegd <aqua>{amount} {mana_unit} <gray>aan speler <gold>{player}"
-    remove: "<gray>Verwijderd <aqua>{amount} {mana_unit} <gray>van speler <gold>{player}"
-    set: "<gray>Zet speler <gold>{player} <gray>naar <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} moet ten minste nul zijn!"
     console_specify_player: "<yellow>Console moet een speler opgeven!"
   modifier:
     add:
       added: "{color}{stat} <gray>modifier niveau <aqua>{value} <gray>met de naam <white>{name} <gray>toegevoegd aan speler <gold>{player}"
       already_exists: "<yellow>Modifier met naam {name} bestaat al op speler <gold>{player}&! Verwijder deze met <gold>/sk modifier verwijder {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifier {name} niet gevonden voor speler <gold>{player}"
       removed: "<gray>Wijziger <white>{name} <gray>verwijderd van speler <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Stat modificaties voor speler <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
       one_stat_header: "<gray>Stat modificaties ({color}{stat}<gray>) voor speler <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
       players_only: "<yellow>Alleen spelers kunnen hun eigen parameters aanmaken! Probeer een speler te specificeren"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray>Verwijderd <aqua>{num} <gray>stat modifiers van speler <gold>{player}"
       removed_one_stat: "<gray>Verwijderd <aqua>{num} {color}{stat} <gray>modifiers van speler <gold>{player}"
       players_only: "<yellow>Alleen spelers kunnen hun eigen parameters verwijderen! Probeer een speler te specificeren"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
       one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Wereldwijd
     list: "<white>Globale XP vermenigvuldiger voor <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Alleen spelers kunnen hun eigen multiplier vermelden! Geef een speler op!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
@@ -507,31 +587,54 @@ commands:
       replaced: Replaced files
       deleted: Deleted files
       skipped: Skipped files
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Vaardigheden profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Vaardigheden:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Statistieken profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Totaal Level: <white>{total_level}<gray>, Basis Level: <white>{base_level}<gray>, Gewijzigd Level: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Jouw Vaardigheid Rang"
     power: "<yellow>Kracht <gray>(Alle Vaardigheden): <white>#{rank} van {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} van {total}"
-  reload: "<green>Configuratie herladen!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Data wordt al opgeslagen!"
     mysql_not_enabled: "<yellow>MySQL was niet ingeschakeld bij het opstarten van de server, in plaats daarvan het opslaan naar bestand!"
     saved: "<green>Skill gegevens opgeslagen!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>Alle vaardigheden ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Vaardigheid &{skill} <gray>ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level must be at least {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Jouw vaardigheidsactiebalk is ingeschakeld"
     disabled: "<red>Jouw vaardigheidsactiebalk is uitgeschakeld"
     not_enabled: "<yellow>Skills actiebalk is niet ingeschakeld op deze server!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord </bold><white>(Pagina {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Scorebord</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Succesvol spelersgegevens overgedragen van <gray>{from} <green>to <gray>{to}"
     error: "Er is een fout opgetreden bij het overzetten van spelergegevens. Controleer de console voor fouten."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Leaderboard is al aan het updaten!"
     updated: "<green>Leaderboard bijgewerkt!"
-  version: "<white>Je bent op Aurelium Skills versie <aqua>{current_version}<white>. De laatste versie is <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>Toegevoegd <aqua>{amount} {skill} <gray>XP aan speler <gray>{player}"
-    set: "<gray>Stel <aqua>{skill} <gray>XP in voor speler <gray>{player} <gray>naar {amount}"
-    remove: "<gray>Verwijderd <aqua>{amount} {skill} <gray>XP van speler <gold>{player}"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Onbekende vaardigheid!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Click to go to next page"
     previous_page: "Previous Page"
     previous_page_click: "Click to go to previous page"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Your Skills"
     your_skills: "Your Skills"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
     chance_drops: "{chance}% for +{value} Drops"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -654,6 +777,29 @@ menus:
     description: "Description"
     unlocked_at: "<1>Unlocked at <2>{skill} {level}"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Aanvullen
@@ -890,4 +1036,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 38
