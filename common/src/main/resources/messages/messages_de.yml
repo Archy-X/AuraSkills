@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Chance zu durchbohren"
   stun:
     name: Schock
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Betäubungschance"
   shielding:
     name: Schutzschild
@@ -334,23 +334,23 @@ commands:
     logs:
       header: "<gray>Anti-AFK Einträge für <red>{player} <gray>({count} gesamt) <dark_gray>| <gray>Seite {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Anti-AFK-Logs für einen bestimmten Spieler anzeigen.
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Werte-Modifikator zu Rüstung mit Wert: {stat}, Wert: {value}, Operation: {operation} hinzugefügt"
         already_exists: "<yellow>Ein Rüstungsmodifikator mit dem Wert {color}{stat} <yellow>existiert bereits auf deiner Rüstung! Entferne ihn zuerst mit /sk armor modifier remove"
-        desc: Adds an armor stat modifier to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
         does_not_exist: "<yellow>Dein Gegenstand hat keine {color}{stat} <yellow>Modifikation!"
         removed: "{color}{stat} <gray>Modifikator wurde von deinem Gegenstand entfernt"
-        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        desc: Entfernt vom gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator und standardmäßig die dazugehörige Beschriftung.
       list:
         header: "<white>Rüstungsmodifikatoren gefunden:"
-        desc: Lists all armor stat modifiers on the item held.
+        desc: Listet alle Rüstungs-Werte-Modifikatoren vom gehaltenen Gegenstand auf.
       removeall:
         removed: "<gray>Alle Rüstungsmodifikatoren wurden von deinem Gegenstand entfernt"
-        desc: Removes all armor stat modifiers from the item held.
+        desc: Entfernt alle Rüstungs-Werte-Modifikatoren vom gehaltenen Gegenstand.
     trait:
       add:
         added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
