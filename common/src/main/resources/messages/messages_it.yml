@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Possibilità Perforazione"
   stun:
     name: Stordimento
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Possibilità Stordimento"
   shielding:
     name: Schermatura
