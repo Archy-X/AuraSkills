@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Delme şansı"
   stun:
     name: Sersemletme
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Sersemletme Şansı"
   shielding:
     name: Koruyucu
