@@ -334,7 +334,7 @@ commands:
     logs:
       header: "<gray>Anty-AFK logi dla <red>{player} <gray>({count} łącznie) <dark_gray>| <gray>Strona {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Pokaż logi anty-AFK dla danego gracza.
   armor:
     modifier:
       add:
@@ -406,7 +406,7 @@ commands:
       error: "<red>Błąd podczas ładowania kopii zapasowej: {error}"
       must_be_yaml: "<yellow>Plik musi być plikiem .yml!"
       file_not_found: "<yellow>Kopia zapasowa tej nazwy pliku nie istnieje w folderze kopii zapasowych!"
-      desc: Loads a backup from a given file.
+      desc: Ładuje kopię zapasową z danego pliku.
     save:
       saving: "<white>Zapisywanie kopii zapasowej..."
       saved: "<white>Wykonano kopię zapasową danych {type} jako {file}"
@@ -514,20 +514,20 @@ commands:
   lang:
     set: "<gray>Język ustawiony na <aqua>{lang}"
     not_found: "<yellow>Język nie został znaleziony!"
-    desc: Changes your player language.
+    desc: Zmienia język gracza.
   mana:
     display: "<white>Twoja {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} {player}: <aqua>{current}/{max}"
     desc: Display your or another player's current and max mana
     add:
-      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
-      desc: Adds mana to a player
+      added: "<gray>Dodano <aqua>{amount} {mana_unit} <gray>do gracza <gold>{player}"
+      desc: Dodaje manę do gracza
     remove:
-      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
-      desc: Removes mana from a player
+      removed: "<gray>Usunięto <aqua>{amount} {mana_unit} <gray>z gracza <gold>{player}"
+      desc: Usuwa manę z gracza
     set:
       set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of player
+      desc: Ustawia manę gracza
     at_least_zero: "<yellow>{mana_unit} musi wynosić co najmniej zero!"
     console_specify_player: "<yellow>Konsola musi określić gracza!"
   modifier:
@@ -591,7 +591,7 @@ commands:
   profile:
     skills:
       header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
-      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
       desc: Shows the skill levels and XP for any player, including offline players.
     stats:
       header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
@@ -601,9 +601,9 @@ commands:
     header: "<aqua><bold>Twój Ranking Umiejętności</bold>"
     power: "<yellow>Moc <gray>(Wszystkie Umiejętności): <white>#{rank} z {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} z {total}"
-    desc: Shows your skill rankings.
+    desc: Pokazuje twoje rankingi umiejętności.
   reload:
-    reloaded: "<green>Config reloaded!"
+    reloaded: "<green>Konfiguracja przeładowana!"
     desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
   resethealth:
     desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
@@ -611,7 +611,7 @@ commands:
     already_saving: "<yellow>Dane już się zapisują!"
     mysql_not_enabled: "<yellow>MySQL nie był włączony przy starcie serwera, zapisuję zamiast niego do pliku!"
     saved: "<green>Dane o umiejętnościach zapisane!"
-    desc: Saves skill data.
+    desc: Zapisuje dane umiejętności.
   skill:
     setall:
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
@@ -707,7 +707,7 @@ menus:
     next_page_click: "Kliknij aby przejść do następnej strony"
     previous_page: "Poprzednia Strona"
     previous_page_click: "Kliknij aby przejść do poprzedniej strony"
-    trait: "Trait"
+    trait: "Cecha"
     trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
     trait_level: "Trait Level"
     base: "Base"
@@ -779,7 +779,7 @@ menus:
     next_upgrade_at: "<1>Następne ulepszenie na <2>{skill} {level}"
   stat_info:
     stat_details: "{stat_name} Stat"
-    stat: "Stat"
+    stat: "Statystyka"
     stat_level: "Stat Level"
     traits_leveled: "Traits Leveled"
     stat_modifiers: "Stat Modifiers"
@@ -791,15 +791,15 @@ menus:
     base_level: "Base Level"
     base_level_desc: "Base level from Minecraft and external sources."
     linked_stat_desc: "Granted by your {stat} stat level."
-    ability_modifier_name: "{name} Ability"
-    ability_modifier_desc: "Granted by the {ability} ability."
+    ability_modifier_name: "Umiejętność {name}"
+    ability_modifier_desc: "Przyznane przez umiejętność {ability}."
     custom_modifier_desc: "Granted by a custom modifier."
     item_hand_desc: "Granted by item in hand."
     item_off_hand_desc: "Granted by item in off hand."
-    helmet_desc: "Granted by helmet."
+    helmet_desc: "Przyznane przez hełm."
     chestplate_desc: "Granted by chestplate."
-    leggings_desc: "Granted by leggings."
-    boots_desc: "Granted by boots."
+    leggings_desc: "Przyznane przez spodnie."
+    boots_desc: "Przyznane przez buty."
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
