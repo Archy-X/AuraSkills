@@ -353,15 +353,15 @@ commands:
         desc: Entfernt alle Rüstungs-Werte-Modifikatoren vom gehaltenen Gegenstand.
     trait:
       add:
-        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
+        added: "Werte-Modifikator zu Rüstung mit Wert: {trait}, Wert: {value}, Operation: {operation} hinzugefügt"
         already_exists: "<yellow>Ein Rüstungsmodifikator mit der Eigenschaft {trait} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk armor trait remove"
-        desc: Adds an armor trait modifier to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
-        desc: Removes an armor trait modifier from the item held.
+        desc: Entfernt einen Rüstungs-Werte-Modifikator vom gehaltenen Gegenstand.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Listet alle Eigenschafts-Modifikatoren des gehaltenen Gegenstandes auf.
       removeall:
-        desc: Removes all armor trait modifiers from the item held.
+        desc: Entfernt alle Rüstungs-Werte-Modifikatoren des gehaltenen Gegenstandes.
     multiplier:
       add:
         added: "<aqua>{target} <gray>Multiplikator mit dem Wert <aqua>{value} <gray>wurde zum Item hinzugefügt"
@@ -370,7 +370,7 @@ commands:
         skill_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wenn getragen: <aqua>+{value}% Skill XP"
         global_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Multiplikatoren global oder zu einer spezifischen Fähigkeit hinzu, wobei der Wert die Erhöhung an Prozent ist, die mehr an XP erhalten wird.
       remove:
         does_not_exist: "<yellow>Dein Gegenstand hat keinen <aqua>{target} <reset>üstungs Multiplikator!"
         removed: "&{target} <gray>Rüstungs Modifikator wurde von deinem Gegenstand entfernt"
