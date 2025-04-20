@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Lävistysmahdollisuus"
   stun:
     name: Tainnutus
-    desc: "{value}% mahdollisuus vähentää vihollisen liikenopeutta 20% 2 sekunnin ajaksi."
+    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Tainnutusmahdollisuus"
   shielding:
     name: Suojaus
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modifioija, jonka taso on <aqua>{value} <gray>, lisättiin esineeseesi."
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Panssarimodifioija, jossa on stat {color}{stat} <yellow>, on jo olemassa panssarissasi! Poista se ensin komennolla /sk armor modifier remove."
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Esineelläsi ei ole {color}{stat} <yellow>-modifikaattoria!"
         removed: "{color}{stat} <gray>modifier poistettiin esineestäsi"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Panssarimodifikaattorit löydetty:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>Kaikki panssarimodifikaattorit on poistettu esineestäsi."
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>kerroin arvolla <aqua>{value} <gray>lisättiin kohteeseesi"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Käytettäessä: <aqua> -{value}% {skill} XP"
         global_lore: "<gray>Käytettäessä: <blue> +{value}% Taito-XP"
         global_lore_subtract: "<gray>Käytettäessä: <blue> -{value}% Skill XP"
+        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Tuotteellasi ei ole <aqua> {target} <yellow> panssarikerrointa!"
         removed: "<aqua>{target}<gray>panssarikerroin poistettiin esineestäsi"
+        desc: Removes an armor multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Löydetty panssarikertoimia:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Kaikki panssarikertoimet on poistettu esineestäsi"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray>panssarivaatimus tasoineen<aqua>{level}<gray> lisättiin tuotteeseesi"
         already_exists: "<yellow>Tuotteella on jo a<dark_aqua>{skill}<yellow> panssari vaatimus! Poista se ensin<gold> /sk armor vaatimus poistaa"
         lore: "<red>Vaatii<dark_aqua>{skill}{level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Tuotteessasi ei ole a<dark_aqua>{skill}<yellow> panssari vaatimus!"
         removed: "<dark_aqua>{skill}<gray>panssarivaatimus poistettiin tuotteestasi"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Haarniskavaatimukset löydetty:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>Kaikki panssarivaatimukset on poistettu tuotteestasi"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Et täytä vaatimuksia tämän esineen varustamiseksi: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Virhe varmuuskopion lataamisessa:{error}"
       must_be_yaml: "<yellow>Tiedoston on oltava .yml-tiedosto!"
       file_not_found: "<yellow>Tämän tiedostonimen varmuuskopiota ei ole varmuuskopioiden kansiossa!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Tallennetaan varmuuskopiota…"
       saved: "<white>Varmuuskopioitu{type} tiedot as{file}"
       error: "<red>Varmuuskopioinnin virhe{type} dataa! Katso lisätietoja konsolissa/alempana olevasta virheestä"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>Sinulla ei ole lunastettavia kohteita"
   item:
     give:
       sender: "<white>Antoi <aqua>{amount}x {key} <white>osoitteelle {player}"
       receiver: "<white>Sinulle annettiin<aqua>{amount} x{key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>modifioija, jonka taso on <aqua>{value} <gray>, lisättiin esineeseesi."
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Tuotteessasi ei ole {color}{stat}<yellow> muuntaja!"
         removed: "{color}{stat}<gray>muokkaaja poistettiin tuotteestasi"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Löytyi kohteen muokkaajia:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Kaikki kohteen muokkaajat on poistettu tuotteestasi"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target}<gray>kerroin arvon kanssa<aqua>{value}<gray> lisättiin tuotteeseesi"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Pidettäessä: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Kun pidetään: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Kun pidetään: <blue>-{value}% Skill XP"
+        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
       remove:
         does_not_exist: "<yellow>Tuotteellasi ei ole <aqua>{target} <yellow>kohdekerrointa!"
         removed: "<aqua>{target}<gray>tuotekerroin poistettiin tuotteestasi"
+        desc: Removes an item multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Tuotekertoimia löydetty:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Kaikki tuotekertoimet on poistettu tuotteestasi"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>Rekisteröity hallussa oleva kohde avaimeen {key}"
       already_registered: "<yellow>Avaimeen on jo rekisteröity kohde <white>{key}<yellow>, käytä <white>/skills item poista rekisteröinti <yellow> poistaaksesi sen rekisteröinnin ensin"
       no_spaces: "<yellow>Nimikeavain ei voi sisältää välilyöntejä!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray>tuotevaatimus tasolla<aqua>{level}<gray> lisättiin tuotteeseesi"
         already_exists: "<yellow>Tuotteella on jo a<dark_aqua>{skill}<yellow> tavaravaatimus! Poista se ensin<gold> /sk kohteen vaatimus poistaa"
         lore: "<red>Vaatii<dark_aqua>{skill}{level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Tuotteessasi ei ole a<dark_aqua>{skill}<yellow> tavaravaatimus!"
         removed: "<dark_aqua>{skill}<gray>nimikevaatimus poistettiin tuotteestasi"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Löydetyt tuotevaatimukset:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>Kaikki tuotevaatimukset on poistettu tuotteestasi"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Et täytä tämän kohteen käyttövaatimuksia:{requirements}"
     unregister:
       unregistered: "<white>Rekisteröimätön tuote avaimella{key}"
       not_registered: "<yellow>Avaimella ei ole rekisteröity tuotetta{key}"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "<gray>Your item will now be ignored by mana ability interactions"
-      remove: "<gray>Your item will no longer be ignored by mana ability interactions"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>The job {job} was successfully added to player {player}"
       limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
       existing: "<yellow>Player {player} already has the job {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>Removed job {job} from player {player}"
       unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white>Removed all jobs from player {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Kieli asetettu<aqua>{lang}"
     not_found: "<yellow>Kieltä ei löydy!"
+    desc: Changes your player language.
   mana:
     display: "<white>Sinun{mana_unit} :<aqua>{current} /{max}"
     display_other: "<white>Pelaajan {player}{mana_unit}: <aqua>{current}/{max}"
-    add: "<gray>Lisätty<aqua>{amount}{mana_unit}<gray> pelaajalle<gold>{player}"
-    remove: "<gray>Poistettu<aqua>{amount}{mana_unit}<gray> pelaajalta<gold>{player}"
-    set: "<gray>Aseta pelaajan <gold>{player} <gray> <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit}täytyy olla vähintään nolla!"
     console_specify_player: "<yellow>Konsolin on määritettävä pelaaja!"
   modifier:
     add:
       added: "{color}{stat}<gray>modifiointitaso<aqua>{value}<gray> nimen kanssa<white>{name}<gray> lisätty pelaajaan<gold>{player}"
       already_exists: "<yellow>Muokkaus, jolla on nimi{name} on jo olemassa pelaajalla<gold>{player}<yellow> ! Poista se komennolla<gold> /sk modifier remove{player}{name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifier {name} ei löydy pelaajalle <gold>{player}"
       removed: "<gray>Modifier <white>{name} <gray>poistettu pelaajalta <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Pelaajan tilastomuuntimet<gold>{player} :"
       all_stats_entry: "  <white>{name}-{color}{stat}<white> Taso<gold>{value}"
       one_stat_header: "<gray>Tilastomuuttajat ({color}{stat}<gray> ) pelaajalle<gold>{player} :"
       one_stat_entry: "  <white>{name}-{color}{stat}<white> Taso<gold>{value}"
       players_only: "<yellow>Vain pelaajat voivat luetella omat muuntajansa! Yritä määrittää pelaaja"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray>Poistettu<aqua>{num}<gray> stat-muuntimet pelaajalta<gold>{player}"
       removed_one_stat: "<gray>Poistettu<aqua>{num}{color}{stat}<gray> modifikaatioita pelaajalta<gold>{player}"
       players_only: "<yellow>Vain pelaajat voivat poistaa omat muokkaajansa! Yritä määrittää pelaaja"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
       one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Maailmanlaajuinen
     list: "<white>Globaali XP-kerroin pelaajalle <gold> {player} <white><aqua> {multiplier} x/+{percent}%"
     skill_entry: "<aqua>{skill}<white>XP-kerroin:<aqua>{multiplier} x / +{percent} %"
     players_only: "<yellow>Vain pelaajat voivat luetella oman kertoimensa! Määritä pelaaja!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Esiasetuksen lataaminen ohittaa määritystiedostosi! Tämä vaikuttaa seuraaviin tiedostoihin <gray> (Liitetty<aqua>, Yhdistetty<gray>, <yellow> Kor <gray> <red> vattu<gray>, Poist <dark_red> ettu<gray>): {entries} <red> Tätä toimintoa ei voi peruuttaa, varmuuskopioi tarvittavat tiedostot manuaalisesti. Kirjoita komento uudelleen vahvistaaksesi."
@@ -507,31 +587,54 @@ commands:
       replaced: Korvatut tiedostot
       deleted: Poistetut tiedostot
       skipped: Ohitetut tiedostot
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Taitoprofiili <gold>{name}:\n<gray>UUID: <white> {uuid}\n<gray>Taidot: {skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill}<gray>- Taso: <white> {level}<gray>, XP: <white> {xp}"
-    stats: "Tilastot pelaajalle <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Taidot:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat}<gray>- Kokonaistaso: <white> {total_level}<gray>, Perustaso: <white> {base_level}<gray>, Muokattu taso: <white> {modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Taitoluokituksesi"
     power: "<yellow>Voima <gray>(Kaikki taidot): <white>Sijalla #{rank} sijoituksia yhteensä {total}"
     entry: "<aqua>{skill}<gray>: <white> #{rank} sijoituksia yhteensä {total}"
-  reload: "<green>Konfigurointi ladattu uudelleen!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Tietoja tallennetaan jo!"
     mysql_not_enabled: "<yellow>MySQL ei ollut käytössä palvelimen käynnistyksen yhteydessä. Tallennus sen sijaan tiedostoon!"
     saved: "<green>Taitotiedot tallennettu!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>Kaikki taidot asetettu tasolle<aqua>{level}<gray> pelaajalle<gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Taito<aqua>{skill}<gray> asetettu tasolle<aqua>{level}<gray> pelaajalle<gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Tason on oltava vähintään{level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Taitojesi toimintopalkki on otettu käyttöön"
     disabled: "<red>Taitojen toimintopalkki on poistettu käytöstä"
     not_enabled: "<yellow>Taitojen toimintopalkki ei ole käytössä tällä palvelimella!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--== <aqua> <bold> Kaikkien taitojen tulostaulukko ==-- </bold> <white>"
     power_header_page: "<white>--== <aqua> <bold> Kaikkien taitojen tulostaulu </bold> <white> (sivu{page}) ==--"
     skill_header: "<white>--==<aqua><bold>{skill} Tulostaulu</bold><white> ==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Pelaajatietojen siirto onnistui<gray>{from}<green> to<gray>{to}"
     error: "<red>Pelaajatietojen siirtämisessä tapahtui virhe. Tarkista konsoli virheiden varalta."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Tulostaulu päivitetään jo!"
     updated: "<green>Tulostaulu päivitetty!"
-  version: "<white>Olet Aurelium Skills -versiossa. <aqua> {current_version} <white> Uusin versio on <aqua> {latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>Lisätty <aqua> {amount} {skill} <gray> XP pelaajalle <gray> {player}"
-    set: "<gray>Aseta <aqua> {skill} <gray> XP pelaajalle <gray> {player} <gray> {amount}"
-    remove: "<gray>Poistettu<aqua>{amount}{skill}<gray> XP pelaajalta<gold>{player}"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>Jäähtymisaika taidolle <aqua>{ability} <gray>on nollattu pelaajalle <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Tuntematon taito!"
   unknown_mana_ability: "<yellow>Tuntematon manakyky!"
   unknown_stat: "<yellow>Tuntematon taito!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Napsauta siirtyäksesi seuraavalle sivulle"
     previous_page: "Edellinen sivu"
     previous_page_click: "Napsauta siirtyäksesi edelliselle sivulle"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Sinun taitosi"
     your_skills: "Sinun taitosi"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Pudotukset"
     chance_drop: "{chance}% +{value} Pudotus"
     chance_drops: "{chance}% +{value} pudotukset"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Lunasta tavaroita"
     inventory_full: "Varastossasi ei ole tarpeeksi tilaa kyseisen tuotteen lunastamiseen"
@@ -654,6 +777,29 @@ menus:
     description: "Kuvaus"
     unlocked_at: "<1>Avautuu <2>{skill} {level}"
     next_upgrade_at: "<1>Seuraava päivitys <2>{skill}{level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Täydennä
@@ -890,4 +1036,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 38
