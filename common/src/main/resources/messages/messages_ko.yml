@@ -121,7 +121,7 @@ abilities:
     info: "{value}% 관통 확률"
   stun:
     name: 기절
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% 기절 확률"
   shielding:
     name: 방어술
