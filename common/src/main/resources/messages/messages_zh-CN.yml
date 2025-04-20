@@ -121,7 +121,7 @@ abilities:
     info: "{value}% 射出穿透箭几率"
   stun:
     name: 眩晕打击
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% 晕眩攻击几率"
   shielding:
     name: 捂头蹲防
