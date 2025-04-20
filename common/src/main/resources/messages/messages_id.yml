@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Tembus"
   stun:
     name: Lumpuh
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Kesempatan"
   shielding:
     name: Perisai
