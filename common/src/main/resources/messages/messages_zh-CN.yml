@@ -121,7 +121,7 @@ abilities:
     info: "{value}% 射出穿透箭几率"
   stun:
     name: 眩晕打击
-    desc: "{value}% 的几率可以使敌人移动速度降低 20%, 持续2秒"
+    desc: "有 {value}% 几率降低敌人 {reduction_percent}% 移速，持续 2 秒。"
     info: "{value}% 晕眩攻击几率"
   shielding:
     name: 捂头蹲防
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<red>{player} <gray>的反挂机日志 <gray>({count} 总共) <dark_gray>| <gray>页 {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: 显示指定玩家的反挂机日志。
   armor:
     modifier:
       add:
-        added: "<gray>属性 {color}{stat} <gray>的 <aqua>{value} <gray>增强属性已添加至你的物品"
+        added: "将如下属性修饰符添加至装备：{stat}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
+        desc: 向手持物品添加装备属性修饰符，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有属性 {color}{stat}!"
         removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
+        desc: 移除手持物品的装备属性修饰符，默认一并移除描述文本。
       list:
         header: "<white>已有的属性列表:"
+        desc: 列出手持物品上所有的装备属性修饰符。
       removeall:
         removed: "<gray>成功清除了物品上的所有属性"
+        desc: 移除手持物品上所有的装备属性修饰符。
     trait:
       add:
+        added: "将如下特征修饰符添加至装备：{trait}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk armor modifier remove 删除它!"
+        desc: 向手持物品添加装备特征修饰符，默认一并添加描述文本。
+      remove:
+        desc: 移除手持物品上指定的装备特征修饰符。
+      list:
+        desc: 列出手持物品上所有的装备特征修饰符。
+      removeall:
+        desc: 移除手持物品上所有的装备特征修饰符。
     multiplier:
       add:
         added: "<gray>装备时属性增强<aqua> {target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>当装备时: <aqua>-{value}% {skill} 经验值"
         global_lore: "<gray>当装备时: <aqua>+{value}% 所有技能 经验值获取"
         global_lore_subtract: "<gray>当装备时: <aqua>-{value}% 所有技能 经验值获取"
+        desc: 为手持物品添加特定或所有技能的经验倍率加成，可借此获得更多技能经验。
       remove:
         does_not_exist: "<yellow>你的盔甲没有属性增强 <aqua>{target}!"
         removed: "<gray>装备时属性增强 {target} <gray>已从你的物品中移除"
+        desc: 移除手持物品上特定的装备经验倍率加成。
       list:
         header: "<white>已有的装备时生效属性列表:"
+        desc: 列出手持物品的所有装备经验倍率加成。
       removeall:
         removed: "<gray>成功清除了物品上的所有装备时生效属性"
+        desc: 移除手持物品上所有的装备经验倍率加成。
     requirement:
       add:
         added: "<gray>等级限制为 <aqua>{level} <gray>的技能 <dark_aqua>{skill} <gray>已经添加到你的物品"
         already_exists: "<yellow>属性 <dark_aqua>{skill} <yellow>已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!"
         lore: "<red>需要 <dark_aqua>{level} <red>级 <dark_aqua>{skill}"
+        desc: 为手持物品添加装备条件，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有技能 <dark_aqua>{skill}<yellow> 的条件限制!"
         removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
+        desc: 移除手持物品的装备条件，默认一并移除描述文本。
       list:
         header: "<white>已存在的条件限制:"
+        desc: 列出手持物品所有的装备条件。
       removeall:
         removed: "<gray>所有条件限制已从你的物品上移除"
+        desc: 移除手持物品上所有的装备条件。
       equip: "<yellow>你没有达到使用此物品的要求: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>加载备份出现错误: {error}"
       must_be_yaml: "<yellow>所选中文档需为 .yml 格式!"
       file_not_found: "<yellow>备份文件夹内不存在符合此名称的备份文件!"
+      desc: 从指定文件加载备份。
     save:
       saving: "<white>保存备份中..."
       saved: "<white>已将 {file} 数据备份为 {type}"
       error: "<red>备份 {type} 数据时出现异常! 请查看控制台/下方堆栈报错以了解详情"
+      desc: 将当前数据以文件形式保存至备份文件夹。
   claimitems:
+    desc: 打开界面领取多余的物品。
     no_items: "<yellow>你没有需要领取的物品"
   item:
     give:
       sender: "<white>已将 <aqua>{amount}x {key} <white>给予了 {player}"
       receiver: "<white>你被给予了 <aqua>{amount}x {key}"
+      desc: 将物品注册列表中指定键名对应的物品给予玩家。
     modifier:
       add:
-        added: "<aqua>{value} <gray>级的 {color}{stat} <gray>属性已添加至你的物品"
+        added: "将如下属性修饰符添加至物品：{stat}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
+        desc: 向手持物品添加物品属性修饰符，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有属性 {color}{stat} <yellow>!"
         removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
+        desc: 移除手持物品的物品属性修饰符，默认一并移除描述文本。
       list:
         header: "<white>已添加的物品属性:"
+        desc: 列出手持物品上所有的物品属性修饰符。
       removeall:
         removed: "<gray>成功清除了物品上的所有属性"
+        desc: 移除手持物品上所有的物品属性修饰符。
     trait:
       add:
+        added: "将如下特征修饰符添加至物品：{trait}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk item trait remove 删除它!"
+        desc: 向手持物品添加物品特征修饰符，默认一并添加描述文本。
+      remove:
+        desc: 移除手持物品上指定的物品特征修饰符。
+      list:
+        desc: 列出手持物品上所有的物品特征修饰符。
+      removeall:
+        desc: 移除手持物品上所有的物品特征修饰符。
     multiplier:
       add:
         added: "<aqua>装备时属性增强 <aqua>{target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>当持有时: <aqua>-{value}% {skill} 经验值"
         global_lore: "<gray>当持有时: <blue>+{value}% 所有技能 经验值获取"
         global_lore_subtract: "<gray>当持有时: <blue>-{value}% 所有技能 经验值获取"
+        desc: 为手持物品添加特定或所有技能的经验倍率加成，可借此获得更多技能经验。
       remove:
         does_not_exist: "<yellow>你的物品没有名为 <aqua>{target} <yellow>的属性翻倍!"
         removed: "<aqua>{target} <gray>物品翻倍已从你的物品上移除"
+        desc: 移除手持物品上特定的物品经验倍率加成。
       list:
         header: "<white>已添加的物品翻倍属性:"
+        desc: 列出手持物品的所有物品经验倍率加成。
       removeall:
         removed: "<gray>成功清除了物品上的所有持有时生效属性"
+        desc: 移除手持物品上所有物品经验倍率加成。
     register:
       registered: "<white>已将手上物品注册至id: {key}"
       already_registered: "<yellow>已有相同id <white>{key} <yellow>注册, 请输入 <white>/skills item unregister <yellow>以解除对该物品的注册"
       no_spaces: "<yellow>id 不可包含空格"
+      desc: 将物品以指定名称注册至物品条目列表，便于配置引用这些物品。
     requirement:
       add:
         added: "<gray>等级限制为 <aqua>{level} <gray>的技能 <dark_aqua>{skill} <gray>已经添加到你的物品"
         already_exists: "<yellow>属性 <dark_aqua>{skill} <yellow>已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!"
         lore: "<red>需要 <dark_aqua>{level} <red>级 <dark_aqua>{skill}"
+        desc: 为手持物品添加物品条件，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有技能 <dark_aqua>{skill}<yellow> 的条件限制!"
         removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
+        desc: 移除手持物品的物品条件，默认一并移除描述文本。
       list:
         header: "<white>已存在的条件限制:"
+        desc: 列出手持物品所有的物品条件。
       removeall:
         removed: "<gray>所有条件限制已从你的物品上移除"
+        desc: 移除手持物品上所有的物品条件。
       use: "<yellow>你没有达到使用此物品的要求: {requirements}"
     unregister:
       unregistered: "<white>id 为 {key} 的物品未被注册"
       not_registered: "<yellow> 没有注册为 id {key} 的物品"
+      desc: 将指定键名对应的物品从物品列表中移除
     ignore:
-      add: "<gray>当前物品将不再触发魔法技能"
-      remove: "<gray>当前物品将能够触发魔法技能"
+      add:
+        added: "<gray>当前物品将不再触发魔法能力"
+        desc: 为物品添加禁止触发魔法能力的标签。
+      remove:
+        removed: "<gray>当前物品可再次触发魔法能力"
+        desc: 移除物品禁止触发魔法能力的标签。
   jobs:
     add:
       added: "<white>职业 {job} 已成功给予玩家 {player}"
       limited: "<yellow>不能将该职业给予玩家 {player}，因为该玩家不能拥有更多职业了"
       existing: "<yellow>玩家 {player} 已拥有职业 {job}"
+      desc: 为自己或指定玩家选定一个技能作为职业。
     remove:
       removed: "<white>成功将玩家 {player} 拥有的职业 {job} 移除"
       unchanged: "<yellow>无任何改动，因为玩家 {player} 尚未拥有职业 {job}"
+      desc: 让自己或指定玩家退出指定技能对应的职业。
     removeall:
       removed: "<white>成功将玩家 {player} 的所有职业移除"
+      desc: 让自己或指定玩家退出所有技能对应的职业。
   lang:
     set: "<gray>语言已设置为 <aqua>{lang}"
     not_found: "<yellow>语言不存在!"
+    desc: 修改玩家显示的语言。
   mana:
     display: "<white>当前 {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>玩家 {player} 当前 {mana_unit}: <aqua>{current}/{max}"
-    add: "<gray>添加了 <aqua>{amount} {mana_unit} <gray>至玩家 <gold>{player}"
-    remove: "<gray>移除了 <aqua>{amount} {mana_unit} <gray>从玩家 <gold>{player}"
-    set: "<gray>将玩家 <gold>{player} <gray>的 {mana_unit} 设置为了 <aqua>{amount}"
+    desc: 显示自身或其他玩家的魔力值与其上限
+    add:
+      added: "<gray>为玩家 <gold>{player} <gray>添加了 <aqua>{amount} {mana_unit}"
+      desc: 为玩家添加魔力值
+    remove:
+      removed: "<gray>从玩家 <gold>{player} <gray>处扣除了 <aqua>{amount}{mana_unit}"
+      desc: 汲取玩家的魔力
+    set:
+      set: "<gray>将玩家 <gold>{player} <gray> 的魔力值设置为了 <aqua>{amount} {mana_unit}"
+      desc: 设置玩家的魔力值
     at_least_zero: "<yellow>{mana_unit} 必须至少大于零!"
     console_specify_player: "<yellow>后台执行此命令需指定一名玩家!"
   modifier:
     add:
       added: "<gray>技能 {color}{stat} <gray>已将属性 <white>{name} <gray>的获取倍数改为 <aqua>{value} <gray>并成功应用于玩家 <gold>{player}"
       already_exists: "<yellow>属性 <white>{name} <yellow>已存在于玩家 <gold>{player}<yellow> 身上! 请使用/sk modifier remove {player} {name} 以移除"
+      desc: 为玩家添加属性修饰符。
+    addtemp:
+      added: "为玩家 {player} 添加了临时属性 {stat} 修饰符：名称：{name}，值：{value}，持续时间：{duration}，操作：{operation}"
+      desc: 为玩家添加临时属性修饰符。
     remove:
       not_found: "<yellow>属性 <gray>{name} <yellow>在玩家 <gold>{player} <yellow>身上不存在"
       removed: "<gray>成功从玩家 <gold>{player} <gray>身上移走了属性 <white>{name}"
+      desc: 移除玩家指定的属性修饰符。
     list:
       all_stats_header: "<gold>{player} <gray>的属性:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>等级 <gold>{value}"
       one_stat_header: "<gold>{player} <white>的属性修改 ({color}{stat}<white>)"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>等级 <gold>{value}"
       players_only: "<yellow>仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!"
+      desc: 列出玩家拥有指定或所有属性的修饰符。
     removeall:
       removed_all_stats: "<gray>删除了玩家 <gold>{player} <gray>的 <aqua>{num} <gray>属性修改"
       removed_one_stat: "<gray>删除了玩家 <gold>{player} <gray>的 <aqua>{num} {color}{stat} <gray>属性修改"
       players_only: "<yellow>仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!"
+      desc: 移除玩家身上的所有属性修饰符。
   trait:
     add:
       already_exists: "<yellow>玩家 <gold>{player}<yellow> 已拥有 <white>{name}<yellow> 属性！请使用 <gold>/sk trait remove {player} {name} 命令来移除"
+      desc: 为玩家添加特征修饰符。
+    addtemp:
+      added: "为玩家 {player} 添加了临时特征 {trait} 修饰符：名称：{name}，值：{value}，持续时间：{duration}"
+      desc: 为玩家添加临时特征修饰符。
+    remove:
+      desc: 移除玩家指定的特征修饰符。
     list:
       all_traits_header: "<gray>玩家 <gold>{player} <gray>的属性："
       one_trait_header: "<gray>玩家 <gold>{player} <gray>的属性({color}{trait}<gray>)："
+      desc: 列出玩家拥有指定或所有特征的修饰符。
     removeall:
       removed_all_traits: "<gray>移除了玩家 <gold>{player} 身上的 <aqua>{num} <gray>个属性"
+      desc: 移除玩家身上的所有特征修饰符。
   multiplier:
     global: 全局
     list: "<white>玩家 <gold>{player} <white>的全局经验翻倍倍数为: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>经验值 翻倍倍数: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>仅玩家可以列出属于他们的经验翻倍器! 尝试指定一名玩家!"
+    desc: 显示玩家当前由权限赋予的经验加成。
+  openmenu:
+    desc: 为玩家打开指定菜单，可选传入 JSON 及页码。
   preset:
     load:
       confirm: "<red>载入预设会覆盖你的配置文件! 下列文件会受到影响<gray>(<aqua>修改<gray>, <yellow>合并<gray>, <red>替换<gray>, <dark_red>删除<gray>): {entries}<red>该操作不可逆, 请预先备份好所有需要的文件. 再次输入命令以确认本次操作."
@@ -507,31 +587,54 @@ commands:
       replaced: 替换文件
       deleted: 删除文件
       skipped: 跳过文件
+      desc: 从预设文件夹载入预设配置。
   profile:
-    skills: "玩家 <gold>{name} <gray>的 Aurelium Skills 详细描述:\n<gray>玩家 UUID: <white>{uuid}\n<gray>技能: {skill_entries}"
-    skill_entry: "\n<dark_aqua>{skill} <gray>- 等级: <white>{level}<gray>, 经验值: <white>{xp}"
-    stats: "玩家 <gold>{name} <gray>的 Aurelium Skills 详细描述:\n<gray>玩家 UUID: <white>{uuid}\n<gray>属性: {stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- 总等级: <white>{total_level}<gray>, 基础等级: <white>{base_level}<gray>, 翻倍等级: <white>{modified_level}"
+    skills:
+      header: "玩家 <gold>{name} <gray>的技能档案：\n<gray>UUID：<white>{uuid}\n<gray>技能：{skill_entries}"
+      entry: "\n<dark_aqua>{skill} <gray>- 等级：<white>{level}<gray>，经验值：<white>{xp}"
+      desc: 显示任意玩家技能等级与经验值，无需对方在线。
+    stats:
+      header: "玩家 <gold>{name} <gray>的属性档案：\n<gray>UUID：<white>{uuid}\n<gray>属性：{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- 总等级：\n<white>{total_level}<gray>，基础等级：<white>{base_level}<gray>，加成等级：<white>{modified_level}"
+      desc: 显示任意玩家属性等级，无需对方在线。
   rank:
     header: "<aqua><bold>技能排名</bold>"
     power: "<yellow>战力 <gray>(技能综合): <white>#{rank}, 总第 {total} 名"
     entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
-  reload: "<green>配置已重新加载!"
+    desc: 显示技能排行。
+  reload:
+    reloaded: "<green>配置已重载！"
+    desc: 重载配置、消息、菜单、战利品表、ActionBar 消息、BossBar 消息及生命与幸运属性。
+  resethealth:
+    desc: 移除 AuraSkills 添加的所有属性修饰符便于卸载插件。仅对离线玩家生效。
   save:
     already_saving: "<yellow>数据已正在保存!"
     mysql_not_enabled: "<yellow>数据库保存在服务器开启时未开启, 已将存储方式改为本地存储!"
     saved: "<green>技能数据保存成功!"
+    desc: 保存技能数据。
   skill:
     setall:
       set: "<gray>玩家 <gold>{player} <gray>的所有技能等级已设置为 <aqua>{level}!"
+      desc: 将玩家的所有技能等级设置为指定值。
     setlevel:
       set: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>{level}"
+      desc: 将玩家的特定技能等级设置为指定值。
+    reset:
+      desc: 将玩家指定或所有技能的等级重置至初始值。
     at_least: "<yellow>所需等级至少应为 {level}!"
+  skills:
+    desc: 打开技能菜单，浏览技能、升级进度与能力。
+  stats:
+    desc: 打开属性界面，浏览当前属性等级及其描述。
+  sources:
+    desc: 打开经验来源界面，浏览增加技能经验的所有途径。
   toggle:
     enabled: "<green>技能状态显示栏已打开"
     disabled: "<red>技能状态显示栏已关闭"
     not_enabled: "<yellow>此服务器未启用技能状态栏!"
+    desc: 切换自身技能 ActionBar 可见性。
   top:
+    desc: 显示指定技能排行榜
     power_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>技能综合排行榜 </bold><white>(第 {page} 页)==--"
     skill_header: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>成功将玩家数据从 <gray>{from} <green>转移到 <gray>{to}"
     error: "<red>传输玩家数据时出错。请检查控制台以获取错误信息。"
+    desc: 将数据从指定 UUID 对应玩家转移至其他玩家。
   updateleaderboards:
     already_updating: "<yellow>排行榜正在更新!"
     updated: "<green>排行榜更新成功!"
-  version: "您正在使用 AuraSkills版本 <aqua>{current_version}<white>. 最新版本是 <aqua>{latest_version}"
+    desc: 刷新并整理排行榜。
+  version:
+    version: "<white>你使用的 AuraSkills 版本为 <aqua>{current_version}<white>。最新版本是 <aqua>{latest_version}"
+    new_update: "{prefix}<white>有新版本可用！你使用的版本为 <aqua>{current_version}<white>，最新版本为 <aqua>{latest_version} {prefix}<white>，可在 Modrinth 下载：\n<yellow><underlined>{link}"
+    desc: 显示插件版本并检查可用的最新版本。
   xp:
-    add: "<gray>成功为玩家 <gold>{player} <gray>添加了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
-    set: "<gray>将玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>熟练度设置为了 <aqua>{amount}"
-    remove: "<gray>成功为玩家 <gold>{player} <gray>取走了技能 <aqua>{skill} <gray>的 <aqua>{amount} <gray>点熟练度"
+    add:
+      added: "<gray>给予了玩家 {player} <aqua>{amount} <gray>点 <aqua>{skill}<gray> 经验值"
+      desc: 给予玩家指定技能的经验值。
+    set:
+      set: "<gray>将玩家 {player} 的<aqua>{skill}<gray> 经验值设置为了 {amount}"
+      desc: 将玩家的技能经验设置为指定值。
+    remove:
+      removed: "<gray>取走了玩家 <gold>{player} <aqua>{amount}<gray> 点 <aqua>{skill}<gray> 技能经验值"
+      desc: 移除玩家指定技能的经验值。
   manaability:
-    cooldown_reset: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{ability} <gray>冷却已被重置"
+    resetcooldown:
+      cooldown_reset: "<gray>玩家 <gold>{player} <gray>的能力 <aqua>{ability}<gray> 冷却已被重置"
+      desc: 重置指定玩家魔法能力的冷却，可选回满魔力值。
   unknown_skill: "<yellow>未知技能!"
   unknown_mana_ability: "<yellow>未知的魔法能力！"
   unknown_stat: "<yellow>未知属性!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "点击进入下一页"
     previous_page: "上一页"
     previous_page_click: "点击返回上一页"
+    trait: "特征"
+    trait_gain: "<1>每 {color}1 点 {stat_name}<1>属性等级\n<1>可获得 {color}{level_modifier} {trait_name}。"
+    trait_level: "特征等级"
+    base: "基础"
+    modifiers_additive: "修饰符（叠加）"
+    modifiers_multiplicative: "修饰符（叠乘）"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} 掉落"
     chance_drop: "{chance}% 的概率获得 +{value} 掉落"
     chance_drops: "{chance}% 的概率获得 +{value} 掉落"
+    stat_info_click: "点击浏览属性细节"
   unclaimed_items:
     unclaimed_items_title: "领取物品"
     inventory_full: "你的物品栏没有足够的空间"
@@ -654,6 +777,30 @@ menus:
     description: "描述"
     unlocked_at: "<1>在 <2>{skill} {level} 解锁。"
     next_upgrade_at: "<2>{skill} <1>的下一等级为 {level}"
+  stat_info:
+    stat_details: "{stat_name} 属性"
+    stat: "属性"
+    stat_level: "属性等级"
+    traits_leveled: "特征已升级"
+    stat_modifiers: "属性修饰符"
+    stat_reward_desc: "由 {skill} 技能等级获得。"
+    stat_modifiers_click: "点击浏览属性修饰符"
+    trait_modifiers_click: "点击浏览特征修饰符"
+    showing_stat_modifiers: "显示属性修饰符"
+    showing_trait_modifiers: "显示特征修饰符"
+    base_level: "基础等级"
+    base_level_desc: "来源于 Minecraft 原版及其他插件的基础等级。"
+    linked_stat_desc: "由 {stat} 属性等级获得。"
+    ability_modifier_name: "{name} 能力"
+    ability_modifier_desc: "由 {ability} 能力获得。"
+    custom_modifier_desc: "由自定义修饰符给予。"
+    item_hand_desc: "由手持物品给予。"
+    item_off_hand_desc: "由副手手持物品给予。"
+    helmet_desc: "由头盔给予。"
+    chestplate_desc: "由胸甲给予。"
+    leggings_desc: "由护腿给予。"
+    boots_desc: "由靴子给予。"
+    effective_trait: "有效{trait_name}"
 mana_abilities:
   replenish:
     name: 自动补种
@@ -890,4 +1037,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 35
+file_version: 39
