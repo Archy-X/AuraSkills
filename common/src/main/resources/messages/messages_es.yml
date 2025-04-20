@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Probabilidad de Perforación"
   stun:
     name: Aturdir
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Probabilidad de Aturdimiento"
   shielding:
     name: Blindaje
