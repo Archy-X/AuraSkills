@@ -7,16 +7,16 @@ import java.util.List;
 public class BlockRequirement {
 
     private final Material material;
-    private final boolean checksPlace;
-    private final boolean checksBreak;
-    private final boolean checksHarvest;
+    private final boolean allowPlace;
+    private final boolean allowBreak;
+    private final boolean allowHarvest;
     private final List<RequirementNode> nodes;
 
-    public BlockRequirement(Material material, boolean checksPlace, boolean checksBreak, boolean checksHarvest, List<RequirementNode> nodes) {
+    public BlockRequirement(Material material, boolean allowPlace, boolean allowBreak, boolean allowHarvest, List<RequirementNode> nodes) {
         this.material = material;
-        this.checksPlace = checksPlace;
-        this.checksBreak = checksBreak;
-        this.checksHarvest = checksHarvest;
+        this.allowPlace = allowPlace;
+        this.allowBreak = allowBreak;
+        this.allowHarvest = allowHarvest;
         this.nodes = nodes;
     }
 
@@ -24,16 +24,16 @@ public class BlockRequirement {
         return material;
     }
 
-    public boolean checksPlacing() {
-        return checksPlace;
+    public boolean allowPlace() {
+        return allowPlace;
     }
 
-    public boolean checksBreaking() {
-        return checksBreak;
+    public boolean allowBreak() {
+        return allowBreak;
     }
 
-    public boolean checksHarvesting() {
-        return checksHarvest;
+    public boolean allowHarvest() {
+        return allowHarvest;
     }
 
     public List<RequirementNode> getNodes() {

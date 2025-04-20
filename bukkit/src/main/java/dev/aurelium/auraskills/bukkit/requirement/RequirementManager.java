@@ -84,22 +84,23 @@ public class RequirementManager implements Listener {
             ConfigurationNode config = loader.loadUserFile("config.yml");
 
             this.blockRequirements = new ArrayList<>();
-            List<? extends ConfigurationNode> blockNodes = config.node("requirement.blocks", "list").childrenList();
+            List<? extends ConfigurationNode> blockNodes = config.node("requirement", "blocks", "list").childrenList();
             for (ConfigurationNode blockNode : blockNodes) {
-                Material material = Material.valueOf(blockNode.node("material").getString().toUpperCase(Locale.ROOT));
-                boolean allowPlace = blockNode.node("allow_place").getBoolean();
-                boolean allowBreak = blockNode.node("allow_break").getBoolean();
-                boolean allowHarvest = blockNode.node("allow_harvest").getBoolean();
+                Material material = Material.valueOf(blockNode.node("material").getString("").toUpperCase(Locale.ROOT));
+                boolean allowPlace = blockNode.node("allow_place").getBoolean(false);
+                boolean allowBreak = blockNode.node("allow_break").getBoolean(false);
+                boolean allowHarvest = blockNode.node("allow_harvest").getBoolean(false);
+
                 List<? extends ConfigurationNode> requirementNodes = blockNode.node("requirements").childrenList();
                 List<RequirementNode> nodes = new ArrayList<>();
 
                 for (ConfigurationNode requirementNode : requirementNodes) {
-                    String type = requirementNode.node("type").getString();
+                    String type = requirementNode.node("type").getString("");
                     String message = requirementNode.node("message").getString("");
 
                     switch (type) {
                         case "skill_level" -> {
-                            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementNode.node("skill").getString().toLowerCase(Locale.ROOT)));
+                            Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(requirementNode.node("skill").getString("").toLowerCase(Locale.ROOT)));
                             int level = requirementNode.node("level").getInt();
                             nodes.add(new SkillNode(plugin, skill, level, message));
                         }
@@ -108,11 +109,14 @@ public class RequirementManager implements Listener {
                             nodes.add(new PermissionNode(plugin, permission, message));
                         }
                         case "excluded_world" -> {
-                            String[] worlds = (String[]) requirementNode.node("world").getList(String.class).toArray();
+                            String[] worlds = requirementNode.node("world").getList(String.class, new ArrayList<>()).toArray(new String[0]);
                             nodes.add(new ExcludedWorldNode(plugin, worlds, message));
                         }
                         case "stat" -> {
-                            Stat stat = plugin.getStatManager().getEnabledStats().stream().filter(s -> s.getId().equals(NamespacedId.fromDefault(requirementNode.node("stat").getString().toLowerCase(Locale.ROOT)))).findFirst().orElse(null);
+                            Stat stat = plugin.getStatManager().getEnabledStats().stream()
+                                    .filter(s -> s.getId().equals(NamespacedId.fromDefault(requirementNode.node("stat").getString("").toLowerCase(Locale.ROOT))))
+                                    .findFirst()
+                                    .orElse(null);
                             int value = requirementNode.node("value").getInt();
                             nodes.add(new StatNode(plugin, stat, value, message));
                         }
@@ -125,7 +129,7 @@ public class RequirementManager implements Listener {
                 blockRequirements.add(blockRequirement);
             }
             if (!blockRequirements.isEmpty()) {
-                plugin.logger().info("Loaded " + blockRequirements.size() + " global requirement" + (blockRequirements.size() != 1 ? "s" : ""));
+                plugin.logger().info("Loaded " + blockRequirements.size() + " block requirement" + (blockRequirements.size() != 1 ? "s" : ""));
             }
         } catch (IOException e) {
             plugin.logger().warn("Error loading block requirements: " + e.getMessage());

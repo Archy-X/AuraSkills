@@ -240,6 +240,8 @@ requirement:
     global: [ ]
   blocks:
     enabled: true
+    bypass_in_creative_mode: true
+    bypass_if_op: false
     list: [ ]
 damage:
   correct_last_damage: true

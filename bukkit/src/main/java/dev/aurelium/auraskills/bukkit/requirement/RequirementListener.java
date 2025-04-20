@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import dev.aurelium.slate.text.TextFormatter;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -99,11 +100,11 @@ public class RequirementListener implements Listener {
         if (plugin.configBoolean(Option.REQUIREMENT_ITEM_PREVENT_TOOL_USE)) {
             Player player = event.getPlayer();
             ItemStack item = player.getInventory().getItemInMainHand();
-            if (item.getType() == Material.AIR) return;
-            checkItemRequirements(player, item, event);
+            if (item.getType() != Material.AIR) {
+                checkItemRequirements(player, item, event);
+            }
         }
 
-        if (plugin.configBoolean(Option.REQUIREMENT_BLOCKS_ENABLED)) return;
         checkBlockRequirements(event.getPlayer(), event.getBlock().getType(), event);
     }
 
@@ -113,18 +114,18 @@ public class RequirementListener implements Listener {
         if (plugin.configBoolean(Option.REQUIREMENT_ITEM_PREVENT_BLOCK_PLACE)) {
             Player player = event.getPlayer();
             ItemStack item = event.getItemInHand();
-            if (item.getType() == Material.AIR) return;
-            checkItemRequirements(player, item, event);
+            if (item.getType() != Material.AIR) {
+                checkItemRequirements(player, item, event);
+            }
         }
 
-        if (plugin.configBoolean(Option.REQUIREMENT_BLOCKS_ENABLED)) return;
         checkBlockRequirements(event.getPlayer(), event.getBlock().getType(), event);
     }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHarvest(PlayerHarvestBlockEvent event) {
         if (event.isCancelled()) return;
-        if (plugin.configBoolean(Option.REQUIREMENT_BLOCKS_ENABLED)) return;
+
         checkBlockRequirements(event.getPlayer(), event.getHarvestedBlock().getType(), event);
     }
 
@@ -184,6 +185,15 @@ public class RequirementListener implements Listener {
     }
 
     private void checkBlockRequirements(Player player, Material material, Cancellable event) {
+        if (!plugin.configBoolean(Option.REQUIREMENT_BLOCKS_ENABLED)) return;
+
+        if (player.getGameMode() == GameMode.CREATIVE && plugin.configBoolean(Option.REQUIREMENT_BLOCKS_BYPASS_IN_CREATIVE_MODE)) {
+            return;
+        }
+        if (player.isOp() && plugin.configBoolean(Option.REQUIREMENT_BLOCKS_BYPASS_IF_OP)) {
+            return;
+        }
+
         BlockRequirement blockRequirement = null;
 
         for (BlockRequirement block : manager.getBlocks()) {
@@ -193,29 +203,33 @@ public class RequirementListener implements Listener {
             }
         }
 
-        if (blockRequirement != null) {
-            if (event instanceof BlockBreakEvent) {
-                if (!blockRequirement.checksBreaking()) return;
-            } else if (event instanceof BlockPlaceEvent) {
-                if (!blockRequirement.checksPlacing()) return;
-            }
+        if (blockRequirement == null) {
+            return;
+        }
 
-            for (RequirementNode node : blockRequirement.getNodes()) {
-                if (!node.check(player)) {
-                    event.setCancelled(true);
-                    String message = node.getDenyMessage();
-                    if (!message.isEmpty()) {
-                        TextFormatter formatter = new TextFormatter();
-                        User user = plugin.getUser(player);
+        if (event instanceof BlockBreakEvent) {
+            if (blockRequirement.allowBreak()) return;
+        } else if (event instanceof BlockPlaceEvent) {
+            if (blockRequirement.allowPlace()) return;
+        } else if (event instanceof PlayerHarvestBlockEvent) {
+            if (blockRequirement.allowHarvest()) return;
+        }
 
-                        if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
-                            message = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
-                        }
+        for (RequirementNode node : blockRequirement.getNodes()) {
+            if (!node.check(player)) {
+                event.setCancelled(true);
+                String message = node.getDenyMessage();
+                if (!message.isEmpty()) {
+                    TextFormatter formatter = new TextFormatter();
+                    User user = plugin.getUser(player);
 
-                        user.sendMessage(formatter.toComponent(message));
+                    if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
+                        message = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, message);
                     }
-                    break;
+
+                    user.sendMessage(formatter.toComponent(message));
                 }
+                break;
             }
         }
     }

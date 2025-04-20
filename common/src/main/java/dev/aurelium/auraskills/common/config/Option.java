@@ -144,6 +144,8 @@ public enum Option {
     REQUIREMENT_ITEM_PREVENT_INTERACT("requirement.item.prevent_interact", OptionType.BOOLEAN),
     REQUIREMENT_ARMOR_PREVENT_ARMOR_EQUIP("requirement.armor.prevent_armor_equip", OptionType.BOOLEAN),
     REQUIREMENT_BLOCKS_ENABLED("requirement.blocks.enabled", OptionType.BOOLEAN),
+    REQUIREMENT_BLOCKS_BYPASS_IN_CREATIVE_MODE("requirement.blocks.bypass_in_creative_mode", OptionType.BOOLEAN),
+    REQUIREMENT_BLOCKS_BYPASS_IF_OP("requirement.blocks.bypass_if_op", OptionType.BOOLEAN),
     // Damage options
     DAMAGE_CORRECT_LAST_DAMAGE("damage.correct_last_damage", OptionType.BOOLEAN),
     // Critical options
