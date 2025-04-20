@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Šance na Proražení"
   stun:
     name: Omráčení
-    desc: "{value}% chance to decreases enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Šance na Omráčení"
   shielding:
     name: Zaštítění
