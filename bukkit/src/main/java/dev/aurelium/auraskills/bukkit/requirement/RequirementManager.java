@@ -109,7 +109,7 @@ public class RequirementManager implements Listener {
                             nodes.add(new PermissionNode(plugin, permission, message));
                         }
                         case "excluded_world" -> {
-                            String[] worlds = requirementNode.node("world").getList(String.class, new ArrayList<>()).toArray(new String[0]);
+                            String[] worlds = requirementNode.node("worlds").getList(String.class, new ArrayList<>()).toArray(new String[0]);
                             nodes.add(new ExcludedWorldNode(plugin, worlds, message));
                         }
                         case "stat" -> {
