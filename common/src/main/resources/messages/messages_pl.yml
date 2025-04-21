@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Szansy Przebicia"
   stun:
     name: Ogłuszenie
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% szans na zmniejszenie szybkości ruchu wroga o {reduction_percent}% na 2 sekundy."
     info: "{value}% Szans Ogłuszenia"
   shielding:
     name: Osłona
@@ -338,9 +338,9 @@ commands:
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Dodano modyfikator statystyk do zbroi ze statystyką: {stat}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator zbroi ze statystyką {color}{stat} <yellow>już istnieje na twojej zbroi! Usuń go najpierw za pomocą /sk armor modifier remove"
-        desc: Adds an armor stat modifier to the item held, along with lore by default.
+        desc: Dodaje modyfikator statystyk zbroi do posiadanego przedmiotu, wraz z domyślnie z lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z Twojego przedmiotu"
@@ -353,7 +353,7 @@ commands:
         desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
-        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
+        added: "Dodano modyfikator cech do zbroi z cechą: {trait}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator zbroi ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk armor trait remove"
         desc: Adds an armor trait modifier to the item held, along with lore by default.
       remove:
@@ -526,7 +526,7 @@ commands:
       removed: "<gray>Usunięto <aqua>{amount} {mana_unit} <gray>z gracza <gold>{player}"
       desc: Usuwa manę z gracza
     set:
-      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      set: "<gray>Ustaw gracza <gold>{player} <gray>na <aqua>{amount} {mana_unit}"
       desc: Ustawia manę gracza
     at_least_zero: "<yellow>{mana_unit} musi wynosić co najmniej zero!"
     console_specify_player: "<yellow>Konsola musi określić gracza!"
@@ -587,15 +587,15 @@ commands:
       replaced: Zastąpione pliki
       deleted: Usunięte pliki
       skipped: Pominięte pliki
-      desc: Loads a configuration preset from the presets folder.
+      desc: Ładuje ustawienie konfiguracji z folderu ustawień wstępnych.
   profile:
     skills:
-      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      header: "Profil umiejętności dla <gold>{name}:\n<gray>UUUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
       entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
       desc: Shows the skill levels and XP for any player, including offline players.
     stats:
-      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
-      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      header: "Profil statystyk dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statystyki:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Całkowity poziom: <white>{total_level}<gray>, Poziom podstawowy: <white>{base_level}<gray>, Zmodyfikowany poziom: <white>{modified_level}"
       desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Twój Ranking Umiejętności</bold>"
@@ -649,7 +649,7 @@ commands:
   updateleaderboards:
     already_updating: "<yellow>Tablica wyników jest już aktualizowana!"
     updated: "<green>Tablica wyników zaktualizowana!"
-    desc: Updates and sorts the leaderboards.
+    desc: Aktualizuje i sortuje tablice wyników.
   version:
     version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
     new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
