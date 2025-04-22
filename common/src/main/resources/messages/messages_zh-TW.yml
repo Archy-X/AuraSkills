@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>配戴時：<aqua>-{value}% {skill} 經驗值"
         global_lore: "<gray>配戴時：<blue>+{value}% 技能經驗值"
         global_lore_subtract: "<gray>配戴時：<blue>-{value}% 技能經驗值"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <aqua>{target} <yellow>裝甲倍數！"
         removed: "<aqua>{target} <gray>裝甲倍數已從你的物品中移除"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>找到的裝甲倍數:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>持有時：<aqua>-{value}% {skill} 經驗值"
         global_lore: "<gray>持有時：<blue>+{value}% 技能經驗值"
         global_lore_subtract: "<gray>持有時：<blue>-{value}% 技能經驗值"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <aqua>{target} <yellow>物品倍數！"
         removed: "<aqua>{target} <gray>物品倍數已從你的物品中移除"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>找到的物品倍數:"
         desc: Lists all item multipliers on the held item.
