@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Käytettäessä: <aqua> -{value}% {skill} XP"
         global_lore: "<gray>Käytettäessä: <blue> +{value}% Taito-XP"
         global_lore_subtract: "<gray>Käytettäessä: <blue> -{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Tuotteellasi ei ole <aqua> {target} <yellow> panssarikerrointa!"
         removed: "<aqua>{target}<gray>panssarikerroin poistettiin esineestäsi"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Löydetty panssarikertoimia:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Pidettäessä: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Kun pidetään: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Kun pidetään: <blue>-{value}% Skill XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Tuotteellasi ei ole <aqua>{target} <yellow>kohdekerrointa!"
         removed: "<aqua>{target}<gray>tuotekerroin poistettiin tuotteestasi"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Tuotekertoimia löydetty:"
         desc: Lists all item multipliers on the held item.
