@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Quando usado: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quando usado: <blue>+{value}% de XP de Habilidade"
         global_lore_subtract: "<gray>Quando usado: <blue>-{value}% de XP de Habilidade"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Seu item não tem um <aqua>{target} <yellow>modificador!"
         removed: "<aqua>{target} <gray>modificador foi removido do seu item"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Modificadores de armadura encontrados:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Quando usado: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quando usado: <aqua>+{value}% XP de Habilidade"
         global_lore_subtract: "<gray>Quando usado: <blue>-{value}% XP de Habilidade"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Seu item não tem um <aqua>{target} <yellow>modificador!"
         removed: "<aqua>{target} <gray>modificador foi removido do seu item"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Modificadores de armadura encontrados:"
         desc: Lists all item multipliers on the held item.
