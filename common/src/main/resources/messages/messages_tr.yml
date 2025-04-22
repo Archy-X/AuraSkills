@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Giyildiğinde: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Giyildiğinde: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Giyildiğinde: <blue>-{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Öğenizde <aqua>{target} <yellow> zırh çarpanı yok!"
         removed: "<aqua>{target} <gray>zırh çarpanı öğenizden kaldırıldı"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Zırh çarpanları bulundu:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Tutulduğunda: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Tutulduğunda: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Tutulduğunda: <blue>-{value}% Skill XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow> Öğenizin bir <aqua>{target}'i yok <yellow> öğe çarpanı!"
         removed: "<aqua>{target} <gray>öğe çarpanı öğenizden kaldırıldı"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Öğe çarpanları bulundu:"
         desc: Lists all item multipliers on the held item.
