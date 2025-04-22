@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>착용 시: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>착용 시: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>착용 시: <blue>-{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>아이템에 <aqua>{target} <yellow>효과가 없습니다!"
         removed: "&{target}& 배율이 방어구에서 제거되었습니다."
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>방어구 배율 찾음:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>유지 시: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>유지 시: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>유지 시: <blue>-{value}% Skill XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>아이템에 <aqua>{target} <yellow>배율이 없습니다!"
         removed: "<aqua>{target}<gray> 배율이 아이템에서 제거되었습니다."
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>아이템 효과 찾음:"
         desc: Lists all item multipliers on the held item.
