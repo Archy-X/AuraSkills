@@ -347,21 +347,21 @@ commands:
         desc: Usuwa modyfikator statystyk pancerza z trzymanego przedmiotu i domyślnie powiązaną z nim lor.
       list:
         header: "<white>Znaleziono modyfikatory pancerza:"
-        desc: Lists all armor stat modifiers on the item held.
+        desc: Wyświetla wszystkie modyfikatory statystyk zbroi na trzymanym przedmiotu.
       removeall:
         removed: "<gray>Wszystkie modyfikatory zbroi zostały usunięte z twojego przedmiotu"
-        desc: Removes all armor stat modifiers from the item held.
+        desc: Usuwa wszystkie modyfikatory statystyk pancerza z trzymanym przedmiotu.
     trait:
       add:
         added: "Dodano modyfikator cech do zbroi z cechą: {trait}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator zbroi ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk armor trait remove"
-        desc: Adds an armor trait modifier to the item held, along with lore by default.
+        desc: Dodaje modyfikator cechy zbroi do trzymanym przedmiotu, wraz z domyślnym lorem.
       remove:
-        desc: Removes an armor trait modifier from the item held.
+        desc: Usuwa modyfikator cechy zbroi z trzymanym przedmiotu.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Wyświetla wszystkie modyfikatory cech przedmiotu trzymanego.
       removeall:
-        desc: Removes all armor trait modifiers from the item held.
+        desc: Usuwa wszystkie modyfikatory cech zbroi z przedmiotu trzymanego.
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -370,27 +370,27 @@ commands:
         skill_lore_subtract: "<gray>Gdy jest używany: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Gdy jest używany: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Gdy jest używany: <blue>-{value}% Doświadczenia Umiejętności"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Dodaje mnożnik zbroi do przedmiotu trzymanego do globalnej lub określonej umiejętności, gdzie wartością jest procent więcej zdobytych doświadczeń.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>zbroi!"
         removed: "<gray>Mnożnik zbroi <aqua>{target} <gray>został usunięty z twojego przedmiotu"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Usuwa z utrzymywanego przedmiotu mnożnik zbroi określonej umiejętności lub globalnej.
       list:
         header: "<white>Znalezione mnożniki zbroi:"
-        desc: Lists all armor multipliers on the held item.
+        desc: Wyświetla wszystkie mnożniki zbroi na utrzymywanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie mnożniki zbroi zostały usunięte z twojego przedmiotu"
-        desc: Removes all armor multipliers from the item held.
+        desc: Usuwa wszystkie mnożniki zbroi z trzymanego przedmiotu.
     requirement:
       add:
         added: "<gray>Wymóg zbroi <dark_aqua>{skill}<gray> z poziomem <aqua>{level}<gray> został dodany do przedmiotu"
         already_exists: "<yellow>Zbroja już ma wymóg <dark_aqua>{skill}<yellow>! Usuń go przez <gold>/sk armor requirement remove"
         lore: "<red>Wymaga <dark_aqua>{skill} {level}"
-        desc: Adds an armor requirement to the item held, along with lore by default.
+        desc: Dodaje wymóg zbroi do trzymanego przedmiotu, wraz z domyślnym lordem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma wymagania zbroi <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Wymóg zbroi <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
-        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
+        desc: Usuwa wymóg zbroi z trzymanego przedmiotu, wraz z domyślnym mu lorem.
       list:
         header: "<white>Znaleziono wymagania zbroi:"
         desc: Wyświetla wymagania dotyczące zbroi na trzymanego przedmiotu.
@@ -428,7 +428,7 @@ commands:
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z twojego przedmiotu"
-        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
+        desc: Usuwa modyfikator statystyk przedmiotu z trzymanego przedmiotu, wraz z domyślnie z lorem.
       list:
         header: "<white>Znaleziono modyfikatory przedmiotu:"
         desc: Wyświetla wszystkie modyfikatory statystyk trzymanego przedmiotu.
@@ -454,7 +454,7 @@ commands:
         skill_lore_subtract: "<gray>Podczas trzymania: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Podczas trzymania: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Podczas trzymania: <blue>-{value}% Doświadczenia Umiejętności"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: "\n"
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>przedmiotu!"
         removed: "<gray>Mnożnik przedmiotu <aqua>{target} <gray>został usunięty z twojego przedmiotu"
