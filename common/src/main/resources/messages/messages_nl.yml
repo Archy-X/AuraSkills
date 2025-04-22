@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Wanneer versleten: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wanneer versleten: <blue>+{value}% Vaardigheid XP"
         global_lore_subtract: "<gray>Wanneer versleten: <blue>-{value}% Vaardigheid XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Jouw item heeft geen <aqua>{target} <yellow>armor vermenigvuldiger!"
         removed: "<aqua>{target} <gray>armor vermenigvuldiger is verwijderd uit je item"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Armor vermenigvuldigers gevonden:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Wanneer verwijderd: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wanneer verwijderd: <blue>+{value}% Vaardigheid XP"
         global_lore_subtract: "<gray>Wanneer verwijderd: <blue>-{value}% Vaardigheid XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Je item heeft geen <aqua>{target} <yellow>item multiplier!"
         removed: "<aqua>{target} <gray>item vermenigvuldiger is verwijderd uit je item"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Item multipliers gevonden:"
         desc: Lists all item multipliers on the held item.
