@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Při nošení: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Při nošení: <blue>+{value}% Dovednostni XP"
         global_lore_subtract: "<gray>Při nošení: <blue>-{value}% Dovednostni XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Tvůj item nemá a <aqua>{target} <yellow>armor multiplikátor!"
         removed: "<aqua>{target} <gray>multiplikátor brnění byl z tvého předmětu odstraněn"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Nalezené multiplikátory brnění:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Při držení: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Při držení: <blue>+{value}% Dovednostní XP"
         global_lore_subtract: "<gray>Při držení: <blue>-{value}% Dovednostní XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Tvůj item nemá a <aqua>{target} <yellow>multiplikátor itemů!"
         removed: "<aqua>{target} <gray>multiplikátor itemů byl z tvého itemů byl odstraněn"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Nalezené multiplikátory pro itemy:"
         desc: Lists all item multipliers on the held item.
