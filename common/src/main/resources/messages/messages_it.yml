@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Quando indossato: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quando indossato: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Quando indossato: <blue>-{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Il tuo oggetto non ha un <aqua>{target} <yellow>armor moltiplicatore!"
         removed: "<aqua>{target} <gray>moltiplicatore di armature è stato rimosso dal tuo oggetto"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Armor moltiplicatori trovati:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Quando indossato: <aqua>+{value}% {skill} XP"
         global_lore: "<gray>Quando indossato: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Quando indossato: <blue>+{value}% Skill XP"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Il tuo oggetto non ha un <aqua>{target} <yellow>armor moltiplicatore!"
         removed: "<aqua>{target} <gray>elemento moltiplicatore è stato rimosso dal tuo oggetto"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Moltiplicatori oggetto trovati:"
         desc: Lists all item multipliers on the held item.
