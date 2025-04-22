@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         global_lore: "<gray>Когда надето: <blue>+{value}% опыта"
         global_lore_subtract: "<gray>Когда надето: <blue>-{value}% опыта"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Найдены модификаторы предметов:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Когда надето: <aqua>+{value}% {skill} XP"
         global_lore: "<gray>Когда в руке: <blue>+{value}% опыта"
         global_lore_subtract: "<gray>Когда надето: <blue>-{value}% опыта умения"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>У вашего предмета нет <aqua>{target}<yellow> требований к броне!"
         removed: "<aqua>{target} <gray>модификатор был удален из вашего предмета"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Найдены модификаторы предметов:"
         desc: Lists all item multipliers on the held item.
