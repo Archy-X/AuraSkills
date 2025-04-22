@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>当装备时: <aqua>-{value}% {skill} 经验值"
         global_lore: "<gray>当装备时: <aqua>+{value}% 所有技能 经验值获取"
         global_lore_subtract: "<gray>当装备时: <aqua>-{value}% 所有技能 经验值获取"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的盔甲没有属性增强 <aqua>{target}!"
         removed: "<gray>装备时属性增强 {target} <gray>已从你的物品中移除"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>已有的装备时生效属性列表:"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>当持有时: <aqua>-{value}% {skill} 经验值"
         global_lore: "<gray>当持有时: <blue>+{value}% 所有技能 经验值获取"
         global_lore_subtract: "<gray>当持有时: <blue>-{value}% 所有技能 经验值获取"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的物品没有名为 <aqua>{target} <yellow>的属性翻倍!"
         removed: "<aqua>{target} <gray>物品翻倍已从你的物品上移除"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>已添加的物品翻倍属性:"
         desc: Lists all item multipliers on the held item.
