@@ -464,22 +464,22 @@ commands:
         desc: Wyświetla mnożniki wszystkich pozycji w utrzymywanych przedmiotu.
       removeall:
         removed: "<gray>Wszystkie mnożniki przedmiotów zostały usunięte z Twojego przedmiotu"
-        desc: Removes all item multipliers from the item held.
+        desc: Usuwa wszystkie mnożniki przedmiotów z trzymanym przedmiotu.
     register:
       registered: "<white>Zarejestrowano przedmiot do klucza {key}"
       already_registered: "<yellow>Istnieje już przedmiot zarejestrowany do klucza <white>{key}<yellow>, użyj <white>/skills item unregister <yellow>aby najpierw go wyrejestrować"
       no_spaces: "<yellow>Klucz przedmiotu nie może zawierać spacji!"
-      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
+      desc: Rejestruje przedmiot w rejestrze przedmiotów z określonym kluczem, do którego można odwoływać się w konfiguracji pluginu.
     requirement:
       add:
         added: "<gray>Wymóg przedmiotu <dark_aqua>{skill}<gray> z poziomem <aqua>{level}<gray> został dodany do przedmiotu"
         already_exists: "<yellow>Przedmiot już ma wymóg <dark_aqua>{skill}<yellow>! Usuń go przez <gold>/sk item requirement remove"
         lore: "<red>Wymaga <dark_aqua>{skill} {level}"
-        desc: Adds an item requirement to the item held, along with lore by default.
+        desc: Dodaje wymóg przedmiotu do przedmiotu trzymanym, wraz z domyślnym lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma wymagania przedmiotu <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Wymóg przedmiotu <dark_aqua>{skill}<gray> został usunięty z przedmiotu"
-        desc: Removes an item requirement from the item held, and the lore associated with it by default.
+        desc: Usuwa wymóg przedmiotu z przedmiotu trzymanym i domyślnie powiązany z nim lor.
       list:
         header: "<white>Znaleziono wymagania przedmiotu:"
         desc: Wyświetla wymagania dotyczące przedmiotów na przedmiot trzymany.
