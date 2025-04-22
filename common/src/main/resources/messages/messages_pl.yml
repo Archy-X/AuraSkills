@@ -344,7 +344,7 @@ commands:
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z Twojego przedmiotu"
-        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        desc: Usuwa modyfikator statystyk pancerza z trzymanego przedmiotu i domyślnie powiązaną z nim lor.
       list:
         header: "<white>Znaleziono modyfikatory pancerza:"
         desc: Lists all armor stat modifiers on the item held.
@@ -393,10 +393,10 @@ commands:
         desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Znaleziono wymagania zbroi:"
-        desc: Lists the armor requirements on the item held.
+        desc: Wyświetla wymagania dotyczące zbroi na trzymanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie wymagania zbroi zostały usunięte z twojego przedmiotu"
-        desc: Removes all armor requirements from the item held.
+        desc: Usuwa wszystkie wymagania dotyczące zbroi na trzymanego przedmiotu.
       equip: "<yellow>Nie spełniasz wymagań do wyposażenia tego przedmiotu: {requirements}"
   backup:
     load:
@@ -411,9 +411,9 @@ commands:
       saving: "<white>Zapisywanie kopii zapasowej..."
       saved: "<white>Wykonano kopię zapasową danych {type} jako {file}"
       error: "<red>Błąd podczas tworzenia kopii zapasowej danych {type}! Zobacz błąd w konsoli/poniżej, aby uzyskać szczegóły"
-      desc: Saves a backup of the current data to the backups folder.
+      desc: Zapisuje kopię zapasową bieżących danych w folderze kopii zapasowych.
   claimitems:
-    desc: Opens the menu to claim unclaimed items.
+    desc: Otwiera menu umożliwiające odebranie nieodebranych przedmiotów.
     no_items: "<yellow>Nie masz żadnych przedmiotów do odebrania"
   item:
     give:
@@ -422,30 +422,30 @@ commands:
       desc: Daje przedmiot z kluczem z rejestru przedmiotów graczowi.
     modifier:
       add:
-        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Dodano modyfikator statystyk do przedmiotu ze statystyką: {stat}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {color}{stat} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item modifier remove"
-        desc: Adds an item stat modifier to the item held, along with lore by default.
+        desc: Dodaje modyfikator statystyk przedmiotu do trzymanego przedmiotu, wraz z domyślną lorem.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie posiada modyfikatora {color}{stat}<yellow>!"
         removed: "<gray>Modyfikator {color}{stat} <gray>został usunięty z twojego przedmiotu"
         desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Znaleziono modyfikatory przedmiotu:"
-        desc: Lists all item stat modifiers on the item held.
+        desc: Wyświetla wszystkie modyfikatory statystyk trzymanego przedmiotu.
       removeall:
         removed: "<gray>Wszystkie modyfikatory przedmiotu zostały usunięte z twojego przedmiotu"
-        desc: Removes all item stat modifiers from the item held.
+        desc: Usuwa wszystkie modyfikatory statystyk z trzymanego elementu.
     trait:
       add:
-        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
+        added: "Dodano modyfikator cechy do elementu z cechą: {trait}, wartość: {value}, operacja: {operation}"
         already_exists: "<yellow>Modyfikator przedmiotu ze statystyką {trait} <yellow>już istnieje! Usuń go najpierw za pomocą /sk item trait remove"
-        desc: Adds an item trait modifier to the item held, along with lore by default.
+        desc: Dodaje modyfikator cechy przedmiotu do przedmiotu trzymany, wraz z domyślnie z lorem.
       remove:
-        desc: Removes an item trait modifier from the item held.
+        desc: Usuwa modyfikator cechy elementu z utrzymywanego przedmiotu.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Wyświetla wszystkie modyfikatory cech elementu na trzymany przedmiotu.
       removeall:
-        desc: Removes all item trait modifiers from the item held.
+        desc: Usuwa wszystkie modyfikatory cech elementu z utrzymywanego przedmiotu.
     multiplier:
       add:
         added: "<gray>Mnożnik <aqua>{target} <gray>o wartości <aqua>{value} <gray>został dodany do twojego przedmiotu"
@@ -461,7 +461,7 @@ commands:
         desc: Removes an item multiplier of a the specified skill or global from the held item.
       list:
         header: "<white>Znalezione mnożniki przedmiotów:"
-        desc: Lists all item multipliers on the held item.
+        desc: Wyświetla mnożniki wszystkich pozycji w utrzymywanych przedmiotu.
       removeall:
         removed: "<gray>Wszystkie mnożniki przedmiotów zostały usunięte z Twojego przedmiotu"
         desc: Removes all item multipliers from the item held.
@@ -482,15 +482,15 @@ commands:
         desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Znaleziono wymagania przedmiotu:"
-        desc: Lists the item requirements on the item held.
+        desc: Wyświetla wymagania dotyczące przedmiotów na przedmiot trzymany.
       removeall:
         removed: "<gray>Wszystkie wymagania przedmiotu zostały usunięte z twojego przedmiotu"
-        desc: Removes all item requirements from the item held.
+        desc: Usuwa wszystkie wymagania dotyczące przedmiotów z przedmiot trzymany.
       use: "<yellow>Nie spełniasz wymagań do użycia tego przedmiotu: {requirements}"
     unregister:
       unregistered: "<white>Odrejestrowano przedmiot z kluczem {key}"
       not_registered: "<yellow>Nie ma przedmiotu zarejestrowanego z kluczem {key}"
-      desc: Unregisters an item from the item registry with the given key
+      desc: Usuwa element z rejestru przedmiotów z podanym kluczem
     ignore:
       add:
         added: "<gray>Twój przedmiot zostanie teraz zignorowany przez interakcje pomiędzy zdolnością many"
@@ -548,18 +548,18 @@ commands:
       one_stat_header: "<gray>Modyfikatory statystyk ({color}{stat}<gray>) dla gracza <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Poziom <gold>{value}"
       players_only: "<yellow>Tylko gracze mogą wyświetlić własne modyfikatory! Spróbuj określić gracza"
-      desc: Lists all or a specific stat's modifiers for a player.
+      desc: Wyświetla wszystkie lub określone modyfikatory statystyk dla gracza.
     removeall:
       removed_all_stats: "<gray>Usunięto <aqua>{num} <gray>statystyk modyfikatory z gracza <gold>{player}"
       removed_one_stat: "<gray>Usunięto modyfikatory <aqua>{num} {color}{stat} <gray>gracza <gold>{player}"
       players_only: "<yellow>Tylko gracze mogą usunąć własne modyfikatory! Spróbuj określić gracza"
-      desc: Removes all stat modifiers from a player.
+      desc: Usuwa wszystkie modyfikatory statystyk z gracza.
   trait:
     add:
       already_exists: "<yellow>Modyfikator o nazwie {name} już istnieje dla gracza <gold>{player}<yellow>! Usuń go za pomocą <gold>/sk trait remove {player} {name}"
       desc: Dodaje modyfikator cechy do gracza.
     addtemp:
-      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      added: "Dodano tymczasowy modyfikator cech do {player} z cechą: {trait}, nazwa: {name}, wartość: {value}, czas trwania: {duration}"
       desc: Dodaje tymczasowy modyfikator cechy do gracza.
     remove:
       desc: Usuwa określony modyfikator cechy z gracza.
@@ -575,9 +575,9 @@ commands:
     list: "<white>Globalny mnożnik XP dla <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<white>Mnożnik XP <aqua>{skill} <white>: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Tylko gracze mogą wyświetlić własny mnożnik! Określ gracza!"
-    desc: Shows a player's current XP multiplier based on their permissions.
+    desc: Pokazuje bieżący mnożnik XP gracza na podstawie jego uprawnień.
   openmenu:
-    desc: Opens a plugin menu for a player with optional properties JSON and page number.
+    desc: Otwiera menu pluginów dla odtwarzacza z opcjonalnymi właściwościami JSON i numerem strony.
   preset:
     load:
       confirm: "<red>Ładowanie ustawień zastąpi twoje pliki konfiguracyjne! Następujące pliki zostaną dotknięte <gray>(<aqua>Dołączone<gray>, <yellow>Scalone<gray>, <red>Zastąpione<gray>, <dark_red>Usunięte<gray>): {entries} <red>Tej akcji nie można cofnąć, ręcznie wykonaj kopię zapasową wszystkich potrzebnych plików. Wpisz polecenie ponownie, aby potwierdzić."
@@ -592,11 +592,11 @@ commands:
     skills:
       header: "Profil umiejętności dla <gold>{name}:\n<gray>UUUID: <white>{uuid}\n<gray>Umiejętności:{skill_entries}"
       entry: "\n  <dark_aqua>{skill} <gray>- Poziom: <white>{level}<gray>, XP: <white>{xp}"
-      desc: Shows the skill levels and XP for any player, including offline players.
+      desc: Pokazuje poziom umiejętności i XP dowolnego gracza, także graczy offline.
     stats:
       header: "Profil statystyk dla <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statystyki:{stat_entries}"
       entry: "\n  <dark_aqua>{stat} <gray>- Całkowity poziom: <white>{total_level}<gray>, Poziom podstawowy: <white>{base_level}<gray>, Zmodyfikowany poziom: <white>{modified_level}"
-      desc: Shows the stat levels for any player, including offline players.
+      desc: Pokazuje poziomy statystyk dowolnego gracza, także graczy offline.
   rank:
     header: "<aqua><bold>Twój Ranking Umiejętności</bold>"
     power: "<yellow>Moc <gray>(Wszystkie Umiejętności): <white>#{rank} z {total}"
@@ -604,9 +604,9 @@ commands:
     desc: Pokazuje twoje rankingi umiejętności.
   reload:
     reloaded: "<green>Konfiguracja przeładowana!"
-    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+    desc: Odświeża konfigurację, wiadomości, menu, tablice lootów, paski akcji, paski bossa oraz statystyki zdrowia i szczęścia.
   resethealth:
-    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
+    desc: Usuwa wszystkie modyfikatory atrybutów przez AuraSkills w celu łatwego odinstalowania. Działa to tylko na graczy offline.
   save:
     already_saving: "<yellow>Dane już się zapisują!"
     mysql_not_enabled: "<yellow>MySQL nie był włączony przy starcie serwera, zapisuję zamiast niego do pliku!"
@@ -618,23 +618,23 @@ commands:
       desc: Ustawia wszystkie umiejętności gracza na określonym poziomie.
     setlevel:
       set: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
-      desc: Sets a specific skill to a level for a player.
+      desc: Ustawia konkretną umiejętność na określonym poziomie dla gracza.
     reset:
-      desc: Resets all skills or a specific skill to the starting level for a player.
+      desc: Resetuje wszystkie umiejętności lub określone umiejętności do poziomu startowego gracza.
     at_least: "<yellow>Poziom musi wynosić co najmniej {level}!"
   skills:
-    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+    desc: Otwiera menu Umiejętności, w którym możesz przeglądać umiejętności, postęp i umiejętności.
   stats:
-    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+    desc: Otwiera menu Statystyk, w którym możesz zobaczyć aktualne poziomy statystyk i opisy.
   sources:
-    desc: Opens the Sources menu to see all XP sources for a skill.
+    desc: Otwiera menu Źródła, aby zobaczyć wszystkie źródła XP dla umiejętności.
   toggle:
     enabled: "<green>Twój pasek umiejętności został włączony"
     disabled: "<red>Twój pasek umiejętności został wyłączony"
     not_enabled: "<yellow>Pasek umiejętności nie jest włączony na serwerze!"
-    desc: Toggles your own skills action bar.
+    desc: Przełącza swój własny pasek umiejętności.
   top:
-    desc: Shows the top players in a skill
+    desc: Pokazuje najlepszych graczy w umiejętności
     power_header: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Tabela Wszystkich Umiejętności </bold><white>(Strona {page})==--"
     skill_header: "<white>--==<aqua><bold>Tabela {skill}</bold><white>==--"
@@ -645,25 +645,25 @@ commands:
   transfer:
     success: "<green>Pomyślnie przeniesiono dane gracza z <gray>{from} <green>do <gray>{to}"
     error: "<red>Wystąpił błąd podczas przenoszenia danych gracza. Sprawdź konsolę w poszukiwaniu błędów."
-    desc: Transfers data from one user to another given the UUIDs.
+    desc: Przenosi dane od jednego użytkownika do drugiego, podając UUID.
   updateleaderboards:
     already_updating: "<yellow>Tablica wyników jest już aktualizowana!"
     updated: "<green>Tablica wyników zaktualizowana!"
     desc: Aktualizuje i sortuje tablice wyników.
   version:
-    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
-    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
-    desc: Shows the currently installed and latest available version of the plugin.
+    version: "<white>Jesteś na AuraSkills <aqua>{current_version}<white>. Najnowszą wersją jest <aqua>{latest_version}"
+    new_update: "{prefix}<white>Dostępna jest nowa aktualizacja! Jesteś na wersji <aqua>{current_version}<white>, najnowsza wersja to <aqua>{latest_version}\n{prefix}<white>Pobierz ją na Modrinth: <yellow><underlined>{link}"
+    desc: Pokazuje aktualnie zainstalowaną i najnowszą dostępną wersję pluginu.
   xp:
     add:
-      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
-      desc: Adds skill XP to a player for a certain skill.
+      added: "<gray>Dodano <aqua>{amount} {skill} <gray>XP do gracza <gray>{player}"
+      desc: Dodaje XP umiejętności graczowi dla określonej umiejętności.
     set:
-      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
-      desc: Sets a player's skill XP for a certain skill to an amount.
+      set: "<gray>Ustaw <aqua>{skill} <gray>XP dla gracza <gray>{player} <gray>do {amount}"
+      desc: Ustawia umiejętność gracza XP dla określonej umiejętności do ilości.
     remove:
-      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
-      desc: Removes skill XP from a player in a certain skill.
+      removed: "<gray>Usunięto <aqua>{amount} {skill} <gray>XP z gracza <gold>{player}"
+      desc: Usuwa XP umiejętności graczowi w określonej umiejętności.
   manaability:
     resetcooldown:
       cooldown_reset: "<gray>Czas odnowienia dla <aqua>{ability} <gray>został zresetowany dla gracza <gold>{player}"
