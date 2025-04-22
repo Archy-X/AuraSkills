@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Quand porté : <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quand porté : <blue>+{value}% XP de skill"
         global_lore_subtract: "<gray>Quand porté : <blue>-{value}% XP de skill"
-        desc: Adds an armor multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Votre objet n'a pas de modificateur de <aqua>{target} <yellow>d'armure!"
         removed: "<aqua>{target} <gray>Les modifications apportées à l'item viennent d'être supprimé"
-        desc: Removes an armor multiplier of a the specified skill or global from the held item.
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Les modificateurs d'armure suivant ont été trouvés :"
         desc: Lists all armor multipliers on the held item.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Quand porté : <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quand porté : <blue>+{value}% XP de skill"
         global_lore_subtract: "<gray>Quand porté : <blue>-{value}% XP de skill"
-        desc: Adds an item multiplier to the held item to global or a specific skill where value is the percent more XP gained.
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Votre objet n'a pas de modificateur de <aqua>{target}!"
         removed: "<aqua>{target} <gray>Les modifications apportées à l'item viennent d'être supprimé"
-        desc: Removes an item multiplier of a the specified skill or global from the held item.
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Modificateur d'item trouvé:"
         desc: Lists all item multipliers on the held item.
