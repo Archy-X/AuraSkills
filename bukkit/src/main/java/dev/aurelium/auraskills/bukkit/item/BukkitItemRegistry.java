@@ -201,6 +201,7 @@ public class BukkitItemRegistry implements ItemRegistry {
         externalItemProviders.put(namespace, provider);
     }
 
+    @SuppressWarnings("deprecation")
     private boolean passesItemMetaFilter(ItemStack item, ItemFilter filter) {
         ItemFilterMeta filterMeta = filter.meta();
         if (filterMeta == null) {

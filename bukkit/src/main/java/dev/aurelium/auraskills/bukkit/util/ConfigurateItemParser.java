@@ -433,6 +433,7 @@ public class ConfigurateItemParser {
         item.setAmount(amount);
     }
 
+    @SuppressWarnings("deprecation")
     private void parseCustomModelData(ConfigurationNode config, ItemStack item) {
         if (!config.node("custom_model_data").virtual()) {
             int data = config.node("custom_model_data").getInt();

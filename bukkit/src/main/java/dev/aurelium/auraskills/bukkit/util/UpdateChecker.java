@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.util;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -14,6 +15,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class UpdateChecker {
@@ -29,7 +31,7 @@ public class UpdateChecker {
     }
 
     public void sendUpdateMessageAsync(CommandSender sender) {
-        getVersion((version, id) -> {
+        getVersion((versionOpt, idOpt) -> versionOpt.ifPresent(version -> idOpt.ifPresent(id -> {
             if (isOutdated(plugin.getDescription().getVersion(), version)) {
                 final String prefix = sender instanceof Player ? plugin.getPrefix(plugin.getDefaultLanguage()) : "[AuraSkills] ";
                 final String downloadLink = "https://modrinth.com/plugin/" + UpdateChecker.MODRINTH_ID + "/version/" + id;
@@ -44,11 +46,11 @@ public class UpdateChecker {
                     sender.sendMessage(msg);
                 }
             }
-        });
+        })));
     }
 
-    // Consumer accepts versionNumber and loader
-    public void getVersion(final BiConsumer<String, String> consumer) {
+    // Consumer accepts versionNumber and versionId
+    public void getVersion(final BiConsumer<Optional<String>, Optional<String>> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
             String loader;
             String serverName = Bukkit.getServer().getName();
@@ -75,28 +77,60 @@ public class UpdateChecker {
                 if (response.statusCode() == 200) {
                     String responseBody = response.body();
                     if (responseBody == null || responseBody.trim().isEmpty()) {
+                        acceptEmpty(consumer);
                         return;
                     }
 
                     // Parse the JSON response using Gson
                     JsonArray jsonArray = JsonParser.parseString(responseBody).getAsJsonArray();
                     if (jsonArray.isEmpty()) {
+                        acceptEmpty(consumer);
                         return;
                     }
 
-                    JsonObject firstElement = jsonArray.get(0).getAsJsonObject();
-                    String versionNumber = firstElement.get("version_number").getAsString();
+                    JsonObject firstRelease = null;
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JsonObject versionObj = jsonArray.get(i).getAsJsonObject();
+                        JsonElement element = versionObj.get("version_type");
+                        // Filter for release versions
+                        if (element != null && element.getAsString().equals("release")) {
+                            firstRelease = versionObj;
+                            break;
+                        }
+                    }
+                    if (firstRelease == null) {
+                        acceptEmpty(consumer);
+                        return;
+                    }
 
-                    String id = firstElement.get("id").getAsString();
+                    JsonElement versionNumElement = firstRelease.get("version_number");
+                    if (versionNumElement == null) {
+                        acceptEmpty(consumer);
+                        return;
+                    }
+                    String versionNumber = versionNumElement.getAsString();
 
-                    consumer.accept(versionNumber, id);
+                    JsonElement idElement = firstRelease.get("id");
+                    if (idElement == null) {
+                        acceptEmpty(consumer);
+                        return;
+                    }
+                    String id = idElement.getAsString();
+
+                    consumer.accept(Optional.of(versionNumber), Optional.of(id));
+                    return;
                 } else {
                     this.plugin.getLogger().info("Cannot look for updates: Request failed with status code " + response.statusCode());
                 }
             } catch (Exception e) {
                 this.plugin.getLogger().info("Cannot look for updates: " + e.getMessage());
             }
+            acceptEmpty(consumer);
         });
+    }
+
+    private void acceptEmpty(BiConsumer<Optional<String>, Optional<String>> consumer) {
+        consumer.accept(Optional.empty(), Optional.empty());
     }
 
     private boolean isOutdated(String localVersion, String resourceVersion) {

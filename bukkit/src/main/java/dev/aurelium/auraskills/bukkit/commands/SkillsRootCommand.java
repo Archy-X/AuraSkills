@@ -320,10 +320,10 @@ public class SkillsRootCommand extends BaseCommand {
 	@Description("%desc_version")
 	public void onVersion(CommandSender sender) {
 		Locale locale = plugin.getLocale(sender);
-		new UpdateChecker(plugin).getVersion((latestVersion, id) -> sender.sendMessage(plugin.getPrefix(locale) +
+		new UpdateChecker(plugin).getVersion((latestVersionOpt, idOpt) -> sender.sendMessage(plugin.getPrefix(locale) +
 				TextUtil.replace(plugin.getMsg(CommandMessage.VERSION_VERSION, locale),
 						"{current_version}", plugin.getDescription().getVersion(),
-						"{latest_version}", latestVersion)));
+						"{latest_version}", latestVersionOpt.orElse("?"))));
 	}
 
 	@Subcommand("sources")
