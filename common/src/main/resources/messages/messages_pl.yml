@@ -370,11 +370,11 @@ commands:
         skill_lore_subtract: "<gray>Gdy jest używany: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Gdy jest używany: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Gdy jest używany: <blue>-{value}% Doświadczenia Umiejętności"
-        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: Dodaje mnożnik zbroi do trzymanego przedmiotu dla wszystkich lub określonej umiejętności, gdzie wartością jest procent uzyskanego XP.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>zbroi!"
         removed: "<gray>Mnożnik zbroi <aqua>{target} <gray>został usunięty z twojego przedmiotu"
-        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
+        desc: Usuwa z trzymanego przedmiotu mnożnik zbroi określonej umiejętności lub globalnego mnożnika.
       list:
         header: "<white>Znalezione mnożniki zbroi:"
         desc: Wyświetla wszystkie mnożniki zbroi na utrzymywanego przedmiotu.
@@ -454,11 +454,11 @@ commands:
         skill_lore_subtract: "<gray>Podczas trzymania: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Podczas trzymania: <blue>+{value}% Doświadczenia Umiejętności"
         global_lore_subtract: "<gray>Podczas trzymania: <blue>-{value}% Doświadczenia Umiejętności"
-        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: Dodaje mnożnik przedmiotu do trzymanego przedmiotu dla wszystkich lub wybranych umiejętności, którego wartość jest procentem zdobytych punktów XP.
       remove:
         does_not_exist: "<yellow>Twój przedmiot nie ma mnożnika <aqua>{target} <yellow>przedmiotu!"
         removed: "<gray>Mnożnik przedmiotu <aqua>{target} <gray>został usunięty z twojego przedmiotu"
-        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
+        desc: Usuwa mnożnik przedmiotu określonej umiejętności lub mnożnik globalny z trzymanego przedmiotu.
       list:
         header: "<white>Znalezione mnożniki przedmiotów:"
         desc: Wyświetla mnożniki wszystkich pozycji w utrzymywanych przedmiotu.
