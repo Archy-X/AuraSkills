@@ -334,34 +334,34 @@ commands:
     logs:
       header: "<red>{player} <gray>的反挂机日志 <gray>({count} 总共) <dark_gray>| <gray>页 {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: 显示指定玩家的反挂机日志。
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "将如下属性修饰符添加至装备：{stat}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
-        desc: Adds an armor stat modifier to the item held, along with lore by default.
+        desc: 向手持物品添加装备属性修饰符，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有属性 {color}{stat}!"
         removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
-        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        desc: 移除手持物品的装备属性修饰符，默认一并移除描述文本。
       list:
         header: "<white>已有的属性列表:"
-        desc: Lists all armor stat modifiers on the item held.
+        desc: 列出手持物品上所有的装备属性修饰符。
       removeall:
         removed: "<gray>成功清除了物品上的所有属性"
-        desc: Removes all armor stat modifiers from the item held.
+        desc: 移除手持物品上所有的装备属性修饰符。
     trait:
       add:
-        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
+        added: "将如下特征修饰符添加至装备：{trait}，值：{value}，操作：{operation}"
         already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk armor modifier remove 删除它!"
-        desc: Adds an armor trait modifier to the item held, along with lore by default.
+        desc: 向手持物品添加装备特征修饰符，默认一并添加描述文本。
       remove:
-        desc: Removes an armor trait modifier from the item held.
+        desc: 移除手持物品上指定的装备特征修饰符。
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: 列出手持物品上所有的装备特征修饰符。
       removeall:
-        desc: Removes all armor trait modifiers from the item held.
+        desc: 移除手持物品上所有的装备特征修饰符。
     multiplier:
       add:
         added: "<gray>装备时属性增强<aqua> {target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
@@ -370,33 +370,33 @@ commands:
         skill_lore_subtract: "<gray>当装备时: <aqua>-{value}% {skill} 经验值"
         global_lore: "<gray>当装备时: <aqua>+{value}% 所有技能 经验值获取"
         global_lore_subtract: "<gray>当装备时: <aqua>-{value}% 所有技能 经验值获取"
-        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: 为手持物品添加特定或所有技能的经验倍率加成，可借此获得更多技能经验。
       remove:
         does_not_exist: "<yellow>你的盔甲没有属性增强 <aqua>{target}!"
         removed: "<gray>装备时属性增强 {target} <gray>已从你的物品中移除"
-        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
+        desc: 移除手持物品上特定的装备经验倍率加成。
       list:
         header: "<white>已有的装备时生效属性列表:"
-        desc: Lists all armor multipliers on the held item.
+        desc: 列出手持物品的所有装备经验倍率加成。
       removeall:
         removed: "<gray>成功清除了物品上的所有装备时生效属性"
-        desc: Removes all armor multipliers from the item held.
+        desc: 移除手持物品上所有的装备经验倍率加成。
     requirement:
       add:
         added: "<gray>等级限制为 <aqua>{level} <gray>的技能 <dark_aqua>{skill} <gray>已经添加到你的物品"
         already_exists: "<yellow>属性 <dark_aqua>{skill} <yellow>已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!"
         lore: "<red>需要 <dark_aqua>{level} <red>级 <dark_aqua>{skill}"
-        desc: Adds an armor requirement to the item held, along with lore by default.
+        desc: 为手持物品添加装备条件，默认一并添加描述文本。
       remove:
         does_not_exist: "<yellow>你的物品没有技能 <dark_aqua>{skill}<yellow> 的条件限制!"
         removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
-        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
+        desc: 移除手持物品的装备条件，默认一并移除描述文本。
       list:
         header: "<white>已存在的条件限制:"
-        desc: Lists the armor requirements on the item held.
+        desc: 列出手持物品所有的装备条件。
       removeall:
         removed: "<gray>所有条件限制已从你的物品上移除"
-        desc: Removes all armor requirements from the item held.
+        desc: 移除手持物品上所有的装备条件。
       equip: "<yellow>你没有达到使用此物品的要求: {requirements}"
   backup:
     load:
@@ -406,12 +406,12 @@ commands:
       error: "<red>加载备份出现错误: {error}"
       must_be_yaml: "<yellow>所选中文档需为 .yml 格式!"
       file_not_found: "<yellow>备份文件夹内不存在符合此名称的备份文件!"
-      desc: Loads a backup from a given file.
+      desc: 从指定文件加载备份。
     save:
       saving: "<white>保存备份中..."
       saved: "<white>已将 {file} 数据备份为 {type}"
       error: "<red>备份 {type} 数据时出现异常! 请查看控制台/下方堆栈报错以了解详情"
-      desc: Saves a backup of the current data to the backups folder.
+      desc: 将当前数据以文件形式保存至备份文件夹。
   claimitems:
     desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>你没有需要领取的物品"
