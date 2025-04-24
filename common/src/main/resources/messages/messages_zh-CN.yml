@@ -656,18 +656,18 @@ commands:
     desc: 显示插件版本并检查可用的最新版本。
   xp:
     add:
-      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
-      desc: Adds skill XP to a player for a certain skill.
+      added: "<gray>给予了玩家 {player} <aqua>{amount} <gray>点 <aqua>{skill}<gray> 经验值"
+      desc: 给予玩家指定技能的经验值。
     set:
-      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
-      desc: Sets a player's skill XP for a certain skill to an amount.
+      set: "<gray>将玩家 {player} 的<aqua>{skill}<gray> 经验值设置为了 {amount}"
+      desc: 将玩家的技能经验设置为指定值。
     remove:
-      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
-      desc: Removes skill XP from a player in a certain skill.
+      removed: "<gray>取走了玩家 <gold>{player} <aqua>{amount}<gray> 点 <aqua>{skill}<gray> 技能经验值"
+      desc: 移除玩家指定技能的经验值。
   manaability:
     resetcooldown:
-      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
-      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
+      cooldown_reset: "<gray>玩家 <gold>{player} <gray>的能力 <aqua>{ability}<gray> 冷却已被重置"
+      desc: 重置指定玩家魔法能力的冷却，可选回满魔力值。
   unknown_skill: "<yellow>未知技能!"
   unknown_mana_ability: "<yellow>未知的魔法能力！"
   unknown_stat: "<yellow>未知属性!"
@@ -707,12 +707,12 @@ menus:
     next_page_click: "点击进入下一页"
     previous_page: "上一页"
     previous_page_click: "点击返回上一页"
-    trait: "Trait"
-    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
-    trait_level: "Trait Level"
-    base: "Base"
-    modifiers_additive: "Modifiers (Additive)"
-    modifiers_multiplicative: "Modifiers (Multiplicative)"
+    trait: "特征"
+    trait_gain: "<1>每 {color}1 点 {stat_name}<1>属性等级\n<1>可获得 {color}{level_modifier} {trait_name}。"
+    trait_level: "特征等级"
+    base: "基础"
+    modifiers_additive: "修饰符（叠加）"
+    modifiers_multiplicative: "修饰符（叠乘）"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"
@@ -755,7 +755,7 @@ menus:
     added_drops: "+{value} 掉落"
     chance_drop: "{chance}% 的概率获得 +{value} 掉落"
     chance_drops: "{chance}% 的概率获得 +{value} 掉落"
-    stat_info_click: "Click to view stat details"
+    stat_info_click: "点击浏览属性细节"
   unclaimed_items:
     unclaimed_items_title: "领取物品"
     inventory_full: "你的物品栏没有足够的空间"
@@ -778,26 +778,26 @@ menus:
     unlocked_at: "<1>在 <2>{skill} {level} 解锁。"
     next_upgrade_at: "<2>{skill} <1>的下一等级为 {level}"
   stat_info:
-    stat_details: "{stat_name} Stat"
-    stat: "Stat"
-    stat_level: "Stat Level"
-    traits_leveled: "Traits Leveled"
-    stat_modifiers: "Stat Modifiers"
-    stat_reward_desc: "Granted by your {skill} skill level."
-    stat_modifiers_click: "Click to view stat modifiers"
-    trait_modifiers_click: "Click to view trait modifiers"
-    showing_stat_modifiers: "Showing stat modifiers"
-    showing_trait_modifiers: "Showing trait modifiers"
-    base_level: "Base Level"
-    base_level_desc: "Base level from Minecraft and external sources."
-    linked_stat_desc: "Granted by your {stat} stat level."
-    ability_modifier_name: "{name} Ability"
-    ability_modifier_desc: "Granted by the {ability} ability."
-    custom_modifier_desc: "Granted by a custom modifier."
-    item_hand_desc: "Granted by item in hand."
-    item_off_hand_desc: "Granted by item in off hand."
-    helmet_desc: "Granted by helmet."
-    chestplate_desc: "Granted by chestplate."
+    stat_details: "{stat_name} 属性"
+    stat: "属性"
+    stat_level: "属性等级"
+    traits_leveled: "特征已升级"
+    stat_modifiers: "属性修饰符"
+    stat_reward_desc: "由 {skill} 技能等级获得。"
+    stat_modifiers_click: "点击浏览属性修饰符"
+    trait_modifiers_click: "点击浏览特征修饰符"
+    showing_stat_modifiers: "显示属性修饰符"
+    showing_trait_modifiers: "显示特征修饰符"
+    base_level: "基础等级"
+    base_level_desc: "来源于 Minecraft 原版及其他插件的基础等级。"
+    linked_stat_desc: "由 {stat} 属性等级获得。"
+    ability_modifier_name: "{name} 能力"
+    ability_modifier_desc: "由 {ability} 能力获得。"
+    custom_modifier_desc: "由自定义修饰符给予。"
+    item_hand_desc: "由手持物品给予。"
+    item_off_hand_desc: "由副手手持物品给予。"
+    helmet_desc: "由头盔给予。"
+    chestplate_desc: "由胸甲给予。"
     leggings_desc: "由护腿给予。"
     boots_desc: "由靴子给予。"
 mana_abilities:
