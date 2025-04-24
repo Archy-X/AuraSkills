@@ -800,6 +800,7 @@ menus:
     chestplate_desc: "Granted by chestplate."
     leggings_desc: "Granted by leggings."
     boots_desc: "Granted by boots."
+    effective_trait: "Effective {trait_name}"
 mana_abilities:
   replenish:
     name: Комбайнер
@@ -1036,4 +1037,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 38
+file_version: 39
