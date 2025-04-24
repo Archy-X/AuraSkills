@@ -121,7 +121,7 @@ abilities:
     info: "{value}% de Chance de Perfuração"
   stun:
     name: Atordoar
-    desc: "{value}% de chance de reduzir a velocidade de movimento do inimigo em 20% por 2 segundos."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Chance de Atordoar"
   shielding:
     name: Proteção
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Registros de Anti-AFK para <red>{player} <gray>({count} total) <dark_gray> <gray>Página {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modificador com nível <aqua>{value} <gray>foi adicionado ao seu item"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Um modificador de armadura com o atributo {color}{stat} <yellow>já existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Seu item não tem um {color}{stat} <yellow>modificador!"
         removed: "{color}{stat} <gray>modificador foi removido do seu item"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Modificadores de armadura encontrados:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>Todos os modificadores de armadura foram removidos do seu item"
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Um modificador de armadura com o atributo {trait} <yellow>já existe em sua armadura! Remova-o primeiro com a remoção do modificador de armadura /sk"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>Multiplicador de {target} <gray>com valor <aqua>{value} <gray>foi adicionado ao seu item"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Quando usado: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quando usado: <blue>+{value}% de XP de Habilidade"
         global_lore_subtract: "<gray>Quando usado: <blue>-{value}% de XP de Habilidade"
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Seu item não tem um <aqua>{target} <yellow>modificador!"
         removed: "<aqua>{target} <gray>modificador foi removido do seu item"
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Modificadores de armadura encontrados:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Todos os modificadores de armadura foram removidos do seu item"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<gray>Requisito de armadura para <dark_aqua>{skill}<gray> com nível <aqua>{level}<gray> foi adicionado ao seu item"
         already_exists: "<yellow>Item já tem um requisito de armadura <dark_aqua>{skill}<yellow> primeiro! Remova ele primeiro com a remoção de armadura <gold>/skill armor"
         lore: "<red>Requer <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Seu item não tem um requisito de armadura de <dark_aqua>{skill}<yellow>!"
         removed: "<gray>Requisito de armadura para <dark_aqua>{skill}<gray> foi removido do seu item"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Requisitos de Armadura encontrados:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>Todos os requisitos de armadura foram removidos do seu item"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Você não tem os cumpre para equipar este item: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Erro ao carregar backup: {error}"
       must_be_yaml: "<yellow>O arquivo deve ser um arquivo .yml"
       file_not_found: "<yellow>Um backup com este nome não existe na pasta de backups!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Salvando backup..."
       saved: "<white>Salvos os dados de {type} como {file}"
       error: "<red>Erro ao fazer backup dos dados do {type}! Veja o erro no console/abaixo para mais detalhes"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>Você não tem itens para reivindicar"
   item:
     give:
       sender: "<white>Dê <aqua>{amount}x {key} <white>para {player}"
       receiver: "<white>Você recebeu <aqua>{amount}x {key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>modificador com nível <aqua>{value} <gray>foi adicionado ao seu item"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Um modificador de item com o atributo {color}{stat} <yellow>já existe em sua armadura! Remova-o primeiro com /sk item modificador"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Seu item não tem um {color}{stat} <yellow>modificador!"
         removed: "{color}{stat} <gray>modificador foi removido do seu item"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Item modificador encontrado:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Todos os modificadores de itens foram removidos do seu item"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Um modificador de item com o atributo {trait} <yellow>já existe em sua armadura! Remova-o primeiro com /sk item modificador"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<gray>Multiplicador de <aqua>{target} <gray>com valor <aqua>{value} <gray>foi adicionado ao seu item"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Quando usado: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Quando usado: <aqua>+{value}% XP de Habilidade"
         global_lore_subtract: "<gray>Quando usado: <blue>-{value}% XP de Habilidade"
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Seu item não tem um <aqua>{target} <yellow>modificador!"
         removed: "<aqua>{target} <gray>modificador foi removido do seu item"
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Modificadores de armadura encontrados:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Todos os modificadores de armadura foram removidos do seu item"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>Item registrado e mantido para a chave {key}"
       already_registered: "<yellow>Já existe um item registrado para a chave <white>{key}<yellow>, use <white>/skills item unregister <yellow>para cancelar o registro primeiro"
       no_spaces: "<yellow>Chave do Item não pode conter espaços!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<gray>Requisito do item <dark_aqua>{skill}<gray> com nível <aqua>{level}<gray> foi adicionado ao seu item"
         already_exists: "<yellow>Item já tem um requisito de item <dark_aqua>{skill}<yellow>! Remova-o primeiro com a exigência de item <gold>/skill remove"
         lore: "<red>Requer <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Seu item não tem um requisito de item <dark_aqua>{skill}<yellow>!"
         removed: "<dark_aqua>{skill}<gray> exigência de item foi removido do seu item"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Requisitos do Item encontrados:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>Todos os itens necessários foram removidos do seu item"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Você não tem os requisitos para usar este item: {requirements}"
     unregister:
       unregistered: "<white>Item não registrado com chave {key}"
       not_registered: "<yellow>Não há nenhum item registrado com a chave {key}"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "Seu item agora será ignorado pelas interações de habilidade de mana"
-      remove: "Seu item não será mais ignorado pelas interações de habilidade de mana"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>O trabalho {job} foi adicionado ao jogador {player} com sucesso"
       limited: "Não é possível adicionar este trabalho porque o jogador {player} atingiu o limite de trabalhos"
       existing: "<yellow>Jogador {player} já possui o trabalho {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>O trabalho {job} foi removido do jogador {player}"
       unchanged: "<yellow>Nada foi alterado, já que o jogador {player} não tem o trabalho {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white>Todos os trabalhos foram removidos do jogador {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Idioma definido para <aqua>{lang}"
     not_found: "<yellow>Idioma não encontrado!"
+    desc: Changes your player language.
   mana:
     display: "<white>Sua {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} de {player}: <aqua>{current}/{max}"
-    add: "<gray>Adicionado <aqua>{amount} {mana_unit} <gray>ao jogador <gold>{player}"
-    remove: "<gray>Removido <aqua>{amount} de {mana_unit} <gray>do jogador <gold>{player}"
-    set: "<gray>Setado {mana_unit} do jogador <gold>{player} <gray>to <aqua>{amount}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} deve ser no mínimo zero!"
     console_specify_player: "<yellow>Console deve especificar um jogador!"
   modifier:
     add:
       added: "{color}{stat} <gray>modificador de nível <aqua>{value} <gray>com nome <white>{name} <gray>adicionado ao jogador <gold>{player}"
       already_exists: "<yellow>Modificador com o nome {name} já existe no jogador <gold>{player}<yellow>! Remover-o com modificador de <gold>/sk modifier remove {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modificador {name} não foi encontrado para o jogador <gold>{player}"
       removed: "<gray>Modificador{name} <gray>removido do jogador <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Modificadores de status para o jogador <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Nível <gold>{value}"
       one_stat_header: "<gray>Modificadores de status ({color}{stat}<gray>) para o jogador <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Nível <gold>{value}"
       players_only: "<yellow>Somente jogadores podem listar seus próprios modificadores! Tente especificar um jogador"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray>Removido <aqua>{num} <gray>stat modificadores do jogador <gold>{player}"
       removed_one_stat: "<gray>Removido <aqua>{num} {color}{stat} <gray>modificadores do jogador <gold>{player}"
       players_only: "<yellow>Somente jogadores podem remover seus próprios modificadores! Tente especificar um jogador"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>Modificador com o nome {name} já existe no jogador <gold>{player}<yellow>! Remover-o com modificador de <gold>/sk modifier remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>Modificadores de status para o jogador <gold>{player}:"
       one_trait_header: "<gray>Modificadores de status ({color}{trait}<gray>) para o jogador <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>Removidos <aqua>{num} <gray>modificadores de característica do jogador <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Global
     list: "<white>Multiplicador de XP global para <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua> Multiplicador de <white>XP [{skill}]: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Somente jogadores podem listar seu próprio multiplicador! Especifique um jogador!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Carregando um predefinido irá substituir seus arquivos de configuração! Os seguintes arquivos serão afetados <gray>(<aqua>Acrescentado<gray>, <yellow>Mesclado<gray>, <red>Substituído<gray>, <dark_red>Excluído<gray>): {entries} <red>Esta ação não pode ser desfeita, faça backup manualmente de quaisquer arquivos necessários. Digite o comando novamente para confirmar."
@@ -507,31 +587,54 @@ commands:
       replaced: Substituir arquivo
       deleted: Apagar arquivos
       skipped: Arquivos ignorados
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Perfil de Habilidades Aurelius para <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Habilidades:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Nível: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Perfil de Habilidades Aurelium para <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Habilidades:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Nível total: <white>{total_level}<gray>, Nível Base: <white>{base_level}<gray>, Nível modificado: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Sua Classificação de Habilidade</bold>"
     power: "<yellow>Poder <gray>(Todas as Habilidades): <white>#{rank} de {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} de {total}"
-  reload: "<green>Configuração recarregada!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Dados já estão salvando!"
     mysql_not_enabled: "<yellow>MySQL não foi habilitado na inicialização do servidor, salvar em vez disso!"
     saved: "<green>Dados de habilidade salvos!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>Todas as habilidades definidas para o nível <aqua>{level} <gray>para o jogador <gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Habilidade <aqua>{skill} <gray>definida para nível <aqua>{level} <gray>para jogador <gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Nível deve ser pelo menos {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Sua barra de ação de habilidades foi ativada"
     disabled: "<red>Sua barra de ação de habilidades foi desativada"
     not_enabled: "<yellow>As Habilidades não estão ativadas neste servidor!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>Todas as Habilidades</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Todas as Habilidades </bold><white>(Página {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Classificação</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Dados transferidos do jogador<gray>{from} <green> para o jogador <gray>{to}. Com sucesso"
     error: "<red>Houve um erro na transferência de dados de jogadores. Favor verificar o console em busca de erros."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>O Placar de Liderança está atualizando!"
     updated: "<green>Classificação atualizada!"
-  version: "<white>Você está usando AuraSkills na versão <aqua>{current_version}<white>. A última versão é <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>Adicionado <aqua>{amount} {skill} <gray>XP ao jogador <gray>{player}"
-    set: "<gray>Definido <aqua>{skill} <gray>XP do jogador <gray>{player} <gray>para {amount}"
-    remove: "<gray>Removido <aqua>{amount} {skill} <gray>XP do jogador <gold>{player}"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>O tempo de espera para <aqua>{ability} <gray>foi redefinido para o jogador <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Habilidade desconhecida!"
   unknown_mana_ability: "<yellow>Habilidade desconhecida!"
   unknown_stat: "<yellow>Habilidade desconhecida!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Clique para a próxima página"
     previous_page: "Página anterior"
     previous_page_click: "Clique para a página anterior"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Suas Habilidades"
     your_skills: "Suas Habilidades"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% para +{value} Drop"
     chance_drops: "{chance}% para +{value} Drops"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Resgatar Items"
     inventory_full: "Você não tem espaço suficiente no seu inventário para reivindicar esse item"
@@ -654,6 +777,29 @@ menus:
     description: "Descrição"
     unlocked_at: "<1>Desbloqueado em <2>{skill} {level}"
     next_upgrade_at: "<1>Próxima melhoria em <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Reabastecer
@@ -890,4 +1036,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 35
+file_version: 38

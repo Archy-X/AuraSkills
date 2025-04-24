@@ -121,7 +121,7 @@ abilities:
     info: "{value}% 穿刺機率"
   stun:
     name: 眩晕
-    desc: "有{value}% 的機率使敵人的移動速度降低20％, 持續2秒."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% 暈眩機率"
   shielding:
     name: 盾
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>玩家 <red>{player} <gray>的 Anti-AFK 記錄 <gray>({count} 總計) <dark_gray>| <gray>第 {page}/{total_pages} 頁:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "<gray>物品已添加{color}{stat} <aqua>{value} <gray>屬性"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>裝備屬性 {color}{stat} <yellow>已經存在! 請先使用 /sk armor modifier remove 刪除"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
         removed: "已經從你的物品刪除{color}{stat} <gray>屬性"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>找到的裝備屬性:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>物品已刪除全部裝備屬性"
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>物品上已存在具有 {trait} 特質的裝甲修飾符！請先使用 /sk armor trait remove 將其刪除"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>倍數 (數值為 <aqua>{value}) <gray>已新增到你的物品"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>配戴時：<aqua>-{value}% {skill} 經驗值"
         global_lore: "<gray>配戴時：<blue>+{value}% 技能經驗值"
         global_lore_subtract: "<gray>配戴時：<blue>-{value}% 技能經驗值"
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <aqua>{target} <yellow>裝甲倍數！"
         removed: "<aqua>{target} <gray>裝甲倍數已從你的物品中移除"
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>找到的裝甲倍數:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>所有裝甲倍數都已從你的物品中移除"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "已將<dark_aqua>{skill}<gray> <aqua> {level} <gray>的裝備要求添加到你的物品中"
         already_exists: "<yellow>物品已經具有 <dark_aqua>{skill}<yellow> 裝備要求! 請先刪除<gold>/sk armor requirement remove"
         lore: "<red>需要 <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <dark_aqua>{skill}<yellow> 裝備要求!"
         removed: "已經將 <dark_aqua>{skill}<gray> 裝備要求從你的物品中移除"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>找到的裝備要求:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>全部裝備要求已從你的物品刪除"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>你沒有裝備這個物品的條件!"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>載入備份時發生錯誤: {error}"
       must_be_yaml: "<yellow>檔案必須是 .yml 檔！"
       file_not_found: "<yellow>備份資料夾中不存在該檔案名稱的備份！"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>正在儲存備份..."
       saved: "<white>已將 {type} 資料備份為 {file}"
       error: "<red>備份 {type} 資料時出錯！有關詳細資訊，請參閱控制台/下面的錯誤"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>您沒有可以領取的物品"
   item:
     give:
       sender: "<white>給予 <aqua>{amount}×{key} <white>到 {player}"
       receiver: "<white>你被賦予了 <aqua>{amount}×{key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "物品已添加{color}{stat} <aqua>{value} 屬性"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>物品上已存在具有統計資料 {color}{stat} <yellow>的物品修飾符！請先使用 /sk item modifier remove 將其刪除"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
         removed: "<gray>已經從你的物品刪除{color}{stat} 屬性"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>找到的物品屬性:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>你的物品已刪除全部屬性"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>物品上已存在具有 {trait} 特質的物品修飾符！請先使用 /sk item trait remove 將其刪除"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>倍數 (數值為 <aqua>{value}) <gray>已新增到你的物品"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>持有時：<aqua>-{value}% {skill} 經驗值"
         global_lore: "<gray>持有時：<blue>+{value}% 技能經驗值"
         global_lore_subtract: "<gray>持有時：<blue>-{value}% 技能經驗值"
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <aqua>{target} <yellow>物品倍數！"
         removed: "<aqua>{target} <gray>物品倍數已從你的物品中移除"
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>找到的物品倍數:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>所有物品倍數都已從你的物品中移除"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>已將持有的物品註冊到金鑰 {key}"
       already_registered: "<yellow>金鑰 <white>{key} <yellow>已經註冊了一個物品，請先使用 <white>/skills item unregister <yellow>取消註冊"
       no_spaces: "<yellow>物品金鑰不能包含空格！"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "已將<dark_aqua>{skill}<gray> <aqua>{level}<gray> 的物品要求添加到你的物品中"
         already_exists: "<yellow>物品已經有 <dark_aqua>{skill}<yellow> 物品要求! 請先刪除 <gold>/sk item requirement remove"
         lore: "<red>需要 <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>你的物品沒有 <dark_aqua>{skill}<yellow> 物品要求!"
         removed: "<dark_aqua>{skill}<gray> 物品要求從你的物品中移除"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>找到的物品要求:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>全部物品要求已從你的物品刪除"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>你沒有使用這個物品的條件: {requirements}"
     unregister:
       unregistered: "<white>已取消註冊金鑰為 {key} 的物品"
       not_registered: "<yellow>沒有註冊金鑰為 {key} 的物品"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "<gray>你的物品現在將被法力能力互動忽略"
-      remove: "<gray>你的物品將不再被法力能力互動忽略"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>已成功將作業 {job} 新增到玩家 {player}"
       limited: "<yellow>無法新增此作業，因為玩家 {player} 已達到作業限制"
       existing: "<yellow>玩家 {player} 已擁有職位 {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>已從玩家 {player} 中刪除作業 {job}"
       unchanged: "<yellow>由於玩家 {player} 沒有職位 {job}，因此沒有任何變更"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white>刪除了玩家 {player} 的所有任務"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>語言設定成 <aqua>{lang}"
     not_found: "<yellow>這個語言不存在!"
+    desc: Changes your player language.
   mana:
     display: "<white>你的 {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>玩家 {player} 的 {mana_unit}: <aqua>{current}/{max}"
-    add: "<gray>已新增 <aqua>{amount} {mana_unit} <gray>到玩家 <gold>{player}"
-    remove: "<gray>已刪除玩家 <gold>{player} 的 <aqua>{amount} {mana_unit}"
-    set: "<gray>已將玩家 <gold>{player} <gray>設定為 <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} 必須至少為零！"
     console_specify_player: "<yellow>控制台必須指定玩家！"
   modifier:
     add:
       added: "<gray>已添加玩家<gold>{player}<white>{name} {color}{stat}<aqua>{value}"
       already_exists: "玩家<gold>{player} 已經有名稱為 {name} 的屬性! 使用<gold>/sk modifier remove {player} {name} 刪除"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "玩家<gold>{player} <yellow>沒有{name} 屬性"
       removed: "已刪除玩家<gold>{player} <yellow>{name} 屬性"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "玩家<gold>{player} <yellow>的屬性狀態:"
       all_stats_entry: "  <white>{name} - {color}{stat} <gold>{value}"
       one_stat_header: "<gray>玩家 <gold>{player} 屬性({color}{stat}<gray>) 狀態:"
       one_stat_entry: "  <white>{name} - {color}{stat} <gold>{value}"
       players_only: "<yellow>只有玩家才能列出自己的屬性! 請指定一個玩家"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "已刪除玩家<gold>{player} <aqua>{num} 個屬性"
       removed_one_stat: "已刪除玩家<gold>{player}<aqua>{num} 個 {color}{stat} 屬性"
       players_only: "<yellow>只有玩家才能刪除自己的屬性! 請指定一個玩家"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>玩家 <gold>{player} <yellow>上已存在名稱為 {name} 的修飾符！請使用 <gold>/sk trait remove {player} {name} 將其刪除"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>玩家 <gold>{player} 的特質修飾符:"
       one_trait_header: "<gray>玩家 <gold>{player} 的特質修飾符 ({color}{trait} <gray>):"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>已從玩家 <gold>{player} 中移除 <aqua>{num} <gray>個特質修飾符"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: 全域
     list: "<gold>{player}<white>的經驗值倍數: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>經驗值倍數: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>只有玩家才能列出自己的經驗值倍數! 請指定一個玩家!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>載入預設集將會覆蓋你的設定檔! 以下檔案將會受到影響 <gray>(<aqua>附加<gray>, <yellow>合併<gray>, <red>取代<gray>, <dark_red>刪除<gray>): {entries} <red>此操作無法復原, 請手動備份任何需要的檔案. 再次輸入指令以確認."
@@ -507,31 +587,54 @@ commands:
       replaced: 取代的檔案
       deleted: 已刪除的文件
       skipped: 跳過的檔案
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "玩家 <gold>{name} 的技能資料:\n<gray>UUID: <white>{uuid}\n<gray>技能: {skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- 等級: <white>{level} <gray>, 經驗值: <white>{xp}"
-    stats: "玩家 <gold>{name} 的統計資料:\n<gray>UUID: <white>{uuid}\n<gray>統計資料: {stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- 總等級: <white>{total_level} <gray>, 基礎等級: <white>{base_level} <gray>, 修飾等級: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>你的技能排行</bold>"
     power: "<yellow>Power <gray>(全部技能): <white>#{rank} 共 {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} 共 {total}"
-  reload: "<green>已重新載入設定!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>資料已經儲存!"
     mysql_not_enabled: "<yellow>MySQL 沒有在伺服器啟動中起用, 資料保存在檔案中!"
     saved: "<green>已儲存技能資料!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill} 設定成等級<aqua>{level}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>等級必須至少為 {level}！"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>狀態列已啟用"
     disabled: "<red>狀態列已停用"
     not_enabled: "<yellow>這個伺服器沒有啟用技能Actionbar!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>全部技能排行榜</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>全部技能排行榜 </bold><white>( 第{page} 頁)==--"
     skill_header: "<white>--==<aqua><bold>{skill} 排行榜</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>已成功將玩家資料從 <gray>{from} <green>傳輸到 <gray>{to}"
     error: "<red>傳輸玩家資料時出錯。檢查控制台是否有錯誤。"
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>排行榜已經更新過了!"
     updated: "<green>排行榜已更新!"
-  version: "<white>您使用的是 AuraSkills 版本 <aqua>{current_version} <white>。最新版本是 <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>已增加玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
-    set: "<gray>已設定玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
-    remove: "<gray>已刪除玩家 <gray>{player} <aqua>{amount} {skill} <gray>經驗"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>玩家 <gold>{player} 的 <aqua>{ability} <gray>冷卻時間已重設"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>未知的技能!"
   unknown_mana_ability: "<yellow>未知的法力能力！"
   unknown_stat: "<yellow>未知統計！"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "點選進入下一頁"
     previous_page: "上一頁"
     previous_page_click: "點選進入上一頁"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} 掉落物"
     chance_drop: "{chance}% 機率獲得 +{value} 掉落物"
     chance_drops: "{chance}% 機率獲得 +{value} 掉落物"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "領取物品"
     inventory_full: "您的背包空間不足以領取該物品"
@@ -654,6 +777,29 @@ menus:
     description: "說明"
     unlocked_at: "<1>已於 <2>{skill} {level} 解鎖"
     next_upgrade_at: "<1>下一次升級在 <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: 自動種植
@@ -890,4 +1036,4 @@ units:
   mana: 法力
   hp: 血量
   xp: 經驗
-file_version: 35
+file_version: 38

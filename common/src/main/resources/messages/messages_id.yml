@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Tembus"
   stun:
     name: Lumpuh
-    desc: "{value}% kesempatan untuk membuat kecepatan lawan menurun sebanyak 20% untuk 2 detik."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% Kesempatan"
   shielding:
     name: Perisai
@@ -334,21 +334,34 @@ commands:
     logs:
       header: "<gray>Log anti-AFK untuk <red>{player} <gray>({count} total) <dark_gray>| <gray>Halaman {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Modifikasi armor dengan statistik ini{color}{stat} <yellow>sudah ada di armor ini! Hapus dulu dengan /sk armor modifier remove"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Modifikasi yang ditemukan:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
+        desc: Removes all armor stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Modifikasi armor dengan sifat {trait} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>pengganda dengan nilai <aqua>{value} <gray>telah ditambahkan ke item Anda"
@@ -357,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Saat dikenakan: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Saat dikenakan: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Saat dikenakan: <blue>-{value}% Skill XP"
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Item Anda tidak memiliki pengganda armor <aqua>{target}<yellow>!"
         removed: "<aqua>{target} <gray>pengganda armor telah dihapus dari item Anda"
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Pengganda armor yang ditemukan:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Semua pengganda armor telah dihapus dari item Anda"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Armor requirement with level <aqua>{level}<gray> telah ditambahkan ke itemmu"
         already_exists: "<yellow>Item telah memiliki persyaratan memiliki <dark_aqua>{skill}<yellow>! Hapus terlebih dahulu dengan <gold>/sk armor requirement remove"
         lore: "<red>Membutuhkan <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Item kamu tidak memiliki persyaratan armor, <dark_aqua>{skill}<yellow> dibutuhkan!"
         removed: "<dark_aqua>{skill} <gray>persyaratan armor telah di hapus"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Persyaratan armor ditemukan:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>semua persyaratan armor telah di hapus"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Kamu tidak memenuhi persyaratan untuk memakai item ini: {requirements}"
   backup:
     load:
@@ -385,30 +406,46 @@ commands:
       error: "<red>Kesalahan memuat cadangan: {error}"
       must_be_yaml: "<yellow>File harus berupa file .yml!"
       file_not_found: "<yellow>Cadangan dengan nama file ini tidak ada di folder cadangan!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Menyimpan cadangan..."
       saved: "<white>Data {type} dicadangkan sebagai {file}"
       error: "<red>Kesalahan mencadangkan data {type}! Lihat kesalahan di konsol/di bawah untuk detailnya"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>Anda tidak memiliki item untuk diklaim"
   item:
     give:
       sender: "<white>Memberikan <aqua>{amount}x {key} <white>ke {player}"
       receiver: "<white>Anda diberi <aqua>{amount}x {key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray>telah berhasil ditambahkan ke armor ini"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Modifikasi item dengan statistik {color}{stat} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Item ini tidak memiliki modifikasi yang kamu tuliskan {color}{stat}!"
         removed: "{color}{stat} <gray>modifikasi telah di hapus"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>Modifikasi yang ditemukan:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>semua modifikasi telah di hapus"
+        desc: Removes all item stat modifiers from the item held.
     trait:
       add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Modifikasi item dengan sifat {trait} <yellow>sudah ada di item Anda! Hapus terlebih dahulu dengan /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>pengganda dengan nilai <aqua>{value} <gray>telah ditambahkan ke item Anda"
@@ -417,87 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Saat dipegang: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Saat dipegang: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Saat dipegang: <blue>-{value}% Skill XP"
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Item Anda tidak memiliki pengganda item <aqua>{target}<yellow>!"
         removed: "<aqua>{target} <gray>pengganda item telah dihapus dari item Anda"
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>Pengganda item yang ditemukan:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Semua pengganda item telah dihapus dari item Anda"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>Item yang dipegang terdaftar ke kunci {key}"
       already_registered: "<yellow>Sudah ada item yang terdaftar ke kunci <white>{key}<yellow>, gunakan <white>/skills item unregister <yellow>untuk membatalkan pendaftarannya terlebih dahulu"
       no_spaces: "<yellow>Kunci item tidak boleh berisi spasi!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Persyaratan armor dengan level <aqua>{level}<gray> telah ditambahkan ke itemmu"
         already_exists: "<yellow>Item telah memiliki persyaratan memiliki <dark_aqua>{skill}<yellow>! Hapus terlebih dahulu dengan <gold>/sk qrmor requirement remove"
         lore: "<red>Membutuhkan <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Item kamu tidak memiliki persyaratan armor, <dark_aqua>{skill}<yellow> dibutuhkan!"
         removed: "<dark_aqua>{skill}<gray> persyaratan armor telah di hapus dari itemmu"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>Persyaratan armor ditemukan:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>semua persyaratan armor telah di hapus"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Kamu tidak memenuhi persyaratan untuk menggunakan item ini: {requirements}"
     unregister:
       unregistered: "<white>Item dengan kunci {key} tidak terdaftar"
       not_registered: "<yellow>Tidak ada item yang terdaftar dengan kunci {key}"
+      desc: Unregisters an item from the item registry with the given key
     ignore:
-      add: "<gray>Item Anda sekarang akan diabaikan oleh interaksi kemampuan mana"
-      remove: "<gray>Item Anda tidak akan lagi diabaikan oleh interaksi kemampuan mana"
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
   jobs:
     add:
       added: "<white>Pekerjaan {job} berhasil ditambahkan ke pemain {player}"
       limited: "<yellow>Tidak dapat menambahkan pekerjaan ini karena pemain {player} telah mencapai batas pekerjaan"
       existing: "<yellow>Pemain {player} sudah memiliki pekerjaan {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
     remove:
       removed: "<white>Menghapus pekerjaan {job} dari pemain {player}"
       unchanged: "<yellow>Tidak ada yang diubah karena pemain {player} tidak memiliki pekerjaan {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
     removeall:
       removed: "<white>Menghapus semua pekerjaan dari pemain {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Bahasa disetel ke <aqua>{lang}"
     not_found: "<yellow>Bahasa tidak ditemukan!"
+    desc: Changes your player language.
   mana:
     display: "<white>Kamu {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} dari {player}: <aqua>{current}/{max}"
-    add: "<gray>Menambahkan <aqua>{amount} {mana_unit} <gray>ke pemain <gold>{player}"
-    remove: "<gray>Menghilangkan <aqua>{amount} {mana_unit} <gray>dari pemain <gold>{player}"
-    set: "<gray>Menyetel <gold>{player} <gray>ke <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} setidaknya harus 0!"
     console_specify_player: "<yellow>Console harus mengspesifikasikan pemain!"
   modifier:
     add:
       added: "{color}{stat} <gray>modifikasi dengan level <aqua>{value} <gray> dan nama <white>{name} <gray>berhasil ditambhkan ke pemain <gold>{player}"
       already_exists: "<yellow>modifikasi dengan nama {name} sudah ada di pemain ini <gold>{player}<yellow>! hapus dengan <gold>/sk modifier remove {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifikasi {name} etidak ditemukan di pemain <gold>{player}"
       removed: "<gray>Modikasi <white>{name} <gray>berhasil dihapus dari pemain <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Modifikasi statistik <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
       one_stat_header: "<gray>Modifikasi statistik ({color}{stat}<gray>) untuk pemain <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
       players_only: "<yellow>Hanya pemain yang bisa melihat daftar modifikasi pemain! Coba spesifikan pemain"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray>Menghapus <aqua>{num} <gray>modifikasi untuk pemain <gold>{player}"
       removed_one_stat: "<gray>Menghapus <aqua>{num} {color}{stat} <gray>modifikasi untuk pemain <gold>{player}"
       players_only: "<yellow>Hanya pemain yang bisa menghapus modifikasi pemain! Coba spesifikan pemain"
+      desc: Removes all stat modifiers from a player.
   trait:
     add:
       already_exists: "<yellow>Modifikasi dengan nama {name} sudah ada di pemain <gold>{player}<yellow>! Hapus dengan <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
     list:
       all_traits_header: "<gray>Modifikasi sifat untuk pemain <gold>{player}:"
       one_trait_header: "<gray>Modifikasi sifat ({color}{trait}<gray>) untuk pemain <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
     removeall:
       removed_all_traits: "<gray>Menghapus <aqua>{num} <gray>modifikasi sifat dari pemain <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Global
     list: "<white>Pengganda EXP untuk pemain <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>Pengganda XP: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Hanya pemain yang bisa melihat pengganda Exp! Spesifikasikan pemain!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Memuat preset akan menimpa file konfigurasi Anda! File berikut akan terpengaruh <gray>(<aqua>Ditambahkan<gray>, <yellow>Digabungkan<gray>, <red>Diganti<gray>, <dark_red>Dihapus<gray>): {entries} <red>Tindakan ini tidak dapat dibatalkan, cadangkan file yang diperlukan secara manual. Ketik perintah lagi untuk mengonfirmasi."
@@ -507,31 +587,54 @@ commands:
       replaced: File yang diganti
       deleted: File yang dihapus
       skipped: File yang dilewati
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Profil skill untuk <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skill:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-    stats: "Profil statistik untuk <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Statistik:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Level Dasar: <white>{base_level}<gray>, Level Modifikasi: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Peringkat Skill Kamu"
     power: "<yellow>Kekuatan <gray>(Semua Skill): <white>#{rank} dari {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} dari {total}"
-  reload: "<green>Config dimuat ulang!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Data sudah tersimpan!"
     mysql_not_enabled: "<yellow>MySQL tidak Active, simpan file setidaknya!"
     saved: "<green>Data skill tersimpan!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray>Semua level skill diatur ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level minimal harus {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Mengaktifkan Actionbar"
     disabled: "<red>Menonaktifkan Actionbar"
     not_enabled: "<yellow>Actionbar skill dilarang di server ini!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Peringkat Semua Skill</bold><white>(Halaman {page})==--"
     skill_header: "<white>--==<aqua><bold>Peringkat {skill}</bold><white>==--"
@@ -542,16 +645,29 @@ commands:
   transfer:
     success: "<green>Berhasil mentransfer data pemain dari <gray>{from} <green>ke <gray>{to}"
     error: "<red>Terjadi kesalahan saat mentransfer data pemain. Periksa konsol untuk kesalahan."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Papan Peringkat Sudah diperbarui!"
     updated: "<green>Papan peringkat diperbarui!"
-  version: "<white>Anda menggunakan AuraSkills <aqua>{current_version}<white>. Versi terbaru adalah <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray>Menambahkan <aqua>{amount} {skill} <gray>EXP untuk pemain <gray>{player}"
-    set: "<gray>Menyetel <aqua>{skill} <gray>EXP untuk pemain <gray>{player} <gray>ke {amount}"
-    remove: "<gray>Menghapus <aqua>{amount} {skill} <gray>EXP dari pemain <gold>{player}"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>Cooldown untuk <aqua>{ability} <gray>telah diatur ulang untuk pemain <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Skill tidak ditemukan!"
   unknown_mana_ability: "<yellow>Kemampuan mana tidak dikenal!"
   unknown_stat: "<yellow>Statistik tidak dikenal!"
@@ -591,6 +707,12 @@ menus:
     next_page_click: "Klik untuk pergi ke halaman berikutnya"
     previous_page: "Halaman Sebelumnya"
     previous_page_click: "Klik untuk pergi ke halaman sebelumnya"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Skill Anda"
     your_skills: "Skill Anda"
@@ -633,6 +755,7 @@ menus:
     added_drops: "+{value} Drop"
     chance_drop: "{chance}% untuk +{value} Drop"
     chance_drops: "{chance}% untuk +{value} Drop"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Klaim Item"
     inventory_full: "Anda tidak memiliki cukup ruang di inventaris Anda untuk mengklaim item itu"
@@ -654,6 +777,29 @@ menus:
     description: "Deskripsi"
     unlocked_at: "<1>Terbuka di <2>{skill} {level}"
     next_upgrade_at: "<1>Peningkatan berikutnya di <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Penanaman Kembali
@@ -890,4 +1036,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: XP
-file_version: 35
+file_version: 38

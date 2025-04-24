@@ -121,7 +121,7 @@ abilities:
     info: "{value}% шанс бронебійності"
   stun:
     name: Стан
-    desc: "{value}% шанс зменшити ворожий швидкість руху на 20% на 2 секунди."
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
     info: "{value}% шанс стану"
   shielding:
     name: Шилдінг
@@ -329,18 +329,39 @@ acf:
     location_console_not_relative: "<red>Помилка: консоль не може використовувати відносні координати для розташування."
 commands:
   prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
   armor:
     modifier:
       add:
-        added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
         already_exists: "<yellow>An модифікатор броні з характеристиками {color}{stat} <yellow>Вже існує на вашому обладунку! Спочатку його видалили з модифікатором зброї /sk armor"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>модефікатор броні знайдено:"
+        desc: Lists all armor stat modifiers on the item held.
       removeall:
         removed: "<gray>Усі модифікатори броні були видалені з Вашого елементу"
+        desc: Removes all armor stat modifiers from the item held.
+    trait:
+      add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
@@ -349,25 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Під час зношення: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Коли зношені: <blue>+{value}% Вміння XP"
         global_lore_subtract: "<gray>Коли зношені: <blue>-{value}% Вміння XP"
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow> Твої редмети не мають <aqua>{target} <yellow>мультипрайер броні!"
         removed: "<aqua>{target} <gray>броня було видалено з вашого предмету"
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>знайдено мультиплікатори:"
+        desc: Lists all armor multipliers on the held item.
       removeall:
         removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
+        desc: Removes all armor multipliers from the item held.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> вимога броні з рівнем <aqua>{level}<gray> була додана до вашого товару"
         already_exists: "<yellow>Item вже має <dark_aqua>{skill}<yellow> вимог до броні! Видаліть її спочатку з <gold>/sk вимог до видалення"
         lore: "<red>Потребує <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Ваш предмет не має <dark_aqua>{skill}<yellow> броня необхідності!"
         removed: "<dark_aqua>{skill}<gray> потрбована броня була видалена з ваших предметів"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
       list:
         header: "<white>Вимоги до броні знайдено:"
+        desc: Lists the armor requirements on the item held.
       removeall:
         removed: "<gray>Усі вимоги броні були видалені з вашого предмету"
+        desc: Removes all armor requirements from the item held.
       equip: "<yellow>Ви не відповідаєте вимогам, щоб обладнати цей предмет: {requirements}"
   backup:
     load:
@@ -377,27 +406,46 @@ commands:
       error: "<red>Помилка завантаження резервного копіювання: {error}"
       must_be_yaml: "<yellow>Файл повинен бути .yml файлом!"
       file_not_found: "<yellow>A резервна копія цього імені файлу не існує в папці резервних копій!"
+      desc: Loads a backup from a given file.
     save:
       saving: "<white>Збереження резервної копії..."
       saved: "<white>Резервовано {type} даних як {file}"
       error: "<red>Помилка при створенні даних {type}! Дивіться помилку в консолі/нижче для деталей"
+      desc: Saves a backup of the current data to the backups folder.
   claimitems:
+    desc: Opens the menu to claim unclaimed items.
     no_items: "<yellow>У вас немає предметів для видачі"
   item:
     give:
       sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
       receiver: "<white>Вам надано <aqua>{amount}x {key}"
+      desc: Gives an item with a key from the item registry to a player.
     modifier:
       add:
-        added: "{color}{stat} <gray>модифіковано з рівнем <aqua>{value} <gray>був додан предмет"
-        already_exists: "<yellow>The modifier з характеристиками {color}{stat} <yellow>already існує на вашому обладунку! Спочатку видаліть його з модифікатором елементів/sk"
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Ваш елемент не має {color}{stat} <yellow>modifier!"
         removed: "{color}{stat} <gray>modifier було видалено з ваших предметів"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
       list:
         header: "<white>предмет модифікатори знайдено:"
+        desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Усі модифікатори елементу були видалені з Вашого елементу"
+        desc: Removes all item stat modifiers from the item held.
+    trait:
+      add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
     multiplier:
       add:
         added: "<aqua>{target} <gray>мультиплікатор з значенням <aqua>{value} <gray>був доданий до Вашої позиції"
@@ -406,66 +454,130 @@ commands:
         skill_lore_subtract: "<gray>Коли активно: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Коли активно: <blue>+{value}% Skill XP"
         global_lore_subtract: "<gray>Коли активно: <blue>-{value}% Skill XP"
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
       remove:
         does_not_exist: "<yellow>Ваш елемент не має <aqua>{target} <yellow>item множник!"
         removed: "<aqua>{target} <gray>предмет було видалено з вашого предмету"
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
       list:
         header: "<white>знайдено мультиплікатори:"
+        desc: Lists all item multipliers on the held item.
       removeall:
         removed: "<gray>Усі мультиплікатори були видалені з вашого предмету"
+        desc: Removes all item multipliers from the item held.
     register:
       registered: "<white>реєстрований утримуваний елемент до ключа {key}"
       already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
       no_spaces: "<yellow>Item key не може містити пробілів!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> вимога предмету з рівнем <aqua>{level}<gray> була додана до вашого товару"
         already_exists: "<yellow>Item вже має <dark_aqua>{skill}<yellow> вимог до предмета! Видаліть її спочатку з <gold>/sk вимог до видалення"
         lore: "<red>Потребує <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Ваш предмет не має <dark_aqua>{skill}<yellow> предмет необхідності!"
         removed: "<dark_aqua>{skill}<gray> потрбований предмет була видалена з ваших предметів"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
       list:
         header: "<white>предметні вимоги знайдено:"
+        desc: Lists the item requirements on the item held.
       removeall:
         removed: "<gray>Усі вимоги до товару були видалені з вашого елемента"
+        desc: Removes all item requirements from the item held.
       use: "<yellow>Ви не відповідаєте вимогам, щоб використовувати цей предмет: {requirements}"
     unregister:
       unregistered: "<white>Незареєстрований елемент з ключем {key}"
       not_registered: "<yellow>Елемент не зареєстровано з ключем {key}"
+      desc: Unregisters an item from the item registry with the given key
+    ignore:
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
   lang:
     set: "<gray>Мова встановлена на <aqua>{lang}"
     not_found: "<yellow>Мова не знайдена!"
+    desc: Changes your player language.
   mana:
     display: "<white>Ваша {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} з {player}: <aqua>{current}/{max}"
-    add: "<gray> Додано <aqua>{amount} {mana_unit} <gray>для гравця <gold>{player}"
-    remove: "<gray> видалено <aqua>{amount} {mana_unit} <gray>від гравця <gold>{player}"
-    set: "<gray>Встановити гравця <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of player
     at_least_zero: "<yellow>{mana_unit} має бути мінімум нуль!"
     console_specify_player: "<yellow>Консоль повинна вказати гравця!"
   modifier:
     add:
       added: "{color}{stat} <gray>модифікатор рівня <aqua>{value} <gray>з іменем <white>{name} <gray>додано до гравця <gold>{player}"
       already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Модифікатор {name} не знайдений для гравця <gold>{player}"
       removed: "<gray>Модифікатор <white>{name} <gray>видалено від гравця <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
     list:
       all_stats_header: "<gray>Стат модифікатори для гравця <gold>{player}:"
       all_stats_entry: "  <white>{name} — {color}{stat} <white>Рівень <gold>{value}"
       one_stat_header: "<gray>Модифікатори характеристик ({color}{stat}<gray>) для гравця <gold>{player}:"
       one_stat_entry: "  <white>{name} — {color}{stat} <white>Рівень <gold>{value}"
       players_only: "<yellow>Тільки гравці можуть відображати свої власні модифікатори! Спробуйте вказати гравця"
+      desc: Lists all or a specific stat's modifiers for a player.
     removeall:
       removed_all_stats: "<gray>Видалено модифікаторів <aqua>{num} <gray>stat з гравця <gold>{player}"
       removed_one_stat: "<gray>Видалено <aqua>{num} {color}{stat} <gray>модифікаторів з гравця <gold>{player}"
       players_only: "<yellow>Тільки гравці можуть видаляти свої модифікатори! Спробуйте вказати гравця"
+      desc: Removes all stat modifiers from a player.
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      desc: Removes all trait modifiers from a player.
   multiplier:
     global: Глобальний
     list: "<white>Глобальний XP множник для <gold>{player}<white>: <aqua>{multiplier}x / +{percent}"
     skill_entry: "<aqua>{skill} <white>XP множник: <aqua>{multiplier}x / +{percent}%"
     players_only: "<yellow>Тільки гравці можуть скласти свій власний мультиплікатор! Вкажіть гравця!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
   preset:
     load:
       confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
@@ -475,31 +587,54 @@ commands:
       replaced: Replaced files
       deleted: Deleted files
       skipped: Skipped files
+      desc: Loads a configuration preset from the presets folder.
   profile:
-    skills: "Профіль виснаження для <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Вміння:{skill_entries}"
-    skill_entry: "\n  <dark_aqua>{skill} <gray>- Рівень: <white>{level}<gray>, ХР: <white>{xp}"
-    stats: "Профіль виснаження для <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Вміння:{stat_entries}"
-    stat_entry: "\n  <dark_aqua>{stat} <gray>- Загальний рівень: <white>{total_level}<gray>, Рівень основи: <white>{base_level}<gray>, Модифікований рівень: <white>{modified_level}"
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
   rank:
     header: "<aqua><bold>Ваші Рейтинг Вмінь"
     power: "<yellow>Power <gray>(Усі навички): <white>#{rank} з {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} з {total}"
-  reload: "<green>Конфігурацію перезавантажено!"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
   save:
     already_saving: "<yellow>Data вже збережено!"
     mysql_not_enabled: "<yellow>MySQL не було увімкнено під час запуску сервера, замість цього збереження файлу!"
     saved: "<green>Дані вмінь збережені!"
+    desc: Saves skill data.
   skill:
     setall:
       set: "<gray> всі вміння поставлені на рівень <aqua>{level} <gray>для гравця <gold>{player}"
+      desc: Sets all of a player's skills to a level.
     setlevel:
       set: "<gray>Вміння <aqua>{skill} <gray>встановити в <aqua>{level} <gray>для гравця <gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level must be at least {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
   toggle:
     enabled: "<green>Бар ваших вмінь було увімкнено"
     disabled: "<red>Бар ваших вмінь було вимкнено"
     not_enabled: "<yellow>бар дій з навичками не ввімкнена на цьому сервері!"
+    desc: Toggles your own skills action bar.
   top:
+    desc: Shows the top players in a skill
     power_header: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>усіх Вмінь Лідера</bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Лідератора</bold><white>==--"
@@ -510,19 +645,33 @@ commands:
   transfer:
     success: "<green>Успішно переміщено дані гравця з <gray>{from} <green>to <gray>{to}"
     error: "<red>Помилка при передачі даних програвача. Перевірте консоль на наявність помилок."
+    desc: Transfers data from one user to another given the UUIDs.
   updateleaderboards:
     already_updating: "<yellow>Leaderboard вже оновлено!"
     updated: "<green>Дошку Лідера оновлено!"
-  version: "<white>Ви знаходитесь на версії з навичками AuraSkills <aqua>{current_version}<white>. Остання версія <aqua>{latest_version}"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
   xp:
-    add: "<gray> Додано <aqua>{amount} {skill} <gray>ХРдля гравця <gray>{player}"
-    set: "<gray>Set <aqua>{skill} <gray>XP для гравця <gray>{player} <gray>to {amount}"
-    remove: "\"<gray>Видалено{amount} {skill} <gray>XP з гравця <gold>{player}\"1"
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
   manaability:
-    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
   unknown_skill: "<yellow>Невідома навичка!"
   unknown_mana_ability: "<yellow>Unknown mana ability!"
   unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
   no_profile: "<yellow>У гравця немає профілю навичок. Будь ласка, спробуйте ще раз під'єднатися до гри або перезавантажте сервер."
 leveler:
   level_up: "{skill} Level Up"
@@ -558,6 +707,12 @@ menus:
     next_page_click: "Click to go to next page"
     previous_page: "Previous Page"
     previous_page_click: "Click to go to previous page"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Your Skills"
     your_skills: "Your Skills"
@@ -568,6 +723,7 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
   level_progression:
     level_progression_title: "{skill} Levels - Page {page}"
     your_ranking: "Your Skill Ranking"
@@ -585,6 +741,13 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
     stats_title: Your Stats
     skills: "Skills"
@@ -592,6 +755,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% for +{value} Drop"
     chance_drops: "{chance}% for +{value} Drops"
+    stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
@@ -613,6 +777,29 @@ menus:
     description: "Description"
     unlocked_at: "<1>Unlocked at <2>{skill} {level}"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
 mana_abilities:
   replenish:
     name: Поповнення
@@ -849,4 +1036,4 @@ units:
   mana: Мана
   hp: HP
   xp: XP
-file_version: 32
+file_version: 38
