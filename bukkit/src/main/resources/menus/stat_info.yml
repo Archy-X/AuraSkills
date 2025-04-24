@@ -111,6 +111,7 @@ templates:
     - '  <dark_gray>{{base}}: {base_level}'
     - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
     - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
+    - component: effective_trait_value
     - ' '
     - component: trait_modifiers_click
     - component: showing_trait_modifiers
@@ -195,6 +196,11 @@ components:
     context: Trait
     lore:
     - '<green>← {{showing_trait_modifiers}} <gray>({modifier_count})'
+  effective_trait_value:
+    context: Trait
+    lore:
+    - ' '
+    - '<gray>{{effective_trait}}: {color}{effective_value}'
 formats:
   value_add: '+{value}'
   value_multiply: '{value}x'

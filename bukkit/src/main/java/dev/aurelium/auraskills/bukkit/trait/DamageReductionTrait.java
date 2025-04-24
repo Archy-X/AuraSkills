@@ -37,6 +37,11 @@ public class DamageReductionTrait extends TraitImpl {
         return NumberUtil.format1(getReductionValue(value) * 100) + "%";
     }
 
+    @Override
+    public boolean displayMatchesValue() {
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
         // LOW to make sure it runs before ability modifiers

@@ -250,6 +250,22 @@ public class StatInfoMenu {
 
             component.shouldShow(c -> c.menu().property("selected") instanceof Trait trait && c.value().equals(trait));
         });
+
+        menu.component("effective_trait_value", Trait.class, component -> {
+            component.replace("trait_name", p -> p.value().getDisplayName(p.locale()));
+            component.replace("effective_value", p -> {
+                double level = plugin.getUser(p.player()).getEffectiveTraitLevel(p.value());
+                return p.value().getMenuDisplay(level, p.locale());
+            });
+
+            component.shouldShow(c -> {
+                var impl = plugin.getTraitManager().getTraitImpl(c.value());
+                if (impl != null) {
+                    return !impl.displayMatchesValue();
+                }
+                return false;
+            });
+        });
     }
 
     private ModifierInstance instance(ActiveMenu menu, String id) {

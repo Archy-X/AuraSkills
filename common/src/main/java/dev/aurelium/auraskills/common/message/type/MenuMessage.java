@@ -121,7 +121,8 @@ public enum MenuMessage implements MessageKey {
     HELMET_DESC(8),
     CHESTPLATE_DESC(8),
     LEGGINGS_DESC(8),
-    BOOTS_DESC(8)
+    BOOTS_DESC(8),
+    EFFECTIVE_TRAIT(8)
     ;
 
     private final String path;

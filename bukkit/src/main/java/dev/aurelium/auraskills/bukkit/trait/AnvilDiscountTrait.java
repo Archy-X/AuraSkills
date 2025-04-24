@@ -39,6 +39,11 @@ public class AnvilDiscountTrait extends TraitImpl {
         return NumberUtil.format1(getDiscount(value) * 100) + "%";
     }
 
+    @Override
+    public boolean displayMatchesValue() {
+        return false;
+    }
+
     @EventHandler
     @SuppressWarnings("removal")
     public void onAnvilPrepare(PrepareAnvilEvent event) {
