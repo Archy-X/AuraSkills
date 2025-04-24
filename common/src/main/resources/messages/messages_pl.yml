@@ -800,7 +800,7 @@ menus:
     chestplate_desc: "Przyznany przez napierśnik."
     leggings_desc: "Przyznane przez spodnie."
     boots_desc: "Przyznane przez buty."
-    effective_trait: "Effective {trait_name}"
+    effective_trait: "Efektywne {trait_name}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
