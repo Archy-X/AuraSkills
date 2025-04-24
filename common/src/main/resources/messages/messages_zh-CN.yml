@@ -800,6 +800,7 @@ menus:
     chestplate_desc: "由胸甲给予。"
     leggings_desc: "由护腿给予。"
     boots_desc: "由靴子给予。"
+    effective_trait: "Effective {trait_name}"
 mana_abilities:
   replenish:
     name: 自动补种
@@ -1036,4 +1037,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 38
+file_version: 39
