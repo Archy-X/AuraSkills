@@ -800,6 +800,7 @@ menus:
     chestplate_desc: "Przyznany przez napierśnik."
     leggings_desc: "Przyznane przez spodnie."
     boots_desc: "Przyznane przez buty."
+    effective_trait: "Effective {trait_name}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -1036,4 +1037,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 38
+file_version: 39
