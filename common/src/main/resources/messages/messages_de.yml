@@ -527,7 +527,7 @@ commands:
       desc: Entfernt Mana von einem Spieler
     set:
       set: "<gray>Setzte Spieler <gold>{player} <gray>auf <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of a player
+      desc: Setzt das Mana eines Spielers
     at_least_zero: "<yellow>{mana_unit} muss mindestens Null sein!"
     console_specify_player: "<yellow>Konsole muss einen Spieler spezifizieren!"
   modifier:
