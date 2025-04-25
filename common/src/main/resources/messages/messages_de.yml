@@ -475,42 +475,42 @@ commands:
         added: "<dark_aqua>{skill}<gray> Items mit Level <aqua>{level}<gray> wurden zu deinem Gegenstand hinzugefügt"
         already_exists: "<yellow>Dein Gegenstand hat bereits die <dark_aqua>{skill}<yellow> Vorrausetzungen erfüllt! Entferne Sie zuerst mit <gold>/sk armor requirement remove"
         lore: "<red>Benötigt <dark_aqua>{skill} {level}"
-        desc: Adds an item requirement to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand eine Anforderung hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
         does_not_exist: "<yellow>Dein Item hat keine <dark_aqua>{skill}<yellow> Gegenstandsvorrausetzungen!"
         removed: "&{skill} <gray>Gegenstandsvorraussetzung wurde von deinem Gegenstand entfernt"
-        desc: Removes an item requirement from the item held, and the lore associated with it by default.
+        desc: Entfernt eine Anforderung vom gehaltenen Gegenstand und standardmäßig die dazugehörige Beschriftung.
       list:
         header: "<white>Gegenstands-Anforderungen gefunden:"
-        desc: Lists the item requirements on the item held.
+        desc: Listet die Anforderungen für den gehaltenen Gegenstand auf.
       removeall:
         removed: "<gray>Alle Voraussetzungen wurden von deinem Gegenstand entfernt"
-        desc: Removes all item requirements from the item held.
+        desc: Entfernt alle Anforderungen von dem gehaltenen Gegenstand.
       use: "<yellow>Du erfüllst nicht die Anforderungen um dieses Item zu verwenden: {requirements}"
     unregister:
       unregistered: "<white>Unregistriertes Gegenstand mit Schlüssel {key}"
       not_registered: "<yellow>Es ist kein Gegenstand mit dem Schlüssel {key} registriert"
-      desc: Unregisters an item from the item registry with the given key
+      desc: Entfernt einen Gegenstand vom Gegenstandverzeichnis mit dem angegebenen Schlüssel
     ignore:
       add:
-        added: "<gray>Your item will now be ignored by mana ability interactions"
-        desc: Adds the tag that ignores the held item from mana ability interactions.
+        added: "<gray>Dein Gegenstand wird nun von Mana Fähigkeitsinteraktionen ignoriert"
+        desc: Fügt den Tag zum gehaltenen Gegenstand hinzu welcher den Gegenstand von Mana Fähigkeitsinteraktionen ignoriert.
       remove:
-        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
-        desc: Removes the tag that ignores the held item from mana ability interactions.
+        removed: "<gray>Dein Gegenstand wird nun nicht mehr von Mana Fähigkeit-Interaktionen ignoriert"
+        desc: Entfernt den Tag zum gehaltenen Gegenstand hinzu welcher den Gegenstand von Mana Fähigkeitsinteraktionen ignoriert.
   jobs:
     add:
       added: "<white>Der Job {job} wurde erfolgreich dem Spieler {player} zugewiesen"
       limited: "<yellow>Es ist nicht möglich diesen Job hinzuzufügen da der Spieler {player} das Job-Limit erreicht hat"
       existing: "<yellow>Spieler {player} hat bereits den Job {job}"
-      desc: Adds a skill as a job for yourself or a specified player.
+      desc: Fügt eine Fertigkeit als Job für dich oder einen bestimmten Spieler hinzu.
     remove:
       removed: "<white>Der Job {job} wurde vom Spieler {player} entfernt"
       unchanged: "<yellow>Nichts wurde verändert da der Spieler {player} den Job {job} nicht hat"
-      desc: Removes a skill as a job for yourself or a specified player.
+      desc: Entfernt eine Fertigkeit als Job für dich oder einen bestimmten Spieler.
     removeall:
       removed: "<white>Alle Jobs vom Spieler {player} wurden entfernt"
-      desc: Removes all joined jobs for yourself or a specified player.
+      desc: Entfernt alle beigetretenen Jobs für dich oder einen bestimmten Spieler.
   lang:
     set: "<gray>Sprache geändert auf <aqua>{lang}"
     not_found: "<yellow>Sprache nicht gefunden!"
@@ -537,30 +537,30 @@ commands:
       desc: Fügt einem Spieler einen Werte-Modifikator hinzu.
     addtemp:
       added: "Temporärer Werte-Modifikator zu {player} mit Typ: {stat}, Name: {name}, Wert: {value}, Dauer: {duration}, Operation: {operation}"
-      desc: Adds a temporary stat modifier to a player.
+      desc: Fügt einem Spieler einen temporären Wertemodifikator hinzu.
     remove:
       not_found: "<yellow>Modifikator {name} nicht gefunden für Spieler <gold>{player}"
       removed: "<gray>Modifikator <white>{name} <gray>entfernt vom Spieler <gold>{player}"
-      desc: Removes a specific stat modifier from a player.
+      desc: Entfernt einen bestimmten Wertemodifikator von einem Spieler.
     list:
       all_stats_header: "<gray>Werte-Modifikatoren für Spieler <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Stufe <gold>{value}"
       one_stat_header: "<gray>Werte-Modifikatoren ({color}{stat}<gray>) für Spieler <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Stufe <gold>{value}"
       players_only: "<yellow>Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben"
-      desc: Lists all or a specific stat's modifiers for a player.
+      desc: Listet alle oder bestimmte Wertemodifikatoren für einen Spieler auf.
     removeall:
       removed_all_stats: "<gray>Entfernt <aqua>{num} <gray>stat Modifikatoren von Spieler <gold>{player}"
       removed_one_stat: "<gray>Entfernt <aqua>{num} {color}{stat} <gray>Modifikatoren von Spieler <gold>{player}"
       players_only: "<yellow>Nur Spieler können ihre eigenen Modifikatoren entfernen! Versuche einen Spieler anzugeben"
-      desc: Removes all stat modifiers from a player.
+      desc: Entfernt alle Wertemodifikatoren von Spieler.
   trait:
     add:
       already_exists: "<yellow>Ein Modifikator mit dem Namen {name} existiert bereits auf dem Spieler <gold>{player}<yellow>! Entferne ihn zuerst mit <gold>/sk trait remove {player} {name}"
       desc: Fügt einem Spieler einen Eigenschaftsmodifikator hinzu.
     addtemp:
-      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
-      desc: Adds a temporary trait modifier to a player.
+      added: "Temporärer Eigenschaftsmodifikator zu {player} mit Eigenschaft: {trait}, Name: {name}, Wert: {value}, Dauer: {duration} hinzugefügt"
+      desc: Fügt einem Spieler einen temporären Eigenschaftsmodifikator hinzu.
     remove:
       desc: Entfernt einen bestimmten Eigenschaftsmodifikator von einem Spieler.
     list:
@@ -569,15 +569,15 @@ commands:
       desc: Listet alle oder bestimmte Eigenschaftsmodifikatoren für einen Spieler auf.
     removeall:
       removed_all_traits: "<gray>Es wurden <aqua>{num} <gray>Eigenschaftsmodifikatoren vom Spieler <gold>{player} <gray>entfernt"
-      desc: Removes all trait modifiers from a player.
+      desc: Entfernt alle Eigenschaftsmodifikatoren von einem Spieler.
   multiplier:
     global: Global
     list: "<white>Globaler XP Multiplikator für <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
     skill_entry: "<aqua>{skill} <white>XP Multiplikator: <aqua>{multiplier}x / +{percent}%"
     players_only: "Nur Spieler können ihre eigenen Modifikatoren auflisten! Versuche einen Spieler anzugeben!"
-    desc: Shows a player's current XP multiplier based on their permissions.
+    desc: Zeigt den aktuellen XP-Multiplikator eines Spielers basierend auf seinen Berechtigungen an.
   openmenu:
-    desc: Opens a plugin menu for a player with optional properties JSON and page number.
+    desc: Öffnet ein Plugin-Menü für einen Player mit optionalen JSON Eigenschaften und einer Seitennummer.
   preset:
     load:
       confirm: "<red>Das Laden einer Voreinstellung überschreibt die Konfigurationsdateien! Die folgenden Dateien sind betroffen <gray>(<aqua>Anhang<gray>, <yellow>Zusammengefügt<gray>, <red>Ersetzt<gray>, <dark_red>Gelöscht<gray>): {entries} <red>Diese Aktion kann nicht rückgängig gemacht werden und es wird empfohlen, wichtige Dateien manuell sichern. Geben Sie den Befehl erneut ein, um ihn zu bestätigen."
@@ -587,15 +587,15 @@ commands:
       replaced: Ersetzte Dateien
       deleted: Gelöschte Dateien
       skipped: Übersprungene Dateien
-      desc: Loads a configuration preset from the presets folder.
+      desc: Lädt eine Konfigurationsvorgabe aus dem Preset-Ordner.
   profile:
     skills:
-      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      header: "Fertigkeits-Profil für <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Fertigkeiten:{skill_entries}"
       entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
-      desc: Shows the skill levels and XP for any player, including offline players.
+      desc: Zeigt die Fertigkeitsstufe und XP für jeden Spieler, einschließlich Offline-Spieler.
     stats:
-      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
-      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      header: "Werte-Profil für <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Fertigkeiten:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Gesamtes Level: <white>{total_level}<gray>, Basislevel: <white>{base_level}<gray>, Geändertes Level: <white>{modified_level}"
       desc: Zeigt die Wertelevel für einen beliebigen Spieler, inklusive Offline-Spieler.
   rank:
     header: "<aqua><bold>Deine Fertigkeiten-Platzierungen</bold>"
@@ -604,9 +604,9 @@ commands:
     desc: Zeigt deine Fertigkeits-Rangpositionen.
   reload:
     reloaded: "<green> Die Konfiguration wurde neu geladen!"
-    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+    desc: Lädt die Konfiguration, Nachrichten, Menüs, Beutetische, Action-Bars, Boss Bars, Gesundheit und Glück Werte neu.
   resethealth:
-    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
+    desc: Entfernt alle Attributmodifikatoren von AuraSkills zur einfachen Deinstallation. Dies funktioniert nur bei Offline-Spielern.
   save:
     already_saving: "<yellow>Daten werden bereits gespeichert!"
     mysql_not_enabled: "<yellow>MySQL wurde beim Serverstart nicht aktiviert, stattdessen wird in Datei gespeichert!"
@@ -623,11 +623,11 @@ commands:
       desc: Setzt alle Fähigkeiten eines Spielers oder eine bestimmte Fertigkeit auf das Startlevel zurück.
     at_least: "<yellow>Stufe muss mindestens {level} sein!"
   skills:
-    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+    desc: Öffnet das Skills-Menü, in dem du Fertigkeiten, Fortschritt und Fähigkeiten durchsuchen kannst.
   stats:
-    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+    desc: Öffnet das Wertemenü, in dem du aktuelle Wertelevel und Beschreibungen sehen kannst.
   sources:
-    desc: Opens the Sources menu to see all XP sources for a skill.
+    desc: Öffnet das Quellen-Menü um alle XP-Quellen für eine Fertigkeit zu sehen.
   toggle:
     enabled: "<green>Deine Fähigkeitsaktionsleiste wurde aktiviert"
     disabled: "<red>Deine Fähigkeitsaktionsleiste wurde deaktiviert"
