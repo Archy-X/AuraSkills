@@ -445,7 +445,7 @@ commands:
       list:
         desc: Listet alle Eigenschafts-Modifikatoren des gehaltenen Gegenstandes auf.
       removeall:
-        desc: Removes all item trait modifiers from the item held.
+        desc: Entfernt alle Eigenschafts-Modifikatoren des gehaltenen Gegenstandes.
     multiplier:
       add:
         added: "<aqua>{target} <gray>Multiplikator mit dem Wert <aqua>{value} <gray>wurde zum Item hinzugefügt"
@@ -454,22 +454,22 @@ commands:
         skill_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wenn getragen: <aqua>+{value}% Skill XP"
         global_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% Skill XP"
-        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: Fügt dem gehaltenen Gegenstand einen Multiplikator für alle oder eine spezifische Fertigkeit zu, wobei der Wert der erhöhte Prozentanteil ist.
       remove:
         does_not_exist: "<yellow>Dein Gegenstand hat keinen <aqua>{target} <reset>üstungs Multiplikator!"
         removed: "&{target} <gray>Rüstungs Modifikator wurde von deinem Gegenstand entfernt"
-        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
+        desc: Entfernt einen Multiplikator der angegebenen Fertigkeit oder einen globalen Multiplikator vom gehaltenen Gegenstand.
       list:
         header: "<white>Gefundene Rüstungs Multiplikatoren:"
-        desc: Lists all item multipliers on the held item.
+        desc: Listet alle Multiplikatoren des gehaltenen Elements auf.
       removeall:
         removed: "<gray>Alle Rüstungsmultiplikatoren wurden von deinem Gegenstand entfernt"
-        desc: Removes all item multipliers from the item held.
+        desc: Entfernt alle Multiplikatoren vom gehaltenen Gegenstand.
     register:
       registered: "<white>Registrierter gehaltener Gegenstand zum Schlüssel {key}"
       already_registered: "<yellow>Es ist bereits ein Gegenstand registriert für Schlüssel <white>{key}<yellow>, benutze <white>/skills item unregister <yellow>to unregistrier es zuerst"
       no_spaces: "<yellow>IGegenstand Schlüssel darf keine Leerzeichen enthalten!"
-      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
+      desc: Registriert einen Eintrag im Gegenstandverzeichnis mit einem angegebenen Schlüssel, der in der Plugin-Konfiguration referenziert werden kann.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Items mit Level <aqua>{level}<gray> wurden zu deinem Gegenstand hinzugefügt"
