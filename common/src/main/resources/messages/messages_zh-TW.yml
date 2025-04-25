@@ -527,7 +527,7 @@ commands:
       desc: Removes mana from a player
     set:
       set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of player
+      desc: Sets the mana of a player
     at_least_zero: "<yellow>{mana_unit} 必須至少為零！"
     console_specify_player: "<yellow>控制台必須指定玩家！"
   modifier:
