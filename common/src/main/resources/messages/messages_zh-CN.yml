@@ -527,7 +527,7 @@ commands:
       desc: 汲取玩家的魔力
     set:
       set: "<gray>将玩家 <gold>{player} <gray> 的魔力值设置为了 <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of a player
+      desc: 设置玩家的魔力值
     at_least_zero: "<yellow>{mana_unit} 必须至少大于零!"
     console_specify_player: "<yellow>后台执行此命令需指定一名玩家!"
   modifier:
@@ -591,11 +591,11 @@ commands:
   profile:
     skills:
       header: "玩家 <gold>{name} <gray>的技能档案：\n<gray>UUID：<white>{uuid}\n<gray>技能：{skill_entries}"
-      entry: " <dark_aqua>{skill} <gray>- 等级：<white>{level}<gray>，经验值：<white>{xp}"
+      entry: "\n<dark_aqua>{skill} <gray>- 等级：<white>{level}<gray>，经验值：<white>{xp}"
       desc: 显示任意玩家技能等级与经验值，无需对方在线。
     stats:
       header: "玩家 <gold>{name} <gray>的属性档案：\n<gray>UUID：<white>{uuid}\n<gray>属性：{stat_entries}"
-      entry: "\n <dark_aqua>{stat} <gray>- 总等级：\n<white>{total_level}<gray>，基础等级：<white>{base_level}<gray>，加成等级：<white>{modified_level}"
+      entry: "\n  <dark_aqua>{stat} <gray>- 总等级：\n<white>{total_level}<gray>，基础等级：<white>{base_level}<gray>，加成等级：<white>{modified_level}"
       desc: 显示任意玩家属性等级，无需对方在线。
   rank:
     header: "<aqua><bold>技能排名</bold>"
@@ -800,7 +800,7 @@ menus:
     chestplate_desc: "由胸甲给予。"
     leggings_desc: "由护腿给予。"
     boots_desc: "由靴子给予。"
-    effective_trait: "Effective {trait_name}"
+    effective_trait: "有效{trait_name}"
 mana_abilities:
   replenish:
     name: 自动补种
