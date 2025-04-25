@@ -741,7 +741,7 @@ menus:
     abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
     mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
     abilities_click: "Click to view {skill} abilities"
-    job: Job
+    job: Baan
     job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
     job_select: Left click to select {skill} as your job
     job_active: You are actively working this job
@@ -749,38 +749,38 @@ menus:
     job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
     job_cooldown: Job selection is on cooldown. You can select again in {time}.
   stats:
-    stats_title: Your Stats
-    skills: "Skills"
+    stats_title: Jouw statistieken
+    skills: "Vaardigheid"
     added_drop: "+{value} Drop"
     added_drops: "+{value} Drops"
-    chance_drop: "{chance}% for +{value} Drop"
-    chance_drops: "{chance}% for +{value} Drops"
+    chance_drop: "{chance}% voor +{value} Drop"
+    chance_drops: "{chance}% voor +{value} Drops"
     stat_info_click: "Click to view stat details"
   unclaimed_items:
     unclaimed_items_title: "Claim Items"
     inventory_full: "You do not have enough space in your inventory to claim that item"
     click_to_claim: "Click to claim!"
   leaderboard:
-    leaderboard_title: "{skill} Leaderboard"
+    leaderboard_title: "{skill} Scorebord"
   sources:
-    sources_title: "{skill} XP Sources"
-    sorter: "Sort XP Sources"
-    descending: "Highest to Lowest"
-    ascending: "Lowest to Highest"
-    alphabetical: "Name (A-Z)"
-    reverse_alphabetical: "Name (Z-A)"
+    sources_title: "{skill} XP Bronnen"
+    sorter: "XP Bronnen sorteren"
+    descending: "Van hoog naar laag"
+    ascending: "Van laag naar hoog"
+    alphabetical: "Naam (A-Z)"
+    reverse_alphabetical: "Naam (Z-A)"
     sort_click: "Click to cycle sort type"
     multiplied_xp: "Multiplied {xp_unit}"
     multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
   abilities:
     abilities_title: "{skill} Abilities"
-    description: "Description"
+    description: "Beschrijving"
     unlocked_at: "<1>Unlocked at <2>{skill} {level}"
     next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
   stat_info:
-    stat_details: "{stat_name} Stat"
-    stat: "Stat"
-    stat_level: "Stat Level"
+    stat_details: "{stat_name} Statistiek"
+    stat: "Statistiek"
+    stat_level: "Statistiek niveau"
     traits_leveled: "Traits Leveled"
     stat_modifiers: "Stat Modifiers"
     stat_reward_desc: "Granted by your {skill} skill level."
@@ -800,7 +800,7 @@ menus:
     chestplate_desc: "Granted by chestplate."
     leggings_desc: "Granted by leggings."
     boots_desc: "Granted by boots."
-    effective_trait: "Effective {trait_name}"
+    effective_trait: "Effectieve {trait_name}"
 mana_abilities:
   replenish:
     name: Aanvullen
@@ -810,7 +810,7 @@ mana_abilities:
     start: "<gold>Replenish Geactiveerd! <gray>(-{mana} {mana_unit})"
     end: "<gray>Replenish is versleten uit"
   treecapitator:
-    name: Treecapitator
+    name: Boomcapitator
     desc: "Breekt complete bomen meteen voor {value} seconden. <1>[Rechtsklik bijl en breek logboek om te activeren]"
     raise: "<gray>Je verhoogt je bijl"
     lower: "<gray>Je verlaagt je bijl"
@@ -910,52 +910,52 @@ sources:
     pufferfish: Kogelvis
     treasure: Schat Voorwerpen
     junk: Ongewenste items
-    rare: Rare Loot
+    rare: Zeldzame Buit
     epic: Epische Buit
   damage:
-    mob_damage: Damage from Mobs
-    player_damage: Damage from Players
-    fall_damage: Taking Fall Damage
+    mob_damage: Schade van Mobs
+    player_damage: Schade van spelers
+    fall_damage: Val schade nemen
   statistic:
-    walk_per_meter: Walking
-    sprint_per_meter: Sprinting
-    swim_per_meter: Swimming
+    walk_per_meter: Lopen
+    sprint_per_meter: Sprinten
+    swim_per_meter: Zwemmen
   jumping:
-    jump_per_100: Jumping
+    jump_per_100: Springen
   brewing:
-    awkward: Brew Awkward Potion
-    regular: Brew Regular Potion
-    extended: Brew Extended Duration Potion
-    upgraded: Brew Upgraded Potion
-    splash: Brew Splash Potion
-    lingering: Brew Lingering Potion
+    awkward: Brouw vreemde drank
+    regular: Brouw normale drank
+    extended: Brouw langere duur drank
+    upgraded: Brouws verbeterde drank
+    splash: Brouw spattende drank
+    lingering: Brouw slepende drank
   enchanting:
-    weapon_per_level: Enchant Weapon
-    armor_per_level: Enchant Armor
-    tool_per_level: Enchant Tool
-    book_per_level: Enchant Book
+    weapon_per_level: Betover wapen
+    armor_per_level: Betover harnas
+    tool_per_level: Betover gereedschap
+    book_per_level: Betover boek
   mana_ability_use:
-    mana_ability_use: Using Mana Abilities
+    mana_ability_use: Gebruik Mana vaardigheden
   item_consume:
-    drink_regular: Drink Regular Potion
-    drink_extended: Drink Extended Duration Potion
-    drink_upgraded: Drink Upgraded Potion
-    golden_apple: Consume Golden Apple
-    enchanted_golden_apple: Consume Enchanted Golden Apple
+    drink_regular: Drink normale drank
+    drink_extended: Drink verlengde duur drank
+    drink_upgraded: Drink verbeterd drank
+    golden_apple: Verbruik gouden appel
+    enchanted_golden_apple: Verbruik betoverde gouden appel
   potion_splash:
-    splash_regular: Splash Regular Potion
-    splash_extended: Splash Extended Duration Potion
-    splash_upgraded: Splash Upgraded Potion
-    lingering_regular: Use Regular Lingering Potion
-    lingering_extended: Use Extended Duration Lingering Potion
-    lingering_upgraded: Use Upgraded Lingering Potion
+    splash_regular: Spattende normale drank
+    splash_extended: Spattende duur verlengde drank
+    splash_upgraded: Spattende verbeterde drank
+    lingering_regular: Gebruik normale slepende drank
+    lingering_extended: Gebruik lange duur slepende drank
+    lingering_upgraded: Gebruik verbeterde slepende drank
   anvil:
-    combine_books_per_level: Combine Enchanted Books
-    combine_weapon_per_level: Combine Weapon with Book
-    combine_armor_per_level: Combine Armor with Book
-    combine_tool_per_level: Combine Tool with Book
+    combine_books_per_level: Combineer betoverde boeken
+    combine_weapon_per_level: Wapen combineren met boek
+    combine_armor_per_level: Combineer harnas met boek
+    combine_tool_per_level: Combineer gereedschap met boek
   grindstone:
-    grindstone_per_level: Disenchant Item with Grindstone
+    grindstone_per_level: Betover voorwerp met slijpsteen
   units:
     damage: Schade
     meter: Meter
@@ -975,8 +975,8 @@ stats:
     name: Regeneratie
     desc: "Regeneratie verhoogt hoe snel je herstel zowel gezondheid als mana."
   luck:
-    name: Luck
-    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+    name: Geluk
+    desc: "Geluk vergroot de kans op extra drops van blokken bij het verzamelen van vaardigheden."
   wisdom:
     name: Wijsdom
     desc: "Wisdom verhoogt je max mana, verhoogt ervaring winst en vermindert de aambeeld kosten."
@@ -984,11 +984,11 @@ stats:
     name: Hardheid
     desc: "Hardheid verhoogt het aantal schade verminderd door vijandelijke aanvallen."
   crit_chance:
-    name: Crit Chance
-    desc: "Crit Chance is your odds to deal a critical hit."
+    name: Kritieke Kans
+    desc: "Kritieke Kans is je kans om een kritische slag te doen."
   crit_damage:
-    name: Crit Damage
-    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+    name: Kritieke Schade
+    desc: "Kritieke Schade is het percentage dat de schade verhoogt wanneer je een kritische slag toebrengt."
   speed:
     name: Speed
     desc: "Speed increases how fast you can walk and run."
@@ -1002,9 +1002,9 @@ traits:
   hunger_regen:
     name: Hunger Regen
   mana_regen:
-    name: Mana Regen
+    name: Mana regeneratie
   luck:
-    name: Luck Attribute
+    name: Geluk Eigenschap
   double_drop:
     name: Double Drop
   experience_bonus:
