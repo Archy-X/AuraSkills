@@ -514,29 +514,29 @@ commands:
   lang:
     set: "<gray>Sprache geändert auf <aqua>{lang}"
     not_found: "<yellow>Sprache nicht gefunden!"
-    desc: Changes your player language.
+    desc: Ändert deine Spielsprache.
   mana:
     display: "<white>Dein {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} von {player}: <aqua>{current}/{max}"
-    desc: Display your or another player's current and max mana
+    desc: Zeigt dein aktuelles und maximales Mana oder das eines anderen Spielers an
     add:
-      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
-      desc: Adds mana to a player
+      added: "<gray>Fügte <aqua>{amount} {mana_unit} <gray>zu Spieler <gold>{player} hinzu"
+      desc: Fügt einem Spieler Mana hinzu
     remove:
-      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
-      desc: Removes mana from a player
+      removed: "<gray>Entfernte <aqua>{amount} {mana_unit} <gray>von Spieler <gold>{player}"
+      desc: Entfernt Mana von einem Spieler
     set:
-      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of player
+      set: "<gray>Setzte Spieler <gold>{player} <gray>auf <aqua>{amount} {mana_unit}"
+      desc: Setzt das Mana eines Spielers
     at_least_zero: "<yellow>{mana_unit} muss mindestens Null sein!"
     console_specify_player: "<yellow>Konsole muss einen Spieler spezifizieren!"
   modifier:
     add:
       added: "{color}{stat} <gray>Modifikator Level <aqua>{value} <gray>mit Namen <white>{name} <gray>zu Spieler <gold>{player} hinzugefügt"
       already_exists: "<yellow>Modifikator mit dem Namen {name} existiert bereits am Spieler <gold>{player}<yellow>! Entferne ihn mit <gold>/sk modifier remove {player} {name}"
-      desc: Adds a stat modifier to a player.
+      desc: Fügt einem Spieler einen Werte-Modifikator hinzu.
     addtemp:
-      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      added: "Temporärer Werte-Modifikator zu {player} mit Typ: {stat}, Name: {name}, Wert: {value}, Dauer: {duration}, Operation: {operation}"
       desc: Adds a temporary stat modifier to a player.
     remove:
       not_found: "<yellow>Modifikator {name} nicht gefunden für Spieler <gold>{player}"
@@ -557,16 +557,16 @@ commands:
   trait:
     add:
       already_exists: "<yellow>Ein Modifikator mit dem Namen {name} existiert bereits auf dem Spieler <gold>{player}<yellow>! Entferne ihn zuerst mit <gold>/sk trait remove {player} {name}"
-      desc: Adds a trait modifier to a player.
+      desc: Fügt einem Spieler einen Eigenschaftsmodifikator hinzu.
     addtemp:
       added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
       desc: Adds a temporary trait modifier to a player.
     remove:
-      desc: Removes a specific trait modifier from a player.
+      desc: Entfernt einen bestimmten Eigenschaftsmodifikator von einem Spieler.
     list:
       all_traits_header: "<gray>Eigenschaftsmodifikatoren für den Spieler <gold>{player}:"
       one_trait_header: "<gray>Eigenschaftsmodifikatoren ({color}{trait}<gray>) für den Spieler <gold>{player}:"
-      desc: Lists all or a specific trait's modifiers for a player.
+      desc: Listet alle oder bestimmte Eigenschaftsmodifikatoren für einen Spieler auf.
     removeall:
       removed_all_traits: "<gray>Es wurden <aqua>{num} <gray>Eigenschaftsmodifikatoren vom Spieler <gold>{player} <gray>entfernt"
       desc: Removes all trait modifiers from a player.
@@ -596,14 +596,14 @@ commands:
     stats:
       header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
       entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
-      desc: Shows the stat levels for any player, including offline players.
+      desc: Zeigt die Wertelevel für einen beliebigen Spieler, inklusive Offline-Spieler.
   rank:
     header: "<aqua><bold>Deine Fertigkeiten-Platzierungen</bold>"
     power: "<yellow>Macht <gray>(Alle Fähigkeiten): <white>#{rank} von {total}"
     entry: "<aqua>{skill}<gray>: <white>#{rank} von {total}"
-    desc: Shows your skill rankings.
+    desc: Zeigt deine Fertigkeits-Rangpositionen.
   reload:
-    reloaded: "<green>Config reloaded!"
+    reloaded: "<green> Die Konfiguration wurde neu geladen!"
     desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
   resethealth:
     desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
@@ -611,16 +611,16 @@ commands:
     already_saving: "<yellow>Daten werden bereits gespeichert!"
     mysql_not_enabled: "<yellow>MySQL wurde beim Serverstart nicht aktiviert, stattdessen wird in Datei gespeichert!"
     saved: "<green>Fertigkeitsdaten gespeichert!"
-    desc: Saves skill data.
+    desc: Speichert Fertigkeitsdaten.
   skill:
     setall:
       set: "<gray>Alle Fertigkeiten von Spieler <gold>{player} <gray>auf Stufe <aqua>{level} <gray>gesetzt"
-      desc: Sets all of a player's skills to a level.
+      desc: Setzt alle Fertigkeiten eines Spielers auf ein Level.
     setlevel:
       set: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>{level} <gray>für Spieler <gold>{player} <gray>gesetzt"
-      desc: Sets a specific skill to a level for a player.
+      desc: Setzt eine bestimmte Fertigkeit eines Spielers auf ein Level.
     reset:
-      desc: Resets all skills or a specific skill to the starting level for a player.
+      desc: Setzt alle Fähigkeiten eines Spielers oder eine bestimmte Fertigkeit auf das Startlevel zurück.
     at_least: "<yellow>Stufe muss mindestens {level} sein!"
   skills:
     desc: Opens the Skills menu where you can browse skills, progress, and abilities.
@@ -632,9 +632,9 @@ commands:
     enabled: "<green>Deine Fähigkeitsaktionsleiste wurde aktiviert"
     disabled: "<red>Deine Fähigkeitsaktionsleiste wurde deaktiviert"
     not_enabled: "<yellow>Fertigkeiten-Aktionsleiste ist auf diesem Server nicht aktiviert!"
-    desc: Toggles your own skills action bar.
+    desc: Schaltet deine eigene Fertigkeitsleiste um.
   top:
-    desc: Shows the top players in a skill
+    desc: Zeigt die besten Spieler in einer Fertigkeit an
     power_header: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten</bold><white>==--"
     power_header_page: "<white>--==<aqua><bold>Rangliste für alle Fertigkeiten </bold><white>(Page {page})==--"
     skill_header: "<white>--==<aqua><bold>{skill} Rangliste</bold><white>==--"
@@ -645,29 +645,29 @@ commands:
   transfer:
     success: "<green>Erfolgreich Spielerdaten von <gray>{from} <green>zu <gray>{to} übertragen"
     error: "<red>Es gab einen Fehler bei der Übertragung der Spielerdaten. Überprüfen Sie die Konsole auf Fehler."
-    desc: Transfers data from one user to another given the UUIDs.
+    desc: Überträgt Daten von einem Benutzer zu einem anderen mit der angegebenen UUID.
   updateleaderboards:
     already_updating: "<yellow>Rangliste wird bereits aktualisiert!"
     updated: "<green>Rangliste aktualisiert!"
-    desc: Updates and sorts the leaderboards.
+    desc: Aktualisiert und sortiert die Ranglisten.
   version:
-    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
-    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
-    desc: Shows the currently installed and latest available version of the plugin.
+    version: "<white>Du bist auf AuraSkills Version <aqua>{current_version}<white>. Die neueste Version ist <aqua>{latest_version}"
+    new_update: "{prefix}<white>Neues Update verfügbar! Du bist auf Version <aqua>{current_version}<white>, die neueste Version ist <aqua>{latest_version}\n{prefix}<white>Laden sie auf Modrinth herunter: <yellow><underlined>{link}"
+    desc: Zeigt die aktuell installierte und aktuellste Version des Plugins an.
   xp:
     add:
-      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
-      desc: Adds skill XP to a player for a certain skill.
+      added: "<gray> <aqua>{amount} {skill} <gray>XP zum Spieler <gray>{player} hinzugefügt"
+      desc: Fügt einem Spieler Fertigkeits XP für eine bestimmte Fertigkeit hinzu.
     set:
-      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
-      desc: Sets a player's skill XP for a certain skill to an amount.
+      set: "<gray>Setze <aqua>{skill} <gray>XP für Spieler <gray>{player} <gray>auf {amount}"
+      desc: Legt die Fertigkeits XP eines Spielers für eine bestimmte Fertigkeit auf einen Wert fest.
     remove:
-      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
-      desc: Removes skill XP from a player in a certain skill.
+      removed: "<gray>Entfernte <aqua>{amount} {skill} <gray>von Spieler <gold>{player}"
+      desc: Entfernt Fertigkeits XP von einem Spieler in einer bestimmten Fähigkeit.
   manaability:
     resetcooldown:
-      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
-      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
+      cooldown_reset: "<gray>Abklingzeit für <aqua>{ability} <gray>wurde für den Spieler <gold>{player} <gray>zurückgesetzt"
+      desc: Setzt eine bestimmte Abklingzeit einer Manafähigkeit für einen Spieler zurück, optional wird Mana aufgefüllt.
   unknown_skill: "<yellow>Unbekannte Fertigkeit!"
   unknown_mana_ability: "<yellow>Unbekannte Mana-Fähigkeit!"
   unknown_stat: "<yellow>Unbekannte Fertigkeit!"
@@ -707,12 +707,12 @@ menus:
     next_page_click: "Klicken, um zur nächsten Seite zu gelangen"
     previous_page: "Vorherige Seite"
     previous_page_click: "Klicken, um zur vorherigen Seite zu gelangen"
-    trait: "Trait"
-    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
-    trait_level: "Trait Level"
-    base: "Base"
-    modifiers_additive: "Modifiers (Additive)"
-    modifiers_multiplicative: "Modifiers (Multiplicative)"
+    trait: "Eigenschaft"
+    trait_gain: "<1>Du erhältst {color}{level_modifier} {trait_name} <1>Eigenschaftslevel pro {color}1 {stat_name} <1>Wertelevel."
+    trait_level: "Eigenschaftslevel"
+    base: "Basis"
+    modifiers_additive: "Modifikatoren (Additiv)"
+    modifiers_multiplicative: "Modifikatoren (Multiplikativ)"
   skills:
     skills_title: "Deine Fertigkeiten"
     your_skills: "Deine Fähigkeiten"
@@ -755,7 +755,7 @@ menus:
     added_drops: "+{value} Drops"
     chance_drop: "{chance}% für +{value} Drop"
     chance_drops: "{chance}% für +{value} Drops"
-    stat_info_click: "Click to view stat details"
+    stat_info_click: "Klicken, um Werte Details anzuzeigen"
   unclaimed_items:
     unclaimed_items_title: "Gegenstand beanspruchen"
     inventory_full: "Du hast nicht genug Platz im Inventar um diesen Gegenstand zu beanspruchen"
@@ -778,29 +778,29 @@ menus:
     unlocked_at: "<1>Schalte dies mit <2>Level {level}</2> in <2>{skill}</2> frei"
     next_upgrade_at: "<1>Nächstes Upgrade in <2>Skill {skill}</2> bei <2>Level {level}</2>"
   stat_info:
-    stat_details: "{stat_name} Stat"
-    stat: "Stat"
-    stat_level: "Stat Level"
-    traits_leveled: "Traits Leveled"
-    stat_modifiers: "Stat Modifiers"
-    stat_reward_desc: "Granted by your {skill} skill level."
-    stat_modifiers_click: "Click to view stat modifiers"
-    trait_modifiers_click: "Click to view trait modifiers"
-    showing_stat_modifiers: "Showing stat modifiers"
-    showing_trait_modifiers: "Showing trait modifiers"
-    base_level: "Base Level"
-    base_level_desc: "Base level from Minecraft and external sources."
-    linked_stat_desc: "Granted by your {stat} stat level."
-    ability_modifier_name: "{name} Ability"
-    ability_modifier_desc: "Granted by the {ability} ability."
-    custom_modifier_desc: "Granted by a custom modifier."
-    item_hand_desc: "Granted by item in hand."
-    item_off_hand_desc: "Granted by item in off hand."
-    helmet_desc: "Granted by helmet."
-    chestplate_desc: "Granted by chestplate."
-    leggings_desc: "Granted by leggings."
-    boots_desc: "Granted by boots."
-    effective_trait: "Effective {trait_name}"
+    stat_details: "{stat_name} Wert"
+    stat: "Wert"
+    stat_level: "Wertelevel"
+    traits_leveled: "Aufgewertete Eigenschaften"
+    stat_modifiers: "Werte-Modifikatoren"
+    stat_reward_desc: "Erhalten von deinem {skill} Fertigkeitslevel."
+    stat_modifiers_click: "Klicke zum Anzeigen von Wertemodifikatoren"
+    trait_modifiers_click: "Klicke zum Anzeigen von Eigenschaftsmodifikatoren"
+    showing_stat_modifiers: "Wertemodifikatoren anzeigen"
+    showing_trait_modifiers: "Eigenschaftsmodifikatoren anzeigen"
+    base_level: "Basislevel"
+    base_level_desc: "Basislevel von Minecraft und externen Quellen."
+    linked_stat_desc: "Erhalten von deinem {stat} Wertelevel."
+    ability_modifier_name: "{name} Fähigkeit"
+    ability_modifier_desc: "Erhalten von deiner {ability} Fähigkeit."
+    custom_modifier_desc: "Erhalten von einem benutzerdefinierten Modifikator."
+    item_hand_desc: "Erhalten durch den Gegenstand in der Hand."
+    item_off_hand_desc: "Erhalten durch den Gegenstand in der Zweithand."
+    helmet_desc: "Erhalten von deinem Helm."
+    chestplate_desc: "Erhalten von deiner Brustplatte."
+    leggings_desc: "Erhalten von deiner Hose."
+    boots_desc: "Erhalten von deinen Schuhen."
+    effective_trait: "Wirksamer {trait_name}"
 mana_abilities:
   replenish:
     name: Auffüllen
