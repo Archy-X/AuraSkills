@@ -527,7 +527,7 @@ commands:
       desc: 汲取玩家的魔力
     set:
       set: "<gray>将玩家 <gold>{player} <gray> 的魔力值设置为了 <aqua>{amount} {mana_unit}"
-      desc: 设置玩家的魔力值
+      desc: Sets the mana of a player
     at_least_zero: "<yellow>{mana_unit} 必须至少大于零!"
     console_specify_player: "<yellow>后台执行此命令需指定一名玩家!"
   modifier:
