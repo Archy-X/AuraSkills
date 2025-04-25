@@ -100,11 +100,11 @@ abilities:
     desc: "Geeft + {value} Graaf Geluk, wat de kans op extra drops verhoogt."
     info: "+{value}% Graaf geluk"
   lucky_spades:
-    name: Lucky Spades
+    name: Gelukkige Schoppen
     desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
     info: "+{value}% Epische Loot"
   retrieval:
-    name: Retrieval
+    name: Ophalen
     desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
     info: "{value} Afstand"
   archer:
@@ -116,7 +116,7 @@ abilities:
     desc: "Breng {value}% meer schade toe met een boog."
     info: "+{value}% boog schade"
   piercing:
-    name: Piercing
+    name: Doorboring
     desc: "{value}% kans voor pijlen om door mobs heen te gaan."
     info: "{value}% Pierce Kans"
   stun:
@@ -144,10 +144,10 @@ abilities:
     desc: "{value}% kans om een schadelijk drankeffect te ontwijken."
     info: "{value}% Geen Debuff"
   parry:
-    name: Parry
+    name: Pareren
     desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
-    info: "{value}% Dmg Reduction"
-    parried: "<red>Attack parried"
+    info: "{value}% Schade vermindering"
+    parried: "<red>Aanval gepareerd"
   fighter:
     name: Vechter
     desc: "Verdien {value}% meer Vecht XP."
@@ -211,7 +211,7 @@ abilities:
     desc: "Bij sluipen tijdens een val je hebt een {value}% kans om {value_2}% van de schade die wordt verwacht aan mobs in een straal van 3 blokken te doen."
     info: "{value}% kans, {value_2}% Schade"
   alchemist:
-    name: Alchemist
+    name: Alchimist
     desc: "Drankjes die je brouwt, hebben een {value}% meer duur."
     info: "+{value}% Drankduur"
   brewer:
@@ -219,11 +219,11 @@ abilities:
     desc: "Verdien {value}% meer Alchemie XP."
     info: "+{value}% XP"
   splasher:
-    name: Splasher
+    name: Spatter
     desc: "Drankjes die je spuwt krijgen {value}% langer duur voor elke betrokken speler."
     info: "+{value}% Duur/Speler"
   lingering:
-    name: Lingering
+    name: Slepende
     desc: "Vertragende drankjes vervallen natuurlijk {value}% langzamer en vervallen {value_2}% minder per getroffen entiteit."
     info: "-{value}% Natuur, -{value_2}% Entiteit Verval"
   wise_effect:
@@ -272,7 +272,7 @@ abilities:
     info: "+{value} Gezondheid, +{value_2} Regeneratie"
     message: "<white>Je hebt een reactievorm bonus gekregen voor 30 seconden! <white>(<red>+{value} Gezondheid, <gold>+{value_2} Regeneratie<white>)"
   disenchanter:
-    name: Disenchanter
+    name: Debetovert
     desc: Krijg {value}% meer ervaring wanneer je voorwerpen met behulp van een hoofdsteen disenchant.
     info: "+{value}% Grindstone EXP"
   forger:
@@ -676,7 +676,7 @@ commands:
 leveler:
   level_up: "{skill} Level Up"
   skill_level_up: Skill Level Up
-  rewards: Rewards
+  rewards: Beloningen
   ability_unlock: Ability Unlock
   ability_level_up: Ability Level Up
   mana_ability_unlock: Mana Ability Unlock
@@ -684,29 +684,29 @@ leveler:
   unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
 menus:
   common:
-    close: "Close"
-    level: "Level"
+    close: "Sluiten"
+    level: "Niveau"
     progress_to_level: "Progress to Level"
     max_level: "MAX LEVEL"
-    ability_levels: "Ability Levels"
-    stats_leveled: "Stats Leveled"
+    ability_levels: "Ability niveaus"
+    stats_leveled: "Eigenschappen niveau"
     mana_ability: "Mana Ability"
-    duration: "Duration"
-    mana_cost: "Mana Cost"
-    cooldown: "Cooldown"
-    damage: "Damage"
+    duration: "Duur"
+    mana_cost: "Manakosten"
+    cooldown: "Afkoeltijd"
+    damage: "Schade"
     max_mana_cost: "Max Mana Cost"
-    attack_speed: "Attack Speed"
-    back: "Go Back"
-    back_click: "Back to {menu_name} Menu"
-    unlocked: "UNLOCKED"
-    in_progress: "IN PROGRESS"
-    locked: "LOCKED"
-    your_level: "Your Level"
-    next_page: "Next Page"
-    next_page_click: "Click to go to next page"
-    previous_page: "Previous Page"
-    previous_page_click: "Click to go to previous page"
+    attack_speed: "Aanval Snelheid"
+    back: "Ga Terug"
+    back_click: "Terug naar {menu_name} menu"
+    unlocked: "ONTGRENDELD"
+    in_progress: "IN VOORTGANG"
+    locked: "VERGRENDELD"
+    your_level: "Jouw niveau"
+    next_page: "Volgende pagina"
+    next_page_click: "Klik om naar de volgende pagina te gaan"
+    previous_page: "Vorige pagina"
+    previous_page_click: "Klik om naar de vorige pagina te gaan"
     trait: "Trait"
     trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
     trait_level: "Trait Level"
@@ -723,18 +723,18 @@ menus:
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"
     stats_click: "Click to learn more or view your stats"
-    active_job: Active Job
+    active_job: Actieve baan
   level_progression:
     level_progression_title: "{skill} Levels - Page {page}"
-    your_ranking: "Your Skill Ranking"
+    your_ranking: "Jouw Vaardigheid Rang"
     rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
     rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
-    rewards: "Rewards"
+    rewards: "Beloningen"
     ability_unlock: "Ability Unlock"
     mana_ability_unlock: "Mana Ability Unlock"
-    progress: "Progress"
+    progress: "Voortgang"
     leaderboard_click: "Click to view the {skill} leaderboard"
-    sources: "XP Sources"
+    sources: "XP Bronnen"
     sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
     sources_click: "Click to view {skill} sources"
     abilities: "Abilities"
@@ -781,7 +781,7 @@ menus:
     stat_details: "{stat_name} Statistiek"
     stat: "Statistiek"
     stat_level: "Statistiek niveau"
-    traits_leveled: "Traits Leveled"
+    traits_leveled: "Eigenschappen niveau"
     stat_modifiers: "Stat Modifiers"
     stat_reward_desc: "Granted by your {skill} skill level."
     stat_modifiers_click: "Click to view stat modifiers"
@@ -990,49 +990,49 @@ stats:
     name: Kritieke Schade
     desc: "Kritieke Schade is het percentage dat de schade verhoogt wanneer je een kritische slag toebrengt."
   speed:
-    name: Speed
-    desc: "Speed increases how fast you can walk and run."
+    name: Snelheid
+    desc: "Snelheid verhoogt hoe snel je kunt lopen en rennen."
 traits:
   attack_damage:
-    name: Attack Damage
+    name: Aanvalsschade
   hp:
     name: HP
   saturation_regen:
-    name: Saturation Regen
+    name: Verzadiging regeneratie
   hunger_regen:
-    name: Hunger Regen
+    name: Honger regeneratie
   mana_regen:
     name: Mana regeneratie
   luck:
     name: Geluk Eigenschap
   double_drop:
-    name: Double Drop
+    name: Dubbele Drop
   experience_bonus:
-    name: Experience Bonus
+    name: Ervaring Bonus
   anvil_discount:
-    name: Anvil Discount
+    name: Aambeeld korting
   max_mana:
-    name: Max Mana
+    name: Maximale mana
   damage_reduction:
-    name: Damage Reduction
+    name: Schade Vermindering
   crit_chance:
-    name: Crit Chance
+    name: Kritieke Kans
   crit_damage:
-    name: Crit Damage
+    name: Kritieke Schade
   movement_speed:
-    name: Movement Speed
+    name: Bewegingssnelheid
   farming_luck:
-    name: Farming Luck
+    name: Landbouw Geluk
   foraging_luck:
-    name: Foraging Luck
+    name: Foerageren Geluk
   mining_luck:
-    name: Mining Luck
+    name: Mijnbouw Geluk
   excavation_luck:
-    name: Excavation Luck
+    name: Opgraving Geluk
   fishing_luck:
-    name: Fishing Luck
+    name: Vissen Geluk
 ui:
-  maxed: MAXED
+  maxed: GEMAXIMALISEERD
 units:
   mana: Mana
   hp: HP
