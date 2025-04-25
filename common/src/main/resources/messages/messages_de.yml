@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Chance zu durchbohren"
   stun:
     name: Schock
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% Chance, den Feind für 2 Sekunden um {reduction_percent} zu verlangsamen."
     info: "{value}% Betäubungschance"
   shielding:
     name: Schutzschild
@@ -370,33 +370,33 @@ commands:
         skill_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% {skill} XP"
         global_lore: "<gray>Wenn getragen: <aqua>+{value}% Skill XP"
         global_lore_subtract: "<gray>Wenn getragen: <aqua>-{value}% Skill XP"
-        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Multiplikator zu, wobei der Wert der erhöhte Prozentanteil ist.
       remove:
         does_not_exist: "<yellow>Dein Gegenstand hat keinen <aqua>{target} <reset>üstungs Multiplikator!"
         removed: "&{target} <gray>Rüstungs Modifikator wurde von deinem Gegenstand entfernt"
-        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
+        desc: Entfernt einen Rüstungsmultiplikator der angegebenen Fertigkeit oder einen globalen Multiplikator vom gehaltenen Gegenstand.
       list:
         header: "<white>Gefundene Rüstungs Multiplikatoren:"
-        desc: Lists all armor multipliers on the held item.
+        desc: Listet alle Rüstungsmultiplikatoren des gehaltenen Gegenstandes auf.
       removeall:
         removed: "<gray>Alle Rüstungsmultiplikatoren wurden von deinem Gegenstand entfernt"
-        desc: Removes all armor multipliers from the item held.
+        desc: Entfernt alle Rüstungs-Werte-Modifikatoren vom gehaltenen Gegenstand.
     requirement:
       add:
         added: "<dark_aqua>{skill}<gray> Rüstungsanforderung mit Level <aqua>{level}<gray> wurde zu deinem Gegenstand hinzugefügt"
         already_exists: "<yellow>Dein Gegenstand hat bereits eine <dark_aqua>{skill}<yellow> Rüstungsvoraussetzung! Entferne Sie zuerst mit <gold>/sk armor requirement remove"
         lore: "<red>Benötigt <dark_aqua>{skill} {level}"
-        desc: Adds an armor requirement to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
         does_not_exist: "<yellow>Dein Gegenstand hat keine <dark_aqua>{skill}<yellow> Rüstungsmodifikation!"
         removed: "&{skill} <gray>Modifikator wurde von deinem Gegenstand entfernt"
-        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
+        desc: Entfernt eine Rüstungsanforderung vom gehaltenen Gegenstand, zusammen mit seiner Beschriftung.
       list:
         header: "<white>Rüstungs-Anforderungen gefunden:"
-        desc: Lists the armor requirements on the item held.
+        desc: Listet die Rüstungsanforderungen für das gehaltene Item auf.
       removeall:
         removed: "<gray>Alle Rüstungsmodifikatoren wurden von deinem Gegenstand entfernt"
-        desc: Removes all armor requirements from the item held.
+        desc: Entfernt alle Rüstungsanforderungen vom gehaltenen Gegenstand.
       equip: "<yellow>Du erfüllst nicht die Anforderungen um diesen Gegenstand zu verwenden: {requirements}"
   backup:
     load:
@@ -406,44 +406,44 @@ commands:
       error: "<red>Fehler beim Laden des Backups: {error}"
       must_be_yaml: "<yellow>Die Datei muss eine .ymi Datei sein!"
       file_not_found: "<yellow>A Ein Backup mit diesem Dateinamen existiert nicht im Backup-Ordner!"
-      desc: Loads a backup from a given file.
+      desc: Lädt eine Sicherung aus einer bestimmten Datei.
     save:
       saving: "<white>Backup wird gespeichert..."
       saved: "<white>Sichert {type} Daten als {file}"
       error: "<red>Fehler beim Sichern von {type} Daten! Siehe Fehler in der Konsole/unten für Details"
-      desc: Saves a backup of the current data to the backups folder.
+      desc: Speichert eine Sicherung der aktuellen Daten im Sicherungsordner.
   claimitems:
-    desc: Opens the menu to claim unclaimed items.
+    desc: Öffnet das Menü, um nicht beanspruchte Artikel zu beanspruchen.
     no_items: "<yellow>Sie haben keine Gegenstände zum beanspruchen"
   item:
     give:
       sender: "<white>Gab <aqua>{amount}x {key} <white>to {player}"
       receiver: "<white>Dir wurde <aqua>{amount}x {key} gegeben"
-      desc: Gives an item with a key from the item registry to a player.
+      desc: Gibt einen Gegenstand mit einem Schlüssel aus dem Gegenstandregister an einen Spieler.
     modifier:
       add:
-        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Werte-Modifikator zu Rüstung mit Wert: {stat}, Wert: {value}, Operation: {operation} hinzugefügt"
         already_exists: "<yellow>Ein Gegenstandmodifikator mit dem Wert{color}{stat} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk item modifier remove"
-        desc: Adds an item stat modifier to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
         does_not_exist: "<yellow>Der Gegenstand hat keinen {color}{stat} <yellow>Modifikator!"
         removed: "{color}{stat} <gray>Modifikator wurde von deinem Gegenstand entfernt"
-        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
+        desc: Entfernt vom gehaltenen Gegenstand einen Rüstungs-Werte-Modifikator und standardmäßig die dazugehörige Beschriftung.
       list:
         header: "<white>Modifikatoren gefunden:"
-        desc: Lists all item stat modifiers on the item held.
+        desc: Listet alle Werte-Modifikatoren des gehaltenen Gegenstandes auf.
       removeall:
         removed: "<gray>Alle Modifikatoren wurden von deinem Gegenstand entfernt"
-        desc: Removes all item stat modifiers from the item held.
+        desc: Entfernt alle Werte-Modifikatoren des Gegenstands.
     trait:
       add:
-        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
+        added: "Eigenschafts-Modifikator zu Rüstung mit Wert: {trait}, Wert: {value}, Operation: {operation} hinzugefügt"
         already_exists: "<yellow>Ein Gegenstandmodifikator mit der Eigenschaft{trait} <yellow>existiert bereits auf deinem Gegenstand! Entferne ihn zuerst mit /sk item trait remove"
-        desc: Adds an item trait modifier to the item held, along with lore by default.
+        desc: Fügt dem gehaltenen Gegenstand einen Eigenschafts-Modifikator hinzu, standardmäßig zusammen mit einer Beschriftung.
       remove:
-        desc: Removes an item trait modifier from the item held.
+        desc: Entfernt einen Eigenschafts-Modifikator vom gehaltenen Gegenstand.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Listet alle Eigenschafts-Modifikatoren des gehaltenen Gegenstandes auf.
       removeall:
         desc: Removes all item trait modifiers from the item held.
     multiplier:
