@@ -334,11 +334,11 @@ commands:
     logs:
       header: "<gray>Bản ghi Anti-AFK của <red>{player} <gray>({count} tổng cộng) <dark_gray>| <gray>Trang {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Hiển thị log anti-AFK cho một người chơi cụ thể.
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Đã thêm bộ điều chỉnh chỉ số vào áo giáp với chỉ số: {stat}, giá trị: {value}, hoạt động: {operation}"
         already_exists: "<yellow>Nâng cấp cho giáp với chỉ số {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor modifier remove"
         desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
