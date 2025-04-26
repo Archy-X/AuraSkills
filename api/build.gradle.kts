@@ -90,7 +90,6 @@ if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePass
     }
 
     signing {
-        useGpgCmd()
         sign(publishing.publications.getByName("mavenJava"))
         isRequired = true
     }
