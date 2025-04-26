@@ -270,6 +270,8 @@ menus:
   removal_protection: false
   stats:
     show_trait_values_directly: true
+  stat_info:
+    enabled: true
 loot:
   update_loot_tables: true
   directly_to_inventory: false
