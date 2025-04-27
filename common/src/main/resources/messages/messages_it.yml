@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Possibilità Perforazione"
   stun:
     name: Stordimento
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% possibilità di diminuire la velocità del nemico del 20% per 2 secondi."
     info: "{value}% Possibilità Stordimento"
   shielding:
     name: Schermatura
@@ -344,7 +344,7 @@ commands:
       remove:
         does_not_exist: "<yellow>Il tuo oggetto non ha un {color}{stat} <yellow>modificatore!"
         removed: "{color}{stat} <gray>modificatore è stato rimosso dal tuo oggetto"
-        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        desc: Rimuove una statistica modificata all'armatura tenuta in mano, e automaticamente dalla lore
       list:
         header: "<white>Modificatori armatura trovati:"
         desc: Lists all armor stat modifiers on the item held.
