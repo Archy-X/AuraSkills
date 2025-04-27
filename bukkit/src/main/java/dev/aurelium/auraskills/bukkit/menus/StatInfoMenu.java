@@ -145,13 +145,24 @@ public class StatInfoMenu {
                 plugin.getSlate().openMenu(t.player(), "stat_info", props);
             });
 
-            template.definedContexts(m -> new HashSet<>(((Stat) m.menu().property("stat")).getTraits()));
+            template.definedContexts(m -> {
+                Set<Trait> contexts = new HashSet<>();
+                for (Trait trait : ((Stat) m.menu().property("stat")).getTraits()) {
+                    if (trait.isEnabled()) {
+                        contexts.add(trait);
+                    }
+                }
+                return contexts;
+            });
 
             template.slotPos(t -> getTraitSlot(t.menu(), t.value()));
 
             template.modify(t -> {
                 Stat stat = t.menu().property("stat");
                 if (stat.hasDirectTrait()) { // Hide the trait item if stat has direct trait
+                    return null;
+                }
+                if (t.item() == null) {
                     return null;
                 }
 
