@@ -11,7 +11,6 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
-import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -123,10 +122,6 @@ public class ItemStateManager {
     private Result addItem(ItemStack item, BukkitUser user, Player player, EquipmentSlot slot) {
         Set<ReloadableIdentifier> toReload = new HashSet<>();
         ModifierType type = getModifierType(slot);
-
-        if (plugin.configBoolean(Option.MODIFIER_AUTO_CONVERT_FROM_LEGACY)) {
-            item = convertLegacyItem(item);
-        }
 
         SkillsItem skillsItem = new SkillsItem(item, plugin);
         if (skillsItem.meetsRequirements(type, player)) {
