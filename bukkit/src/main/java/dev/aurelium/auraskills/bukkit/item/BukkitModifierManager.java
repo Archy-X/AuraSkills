@@ -28,11 +28,11 @@ public class BukkitModifierManager implements ModifierManager {
         User user = plugin.getUser(player);
 
         ItemStack mainHand = player.getInventory().getItemInMainHand();
-        var toReloadMain = manager.changeItemInSlot(user, player, mainHand, EquipmentSlot.HAND, false, true);
+        var toReloadMain = manager.changeItemInSlot(user, player, mainHand, EquipmentSlot.HAND, false, true, false);
         Set<ReloadableIdentifier> toReload = new HashSet<>(toReloadMain);
 
         ItemStack itemOffHand = player.getInventory().getItemInOffHand();
-        toReload.addAll(manager.changeItemInSlot(user, player, itemOffHand, EquipmentSlot.OFF_HAND, false, true));
+        toReload.addAll(manager.changeItemInSlot(user, player, itemOffHand, EquipmentSlot.OFF_HAND, false, true, false));
 
         EntityEquipment equipment = player.getEquipment();
         if (equipment != null) {
@@ -43,7 +43,7 @@ public class BukkitModifierManager implements ModifierManager {
                     continue;
                 }
 
-                toReload.addAll(manager.changeItemInSlot(user, player, armor, slot, false, true));
+                toReload.addAll(manager.changeItemInSlot(user, player, armor, slot, false, true, false));
             }
         }
 

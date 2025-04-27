@@ -61,7 +61,7 @@ public class ArmorModifierListener implements Listener {
                             wearing = new ItemStack(Material.AIR);
                         }
 
-                        toReload.addAll(stateManager.changeItemInSlot(user, player, wearing, armorType.getEquipmentSlot(), false, false));
+                        toReload.addAll(stateManager.changeItemInSlot(user, player, wearing, armorType.getEquipmentSlot(), false, false, false));
                     }
 
                     // Reload after all slots are processed to prevent redundant reloads

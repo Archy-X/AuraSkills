@@ -32,7 +32,7 @@ public class ItemStateManager {
     }
 
     public void changeItemInSlot(User userObj, Player player, @NotNull ItemStack afterItem, @NotNull EquipmentSlot slot) {
-        changeItemInSlot(userObj, player, afterItem, slot, true, false);
+        changeItemInSlot(userObj, player, afterItem, slot, true, false, false);
     }
 
     /**
@@ -45,10 +45,11 @@ public class ItemStateManager {
      * @param slot the slot that changed
      * @param reloadIds whether to reload identifiers (stats and traits) after the operation
      * @param force whether to reload even if the existing known item is the same (such as when requirements change)
+     * @param modify whether the item can be modified
      * @return the set of reloaded identifiers if {@code reloadIds} is true, or the set of identifiers that were affected but
      * not reloaded if {@code reloadIds} is false
      */
-    public Set<ReloadableIdentifier> changeItemInSlot(User userObj, Player player, @NotNull ItemStack afterItem, @NotNull EquipmentSlot slot, boolean reloadIds, boolean force) {
+    public Set<ReloadableIdentifier> changeItemInSlot(User userObj, Player player, @NotNull ItemStack afterItem, @NotNull EquipmentSlot slot, boolean reloadIds, boolean force, boolean modify) {
         if (!(userObj instanceof BukkitUser user)) {
             return Set.of();
         }
@@ -78,7 +79,7 @@ public class ItemStateManager {
         equipment.setSlot(slot, modifiedItem.clone()); // Store the final item as applied in the user state
 
         // If the item was modified, set it to the inventory
-        if (!modifiedItem.equals(afterItem)) {
+        if (!modifiedItem.equals(afterItem) && modify) {
             player.getInventory().setItem(slot, modifiedItem);
         }
 

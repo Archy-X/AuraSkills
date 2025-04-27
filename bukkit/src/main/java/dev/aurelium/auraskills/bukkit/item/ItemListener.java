@@ -66,8 +66,8 @@ public class ItemListener implements Listener {
 
         Set<ReloadableIdentifier> toReload = new HashSet<>();
 
-        toReload.addAll(stateManager.changeItemInSlot(user, player, itemOffHand, EquipmentSlot.OFF_HAND, false, false));
-        toReload.addAll(stateManager.changeItemInSlot(user, player, itemMainHand, EquipmentSlot.HAND, false, false));
+        toReload.addAll(stateManager.changeItemInSlot(user, player, itemOffHand, EquipmentSlot.OFF_HAND, false, false, false));
+        toReload.addAll(stateManager.changeItemInSlot(user, player, itemMainHand, EquipmentSlot.HAND, false, false, false));
 
         stateManager.reloadIdentifiers(user, toReload);
     }
