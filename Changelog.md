@@ -2,6 +2,15 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.1
+
+### New Features
+- Add menus.stat_info.enabled option to disable stat_info menu in config.yml
+
+### Bug Fixes
+
+- Fix item duplication when auto_convert_from_legacy is true
+
 ## 2.3.0
 
 ### Breaking Changes
