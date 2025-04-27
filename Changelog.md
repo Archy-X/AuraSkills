@@ -2,6 +2,16 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.2
+
+### New Features
+- Add auraskills.leaderboard.exclude permission to hide players from the leaderboard
+  - Setting this to online players requires a relog to take effect (leaderboard still takes time to update)
+
+### Bug Fixes
+- Remove legacy item conversion to fix item stacking
+- Fix stat info menu not opening with disabled traits
+
 ## 2.3.1
 
 ### New Features
