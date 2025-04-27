@@ -250,3 +250,5 @@ permissions:
     default: false
   auraskills.antiafk.notify:
     default: op
+  auraskills.leaderboard.exclude:
+    default: false

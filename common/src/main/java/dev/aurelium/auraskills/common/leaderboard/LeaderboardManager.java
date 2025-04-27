@@ -13,16 +13,21 @@ import java.util.concurrent.TimeUnit;
 public class LeaderboardManager {
 
     private final AuraSkillsPlugin plugin;
+    private final LeaderboardExclusion leaderboardExclusion;
     private final Map<Skill, List<SkillValue>> skillLeaderboards;
+
     private List<SkillValue> powerLeaderboard;
     private List<SkillValue> averageLeaderboard;
     private volatile boolean sorting = false;
 
-    public LeaderboardManager(AuraSkillsPlugin plugin) {
+    public LeaderboardManager(AuraSkillsPlugin plugin, LeaderboardExclusion leaderboardExclusion) {
         this.plugin = plugin;
+        this.leaderboardExclusion = leaderboardExclusion;
         this.skillLeaderboards = new HashMap<>();
         this.powerLeaderboard = new ArrayList<>();
         this.averageLeaderboard = new ArrayList<>();
+        // Load excluded players
+        this.leaderboardExclusion.loadFromFile();
     }
 
     public void startLeaderboardUpdater() {
@@ -120,27 +125,30 @@ public class LeaderboardManager {
         List<SkillValue> leaderboard = skillLeaderboards.get(skill);
         if (leaderboard == null) return 0;
 
-        for (SkillValue skillValue : leaderboard) {
+        for (int i = 0; i < leaderboard.size(); i++) {
+            SkillValue skillValue = leaderboard.get(i);
             if (skillValue.id().equals(id)) {
-                return leaderboard.indexOf(skillValue) + 1;
+                return i + 1;
             }
         }
         return 0;
     }
 
     public int getPowerRank(UUID id) {
-        for (SkillValue skillValue : powerLeaderboard) {
+        for (int i = 0; i < powerLeaderboard.size(); i++) {
+            SkillValue skillValue = powerLeaderboard.get(i);
             if (skillValue.id().equals(id)) {
-                return powerLeaderboard.indexOf(skillValue) + 1;
+                return i + 1;
             }
         }
         return 0;
     }
 
     public int getAverageRank(UUID id) {
-        for (SkillValue skillValue : averageLeaderboard) {
+        for (int i = 0; i < averageLeaderboard.size(); i++) {
+            SkillValue skillValue = averageLeaderboard.get(i);
             if (skillValue.id().equals(id)) {
-                return averageLeaderboard.indexOf(skillValue) + 1;
+                return i + 1;
             }
         }
         return 0;
@@ -154,9 +162,18 @@ public class LeaderboardManager {
         this.sorting = sorting;
     }
 
+    public LeaderboardExclusion getLeaderboardExclusion() {
+        return leaderboardExclusion;
+    }
+
     private void addLoadedPlayersToLeaderboards(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) {
         for (User user : plugin.getUserManager().getUserMap().values()) {
             UUID id = user.getUuid();
+
+            if (leaderboardExclusion.isExcludedPlayer(id)) {
+                continue;
+            }
+
             int powerLevel = 0;
             double powerXp = 0;
             int numEnabled = 0;
@@ -185,6 +202,10 @@ public class LeaderboardManager {
     private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) throws Exception {
         List<UserState> offlineStates = plugin.getStorageProvider().loadStates(true, true);
         for (UserState state : offlineStates) {
+            if (leaderboardExclusion.isExcludedPlayer(state.uuid())) {
+                continue;
+            }
+
             int powerLevel = 0;
             double powerXp = 0.0;
             int numEnabled = 0;

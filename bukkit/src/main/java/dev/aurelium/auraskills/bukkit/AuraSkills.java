@@ -23,6 +23,7 @@ import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
 import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
 import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
 import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
+import dev.aurelium.auraskills.bukkit.leaderboard.BukkitLeaderboardExclusion;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
 import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
@@ -221,7 +222,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         regionManager = new BukkitRegionManager(this);
         backupProvider = new BackupProvider(this);
         xpRequirements = new XpRequirements(this);
-        leaderboardManager = new LeaderboardManager(this);
+        leaderboardManager = new LeaderboardManager(this, new BukkitLeaderboardExclusion(this));
         uiProvider = new BukkitUiProvider(this);
         modifierManager = new BukkitModifierManager(this);
         inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
@@ -301,6 +302,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             regionManager.saveAllRegions(false, true);
             regionManager.clearRegionMap();
         }
+        leaderboardManager.getLeaderboardExclusion().saveToFile(); // Save excluded leaderboard players
         try {
             backupAutomatically();
         } catch (Exception e) {
@@ -417,6 +419,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new RegionBlockListener(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new JobsListener(this), this);
+        pm.registerEvents(((BukkitLeaderboardExclusion) leaderboardManager.getLeaderboardExclusion()), this);
     }
 
     public BukkitAudiences getAudiences() {
