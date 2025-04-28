@@ -38,6 +38,7 @@ public class BukkitModifierManager implements ModifierManager {
         if (equipment != null) {
             for (var slot : new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET }) {
                 ItemStack armor = equipment.getItem(slot);
+                if (armor == null) continue;
 
                 if (armor.getType() == Material.AIR) {
                     continue;
