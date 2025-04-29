@@ -18,6 +18,7 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.bukkit.requirement.GlobalRequirement;
 import dev.aurelium.auraskills.bukkit.requirement.Requirements;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.user.User;
@@ -549,24 +550,41 @@ public class SkillsItem {
         return metaContainer;
     }
 
+    @SuppressWarnings("deprecation")
     private List<PersistentDataContainer> getContainerList(MetaType metaType, ModifierType modifierType) {
         var container = meta.getPersistentDataContainer();
         String name = getContainerName(metaType, modifierType);
         NamespacedKey metaKey = new NamespacedKey(plugin, name);
-        List<PersistentDataContainer> metaContainerList = container.get(metaKey, PersistentDataType.LIST.dataContainers());
-        if (metaContainerList == null) {
-            metaContainerList = new ArrayList<>();
+
+        List<PersistentDataContainer> metaContainerList;
+        if (VersionUtils.isAtLeastVersion(20, 4)) {
+            metaContainerList = container.get(metaKey, PersistentDataType.LIST.dataContainers());
+            if (metaContainerList == null) {
+                metaContainerList = new ArrayList<>();
+            } else {
+                metaContainerList = new ArrayList<>(metaContainerList); // Create a copy since the returned list is unmodifiable
+            }
         } else {
-            metaContainerList = new ArrayList<>(metaContainerList); // Create a copy since the returned list is unmodifiable
+            var tagContainerArray = container.get(metaKey, PersistentDataType.TAG_CONTAINER_ARRAY);
+            if (tagContainerArray == null) {
+                metaContainerList = new ArrayList<>();
+            } else {
+                metaContainerList = new ArrayList<>(Arrays.asList(tagContainerArray));
+            }
         }
         return metaContainerList;
     }
 
+    @SuppressWarnings("deprecation")
     private boolean isContainerList(MetaType metaType, ModifierType modifierType) {
         var container = meta.getPersistentDataContainer();
         String name = getContainerName(metaType, modifierType);
         NamespacedKey metaKey = new NamespacedKey(plugin, name);
-        return container.has(metaKey, PersistentDataType.LIST.dataContainers());
+        if (VersionUtils.isAtLeastVersion(20, 4)) {
+            return container.has(metaKey, PersistentDataType.LIST.dataContainers());
+        } else {
+            return container.has(metaKey, PersistentDataType.TAG_CONTAINER_ARRAY);
+        }
     }
 
     private boolean isTagContainer(MetaType metaType, ModifierType modifierType) {
@@ -582,10 +600,15 @@ public class SkillsItem {
         parent.set(new NamespacedKey(plugin, name), PersistentDataType.TAG_CONTAINER, container);
     }
 
+    @SuppressWarnings("deprecation")
     private void saveContainerList(List<PersistentDataContainer> containers, MetaType metaType, ModifierType modifierType) {
         PersistentDataContainer parent = meta.getPersistentDataContainer();
         String name = getContainerName(metaType, modifierType);
-        parent.set(new NamespacedKey(plugin, name), PersistentDataType.LIST.dataContainers(), containers);
+        if (VersionUtils.isAtLeastVersion(20, 4)) {
+            parent.set(new NamespacedKey(plugin, name), PersistentDataType.LIST.dataContainers(), containers);
+        } else {
+            parent.set(new NamespacedKey(plugin, name), PersistentDataType.TAG_CONTAINER_ARRAY, containers.toArray(new PersistentDataContainer[0]));
+        }
     }
 
     private void removeEmpty(PersistentDataContainer container, MetaType metaType, ModifierType modifierType) {
