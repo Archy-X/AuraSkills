@@ -2,6 +2,13 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.3
+
+### Bug Fixes
+- Fix languages with country codes not working
+- Fix NoSuchFieldError when holding items in 1.20-1.20.3
+- Fix NPE when applying modifiers
+
 ## 2.3.2
 
 ### New Features
