@@ -97,6 +97,7 @@ public class SqlUserLoader {
         // Load locale
         String localeString = rs.getString("locale");
         if (localeString != null) {
+            localeString = localeString.replace("_", "-");
             user.setLocale(Locale.forLanguageTag(localeString));
         }
         // Load mana

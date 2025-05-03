@@ -67,6 +67,7 @@ public class FileStorageProvider extends StorageProvider {
         // Load locale
         String localeString = root.node("locale").getString();
         if (localeString != null) {
+            localeString = localeString.replace("_", "-");
             Locale locale = Locale.forLanguageTag(localeString);
             user.setLocale(locale);
         }
@@ -333,7 +334,7 @@ public class FileStorageProvider extends StorageProvider {
 
         // Apply locale
         if (user.hasLocale()) {
-            root.node("locale").set(user.getLocale().toString());
+            root.node("locale").set(user.getLocale().toLanguageTag());
         }
 
         // Apply mana

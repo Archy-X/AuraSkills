@@ -298,7 +298,7 @@ public class SqlStorageProvider extends StorageProvider {
             int curr = 2; // Current index to set
             for (int i = 0; i < 2; i++) { // Repeat twice to set duplicate values
                 if (user.hasLocale()) {
-                    statement.setString(curr++, user.getLocale().toString());
+                    statement.setString(curr++, user.getLocale().toLanguageTag());
                 } else {
                     statement.setNull(curr++, Types.VARCHAR);
                 }
