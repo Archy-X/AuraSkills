@@ -209,7 +209,7 @@ public abstract class LevelManager {
         return multiplier;
     }
 
-    public double getItemMultiplier(@NotNull User user, Skill skill) {
+    public double getItemMultiplier(@NotNull User user, @Nullable Skill skill) {
         return user.getTotalMultiplier(skill) / 100;
     }
 

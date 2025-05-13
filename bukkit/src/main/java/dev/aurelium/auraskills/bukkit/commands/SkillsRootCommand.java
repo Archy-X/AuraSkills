@@ -274,6 +274,7 @@ public class SkillsRootCommand extends BaseCommand {
 		User user = plugin.getUser(target);
 		Locale locale = user.getLocale();
 		double multiplier = plugin.getLevelManager().getPermissionMultiplier(user, null);
+		multiplier += plugin.getLevelManager().getItemMultiplier(user, null);
 		sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.MULTIPLIER_LIST, locale),
 				"{player}", target.getName(),
 				"{multiplier}", NumberUtil.format2(1 + multiplier),
@@ -281,6 +282,7 @@ public class SkillsRootCommand extends BaseCommand {
 		// Send skill specific multipliers if different from global
 		for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
 			double skillMultiplier = plugin.getLevelManager().getPermissionMultiplier(user, skill);
+			skillMultiplier += plugin.getLevelManager().getItemMultiplier(user, skill);
 			if (skillMultiplier != multiplier) {
 				sender.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.MULTIPLIER_SKILL_ENTRY, locale),
 						"{skill}", skill.getDisplayName(locale),
