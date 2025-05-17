@@ -88,15 +88,16 @@ public class BukkitItemRegistry implements ItemRegistry {
             return;
         }
 
-        ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
-        // Handle items that could not fit in the inventory
-        if (leftoverItem != null) {
-            // Add unclaimed item key and amount to player data
-            user.getUnclaimedItems().add(new KeyIntPair(key.toString(), leftoverItem.getAmount()));
-            // Notify player
-            plugin.getServer().getScheduler().runTaskLater(plugin, () ->
-                    player.sendMessage(plugin.getPrefix(user.getLocale()) + plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, user.getLocale())), 1);
-        }
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
+            // Handle items that could not fit in the inventory
+            if (leftoverItem != null) {
+                // Add unclaimed item key and amount to player data
+                user.getUnclaimedItems().add(new KeyIntPair(key.toString(), leftoverItem.getAmount()));
+                // Notify player
+                plugin.getScheduler().executeSync(() -> player.sendMessage(plugin.getPrefix(user.getLocale()) + plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, user.getLocale())));
+            }
+        });
     }
 
     @Override

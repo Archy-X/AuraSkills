@@ -51,12 +51,7 @@ public class ProfileCommand extends BaseCommand {
             plugin.getScheduler().executeAsync(() -> {
                 try {
                     UserState userState = plugin.getStorageProvider().loadState(uuid);
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            sendSkillsMessage(sender, player, uuid, userState.skillLevels(), userState.skillXp());
-                        }
-                    }.runTask(plugin);
+                    plugin.getScheduler().executeSync(() -> sendSkillsMessage(sender, player, uuid, userState.skillLevels(), userState.skillXp()));
                 } catch (Exception ignored) {
                     sender.sendMessage(manager.formatMessage(manager.getCommandIssuer(sender), MessageType.ERROR, MinecraftMessageKeys.NO_PLAYER_FOUND, "{search}", player));
                 }
@@ -84,12 +79,7 @@ public class ProfileCommand extends BaseCommand {
             plugin.getScheduler().executeAsync(() -> {
                 try {
                     UserState userState = plugin.getStorageProvider().loadState(uuid);
-                    new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            sendStatsMessage(sender, player, uuid, userState.skillLevels(), userState.statModifiers());
-                        }
-                    }.runTask(plugin);
+                    plugin.getScheduler().executeSync(() -> sendStatsMessage(sender, player, uuid, userState.skillLevels(), userState.statModifiers()));
                 } catch (Exception ignored) {
                     sender.sendMessage(manager.formatMessage(manager.getCommandIssuer(sender), MessageType.ERROR, MinecraftMessageKeys.NO_PLAYER_FOUND, "{search}", player));
                 }

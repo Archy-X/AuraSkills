@@ -33,21 +33,23 @@ public class MovementSpeedTrait extends TraitImpl {
 
     @Override
     protected void reload(Player player, Trait trait) {
-        double WALK_SPEED_RATIO = 500;
-        double value = getValue(player, trait, WALK_SPEED_RATIO);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            double WALK_SPEED_RATIO = 500;
+            double value = getValue(player, trait, WALK_SPEED_RATIO);
 
-        if (!trait.isEnabled()) return;
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            player.setWalkSpeed(0.2f);
-            return;
-        }
-        double max = trait.optionDouble("max") / WALK_SPEED_RATIO;
-        if (0.2 + value > max) {
-            player.setWalkSpeed((float) (max));
-            return;
-        }
+            if (!trait.isEnabled()) return;
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+                player.setWalkSpeed(0.2f);
+                return;
+            }
+            double max = trait.optionDouble("max") / WALK_SPEED_RATIO;
+            if (0.2 + value > max) {
+                player.setWalkSpeed((float) (max));
+                return;
+            }
 
-        player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+            player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+        });
     }
 
     @EventHandler

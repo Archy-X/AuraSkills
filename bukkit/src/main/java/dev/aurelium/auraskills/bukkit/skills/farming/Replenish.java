@@ -75,7 +75,7 @@ public class Replenish extends ReadiedManaAbility {
 
     private void replantCrop(Block block) {
         Material material = block.getType();
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtLocation(block.getLocation(), () -> {
             if (material != Material.NETHER_WART) {
                 if (block.getRelative(BlockFace.DOWN).getType() == Material.FARMLAND) {
                     block.setType(material);

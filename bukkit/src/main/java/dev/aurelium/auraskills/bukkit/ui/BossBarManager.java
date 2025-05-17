@@ -204,7 +204,7 @@ public class BossBarManager implements Listener {
         if (!ANIMATE_PROGRESS) {  // If the config option is disabled, immediately show new progress
             bossBar.progress(progressNew);
         } else {  // Update the progress later to display its animation from progressOld to progressNew
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtEntity(player, () -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
         }
         plugin.getAudiences().player(player).showBossBar(bossBar);
 
@@ -223,7 +223,7 @@ public class BossBarManager implements Listener {
         if (!ANIMATE_PROGRESS) {  // Update boss bar progress immediately
             bossBar.progress(progress);
         } else {  // Update progress later, so the player sees the animation from previous progress (from reused boss bar) to new
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtEntity(player, () -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
         }
         bossBar.name(name); // Update the boss bar to the new text value
         bossBar.color(getColor(skill));

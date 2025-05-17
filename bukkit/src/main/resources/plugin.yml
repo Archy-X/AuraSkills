@@ -17,6 +17,7 @@ softdepend:
 - MythicMobs
 - Nexo
 api-version: '1.13'
+folia-supported: true
 prefix: AuraSkills
 
 permissions:

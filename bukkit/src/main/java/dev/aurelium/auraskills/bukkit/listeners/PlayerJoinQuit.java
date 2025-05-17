@@ -95,7 +95,7 @@ public class PlayerJoinQuit implements Listener {
 
     private void sendUpdateMessage(Player player) {
         // Use a delayed task to give time for permission plugins to load data
-        plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+        plugin.getScheduler().scheduleSync(() -> {
             if (!plugin.configBoolean(Option.CHECK_FOR_UPDATES)) {
                 return;
             }
@@ -105,7 +105,7 @@ public class PlayerJoinQuit implements Listener {
             // Check for updates
             UpdateChecker updateChecker = new UpdateChecker(plugin);
             updateChecker.sendUpdateMessageAsync(player);
-        }, 40L);
+        }, 2L, TimeUnit.SECONDS);
     }
 
 }

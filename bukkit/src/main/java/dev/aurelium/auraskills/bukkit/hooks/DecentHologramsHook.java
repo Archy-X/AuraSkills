@@ -27,7 +27,7 @@ public class DecentHologramsHook extends HologramsHook {
     }
 
     public void deleteHologram(Hologram dh) {
-        plugin.getScheduler().scheduleSync(dh::delete, 30L * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().scheduleAtLocation(dh.getLocation(), dh::delete, 30L * 50L, TimeUnit.MILLISECONDS);
     }
 
     @Override

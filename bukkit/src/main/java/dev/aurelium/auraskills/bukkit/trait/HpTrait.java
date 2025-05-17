@@ -74,9 +74,10 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public void reload(Player player, Trait trait) {
-        setHealth(player, plugin.getUser(player));
-
-        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            setHealth(player, plugin.getUser(player));
+            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        });
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
@@ -100,7 +101,7 @@ public class HpTrait extends TraitImpl {
         }
         User user = plugin.getUser(player);
         if (Traits.HP.optionInt("update_delay") > 0) {
-            plugin.getScheduler().scheduleSync(() -> setWorldChange(event, player, user),
+            plugin.getScheduler().scheduleAtEntity(player, () -> setWorldChange(event, player, user),
                     Traits.HP.optionInt("update_delay") * 50L, TimeUnit.MILLISECONDS);
         } else {
             setWorldChange(event, player, user);
