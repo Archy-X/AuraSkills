@@ -32,6 +32,7 @@ public class SourcesMenu {
     public static final String DEF_SOURCE_END = "4,8";
     private final List<Integer> track;
     private NumberFormat xpFormat = new DecimalFormat("#.##");
+    private NumberFormat moneyFormat = new DecimalFormat("0.00");
 
     private final AuraSkills plugin;
 
@@ -55,6 +56,10 @@ public class SourcesMenu {
         if (xpFormatObj instanceof String s) {
             this.xpFormat = new DecimalFormat(s);
         }
+        Object moneyFormatObj = menu.options().get("money_format");
+        if (moneyFormatObj instanceof String s) {
+            this.moneyFormat = new DecimalFormat(s);
+        }
     }
 
     public void build(MenuBuilder menu) {
@@ -66,7 +71,8 @@ public class SourcesMenu {
                 "items_per_page", SourcesMenu.DEF_ITEMS_PER_PAGE,
                 "use_track", false,
                 "track", new int[0],
-                "xp_format", "#.##"));
+                "xp_format", "#.##",
+                "income_format", "0.00"));
 
         menu.replaceTitle("current_page", p -> String.valueOf(p.menu().getCurrentPage() + 1));
         menu.replaceTitle("total_pages", p -> String.valueOf(p.menu().getTotalPages()));
@@ -127,6 +133,12 @@ public class SourcesMenu {
                         "{xp}", xpFormat.format(source.getXp()),
                         "{unit}", unitName);
             });
+            template.replace("income", p -> {
+                XpSource source = p.value();
+                var skill = (Skill) p.menu().getProperty("skill");
+                double xp = getMultipliedXpValue(p.value(), p.menu(), p.player());
+                return moneyFormat.format(source.getIncome().getIncomeEarned(plugin.getUser(p.player()).toApi(), source.getValues(), skill, xp));
+            });
 
             template.slotPos(t -> {
                 int index = getSortedSources(t.menu()).indexOf(t.value());
@@ -181,14 +193,19 @@ public class SourcesMenu {
 
         menu.component("multiplied_xp", XpSource.class, component -> {
             component.replace("source_xp", p -> {
-                double multiplier = getMultiplier(p.player(), (Skill) p.menu().getProperty("skill"));
+                double value = getMultipliedXpValue(p.value(), p.menu(), p.player());
                 String unitName = p.value().getUnitName(p.locale());
                 return TextUtil.replace(unitName == null ? p.menu().getFormat("source_xp") : p.menu().getFormat("source_xp_rate"),
-                        "{xp}", xpFormat.format(p.value().getXp() * multiplier),
+                        "{xp}", xpFormat.format(value),
                         "{unit}", unitName);
             });
             component.shouldShow(t -> getMultiplier(t.player(), (Skill) t.menu().getProperty("skill")) > 1.0);
         });
+    }
+
+    private double getMultipliedXpValue(XpSource xpSource, ActiveMenu activeMenu, Player player) {
+        double multiplier = getMultiplier(player, (Skill) activeMenu.getProperty("skill"));
+        return xpSource.getXp() * multiplier;
     }
 
     private double getMultiplier(Player player, Skill skill) {
