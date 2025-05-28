@@ -1,41 +1,33 @@
 name: Bug Report
 description: Report bugs and issues
-labels: ["type: bug"]
+labels: ["bug"]
 assignees:
   - Archy-X
 body:
   - type: markdown
     attributes:
       value: |
-        Before reporting a bug, please make sure you are on the latest version of Aurelium Skills.
+        Before reporting a bug, please make sure you are on the latest version of AuraSkills.
   - type: input
     id: server-version
     attributes:
       label: Server software and version
       description: |
         The type of server software and Minecraft version you are running.
-        Make sure you are not running unsupported server software (https://wiki.aurelium.dev/skills/other/incompatibilities)
         Example: Paper 1.17.1
     validations:
       required: true
   - type: textarea
-    id: expected-behavior
+    id: description
     attributes:
-      label: Expected behavior
-      description: What you expected to happen.
+      label: Description
+      description: A detailed description of the bug or issue, including expected and actual behavior.
     validations:
       required: true
   - type: textarea
-    id: actual-behavior
+    id: steps-to-reproduce
     attributes:
-      label: Actual behavior
-      description: What actually happened (aka the bug). Include errors/stacktraces here if applicable.
-    validations:
-      required: true
-  - type: textarea
-    id: how-to-reproduce
-    attributes:
-      label: How to reproduce
+      label: Steps to reproduce
       description: A detailed list of steps to reproduce the issue.
     validations:
       required: true
