@@ -27,6 +27,7 @@ repositories {
     maven("https://mvn.lumine.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.nexomc.com/snapshots/")
+    maven("https://repo.nexomc.com/releases/")
     mavenLocal()
 }
 
@@ -55,7 +56,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
-    compileOnly("com.nexomc:nexo:1.1.0-dev.21")
+    compileOnly("com.nexomc:nexo:1.6.0")
 }
 
 val compiler = javaToolchains.compilerFor {
