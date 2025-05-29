@@ -300,6 +300,8 @@ public class UserStats {
         double level = 0.0;
 
         for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
+            if (!user.hasSkillPermission(skill)) continue;
+
             for (Entry<Stat, Double> entry : getStatLevelRewards(stat, skill)) {
                 level += entry.getValue();
             }
