@@ -15,7 +15,6 @@ import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
@@ -91,9 +90,11 @@ public class HpTrait extends TraitImpl {
         return getMenuDisplay(value, trait, (NumberFormat) null);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void worldChange(PlayerChangedWorldEvent event) {
+    @Override
+    public void changeWorld(PlayerChangedWorldEvent event, Trait trait) {
+        if (!trait.equals(Traits.HP)) return;
         if (!Traits.HP.isEnabled()) return;
+
         Player player = event.getPlayer();
         if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) && !plugin.getWorldManager().isDisabledWorld(event.getFrom().getName())) {
             worldChangeHealth.put(player.getUniqueId(), player.getHealth());

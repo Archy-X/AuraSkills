@@ -85,7 +85,7 @@ public class UserStats {
     }
 
     public double getBonusTraitLevel(Trait trait) {
-        if (!trait.isEnabled()) {
+        if (!trait.isEnabled() || plugin.getWorldManager().isDisabledWorld(user.getWorld())) {
             return 0.0;
         }
 

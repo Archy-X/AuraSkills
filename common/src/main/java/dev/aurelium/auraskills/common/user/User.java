@@ -101,6 +101,8 @@ public abstract class User {
 
     public abstract int getPermissionJobLimit();
 
+    public abstract String getWorld();
+
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }

@@ -53,8 +53,10 @@ public class LuckTrait extends TraitImpl {
         setLuck(player);
     }
 
-    @EventHandler
-    public void worldChange(PlayerChangedWorldEvent event) {
+    @Override
+    public void changeWorld(PlayerChangedWorldEvent event, Trait trait) {
+        if (!trait.equals(Traits.LUCK)) return;
+
         setLuck(event.getPlayer());
     }
 
