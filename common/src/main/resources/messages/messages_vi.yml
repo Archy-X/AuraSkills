@@ -359,9 +359,9 @@ commands:
       remove:
         desc: Removes an armor trait modifier from the item held.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Liệt kê tất cả các đặc trưng của vật phẩm đang được cầm.
       removeall:
-        desc: Removes all armor trait modifiers from the item held.
+        desc: Liệt kê tất cả các đặc trưng thuộc tính giáp của vật phẩm đang được cầm.
     multiplier:
       add:
         added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
@@ -370,7 +370,7 @@ commands:
         skill_lore_subtract: "<gray>Khi mặc: <aqua>-{value}% XP {skill}"
         global_lore: "<gray>Khi mặc: <blue>+{value}% XP Khả năng"
         global_lore_subtract: "<gray>Khi mặc: <blue>-{value}% XP Khả năng"
-        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+        desc: Thêm hệ số giáp vào vật phẩm đang cầm, giúp tăng phần trăm kinh nghiệm nhận được cho tất cả hoặc một kỹ năng cụ thể.
       remove:
         does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
         removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ khỏi giáp của bạn"
