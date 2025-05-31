@@ -58,6 +58,7 @@ config.yml:
     disable-in-creative-mode: '_'
     reset-skills-on-death: on_death.reset_skills
     reset-xp-on-death: on_death.reset_xp
+    reset-xp-on-death-ratio: on_death.reset_xp_ratio
     auto-save.enabled: '_'
     auto-save.interval-ticks: '_'
     leveler.title.enabled: ''
