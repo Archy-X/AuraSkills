@@ -191,6 +191,7 @@ data_validation:
 on_death:
   reset_skills: false
   reset_xp: false
+  reset_xp_ratio: 0
 auto_save:
   enabled: true
   interval_ticks: 12000
