@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.api.mana;
 
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.annotation.Inject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
 
 import java.util.List;
 import java.util.Locale;
@@ -182,4 +182,5 @@ public enum ManaAbilities implements ManaAbility {
     public Map<String, Object> optionMap(String key) {
         return provider.optionMap(this, key);
     }
+
 }

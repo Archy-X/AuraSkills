@@ -118,7 +118,7 @@ public abstract class User {
         for (Map.Entry<Skill, Integer> entry : skillLevels.entrySet()) {
             if (entry.getKey().isEnabled()) {
                 sum += entry.getValue();
-                numEnabled ++;
+                numEnabled++;
             }
         }
         return sum / (double) numEnabled;
@@ -465,6 +465,7 @@ public abstract class User {
 
     /**
      * Checks if the profile has not had any changes since creation
+     *
      * @return True if profile has not been modified, false if player has leveled profile
      */
     public boolean isBlankProfile() {

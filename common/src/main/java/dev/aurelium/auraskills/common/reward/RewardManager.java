@@ -85,7 +85,8 @@ public abstract class RewardManager {
                 try {
                     Constructor<? extends RewardParser> constructor = rewardType.getParser().getConstructor(AuraSkillsPlugin.class, Skill.class);
                     return constructor.newInstance(plugin, skill).parse(config);
-                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                        IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }

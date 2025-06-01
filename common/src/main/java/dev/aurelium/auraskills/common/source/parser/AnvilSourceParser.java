@@ -21,4 +21,5 @@ public class AnvilSourceParser extends SourceParser<AnvilSource> {
 
         return new AnvilSource(plugin, context.parseValues(source), leftItem, rightItem, multiplier);
     }
+
 }

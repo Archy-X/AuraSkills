@@ -3,8 +3,8 @@ package dev.aurelium.auraskills.common.reward.type;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
+import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,10 +23,10 @@ public class CommandReward extends MessagedReward {
     private final String revertCommand;
 
     public CommandReward(AuraSkillsPlugin plugin, Skill skill, String menuMessage, String chatMessage,
-                         @NotNull CommandExecutor executor,
-                         @NotNull String command,
-                         @Nullable CommandExecutor revertExecutor,
-                         @Nullable String revertCommand
+            @NotNull CommandExecutor executor,
+            @NotNull String command,
+            @Nullable CommandExecutor revertExecutor,
+            @Nullable String revertCommand
     ) {
         super(plugin, skill, menuMessage, chatMessage);
         this.executor = executor;

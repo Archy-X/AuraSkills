@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.common.reward.builder.PermissionRewardBuilder;
 import org.spongepowered.configurate.ConfigurationNode;
 
 public class PermissionRewardParser extends RewardParser {
-    
+
     public PermissionRewardParser(AuraSkillsPlugin plugin, Skill skill) {
         super(plugin, skill);
     }
@@ -27,5 +27,5 @@ public class PermissionRewardParser extends RewardParser {
 
         return builder.skill(skill).build();
     }
-    
+
 }

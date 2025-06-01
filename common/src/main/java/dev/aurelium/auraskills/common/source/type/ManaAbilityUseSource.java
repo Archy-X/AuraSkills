@@ -20,4 +20,5 @@ public class ManaAbilityUseSource extends Source implements ManaAbilityUseXpSour
     public @Nullable ManaAbility[] getManaAbilities() {
         return manaAbilities;
     }
+
 }

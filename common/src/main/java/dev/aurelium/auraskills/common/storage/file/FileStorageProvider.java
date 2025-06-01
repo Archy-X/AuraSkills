@@ -46,7 +46,7 @@ public class FileStorageProvider extends StorageProvider {
     protected User loadRaw(UUID uuid) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
         User user = userManager.createNewUser(uuid);
-        
+
         if (root.empty()) {
             return user;
         }
@@ -115,7 +115,7 @@ public class FileStorageProvider extends StorageProvider {
     private SkillLevelMaps loadSkills(ConfigurationNode node) {
         Map<Skill, Integer> levelsMap = new HashMap<>();
         Map<Skill, Double> xpMap = new HashMap<>();
-        
+
         // Load each skill section
         node.childrenMap().forEach((skillName, skillNode) -> {
             NamespacedId skillId = NamespacedId.fromString(skillName.toString());
@@ -128,7 +128,7 @@ public class FileStorageProvider extends StorageProvider {
             levelsMap.put(skill, level);
             xpMap.put(skill, xp);
         });
-        
+
         return new SkillLevelMaps(levelsMap, xpMap);
     }
 
@@ -257,7 +257,6 @@ public class FileStorageProvider extends StorageProvider {
 
         return loader.load();
     }
-
 
     @Override
     @NotNull
@@ -539,4 +538,5 @@ public class FileStorageProvider extends StorageProvider {
         }
 
     }
+
 }

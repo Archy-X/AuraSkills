@@ -135,8 +135,8 @@ public class MessageBuilder {
             throw new IllegalArgumentException("Replacements must be even");
         }
         // Replace replacements
-        for (int i = 0; i < rep.length; i+=2) {
-            message = TextUtil.replace(message, "{" + rep[i] + "}", rep[i+1]);
+        for (int i = 0; i < rep.length; i += 2) {
+            message = TextUtil.replace(message, "{" + rep[i] + "}", rep[i + 1]);
         }
         component = component.append(toComponent(message));
         return this;

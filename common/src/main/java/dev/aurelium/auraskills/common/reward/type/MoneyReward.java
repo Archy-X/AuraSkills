@@ -5,9 +5,9 @@ import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.reward.SkillReward;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -57,4 +57,5 @@ public class MoneyReward extends SkillReward {
     public String getChatMessage(User player, Locale locale, Skill skill, int level) {
         return ""; // ALl money rewards have to be added into one line
     }
+
 }

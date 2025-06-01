@@ -193,7 +193,7 @@ public class SkillsItem {
     }
 
     private void convertModifiersToContainerList() {
-        for (MetaType metaType : new MetaType[] {MetaType.MODIFIER, MetaType.TRAIT_MODIFIER}) {
+        for (MetaType metaType : new MetaType[]{MetaType.MODIFIER, MetaType.TRAIT_MODIFIER}) {
             for (ModifierType modifierType : ModifierType.values()) {
                 if (isContainerList(metaType, modifierType)) continue; // Skip if already converted
 
@@ -410,8 +410,7 @@ public class SkillsItem {
         if (meta.getLore() != null) {
             if (!meta.getLore().isEmpty()) lore = meta.getLore();
             else lore = new LinkedList<>();
-        }
-        else {
+        } else {
             lore = new LinkedList<>();
         }
         CommandMessage message;

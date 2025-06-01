@@ -90,7 +90,6 @@ public class SkillCommand extends BaseCommand {
         }
     }
 
-
     @Subcommand("reset")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.skill.reset")
@@ -121,6 +120,5 @@ public class SkillCommand extends BaseCommand {
                     .replace("{player}", player.getName()));
         }
     }
-
 
 }

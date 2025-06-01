@@ -44,4 +44,5 @@ public class AbilityRegistry extends Registry<Ability, AbilityProvider> {
         }
         return root;
     }
+
 }

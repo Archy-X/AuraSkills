@@ -46,11 +46,11 @@ import java.util.concurrent.TimeUnit;
 
 public class AlchemyAbilities extends AbilityImpl {
 
-    private final NamespacedKey DURATION_BONUS_KEY;
+    private final NamespacedKey durationBonusKey;
 
     public AlchemyAbilities(AuraSkills plugin) {
         super(plugin, Abilities.ALCHEMIST, Abilities.BREWER, Abilities.SPLASHER, Abilities.LINGERING, Abilities.WISE_EFFECT);
-        this.DURATION_BONUS_KEY = new NamespacedKey(plugin, "duration_bonus");
+        this.durationBonusKey = new NamespacedKey(plugin, "duration_bonus");
         wiseEffect(); // Start Wise Effect timer task
     }
 
@@ -130,10 +130,10 @@ public class AlchemyAbilities extends AbilityImpl {
         // Add duration to PersistentDataContainer
         var container = meta.getPersistentDataContainer();
         // Don't apply duration to the same item
-        if (container.has(DURATION_BONUS_KEY, PersistentDataType.INTEGER)) {
+        if (container.has(durationBonusKey, PersistentDataType.INTEGER)) {
             return item;
         }
-        container.set(DURATION_BONUS_KEY, PersistentDataType.INTEGER, durationBonus);
+        container.set(durationBonusKey, PersistentDataType.INTEGER, durationBonus);
         // Add lore
         if (Abilities.ALCHEMIST.optionBoolean("add_item_lore", true)) {
             List<String> lore = meta.getLore() != null ? meta.getLore() : new ArrayList<>();
@@ -161,7 +161,7 @@ public class AlchemyAbilities extends AbilityImpl {
         ItemStack item = event.getItem();
         if (item.getType() != Material.POTION || !(item.getItemMeta() instanceof PotionMeta meta)) return;
 
-        int durationBonus = item.getItemMeta().getPersistentDataContainer().getOrDefault(DURATION_BONUS_KEY, PersistentDataType.INTEGER, 0);
+        int durationBonus = item.getItemMeta().getPersistentDataContainer().getOrDefault(durationBonusKey, PersistentDataType.INTEGER, 0);
         if (durationBonus <= 0) return;
 
         BukkitPotionType bukkitPotionType = new BukkitPotionType(meta);
@@ -188,9 +188,8 @@ public class AlchemyAbilities extends AbilityImpl {
                 } else {
                     PotionUtil.applyEffect(player, new PotionEffect(effectType, duration + durationBonus, amplifier));
                 }
-            }
-            // Special case for Turtle Master
-            else {
+            } else {
+                // Special case for Turtle Master
                 if (!bukkitPotionType.isUpgraded()) {
                     PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration + durationBonus, 3));
                     PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration + durationBonus, 2));
@@ -225,10 +224,10 @@ public class AlchemyAbilities extends AbilityImpl {
         if (!isDisabled(Abilities.ALCHEMIST)) {
             if (event.getPotion().getShooter() instanceof Player player) {
                 if (!failsChecks(player, Abilities.ALCHEMIST)) {
-                    durationBonus = meta.getPersistentDataContainer().getOrDefault(DURATION_BONUS_KEY, PersistentDataType.INTEGER, 0);
+                    durationBonus = meta.getPersistentDataContainer().getOrDefault(durationBonusKey, PersistentDataType.INTEGER, 0);
                 }
             } else {
-                durationBonus = meta.getPersistentDataContainer().getOrDefault(DURATION_BONUS_KEY, PersistentDataType.INTEGER, 0);
+                durationBonus = meta.getPersistentDataContainer().getOrDefault(durationBonusKey, PersistentDataType.INTEGER, 0);
             }
         }
         // Add effects for each player
@@ -251,9 +250,8 @@ public class AlchemyAbilities extends AbilityImpl {
                         PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), duration, effect.getAmplifier()));
                     }
 
-                }
-                // Special case for Turtle Master
-                else {
+                } else {
+                    // Special case for Turtle Master
                     if (!bukkitPotionType.isUpgraded()) {
                         PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.slowness(), duration, 3));
                         PotionUtil.applyEffect(player, new PotionEffect(CompatUtil.resistance(), duration, 2));
@@ -368,7 +366,7 @@ public class AlchemyAbilities extends AbilityImpl {
 
         User user = plugin.getUser(player);
 
-        AttributeInstance entityAttribute = entity.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance entityAttribute = entity.getAttribute(AttributeCompat.maxHealth);
         if (entityAttribute == null) return;
 
         // Get the health to regen from a percent of the mob's health
@@ -376,7 +374,7 @@ public class AlchemyAbilities extends AbilityImpl {
         double percent = getValue(ability, user) / 100;
         double healthRegen = maxHealth * percent;
 
-        AttributeInstance playerAttribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance playerAttribute = player.getAttribute(AttributeCompat.maxHealth);
         if (playerAttribute == null) return;
 
         player.setHealth(player.getHealth() + Math.min(healthRegen, playerAttribute.getValue() - player.getHealth()));

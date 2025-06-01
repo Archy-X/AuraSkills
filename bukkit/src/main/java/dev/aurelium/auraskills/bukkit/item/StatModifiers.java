@@ -10,7 +10,7 @@ public enum StatModifiers implements BuiltInModifier {
     STAMINA("mining-stamina"),
     ENCHANTED_STRENGTH("AbilityModifier-EnchantedStrength"),
     WISE_EFFECT("AbilityModifier-WiseEffect"),
-    REVIVAL(new String[] {"AureliumSkills.Ability.Revival.Health", "AureliumSkills.Ability.Revival.Regeneration"});
+    REVIVAL(new String[]{"AureliumSkills.Ability.Revival.Health", "AureliumSkills.Ability.Revival.Regeneration"});
 
     private final String[] ids;
 
@@ -19,7 +19,7 @@ public enum StatModifiers implements BuiltInModifier {
     }
 
     StatModifiers(String id) {
-        this.ids = new String[] {id};
+        this.ids = new String[]{id};
     }
 
     @Nullable

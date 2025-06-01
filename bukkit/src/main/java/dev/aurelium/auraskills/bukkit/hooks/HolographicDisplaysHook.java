@@ -33,4 +33,5 @@ public class HolographicDisplaysHook extends HologramsHook {
     public Class<? extends Hook> getTypeClass() {
         return HologramsHook.class;
     }
+
 }

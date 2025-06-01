@@ -18,7 +18,7 @@ public class EntitySource extends Source implements EntityXpSource {
     private final boolean scaleXpWithHealth;
 
     public EntitySource(AuraSkillsPlugin plugin, SourceValues values, String entity, EntityTriggers[] triggers, EntityDamagers[] damagers,
-                        @Nullable DamageCause[] causes, @Nullable DamageCause[] excludedCauses, boolean scaleXpWithHealth) {
+            @Nullable DamageCause[] causes, @Nullable DamageCause[] excludedCauses, boolean scaleXpWithHealth) {
         super(plugin, values);
         this.entity = entity;
         this.triggers = triggers;
@@ -64,4 +64,5 @@ public class EntitySource extends Source implements EntityXpSource {
     public DamageCause[] getExcludedCauses() {
         return excludedCauses;
     }
+
 }

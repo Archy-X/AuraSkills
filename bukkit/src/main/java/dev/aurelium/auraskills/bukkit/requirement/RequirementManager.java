@@ -120,8 +120,7 @@ public class RequirementManager implements Listener {
                             int value = requirementNode.node("value").getInt();
                             nodes.add(new StatNode(plugin, stat, value, message));
                         }
-                        default ->
-                            plugin.logger().warn("Unknown requirement type: " + type);
+                        default -> plugin.logger().warn("Unknown requirement type: " + type);
                     }
                 }
 

@@ -27,4 +27,5 @@ public class VanillaEntityParser implements CustomEntityParser {
         // But if it starts with minecraft:, it's a vanilla entity stated explicitly
         return !entity.contains(":") || entity.startsWith("minecraft:");
     }
+
 }

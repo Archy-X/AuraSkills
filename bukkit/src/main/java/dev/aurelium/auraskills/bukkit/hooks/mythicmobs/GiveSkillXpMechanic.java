@@ -39,4 +39,5 @@ public class GiveSkillXpMechanic implements ITargetedEntitySkill {
 
         return SkillResult.SUCCESS;
     }
+
 }

@@ -45,4 +45,5 @@ public class CommandRewardBuilder extends MessagedRewardBuilder {
         );
         return new CommandReward(plugin, skill, menuMessage, chatMessage, executor, command, revertExecutor, revertCommand);
     }
+
 }

@@ -35,4 +35,5 @@ public class TestPlatformLogger implements PlatformLogger {
     public void debug(String message) {
         System.out.println("[DEBUG] " + message);
     }
+
 }

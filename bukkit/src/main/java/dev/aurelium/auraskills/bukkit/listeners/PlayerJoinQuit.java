@@ -90,7 +90,8 @@ public class PlayerJoinQuit implements Listener {
             if (plugin.getMessageProvider().getLoadedLanguages().contains(locale)) {
                 user.setLocale(locale);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     private void sendUpdateMessage(Player player) {

@@ -26,4 +26,5 @@ public class BukkitTaskWrapper implements Task {
     public void cancel() {
         Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
     }
+
 }

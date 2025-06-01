@@ -33,7 +33,8 @@ public class OpenMenuCommand extends BaseCommand {
 
     public OpenMenuCommand(AuraSkills plugin) {
         this.plugin = plugin;
-        this.mapType = new TypeToken<Map<String, Object>>(){}.getType();
+        this.mapType = new TypeToken<Map<String, Object>>() {
+        }.getType();
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(mapType, getDeserializer())
                 .create();

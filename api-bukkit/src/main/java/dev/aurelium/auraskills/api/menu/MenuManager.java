@@ -78,7 +78,7 @@ public interface MenuManager {
      * check that placeholder.
      *
      * @param replacer the placeholder replacer that takes a {@link dev.aurelium.slate.info.PlaceholderInfo} argument
-     *                 and returns the replaced String.
+     * and returns the replaced String.
      */
     void registerGlobalReplacer(ItemReplacer replacer);
 

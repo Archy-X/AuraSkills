@@ -32,7 +32,7 @@ public class BukkitActionBarManager extends ActionBarManager {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return "";
 
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute != null) {
             return String.valueOf(Math.round(attribute.getValue() * Traits.HP.optionDouble("action_bar_scaling", 1)));
         }
@@ -48,4 +48,5 @@ public class BukkitActionBarManager extends ActionBarManager {
         }
         return "";
     }
+
 }

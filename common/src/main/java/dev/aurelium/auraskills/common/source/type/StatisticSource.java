@@ -32,4 +32,5 @@ public class StatisticSource extends Source implements StatisticXpSource {
     public int getMinimumIncrease() {
         return minimumIncrease;
     }
+
 }

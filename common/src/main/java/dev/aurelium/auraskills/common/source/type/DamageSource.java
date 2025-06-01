@@ -18,7 +18,7 @@ public class DamageSource extends Source implements DamageXpSource {
     private final int cooldownMs;
 
     public DamageSource(AuraSkillsPlugin plugin, SourceValues values, DamageCause[] causes, DamageCause[] excludedCauses,
-                        String[] damagers, String[] excludedDamagers, boolean mustSurvive, boolean useOriginalDamage, boolean includeProjectiles, int cooldownMs) {
+            String[] damagers, String[] excludedDamagers, boolean mustSurvive, boolean useOriginalDamage, boolean includeProjectiles, int cooldownMs) {
         super(plugin, values);
         this.causes = causes;
         this.excludedCauses = excludedCauses;
@@ -74,4 +74,5 @@ public class DamageSource extends Source implements DamageXpSource {
     public int getCooldownMs() {
         return cooldownMs;
     }
+
 }

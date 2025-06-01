@@ -12,4 +12,5 @@ public record TemporaryModifier(
     public int compareTo(@NotNull TemporaryModifier other) {
         return Long.compare(this.expirationTime, other.expirationTime);
     }
+
 }

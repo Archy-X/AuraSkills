@@ -110,14 +110,13 @@ public class HealthRegenTraits extends TraitImpl {
 
         if (player.isDead()) return;
 
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute == null) return;
 
         if (!(player.getHealth() < attribute.getValue())) return;
 
         if (regenCondition.apply(player)) {
-            double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait)
-                    , attribute.getValue() - player.getHealth());
+            double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait), attribute.getValue() - player.getHealth());
 
             final double gainThreshold = 0.001;
             if (amountGained < gainThreshold) {

@@ -29,4 +29,5 @@ public class FishingA extends Check {
             logFail(player);
         }
     }
+
 }

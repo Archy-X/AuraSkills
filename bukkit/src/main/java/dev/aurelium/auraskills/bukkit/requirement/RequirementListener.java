@@ -61,8 +61,7 @@ public class RequirementListener implements Listener {
                     sendMessage(CommandMessage.ARMOR_REQUIREMENT_EQUIP, CommandMessage.ARMOR_REQUIREMENT_ENTRY, ModifierType.ARMOR, player, locale, item);
                     manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
                 }
-            }
-            else {
+            } else {
                 sendMessage(CommandMessage.ARMOR_REQUIREMENT_EQUIP, CommandMessage.ARMOR_REQUIREMENT_ENTRY, ModifierType.ARMOR, player, locale, item);
                 manager.getErrorMessageTimer().put(player.getUniqueId(), 8);
             }
@@ -90,8 +89,8 @@ public class RequirementListener implements Listener {
             requirementsString.delete(requirementsString.length() - 2, requirementsString.length());
         }
 
-        player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(baseMessage, locale)
-                , "{requirements}", requirementsString.toString()));
+        player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(baseMessage, locale),
+                "{requirements}", requirementsString.toString()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -128,7 +127,6 @@ public class RequirementListener implements Listener {
 
         checkBlockRequirements(event.getPlayer(), event.getHarvestedBlock().getType(), event);
     }
-
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onAttack(EntityDamageByEntityEvent event) {
@@ -233,4 +231,5 @@ public class RequirementListener implements Listener {
             }
         }
     }
+
 }

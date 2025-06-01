@@ -29,4 +29,5 @@ public class EntityA extends Check {
             logFail(player);
         }
     }
+
 }

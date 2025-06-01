@@ -19,4 +19,5 @@ public enum LevelerMessage implements MessageKey {
     public String getPath() {
         return "leveler." + this.toString().toLowerCase(Locale.ROOT);
     }
+
 }

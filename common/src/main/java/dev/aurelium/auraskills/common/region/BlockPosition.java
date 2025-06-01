@@ -18,7 +18,9 @@ public class BlockPosition {
 
     public static BlockPosition fromCommaString(@NotNull String list) {
         String[] splitCoords = list.split(",");
-        int x = 0, y = 0, z = 0;
+        int x = 0;
+        int y = 0;
+        int z = 0;
         if (splitCoords.length == 3) {
             x = NumberUtil.toInt(splitCoords[0]);
             y = NumberUtil.toInt(splitCoords[1]);
@@ -61,4 +63,5 @@ public class BlockPosition {
     public String toString() {
         return x + "," + y + "," + z;
     }
+
 }

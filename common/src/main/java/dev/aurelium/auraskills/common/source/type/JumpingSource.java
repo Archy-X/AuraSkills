@@ -18,4 +18,5 @@ public class JumpingSource extends Source implements JumpingXpSource {
     public int getInterval() {
         return interval;
     }
+
 }

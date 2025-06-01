@@ -32,8 +32,8 @@ public class HpTrait extends TraitImpl {
     private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
     private final Map<Integer, Double> hearts = new HashMap<>();
     private static final double threshold = 0.1;
-    private final UUID ATTRIBUTE_ID = UUID.fromString("7d1423dd-91db-467a-8eb8-1886e30ca0b1");
-    private final String ATTRIBUTE_KEY = "hp_trait";
+    private static final UUID ATTRIBUTE_ID = UUID.fromString("7d1423dd-91db-467a-8eb8-1886e30ca0b1");
+    private static final String ATTRIBUTE_KEY = "hp_trait";
 
     HpTrait(AuraSkills plugin) {
         super(plugin, Traits.HP);
@@ -54,7 +54,7 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute == null) return 0.0;
         double current = attribute.getValue();
         // Subtract skills attribute value
@@ -121,7 +121,7 @@ public class HpTrait extends TraitImpl {
             return;
         }
 
-        var attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        var attribute = player.getAttribute(AttributeCompat.maxHealth);
         double maxHealth = attribute == null ? 20.0 : attribute.getValue();
 
         double newHealth = worldChangeHealth.get(playerID);
@@ -138,7 +138,7 @@ public class HpTrait extends TraitImpl {
         Trait trait = Traits.HP;
 
         double modifier = user.getBonusTraitLevel(trait);
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute == null) return;
         double originalMaxHealth = attribute.getValue();
         boolean hasChange = true;
@@ -187,8 +187,8 @@ public class HpTrait extends TraitImpl {
             }
             if (trait.optionBoolean("keep_full_on_increase", false) && attribute.getValue() > originalMaxHealth) {
                 // Heals player to full health if had full health before modifier
-                final double THRESHOLD = 0.01;
-                if (player.getHealth() >= originalMaxHealth - THRESHOLD) {
+                final double threshold = 0.01;
+                if (player.getHealth() >= originalMaxHealth - threshold) {
                     player.setHealth(attribute.getValue());
                 }
             }
@@ -215,7 +215,7 @@ public class HpTrait extends TraitImpl {
     }
 
     private void applyScaling(Player player) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute == null) return;
 
         if (Traits.HP.isEnabled() && Traits.HP.optionBoolean("health_scaling", true)) {

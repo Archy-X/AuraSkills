@@ -6,26 +6,25 @@ import org.bukkit.attribute.Attribute;
 
 public class AttributeCompat {
 
-    public static Attribute MAX_HEALTH;
-    public static Attribute MOVEMENT_SPEED;
-    public static Attribute ATTACK_DAMAGE;
-    public static Attribute ATTACK_SPEED;
-    public static Attribute LUCK;
+    public static Attribute maxHealth;
+    public static Attribute movementSpeed;
+    public static Attribute attackDamage;
+    public static Attribute attackSpeed;
+    public static Attribute luck;
 
     static {
-
         if (VersionUtils.isAtLeastVersion(21, 2)) {
-            MAX_HEALTH = fromRegistry("max_health");
-            MOVEMENT_SPEED = fromRegistry("movement_speed");
-            ATTACK_DAMAGE = fromRegistry("attack_damage");
-            ATTACK_SPEED = fromRegistry("attack_speed");
-            LUCK = fromRegistry("luck");
+            maxHealth = fromRegistry("max_health");
+            movementSpeed = fromRegistry("movement_speed");
+            attackDamage = fromRegistry("attack_damage");
+            attackSpeed = fromRegistry("attack_speed");
+            luck = fromRegistry("luck");
         } else {
-            MAX_HEALTH = fromRegistry("generic.max_health");
-            MOVEMENT_SPEED = fromRegistry("generic.movement_speed");
-            ATTACK_DAMAGE = fromRegistry("generic.attack_damage");
-            ATTACK_SPEED = fromRegistry("generic.attack_speed");
-            LUCK = fromRegistry("generic.luck");
+            maxHealth = fromRegistry("generic.max_health");
+            movementSpeed = fromRegistry("generic.movement_speed");
+            attackDamage = fromRegistry("generic.attack_damage");
+            attackSpeed = fromRegistry("generic.attack_speed");
+            luck = fromRegistry("generic.luck");
         }
     }
 

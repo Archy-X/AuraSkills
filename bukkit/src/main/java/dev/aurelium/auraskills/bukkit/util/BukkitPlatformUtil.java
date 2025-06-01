@@ -80,4 +80,5 @@ public class BukkitPlatformUtil implements PlatformUtil {
     private Material parseMaterial(String name) {
         return Material.getMaterial(name);
     }
+
 }

@@ -18,4 +18,5 @@ public class GrindstoneSourceParser extends SourceParser<GrindstoneSource> {
 
         return new GrindstoneSource(plugin, context.parseValues(source), multiplier);
     }
+
 }

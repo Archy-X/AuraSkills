@@ -9,8 +9,8 @@ public class TextUtil {
         if (source == null) {
             return null;
         }
-        int i = 0;
-        if ((i = source.indexOf(os, i)) >= 0) {
+        int i = source.indexOf(os);
+        if (i >= 0) {
             char[] sourceArray = source.toCharArray();
             char[] nsArray = ns.toCharArray();
             int oLength = os.length();
@@ -157,7 +157,7 @@ public class TextUtil {
         final Set<Integer> delimiterHashSet = new HashSet<>();
         if (delimiters == null || delimiters.length == 0) {
             if (delimiters == null) {
-                delimiterHashSet.add(Character.codePointAt(new char[] {' '}, 0));
+                delimiterHashSet.add(Character.codePointAt(new char[]{' '}, 0));
             }
 
             return delimiterHashSet;
@@ -179,7 +179,7 @@ public class TextUtil {
         int outOffset = 0;
 
         boolean capitalizeNext = true;
-        for (int index = 0; index < strLen;) {
+        for (int index = 0; index < strLen; ) {
             final int codePoint = str.codePointAt(index);
 
             if (delimiterSet.contains(codePoint)) {

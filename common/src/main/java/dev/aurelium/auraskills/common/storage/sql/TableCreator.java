@@ -17,7 +17,7 @@ public class TableCreator {
         this.tablePrefix = tablePrefix;
     }
 
-    public void createTables() throws IllegalStateException{
+    public void createTables() throws IllegalStateException {
         try (Connection connection = pool.getConnection()) {
             createUsersTable(connection);
             createSkillLevelsTable(connection);
@@ -124,25 +124,25 @@ public class TableCreator {
 
         try (Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE)) {
             statement.execute("""
-            create table %smodifiers
-            (
-                modifier_id        int auto_increment
-                    primary key,
-                user_id            int          not null,
-                modifier_type      varchar(128) not null,
-                type_id            varchar(512) null,
-                modifier_name      varchar(512) not null,
-                modifier_value     double       not null,
-                modifier_operation tinyint      not null,
-                expiration_time    bigint       null,
-                remaining_duration bigint       null,
-                metadata           text         null,
-                constraint modifiers_uk
-                    unique (user_id, modifier_type, modifier_name),
-                constraint modifiers_users_user_id_fk
-                    foreign key (user_id) references %susers (user_id)
-            )
-            """.formatted(tablePrefix, tablePrefix));
+                    create table %smodifiers
+                    (
+                        modifier_id        int auto_increment
+                            primary key,
+                        user_id            int          not null,
+                        modifier_type      varchar(128) not null,
+                        type_id            varchar(512) null,
+                        modifier_name      varchar(512) not null,
+                        modifier_value     double       not null,
+                        modifier_operation tinyint      not null,
+                        expiration_time    bigint       null,
+                        remaining_duration bigint       null,
+                        metadata           text         null,
+                        constraint modifiers_uk
+                            unique (user_id, modifier_type, modifier_name),
+                        constraint modifiers_users_user_id_fk
+                            foreign key (user_id) references %susers (user_id)
+                    )
+                    """.formatted(tablePrefix, tablePrefix));
             plugin.logger().info("Created table " + tablePrefix + "modifiers");
         }
     }

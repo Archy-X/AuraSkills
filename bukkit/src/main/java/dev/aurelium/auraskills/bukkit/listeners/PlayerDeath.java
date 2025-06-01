@@ -27,11 +27,11 @@ public class PlayerDeath implements Listener {
                     user.resetSkill(skill);
                 } else if (plugin.configBoolean(Option.ON_DEATH_RESET_XP)) {
                     double ratio = plugin.configDouble(Option.ON_DEATH_RESET_XP_RATIO);
-	                if (ratio > 0 && ratio < 1) {
-		                user.setSkillXp(skill, user.getSkillXp(skill) * ratio);
-	                } else {
-		                user.setSkillXp(skill, 0);
-	                }
+                    if (ratio > 0 && ratio < 1) {
+                        user.setSkillXp(skill, user.getSkillXp(skill) * ratio);
+                    } else {
+                        user.setSkillXp(skill, 0);
+                    }
                 }
             }
             plugin.getModifierManager().applyModifiers(player, true);

@@ -8,4 +8,5 @@ public class AverageSorter implements Comparator<SkillValue> {
     public int compare(SkillValue a, SkillValue b) {
         return (int) (b.xp() * 100) - (int) (a.xp() * 100);
     }
+
 }

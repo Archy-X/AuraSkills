@@ -17,7 +17,8 @@ public class TownyHook extends Hook {
     public boolean canBreak(Player player, Block block) {
         try {
             return PlayerCacheUtil.getCachePermission(player, block.getLocation(), block.getType(), TownyPermission.ActionType.DESTROY);
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return true;
     }
 
@@ -25,4 +26,5 @@ public class TownyHook extends Hook {
     public Class<? extends Hook> getTypeClass() {
         return TownyHook.class;
     }
+
 }

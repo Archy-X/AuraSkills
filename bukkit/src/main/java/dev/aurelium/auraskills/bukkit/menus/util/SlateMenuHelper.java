@@ -21,4 +21,5 @@ public class SlateMenuHelper implements MenuHelper {
             return formatName;
         }
     }
+
 }

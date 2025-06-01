@@ -180,7 +180,8 @@ public class UpdateChecker {
                 } else if (local > resource) { // If local is greater than resource, return as not outdated
                     return false;
                 }
-            } catch (NumberFormatException ignored) {}
+            } catch (NumberFormatException ignored) {
+            }
         }
         return true;
     }

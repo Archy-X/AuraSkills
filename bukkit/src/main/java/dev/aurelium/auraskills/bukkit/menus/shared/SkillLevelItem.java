@@ -24,11 +24,30 @@ public class SkillLevelItem {
 
     public static List<Integer> getDefaultTrack() {
         List<Integer> track = new ArrayList<>();
-        track.add(9); track.add(18); track.add(27); track.add(36); track.add(37);
-        track.add(38); track.add(29); track.add(20); track.add(11); track.add(12);
-        track.add(13); track.add(22); track.add(31); track.add(40); track.add(41);
-        track.add(42); track.add(33); track.add(24); track.add(15); track.add(16);
-        track.add(17); track.add(26); track.add(35); track.add(44);
+        track.add(9);
+        track.add(18);
+        track.add(27);
+        track.add(36);
+        track.add(37);
+        track.add(38);
+        track.add(29);
+        track.add(20);
+        track.add(11);
+        track.add(12);
+        track.add(13);
+        track.add(22);
+        track.add(31);
+        track.add(40);
+        track.add(41);
+        track.add(42);
+        track.add(33);
+        track.add(24);
+        track.add(15);
+        track.add(16);
+        track.add(17);
+        track.add(26);
+        track.add(35);
+        track.add(44);
         return track;
     }
 

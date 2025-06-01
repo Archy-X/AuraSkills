@@ -259,6 +259,7 @@ public class CustomStat implements Stat {
         public void setSymbol(String symbol) {
             this.symbol = symbol;
         }
+
     }
 
 }

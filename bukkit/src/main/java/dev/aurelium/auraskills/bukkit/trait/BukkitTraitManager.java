@@ -112,4 +112,5 @@ public class BukkitTraitManager extends TraitManager {
             return NumberUtil.format1(value);
         }
     }
+
 }

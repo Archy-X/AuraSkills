@@ -18,4 +18,5 @@ public abstract class RequirementNode {
     public String getDenyMessage() {
         return denyMessage;
     }
+
 }

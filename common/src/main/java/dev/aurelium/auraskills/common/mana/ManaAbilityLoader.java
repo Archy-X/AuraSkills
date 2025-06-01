@@ -65,4 +65,5 @@ public class ManaAbilityLoader {
             configMap.put("enabled", false);
         }
     }
+
 }

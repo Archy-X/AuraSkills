@@ -18,4 +18,5 @@ public class PotionDataParser implements UtilityParser<PotionData> {
 
         return new SourcePotionData(types, excludedTypes, extended, upgraded, excludeNegative);
     }
+
 }

@@ -21,4 +21,5 @@ public class ApiXpRequirements implements XpRequirements {
     public int getDefaultXpRequired(int level) {
         return plugin.getXpRequirements().getDefaultXpRequired(level);
     }
+
 }

@@ -16,7 +16,7 @@ public class ConfigOptionTest {
     @Test
     public void testOptionMatchesConfigFile() throws IOException {
         ConfigurationNode config = FileUtil.loadEmbeddedYamlFile("config.yml", AuraSkillsPlugin.class.getClassLoader(), false);
-        
+
         for (Option option : Option.values()) {
             NodePath path = FileUtil.toPath(option.getPath());
             ConfigurationNode node = config.node(path);

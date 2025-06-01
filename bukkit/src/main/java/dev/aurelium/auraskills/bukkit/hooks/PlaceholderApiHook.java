@@ -31,4 +31,5 @@ public class PlaceholderApiHook extends PlaceholderHook {
     public Class<? extends Hook> getTypeClass() {
         return PlaceholderHook.class;
     }
+
 }

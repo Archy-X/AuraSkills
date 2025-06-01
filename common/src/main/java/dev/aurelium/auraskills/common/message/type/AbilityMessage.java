@@ -24,8 +24,7 @@ public enum AbilityMessage implements MessageKey {
         Ability ability;
         try {
             ability = Abilities.valueOf(this.name().substring(0, this.name().lastIndexOf("_")));
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             ability = Abilities.valueOf(this.name().substring(0, this.name().indexOf("_")));
         }
         if (!ability.isEnabled()) {
@@ -39,4 +38,5 @@ public enum AbilityMessage implements MessageKey {
     public String getPath() {
         return path;
     }
+
 }

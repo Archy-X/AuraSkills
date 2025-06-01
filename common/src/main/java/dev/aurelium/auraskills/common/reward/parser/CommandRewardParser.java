@@ -32,5 +32,5 @@ public class CommandRewardParser extends RewardParser {
 
         return builder.skill(skill).build();
     }
-    
+
 }

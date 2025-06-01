@@ -26,4 +26,5 @@ public class ScheduledTask implements Task {
     public void cancel() {
         future.cancel(false);
     }
+
 }

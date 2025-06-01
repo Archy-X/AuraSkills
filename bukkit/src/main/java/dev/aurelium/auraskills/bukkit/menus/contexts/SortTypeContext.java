@@ -18,4 +18,5 @@ public class SortTypeContext implements ContextProvider<SortType> {
     public SortType parse(String menuName, String s) {
         return SortType.valueOf(s.toUpperCase(Locale.ROOT));
     }
+
 }

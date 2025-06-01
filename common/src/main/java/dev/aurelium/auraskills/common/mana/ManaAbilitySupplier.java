@@ -128,4 +128,5 @@ public class ManaAbilitySupplier extends OptionSupplier<ManaAbility> implements 
     public boolean isLoaded(ManaAbility type) {
         return manaAbilityManager.isLoaded(type);
     }
+
 }

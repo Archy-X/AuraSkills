@@ -1,12 +1,12 @@
 package dev.aurelium.auraskills.common.source;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.source.SourceIncome;
 import dev.aurelium.auraskills.api.source.SourceType;
 import dev.aurelium.auraskills.api.source.SourceValues;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.message.MessageKey;
-import dev.aurelium.auraskills.api.source.SourceIncome;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;

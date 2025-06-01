@@ -215,6 +215,7 @@ public class CustomSkill implements Skill {
         public CustomSkill build() {
             return new CustomSkill(id, defined, xpMultiplierAbility);
         }
+
     }
 
     public static class Defined {
@@ -264,6 +265,7 @@ public class CustomSkill implements Skill {
         public void setDescription(String description) {
             this.description = description;
         }
+
     }
 
 }

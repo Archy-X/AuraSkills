@@ -56,4 +56,5 @@ public class EntityXpGainEvent extends XpGainEvent {
     public EntityEvent getOriginalEvent() {
         return originalEvent;
     }
+
 }

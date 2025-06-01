@@ -19,4 +19,5 @@ public class SkillSource<T extends XpSource> {
     public Skill skill() {
         return skill;
     }
+
 }

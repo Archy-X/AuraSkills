@@ -43,15 +43,15 @@ public class LevelUpMessenger {
 
     public void sendChatMessage() {
         String message = MessageBuilder.create(plugin).locale(locale).rawMessage(LevelerFormat.CHAT,
-                "skill", skill.getDisplayName(locale, false),
-                "old", RomanNumber.toRoman(level - 1, plugin),
-                "new", RomanNumber.toRoman(level, plugin),
-                "stat_level", getRewardMessage(),
-                "ability_unlock", getAbilityUnlockMessage(),
-                "ability_level_up", getAbilityLevelUpMessage(),
-                "mana_ability_unlock", getManaAbilityUnlockMessage(),
-                "mana_ability_level_up", getManaAbilityLevelUpMessage(),
-                "money_reward", getMoneyRewardMessage())
+                        "skill", skill.getDisplayName(locale, false),
+                        "old", RomanNumber.toRoman(level - 1, plugin),
+                        "new", RomanNumber.toRoman(level, plugin),
+                        "stat_level", getRewardMessage(),
+                        "ability_unlock", getAbilityUnlockMessage(),
+                        "ability_level_up", getAbilityLevelUpMessage(),
+                        "mana_ability_unlock", getManaAbilityUnlockMessage(),
+                        "mana_ability_level_up", getManaAbilityLevelUpMessage(),
+                        "money_reward", getMoneyRewardMessage())
                 .toString();
         // Replace PlaceholderAPI placeholders
         if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
@@ -129,8 +129,8 @@ public class LevelUpMessenger {
         String format = plugin.getMessageProvider().getRaw(LevelerFormat.DESC_UPGRADE_VALUE, locale);
         // Subtract 1 from level to go from previous to current value
         String desc = TextUtil.replace(plugin.getAbilityManager().getBaseDescription(ability, user, false),
-                        "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
-                        "{value_2}", AbilityUtil.getUpgradeValue2(ability, level - 1, format));
+                "{value}", AbilityUtil.getUpgradeValue(ability, level - 1, format),
+                "{value_2}", AbilityUtil.getUpgradeValue2(ability, level - 1, format));
         desc = TextUtil.wrapText(desc, WRAP_LENGTH, "\n" + descWrap(locale));
         return desc;
     }
@@ -181,9 +181,9 @@ public class LevelUpMessenger {
         // Subtract 1 from level to go from previous to current value
         String message = TextUtil.replace(plugin.getManaAbilityManager().getBaseDescription(manaAbility, user, false)
                         .replace("<1>", "<white>"),
-                        "{value}", AbilityUtil.getUpgradeValue(manaAbility, level - 1, format),
-                        "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
-                        "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level - 1, format));
+                "{value}", AbilityUtil.getUpgradeValue(manaAbility, level - 1, format),
+                "{haste_level}", String.valueOf(manaAbility.optionInt("haste_level", 10)),
+                "{duration}", AbilityUtil.getUpgradeDuration(manaAbility, level - 1, format));
         message = TextUtil.wrapText(message, WRAP_LENGTH, "\n" + descWrap(locale));
         return message;
     }

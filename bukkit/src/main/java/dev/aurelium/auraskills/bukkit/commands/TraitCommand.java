@@ -63,8 +63,8 @@ public class TraitCommand extends BaseCommand {
     @CommandCompletion("@players @traits @nothing @nothing @nothing true|false @modifier_operations true|false true|false")
     @Description("%desc_trait_addtemp")
     public void addTemp(CommandSender sender, @Flags("other") Player player, Trait trait, String name, double value,
-                        Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
-                        @Default("false") boolean silent, @Default("false") boolean stack) {
+            Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
+            @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
 

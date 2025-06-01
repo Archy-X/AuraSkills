@@ -21,7 +21,8 @@ public class EntityC extends Check {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityXpGain(EntityXpGainEvent event) {
-        if (isDisabled() || !(event.getSource() instanceof EntityXpSource) || !(event.getAttacked() instanceof Player)) return;
+        if (isDisabled() || !(event.getSource() instanceof EntityXpSource) || !(event.getAttacked() instanceof Player))
+            return;
 
         Player player = event.getPlayer();
         if (handler.failsCheck(getCheckData(player), event.getAttacked().getUniqueId())) {
@@ -29,4 +30,5 @@ public class EntityC extends Check {
             logFail(player);
         }
     }
+
 }

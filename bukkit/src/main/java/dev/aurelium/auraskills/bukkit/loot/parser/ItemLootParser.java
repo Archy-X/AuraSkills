@@ -103,7 +103,7 @@ public class ItemLootParser implements LootParser {
         if (config.hasChild("amount")) {
             Object object = config.node("amount").raw();
             if (object instanceof Integer amount) {
-                return new int[] {amount, amount};
+                return new int[]{amount, amount};
             } else if (object instanceof String amountString) {
                 String[] splitString = amountString.split("-");
                 int minAmount = Integer.parseInt(splitString[0]);
@@ -111,10 +111,10 @@ public class ItemLootParser implements LootParser {
                 if (splitString.length > 1) {
                     maxAmount = Integer.parseInt(splitString[1]);
                 }
-                return new int[] {minAmount, maxAmount};
+                return new int[]{minAmount, maxAmount};
             }
         }
-        return new int[] {1, 1};
+        return new int[]{1, 1};
     }
 
 }

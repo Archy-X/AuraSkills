@@ -49,6 +49,7 @@ public class BlockSourceParser extends SourceParser<BlockSource> {
             }
             return new BlockSource.BlockSourceState(ImmutableMap.copyOf(stateMap));
         }
+
     }
 
 }

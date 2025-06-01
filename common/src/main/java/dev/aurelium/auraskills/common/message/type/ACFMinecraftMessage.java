@@ -25,4 +25,5 @@ public enum ACFMinecraftMessage implements MessageKey {
     public String getPath() {
         return path;
     }
+
 }

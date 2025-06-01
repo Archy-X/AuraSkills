@@ -49,4 +49,5 @@ public class ManaAbilityData {
     public void setErrorTimer(int errorTimer) {
         this.errorTimer = errorTimer;
     }
+
 }

@@ -36,6 +36,7 @@ public interface XpSource {
      * @return The name in all caps
      */
     String name();
+
     /**
      * Gets the amount of xp the source gives.
      * The value is the base amount before any multipliers are applied.

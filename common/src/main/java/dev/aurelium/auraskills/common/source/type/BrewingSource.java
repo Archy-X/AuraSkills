@@ -27,4 +27,5 @@ public class BrewingSource extends Source implements BrewingXpSource {
     public @NotNull BrewTriggers getTrigger() {
         return trigger;
     }
+
 }

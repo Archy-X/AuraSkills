@@ -29,11 +29,11 @@ public class XpRequirementsLoader {
 
     public void load() {
         ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
-        String FILE_NAME = "xp_requirements.yml";
+        String fileName = "xp_requirements.yml";
         try {
-            loader.generateUserFile(FILE_NAME);
+            loader.generateUserFile(fileName);
 
-            ConfigurationNode config = loader.loadUserFile(FILE_NAME);
+            ConfigurationNode config = loader.loadUserFile(fileName);
 
             // Load default section
             ConfigurationNode defaultConfig = config.node("default");
@@ -68,7 +68,7 @@ public class XpRequirementsLoader {
                 }
             }
         } catch (IOException e) {
-            plugin.logger().warn("Failed to load " + FILE_NAME + ": " + e.getMessage());
+            plugin.logger().warn("Failed to load " + fileName + ": " + e.getMessage());
             e.printStackTrace();
         }
     }

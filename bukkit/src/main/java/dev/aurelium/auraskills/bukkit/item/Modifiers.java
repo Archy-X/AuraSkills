@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class Modifiers {
-    
+
     private final AuraSkills plugin;
 
     public Modifiers(AuraSkills plugin) {
@@ -34,5 +34,5 @@ public class Modifiers {
         }
         return modifiers;
     }
-    
+
 }

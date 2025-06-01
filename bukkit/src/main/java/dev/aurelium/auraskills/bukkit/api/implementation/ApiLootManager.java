@@ -24,4 +24,5 @@ public class ApiLootManager implements LootManager {
     public void registerLootType(String name, LootParser parser) {
         plugin.getLootTableManager().getLootManager().registerCustomLootParser(name, parser);
     }
+
 }
