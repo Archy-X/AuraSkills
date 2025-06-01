@@ -613,6 +613,8 @@ commands:
     saved: "<green>スキルデータが保存されました！"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gold>{player}のすべてのスキルがレベル{level}に設定されました"
       desc: Sets all of a player's skills to a level.
