@@ -613,6 +613,8 @@ commands:
     saved: "<green>Dane o umiejętnościach zapisane!"
     desc: Zapisuje dane umiejętności.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
       desc: Ustawia wszystkie umiejętności gracza na określonym poziomie.
