@@ -613,6 +613,8 @@ commands:
     saved: "<green>Dữ liệu về Khả năng đã được lưu lại!"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray>Tất cả Khả năng đã được thành cấp <aqua>{level} <gray>cho người chơi <gold>{player}"
       desc: Sets all of a player's skills to a level.
