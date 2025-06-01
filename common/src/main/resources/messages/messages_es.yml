@@ -613,6 +613,8 @@ commands:
     saved: "<green>¡Datos de habilidades guardados!"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray>Todas las habilidades fueron establecidas al nivel <aqua>{level} <gray>para <gold>{player}"
       desc: Sets all of a player's skills to a level.
