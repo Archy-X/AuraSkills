@@ -19,4 +19,5 @@ public class SubmittedTask implements Task {
     public void cancel() {
         future.cancel(false);
     }
+
 }

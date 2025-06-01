@@ -58,11 +58,8 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     protected boolean hasInteraction(Block block) {
         Material mat = block.getType();
         return switch (mat) {
-            case ENDER_CHEST, CRAFTING_TABLE, ENCHANTING_TABLE, BEACON, ANVIL, GRINDSTONE, CARTOGRAPHY_TABLE,
-                    LOOM, STONECUTTER, SMITHING_TABLE, LEVER, BAMBOO_BUTTON, BIRCH_BUTTON, ACACIA_BUTTON,
-                    CHERRY_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, MANGROVE_BUTTON, OAK_BUTTON,
-                    POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON
-                    -> true;
+            case ENDER_CHEST, CRAFTING_TABLE, ENCHANTING_TABLE, BEACON, ANVIL, GRINDSTONE, CARTOGRAPHY_TABLE, LOOM, STONECUTTER, SMITHING_TABLE, LEVER, BAMBOO_BUTTON, BIRCH_BUTTON, ACACIA_BUTTON, CHERRY_BUTTON, CRIMSON_BUTTON, DARK_OAK_BUTTON, JUNGLE_BUTTON, MANGROVE_BUTTON, OAK_BUTTON, POLISHED_BLACKSTONE_BUTTON, SPRUCE_BUTTON, STONE_BUTTON, WARPED_BUTTON ->
+                    true;
             default -> {
                 BlockData data = block.getBlockData();
                 if (block.getState() instanceof InventoryHolder) {
@@ -132,7 +129,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     }
 
     private void scheduleUnready(Player player, Locale locale, ManaAbilityData data) {
-        int READY_DURATION = 80;
+        int readyDuration = 80;
         plugin.getScheduler().scheduleSync(() -> {
             if (!data.isActivated()) {
                 if (data.isReady()) {
@@ -140,7 +137,7 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
                     plugin.getAbilityManager().sendMessage(player, plugin.getMsg(ManaAbilityMessage.valueOf(manaAbility.name() + "_LOWER"), locale));
                 }
             }
-        }, READY_DURATION * 50, TimeUnit.MILLISECONDS);
+        }, readyDuration * 50, TimeUnit.MILLISECONDS);
     }
 
     private boolean isAllowReady(Player player, PlayerInteractEvent event) {
@@ -178,4 +175,5 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }
         return false;
     }
+
 }

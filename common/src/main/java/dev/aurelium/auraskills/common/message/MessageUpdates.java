@@ -55,4 +55,5 @@ public enum MessageUpdates implements MessageUpdate {
     public String getMessage() {
         return message;
     }
+
 }

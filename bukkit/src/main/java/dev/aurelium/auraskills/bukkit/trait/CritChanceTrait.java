@@ -31,4 +31,5 @@ public class CritChanceTrait extends TraitImpl {
     public boolean isCrit(User user) {
         return rand.nextDouble() < (user.getEffectiveTraitLevel(Traits.CRIT_CHANCE) / 100);
     }
+
 }

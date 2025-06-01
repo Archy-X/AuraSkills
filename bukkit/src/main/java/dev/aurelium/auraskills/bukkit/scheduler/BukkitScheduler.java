@@ -32,7 +32,7 @@ public class BukkitScheduler extends Scheduler {
     @Override
     public Task timerSync(TaskRunnable runnable, long delay, long period, TimeUnit timeUnit) {
         BukkitTask bukkitTask = plugin.getServer().getScheduler().runTaskTimer(plugin, runnable, timeUnit.toMillis(delay) / 50, timeUnit.toMillis(period) / 50);
-        Task task =  new BukkitTaskWrapper(bukkitTask);
+        Task task = new BukkitTaskWrapper(bukkitTask);
         runnable.injectTask(task);
         return task;
     }
@@ -44,4 +44,5 @@ public class BukkitScheduler extends Scheduler {
         runnable.injectTask(task);
         return task;
     }
+
 }

@@ -47,7 +47,7 @@ public class BossBarManager implements Listener {
     private NumberFormat moneyFormat;
     private final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
-    private boolean ANIMATE_PROGRESS;
+    private boolean animateProgress;
 
     public BossBarManager(AuraSkills plugin) {
         this.bossBars = new HashMap<>();
@@ -58,7 +58,7 @@ public class BossBarManager implements Listener {
         this.checkCurrentActions = new HashMap<>();
         this.singleCheckCurrentActions = new HashMap<>();
         loadNumberFormats();
-        this.ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
+        this.animateProgress = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
     }
 
     public NumberFormat getXpFormat() {
@@ -94,7 +94,7 @@ public class BossBarManager implements Listener {
         stayTime = plugin.configInt(Option.BOSS_BAR_STAY_TIME);
         colors = new HashMap<>();
         overlays = new HashMap<>();
-        ANIMATE_PROGRESS = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
+        animateProgress = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         for (String entry : plugin.configStringList(Option.BOSS_BAR_FORMAT)) {
             String[] splitEntry = entry.split(" ");
             Skill skill;
@@ -110,15 +110,13 @@ public class BossBarManager implements Listener {
             if (splitEntry.length > 1) {
                 try {
                     color = BossBar.Color.valueOf(splitEntry[1].toUpperCase(Locale.ROOT));
-                }
-                catch (IllegalArgumentException e) {
+                } catch (IllegalArgumentException e) {
                     plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[1] + " is not a valid BarColor");
                 }
                 if (splitEntry.length > 2) {
                     try {
                         overlay = BossBar.Overlay.valueOf(splitEntry[2].toUpperCase(Locale.ROOT));
-                    }
-                    catch (IllegalArgumentException e) {
+                    } catch (IllegalArgumentException e) {
                         plugin.logger().warn("Error loading boss bar format in config.yml: " + splitEntry[2] + " is not a valid BarStyle");
                     }
                 }
@@ -180,9 +178,8 @@ public class BossBarManager implements Listener {
                 progressOld = 1.0f;
             }
             bossBar = handleNewBossBar(player, skill, progressOld, progressNew, text);
-        }
-        // Use existing one
-        else {
+        } else {
+            // Use existing one
             handleExistingBossBar(bossBar, player, skill, progressNew, text);
         }
         // Increment current action
@@ -201,7 +198,7 @@ public class BossBarManager implements Listener {
         Component name = tf.toComponent(text);
 
         BossBar bossBar = BossBar.bossBar(name, progressOld, color, overlay);
-        if (!ANIMATE_PROGRESS) {  // If the config option is disabled, immediately show new progress
+        if (!animateProgress) {  // If the config option is disabled, immediately show new progress
             bossBar.progress(progressNew);
         } else {  // Update the progress later to display its animation from progressOld to progressNew
             plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
@@ -220,7 +217,7 @@ public class BossBarManager implements Listener {
     private void handleExistingBossBar(BossBar bossBar, Player player, Skill skill, float progress, String text) {
         Component name = tf.toComponent(text);
 
-        if (!ANIMATE_PROGRESS) {  // Update boss bar progress immediately
+        if (!animateProgress) {  // Update boss bar progress immediately
             bossBar.progress(progress);
         } else {  // Update progress later, so the player sees the animation from previous progress (from reused boss bar) to new
             plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
@@ -372,5 +369,5 @@ public class BossBarManager implements Listener {
         checkCurrentActions.remove(playerId);
         singleCheckCurrentActions.remove(playerId);
     }
-    
+
 }

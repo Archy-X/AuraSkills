@@ -30,4 +30,5 @@ public class ItemRewardBuilder extends MessagedRewardBuilder {
         Validate.allNotNull("key", itemKey);
         return new ItemReward(plugin, skill, menuMessage, chatMessage, itemKey, amount);
     }
+
 }

@@ -17,4 +17,5 @@ public class MySqlConnectionPool extends ConnectionPool {
         config.setUsername(credentials.username());
         config.setPassword(credentials.password());
     }
+
 }

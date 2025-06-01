@@ -9,4 +9,5 @@ public record KeyValueRow(
         @NotNull String keyName,
         @NotNull String value
 ) {
+
 }

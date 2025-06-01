@@ -160,6 +160,7 @@ public class BlockSource extends Source implements BlockXpSource {
             }
             return type.isInstance(obj);
         }
+
     }
 
 }

@@ -32,14 +32,14 @@ public class VanillaEntitySupplier extends EntitySupplier {
 
         if (entity instanceof LivingEntity livingEntity) {
             if (getEntityProperties().health() != null) {
-                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.MAX_HEALTH);
+                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.maxHealth);
                 if (attribute != null) {
                     attribute.setBaseValue(getEntityProperties().health());
                     livingEntity.setHealth(Math.min(getEntityProperties().health(), attribute.getValue()));
                 }
             }
             if (properties.damage() != null) {
-                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.ATTACK_DAMAGE);
+                AttributeInstance attribute = livingEntity.getAttribute(AttributeCompat.attackDamage);
                 if (attribute != null) {
                     attribute.setBaseValue(getEntityProperties().damage());
                 }
@@ -71,4 +71,5 @@ public class VanillaEntitySupplier extends EntitySupplier {
     public void removeEntity(Entity entity) {
         entity.remove();
     }
+
 }

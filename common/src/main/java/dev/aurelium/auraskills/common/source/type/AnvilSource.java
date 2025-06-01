@@ -34,4 +34,5 @@ public class AnvilSource extends Source implements AnvilXpSource {
     public String getMultiplier() {
         return multiplier;
     }
+
 }

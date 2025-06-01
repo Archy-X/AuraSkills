@@ -15,4 +15,5 @@ public class UserRecipient implements Recipient {
     public void sendMessage(Component component) {
         user.sendMessage(component);
     }
+
 }

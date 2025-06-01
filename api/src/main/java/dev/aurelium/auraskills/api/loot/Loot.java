@@ -11,4 +11,5 @@ public abstract class Loot {
     public LootValues getValues() {
         return values;
     }
+
 }

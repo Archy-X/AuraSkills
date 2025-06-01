@@ -29,4 +29,5 @@ public class TraitContext implements ContextProvider<Trait> {
             return null;
         }
     }
+
 }

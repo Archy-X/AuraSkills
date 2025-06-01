@@ -18,4 +18,5 @@ public class JumpingSourceParser extends SourceParser<JumpingSource> {
 
         return new JumpingSource(plugin, context.parseValues(source), interval);
     }
+
 }

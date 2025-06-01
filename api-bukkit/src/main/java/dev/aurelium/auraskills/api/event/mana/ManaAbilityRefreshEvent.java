@@ -42,4 +42,5 @@ public class ManaAbilityRefreshEvent extends Event {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

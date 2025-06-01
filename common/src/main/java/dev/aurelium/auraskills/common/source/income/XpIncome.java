@@ -25,4 +25,5 @@ public class XpIncome implements SourceIncome {
             return incomePerXp * sourceValues.getXp();
         }
     }
+
 }

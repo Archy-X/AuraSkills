@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.config;
 
-
 public enum Option {
 
     // Mysql Options

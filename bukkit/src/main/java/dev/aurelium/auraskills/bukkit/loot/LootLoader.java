@@ -68,11 +68,9 @@ public class LootLoader extends Parser {
                         }
 
                         loot = new ItemLootParser(manager).parse(context, ApiConfigNode.toApi(lootNode));
-                    }
-                    // Command loot
-                    else if (lootType.equalsIgnoreCase("command")) {
+                    } else if (lootType.equalsIgnoreCase("command")) { // Command loot
                         loot = new CommandLootParser().parse(context, ApiConfigNode.toApi(lootNode));
-                    // Entity loot, mainly for fishing
+                        // Entity loot, mainly for fishing
                     } else if (lootType.equalsIgnoreCase("entity")) {
                         loot = new EntityLootParser(manager).parse(context, ApiConfigNode.toApi(lootNode));
                     } else {

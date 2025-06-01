@@ -22,4 +22,5 @@ public enum LevelerFormat implements MessageKey {
     public String getPath() {
         return "leveler_format." + this.toString().toLowerCase(Locale.ROOT);
     }
+
 }

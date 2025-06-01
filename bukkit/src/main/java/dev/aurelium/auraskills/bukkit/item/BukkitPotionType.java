@@ -77,9 +77,10 @@ public class BukkitPotionType {
                 Method setBasePotionData = PotionMeta.class.getDeclaredMethod("setBasePotionData", potionDataClass);
                 setBasePotionData.invoke(meta, potionData);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException | ClassNotFoundException e) {
+                    NoSuchMethodException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
 }

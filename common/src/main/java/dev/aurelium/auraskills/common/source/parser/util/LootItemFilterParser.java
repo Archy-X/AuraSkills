@@ -20,4 +20,5 @@ public class LootItemFilterParser implements UtilityParser<LootItemFilter> {
 
         return new LootSourceItem(materials, excludedMaterials, category, meta, lootPool);
     }
+
 }

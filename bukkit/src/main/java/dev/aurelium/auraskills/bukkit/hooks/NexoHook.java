@@ -81,15 +81,15 @@ public class NexoHook extends Hook implements Listener {
             @Nullable BlockXpSourceState[] states = block.getStates();
             List<BlockXpSourceState> stateBuilder = new ArrayList<>();
             // Modify states
-            final String NEXO_PREFIX = "nexo:";
+            final String nexoPrefix = "nexo:";
 
             for (int i = 0; i < blocks.length; i++) {
                 String blockId = blocks[i];
-                if (!blockId.startsWith(NEXO_PREFIX)) {
+                if (!blockId.startsWith(nexoPrefix)) {
                     continue;
                 }
 
-                String nextBlockId = blockId.substring(NEXO_PREFIX.length());
+                String nextBlockId = blockId.substring(nexoPrefix.length());
                 BlockData blockData = NexoBlocks.blockData(nextBlockId);
                 if (blockData == null) continue;
 

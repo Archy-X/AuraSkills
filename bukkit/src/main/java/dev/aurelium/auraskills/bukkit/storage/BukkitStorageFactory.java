@@ -13,4 +13,5 @@ public class BukkitStorageFactory extends StorageFactory {
     public String getDataDirectory() {
         return plugin.getPluginFolder().getPath() + "/userdata";
     }
+
 }

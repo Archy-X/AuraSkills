@@ -85,5 +85,5 @@ public enum Command {
     XP_ADD,
     XP_SET,
     XP_REMOVE
-    
+
 }

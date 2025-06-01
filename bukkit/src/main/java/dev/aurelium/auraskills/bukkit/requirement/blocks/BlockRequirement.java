@@ -39,4 +39,5 @@ public class BlockRequirement {
     public List<RequirementNode> getNodes() {
         return nodes;
     }
+
 }

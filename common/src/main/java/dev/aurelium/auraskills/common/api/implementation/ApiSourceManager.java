@@ -58,4 +58,5 @@ public class ApiSourceManager implements SourceManager {
     public SourceIncome loadSourceIncome(ConfigNode source) {
         return incomeLoader.loadSourceIncome(((ApiConfigNode) source).getBacking());
     }
+
 }

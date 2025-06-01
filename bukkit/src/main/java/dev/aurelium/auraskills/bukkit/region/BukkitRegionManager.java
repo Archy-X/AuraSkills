@@ -132,4 +132,5 @@ public class BukkitRegionManager extends RegionManager {
         }
         return world.isChunkLoaded(chunkX, chunkZ);
     }
+
 }

@@ -126,4 +126,5 @@ public enum Traits implements Trait {
     public String toString() {
         return id.toString();
     }
+
 }

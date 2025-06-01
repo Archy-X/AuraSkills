@@ -48,7 +48,7 @@ public class OfflineSkillsUser implements SkillsUser {
 
     @Override
     public void addSkillXp(Skill skill, double amountToAdd, XpSource source) {
-        
+
     }
 
     @Override
@@ -232,4 +232,5 @@ public class OfflineSkillsUser implements SkillsUser {
         future.complete(false);
         return future;
     }
+
 }

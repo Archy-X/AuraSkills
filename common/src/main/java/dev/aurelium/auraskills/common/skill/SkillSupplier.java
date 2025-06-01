@@ -75,4 +75,5 @@ public class SkillSupplier extends OptionSupplier<Skill> implements SkillProvide
     public boolean isLoaded(Skill type) {
         return skillManager.isLoaded(type);
     }
+
 }

@@ -23,7 +23,7 @@ public class DamageC extends Check {
     public void onDamageXpGain(DamageXpGainEvent event) {
         if (isDisabled() || !(event.getSource() instanceof DamageXpSource) || event.getDamager() == null) return;
 
-        Player player= event.getPlayer();
+        Player player = event.getPlayer();
         if (handler.failsCheck(getCheckData(player), event.getDamager().getEntityId())) {
             event.setCancelled(true);
             logFail(player);

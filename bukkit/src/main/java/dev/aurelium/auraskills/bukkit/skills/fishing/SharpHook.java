@@ -1,12 +1,12 @@
 package dev.aurelium.auraskills.bukkit.skills.fishing;
 
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.mana.ManaAbilityProvider;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
-import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -69,7 +69,7 @@ public class SharpHook extends ManaAbilityProvider {
             }
         }
         // Check entities
-        for (Entity entity : player.getNearbyEntities(33, 33 ,33)) {
+        for (Entity entity : player.getNearbyEntities(33, 33, 33)) {
             if (!(entity instanceof FishHook fishHook)) continue;
             ProjectileSource source = fishHook.getShooter();
             if (!fishHook.isValid() || !(source instanceof Player)) {

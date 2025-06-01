@@ -51,7 +51,7 @@ public abstract class MessageProvider implements PolyglotProvider {
                 .messageDirectory("messages")
                 .messageFileName("messages_{language}.yml")
                 .defaultLanguage("en")
-                .providedLanguages(new String[] {"global", "en", "fr", "de", "es", "zh-CN", "zh-TW", "pt-BR", "it", "cs", "pl", "uk", "ko", "nl", "ja", "ru", "id", "vi", "tr", "fi", "th"})
+                .providedLanguages(new String[]{"global", "en", "fr", "de", "es", "zh-CN", "zh-TW", "pt-BR", "it", "cs", "pl", "uk", "ko", "nl", "ja", "ru", "id", "vi", "tr", "fi", "th"})
                 .messageReplacements(new MessageReplacements(replace))
                 .build();
         this.polyglot = new Polyglot(this, config);
@@ -322,4 +322,5 @@ public abstract class MessageProvider implements PolyglotProvider {
     public void logSevere(String message) {
         plugin.logger().severe(message);
     }
+
 }

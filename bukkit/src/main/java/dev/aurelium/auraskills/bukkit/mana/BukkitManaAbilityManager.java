@@ -75,10 +75,10 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
     public void sendNotEnoughManaMessage(User user, double manaCost) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;
-        plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_ENOUGH_MANA, user.getLocale())
-                , "{mana}", NumberUtil.format0(manaCost)
-                , "{current_mana}", String.valueOf(Math.round(user.getMana()))
-                , "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
+        plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(ManaAbilityMessage.NOT_ENOUGH_MANA, user.getLocale()),
+                "{mana}", NumberUtil.format0(manaCost),
+                "{current_mana}", String.valueOf(Math.round(user.getMana())),
+                "{max_mana}", String.valueOf(Math.round(user.getMaxMana()))));
     }
 
     @Override
@@ -100,4 +100,5 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
         }
         return abilities;
     }
+
 }

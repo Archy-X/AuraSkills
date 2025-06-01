@@ -19,4 +19,5 @@ public class ItemConsumeSourceParser extends SourceParser<ItemConsumeSource> {
 
         return new ItemConsumeSource(plugin, context.parseValues(source), item);
     }
+
 }

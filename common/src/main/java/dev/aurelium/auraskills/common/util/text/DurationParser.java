@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 
 public final class DurationParser {
 
-    private DurationParser() {}
+    private DurationParser() {
+    }
 
     private static final Pattern DURATION_PATTERN = Pattern.compile(
             "(?:(\\d+)y)?(?:(\\d+)mo)?(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?(?:(\\d+)s)?"
@@ -59,8 +60,8 @@ public final class DurationParser {
         return sb.isEmpty() ? "0s" : sb.toString();
     }
 
-
     private static long parseNumber(String group) {
         return group == null ? 0 : Long.parseLong(group);
     }
+
 }

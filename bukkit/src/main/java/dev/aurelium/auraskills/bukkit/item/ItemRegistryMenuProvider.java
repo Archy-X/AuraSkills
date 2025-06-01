@@ -17,4 +17,5 @@ public class ItemRegistryMenuProvider implements KeyedItemProvider {
     public @Nullable ItemStack getItem(String key) {
         return itemRegistry.getItem(NamespacedId.fromDefault(key));
     }
+
 }

@@ -37,7 +37,7 @@ public abstract class TraitManager {
         }
         return loadedTrait;
     }
-    
+
     public void register(Trait trait, LoadedTrait loadedTrait) {
         traitMap.put(trait, loadedTrait);
     }
@@ -73,4 +73,5 @@ public abstract class TraitManager {
     public abstract void registerTraitHandler(TraitHandler traitHandler);
 
     public abstract String getMenuDisplay(Trait trait, double value, Locale locale, @Nullable NumberFormat format);
+
 }

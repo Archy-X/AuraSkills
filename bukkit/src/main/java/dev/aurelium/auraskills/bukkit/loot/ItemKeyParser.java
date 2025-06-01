@@ -29,4 +29,5 @@ public class ItemKeyParser implements CustomItemParser {
             throw new IllegalArgumentException("Item with key " + itemKey + " not found in item registry");
         }
     }
+
 }

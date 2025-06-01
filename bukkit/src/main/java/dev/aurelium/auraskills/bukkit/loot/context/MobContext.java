@@ -11,4 +11,5 @@ public record MobContext(EntityType entityType) implements LootContext {
     public String getName() {
         return entityType.toString().toLowerCase(Locale.ROOT);
     }
+
 }

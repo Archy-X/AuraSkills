@@ -32,4 +32,5 @@ public class MythicEntitySupplier extends EntitySupplier {
     public void removeEntity(Entity entity) {
         MythicBukkit.inst().getMobManager().getActiveMob(entity.getUniqueId()).ifPresent(ActiveMob::remove);
     }
+
 }

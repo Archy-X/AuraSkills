@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.api.implementation;
 
-import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.api.user.SkillsUser;
+import dev.aurelium.auraskills.api.user.UserManager;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 

@@ -34,4 +34,5 @@ public class XpSourceContext implements ContextProvider<XpSource> {
         // Find source from skill that matches id
         return skill.getSources().stream().filter(source -> source.getId().equals(sourceId)).findFirst().orElse(null);
     }
+
 }

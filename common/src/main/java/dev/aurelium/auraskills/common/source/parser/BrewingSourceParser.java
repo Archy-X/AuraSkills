@@ -21,4 +21,5 @@ public class BrewingSourceParser extends SourceParser<BrewingSource> {
 
         return new BrewingSource(plugin, context.parseValues(source), ingredients, trigger);
     }
+
 }

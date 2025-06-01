@@ -34,5 +34,4 @@ public final class AuraSkillsBukkitProvider {
         throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 
-
 }

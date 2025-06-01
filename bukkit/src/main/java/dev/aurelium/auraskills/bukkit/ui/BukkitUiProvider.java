@@ -84,4 +84,5 @@ public class BukkitUiProvider implements UiProvider {
         plugin.getAudiences().player(player).showTitle(Title.title(cTitle, cSubtitle,
                 Times.times(Duration.ofMillis(fadeInMs), Duration.ofMillis(stayMs), Duration.ofMillis(fadeOutMs))));
     }
+
 }

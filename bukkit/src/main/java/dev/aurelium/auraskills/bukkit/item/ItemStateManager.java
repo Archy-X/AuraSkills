@@ -168,6 +168,8 @@ public class ItemStateManager {
         };
     }
 
-    private record Result(ItemStack item, Set<ReloadableIdentifier> toReload) { }
+    private record Result(ItemStack item, Set<ReloadableIdentifier> toReload) {
+
+    }
 
 }

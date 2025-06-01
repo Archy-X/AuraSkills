@@ -63,10 +63,10 @@ public interface AuraSkillsApi {
      * which is used to register custom skills, stats, abilities, etc.
      *
      * @param namespace The name of the plugin this is being called by to uniquely identify custom content.
-     *                  The namespace will be forced to lowercase. Referencing custom content in config files is done
-     *                  by appending "namespace/" to the name of the content.
+     * The namespace will be forced to lowercase. Referencing custom content in config files is done
+     * by appending "namespace/" to the name of the content.
      * @param contentDirectory The directory where configuration files for custom content will be loaded from.
-     *                         For Bukkit, pass in JavaPlugin#getDataFolder to use the plugin's config folder.
+     * For Bukkit, pass in JavaPlugin#getDataFolder to use the plugin's config folder.
      * @return the {@link NamespacedRegistry} to register custom content
      * @throws IllegalArgumentException if the namespace is "auraskills", which is not allowed
      */

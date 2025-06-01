@@ -24,4 +24,5 @@ public class JobsBatchData {
     public void addAccumulatedIncome(double amount) {
         this.accumulatedIncome += amount;
     }
+
 }

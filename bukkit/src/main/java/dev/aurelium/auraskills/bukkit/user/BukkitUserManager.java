@@ -80,4 +80,5 @@ public class BukkitUserManager implements UserManager {
         }
         return online;
     }
+
 }

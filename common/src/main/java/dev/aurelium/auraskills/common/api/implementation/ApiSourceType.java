@@ -31,4 +31,5 @@ public class ApiSourceType implements SourceType {
     public boolean isEnabled() {
         return plugin.getSkillManager().isSourceEnabled(this);
     }
+
 }

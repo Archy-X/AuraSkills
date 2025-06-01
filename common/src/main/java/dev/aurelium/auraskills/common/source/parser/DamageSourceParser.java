@@ -26,4 +26,5 @@ public class DamageSourceParser extends SourceParser<DamageSource> {
 
         return new DamageSource(plugin, context.parseValues(source), causes, excludedCauses, damagers, excludedDamagers, mustSurvive, useOriginalDamage, includeProjectiles, cooldownMsg);
     }
+
 }

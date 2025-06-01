@@ -20,4 +20,5 @@ public class ItemConsumeSource extends Source implements ItemConsumeXpSource {
     public @NotNull ItemFilter getItem() {
         return item;
     }
+
 }

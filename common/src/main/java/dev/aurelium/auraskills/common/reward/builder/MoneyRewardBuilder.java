@@ -28,4 +28,5 @@ public class MoneyRewardBuilder extends RewardBuilder {
     public SkillReward build() {
         return new MoneyReward(plugin, skill, amount, formula);
     }
+
 }

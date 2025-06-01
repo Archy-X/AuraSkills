@@ -82,12 +82,11 @@ public enum Abilities implements Ability {
     ANVIL_MASTER("forging"),
     SKILL_MENDER("forging");
 
-    @Inject
-    private AbilityProvider provider;
-
     private final NamespacedId id;
     private final boolean hasSecondaryValue;
     private final String legacySkillName;
+    @Inject
+    private AbilityProvider provider;
 
     Abilities(String legacySkillName) {
         this(legacySkillName, false);
@@ -252,4 +251,5 @@ public enum Abilities implements Ability {
     public Map<String, Object> optionMap(String key) {
         return provider.optionMap(this, key);
     }
+
 }

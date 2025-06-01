@@ -90,7 +90,7 @@ public class Terraform extends ReadiedManaAbility {
 
     private void terraformBreak(Player player, Block block) {
         Material material = block.getType();
-        BlockFace[] faces = new BlockFace[] {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
+        BlockFace[] faces = new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
         int count = 0;

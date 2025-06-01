@@ -9,7 +9,7 @@ import dev.aurelium.auraskills.common.reward.builder.StatRewardBuilder;
 import org.spongepowered.configurate.ConfigurationNode;
 
 public class StatRewardParser extends RewardParser {
-    
+
     public StatRewardParser(AuraSkillsPlugin plugin, Skill skill) {
         super(plugin, skill);
     }
@@ -33,4 +33,5 @@ public class StatRewardParser extends RewardParser {
                 .skill(skill)
                 .build();
     }
+
 }

@@ -6,8 +6,8 @@ import dev.aurelium.auraskills.common.config.Option;
 import java.util.TreeMap;
 
 public class RomanNumber {
-	
-	private final static TreeMap<Integer, String> map = new TreeMap<>();
+
+    private static final TreeMap<Integer, String> map = new TreeMap<>();
 
     static {
         map.put(1000000000, "Ⓜ");
@@ -62,4 +62,5 @@ public class RomanNumber {
             return String.valueOf(number);
         }
     }
+
 }

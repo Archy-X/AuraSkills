@@ -42,4 +42,5 @@ public class BukkitLogger implements PlatformLogger {
     public void debug(String message) {
         plugin.getLogger().info("[DEBUG] " + message);
     }
+
 }

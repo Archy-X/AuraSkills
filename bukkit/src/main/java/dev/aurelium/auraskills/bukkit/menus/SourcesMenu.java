@@ -170,7 +170,8 @@ public class SourcesMenu {
                 // Filter valid sources
                 List<XpSource> filteredSources = new ArrayList<>();
                 for (XpSource source : ((Skill) activeMenu.getProperty("skill")).getSources()) {
-                    if (source.getXp() == 0.0 || plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source) == null) continue;
+                    if (source.getXp() == 0.0 || plugin.getItemRegistry().getSourceMenuItems().getMenuItem(source) == null)
+                        continue;
                     filteredSources.add(source);
                 }
                 filteredSources.sort(((SortType) activeMenu.getProperty("sort_type")).getComparator(plugin, m.locale()));

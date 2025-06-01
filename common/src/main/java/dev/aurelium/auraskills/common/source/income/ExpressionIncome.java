@@ -37,4 +37,5 @@ public class ExpressionIncome implements SourceIncome {
         }
         return 0;
     }
+
 }

@@ -27,7 +27,7 @@ public class ConfigurateSourceContext extends SourceContext {
         return new SourceValues(api, sourceType, id, xp, displayName, unitName, income);
     }
 
-    public ConfigurationNode required(ConfigurationNode node, String path)  {
+    public ConfigurationNode required(ConfigurationNode node, String path) {
         if (!node.hasChild(path)) {
             throw new IllegalArgumentException("Missing required field: " + path);
         }
@@ -51,7 +51,7 @@ public class ConfigurateSourceContext extends SourceContext {
             try {
                 list = source.node(pluralKey).getList(type);
             } catch (SerializationException e) {
-                throw new IllegalArgumentException("Failed to convert value of key "  + pluralKey + " to a list of type " + type.getName() + " from input: " + source.node(pluralKey).getString());
+                throw new IllegalArgumentException("Failed to convert value of key " + pluralKey + " to a list of type " + type.getName() + " from input: " + source.node(pluralKey).getString());
             }
             if (list != null) {
                 array = list.toArray((V[]) Array.newInstance(type, list.size()));

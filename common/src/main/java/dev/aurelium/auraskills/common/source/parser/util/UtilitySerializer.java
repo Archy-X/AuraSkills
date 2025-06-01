@@ -29,4 +29,5 @@ public class UtilitySerializer<T> implements TypeSerializer<T> {
     public void serialize(Type type, @Nullable T obj, ConfigurationNode node) throws SerializationException {
         // Empty because we don't need to serialize
     }
+
 }

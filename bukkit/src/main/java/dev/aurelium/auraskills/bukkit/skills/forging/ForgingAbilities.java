@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.skills.forging;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.source.GrindstoneLeveler;
@@ -115,7 +115,8 @@ public class ForgingAbilities extends AbilityImpl {
             if (world != null) {
                 world.spawn(location, ExperienceOrb.class).setExperience(added);
             }
-        } catch (IllegalArgumentException ignored) {}
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {

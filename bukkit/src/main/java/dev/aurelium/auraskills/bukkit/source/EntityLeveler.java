@@ -34,13 +34,13 @@ import java.util.UUID;
 
 public class EntityLeveler extends SourceLeveler {
 
-    private final NamespacedKey SPAWNER_MOB_KEY;
-    private final NamespacedKey ROSE_STACKER_SPAWNER;
+    private final NamespacedKey spawnerMobKey;
+    private final NamespacedKey roseStackerSpawner;
 
     public EntityLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.ENTITY);
-        this.SPAWNER_MOB_KEY = new NamespacedKey(plugin, "is_spawner_mob");
-        this.ROSE_STACKER_SPAWNER = NamespacedKey.fromString("rosestacker:spawner_spawned");
+        this.spawnerMobKey = new NamespacedKey(plugin, "is_spawner_mob");
+        this.roseStackerSpawner = NamespacedKey.fromString("rosestacker:spawner_spawned");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -267,7 +267,7 @@ public class EntityLeveler extends SourceLeveler {
         }
         LivingEntity entity = event.getEntity();
         PersistentDataContainer data = entity.getPersistentDataContainer();
-        data.set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+        data.set(spawnerMobKey, PersistentDataType.INTEGER, 1);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -276,11 +276,11 @@ public class EntityLeveler extends SourceLeveler {
 
         Entity original = event.getEntity();
         // Ignore entities that aren't spawner mobs
-        if (!original.getPersistentDataContainer().has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) return;
+        if (!original.getPersistentDataContainer().has(spawnerMobKey, PersistentDataType.INTEGER)) return;
 
         // Apply key to split entities
         for (Entity entity : event.getTransformedEntities()) {
-            entity.getPersistentDataContainer().set(SPAWNER_MOB_KEY, PersistentDataType.INTEGER, 1);
+            entity.getPersistentDataContainer().set(spawnerMobKey, PersistentDataType.INTEGER, 1);
         }
     }
 
@@ -294,9 +294,9 @@ public class EntityLeveler extends SourceLeveler {
 
     private boolean isSpawnerSpawned(Entity entity) {
         PersistentDataContainer container = entity.getPersistentDataContainer();
-        if (container.has(SPAWNER_MOB_KEY, PersistentDataType.INTEGER)) {
+        if (container.has(spawnerMobKey, PersistentDataType.INTEGER)) {
             return true;
-        } else return container.has(ROSE_STACKER_SPAWNER, PersistentDataType.INTEGER);
+        } else return container.has(roseStackerSpawner, PersistentDataType.INTEGER);
     }
 
     @Nullable
@@ -317,7 +317,7 @@ public class EntityLeveler extends SourceLeveler {
     private double getDamageMultiplier(LivingEntity entity, EntityXpSource source, EntityDamageEvent event) {
         double damageDealt = Math.min(entity.getHealth(), event.getFinalDamage());
         if (source.scaleXpWithHealth()) {
-            AttributeInstance healthAttribute = entity.getAttribute(AttributeCompat.MAX_HEALTH);
+            AttributeInstance healthAttribute = entity.getAttribute(AttributeCompat.maxHealth);
             if (healthAttribute != null) {
                 double maxHealth = healthAttribute.getValue();
                 return damageDealt / maxHealth; // XP gain is damage/maxHealth * sourceXp

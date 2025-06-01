@@ -26,4 +26,5 @@ public class ItemFilterParser implements UtilityParser<ItemFilter> {
 
         return new SourceItem(materials, excludedMaterials, category, meta);
     }
+
 }

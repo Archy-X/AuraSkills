@@ -22,8 +22,8 @@ import java.util.Locale;
 
 public class HealingAbilities extends AbilityImpl {
 
-    private final String REVIVAL_HEALTH_MODIFIER_NAME = "AureliumSkills.Ability.Revival.Health";
-    private final String REVIVAL_REGEN_MODIFIER_NAME = "AureliumSkills.Ability.Revival.Regeneration";
+    private static final String REVIVAL_HEALTH_MODIFIER_NAME = "AureliumSkills.Ability.Revival.Health";
+    private static final String REVIVAL_REGEN_MODIFIER_NAME = "AureliumSkills.Ability.Revival.Regeneration";
 
     public HealingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LIFE_ESSENCE, Abilities.HEALER, Abilities.LIFE_STEAL, Abilities.GOLDEN_HEART, Abilities.REVIVAL);
@@ -73,9 +73,10 @@ public class HealingAbilities extends AbilityImpl {
         user.addStatModifier(regenerationModifier);
         if (ability.optionBoolean("enable_message", true)) {
             Locale locale = user.getLocale();
-            plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(AbilityMessage.REVIVAL_MESSAGE, locale)
-                    , "{value}", NumberUtil.format1(healthBonus)
-                    , "{value_2}", NumberUtil.format1(regenerationBonus)));
+            plugin.getAbilityManager().sendMessage(player,
+                    TextUtil.replace(plugin.getMsg(AbilityMessage.REVIVAL_MESSAGE, locale),
+                            "{value}", NumberUtil.format1(healthBonus),
+                            "{value_2}", NumberUtil.format1(regenerationBonus)));
         }
         new BukkitRunnable() {
             @Override

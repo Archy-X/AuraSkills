@@ -24,12 +24,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Treecapitator extends ReadiedManaAbility {
 
-    private final boolean GIVE_XP;
+    private final boolean giveXp;
 
     public Treecapitator(AuraSkills plugin) {
         super(plugin, ManaAbilities.TREECAPITATOR, ManaAbilityMessage.TREECAPITATOR_START, ManaAbilityMessage.TREECAPITATOR_END,
                 new String[]{"_AXE"}, new Action[]{Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
-        this.GIVE_XP = ManaAbilities.TREECAPITATOR.optionBoolean("give_xp", true);
+        this.giveXp = ManaAbilities.TREECAPITATOR.optionBoolean("give_xp", true);
     }
 
     @Override
@@ -99,14 +99,15 @@ public class Treecapitator extends ReadiedManaAbility {
             BlockXpSource adjSource = getSource(adjacentBlock);
             boolean isTrunk = isTrunk(adjSource);
             boolean isLeaf = isLeaf(adjSource);
-            if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
+            if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT"))
+                continue; // Check block is leaf or trunk
             // Make sure block was not placed
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
             }
             adjacentBlock.breakNaturally();
             tree.incrementBlocksBroken();
-            if (adjSource != null && GIVE_XP) {
+            if (adjSource != null && giveXp) {
                 plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
             }
             // Continue breaking blocks
@@ -169,7 +170,7 @@ public class Treecapitator extends ReadiedManaAbility {
         private void setMaxBlocks(XpSource source) {
             String matName = originalBlock.getType().toString();
             if (source == null && matName.contains("STRIPPED")) {
-                String[] woodNames = new String[] {"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "CRIMSON", "WARPED", "MANGROVE", "CHERRY"};
+                String[] woodNames = new String[]{"OAK", "SPRUCE", "BIRCH", "JUNGLE", "ACACIA", "DARK_OAK", "CRIMSON", "WARPED", "MANGROVE", "CHERRY"};
                 for (String woodName : woodNames) {
                     if (matName.contains(woodName)) {
                         if (woodName.equals("CRIMSON") || woodName.equals("WARPED")) {

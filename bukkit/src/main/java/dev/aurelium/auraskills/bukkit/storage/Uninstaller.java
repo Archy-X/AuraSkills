@@ -75,7 +75,7 @@ public class Uninstaller {
         return false;
     }
 
-    private boolean removeLegacyPlayer(NBTFileHandle nbtFile) throws IOException  {
+    private boolean removeLegacyPlayer(NBTFileHandle nbtFile) throws IOException {
         ReadWriteNBTCompoundList compoundList = nbtFile.getCompoundList("Attributes");
         if (compoundList == null) {
             return false;

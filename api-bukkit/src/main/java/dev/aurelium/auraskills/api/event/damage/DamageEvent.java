@@ -71,6 +71,7 @@ public class DamageEvent extends Event implements Cancellable {
     }
 
     static class DamageCalculation {
+
         private double damage;
 
         public DamageCalculation(double baseDamage) {
@@ -84,6 +85,7 @@ public class DamageEvent extends Event implements Cancellable {
         public double getDamage() {
             return damage;
         }
+
     }
 
     private double applyModifier(DamageCalculation calculation, DamageModifier modifier) {
@@ -100,4 +102,5 @@ public class DamageEvent extends Event implements Cancellable {
         }
         return 0.0;
     }
+
 }

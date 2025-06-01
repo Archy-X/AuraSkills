@@ -19,4 +19,5 @@ public class ManaAbilityUseSourceParser extends SourceParser<ManaAbilityUseSourc
 
         return new ManaAbilityUseSource(plugin, context.parseValues(source), manaAbilities);
     }
+
 }

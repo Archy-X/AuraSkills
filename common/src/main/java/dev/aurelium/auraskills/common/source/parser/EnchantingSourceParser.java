@@ -20,4 +20,5 @@ public class EnchantingSourceParser extends SourceParser<EnchantingSource> {
 
         return new EnchantingSource(plugin, context.parseValues(source), item, unit);
     }
+
 }

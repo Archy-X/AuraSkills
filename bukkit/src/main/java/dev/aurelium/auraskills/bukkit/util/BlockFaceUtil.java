@@ -9,7 +9,7 @@ import java.util.List;
 public class BlockFaceUtil {
 
     public static BlockFace[] getBlockSides() {
-        return new BlockFace[] {BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
+        return new BlockFace[]{BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
     }
 
     public static List<Block> getSurroundingBlocks(Block block) {

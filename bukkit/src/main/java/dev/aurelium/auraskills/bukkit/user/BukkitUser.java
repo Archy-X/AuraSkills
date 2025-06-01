@@ -231,4 +231,5 @@ public class BukkitUser extends User {
         // Remove fleeting
         removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
     }
+
 }

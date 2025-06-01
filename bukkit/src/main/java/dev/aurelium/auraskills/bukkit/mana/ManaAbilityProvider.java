@@ -164,8 +164,8 @@ public abstract class ManaAbilityProvider implements Listener {
             manaConsumed = 0.0;
         }
 
-        plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(activateMessage, user.getLocale())
-                ,"{mana}", NumberUtil.format0(manaConsumed)));
+        plugin.getAbilityManager().sendMessage(player, TextUtil.replace(plugin.getMsg(activateMessage, user.getLocale()),
+                "{mana}", NumberUtil.format0(manaConsumed)));
     }
 
     public boolean insufficientMana(User user, double manaCost) {

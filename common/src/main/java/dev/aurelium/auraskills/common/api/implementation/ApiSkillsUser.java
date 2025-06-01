@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.api.implementation;
 
-
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;

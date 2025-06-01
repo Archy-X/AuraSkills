@@ -17,7 +17,7 @@ public class SourceValues {
     private final SourceIncome income;
 
     public SourceValues(AuraSkillsApi api, SourceType type, NamespacedId id, double xp,
-                        @Nullable String displayName, @Nullable String unitName, SourceIncome income) {
+            @Nullable String displayName, @Nullable String unitName, SourceIncome income) {
         this.api = api;
         this.type = type;
         this.id = id;
@@ -56,4 +56,5 @@ public class SourceValues {
     public SourceIncome getIncome() {
         return income;
     }
+
 }

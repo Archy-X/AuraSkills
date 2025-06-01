@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.message.type;
 
-
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.common.message.MessageKey;
@@ -8,7 +7,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import java.util.Locale;
 
 public enum ManaAbilityMessage implements MessageKey {
-    
+
     REPLENISH_NAME,
     REPLENISH_DESC,
     REPLENISH_RAISE,
@@ -74,4 +73,5 @@ public enum ManaAbilityMessage implements MessageKey {
     public String getPath() {
         return path;
     }
+
 }

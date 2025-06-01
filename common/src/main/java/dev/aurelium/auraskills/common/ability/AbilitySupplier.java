@@ -108,4 +108,5 @@ public class AbilitySupplier extends OptionSupplier<Ability> implements AbilityP
     public boolean isLoaded(Ability type) {
         return abilityManager.isLoaded(type);
     }
+
 }

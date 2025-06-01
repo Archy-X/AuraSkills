@@ -42,7 +42,7 @@ public abstract class ActionBarManager {
                 if (!plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
                     return;
                 }
-    
+
                 for (User user : plugin.getUserManager().getOnlineUsers()) {
                     UUID uuid = user.getUuid();
                     Integer time = timer.get(uuid);
@@ -58,7 +58,7 @@ public abstract class ActionBarManager {
         };
         plugin.getScheduler().timerSync(task, 0, 2 * 50L, TimeUnit.MILLISECONDS);
     }
-    
+
     public void startUpdatingIdleActionBar() {
         var task = new TaskRunnable() {
             @Override
@@ -100,11 +100,11 @@ public abstract class ActionBarManager {
                         }
                     }
 
-                    String message = TextUtil.replace(base
-                            , "{hp}", getHp(user)
-                            , "{max_hp}", getMaxHp(user)
-                            , "{mana}", getMana(user)
-                            , "{max_mana}", getMaxMana(user));
+                    String message = TextUtil.replace(base,
+                            "{hp}", getHp(user),
+                            "{max_hp}", getMaxHp(user),
+                            "{mana}", getMana(user),
+                            "{max_mana}", getMaxMana(user));
                     message = replacePlaceholderApi(user, message);
 
                     if (formatLast) {
@@ -147,28 +147,28 @@ public abstract class ActionBarManager {
         currentAction.put(uuid, thisAction);
         // Schedule timer task to update action bar
         plugin.getScheduler().timerSync(
-            new TaskRunnable() {
-                @Override
-                public void run() {
-                    if (!isGainingXp.contains(uuid)) {
-                        cancel();
-                        return;
-                    }
-                    // Cancel if a later action bar is sent
-                    Integer actionNum = currentAction.get(uuid);
-                    if (actionNum == null) {
-                        cancel();
-                        return;
-                    }
-                    if (thisAction != actionNum) {
-                        cancel();
-                        return;
-                    }
+                new TaskRunnable() {
+                    @Override
+                    public void run() {
+                        if (!isGainingXp.contains(uuid)) {
+                            cancel();
+                            return;
+                        }
+                        // Cancel if a later action bar is sent
+                        Integer actionNum = currentAction.get(uuid);
+                        if (actionNum == null) {
+                            cancel();
+                            return;
+                        }
+                        if (thisAction != actionNum) {
+                            cancel();
+                            return;
+                        }
 
-                    String message = getXpActionBarMessage(user, skill, currentXp, levelXp, xpGained, level, maxed, income);
-                    uiProvider.sendActionBar(user, message);
-                }
-            }, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
+                        String message = getXpActionBarMessage(user, skill, currentXp, levelXp, xpGained, level, maxed, income);
+                        uiProvider.sendActionBar(user, message);
+                    }
+                }, 0, plugin.configInt(Option.ACTION_BAR_UPDATE_PERIOD) * 50L, TimeUnit.MILLISECONDS);
         // Schedule task to stop updating action bar
         plugin.getScheduler().scheduleSync(() -> {
             Integer timerNum = timer.get(uuid);

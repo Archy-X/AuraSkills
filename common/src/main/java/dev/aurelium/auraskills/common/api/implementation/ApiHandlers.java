@@ -16,4 +16,5 @@ public class ApiHandlers implements Handlers {
     public void registerTraitHandler(TraitHandler traitHandler) {
         plugin.getTraitManager().registerTraitHandler(traitHandler);
     }
+
 }

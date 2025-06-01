@@ -104,7 +104,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
         //Gets max hp
         if (identifier.equals("hp_max")) {
-            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
             if (attribute != null) {
                 return String.valueOf(Math.round(attribute.getValue() * Traits.HP.optionDouble("action_bar_scaling")));
             } else {
@@ -119,7 +119,7 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
 
         //Gets HP Percent as an integer
         if (identifier.equals("hp_percent")) {
-            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
             if (attribute != null) {
                 return String.valueOf(Math.round(player.getHealth() / attribute.getValue()));
             } else {
@@ -510,4 +510,5 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_jobs_active_[skill]%"
         );
     }
+
 }

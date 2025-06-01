@@ -122,11 +122,10 @@ public enum MenuMessage implements MessageKey {
     CHESTPLATE_DESC(8),
     LEGGINGS_DESC(8),
     BOOTS_DESC(8),
-    EFFECTIVE_TRAIT(8)
-    ;
+    EFFECTIVE_TRAIT(8);
 
     private final String path;
-    
+
     MenuMessage(int section) {
         String key = this.name().toLowerCase(Locale.ROOT);
         this.path = "menus." + switch (section) {
@@ -147,4 +146,5 @@ public enum MenuMessage implements MessageKey {
     public String getPath() {
         return path;
     }
+
 }

@@ -36,4 +36,5 @@ public class MaxManaTrait extends TraitImpl {
 
         reload(event.getPlayer(), trait);
     }
+
 }

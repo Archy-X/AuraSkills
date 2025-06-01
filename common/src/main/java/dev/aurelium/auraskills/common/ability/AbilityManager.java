@@ -97,7 +97,7 @@ public abstract class AbilityManager {
     }
 
     public String getGuaranteedValue(Ability ability, int level) {
-       return String.valueOf((int) ability.getValue(level) / 100);
+        return String.valueOf((int) ability.getValue(level) / 100);
     }
 
 }

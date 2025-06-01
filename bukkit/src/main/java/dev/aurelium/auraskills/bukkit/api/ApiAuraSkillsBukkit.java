@@ -43,4 +43,5 @@ public class ApiAuraSkillsBukkit implements AuraSkillsBukkit {
     public MenuManager getMenuManager() {
         return menuManager;
     }
+
 }

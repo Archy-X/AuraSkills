@@ -29,4 +29,5 @@ public class ManaAbilityContext implements ContextProvider<ManaAbility> {
             return null;
         }
     }
+
 }

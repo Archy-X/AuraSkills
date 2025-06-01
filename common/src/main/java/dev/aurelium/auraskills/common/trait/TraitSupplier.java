@@ -49,4 +49,5 @@ public class TraitSupplier extends OptionSupplier<Trait> implements TraitProvide
     public boolean isLoaded(Trait type) {
         return traitManager.isLoaded(type);
     }
+
 }

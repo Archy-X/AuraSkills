@@ -38,4 +38,5 @@ public class EntityLootParser implements LootParser {
 
         return new EntityLoot(context.parseValues(config), entity);
     }
+
 }
