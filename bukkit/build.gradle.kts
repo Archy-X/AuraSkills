@@ -88,7 +88,7 @@ tasks {
     }
 
     register<Copy>("copyJar") {
-        val projectVersion : String by project
+        val projectVersion: String by project
         from("build/libs/AuraSkills-${projectVersion}.jar")
         into("../build/libs")
     }
@@ -173,4 +173,3 @@ fun extractChangelog(version: String): String {
     return result?.groupValues?.get(1)?.trim()
         ?: ""
 }
-
