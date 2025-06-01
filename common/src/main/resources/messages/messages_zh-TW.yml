@@ -613,6 +613,8 @@ commands:
     saved: "<green>已儲存技能資料!"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray>將玩家<gold>{player}<gray>的全部技能設定成等級<aqua>{level}"
       desc: Sets all of a player's skills to a level.
