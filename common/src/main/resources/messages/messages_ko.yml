@@ -613,6 +613,8 @@ commands:
     saved: "<green>스킬 데이터가 저장되었습니다!"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray>사용자 <gold>{player} <gray>의 모든 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
       desc: Sets all of a player's skills to a level.
