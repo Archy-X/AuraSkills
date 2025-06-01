@@ -613,6 +613,8 @@ commands:
     saved: "<green>Дані вмінь збережені!"
     desc: Saves skill data.
   skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
     setall:
       set: "<gray> всі вміння поставлені на рівень <aqua>{level} <gray>для гравця <gold>{player}"
       desc: Sets all of a player's skills to a level.
