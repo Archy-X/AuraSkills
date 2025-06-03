@@ -81,7 +81,7 @@ public class ItemLootParser implements LootParser {
             String enchantmentName = splitEntry[0].toLowerCase(Locale.ROOT);
             int minLevel = 1;
             int maxLevel = 1;
-			double chance = 1.0;
+            double chance = 1.0;
             if (splitEntry.length > 1) {
                 String levelString = splitEntry[1];
                 if (levelString.contains("-")) { // Handle level range format (eg. 1-5)
@@ -95,8 +95,8 @@ public class ItemLootParser implements LootParser {
                 }
             }
             if (splitEntry.length > 2) {
-				chance = Double.parseDouble(splitEntry[2]);
-			}
+                chance = Double.parseDouble(splitEntry[2]);
+            }
             LootEnchantEntry entry = new LootEnchantEntry(enchantmentName, minLevel, maxLevel, chance);
             entryList.add(entry);
         }
