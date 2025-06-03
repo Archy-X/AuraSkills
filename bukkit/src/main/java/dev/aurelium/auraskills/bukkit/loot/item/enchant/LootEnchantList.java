@@ -20,8 +20,7 @@ public record LootEnchantList(List<LootEnchantEntry> entries) {
             
             // Avoid getting a random double if the chance is 1.0
             double chance = 1.0;
-            if (entry.chance() < 1.0)
-            {
+            if (entry.chance() < 1.0) {
                 chance = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
             }
             
