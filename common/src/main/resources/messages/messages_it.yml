@@ -344,7 +344,7 @@ commands:
       remove:
         does_not_exist: "<yellow>Il tuo oggetto non ha un {color}{stat} <yellow>modificatore!"
         removed: "{color}{stat} <gray>modificatore è stato rimosso dal tuo oggetto"
-        desc: Rimuove una statistica modificata all'armatura tenuta in mano, e automaticamente dalla lore
+        desc: Rimuove un modificatore di statistica dell'armatura dall'oggetto posseduto e dalla storia ad esso associata per impostazione predefinita.
       list:
         header: "<white>Modificatori armatura trovati:"
         desc: Lists all armor stat modifiers on the item held.
@@ -713,7 +713,7 @@ menus:
     trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
     trait_level: "Trait Level"
     base: "Base"
-    modifiers_additive: "Modifiers (Additive)"
+    modifiers_additive: "Modificatori (Additivi)"
     modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
     skills_title: "Le tue abilità"
