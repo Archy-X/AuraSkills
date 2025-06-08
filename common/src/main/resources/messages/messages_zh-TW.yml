@@ -344,13 +344,13 @@ commands:
       remove:
         does_not_exist: "<yellow>你的物品沒有 {color}{stat} <yellow>的屬性!"
         removed: "已經從你的物品刪除{color}{stat} <gray>屬性"
-        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+        desc: 從手持的盔甲物品移除屬性修飾符，預設同時移除相關說明。
       list:
         header: "<white>找到的裝備屬性:"
-        desc: Lists all armor stat modifiers on the item held.
+        desc: 列出手持盔甲物品上的所有屬性修飾符。
       removeall:
         removed: "<gray>物品已刪除全部裝備屬性"
-        desc: Removes all armor stat modifiers from the item held.
+        desc: 移除手持盔甲物品上的所有屬性修飾符。
     trait:
       add:
         added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
@@ -507,7 +507,7 @@ commands:
     remove:
       removed: "<white>已從玩家 {player} 中刪除作業 {job}"
       unchanged: "<yellow>由於玩家 {player} 沒有職位 {job}，因此沒有任何變更"
-      desc: Removes a skill as a job for yourself or a specified player.
+      desc: 將技能從你自己或指定玩家的職業中移除。
     removeall:
       removed: "<white>刪除了玩家 {player} 的所有任務"
       desc: Removes all joined jobs for yourself or a specified player.
