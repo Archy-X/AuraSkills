@@ -93,6 +93,7 @@ public class UserStats {
 
         List<AuraSkillsModifier<?>> modifiers = new ArrayList<>(traitModifiers.values());
         for (var statMod : statModifiers.values()) {
+            if (statMod.stat() == null) continue;
             // If the trait is linked to a direct stat, add the "multiply" and "add_percent" stat modifiers for that stat
             if (statMod.stat().hasDirectTrait() && trait.equals(statMod.stat().getTraits().get(0))) {
                 if (statMod.operation() == Operation.MULTIPLY || statMod.operation() == Operation.ADD_PERCENT) {
