@@ -75,7 +75,7 @@ public class ItemLootParser implements LootParser {
 
     private LootEnchantList parseSingleEnchantList(ConfigurationNode config) throws SerializationException {
         List<LootEnchantEntry> entryList = new ArrayList<>();
-        
+
         for (ConfigurationNode enchantment : config.node("enchantments").childrenList()) {
             String enchantmentName = null;
             String levelString = "1";
