@@ -124,8 +124,7 @@ public class ItemLootParser implements LootParser {
 
         if (config.hasChild("damage")) {
             boolean wasMap = false;
-            for (ConfigurationNode damage : config.node("damage").childrenList())
-            {
+            for (ConfigurationNode damage : config.node("damage").childrenList()) {
                 if (damage.isMap()) {
                     minDamage = damage.node("min").getDouble();
                     maxDamage = damage.node("max").getDouble();
@@ -133,7 +132,7 @@ public class ItemLootParser implements LootParser {
                 }
             }
 
-            if (wasMap == false) { 
+            if (wasMap == false) {
                 minDamage = config.node("damage").getDouble();
                 maxDamage = minDamage;
             }
