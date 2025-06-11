@@ -332,7 +332,7 @@ commands:
   antiafk:
     failed: "<red>{player} falló el chequeo anti-AFK {check} <gray>(Contador: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: ":"
       entry: "<gray>{timestamp} - {message}"
       desc: Show anti-AFK logs for a given player.
   armor:
