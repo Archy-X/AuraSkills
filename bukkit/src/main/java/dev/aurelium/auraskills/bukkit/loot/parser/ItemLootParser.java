@@ -50,6 +50,7 @@ public class ItemLootParser implements LootParser {
         Validate.notNull(item, "Failed to parse item");
 
         int[] amounts = parseAmount(backing);
+        double[] durability = parseDurability(backing);
 
         return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1], durability[0], durability[1]);
     }
