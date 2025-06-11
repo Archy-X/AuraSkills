@@ -51,8 +51,9 @@ public class ItemLootParser implements LootParser {
         Validate.notNull(item, "Failed to parse item");
 
         int[] amounts = parseAmount(backing);
+        double[] durability = parseDurability(backing);
 
-        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1]);
+        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1], durability[0], durability[1]);
     }
 
     private ItemSupplier parseItem(ConfigurationNode config) throws SerializationException {
@@ -138,6 +139,30 @@ public class ItemLootParser implements LootParser {
             }
         }
         return new int[]{1, 1};
+    }
+
+    protected double[] parseDurability(ConfigurationNode config) {
+        double minDamage = 0.0;
+        double maxDamage = 0.0;
+
+        if (config.hasChild("damage")) {
+            boolean wasMap = false;
+            for (ConfigurationNode damage : config.node("damage").childrenList())
+            {
+                if (damage.isMap()) {
+                    minDamage = damage.node("min").getDouble();
+                    maxDamage = damage.node("max").getDouble();
+                    wasMap = true;
+                }
+            }
+
+            if (wasMap == false) { 
+                minDamage = config.node("damage").getDouble();
+                maxDamage = minDamage;
+            }
+        }
+
+        return new double[]{minDamage, maxDamage};
     }
 
 }
