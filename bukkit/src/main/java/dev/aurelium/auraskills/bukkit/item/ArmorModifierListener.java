@@ -43,7 +43,10 @@ public class ArmorModifierListener implements Listener {
             newPiece = new ItemStack(Material.AIR);
         }
 
-        stateManager.changeItemInSlot(user, player, newPiece, event.getType().getEquipmentSlot());
+        ArmorType type = event.getType();
+        if (type != null) {
+            stateManager.changeItemInSlot(user, player, newPiece, type.getEquipmentSlot());
+        }
     }
 
     // Timer based detection
