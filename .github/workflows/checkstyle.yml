@@ -18,4 +18,4 @@ jobs:
         with:
           gradle-version: "8.10.2"
       - name: Run checkstyle
-        run: ./gradlew checkstyleMain
+        run: ./gradlew checkstyleMain checkstyleTest
