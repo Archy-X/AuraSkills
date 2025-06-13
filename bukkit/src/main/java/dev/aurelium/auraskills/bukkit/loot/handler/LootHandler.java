@@ -47,7 +47,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class LootHandler {
@@ -229,22 +228,22 @@ public abstract class LootHandler {
         return new Random().nextInt(maxAmount - minAmount + 1) + minAmount;
     }
 
-    public @NotNull ItemMeta getMeta(ItemStack item) {
-        return Objects.requireNonNull(item.getItemMeta());
-    }
-
     private ItemStack generateDamaged(ItemStack drop, double minDamage, double maxDamage) {
         if (minDamage >= 0.0 && minDamage <= 1.0 &&
-            maxDamage >= 0.0 && maxDamage <= 1.0 &&
-            minDamage <= maxDamage) {
+                maxDamage >= 0.0 && maxDamage <= 1.0 &&
+                minDamage <= maxDamage) {
 
             // Check if the item is damageable.
-            ItemMeta meta = getMeta(drop);
-            if (meta instanceof Damageable damageable){
+            if (drop == null) {
+                return drop;
+            }
+
+            ItemMeta meta = drop.getItemMeta();
+            if (meta instanceof Damageable damageable) {
                 int damage = 0; // Default to 0 damage
                 short durability = drop.getType().getMaxDurability();
-                int minDamageValue = (int)(durability * minDamage); // E.g. 1561 * 0.0 = 0 -> resulting in an undamaged item.
-                int maxDamageValue = (int)(durability * maxDamage); // E.g. 1561 * 0.5 = 780 -> resulting in a max 50% damaged item.
+                int minDamageValue = (int) (durability * minDamage); // E.g. 1561 * 0.0 = 0 -> resulting in an undamaged item.
+                int maxDamageValue = (int) (durability * maxDamage); // E.g. 1561 * 0.5 = 780 -> resulting in a max 50% damaged item.
 
                 if (minDamage == maxDamage) {
                     damage = maxDamageValue;

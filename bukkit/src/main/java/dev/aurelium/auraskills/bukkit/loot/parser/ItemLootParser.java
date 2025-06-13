@@ -146,17 +146,10 @@ public class ItemLootParser implements LootParser {
         double maxDamage = 0.0;
 
         if (config.hasChild("damage")) {
-            boolean wasMap = false;
-            for (ConfigurationNode damage : config.node("damage").childrenList())
-            {
-                if (damage.isMap()) {
-                    minDamage = damage.node("min").getDouble();
-                    maxDamage = damage.node("max").getDouble();
-                    wasMap = true;
-                }
-            }
-
-            if (wasMap == false) { 
+            if (config.node("damage").isMap()) {
+                minDamage = config.node("damage", "min").getDouble();
+                maxDamage = config.node("damage", "max").getDouble();
+            } else {
                 minDamage = config.node("damage").getDouble();
                 maxDamage = minDamage;
             }

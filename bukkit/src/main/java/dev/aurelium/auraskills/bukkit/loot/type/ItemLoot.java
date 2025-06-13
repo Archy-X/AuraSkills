@@ -40,4 +40,5 @@ public class ItemLoot extends Loot {
     public double getMaxDamage() {
         return maxDamage;
     }
+
 }
