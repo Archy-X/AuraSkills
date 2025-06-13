@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
+import de.tr7zw.changeme.nbtapi.NBT;
+import de.tr7zw.changeme.nbtapi.iface.ReadableNBT;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.loot.Loot;

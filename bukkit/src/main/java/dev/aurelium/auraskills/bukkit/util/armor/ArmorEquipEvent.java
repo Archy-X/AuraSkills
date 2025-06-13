@@ -5,6 +5,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Arnah
@@ -48,7 +50,8 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      * @return A list of handlers handling this event.
      */
     @Override
-    public final HandlerList getHandlers() {
+    @NotNull
+    public HandlerList getHandlers() {
         return handlers;
     }
 
@@ -58,7 +61,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      * @param cancel If this event should be cancelled.
      */
     @Override
-    public final void setCancelled(final boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
@@ -68,33 +71,34 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
      * @return If this event is cancelled
      */
     @Override
-    public final boolean isCancelled() {
+    public boolean isCancelled() {
         return cancel;
     }
 
-    public final ArmorType getType() {
+    @Nullable
+    public ArmorType getType() {
         return type;
     }
 
     /**
      * Returns the last equipped armor piece, could be a piece of armor, or null
      */
-    public final ItemStack getOldArmorPiece() {
+    public ItemStack getOldArmorPiece() {
         return oldArmorPiece;
     }
 
-    public final void setOldArmorPiece(final ItemStack oldArmorPiece) {
+    public void setOldArmorPiece(final ItemStack oldArmorPiece) {
         this.oldArmorPiece = oldArmorPiece;
     }
 
     /**
      * Returns the newly equipped armor, could be a piece of armor, or null
      */
-    public final ItemStack getNewArmorPiece() {
+    public ItemStack getNewArmorPiece() {
         return newArmorPiece;
     }
 
-    public final void setNewArmorPiece(final ItemStack newArmorPiece) {
+    public void setNewArmorPiece(final ItemStack newArmorPiece) {
         this.newArmorPiece = newArmorPiece;
     }
 
