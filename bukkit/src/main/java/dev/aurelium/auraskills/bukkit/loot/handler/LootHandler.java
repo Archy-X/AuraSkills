@@ -227,17 +227,17 @@ public abstract class LootHandler {
         return new Random().nextInt(maxAmount - minAmount + 1) + minAmount;
     }
 
-    public @NotNull ItemMeta getMeta(ItemStack item) {
-        return Objects.requireNonNull(item.getItemMeta());
-    }
-
     private ItemStack generateDamaged(ItemStack drop, double minDamage, double maxDamage) {
         if (minDamage >= 0.0 && minDamage <= 1.0 &&
                 maxDamage >= 0.0 && maxDamage <= 1.0 &&
                 minDamage <= maxDamage) {
 
             // Check if the item is damageable.
-            ItemMeta meta = getMeta(drop);
+            if (drop == null) {
+                return drop;
+            }
+
+            ItemMeta meta = drop.getItemMeta();
             if (meta instanceof Damageable damageable) {
                 int damage = 0; // Default to 0 damage
                 short durability = drop.getType().getMaxDurability();
