@@ -4,6 +4,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://central.sonatype.com/repository/maven-snapshots/")
     maven("https://repo.aikar.co/content/groups/aikar/")
     maven("https://www.jitpack.io")
 }
@@ -13,13 +14,9 @@ dependencies {
     api("net.kyori:adventure-api:4.17.0")
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.17.0")
-    api("com.github.Archy-X:Polyglot:1.2.3") {
-        exclude("org.spongepowered", "configurate-yaml")
-    }
+    api("dev.aurelium:polyglot:1.2.3")
     api("com.ezylang:EvalEx:3.3.0")
-    api("org.spongepowered:configurate-yaml:4.1.2") {
-        exclude("org.yaml", "snakeyaml")
-    }
+    api("org.spongepowered:configurate-yaml:4.2.0")
     implementation("com.zaxxer:HikariCP:5.1.0") {
         exclude("org.slf4j", "slf4j-api")
     }
