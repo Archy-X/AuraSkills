@@ -1,8 +1,9 @@
 package dev.aurelium.auraskills.bukkit.antiafk;
 
 import dev.aurelium.auraskills.bukkit.antiafk.checks.*;
+import dev.aurelium.auraskills.common.antiafk.CheckType;
 
-public enum CheckType {
+public enum BukkitCheckType implements CheckType {
 
     BLOCK_A(BlockA.class),
     DAMAGE_A(DamageA.class),
@@ -13,13 +14,14 @@ public enum CheckType {
     ENTITY_C(EntityC.class),
     FISHING_A(FishingA.class);
 
-    private final Class<? extends Check> checkClass;
+    private final Class<? extends BukkitCheck> checkClass;
 
-    CheckType(Class<? extends Check> checkClass) {
+    BukkitCheckType(Class<? extends BukkitCheck> checkClass) {
         this.checkClass = checkClass;
     }
 
-    public Class<? extends Check> getCheckClass() {
+    @Override
+    public Class<? extends BukkitCheck> getCheckClass() {
         return checkClass;
     }
 

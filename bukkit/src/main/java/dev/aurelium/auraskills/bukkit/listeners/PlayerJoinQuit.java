@@ -68,7 +68,7 @@ public class PlayerJoinQuit implements Listener {
     private void loadUserAsync(Player player) {
         plugin.getScheduler().executeAsync(() -> {
             try {
-                plugin.getStorageProvider().load(player.getUniqueId());
+                plugin.getStorageProvider().load(player.getUniqueId(), player);
             } catch (Exception e) {
                 e.printStackTrace();
             }

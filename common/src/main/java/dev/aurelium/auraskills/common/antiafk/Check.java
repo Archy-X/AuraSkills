@@ -1,19 +1,18 @@
-package dev.aurelium.auraskills.bukkit.antiafk;
+package dev.aurelium.auraskills.common.antiafk;
 
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.parser.ParseException;
-import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 
 import java.util.Locale;
 
-public class Check implements Listener {
+public class Check {
 
+    protected final AuraSkillsPlugin plugin;
     private final CheckType type;
     private final AntiAfkManager manager;
-    private final AuraSkills plugin;
     private final String configPrefix;
     private final Option enabledOption;
     private final int logThreshold;
@@ -44,11 +43,11 @@ public class Check implements Listener {
         return logThreshold;
     }
 
-    protected CheckData getCheckData(Player player) {
-        return manager.getCheckData(player, type);
+    protected CheckData getCheckData(PlayerRef ref) {
+        return manager.getCheckData(ref, type);
     }
 
-    protected void logFail(Player player) {
+    protected void logFail(PlayerRef player) {
         if (!plugin.configBoolean(Option.ANTI_AFK_LOGGING_ENABLED)) return;
 
         CheckData checkData = getCheckData(player);

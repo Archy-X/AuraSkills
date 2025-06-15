@@ -11,7 +11,7 @@ import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
-import dev.aurelium.auraskills.bukkit.antiafk.AntiAfkManager;
+import dev.aurelium.auraskills.bukkit.antiafk.BukkitAntiAfkManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.api.implementation.BukkitApiProvider;
@@ -20,11 +20,7 @@ import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
-import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
-import dev.aurelium.auraskills.bukkit.item.ArmorModifierListener;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
-import dev.aurelium.auraskills.bukkit.item.BukkitModifierManager;
-import dev.aurelium.auraskills.bukkit.item.ItemListener;
+import dev.aurelium.auraskills.bukkit.item.*;
 import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
 import dev.aurelium.auraskills.bukkit.leaderboard.BukkitLeaderboardExclusion;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
@@ -79,6 +75,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.migration.MigrationManager;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
@@ -113,6 +110,8 @@ import org.spongepowered.configurate.ConfigurationNode;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
+
+import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.unwrap;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
@@ -161,7 +160,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ConfirmManager confirmManager;
     private PresetManager presetManager;
     private PlatformUtil platformUtil;
-    private AntiAfkManager antiAfkManager;
+    private BukkitAntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
 
     @Override
@@ -234,7 +233,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         commandManager = commandRegistrar.registerCommands();
         messageProvider.setACFMessages(commandManager);
         levelManager = new BukkitLevelManager(this);
-        antiAfkManager = new AntiAfkManager(this); // Requires config loaded
+        antiAfkManager = new BukkitAntiAfkManager(this); // Requires config loaded
         registerPriorityEvents();
         // Enabled bStats
         Metrics metrics = new Metrics(this, 21318);
@@ -458,7 +457,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return confirmManager;
     }
 
-    public AntiAfkManager getAntiAfkManager() {
+    public BukkitAntiAfkManager getAntiAfkManager() {
         return antiAfkManager;
     }
 
@@ -639,6 +638,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public BukkitModifierManager getModifierManager() {
         return modifierManager;
+    }
+
+    @Override
+    public User getUser(PlayerRef ref) {
+        return getUser(unwrap(ref));
     }
 
     public ItemManager getItemManager() {

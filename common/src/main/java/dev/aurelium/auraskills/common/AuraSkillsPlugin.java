@@ -33,6 +33,7 @@ import dev.aurelium.auraskills.common.storage.backup.BackupProvider;
 import dev.aurelium.auraskills.common.trait.TraitManager;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.ui.UiProvider;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
@@ -109,6 +110,14 @@ public interface AuraSkillsPlugin {
     ApiProvider getApiProvider();
 
     ModifierManager getModifierManager();
+
+    /**
+     * Get a user instance from a player reference instance
+     *
+     * @param ref the reference
+     * @return the user
+     */
+    User getUser(PlayerRef ref);
 
     // Message convenience methods
 

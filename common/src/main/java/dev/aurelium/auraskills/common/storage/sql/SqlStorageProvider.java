@@ -25,6 +25,7 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.*;
@@ -70,9 +71,9 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    protected User loadRaw(UUID uuid) throws Exception {
+    protected User loadRaw(UUID uuid, @Nullable Object platformPlayer) throws Exception {
         try (Connection connection = pool.getConnection()) {
-            User user = userManager.createNewUser(uuid);
+            User user = userManager.createNewUser(uuid, platformPlayer);
             userLoader.loadUser(uuid, user, connection);
 
             return user;

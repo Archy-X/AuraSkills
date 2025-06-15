@@ -27,7 +27,7 @@ public class BukkitUserManager implements UserManager {
         if (user != null) {
             return user;
         } else {
-            return createNewUser(player.getUniqueId());
+            return createNewUser(player.getUniqueId(), player);
         }
     }
 
@@ -58,8 +58,10 @@ public class BukkitUserManager implements UserManager {
     }
 
     @Override
-    public User createNewUser(UUID uuid) {
-        @Nullable Player player = plugin.getServer().getPlayer(uuid);
+    public User createNewUser(UUID uuid, @Nullable Object platformPlayer) {
+        if (!(platformPlayer instanceof Player player)) {
+            throw new IllegalStateException("platformPlayer not instance of " + Player.class.getName());
+        }
         User user = new BukkitUser(uuid, player, plugin);
         // Set all skills to level 1 for new players
         for (LoadedSkill loadedSkill : plugin.getSkillManager().getSkills()) {

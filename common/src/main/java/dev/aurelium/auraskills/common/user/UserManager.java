@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.common.user;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,7 +21,7 @@ public interface UserManager {
 
     Map<UUID, User> getUserMap();
 
-    User createNewUser(UUID uuid);
+    User createNewUser(UUID uuid, @Nullable Object platformPlayer);
 
     List<User> getOnlineUsers();
 

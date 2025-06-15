@@ -34,7 +34,7 @@ public class ApiUserManager implements UserManager {
         } else {
             plugin.getScheduler().executeAsync(() -> {
                 try {
-                    plugin.getStorageProvider().load(playerId);
+                    plugin.getStorageProvider().load(playerId, null);
                     User loadedUser = plugin.getUserManager().getUser(playerId);
                     if (loadedUser != null) {
                         future.complete(new ApiSkillsUser(loadedUser));

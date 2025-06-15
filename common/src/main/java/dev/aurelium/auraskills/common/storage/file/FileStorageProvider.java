@@ -21,6 +21,7 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -43,9 +44,9 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    protected User loadRaw(UUID uuid) throws Exception {
+    protected User loadRaw(UUID uuid, @Nullable Object platformPlayer) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
-        User user = userManager.createNewUser(uuid);
+        User user = userManager.createNewUser(uuid, platformPlayer);
 
         if (root.empty()) {
             return user;

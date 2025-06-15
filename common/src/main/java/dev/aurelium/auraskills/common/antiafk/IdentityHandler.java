@@ -1,6 +1,4 @@
-package dev.aurelium.auraskills.bukkit.antiafk.handler;
-
-import dev.aurelium.auraskills.bukkit.antiafk.CheckData;
+package dev.aurelium.auraskills.common.antiafk;
 
 public record IdentityHandler(int minCount, String idKey) {
 

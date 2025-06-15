@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.antiafk;
+package dev.aurelium.auraskills.common.antiafk;
 
 import java.util.HashMap;
 import java.util.Map;
