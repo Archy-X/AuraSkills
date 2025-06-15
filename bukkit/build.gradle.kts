@@ -165,7 +165,13 @@ if (project.hasProperty("modrinthToken")) {
 
 fun extractChangelog(version: String): String {
     val heading = Regex.escape(version)
-    val path = if (System.getProperty("user.dir").endsWith("bukkit")) "../Changelog.md" else "Changelog.md"
+    val cwd = System.getProperty("user.dir")
+    val isInSubmodule: Boolean = project.parent
+        ?.childProjects
+        ?.keys
+        ?.any { cwd.endsWith(it) }
+        ?: false
+    val path = if (isInSubmodule) "../Changelog.md" else "Changelog.md"
 
     val fullChangelog = File(path).readText()
     val headingPattern = Regex("## $heading\\R+([\\s\\S]*?)\\R+##\\s", RegexOption.DOT_MATCHES_ALL)
