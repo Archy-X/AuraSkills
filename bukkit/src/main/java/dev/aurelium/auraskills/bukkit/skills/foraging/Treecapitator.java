@@ -97,10 +97,11 @@ public class Treecapitator extends ReadiedManaAbility {
         }
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
             BlockXpSource adjSource = getSource(adjacentBlock);
+            boolean ignoreLeafs = ManaAbilities.TREECAPITATOR.optionBoolean("ignore_leafs", false);
             boolean isTrunk = isTrunk(adjSource);
             boolean isLeaf = isLeaf(adjSource);
-            if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT"))
-                continue; // Check block is leaf or trunk
+            if (ignoreLeafs && isLeaf) continue; // Skip leaf is the 'ignore_leafs' options is true
+            if (!isTrunk && !isLeaf && !adjacentBlock.getType().toString().equals("SHROOMLIGHT")) continue; // Check block is leaf or trunk
             // Make sure block was not placed
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
