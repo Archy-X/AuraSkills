@@ -5,7 +5,6 @@ import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
-import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.user.User;
@@ -15,12 +14,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class BukkitEventHandler implements EventHandler {
-
-    private final AuraSkills plugin;
-
-    public BukkitEventHandler(AuraSkills plugin) {
-        this.plugin = plugin;
-    }
 
     @Override
     public void callUserLoadEvent(User user) {

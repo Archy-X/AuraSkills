@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.trait.GatheringLuckTraits;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class FishingAbilities extends AbilityImpl {
+public class FishingAbilities extends BukkitAbilityImpl {
 
     public FishingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LUCKY_CATCH, Abilities.FISHER, Abilities.TREASURE_HUNTER, Abilities.GRAPPLER, Abilities.EPIC_CATCH);

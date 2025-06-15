@@ -4,7 +4,7 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
-import dev.aurelium.auraskills.bukkit.loot.LootManager;
+import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.entity.EntitySupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
@@ -13,9 +13,9 @@ import org.spongepowered.configurate.ConfigurationNode;
 
 public class EntityLootParser implements LootParser {
 
-    protected final LootManager manager;
+    protected final BukkitLootManager manager;
 
-    public EntityLootParser(LootManager manager) {
+    public EntityLootParser(BukkitLootManager manager) {
         this.manager = manager;
     }
 

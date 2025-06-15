@@ -11,7 +11,7 @@ import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityManager;
-import dev.aurelium.auraskills.bukkit.antiafk.AntiAfkManager;
+import dev.aurelium.auraskills.bukkit.antiafk.BukkitAntiAfkManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.api.implementation.BukkitApiProvider;
@@ -20,11 +20,7 @@ import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
 import dev.aurelium.auraskills.bukkit.event.BukkitEventHandler;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags;
-import dev.aurelium.auraskills.bukkit.item.ApiItemManager;
-import dev.aurelium.auraskills.bukkit.item.ArmorModifierListener;
-import dev.aurelium.auraskills.bukkit.item.BukkitItemRegistry;
-import dev.aurelium.auraskills.bukkit.item.BukkitModifierManager;
-import dev.aurelium.auraskills.bukkit.item.ItemListener;
+import dev.aurelium.auraskills.bukkit.item.*;
 import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
 import dev.aurelium.auraskills.bukkit.leaderboard.BukkitLeaderboardExclusion;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
@@ -33,7 +29,7 @@ import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerJoinQuit;
 import dev.aurelium.auraskills.bukkit.logging.BukkitLogger;
-import dev.aurelium.auraskills.bukkit.loot.LootTableManager;
+import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.handler.BlockLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.handler.FishingLootHandler;
 import dev.aurelium.auraskills.bukkit.loot.handler.MobLootHandler;
@@ -49,7 +45,6 @@ import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
 import dev.aurelium.auraskills.bukkit.region.RegionListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
-import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.storage.BukkitStorageFactory;
@@ -60,6 +55,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUserManager;
 import dev.aurelium.auraskills.bukkit.util.BukkitPlatformUtil;
 import dev.aurelium.auraskills.bukkit.util.MetricsUtil;
 import dev.aurelium.auraskills.bukkit.util.UpdateChecker;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorListener;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
@@ -79,6 +75,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.migration.MigrationManager;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
@@ -113,6 +110,8 @@ import org.spongepowered.configurate.ConfigurationNode;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
+
+import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.unwrap;
 
 public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
@@ -150,7 +149,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitAudiences audiences;
     private BukkitRegionManager regionManager;
     private BukkitWorldManager worldManager;
-    private LootTableManager lootTableManager;
+    private BukkitLootManager lootManager;
     private BukkitModifierManager modifierManager;
     private RequirementManager requirementManager;
     private BackupProvider backupProvider;
@@ -161,7 +160,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private ConfirmManager confirmManager;
     private PresetManager presetManager;
     private PlatformUtil platformUtil;
-    private AntiAfkManager antiAfkManager;
+    private BukkitAntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
 
     @Override
@@ -199,7 +198,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         // Create scheduler
         scheduler = new BukkitScheduler(this);
         audiences = BukkitAudiences.create(this);
-        eventHandler = new BukkitEventHandler(this);
+        eventHandler = new BukkitEventHandler();
         hookManager = new HookManager();
         userManager = new BukkitUserManager(this);
         presetManager = new PresetManager(this);
@@ -227,14 +226,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         modifierManager = new BukkitModifierManager(this);
         inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
         inventoryManager.init();
-        rewardManager = new BukkitRewardManager(this); // Loaded later
-        lootTableManager = new LootTableManager(this); // Loaded later
+        rewardManager = new RewardManager(this); // Loaded later
+        lootManager = new BukkitLootManager(this); // Loaded later
         confirmManager = new ConfirmManager(this);
         CommandRegistrar commandRegistrar = new CommandRegistrar(this);
         commandManager = commandRegistrar.registerCommands();
         messageProvider.setACFMessages(commandManager);
         levelManager = new BukkitLevelManager(this);
-        antiAfkManager = new AntiAfkManager(this); // Requires config loaded
+        antiAfkManager = new BukkitAntiAfkManager(this); // Requires config loaded
         registerPriorityEvents();
         // Enabled bStats
         Metrics metrics = new Metrics(this, 21318);
@@ -247,7 +246,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             uiProvider.getBossBarManager().loadOptions(); // Requires skills registered
             requirementManager = new RequirementManager(this); // Requires skills registered
             rewardManager.loadRewards(); // Requires skills loaded
-            lootTableManager.loadLootTables(); // Requires skills registered
+            lootManager.loadLootTables(); // Requires skills registered
             // Register default content
             traitManager.registerTraitImplementations();
             abilityManager.registerAbilityImplementations();
@@ -442,8 +441,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return regionManager;
     }
 
-    public LootTableManager getLootTableManager() {
-        return lootTableManager;
+    public BukkitLootManager getLootManager() {
+        return lootManager;
     }
 
     public RequirementManager getRequirementManager() {
@@ -458,7 +457,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return confirmManager;
     }
 
-    public AntiAfkManager getAntiAfkManager() {
+    public BukkitAntiAfkManager getAntiAfkManager() {
         return antiAfkManager;
     }
 
@@ -641,6 +640,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         return modifierManager;
     }
 
+    @Override
+    public User getUser(PlayerRef ref) {
+        return getUser(unwrap(ref));
+    }
+
     public ItemManager getItemManager() {
         return itemManager;
     }
@@ -685,6 +689,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public File getPluginFolder() {
         return this.getDataFolder();
+    }
+
+    @Override
+    public boolean isAtLeastVersion(int majorVersion) {
+        return VersionUtils.isAtLeastVersion(majorVersion);
+    }
+
+    @Override
+    public boolean isAtLeastVersion(int majorVersion, int minorVersion) {
+        return VersionUtils.isAtLeastVersion(minorVersion);
     }
 
     public Locale getLocale(CommandSender sender) {

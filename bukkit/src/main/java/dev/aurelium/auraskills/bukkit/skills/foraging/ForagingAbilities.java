@@ -12,7 +12,7 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.user.User;
@@ -24,7 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 
-public class ForagingAbilities extends AbilityImpl {
+public class ForagingAbilities extends BukkitAbilityImpl {
 
     public ForagingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.LUMBERJACK, Abilities.FORAGER, Abilities.AXE_MASTER, Abilities.SHREDDER, Abilities.VALOR);

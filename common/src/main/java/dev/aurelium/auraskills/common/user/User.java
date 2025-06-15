@@ -14,6 +14,8 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
+import dev.aurelium.auraskills.common.antiafk.CheckData;
+import dev.aurelium.auraskills.common.antiafk.CheckType;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.jobs.JobsBatchData;
@@ -56,6 +58,7 @@ public abstract class User {
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
     private final JobsBatchData jobsBatchData;
+    private final Map<CheckType, CheckData> checkData = new HashMap<>();
     @Nullable
     private List<AntiAfkLog> storedAntiAfkLogs;
     private double currentOriginalDamage;
@@ -91,6 +94,8 @@ public abstract class User {
     // Abstract methods to be implemented by the platform-specific PlayerData class
     public abstract String getUsername();
 
+    public abstract void sendMessage(String message);
+
     public abstract void sendMessage(Component component);
 
     public abstract double getPermissionMultiplier(Skill skill);
@@ -102,6 +107,8 @@ public abstract class User {
     public abstract int getPermissionJobLimit();
 
     public abstract String getWorld();
+
+    public abstract boolean hasPermission(String permission);
 
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
@@ -445,6 +452,11 @@ public abstract class User {
 
     public List<AntiAfkLog> getSessionAntiAfkLogs() {
         return sessionAntiAfkLogs;
+    }
+
+    @NotNull
+    public CheckData getCheckData(CheckType type) {
+        return checkData.computeIfAbsent(type, t -> new CheckData());
     }
 
     public Optional<List<AntiAfkLog>> getStoredAntiAfkLogs() {

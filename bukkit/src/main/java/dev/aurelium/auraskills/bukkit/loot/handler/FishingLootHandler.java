@@ -11,12 +11,12 @@ import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
-import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
+import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -55,7 +55,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
         Skill skill = originalSource != null ? originalSource.skill() : Skills.FISHING;
 
-        LootTable table = plugin.getLootTableManager().getLootTable(skill);
+        LootTable table = plugin.getLootManager().getLootTable(skill);
         if (table == null) return;
         for (LootPool pool : table.getPools()) {
             // Check if in open water
