@@ -1,25 +1,19 @@
-package dev.aurelium.auraskills.bukkit.ability;
+package dev.aurelium.auraskills.common.ability;
 
 import dev.aurelium.auraskills.api.ability.Ability;
-import dev.aurelium.auraskills.api.ability.AbilityContext;
-import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class AbilityImpl extends AbilityContext implements Listener {
+public class AbilityImpl {
 
-    protected final AuraSkills plugin;
     protected final Random rand = new Random();
     private final List<Ability> abilities = new ArrayList<>();
 
-    public AbilityImpl(AuraSkills plugin, Ability... abilities) {
-        super(plugin.getApi());
-        this.plugin = plugin;
+    public AbilityImpl(Ability... abilities) {
         this.abilities.addAll(Arrays.asList(abilities));
     }
 

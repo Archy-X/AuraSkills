@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
@@ -34,7 +34,7 @@ import org.bukkit.util.Vector;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class FightingAbilities extends AbilityImpl {
+public class FightingAbilities extends BukkitAbilityImpl {
 
     public static final String BLEED_DAMAGER_KEY = "bleed_damager";
     private final String parryKey = "parry_ready";

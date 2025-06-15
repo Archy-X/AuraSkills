@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.ability;
 
-import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.skills.alchemy.AlchemyAbilities;
@@ -21,21 +20,17 @@ import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BukkitAbilityManager extends AbilityManager {
 
     private final AuraSkills plugin;
-    private final Map<Class<?>, AbilityImpl> abilityImpls = new HashMap<>();
 
     public BukkitAbilityManager(AuraSkills plugin) {
         super(plugin);
         this.plugin = plugin;
     }
 
+    @Override
     public void registerAbilityImplementations() {
         registerAbilityImpl(new FishingAbilities(plugin));
         registerAbilityImpl(new EnduranceAbilities(plugin));
@@ -53,29 +48,17 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new DefenseAbilities(plugin));
     }
 
-    public void registerAbilityImpl(AbilityImpl abilityImpl) {
-        abilityImpls.put(abilityImpl.getClass(), abilityImpl);
+    public void registerAbilityImpl(BukkitAbilityImpl abilityImpl) {
+        addImplToMap(abilityImpl);
         Bukkit.getPluginManager().registerEvents(abilityImpl, plugin);
     }
 
-    public <T extends AbilityImpl> T getAbilityImpl(Class<T> clazz) {
-        AbilityImpl abilityImpl = abilityImpls.get(clazz);
-        if (abilityImpl != null) {
-            return clazz.cast(abilityImpl);
-        }
-        throw new IllegalArgumentException("Ability implementation of type " + clazz.getSimpleName() + " not found!");
-    }
-
-    @Nullable
-    public AbilityImpl getAbilityImpl(Ability ability) {
-        for (AbilityImpl impl : abilityImpls.values()) {
-            if (impl.getAbilities().contains(ability)) {
-                return impl;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Sends a message to the ability action bar if enabled, or the chat otherwise.
+     *
+     * @param player the player to send the message to
+     * @param message the message to send
+     */
     public void sendMessage(Player player, String message) {
         User user = plugin.getUser(player);
         if (plugin.configBoolean(Option.ACTION_BAR_ABILITY) && plugin.configBoolean(Option.ACTION_BAR_ENABLED)) {
@@ -84,16 +67,6 @@ public class BukkitAbilityManager extends AbilityManager {
             if (message == null || message.isEmpty()) return; // Don't send empty message
             player.sendMessage(plugin.getPrefix(user.getLocale()) + message);
         }
-    }
-
-    @Override
-    public String getBaseDescription(Ability ability, User user, boolean formatted) {
-        String desc = ability.getDescription(user.getLocale(), formatted);
-        AbilityImpl impl = plugin.getAbilityManager().getAbilityImpl(ability);
-        if (impl != null) {
-            desc = impl.replaceDescPlaceholders(desc, ability, user);
-        }
-        return desc;
     }
 
 }

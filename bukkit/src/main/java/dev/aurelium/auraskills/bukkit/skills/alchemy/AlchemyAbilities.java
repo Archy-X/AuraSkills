@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
 import dev.aurelium.auraskills.bukkit.skills.agility.AgilityAbilities;
 import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
@@ -44,7 +44,7 @@ import org.bukkit.projectiles.ProjectileSource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class AlchemyAbilities extends AbilityImpl {
+public class AlchemyAbilities extends BukkitAbilityImpl {
 
     private final NamespacedKey durationBonusKey;
 

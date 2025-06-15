@@ -6,7 +6,7 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
@@ -29,7 +29,7 @@ import org.bukkit.inventory.view.AnvilView;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class EnchantingAbilities extends AbilityImpl {
+public class EnchantingAbilities extends BukkitAbilityImpl {
 
     public EnchantingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.XP_CONVERT, Abilities.ENCHANTER, Abilities.XP_WARRIOR, Abilities.ENCHANTED_STRENGTH, Abilities.LUCKY_TABLE);

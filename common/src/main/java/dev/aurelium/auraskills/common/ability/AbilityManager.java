@@ -10,7 +10,10 @@ import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manager for storing and retrieving ability configs. Does not handle
@@ -21,11 +24,45 @@ public abstract class AbilityManager {
     private final AuraSkillsPlugin plugin;
     private final Map<Ability, LoadedAbility> abilityMap;
     private final AbilitySupplier supplier;
+    protected final Map<Class<?>, AbilityImpl> abilityImpls = new HashMap<>();
 
     public AbilityManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.abilityMap = new HashMap<>();
         this.supplier = new AbilitySupplier(this, plugin.getMessageProvider());
+    }
+
+    public abstract void registerAbilityImplementations();
+
+    protected void addImplToMap(AbilityImpl abilityImpl) {
+        abilityImpls.put(abilityImpl.getClass(), abilityImpl);
+    }
+
+    public <T extends AbilityImpl> T getAbilityImpl(Class<T> clazz) {
+        AbilityImpl abilityImpl = abilityImpls.get(clazz);
+        if (abilityImpl != null) {
+            return clazz.cast(abilityImpl);
+        }
+        throw new IllegalArgumentException("Ability implementation of type " + clazz.getSimpleName() + " not found!");
+    }
+
+    @Nullable
+    public AbilityImpl getAbilityImpl(Ability ability) {
+        for (AbilityImpl impl : abilityImpls.values()) {
+            if (impl.getAbilities().contains(ability)) {
+                return impl;
+            }
+        }
+        return null;
+    }
+
+    public String getBaseDescription(Ability ability, User user, boolean formatted) {
+        String desc = ability.getDescription(user.getLocale(), formatted);
+        AbilityImpl impl = plugin.getAbilityManager().getAbilityImpl(ability);
+        if (impl != null) {
+            desc = impl.replaceDescPlaceholders(desc, ability, user);
+        }
+        return desc;
     }
 
     // Supplier to be injected into Ability instances
@@ -89,8 +126,6 @@ public abstract class AbilityManager {
     public boolean isLoaded(Ability ability) {
         return abilityMap.containsKey(ability);
     }
-
-    public abstract String getBaseDescription(Ability ability, User user, boolean formatted);
 
     public String getChanceValue(Ability ability, int level) {
         return NumberUtil.format1(ability.getValue(level) - (Math.floor(ability.getValue(level) / 100) * 100));
