@@ -1,31 +1,31 @@
-package dev.aurelium.auraskills.bukkit.hooks;
+package dev.aurelium.auraskills.common.hooks;
 
-import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.hooks.Hook;
-import dev.aurelium.auraskills.common.hooks.HookManager;
-import dev.aurelium.auraskills.common.hooks.HookRegistrationException;
-import org.bukkit.event.Listener;
+import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-public class HookRegistrar {
+public abstract class HookRegistrar {
 
-    private final AuraSkills plugin;
+    private final AuraSkillsPlugin plugin;
     private final HookManager manager;
 
-    public HookRegistrar(AuraSkills plugin, HookManager manager) {
+    public HookRegistrar(AuraSkillsPlugin plugin, HookManager manager) {
         this.plugin = plugin;
         this.manager = manager;
     }
 
-    public void registerHooks(ConfigurationNode config) {
-        for (Hooks hookType : Hooks.values()) {
+    public abstract void registerEvents(Hook hook);
+
+    public abstract boolean isPluginEnabled(String name);
+
+    public void registerHooks(ConfigurationNode config, HookType[] hooks) {
+        for (HookType hookType : hooks) {
             // Don't re-register hooks
             if (manager.isRegistered(hookType.getHookClass())) continue;
             // Make sure the plugin that hooks into is enabled
-            if (!plugin.getServer().getPluginManager().isPluginEnabled(hookType.getPluginName())) {
+            if (!isPluginEnabled(hookType.getPluginName())) {
                 continue;
             }
 
@@ -36,10 +36,7 @@ public class HookRegistrar {
                     continue;
                 }
                 Hook hook = createHook(hookType, hookConfig);
-                // Register events in hook
-                if (hook instanceof Listener) {
-                    plugin.getServer().getPluginManager().registerEvents((Listener) hook, plugin);
-                }
+                registerEvents(hook);
 
                 manager.registerHook(hook.getClass(), hook);
 
@@ -51,10 +48,14 @@ public class HookRegistrar {
         }
     }
 
-    private Hook createHook(Hooks type, ConfigurationNode config) {
+    protected Hook createHook(HookType type, ConfigurationNode config) {
         Class<? extends Hook> hookClass = type.getHookClass();
 
-        Constructor<?> constructor = hookClass.getDeclaredConstructors()[0];
+        Constructor<?>[] constructors = hookClass.getDeclaredConstructors();
+        if (constructors.length == 0) {
+            throw new HookRegistrationException("Hook does not have a declared constructor");
+        }
+        Constructor<?> constructor = constructors[0];
         if (constructor == null) {
             throw new HookRegistrationException("Hook does not have a declared constructor");
         }
