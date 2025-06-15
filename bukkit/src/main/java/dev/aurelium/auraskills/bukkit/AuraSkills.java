@@ -45,7 +45,6 @@ import dev.aurelium.auraskills.bukkit.region.RegionBlockListener;
 import dev.aurelium.auraskills.bukkit.region.RegionListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementListener;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
-import dev.aurelium.auraskills.bukkit.reward.BukkitRewardManager;
 import dev.aurelium.auraskills.bukkit.scheduler.BukkitScheduler;
 import dev.aurelium.auraskills.bukkit.stat.BukkitStatManager;
 import dev.aurelium.auraskills.bukkit.storage.BukkitStorageFactory;
@@ -226,7 +225,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         modifierManager = new BukkitModifierManager(this);
         inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
         inventoryManager.init();
-        rewardManager = new BukkitRewardManager(this); // Loaded later
+        rewardManager = new RewardManager(this); // Loaded later
         lootTableManager = new LootTableManager(this); // Loaded later
         confirmManager = new ConfirmManager(this);
         CommandRegistrar commandRegistrar = new CommandRegistrar(this);
