@@ -21,6 +21,16 @@ public class ApiConfigNode implements ConfigNode {
         return new ApiConfigNode(configurationNode);
     }
 
+    public static List<ConfigNode> toApi(List<ConfigurationNode> configurationNodes) {
+        List<ConfigNode> returnList = new ArrayList<>();
+        if (configurationNodes != null) {
+            for (ConfigurationNode config : configurationNodes) {
+                returnList.add(ApiConfigNode.toApi(config));
+            }
+        }
+        return returnList;
+    }
+
     public ConfigurationNode getBacking() {
         return backing;
     }

@@ -1,14 +1,17 @@
 package dev.aurelium.auraskills.api.loot;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 
-public class LootOptioned {
+public class LootOptioned extends LootRequirements {
 
     protected final Map<String, Object> options;
 
-    public LootOptioned(Map<String, Object> options) {
+    public LootOptioned(Map<String, Object> options, List<ConfigNode> requirements) {
+        super(requirements);
         this.options = options;
     }
 

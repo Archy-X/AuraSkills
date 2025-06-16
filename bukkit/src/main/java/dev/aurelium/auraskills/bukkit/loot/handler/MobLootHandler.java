@@ -9,10 +9,12 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementCheck;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
@@ -66,9 +68,12 @@ public class MobLootHandler extends LootHandler implements Listener {
             skill = skillSource.skill();
         }
 
+        SkillsUser skillsUser = plugin.getApi().getUserManager().getUser(player.getUniqueId());
+
         for (LootPool pool : table.getPools()) {
+            // Skip if requirements fail or
             // Skip pool if no loot in the pool match the mob context
-            if (isPoolUnobtainable(pool, entity.getType())) {
+            if (RequirementCheck.failed(pool.getRequirements(), skillsUser) || isPoolUnobtainable(pool, entity.getType())) {
                 continue;
             }
 
@@ -80,7 +85,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
             double rolled = random.nextDouble();
             if (rolled < chance) {
-                Loot selectedLoot = selectLoot(pool, context);
+                Loot selectedLoot = selectLoot(pool, context, skillsUser);
                 // Give loot
                 if (selectedLoot == null) {
                     break;

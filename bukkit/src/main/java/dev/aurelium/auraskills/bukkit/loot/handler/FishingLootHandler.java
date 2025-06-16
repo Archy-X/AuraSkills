@@ -10,11 +10,13 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
+import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
 import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementCheck;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
@@ -81,14 +83,17 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
             if (source == null) continue;
 
-            // Skip if pool has no loot matching the source
-            if (isPoolUnobtainable(pool, source)) {
+            SkillsUser skillsUser = plugin.getApi().getUserManager().getUser(player.getUniqueId());
+
+            // Skip if requirements fail or
+            // Skip pool if no loot in the pool match the mob context
+            if (RequirementCheck.failed(pool.getRequirements(), skillsUser) || isPoolUnobtainable(pool, source)) {
                 continue;
             }
 
             if (random.nextDouble() < chance) { // Pool is selected
                 XpSource contextSource = originalSource != null ? originalSource.source() : null;
-                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
+                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource), skillsUser);
                 // Give loot
                 if (selectedLoot == null) { // Continue iterating pools
                     continue;

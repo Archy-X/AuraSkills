@@ -9,12 +9,13 @@ import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.util.data.Validate;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class CommandLootParser implements LootParser {
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config) {
+    public Loot parse(LootParsingContext context, ConfigNode config, List<ConfigNode> requirements) {
         String executorName = config.node("executor").getString("console");
         CommandExecutor executor = CommandExecutor.valueOf(executorName.toUpperCase(Locale.ROOT));
 
@@ -29,7 +30,7 @@ public class CommandLootParser implements LootParser {
             commands = new String[]{command};
         }
 
-        return new CommandLoot(context.parseValues(config), executor, commands);
+        return new CommandLoot(context.parseValues(config), executor, commands, requirements);
     }
 
 }

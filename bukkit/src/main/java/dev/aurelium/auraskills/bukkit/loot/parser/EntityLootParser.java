@@ -11,6 +11,8 @@ import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import org.spongepowered.configurate.ConfigurationNode;
 
+import java.util.List;
+
 public class EntityLootParser implements LootParser {
 
     protected final LootManager manager;
@@ -20,7 +22,7 @@ public class EntityLootParser implements LootParser {
     }
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config) {
+    public Loot parse(LootParsingContext context, ConfigNode config, List<ConfigNode> requirements) {
         ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
 
         String entityType = backing.node("entity").getString();
@@ -36,7 +38,7 @@ public class EntityLootParser implements LootParser {
 
         Validate.notNull(entity, "Couldn't parse entity loot with entity type: " + entityType);
 
-        return new EntityLoot(context.parseValues(config), entity);
+        return new EntityLoot(context.parseValues(config), entity, requirements);
     }
 
 }

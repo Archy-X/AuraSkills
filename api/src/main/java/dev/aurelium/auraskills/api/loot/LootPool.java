@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.api.loot;
 
+import dev.aurelium.auraskills.api.config.ConfigNode;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -12,8 +14,8 @@ public class LootPool extends LootOptioned {
     private final boolean overrideVanillaLoot;
     private final Random random = new Random();
 
-    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot, Map<String, Object> options) {
-        super(options);
+    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot, Map<String, Object> options, List<ConfigNode> requirements) {
+        super(options, requirements);
         this.name = name;
         this.loot = loot;
         this.baseChance = baseChance;

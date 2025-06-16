@@ -1,10 +1,15 @@
 package dev.aurelium.auraskills.api.loot;
 
-public abstract class Loot {
+import dev.aurelium.auraskills.api.config.ConfigNode;
+
+import java.util.List;
+
+public abstract class Loot extends LootRequirements {
 
     protected final LootValues values;
 
-    public Loot(LootValues values) {
+    public Loot(LootValues values, List<ConfigNode> requirements) {
+        super(requirements);
         this.values = values;
     }
 
