@@ -69,12 +69,14 @@ public class FishingLootHandler extends LootHandler implements Listener {
             double chance = getCommonChance(pool, user);
 
             LootDropEvent.Cause cause = LootDropEvent.Cause.FISHING_OTHER_LOOT;
-            if (pool.getName().equals("rare") && Abilities.TREASURE_HUNTER.isEnabled()) {
-                chance = getAbilityModifiedChance(chance, Abilities.TREASURE_HUNTER, user);
+			// Hacky fix with ability level: feature fix@ https://github.com/Archy-X/AuraSkills/issues/372
+            if (pool.getName().equals("rare") && Abilities.TREASURE_HUNTER.isEnabled() && user.getAbilityLevel(Abilities.TREASURE_HUNTER) > 0) {
+				chance = getAbilityModifiedChance(chance, Abilities.TREASURE_HUNTER, user);
                 source = getSourceWithLootPool("rare", skill);
                 cause = LootDropEvent.Cause.TREASURE_HUNTER;
-            } else if (pool.getName().equals("epic") && Abilities.EPIC_CATCH.isEnabled()) {
-                chance = getAbilityModifiedChance(chance, Abilities.EPIC_CATCH, user);
+			// Hacky fix with ability level: feature fix@ https://github.com/Archy-X/AuraSkills/issues/372
+            } else if (pool.getName().equals("epic") && Abilities.EPIC_CATCH.isEnabled() && user.getAbilityLevel(Abilities.EPIC_CATCH) > 0) {
+				chance = getAbilityModifiedChance(chance, Abilities.EPIC_CATCH, user);
                 source = getSourceWithLootPool("epic", skill);
                 cause = LootDropEvent.Cause.EPIC_CATCH;
             } else if (originalSource != null) {
