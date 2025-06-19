@@ -105,9 +105,8 @@ public class DefenseAbilities extends AbilityImpl {
     }
 
     private boolean isNegativeEffect(PotionEffectType type) {
-        if (VersionUtils.isAtLeastVersion(20, 6)) {
+        if (VersionUtils.isAtLeastVersion(20, 6))
             return (type.getCategory() == PotionEffectTypeCategory.HARMFUL);
-        }
 
         return type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
                 type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.BLINDNESS) ||
