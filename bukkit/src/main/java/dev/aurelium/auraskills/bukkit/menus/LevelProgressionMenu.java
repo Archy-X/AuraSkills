@@ -85,6 +85,7 @@ public class LevelProgressionMenu {
         menu.item("previous_page", globalItems::previousPage);
         menu.item("next_page", globalItems::nextPage);
         menu.item("close", globalItems::close);
+        menu.fillItem(globalItems::fill);
 
         var skillItem = new SkillItem(plugin);
         skillItem.buildComponents(menu);
