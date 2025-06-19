@@ -40,9 +40,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ArcheryAbilities extends AbilityImpl {
 
-    private final UUID LEGACY_STUN_ID = UUID.fromString("886ccad1-20f0-48e4-8634-53f3a76cf2ea");
-    private final String LEGACY_STUN_NAME = "AureliumSkills-Stun";
-    private final String STUN_KEY = "stun_ability";
+    private final UUID legacyStunId = UUID.fromString("886ccad1-20f0-48e4-8634-53f3a76cf2ea");
+    private final String legacyStunName = "AureliumSkills-Stun";
+    private final String stunKey = "stun_ability";
 
     public ArcheryAbilities(AuraSkills plugin) {
         super(plugin, Abilities.RETRIEVAL, Abilities.ARCHER, Abilities.BOW_MASTER, Abilities.PIERCING, Abilities.STUN);
@@ -101,12 +101,12 @@ public class ArcheryAbilities extends AbilityImpl {
 
     public void stun(Player player, User user, LivingEntity entity) {
         var ability = Abilities.STUN;
-        double STUN_SPEED_REDUCTION = ability.optionDouble("speed_reduction", 0.2);
+        double stunSpeedReduction = ability.optionDouble("speed_reduction", 0.2);
 
         if (failsChecks(player, ability)) return;
 
         if (rand.nextDouble() < (getValue(ability, user) / 100)) {
-            AttributeInstance speed = entity.getAttribute(AttributeCompat.MOVEMENT_SPEED);
+            AttributeInstance speed = entity.getAttribute(AttributeCompat.movementSpeed);
             if (speed == null) return;
             // Check if there already is a stun modifier
             for (AttributeModifier existingModifier : speed.getModifiers()) {
@@ -115,7 +115,7 @@ public class ArcheryAbilities extends AbilityImpl {
                 }
             }
             // Applies stun
-            AttributeModifier modifier = getAttributeModifier(speed, STUN_SPEED_REDUCTION);
+            AttributeModifier modifier = getAttributeModifier(speed, stunSpeedReduction);
             speed.addModifier(modifier);
 
             scheduleStunRemoval(entity);
@@ -123,23 +123,23 @@ public class ArcheryAbilities extends AbilityImpl {
     }
 
     @SuppressWarnings("removal")
-    private @NotNull AttributeModifier getAttributeModifier(AttributeInstance speed, double STUN_SPEED_REDUCTION) {
-        double reducedSpeed = speed.getValue() * STUN_SPEED_REDUCTION;
+    private @NotNull AttributeModifier getAttributeModifier(AttributeInstance speed, double stunSpeedReduction) {
+        double reducedSpeed = speed.getValue() * stunSpeedReduction;
         double attributeValue = -1 * reducedSpeed;
 
         AttributeModifier modifier;
         if (VersionUtils.isAtLeastVersion(21)) {
-            NamespacedKey key = new NamespacedKey(plugin, STUN_KEY);
+            NamespacedKey key = new NamespacedKey(plugin, stunKey);
             modifier = new AttributeModifier(key, attributeValue, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY);
         } else {
-            modifier = new AttributeModifier(LEGACY_STUN_ID, LEGACY_STUN_NAME, attributeValue, Operation.ADD_NUMBER);
+            modifier = new AttributeModifier(legacyStunId, legacyStunName, attributeValue, Operation.ADD_NUMBER);
         }
         return modifier;
     }
 
     private void scheduleStunRemoval(LivingEntity entity) {
         plugin.getScheduler().scheduleAtEntity(entity, () -> {
-            AttributeInstance newSpeed = entity.getAttribute(AttributeCompat.MOVEMENT_SPEED);
+            AttributeInstance newSpeed = entity.getAttribute(AttributeCompat.movementSpeed);
             if (newSpeed == null) return;
             for (AttributeModifier attributeModifier : newSpeed.getModifiers()) {
                 if (isStunModifier(attributeModifier)) {
@@ -152,7 +152,7 @@ public class ArcheryAbilities extends AbilityImpl {
     @EventHandler
     public void removeStun(PlayerQuitEvent event) {
         // Removes stun on logout
-        AttributeInstance speed = event.getPlayer().getAttribute(AttributeCompat.MOVEMENT_SPEED);
+        AttributeInstance speed = event.getPlayer().getAttribute(AttributeCompat.movementSpeed);
         if (speed == null) return;
 
         for (AttributeModifier attributeModifier : speed.getModifiers()) {
@@ -163,7 +163,7 @@ public class ArcheryAbilities extends AbilityImpl {
     }
 
     private boolean isStunModifier(AttributeModifier modifier) {
-        if (modifier.getName().equals(LEGACY_STUN_NAME)) {
+        if (modifier.getName().equals(legacyStunName)) {
             return true;
         }
         if (VersionUtils.isAtLeastVersion(21)) {
@@ -171,7 +171,7 @@ public class ArcheryAbilities extends AbilityImpl {
             String namespace = modifier.getKey().getNamespace();
             String key = modifier.getKey().getKey();
 
-            return namespace.equals(pluginNamespace) && key.equals(STUN_KEY);
+            return namespace.equals(pluginNamespace) && key.equals(stunKey);
         }
         return false;
     }
@@ -315,7 +315,8 @@ public class ArcheryAbilities extends AbilityImpl {
             Method setBasePotionData = PotionMeta.class.getDeclaredMethod("setBasePotionData", potionDataClass);
 
             setBasePotionData.invoke(meta, potionData);
-        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException | ClassNotFoundException e) {
+        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException |
+                ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
