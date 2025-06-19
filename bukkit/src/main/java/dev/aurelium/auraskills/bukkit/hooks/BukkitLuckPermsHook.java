@@ -139,4 +139,5 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
     public Class<? extends Hook> getTypeClass() {
         return BukkitLuckPermsHook.class;
     }
+
 }

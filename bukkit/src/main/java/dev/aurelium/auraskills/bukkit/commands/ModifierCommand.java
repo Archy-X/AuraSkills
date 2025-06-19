@@ -66,8 +66,8 @@ public class ModifierCommand extends BaseCommand {
     @CommandCompletion("@players @stats @nothing @nothing @nothing true|false @modifier_operations true|false true|false")
     @Description("%desc_modifier_addtemp")
     public void addTemp(CommandSender sender, @Flags("other") Player player, Stat stat, String name, double value,
-                        Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
-                        @Default("false") boolean silent, @Default("false") boolean stack) {
+            Duration duration, @Default("false") boolean pauseOffline, @Default("add") Operation operation,
+            @Default("false") boolean silent, @Default("false") boolean stack) {
         User user = plugin.getUser(player);
         Locale locale = user.getLocale();
 
@@ -201,8 +201,7 @@ public class ModifierCommand extends BaseCommand {
                 if (stat == null) {
                     toRemove.add(key);
                     removed++;
-                }
-                else if (playerData.getStatModifiers().get(key).stat() == stat) {
+                } else if (playerData.getStatModifiers().get(key).stat() == stat) {
                     toRemove.add(key);
                     removed++;
                 }

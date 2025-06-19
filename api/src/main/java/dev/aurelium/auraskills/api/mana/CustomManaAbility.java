@@ -387,6 +387,7 @@ public class CustomManaAbility implements ManaAbility {
         public void setInfoFormats(List<String> infoFormats) {
             this.infoFormats = infoFormats;
         }
+
     }
 
 }

@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.common.item;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.source.SourceMenuItems;
+import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.Nullable;
 
 /**

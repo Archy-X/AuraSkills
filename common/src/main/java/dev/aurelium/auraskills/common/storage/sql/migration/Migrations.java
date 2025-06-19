@@ -16,4 +16,5 @@ public enum Migrations {
     public String getFileName() {
         return fileName;
     }
+
 }

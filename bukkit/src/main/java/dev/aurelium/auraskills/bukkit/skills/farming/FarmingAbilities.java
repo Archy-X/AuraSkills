@@ -2,11 +2,11 @@ package dev.aurelium.auraskills.bukkit.skills.farming;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
-import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Location;

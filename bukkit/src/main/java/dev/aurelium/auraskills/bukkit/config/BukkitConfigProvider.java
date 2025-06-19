@@ -149,4 +149,5 @@ public class BukkitConfigProvider implements ConfigProvider {
         boolean selectionEnabled = plugin.configBoolean(Option.JOBS_SELECTION_REQUIRE_SELECTION);
         return plugin.configBoolean(Option.JOBS_ENABLED) && economyEnabled && selectionEnabled;
     }
+
 }

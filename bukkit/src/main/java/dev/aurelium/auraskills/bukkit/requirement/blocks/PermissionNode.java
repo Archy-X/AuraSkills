@@ -16,4 +16,5 @@ public class PermissionNode extends RequirementNode {
     public boolean check(Player player) {
         return player.hasPermission(permission);
     }
+
 }

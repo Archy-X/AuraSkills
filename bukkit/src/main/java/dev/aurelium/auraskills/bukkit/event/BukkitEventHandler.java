@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.bukkit.event;
 
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.event.skill.SkillLevelUpEvent;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.event.user.UserLoadEvent;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;

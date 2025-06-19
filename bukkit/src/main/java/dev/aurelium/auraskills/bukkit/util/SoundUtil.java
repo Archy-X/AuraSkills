@@ -12,7 +12,7 @@ import java.util.Locale;
 public class SoundUtil {
 
     @Nullable
-    private static Method SOUND_VALUE_OF = null;
+    private static Method soundValueOf = null;
 
     @SuppressWarnings("deprecation")
     public static Sound getFromEitherName(String name) throws RuntimeException {
@@ -28,16 +28,16 @@ public class SoundUtil {
         if (VersionUtils.isAtLeastVersion(21, 3)) {
             return Sound.valueOf(name);
         } else {
-            if (SOUND_VALUE_OF == null) {
+            if (soundValueOf == null) {
                 try {
-                    SOUND_VALUE_OF = Sound.class.getDeclaredMethod("valueOf", String.class);
+                    soundValueOf = Sound.class.getDeclaredMethod("valueOf", String.class);
                 } catch (NoSuchMethodException e) {
                     throw new RuntimeException(e);
                 }
             }
 
             try {
-                Object soundObj = SOUND_VALUE_OF.invoke(null, name.toUpperCase(Locale.ROOT));
+                Object soundObj = soundValueOf.invoke(null, name.toUpperCase(Locale.ROOT));
                 if (soundObj instanceof Sound sound) {
                     return sound;
                 } else {

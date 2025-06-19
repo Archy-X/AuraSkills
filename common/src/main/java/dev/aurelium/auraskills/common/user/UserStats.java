@@ -85,7 +85,7 @@ public class UserStats {
     }
 
     public double getBonusTraitLevel(Trait trait) {
-        if (!trait.isEnabled()) {
+        if (!trait.isEnabled() || plugin.getWorldManager().isDisabledWorld(user.getWorld())) {
             return 0.0;
         }
 
@@ -93,6 +93,7 @@ public class UserStats {
 
         List<AuraSkillsModifier<?>> modifiers = new ArrayList<>(traitModifiers.values());
         for (var statMod : statModifiers.values()) {
+            if (statMod.stat() == null) continue;
             // If the trait is linked to a direct stat, add the "multiply" and "add_percent" stat modifiers for that stat
             if (statMod.stat().hasDirectTrait() && trait.equals(statMod.stat().getTraits().get(0))) {
                 if (statMod.operation() == Operation.MULTIPLY || statMod.operation() == Operation.ADD_PERCENT) {
@@ -300,6 +301,8 @@ public class UserStats {
         double level = 0.0;
 
         for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
+            if (!user.hasSkillPermission(skill)) continue;
+
             for (Entry<Stat, Double> entry : getStatLevelRewards(stat, skill)) {
                 level += entry.getValue();
             }

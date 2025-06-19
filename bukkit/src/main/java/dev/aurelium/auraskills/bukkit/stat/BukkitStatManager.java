@@ -57,4 +57,5 @@ public class BukkitStatManager extends StatManager {
 
         traitImpl.onReload(player, user.toApi(), trait);
     }
+
 }

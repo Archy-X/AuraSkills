@@ -70,7 +70,6 @@ public class BlockLevelerHelper {
         return source.getStateMultiplier("placeholder", 1.0);
     }
 
-
     private int getSameBlocksAbove(Block block, BlockXpSource source, int num) {
         if (sourceMatches(block, source)) {
             if (checkReplace() && plugin.getRegionManager().isPlacedBlock(block)) {

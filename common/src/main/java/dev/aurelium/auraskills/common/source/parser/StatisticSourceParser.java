@@ -20,4 +20,5 @@ public class StatisticSourceParser extends SourceParser<StatisticSource> {
 
         return new StatisticSource(plugin, context.parseValues(source), statistic, multiplier, minimumIncrease);
     }
+
 }

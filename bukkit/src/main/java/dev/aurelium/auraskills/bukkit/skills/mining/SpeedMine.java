@@ -24,7 +24,7 @@ public class SpeedMine extends ReadiedManaAbility {
 
     public SpeedMine(AuraSkills plugin) {
         super(plugin, ManaAbilities.SPEED_MINE, ManaAbilityMessage.SPEED_MINE_START, ManaAbilityMessage.SPEED_MINE_END,
-                new String[] {"PICKAXE"}, new Action[] {Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
+                new String[]{"PICKAXE"}, new Action[]{Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR});
     }
 
     @Override
@@ -69,4 +69,5 @@ public class SpeedMine extends ReadiedManaAbility {
             checkActivation(player);
         }
     }
+
 }

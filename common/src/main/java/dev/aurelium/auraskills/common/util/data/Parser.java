@@ -16,7 +16,7 @@ public class Parser {
             return def;
         }
     }
-    
+
     protected String getString(Map<?, ?> map, String key) {
         return DataUtil.getString(map, key);
     }
@@ -28,7 +28,7 @@ public class Parser {
             return def;
         }
     }
-    
+
     protected double getDouble(Map<?, ?> map, String key) {
         return DataUtil.getDouble(map, key);
     }
@@ -40,7 +40,7 @@ public class Parser {
             return def;
         }
     }
-    
+
     protected int getInt(Map<?, ?> map, String key) {
         return DataUtil.getInt(map, key);
     }
@@ -52,7 +52,7 @@ public class Parser {
             return def;
         }
     }
-    
+
     protected boolean getBoolean(Map<?, ?> map, String key) {
         return DataUtil.getBoolean(map, key);
     }
@@ -64,7 +64,7 @@ public class Parser {
             return def;
         }
     }
-    
+
     protected List<String> getStringList(Map<?, ?> map, String key) {
         return DataUtil.getStringList(map, key);
     }

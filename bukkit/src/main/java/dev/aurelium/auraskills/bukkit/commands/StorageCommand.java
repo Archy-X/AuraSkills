@@ -85,7 +85,7 @@ public class StorageCommand extends BaseCommand {
         try {
             StorageProvider storage = plugin.getStorageProvider();
             for (UserState state : storage.loadStates(false, false)) {
-                if (state.statModifiers().isEmpty() && state.traitModifiers().isEmpty()){
+                if (state.statModifiers().isEmpty() && state.traitModifiers().isEmpty()) {
                     skipped++;
                     continue;
                 }

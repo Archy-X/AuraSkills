@@ -130,5 +130,5 @@ public class StatFormat {
     public String applyPlaceholders(String input, Player player) {
         return input.replace("{player}", player.getName());
     }
-    
+
 }

@@ -18,7 +18,7 @@ public class BaseContext {
         return api;
     }
 
-    public ConfigNode required(ConfigNode node, String path)  {
+    public ConfigNode required(ConfigNode node, String path) {
         if (!node.hasChild(path)) {
             throw new IllegalArgumentException("Missing required field: " + path);
         }
@@ -42,7 +42,7 @@ public class BaseContext {
             try {
                 list = source.node(pluralKey).getList(type);
             } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Failed to convert value of key "  + pluralKey + " to a list of type " + type.getName());
+                throw new IllegalArgumentException("Failed to convert value of key " + pluralKey + " to a list of type " + type.getName());
             }
             if (list != null) {
                 array = list.toArray((V[]) Array.newInstance(type, list.size()));

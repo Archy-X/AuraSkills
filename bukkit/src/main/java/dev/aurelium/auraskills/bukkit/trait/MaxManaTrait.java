@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 public class MaxManaTrait extends TraitImpl {
 
@@ -28,4 +29,12 @@ public class MaxManaTrait extends TraitImpl {
             }
         }
     }
+
+    @Override
+    protected void changeWorld(PlayerChangedWorldEvent event, Trait trait) {
+        if (!trait.equals(Traits.MAX_MANA)) return;
+
+        reload(event.getPlayer(), trait);
+    }
+
 }

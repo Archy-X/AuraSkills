@@ -9,4 +9,5 @@ public record AntiAfkLog(
         BlockPosition coords,
         @NotNull String world
 ) {
+
 }

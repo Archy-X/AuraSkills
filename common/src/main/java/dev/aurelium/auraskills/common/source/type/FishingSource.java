@@ -20,4 +20,5 @@ public class FishingSource extends Source implements FishingXpSource {
     public @NotNull LootItemFilter getItem() {
         return item;
     }
+
 }

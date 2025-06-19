@@ -56,13 +56,13 @@ public class FileUserMigrator {
     }
 
     private void applyFormatChanges(ConfigurationNode config) throws SerializationException {
-        final String PLUGIN_NAME = "auraskills";
+        final String pluginName = "auraskills";
         // Add namespace to skills
         ConfigurationNode skillsNode = config.node("skills");
         for (ConfigurationNode oldNode : skillsNode.childrenMap().values()) {
             String oldKey = (String) oldNode.key();
             if (oldKey != null) {
-                skillsNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
+                skillsNode.node(pluginName + "/" + oldKey).set(oldNode.raw());
                 skillsNode.removeChild(oldKey);
             }
         }
@@ -70,14 +70,14 @@ public class FileUserMigrator {
         ConfigurationNode statModifiersNode = config.node("stat_modifiers");
         for (ConfigurationNode modifierNode : statModifiersNode.childrenMap().values()) {
             String bareStatName = modifierNode.node("stat").getString();
-            modifierNode.node("stat").set(PLUGIN_NAME + "/" + bareStatName);
+            modifierNode.node("stat").set(pluginName + "/" + bareStatName);
         }
         // Add namespace to ability data
         ConfigurationNode abilityDataNode = config.node("ability_data");
         for (ConfigurationNode oldNode : abilityDataNode.childrenMap().values()) {
             String oldKey = (String) oldNode.key();
             if (oldKey != null) {
-                abilityDataNode.node(PLUGIN_NAME + "/" + oldKey).set(oldNode.raw());
+                abilityDataNode.node(pluginName + "/" + oldKey).set(oldNode.raw());
                 abilityDataNode.removeChild(oldKey);
             }
         }

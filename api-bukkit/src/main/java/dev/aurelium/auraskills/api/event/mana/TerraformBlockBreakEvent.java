@@ -10,4 +10,5 @@ public class TerraformBlockBreakEvent extends BlockBreakEvent {
     public TerraformBlockBreakEvent(@NotNull Block theBlock, @NotNull Player player) {
         super(theBlock, player);
     }
+
 }

@@ -63,4 +63,5 @@ public abstract class OptionSupplier<T> implements OptionedProvider<T> {
     public Map<String, Object> optionMap(T type, String key) {
         return isLoaded(type) ? getOptions(type).getMap(key) : new HashMap<>();
     }
+
 }

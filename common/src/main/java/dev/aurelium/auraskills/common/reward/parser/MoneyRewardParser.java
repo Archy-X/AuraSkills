@@ -20,4 +20,5 @@ public class MoneyRewardParser extends RewardParser {
                 .skill(skill)
                 .build();
     }
+
 }

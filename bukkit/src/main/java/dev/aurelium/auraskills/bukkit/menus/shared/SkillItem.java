@@ -199,8 +199,7 @@ public class SkillItem {
                         }
                         case "cooldown_entry" ->
                                 builder.append(message, "{cooldown}", NumberUtil.format1(manaAbility.getCooldown(level)));
-                        default ->
-                                builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
+                        default -> builder.append(message, "{value}", NumberUtil.format1(manaAbility.getValue(level)));
                     }
                 }
                 return builder.build();

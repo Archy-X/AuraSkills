@@ -186,6 +186,14 @@ public class BukkitUser extends User {
     }
 
     @Override
+    public String getWorld() {
+        if (player == null) {
+            return plugin.getServer().getWorlds().getFirst().getName();
+        }
+        return player.getWorld().getName();
+    }
+
+    @Override
     public boolean canSelectJob(@NotNull Skill skill) {
         if (player == null) return true;
 
@@ -223,4 +231,5 @@ public class BukkitUser extends User {
         // Remove fleeting
         removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
     }
+
 }

@@ -34,4 +34,5 @@ public class SlimefunHook extends Hook implements Listener {
     public Class<? extends Hook> getTypeClass() {
         return SlimefunHook.class;
     }
+
 }

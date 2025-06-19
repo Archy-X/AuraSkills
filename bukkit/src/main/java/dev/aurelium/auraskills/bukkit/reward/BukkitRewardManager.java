@@ -119,4 +119,5 @@ public class BukkitRewardManager extends RewardManager {
         }
         return new File(plugin.getPluginFolder() + "/rewards");
     }
+
 }

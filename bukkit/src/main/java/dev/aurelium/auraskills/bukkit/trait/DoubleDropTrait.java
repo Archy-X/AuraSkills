@@ -113,4 +113,5 @@ public class DoubleDropTrait extends TraitImpl {
             }
         }
     }
+
 }

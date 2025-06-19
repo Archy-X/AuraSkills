@@ -5,6 +5,7 @@ import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.annotation.*;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -16,7 +17,6 @@ import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
-import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -82,8 +82,7 @@ public class ArmorCommand extends BaseCommand {
         player.getInventory().setItemInMainHand(item);
         if (removed) {
             player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_REMOVE_REMOVED, locale), stat, locale));
-        }
-        else {
+        } else {
             player.sendMessage(plugin.getPrefix(locale) + format.applyPlaceholders(plugin.getMsg(CommandMessage.ARMOR_MODIFIER_REMOVE_DOES_NOT_EXIST, locale), stat, locale));
         }
     }
@@ -236,8 +235,7 @@ public class ArmorCommand extends BaseCommand {
             player.getInventory().setItemInMainHand(item);
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_REMOVE_REMOVED, locale),
                     "{skill}", skill.getDisplayName(locale)));
-        }
-        else {
+        } else {
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ARMOR_REQUIREMENT_REMOVE_DOES_NOT_EXIST, locale),
                     "{skill}", skill.getDisplayName(locale)));
         }

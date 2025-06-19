@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.config;
 
-
 public enum Option {
 
     // Mysql Options
@@ -110,6 +109,7 @@ public enum Option {
     DISABLE_IN_CREATIVE_MODE("disable_in_creative_mode", OptionType.BOOLEAN),
     ON_DEATH_RESET_SKILLS("on_death.reset_skills", OptionType.BOOLEAN),
     ON_DEATH_RESET_XP("on_death.reset_xp", OptionType.BOOLEAN),
+    ON_DEATH_RESET_XP_RATIO("on_death.reset_xp_ratio", OptionType.DOUBLE),
     AUTO_SAVE_ENABLED("auto_save.enabled", OptionType.BOOLEAN),
     AUTO_SAVE_INTERVAL_TICKS("auto_save.interval_ticks", OptionType.INT),
     // Leveler options

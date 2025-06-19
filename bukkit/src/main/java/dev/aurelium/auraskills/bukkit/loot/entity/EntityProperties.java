@@ -47,4 +47,5 @@ public record EntityProperties(
                 equipment
         );
     }
+
 }

@@ -16,6 +16,7 @@ java {
 
 repositories {
     mavenCentral()
+    maven("https://central.sonatype.com/repository/maven-snapshots/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     maven("https://repo.aikar.co/content/groups/aikar/")
@@ -27,6 +28,7 @@ repositories {
     maven("https://mvn.lumine.io/repository/maven-public/")
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.nexomc.com/snapshots/")
+    maven("https://repo.nexomc.com/releases/")
     mavenLocal()
 }
 
@@ -56,7 +58,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
-    compileOnly("com.nexomc:nexo:1.1.0-dev.21")
+    compileOnly("com.nexomc:nexo:1.6.0")
 }
 
 val compiler = javaToolchains.compilerFor {
@@ -89,7 +91,7 @@ tasks {
     }
 
     register<Copy>("copyJar") {
-        val projectVersion : String by project
+        val projectVersion: String by project
         from("build/libs/AuraSkills-${projectVersion}.jar")
         into("../build/libs")
     }
@@ -165,7 +167,13 @@ if (project.hasProperty("modrinthToken")) {
 
 fun extractChangelog(version: String): String {
     val heading = Regex.escape(version)
-    val path = if (System.getProperty("user.dir").endsWith("bukkit")) "../Changelog.md" else "Changelog.md"
+    val cwd = System.getProperty("user.dir")
+    val isInSubmodule: Boolean = project.parent
+        ?.childProjects
+        ?.keys
+        ?.any { cwd.endsWith(it) }
+        ?: false
+    val path = if (isInSubmodule) "../Changelog.md" else "Changelog.md"
 
     val fullChangelog = File(path).readText()
     val headingPattern = Regex("## $heading\\R+([\\s\\S]*?)\\R+##\\s", RegexOption.DOT_MATCHES_ALL)
@@ -174,4 +182,3 @@ fun extractChangelog(version: String): String {
     return result?.groupValues?.get(1)?.trim()
         ?: ""
 }
-

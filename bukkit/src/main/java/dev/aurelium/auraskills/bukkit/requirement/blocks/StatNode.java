@@ -19,4 +19,5 @@ public class StatNode extends RequirementNode {
     public boolean check(Player player) {
         return plugin.getUser(player).getStatLevel(stat) >= value;
     }
+
 }

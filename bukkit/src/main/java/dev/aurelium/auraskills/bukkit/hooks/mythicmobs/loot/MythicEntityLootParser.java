@@ -23,4 +23,5 @@ public class MythicEntityLootParser implements CustomEntityParser {
     public boolean shouldUseParser(ConfigurationNode config) {
         return config.node("entity").getString("").startsWith("mythicmobs:");
     }
+
 }

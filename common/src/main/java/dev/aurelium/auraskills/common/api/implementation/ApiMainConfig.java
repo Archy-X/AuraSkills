@@ -37,4 +37,5 @@ public class ApiMainConfig implements MainConfig {
     public boolean jobSelectionEnabled() {
         return plugin.config().jobSelectionEnabled();
     }
+
 }

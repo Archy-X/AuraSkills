@@ -138,4 +138,5 @@ public enum Stats implements Stat {
     public Map<String, Object> optionMap(String key) {
         return provider.optionMap(this, key);
     }
+
 }

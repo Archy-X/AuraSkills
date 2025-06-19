@@ -27,4 +27,5 @@ public class CommandIssuerRecipient implements Recipient {
             issuer.sendMessage(LegacyComponentSerializer.legacySection().serialize(component));
         }
     }
+
 }

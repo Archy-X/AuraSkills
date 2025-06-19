@@ -1,16 +1,16 @@
-name: Feature Suggestion
-description: Suggest a feature or idea
-labels: ["type: feature"]
+name: Feature Request
+description: Suggest a feature or enhancement
+labels: ["feature"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for sharing your ideas! Please note that there is no guarantee your feature will be added.
+        Thank you for sharing your ideas. Please note that feature requests are not guaranteed to be added.
   - type: textarea
     id: description
     attributes:
       label: Feature description
-      description: A clear and detailed description of what the feature is.
+      description: A clear and detailed description of what the feature is and its use case.
     validations:
       required: true
   - type: textarea

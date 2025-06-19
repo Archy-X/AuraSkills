@@ -74,7 +74,7 @@ public class AntiAfkManager {
         return checkMap.get(type);
     }
 
-    public CheckData getCheckData(Player player, CheckType type)  {
+    public CheckData getCheckData(Player player, CheckType type) {
         return ((BukkitUser) plugin.getUser(player)).getCheckData(type);
     }
 
@@ -117,9 +117,11 @@ public class AntiAfkManager {
                 plugin.getServer().getPluginManager().registerEvents(check, plugin);
                 checkMap.put(type, check);
             }
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                IllegalAccessException e) {
             plugin.logger().warn("Failed to register check of type " + type);
             e.printStackTrace();
         }
     }
+
 }

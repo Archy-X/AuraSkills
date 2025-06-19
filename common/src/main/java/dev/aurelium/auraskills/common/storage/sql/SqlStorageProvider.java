@@ -374,23 +374,23 @@ public class SqlStorageProvider extends StorageProvider {
 
     private void saveModifierRows(Connection connection, int userId, List<ModifierRow> rows) throws SQLException {
         String sql = """
-        INSERT INTO auraskills_modifiers (
-            user_id,
-            modifier_type,
-            type_id,
-            modifier_name,
-            modifier_value,
-            modifier_operation,
-            expiration_time,
-            remaining_duration,
-            metadata
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE
-            modifier_value = VALUES(modifier_value),
-            expiration_time = VALUES(expiration_time),
-            remaining_duration = VALUES(remaining_duration),
-            metadata = VALUES(metadata)
-        """;
+                INSERT INTO auraskills_modifiers (
+                    user_id,
+                    modifier_type,
+                    type_id,
+                    modifier_name,
+                    modifier_value,
+                    modifier_operation,
+                    expiration_time,
+                    remaining_duration,
+                    metadata
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE
+                    modifier_value = VALUES(modifier_value),
+                    expiration_time = VALUES(expiration_time),
+                    remaining_duration = VALUES(remaining_duration),
+                    metadata = VALUES(metadata)
+                """;
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             for (ModifierRow row : rows) {

@@ -19,4 +19,5 @@ public class PotionSplashSourceParser extends SourceParser<PotionSplashSource> {
 
         return new PotionSplashSource(plugin, context.parseValues(source), item);
     }
+
 }

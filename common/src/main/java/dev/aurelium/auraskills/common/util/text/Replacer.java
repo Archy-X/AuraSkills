@@ -20,4 +20,5 @@ public class Replacer {
     public Map<String, Supplier<String>> getReplacements() {
         return replacements;
     }
+
 }

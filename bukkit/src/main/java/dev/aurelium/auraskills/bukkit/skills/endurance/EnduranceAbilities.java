@@ -56,15 +56,14 @@ public class EnduranceAbilities extends AbilityImpl {
             // Applies modifier
             double modifier = getValue(ability, user) / 100;
             event.setAmount(event.getAmount() * (1 + modifier));
-        }
-        // Recovery
-        else if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.SATIATED)) {
+        } else if (event.getRegainReason().equals(EntityRegainHealthEvent.RegainReason.SATIATED)) {
+            // Recovery
             var ability = Abilities.RECOVERY;
 
             if (isDisabled(ability)) return;
             if (failsChecks(player, ability)) return;
             // Gets health
-            AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
             if (attribute == null) return;
 
             double currentHealth = player.getHealth();
@@ -89,7 +88,7 @@ public class EnduranceAbilities extends AbilityImpl {
 
         User user = plugin.getUser(player);
         // Gets health
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
         if (attribute == null) return;
 
         double currentHealth = player.getHealth();

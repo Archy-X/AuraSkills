@@ -18,4 +18,5 @@ public class GrindstoneSource extends Source implements GrindstoneXpSource {
     public String getMultiplier() {
         return multiplier;
     }
+
 }

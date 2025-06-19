@@ -248,8 +248,7 @@ public class ItemCommand extends BaseCommand {
             player.getInventory().setItemInMainHand(item);
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_REQUIREMENT_REMOVE_REMOVED, locale),
                     "{skill}", skill.getDisplayName(locale)));
-        }
-        else {
+        } else {
             player.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_REQUIREMENT_REMOVE_DOES_NOT_EXIST, locale),
                     "{skill}", skill.getDisplayName(locale)));
         }

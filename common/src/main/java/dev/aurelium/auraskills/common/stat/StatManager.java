@@ -38,11 +38,11 @@ public abstract class StatManager {
         }
         return loadedStat;
     }
-    
+
     public Collection<LoadedStat> getStats() {
         return statMap.values();
     }
-    
+
     public Set<Stat> getEnabledStats() {
         Set<Stat> stats = new LinkedHashSet<>();
         for (LoadedStat loaded : statMap.values()) {

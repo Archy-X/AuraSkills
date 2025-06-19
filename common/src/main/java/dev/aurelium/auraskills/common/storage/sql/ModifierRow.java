@@ -12,4 +12,5 @@ public record ModifierRow(
         long remainingDuration,
         @Nullable String metadata
 ) {
+
 }

@@ -54,4 +54,5 @@ public class ManaAbilityCommand extends BaseCommand {
             sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_MANA_ABILITY, locale));
         }
     }
+
 }

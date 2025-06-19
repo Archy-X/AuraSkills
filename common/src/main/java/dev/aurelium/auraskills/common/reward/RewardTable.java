@@ -50,6 +50,7 @@ public class RewardTable {
 
     /**
      * Searches rewards for all rewards of a certain type
+     *
      * @param type The class of the type of reward to search
      * @param <T> The reward type
      * @return A map of each level to a list of rewards of that type

@@ -19,4 +19,5 @@ public class FishingSourceParser extends SourceParser<FishingSource> {
 
         return new FishingSource(plugin, context.parseValues(source), item);
     }
+
 }

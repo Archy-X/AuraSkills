@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.reward.type;
 
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.user.User;
 
@@ -20,4 +20,5 @@ public class ItemReward extends MessagedReward {
     public void giveReward(User user, Skill skill, int level) {
         plugin.getItemRegistry().giveItem(user, itemKey, amount);
     }
+
 }

@@ -24,6 +24,7 @@ public abstract class SourceComparator implements Comparator<XpSource> {
         public int compare(XpSource source1, XpSource source2) {
             return (int) (source1.getXp() * 100) - (int) (source2.getXp() * 100);
         }
+
     }
 
     public static class Descending extends SourceComparator {
@@ -36,6 +37,7 @@ public abstract class SourceComparator implements Comparator<XpSource> {
         public int compare(XpSource source1, XpSource source2) {
             return (int) (source2.getXp() * 100) - (int) (source1.getXp() * 100);
         }
+
     }
 
     public static class Alphabetical extends SourceComparator {
@@ -51,6 +53,7 @@ public abstract class SourceComparator implements Comparator<XpSource> {
         public int compare(XpSource source1, XpSource source2) {
             return source1.getDisplayName(locale).compareTo(source2.getDisplayName(locale));
         }
+
     }
 
     public static class ReverseAlphabetical extends SourceComparator {
@@ -66,6 +69,7 @@ public abstract class SourceComparator implements Comparator<XpSource> {
         public int compare(XpSource source1, XpSource source2) {
             return source2.getDisplayName(locale).compareTo(source1.getDisplayName(locale));
         }
+
     }
 
 }

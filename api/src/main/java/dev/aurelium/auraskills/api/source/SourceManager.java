@@ -15,8 +15,8 @@ public interface SourceManager {
      * instance and the skill it belongs to.
      *
      * @param typeClass the class of the {@link XpSource} type
-     * @return a list of sources
      * @param <T> an instance of XpSource
+     * @return a list of sources
      */
     @NotNull
     <T extends XpSource> List<SkillSource<T>> getSourcesOfType(Class<T> typeClass);
@@ -26,8 +26,8 @@ public interface SourceManager {
      * one instance is expected due to having no variants.
      *
      * @param typeClass the class of the {@link XpSource} type
-     * @return the {@link SkillSource}
      * @param <T> an instance of XpSource
+     * @return the {@link SkillSource}
      */
     @Nullable
     <T extends XpSource> SkillSource<T> getSingleSourceOfType(Class<T> typeClass);

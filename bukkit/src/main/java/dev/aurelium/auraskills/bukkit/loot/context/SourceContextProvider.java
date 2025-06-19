@@ -40,9 +40,11 @@ public class SourceContextProvider extends ContextProvider {
                     for (XpSource tagSource : sourceList) {
                         contexts.add(new SourceContext(tagSource));
                     }
-                } catch (IllegalArgumentException ignored) { }
+                } catch (IllegalArgumentException ignored) {
+                }
             }
         }
         return contexts;
     }
+
 }

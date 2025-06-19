@@ -20,4 +20,5 @@ public class PotionSplashSource extends Source implements PotionSplashXpSource {
     public @NotNull ItemFilter getItem() {
         return item;
     }
+
 }

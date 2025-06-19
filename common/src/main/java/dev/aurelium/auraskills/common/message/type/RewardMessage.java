@@ -30,4 +30,5 @@ public enum RewardMessage implements MessageKey {
             return "rewards." + toString().toLowerCase(Locale.ROOT);
         }
     }
+
 }

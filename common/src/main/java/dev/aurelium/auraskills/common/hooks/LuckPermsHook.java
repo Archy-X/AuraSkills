@@ -32,4 +32,5 @@ public class LuckPermsHook extends PermissionsHook {
     public Class<? extends Hook> getTypeClass() {
         return PermissionsHook.class;
     }
+
 }

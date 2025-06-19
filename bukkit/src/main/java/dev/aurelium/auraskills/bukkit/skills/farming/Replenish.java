@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class Replenish extends ReadiedManaAbility {
 
     public Replenish(AuraSkills plugin) {
-        super(plugin, ManaAbilities.REPLENISH, ManaAbilityMessage.REPLENISH_START, ManaAbilityMessage.REPLENISH_END, new String[] {"HOE"},
-                new Action[] {Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
+        super(plugin, ManaAbilities.REPLENISH, ManaAbilityMessage.REPLENISH_START, ManaAbilityMessage.REPLENISH_END, new String[]{"HOE"},
+                new Action[]{Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK});
     }
 
     @Override

@@ -22,4 +22,5 @@ public enum CheckType {
     public Class<? extends Check> getCheckClass() {
         return checkClass;
     }
+
 }

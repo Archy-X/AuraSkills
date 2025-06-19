@@ -16,4 +16,5 @@ public class BukkitApiProvider implements ApiProvider {
     public LootManager getLootManager() {
         return lootManager;
     }
+
 }

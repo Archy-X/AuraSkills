@@ -38,4 +38,5 @@ public class VaultHook extends EconomyHook {
     public Class<? extends Hook> getTypeClass() {
         return EconomyHook.class;
     }
+
 }

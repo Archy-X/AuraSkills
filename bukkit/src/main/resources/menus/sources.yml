@@ -58,3 +58,4 @@ options:
   use_track: false
   track: []
   xp_format: '#.##'
+  income_format: '0.00'

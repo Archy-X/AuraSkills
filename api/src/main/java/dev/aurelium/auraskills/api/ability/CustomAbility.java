@@ -401,6 +401,7 @@ public class CustomAbility implements Ability {
         public void setInfo(String info) {
             this.info = info;
         }
+
     }
 
 }

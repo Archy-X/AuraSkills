@@ -19,4 +19,5 @@ public class SkillNode extends RequirementNode {
     public boolean check(Player player) {
         return plugin.getUser(player).getSkillLevel(skill) >= level;
     }
+
 }

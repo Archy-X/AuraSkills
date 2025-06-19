@@ -43,4 +43,5 @@ public class ApiLocationManager implements LocationManager {
         }
         return plugin.getWorldManager().isCheckReplaceDisabled(location) || isRegionDisabled;
     }
+
 }

@@ -26,9 +26,10 @@ public class CommandLootParser implements LootParser {
         } else {
             String command = config.node("command").getString("");
             Validate.notNull(command, "Command loot must specify key command");
-            commands = new String[] {command};
+            commands = new String[]{command};
         }
 
         return new CommandLoot(context.parseValues(config), executor, commands);
     }
+
 }

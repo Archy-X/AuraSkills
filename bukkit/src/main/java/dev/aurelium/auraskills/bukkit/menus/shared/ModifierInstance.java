@@ -20,6 +20,4 @@ public record ModifierInstance(
         return new ModifierInstance(this.parent, this.id, this.value, this.operation, this.item, this.displayName, this.description, index);
     }
 
-
-
 }

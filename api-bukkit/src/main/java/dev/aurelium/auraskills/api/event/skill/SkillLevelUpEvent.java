@@ -48,4 +48,5 @@ public class SkillLevelUpEvent extends Event {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

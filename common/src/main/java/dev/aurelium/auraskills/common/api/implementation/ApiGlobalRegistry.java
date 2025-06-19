@@ -68,4 +68,5 @@ public class ApiGlobalRegistry implements GlobalRegistry {
     public Collection<ManaAbility> getManaAbilities() {
         return plugin.getManaAbilityRegistry().getValues();
     }
+
 }

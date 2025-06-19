@@ -9,6 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public record LoadedSkill(Skill skill, @NotNull ImmutableList<Ability> abilities, @Nullable ManaAbility manaAbility,
-                          @NotNull ImmutableList<XpSource> sources, @NotNull SkillOptions options) {
+        @NotNull ImmutableList<XpSource> sources, @NotNull SkillOptions options) {
 
 }

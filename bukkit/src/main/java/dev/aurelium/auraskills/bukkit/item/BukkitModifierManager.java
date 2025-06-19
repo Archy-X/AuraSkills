@@ -36,7 +36,7 @@ public class BukkitModifierManager implements ModifierManager {
 
         EntityEquipment equipment = player.getEquipment();
         if (equipment != null) {
-            for (var slot : new EquipmentSlot[] { EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET }) {
+            for (var slot : new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
                 ItemStack armor = equipment.getItem(slot);
                 if (armor == null) continue;
 
@@ -61,4 +61,5 @@ public class BukkitModifierManager implements ModifierManager {
             applyModifiers(player, reload);
         }
     }
+
 }

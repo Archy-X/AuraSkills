@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.skills.fighting;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
+import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -10,7 +11,6 @@ import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
-import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -37,8 +37,8 @@ import java.util.concurrent.TimeUnit;
 public class FightingAbilities extends AbilityImpl {
 
     public static final String BLEED_DAMAGER_KEY = "bleed_damager";
-    private final String PARRY_KEY = "parry_ready";
-    private final String PARRY_VECTOR = "parry_vector";
+    private final String parryKey = "parry_ready";
+    private final String parryVector = "parry_vector";
 
     public FightingAbilities(AuraSkills plugin) {
         super(plugin, Abilities.PARRY, Abilities.FIGHTER, Abilities.SWORD_MASTER, Abilities.FIRST_STRIKE, Abilities.BLEED);
@@ -277,12 +277,12 @@ public class FightingAbilities extends AbilityImpl {
         User user = plugin.getUser(player);
 
         // Return if already ready
-        if (user.metadataBoolean(PARRY_KEY)) {
+        if (user.metadataBoolean(parryKey)) {
             return;
         }
         Vector facing = player.getLocation().getDirection();
-        user.getMetadata().put(PARRY_KEY, true);
-        user.getMetadata().put(PARRY_VECTOR, facing);
+        user.getMetadata().put(parryKey, true);
+        user.getMetadata().put(parryVector, facing);
 
         scheduleUnready(user);
     }
@@ -291,7 +291,7 @@ public class FightingAbilities extends AbilityImpl {
         var ability = Abilities.PARRY;
         if (failsChecks(player, ability)) return DamageModifier.none();
         // Return if not parry ready
-        if (!user.metadataBoolean(PARRY_KEY)) return DamageModifier.none();
+        if (!user.metadataBoolean(parryKey)) return DamageModifier.none();
 
         if (event.getDamageMeta().getAttacker() != null &&
                 !isFacingCloseEnough(user, player, event.getDamageMeta().getAttacker())) {
@@ -319,7 +319,7 @@ public class FightingAbilities extends AbilityImpl {
         Vector vb = player.getLocation().toVector();
         Vector playerToDamager = va.subtract(vb).normalize();
 
-        Object facingObj = user.getMetadata().get(PARRY_VECTOR);
+        Object facingObj = user.getMetadata().get(parryVector);
         if (facingObj == null) return false;
 
         Vector facing = (Vector) facingObj;
@@ -329,8 +329,8 @@ public class FightingAbilities extends AbilityImpl {
 
     private void scheduleUnready(User user) {
         plugin.getScheduler().scheduleSync(() -> {
-            user.getMetadata().remove(PARRY_KEY);
-            user.getMetadata().remove(PARRY_VECTOR);
+            user.getMetadata().remove(parryKey);
+            user.getMetadata().remove(parryVector);
         }, Abilities.PARRY.optionInt("time_ms", 250), TimeUnit.MILLISECONDS);
     }
 

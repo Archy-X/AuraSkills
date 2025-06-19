@@ -26,9 +26,9 @@ import java.util.UUID;
 
 public class LightningBlade extends ReadiedManaAbility {
 
-    private final UUID MODIFIER_ID = UUID.fromString("2fc64528-614b-11ee-8c99-0242ac120002");
-    private final String LEGACY_MODIFIER_NAME = "auraskills_lightning_blade";
-    private final String MODIFIER_KEY = "lightning_blade_mana_ability";
+    private static final UUID MODIFIER_ID = UUID.fromString("2fc64528-614b-11ee-8c99-0242ac120002");
+    private static final String LEGACY_MODIFIER_NAME = "auraskills_lightning_blade";
+    private static final String MODIFIER_KEY = "lightning_blade_mana_ability";
 
     public LightningBlade(AuraSkills plugin) {
         super(plugin, ManaAbilities.LIGHTNING_BLADE, ManaAbilityMessage.LIGHTNING_BLADE_START, ManaAbilityMessage.LIGHTNING_BLADE_END,
@@ -38,7 +38,7 @@ public class LightningBlade extends ReadiedManaAbility {
     @Override
     @SuppressWarnings("removal")
     public void onActivate(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.attackSpeed);
         if (attribute == null) return;
 
         // Remove existing modifier if exists
@@ -61,7 +61,7 @@ public class LightningBlade extends ReadiedManaAbility {
 
     @Override
     public void onStop(Player player, User user) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.attackSpeed);
         if (attribute == null) return;
 
         for (AttributeModifier modifier : attribute.getModifiers()) {
@@ -125,7 +125,7 @@ public class LightningBlade extends ReadiedManaAbility {
             return;
         }
         // Remove attack speed attribute modifier
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.ATTACK_SPEED);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.attackSpeed);
         if (attribute == null) return;
         for (AttributeModifier modifier : attribute.getModifiers()) {
             if (modifier.getName().equals("AureliumSkills-LightningBlade")) {
@@ -133,4 +133,5 @@ public class LightningBlade extends ReadiedManaAbility {
             }
         }
     }
+
 }

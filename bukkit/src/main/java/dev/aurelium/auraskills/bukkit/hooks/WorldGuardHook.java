@@ -128,5 +128,4 @@ public class WorldGuardHook extends Hook {
         return WorldGuardHook.class;
     }
 
-
 }

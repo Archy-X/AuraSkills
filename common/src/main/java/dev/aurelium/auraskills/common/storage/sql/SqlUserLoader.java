@@ -34,44 +34,44 @@ public class SqlUserLoader {
 
     private final AuraSkillsPlugin plugin;
     private static final String LOAD_QUERY = """
-        SELECT u.*,
-            (
-                SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                    'name', s.skill_name,
-                    'level', s.skill_level,
-                    'xp', s.skill_xp
-                ))
-                FROM auraskills_skill_levels s
-                WHERE s.user_id = u.user_id
-            ) AS skill_levels,
-            (
-                SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                    'data_id', k.data_id,
-                    'category_id', k.category_id,
-                    'key_name', k.key_name,
-                    'value', k.value
-                ))
-                FROM auraskills_key_values k
-                WHERE k.user_id = u.user_id
-            ) AS key_values,
-            (
-                SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                    'modifier_type', m.modifier_type,
-                    'type_id', m.type_id,
-                    'modifier_name', m.modifier_name,
-                    'modifier_value', m.modifier_value,
-                    'modifier_operation', m.modifier_operation,
-                    'expiration_time', m.expiration_time,
-                    'remaining_duration', m.remaining_duration
-                ))
-                FROM auraskills_modifiers m
-                WHERE m.user_id = u.user_id
-            ) AS modifiers
-        FROM
-            auraskills_users u
-        WHERE
-            u.player_uuid = ?;
-        """;
+            SELECT u.*,
+                (
+                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
+                        'name', s.skill_name,
+                        'level', s.skill_level,
+                        'xp', s.skill_xp
+                    ))
+                    FROM auraskills_skill_levels s
+                    WHERE s.user_id = u.user_id
+                ) AS skill_levels,
+                (
+                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
+                        'data_id', k.data_id,
+                        'category_id', k.category_id,
+                        'key_name', k.key_name,
+                        'value', k.value
+                    ))
+                    FROM auraskills_key_values k
+                    WHERE k.user_id = u.user_id
+                ) AS key_values,
+                (
+                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
+                        'modifier_type', m.modifier_type,
+                        'type_id', m.type_id,
+                        'modifier_name', m.modifier_name,
+                        'modifier_value', m.modifier_value,
+                        'modifier_operation', m.modifier_operation,
+                        'expiration_time', m.expiration_time,
+                        'remaining_duration', m.remaining_duration
+                    ))
+                    FROM auraskills_modifiers m
+                    WHERE m.user_id = u.user_id
+                ) AS modifiers
+            FROM
+                auraskills_users u
+            WHERE
+                u.player_uuid = ?;
+            """;
 
     public SqlUserLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -225,7 +225,8 @@ public class SqlUserLoader {
             ActionBarType type = ActionBarType.valueOf(keyName.toUpperCase(Locale.ROOT));
             boolean enabled = !valueStr.equals("false");
             user.setActionBarSetting(type, enabled);
-        } catch (IllegalArgumentException ignored) { }
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     private void applyJobs(User user, String keyName, String valueStr) {
@@ -275,7 +276,8 @@ public class SqlUserLoader {
             } catch (NumberFormatException e) {
                 try {
                     parsed = Double.parseDouble(value);
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         return parsed;

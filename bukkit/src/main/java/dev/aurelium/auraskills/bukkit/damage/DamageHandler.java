@@ -24,4 +24,5 @@ public class DamageHandler {
 
         return new DamageResult(finalDamage, false);
     }
+
 }

@@ -76,4 +76,5 @@ public class StatSupplier extends OptionSupplier<Stat> implements StatProvider {
     public boolean isLoaded(Stat type) {
         return statManager.isLoaded(type);
     }
+
 }

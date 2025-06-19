@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.message.type;
 
-
 import dev.aurelium.auraskills.common.commands.Command;
 import dev.aurelium.auraskills.common.message.MessageKey;
 
@@ -195,7 +194,7 @@ public enum CommandMessage implements MessageKey {
     CommandMessage() {
         this.path = "commands." + this.name().toLowerCase(Locale.ROOT).replace("_", ".");
     }
-    
+
     CommandMessage(Command command, String path) {
         this.path = "commands." + command.name().toLowerCase(Locale.ROOT).replace("_", ".") + "." + path;
     }

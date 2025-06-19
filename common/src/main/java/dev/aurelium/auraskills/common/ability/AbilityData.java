@@ -39,6 +39,7 @@ public class AbilityData {
 
     /**
      * Gets an ability data value as an int
+     *
      * @param key The key of the data to look up
      * @return The value as an int, or 0 if no mapping exists
      */
@@ -49,6 +50,7 @@ public class AbilityData {
 
     /**
      * Gets an ability data value as a boolean
+     *
      * @param key The key of the data to look up
      * @return The value as a boolean, or false if no mapping exists
      */
@@ -59,6 +61,7 @@ public class AbilityData {
 
     /**
      * Gets an ability data value as a double
+     *
      * @param key The key of the data to look up
      * @return The value as a double, or 0.0 if no mapping exists
      */

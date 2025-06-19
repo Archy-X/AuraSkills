@@ -56,6 +56,22 @@ public class SkillCommand extends BaseCommand {
         }
     }
 
+    @Subcommand("addlevel")
+    @CommandCompletion("@players @skills")
+    @CommandPermission("auraskills.command.skill.setlevel")
+    @Description("%desc_skill_addlevel")
+    public void onSkillAddlevel(CommandSender sender, @Flags("other") Player player, Skill skill, int level) {
+        User user = plugin.getUser(player);
+        Locale locale = user.getLocale();
+        if (skill.isEnabled()) {
+            int oldLevel = user.getSkillLevel(skill);
+            level = oldLevel + level;
+            this.onSkillSetlevel(sender, player, skill, level);
+        } else {
+            sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UNKNOWN_SKILL, locale));
+        }
+    }
+
     @Subcommand("setall")
     @CommandCompletion("@players")
     @CommandPermission("auraskills.command.skill.setlevel")
@@ -90,7 +106,6 @@ public class SkillCommand extends BaseCommand {
         }
     }
 
-
     @Subcommand("reset")
     @CommandCompletion("@players @skills")
     @CommandPermission("auraskills.command.skill.reset")
@@ -121,6 +136,5 @@ public class SkillCommand extends BaseCommand {
                     .replace("{player}", player.getName()));
         }
     }
-
 
 }

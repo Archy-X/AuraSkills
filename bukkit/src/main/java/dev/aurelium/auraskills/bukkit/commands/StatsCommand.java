@@ -11,17 +11,17 @@ import org.bukkit.entity.Player;
 @CommandAlias("stats")
 public class StatsCommand extends BaseCommand {
 
-	private final AuraSkills plugin;
+    private final AuraSkills plugin;
 
-	public StatsCommand(AuraSkills plugin) {
-		this.plugin = plugin;
-	}
+    public StatsCommand(AuraSkills plugin) {
+        this.plugin = plugin;
+    }
 
-	@Default
-	@CommandPermission("auraskills.command.stats")
-	@Description("%desc_stats")
-	public void onStats(Player player) {
-		plugin.getSlate().openMenu(player, "stats");
-	}
-	
+    @Default
+    @CommandPermission("auraskills.command.stats")
+    @Description("%desc_stats")
+    public void onStats(Player player) {
+        plugin.getSlate().openMenu(player, "stats");
+    }
+
 }

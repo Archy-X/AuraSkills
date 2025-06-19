@@ -126,4 +126,5 @@ public class NamespacedId {
     public int hashCode() {
         return Objects.hash(namespace, key);
     }
+
 }

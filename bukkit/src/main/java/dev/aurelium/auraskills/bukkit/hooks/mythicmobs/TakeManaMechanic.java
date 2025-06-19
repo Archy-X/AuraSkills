@@ -33,4 +33,5 @@ public class TakeManaMechanic implements ITargetedEntitySkill {
 
         return SkillResult.SUCCESS;
     }
+
 }

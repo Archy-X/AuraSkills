@@ -107,4 +107,5 @@ public class XpGainEvent extends Event implements Cancellable {
     public static HandlerList getHandlerList() {
         return handlers;
     }
+
 }

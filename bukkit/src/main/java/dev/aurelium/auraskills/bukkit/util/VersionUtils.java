@@ -15,8 +15,7 @@ public class VersionUtils {
     public static boolean isPigman(EntityType type) {
         if (MAJOR_VERSION == 16) {
             return type.equals(EntityType.ZOMBIFIED_PIGLIN);
-        }
-        else {
+        } else {
             return type.name().equals("PIG_ZOMBIE");
         }
     }
@@ -45,7 +44,8 @@ public class VersionUtils {
                     return 0;
                 }
             }
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return FALLBACK_MINOR_VERSION;
     }
 
@@ -64,7 +64,8 @@ public class VersionUtils {
                     return Integer.parseInt(version.substring(firstDot + 1));
                 }
             }
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
         return FALLBACK_MAJOR_VERSION;
     }
 

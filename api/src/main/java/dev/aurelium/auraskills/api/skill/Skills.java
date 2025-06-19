@@ -151,4 +151,5 @@ public enum Skills implements Skill {
     public Map<String, Object> optionMap(String key) {
         return provider.optionMap(this, key);
     }
+
 }

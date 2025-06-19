@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
-import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityRefreshEvent;
+import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.config.Option;
@@ -16,11 +16,11 @@ import java.util.concurrent.TimeUnit;
 public class TimerCountdown {
 
     private final AuraSkills plugin;
-    private final int PERIOD;
+    private final int period;
 
     public TimerCountdown(AuraSkills plugin) {
         this.plugin = plugin;
-        this.PERIOD = Math.min(plugin.configInt(Option.MANA_COOLDOWN_TIMER_PERIOD), 1);
+        this.period = Math.min(plugin.configInt(Option.MANA_COOLDOWN_TIMER_PERIOD), 1);
         startCountdown();
     }
 
@@ -31,7 +31,7 @@ public class TimerCountdown {
             public void run() {
                 countCooldown();
             }
-        }, 0, PERIOD * 50L, TimeUnit.MILLISECONDS);
+        }, 0, period * 50L, TimeUnit.MILLISECONDS);
         // Count error timer by 1 every second
         plugin.getScheduler().timerSync(new TaskRunnable() {
             @Override
@@ -45,8 +45,8 @@ public class TimerCountdown {
         for (User user : plugin.getUserManager().getOnlineUsers()) {
             for (ManaAbilityData data : user.getManaAbilityDataMap().values()) {
                 int cooldown = data.getCooldown();
-                if (cooldown > PERIOD) {
-                    data.setCooldown(cooldown - PERIOD);
+                if (cooldown > period) {
+                    data.setCooldown(cooldown - period);
                 } else if (cooldown > 0) {
                     // Cooldown is less than or equal to period
                     data.setCooldown(0);

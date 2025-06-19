@@ -28,4 +28,5 @@ public class EnchantingSource extends Source implements EnchantingXpSource {
     public @Nullable String getUnit() {
         return unit;
     }
+
 }

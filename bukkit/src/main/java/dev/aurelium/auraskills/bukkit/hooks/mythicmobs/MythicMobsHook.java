@@ -1,12 +1,12 @@
 package dev.aurelium.auraskills.bukkit.hooks.mythicmobs;
 
+import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.damage.DamageHandler;
 import dev.aurelium.auraskills.bukkit.damage.DamageResult;
 import dev.aurelium.auraskills.bukkit.hooks.mythicmobs.loot.MythicEntityLootParser;
 import dev.aurelium.auraskills.common.hooks.Hook;
-import dev.aurelium.auraskills.api.damage.DamageType;
 import io.lumine.mythic.api.adapters.AbstractEntity;
 import io.lumine.mythic.bukkit.BukkitAdapter;
 import io.lumine.mythic.bukkit.MythicBukkit;
@@ -159,4 +159,5 @@ public class MythicMobsHook extends Hook implements Listener {
         }
         return DamageType.OTHER;
     }
+
 }

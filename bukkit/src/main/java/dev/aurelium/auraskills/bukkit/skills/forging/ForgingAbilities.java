@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.skills.forging;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
-import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
+import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
 import dev.aurelium.auraskills.bukkit.source.GrindstoneLeveler;
@@ -28,6 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.Repairable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -114,7 +115,8 @@ public class ForgingAbilities extends AbilityImpl {
             if (world != null) {
                 world.spawn(location, ExperienceOrb.class).setExperience(added);
             }
-        } catch (IllegalArgumentException ignored) {}
+        } catch (IllegalArgumentException ignored) {
+        }
     }
 
     private void checkEnchants(ItemStack item, Set<EnchantmentValue> enchants) {
@@ -156,7 +158,7 @@ public class ForgingAbilities extends AbilityImpl {
 
         ItemMeta meta = first.getItemMeta();
         if (meta == null) return;
-        if (meta instanceof Damageable damageable) {
+        if (meta instanceof Damageable damageable && meta instanceof Repairable repairable) {
             short max = first.getType().getMaxDurability();
             // Calculate durability to add, vanilla by default adds 20% of the max durability
             long addedLong = second.getAmount() * (Math.round(0.25 * max) + Math.round(max * 0.25 * (getValue(ability, user) / 100)));
@@ -169,6 +171,7 @@ public class ForgingAbilities extends AbilityImpl {
                 added = (short) addedLong;
             }
             damageable.setDamage(Math.max(damageable.getDamage() - added, 0));
+            repairable.setRepairCost((repairable.getRepairCost() * 2) + 1);
             result.setItemMeta(damageable);
         }
     }
@@ -228,7 +231,7 @@ public class ForgingAbilities extends AbilityImpl {
             }
         } else if (name.startsWith("GOLD_") || name.startsWith("GOLDEN_")) {
             if (!name.contains("APPLE") && !name.contains("CARROT") && !name.contains("HORSE_ARMOR")
-                    && !name.contains("GOLD") && !name.contains("INGOT") && !name.contains("NUGGET")
+                    && !name.contains("BLOCK") && !name.contains("INGOT") && !name.contains("NUGGET")
                     && !name.contains("ORE") && !name.contains("BARDING")) {
                 return Material.GOLD_INGOT;
             }

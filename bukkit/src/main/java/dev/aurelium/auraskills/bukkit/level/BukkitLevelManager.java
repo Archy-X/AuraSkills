@@ -74,7 +74,7 @@ public class BukkitLevelManager extends LevelManager {
     }
 
     public void addEntityXp(User user, Skill skill, @NotNull XpSource source, double amount,
-                            LivingEntity attacked, Entity damager, EntityEvent originalEvent) {
+            LivingEntity attacked, Entity damager, EntityEvent originalEvent) {
         if (amount == 0) return; // Ignore if source amount is 0
 
         double amountToAdd = amount * calculateMultiplier(user, skill);
@@ -87,7 +87,7 @@ public class BukkitLevelManager extends LevelManager {
     }
 
     public void addDamageXp(User user, Skill skill, @NotNull XpSource source, double amount,
-                            DamageCause cause, Entity damager, EntityEvent originalEvent) {
+            DamageCause cause, Entity damager, EntityEvent originalEvent) {
         if (amount == 0) return;
 
         double amountToAdd = amount * calculateMultiplier(user, skill);

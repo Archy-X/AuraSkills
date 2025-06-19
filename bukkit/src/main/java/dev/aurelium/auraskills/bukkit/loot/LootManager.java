@@ -99,4 +99,5 @@ public class LootManager {
     public void registerCustomLootParser(String name, LootParser parser) {
         customLootParsers.put(name, parser);
     }
+
 }

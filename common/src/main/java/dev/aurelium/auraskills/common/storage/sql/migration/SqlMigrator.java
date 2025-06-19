@@ -59,12 +59,12 @@ public class SqlMigrator {
         }
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS %s (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    file_name VARCHAR(255) NOT NULL UNIQUE,
-                    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            """.formatted(TABLE_PREFIX + MIGRATION_TABLE));
+                    CREATE TABLE IF NOT EXISTS %s (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        file_name VARCHAR(255) NOT NULL UNIQUE,
+                        applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    )
+                    """.formatted(TABLE_PREFIX + MIGRATION_TABLE));
             plugin.logger().info("Created table " + TABLE_PREFIX + SqlMigrator.MIGRATION_TABLE);
         }
     }
@@ -72,7 +72,7 @@ public class SqlMigrator {
     private List<String> getAppliedMigrations(Connection conn) throws SQLException {
         List<String> migrations = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement("SELECT file_name FROM " + TABLE_PREFIX + MIGRATION_TABLE);
-             ResultSet rs = ps.executeQuery()) {
+                ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 migrations.add(rs.getString(1));
             }

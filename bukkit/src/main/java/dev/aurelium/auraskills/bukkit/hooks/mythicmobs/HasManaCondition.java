@@ -23,4 +23,5 @@ public class HasManaCondition implements ICasterCondition {
         if (!caster.getEntity().isPlayer()) return false;
         return plugin.getUser(BukkitAdapter.adapt(caster.getEntity().asPlayer())).getMana() >= requiredMana;
     }
+
 }

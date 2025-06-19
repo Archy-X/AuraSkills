@@ -109,5 +109,4 @@ public class UserEquipment {
                 "feet=" + feet + ']';
     }
 
-
 }

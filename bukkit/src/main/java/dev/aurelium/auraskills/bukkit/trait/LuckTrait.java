@@ -20,8 +20,8 @@ import java.util.UUID;
 
 public class LuckTrait extends TraitImpl {
 
-    private final UUID LEGACY_MODIFIER_ID = UUID.fromString("fd1c6253-b865-454f-9203-002e3676a9da");
-    private final String MODIFIER_KEY = "luck_trait";
+    private static final UUID LEGACY_MODIFIER_ID = UUID.fromString("fd1c6253-b865-454f-9203-002e3676a9da");
+    private static final String MODIFIER_KEY = "luck_trait";
 
     LuckTrait(AuraSkills plugin) {
         super(plugin, Traits.LUCK);
@@ -29,7 +29,7 @@ public class LuckTrait extends TraitImpl {
 
     @Override
     public double getBaseLevel(Player player, Trait trait) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.LUCK);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.luck);
         if (attribute == null) {
             return 0.0;
         }
@@ -53,14 +53,16 @@ public class LuckTrait extends TraitImpl {
         plugin.getScheduler().executeAtEntity(player, (task) -> setLuck(player));
     }
 
-    @EventHandler
-    public void worldChange(PlayerChangedWorldEvent event) {
+    @Override
+    public void changeWorld(PlayerChangedWorldEvent event, Trait trait) {
+        if (!trait.equals(Traits.LUCK)) return;
+
         setLuck(event.getPlayer());
     }
 
     @SuppressWarnings("removal")
     private void setLuck(Player player) {
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.LUCK);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.luck);
         if (attribute == null) {
             return;
         }
@@ -112,7 +114,8 @@ public class LuckTrait extends TraitImpl {
                     if (namespace.equals("minecraft") && modifier.getAmount() == 0 && modifier.getOperation().equals(Operation.ADD_NUMBER)) {
                         return true;
                     }
-                } catch (IllegalArgumentException ignored) { }
+                } catch (IllegalArgumentException ignored) {
+                }
             }
         }
         return false;

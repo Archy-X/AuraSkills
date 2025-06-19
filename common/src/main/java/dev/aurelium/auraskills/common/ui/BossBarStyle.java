@@ -7,4 +7,5 @@ public enum BossBarStyle {
     SEGMENTED_10,
     SEGMENTED_12,
     SEGMENTED_20
+
 }

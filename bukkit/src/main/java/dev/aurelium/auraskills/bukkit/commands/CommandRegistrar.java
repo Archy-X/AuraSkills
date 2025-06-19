@@ -287,7 +287,7 @@ public class CommandRegistrar {
             registerSkillCommand(new SkillCommands.ForgingCommand(plugin), map, manager);
         }
     }
-    
+
     private void registerSkillCommand(SkillCommands.SkillCommand command, Map<Skill, Boolean> enabled, PaperCommandManager manager) {
         if (enabled.getOrDefault(command.skill, false)) {
             manager.registerCommand(command);

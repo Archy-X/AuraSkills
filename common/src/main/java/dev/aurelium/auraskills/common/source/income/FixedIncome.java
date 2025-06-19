@@ -17,4 +17,5 @@ public class FixedIncome implements SourceIncome {
     public double getIncomeEarned(SkillsUser user, SourceValues sourceValues, Skill skill, double finalXp) {
         return income;
     }
+
 }
