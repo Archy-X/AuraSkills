@@ -6,6 +6,8 @@ import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.util.CompatUtil;
+import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +20,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class DefenseAbilities extends AbilityImpl {
@@ -102,7 +105,16 @@ public class DefenseAbilities extends AbilityImpl {
     }
 
     private boolean isNegativeEffect(PotionEffectType type) {
-        return (type.getCategory() == PotionEffectTypeCategory.HARMFUL);
+        if (VersionUtils.isAtLeastVersion(20, 6)) {
+            return (type.getCategory() == PotionEffectTypeCategory.HARMFUL);
+        }
+
+        return type.equals(PotionEffectType.POISON) || type.equals(PotionEffectType.UNLUCK) || type.equals(PotionEffectType.WITHER) ||
+                type.equals(PotionEffectType.WEAKNESS) || type.equals(PotionEffectType.HUNGER) || type.equals(PotionEffectType.BLINDNESS) ||
+                CompatUtil.isEffect(type, Set.of("slowness", "slow")) ||
+                CompatUtil.isEffect(type, Set.of("mining_fatigue", "slow_digging")) ||
+                CompatUtil.isEffect(type, Set.of("instant_damage", "harm")) ||
+                CompatUtil.isEffect(type, Set.of("nausea", "confusion"));
     }
 
     public void noDebuffFire(User user, Player player, LivingEntity entity) {
