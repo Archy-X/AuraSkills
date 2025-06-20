@@ -67,7 +67,9 @@ public class StatInfoMenu {
         menu.replace("color", p -> stat(p).getColor(p.locale()));
         menu.replace("stat_name", p -> stat(p).getDisplayName(p.locale(), false));
 
+        var globalItems = new GlobalItems(plugin);
         menu.item("back", item -> getBackItem(plugin, item));
+        menu.fillItem(globalItems::fill);
 
         menu.template("stat", Stat.class, template -> {
             template.replace("stat_desc", p -> stat(p).getDescription(p.locale(), false));
