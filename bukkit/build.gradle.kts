@@ -1,4 +1,3 @@
-import org.gradle.api.tasks.Copy
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
@@ -112,9 +111,11 @@ tasks {
         options.forkOptions.executable = compiler.map { it.executablePath }.get().toString()
     }
 
+    val projectVersion = project.version.toString()
+
     processResources {
         filesMatching("plugin.yml") {
-            expand("projectVersion" to project.version)
+            expand("projectVersion" to projectVersion)
         }
     }
 }
