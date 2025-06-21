@@ -5,6 +5,7 @@ plugins {
     id("com.gradleup.shadow") version "8.3.5"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
     id("com.modrinth.minotaur") version "2.+"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 java {
@@ -116,6 +117,10 @@ tasks {
         filesMatching("plugin.yml") {
             expand("projectVersion" to projectVersion)
         }
+    }
+
+    runServer {
+        minecraftVersion("1.21.5")
     }
 }
 

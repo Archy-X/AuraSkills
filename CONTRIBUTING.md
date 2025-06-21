@@ -41,89 +41,31 @@ The output jar can be found in the `build/libs` directory.
 
 ### Starting a server
 
-AuraSkills runs on a standard Paper server, so follow the [steps](https://docs.papermc.io/paper/getting-started/) for
-running one if you don't have a server set up already. Once you have a server, simply add the jar from the previous step
-to the `plugins` folder
-and restart the server.
+AuraSkills contains a Gradle task to quickly build the plugin and start up a test server:
 
-### Advanced: How to build AuraSkills and deploy a server in one click in IntelliJ
-
-When you are building and testing your changes to AuraSkills, manually running Gradle commands, copying the jar file,
-and restarting the server can be tedious. Luckily IntelliJ IDEA allows you to automate this process using run
-configurations.
-
-**Install the Ant plugin**
-
-You must install the [Ant](https://plugins.jetbrains.com/plugin/23025-ant) plugin in IntelliJ,
-which is needed to create an Ant build file for copying the jar file.
-
-**Create a build.xml file**
-
-Create a build.xml file in the root project directory (e.g. AuraSkills/build.xml) and
-copy the following configuration:
-
-```xml
-
-<project name="AuraSkills">
-    <property file="gradle.properties"/>
-    <target name="Copy Jar">
-        <copy file="build/libs/AuraSkills-${projectVersion}.jar" tofile="/PATH/TO/YOUR/SERVER/plugins/AuraSkills.jar"/>
-    </target>
-</project>
+```
+./gradlew clean :bukkit:runServer
 ```
 
-Replace the toFile value with the actual path of your Paper server (On macOS/Linux use an absolute path prefixed with /,
-on Windows use C:/ or whatever your drive is named).
+Windows
 
-**Add as Ant build file**
+```
+.\gradlew.bat clean :bukkit:runServer
+```
 
-Then right-click your file in the IntelliJ project window and click "Add as Ant Build File". This will make this copy
-jar
-action available in the following steps.
+A Paper server will be automatically downloaded and run in the `bukkit/run` directory. The first time you start the
+server, you may need to agree to the EULA in `eula.txt`. You can then join the server on the `localhost` IP address.
 
-**Open the Run Configurations menu**
+The Minecraft version of this test server can be viewed and changed in `bukkit/build.gradle.kts`
+(find "minecraftVersion" in the file). You can
+also [add additional plugins](https://github.com/jpenilla/run-task/wiki/Basic-Usage) to automatically download into the
+test server. However, make sure you do not commit changes to the runServer task when submitting a PR.
 
-Locate the run configuration menu on the top right of your editor directly to the left of the run triangle. It
-should have text saying "Current File" with a dropdown arrow (you might see something other than "Current File", but it
-should still look like a dropdown).
-
-<img src="https://i.imgur.com/iGiG0vs.png" width="100" alt="Current File dropdown">
-
-Click the dropdown and then click "Edit Configurations...".
-
-**Add a new run configuration**
-
-Click the plus button on the top left of the menu and select "JAR Application". You can name your configuration
-anything,
-such as "1.21.5" or whatever server version you are running.
-
-Then enter the following configuration:
-
-- Set Path to JAR to your Paper server's JAR file, which should be in the format paper-*.jar unless you renamed it.
-- Set Program arguments to "nogui".
-- Set Working directory to the root directory of your Paper server (whatever directory your Paper jar is in).
-- In JRE, select or install a Java 21 JDK
-
-In the "Before launch" panel, click the plus button and select "Run Gradle task" to create a new Gradle task to run
-before
-starting the server. Select `AuraSkills` as the Gradle project and add `clean build` in the Tasks: field. Click Ok.
-
-Click the plus again to create another Before launch configuration and select "Run Ant Target". Select the name of the
-Ant target you created in the build.xml file and click Ok.
-
-Your configuration should now look similar to the following (your Path to JAR and Working directory will differ):
-
-<img src="https://i.imgur.com/rs6xxb5.png" width="500" alt="Run configuration window">
-
-Click Ok on the main Run/Debug Configurations menu to save your configuration and close the menu.
-
-**Running the configuration**
-
-To build AuraSkills and run your server, ensure your configuration is selected in the run configuration dropdown on
-the top right of the IDE and click the green triangle. To stop the server, use the `stop` command in the server's
-console that opens in the IDE or click the red square on the top right.
-
-That's it! This run configuration can save a lot of time when you are testing AuraSkills or any Minecraft plugin.
+In IntelliJ, you can find this task through the Gradle window under
+`AuraSkills -> bukkit -> Tasks -> run paper -> runServer`.
+Clicking this button will save this to a run configuration on the top right of the IDE, which can be run by selecting
+the
+`[runServer]` task in the drop-down and clicking the green run button.
 
 ## Code style
 
@@ -188,7 +130,7 @@ Before you open a pull request, ensure you meet all the following:
 - The [Checkstyle](#code-style) task succeeds
 
 After opening a pull request, wait for a project committer to review your PR. Address any review comments and click
-"Resolve" on a conversation thread after making the necessary changes. You might go through multiple rounds of reviews 
+"Resolve" on a conversation thread after making the necessary changes. You might go through multiple rounds of reviews
 or receive comments to make minor formatting changes. The thorough review process is to ensure the code in the project
 is consistent and maintainable. Do not take the presence of many review comments to mean that your code is bad in any
 way.
