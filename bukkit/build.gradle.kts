@@ -54,7 +54,6 @@ dependencies {
     compileOnly("net.luckperms:api:5.4")
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
-    compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
 }
