@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Interface that provides messages for the plugin.
@@ -37,7 +38,7 @@ public abstract class MessageProvider implements PolyglotProvider {
     protected final MessageManager manager;
     @Nullable
     private Locale defaultLanguage; // Lazy loaded by getDefaultLanguage
-    private final Map<LocalizedKey, Component> componentCache = new HashMap<>();
+    private final Map<LocalizedKey, Component> componentCache = new ConcurrentHashMap<>();
 
     public MessageProvider(AuraSkillsPlugin plugin) {
         this.plugin = plugin;

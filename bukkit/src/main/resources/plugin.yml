@@ -19,6 +19,8 @@ softdepend:
 api-version: '1.13'
 prefix: AuraSkills
 
+folia-supported: true
+
 permissions:
   auraskills.*:
     description: Permission to use all commands from AuraSkills

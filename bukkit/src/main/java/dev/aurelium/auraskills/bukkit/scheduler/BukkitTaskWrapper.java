@@ -1,15 +1,14 @@
 package dev.aurelium.auraskills.bukkit.scheduler;
 
+import com.tcoded.folialib.wrapper.task.WrappedTask;
 import dev.aurelium.auraskills.common.scheduler.Task;
 import dev.aurelium.auraskills.common.scheduler.TaskStatus;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
 public class BukkitTaskWrapper implements Task {
 
-    private final BukkitTask bukkitTask;
+    private final WrappedTask bukkitTask;
 
-    public BukkitTaskWrapper(BukkitTask bukkitTask) {
+    public BukkitTaskWrapper(WrappedTask bukkitTask) {
         this.bukkitTask = bukkitTask;
     }
 
@@ -24,7 +23,7 @@ public class BukkitTaskWrapper implements Task {
 
     @Override
     public void cancel() {
-        Bukkit.getScheduler().cancelTask(bukkitTask.getTaskId());
+        bukkitTask.cancel();
     }
 
 }

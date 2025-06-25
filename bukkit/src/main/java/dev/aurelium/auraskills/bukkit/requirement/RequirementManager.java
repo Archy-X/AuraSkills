@@ -17,6 +17,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class RequirementManager implements Listener {
@@ -27,7 +28,7 @@ public class RequirementManager implements Listener {
     private final AuraSkills plugin;
 
     public RequirementManager(AuraSkills plugin) {
-        errorMessageTimer = new HashMap<>();
+        errorMessageTimer = new ConcurrentHashMap<>();
         this.plugin = plugin;
         load();
         loadBlocks();

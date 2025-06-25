@@ -190,7 +190,9 @@ public class AgilityAbilities extends BukkitAbilityImpl {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    removeFleeting(player);
+                    plugin.getScheduler().executeAtEntity(player, (t) -> {
+                        removeFleeting(player);
+                    });
                 }
             }
         }, 5, 5, TimeUnit.SECONDS);

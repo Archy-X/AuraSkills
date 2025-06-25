@@ -26,7 +26,7 @@ public class HolographicDisplaysHook extends HologramsHook {
     }
 
     public void deleteHologram(Hologram hd) {
-        plugin.getScheduler().scheduleSync(hd::delete, 30L * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().scheduleAtLocation(hd.getLocation(), hd::delete, 30L * 50L, TimeUnit.MILLISECONDS);
     }
 
     @Override

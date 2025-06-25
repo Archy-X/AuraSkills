@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.ui;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
@@ -12,7 +13,10 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -22,10 +26,10 @@ public abstract class ActionBarManager {
     protected final AuraSkillsPlugin plugin;
     private final UiProvider uiProvider;
 
-    private final HashSet<UUID> isPaused = new HashSet<>();
-    private final HashSet<UUID> isGainingXp = new HashSet<>();
-    private final Map<UUID, Integer> timer = new HashMap<>();
-    private final Map<UUID, Integer> currentAction = new HashMap<>();
+    private final Set<UUID> isPaused = Sets.newConcurrentHashSet();
+    private final Set<UUID> isGainingXp = Sets.newConcurrentHashSet();
+    private final Map<UUID, Integer> timer = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> currentAction = new ConcurrentHashMap<>();
     private final Map<Locale, String> idleMessageCache = new ConcurrentHashMap<>();
 
     public ActionBarManager(AuraSkillsPlugin plugin, UiProvider uiProvider) {

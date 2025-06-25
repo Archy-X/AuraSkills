@@ -73,6 +73,8 @@ public class MythicMobsHook extends Hook implements Listener {
             if (target.hasMetadata("NPC")) return;
         }
 
+        // This is unsafe here since it will read attributes from the player, but since MythicMobs doesn't support
+        // Folia, we can ignore this. If MythicMobs ever supports Folia, they should fire this event on the proper region
         DamageResult result = damageHandler.handleDamage(
                 BukkitAdapter.adapt(attacker), BukkitAdapter.adapt(target), getDamageType(attacker),
                 event.getDamageMetadata().getDamageCause(), event.getDamage(), "mythicmobs");
