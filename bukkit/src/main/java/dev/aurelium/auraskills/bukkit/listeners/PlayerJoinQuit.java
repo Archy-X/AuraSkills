@@ -16,6 +16,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.wrap;
+
 public class PlayerJoinQuit implements Listener {
 
     private final AuraSkills plugin;
@@ -68,7 +70,7 @@ public class PlayerJoinQuit implements Listener {
     private void loadUserAsync(Player player) {
         plugin.getScheduler().executeAsync(() -> {
             try {
-                plugin.getStorageProvider().load(player.getUniqueId());
+                plugin.getStorageProvider().load(player.getUniqueId(), wrap(player));
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -5,12 +5,14 @@ import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
 import dev.aurelium.auraskills.common.user.AntiAfkLog;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.user.UserState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public abstract class StorageProvider {
         this.plugin = plugin;
     }
 
-    public void load(UUID uuid) throws Exception {
+    public void load(UUID uuid, @Nullable PlayerRef platformPlayer) throws Exception {
         ReentrantReadWriteLock lock = getUserLock(uuid);
         boolean lockAcquired = false;
         try {
@@ -42,7 +44,7 @@ public abstract class StorageProvider {
                 plugin.logger().warn("Load timout exceeded for user " + uuid);
             }
 
-            User user = loadRaw(uuid);
+            User user = loadRaw(uuid, platformPlayer);
             fixInvalidData(user);
 
             plugin.getUserManager().addUser(user);
@@ -68,7 +70,7 @@ public abstract class StorageProvider {
         }
     }
 
-    protected abstract User loadRaw(UUID uuid) throws Exception;
+    protected abstract User loadRaw(UUID uuid, PlayerRef platformPlayer) throws Exception;
 
     /**
      * Loads a snapshot of player data for an offline player

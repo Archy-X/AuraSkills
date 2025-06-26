@@ -4,7 +4,7 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
-import dev.aurelium.auraskills.bukkit.loot.LootManager;
+import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantEntry;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantLevel;
@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
+import dev.aurelium.auraskills.common.loot.CustomItemParser;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -20,12 +21,14 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
 
+import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.wrap;
+
 public class ItemLootParser implements LootParser {
 
-    private final LootManager manager;
+    private final BukkitLootManager manager;
     private final ConfigurateItemParser itemParser;
 
-    public ItemLootParser(LootManager manager) {
+    public ItemLootParser(BukkitLootManager manager) {
         this.manager = manager;
         this.itemParser = new ConfigurateItemParser(manager.getPlugin());
     }
@@ -51,8 +54,9 @@ public class ItemLootParser implements LootParser {
         Validate.notNull(item, "Failed to parse item");
 
         int[] amounts = parseAmount(backing);
+        double[] durability = parseDurability(backing);
 
-        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1], requirements);
+        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1], durability[0], durability[1], requirements);
     }
 
     private ItemSupplier parseItem(ConfigurationNode config) throws SerializationException {
@@ -61,7 +65,7 @@ public class ItemLootParser implements LootParser {
         // Parse possible enchantments, value of the map is the weight
         Map<LootEnchantList, Integer> possibleEnchants = parsePossibleEnchants(config);
 
-        return new ItemSupplier(baseItem, new LootEnchantments(possibleEnchants));
+        return new ItemSupplier(wrap(baseItem), new LootEnchantments(possibleEnchants));
     }
 
     private Map<LootEnchantList, Integer> parsePossibleEnchants(ConfigurationNode config) throws SerializationException {
@@ -73,11 +77,11 @@ public class ItemLootParser implements LootParser {
         return possibleEnchants;
     }
 
-    private LootEnchantList parseSingleEnchantList(ConfigurationNode config) throws SerializationException {
+    private LootEnchantList parseSingleEnchantList(ConfigurationNode config) {
         List<LootEnchantEntry> entryList = new ArrayList<>();
 
         for (ConfigurationNode enchantment : config.node("enchantments").childrenList()) {
-            String enchantmentName = null;
+            String enchantmentName;
             String levelString = "1";
             double chance = 1.0;
 
@@ -86,26 +90,24 @@ public class ItemLootParser implements LootParser {
                 levelString = enchantment.node("level").getString("1");
                 chance = Double.parseDouble(enchantment.node("chance").getString("1.0"));
             } else {
-                String[] splitEntry = enchantment.getString().split(" ");
+                String[] splitEntry = enchantment.getString("").split(" ");
                 enchantmentName = splitEntry[0].toLowerCase(Locale.ROOT);
                 if (splitEntry.length > 1) {
                     levelString = splitEntry[1];
                 }
             }
 
-            if (enchantmentName != null) {
-                LootEnchantLevel enchantLevel = parseLevel(levelString);
-                LootEnchantEntry entry = new LootEnchantEntry(enchantmentName, enchantLevel.minLevel(), enchantLevel.maxLevel(), chance);
-                entryList.add(entry);
-            }
+            LootEnchantLevel enchantLevel = parseLevel(levelString);
+            LootEnchantEntry entry = new LootEnchantEntry(enchantmentName, enchantLevel.minLevel(), enchantLevel.maxLevel(), chance);
+            entryList.add(entry);
         }
 
         return new LootEnchantList(entryList);
     }
 
     protected LootEnchantLevel parseLevel(String levelString) {
-        int minLevel = 1;
-        int maxLevel = 1;
+        int minLevel;
+        int maxLevel;
 
         if (levelString.contains("-")) { // Handle level range format (eg. 1-5)
             String[] splitLevel = levelString.split("-");
@@ -117,9 +119,7 @@ public class ItemLootParser implements LootParser {
             maxLevel = fixedLevel;
         }
 
-        LootEnchantLevel level = new LootEnchantLevel(minLevel, maxLevel);
-
-        return level;
+        return new LootEnchantLevel(minLevel, maxLevel);
     }
 
     protected int[] parseAmount(ConfigurationNode config) {
@@ -138,6 +138,23 @@ public class ItemLootParser implements LootParser {
             }
         }
         return new int[]{1, 1};
+    }
+
+    protected double[] parseDurability(ConfigurationNode config) {
+        double minDamage = 0.0;
+        double maxDamage = 0.0;
+
+        if (config.hasChild("damage")) {
+            if (config.node("damage").isMap()) {
+                minDamage = config.node("damage", "min").getDouble();
+                maxDamage = config.node("damage", "max").getDouble();
+            } else {
+                minDamage = config.node("damage").getDouble();
+                maxDamage = minDamage;
+            }
+        }
+
+        return new double[]{minDamage, maxDamage};
     }
 
 }

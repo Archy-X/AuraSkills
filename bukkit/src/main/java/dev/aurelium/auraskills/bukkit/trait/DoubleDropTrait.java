@@ -100,7 +100,7 @@ public class DoubleDropTrait extends TraitImpl {
                     } else {
                         itemToDrop = item.clone();
                     }
-                    boolean toInventory = plugin.getLootTableManager().toInventory(player.getInventory().getItemInMainHand());
+                    boolean toInventory = plugin.getLootManager().toInventory(player.getInventory().getItemInMainHand());
                     LootDropEvent lootDropEvent = new LootDropEvent(player, user.toApi(), itemToDrop, location, LootDropEvent.Cause.LUCK_DOUBLE_DROP, toInventory);
                     Bukkit.getPluginManager().callEvent(lootDropEvent);
 

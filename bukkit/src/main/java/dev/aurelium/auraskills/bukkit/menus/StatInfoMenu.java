@@ -67,7 +67,9 @@ public class StatInfoMenu {
         menu.replace("color", p -> stat(p).getColor(p.locale()));
         menu.replace("stat_name", p -> stat(p).getDisplayName(p.locale(), false));
 
+        var globalItems = new GlobalItems(plugin);
         menu.item("back", item -> getBackItem(plugin, item));
+        menu.fillItem(globalItems::fill);
 
         menu.template("stat", Stat.class, template -> {
             template.replace("stat_desc", p -> stat(p).getDescription(p.locale(), false));
@@ -192,7 +194,8 @@ public class StatInfoMenu {
                         case ADD -> formatValue(t, "value_add");
                         case MULTIPLY -> formatValue(t, "value_multiply");
                         case ADD_PERCENT -> formatValue(t, "value_add_percent");
-                    });
+                    }
+            );
             template.replace("type_name", t -> {
                 var type = instance(t.menu(), t.value()).parent();
                 if (type instanceof Stat || stat(t).hasDirectTrait()) {

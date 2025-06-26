@@ -1,23 +1,26 @@
 package dev.aurelium.auraskills.bukkit.user;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.common.skill.LoadedSkill;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-public class BukkitUserManager implements UserManager {
+import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.unwrap;
+import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.wrap;
+
+public class BukkitUserManager extends UserManager {
 
     private final AuraSkills plugin;
-    private final Map<UUID, User> playerDataMap = new ConcurrentHashMap<>();
 
     public BukkitUserManager(AuraSkills plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 
@@ -27,46 +30,13 @@ public class BukkitUserManager implements UserManager {
         if (user != null) {
             return user;
         } else {
-            return createNewUser(player.getUniqueId());
+            return createNewUser(player.getUniqueId(), wrap(player));
         }
     }
 
     @Override
-    @Nullable
-    public User getUser(UUID uuid) {
-        return playerDataMap.get(uuid);
-    }
-
-    @Override
-    public void addUser(User user) {
-        playerDataMap.put(user.getUuid(), user);
-    }
-
-    @Override
-    public void removeUser(UUID uuid) {
-        playerDataMap.remove(uuid);
-    }
-
-    @Override
-    public boolean hasUser(UUID uuid) {
-        return playerDataMap.containsKey(uuid);
-    }
-
-    @Override
-    public Map<UUID, User> getUserMap() {
-        return playerDataMap;
-    }
-
-    @Override
-    public User createNewUser(UUID uuid) {
-        @Nullable Player player = plugin.getServer().getPlayer(uuid);
-        User user = new BukkitUser(uuid, player, plugin);
-        // Set all skills to level 1 for new players
-        for (LoadedSkill loadedSkill : plugin.getSkillManager().getSkills()) {
-            user.setSkillLevel(loadedSkill.skill(), plugin.config().getStartLevel());
-            user.setSkillXp(loadedSkill.skill(), 0.0);
-        }
-        return user;
+    public User instantiateUser(UUID uuid, PlayerRef ref) {
+        return new BukkitUser(uuid, ref != null ? unwrap(ref) : null, plugin);
     }
 
     @Override

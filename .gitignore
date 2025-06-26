@@ -33,3 +33,5 @@ buildNumber.properties
 .flattened-pom.xml
 
 build.xml
+
+bukkit/run/

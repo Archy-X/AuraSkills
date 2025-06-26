@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.region.BlockPosition;
 import dev.aurelium.auraskills.common.storage.StorageProvider;
 import dev.aurelium.auraskills.common.ui.ActionBarType;
@@ -21,6 +22,7 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -43,9 +45,9 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     @Override
-    protected User loadRaw(UUID uuid) throws Exception {
+    protected User loadRaw(UUID uuid, @Nullable PlayerRef platformPlayer) throws Exception {
         CommentedConfigurationNode root = loadYamlFile(uuid);
-        User user = userManager.createNewUser(uuid);
+        User user = userManager.createNewUser(uuid, platformPlayer);
 
         if (root.empty()) {
             return user;

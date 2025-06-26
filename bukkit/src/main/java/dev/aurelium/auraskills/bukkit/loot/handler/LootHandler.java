@@ -1,11 +1,8 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
-import dev.aurelium.auraskills.api.loot.Loot;
-import dev.aurelium.auraskills.api.loot.LootContext;
-import dev.aurelium.auraskills.api.loot.LootPool;
-import dev.aurelium.auraskills.api.loot.LootTable;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
+import dev.aurelium.auraskills.api.loot.*;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
@@ -14,14 +11,15 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
-import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
-import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementCheck;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
+import dev.aurelium.auraskills.common.loot.AbstractLootHandler;
+import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
@@ -32,21 +30,25 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class LootHandler {
+import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
+
+public abstract class LootHandler extends AbstractLootHandler {
 
     protected final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
@@ -75,9 +77,9 @@ public abstract class LootHandler {
         giveXp(player, loot, source, skill);
     }
 
-    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropEvent.Cause cause, LootTable table) {
+    protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropCause cause, LootTable table) {
         Block block = breakEvent.getBlock();
-        ItemStack drop = loot.getItem().supplyItem(plugin, table);
+        ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
@@ -87,8 +89,8 @@ public abstract class LootHandler {
         giveXp(player, loot, null, skill);
     }
 
-    protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropEvent.Cause cause, LootTable table) {
-        ItemStack drop = loot.getItem().supplyItem(plugin, table);
+    protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropCause cause, LootTable table) {
+        ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
 
         giveDropItemLoot(player, location, cause, drop);
@@ -97,10 +99,10 @@ public abstract class LootHandler {
         giveXp(player, loot, null, skill);
     }
 
-    private void giveDropItemLoot(Player player, Location location, LootDropEvent.Cause cause, ItemStack drop) {
-        boolean toInventory = plugin.getLootTableManager().toInventory(player.getInventory().getItemInMainHand());
+    private void giveDropItemLoot(Player player, Location location, LootDropCause cause, ItemStack drop) {
+        boolean toInventory = plugin.getLootManager().toInventory(player.getInventory().getItemInMainHand());
 
-        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, cause, toInventory);
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, location, (Cause) cause, toInventory);
         Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;
@@ -108,16 +110,16 @@ public abstract class LootHandler {
         ItemUtils.giveBlockLoot(player, dropEvent);
     }
 
-    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropEvent.Cause cause, LootTable table) {
+    protected void giveFishingItemLoot(Player player, ItemLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill, LootDropCause cause, LootTable table) {
         if (!(event.getCaught() instanceof Item itemEntity)) return;
 
         int amount = generateAmount(loot.getMinAmount(), loot.getMaxAmount());
         if (amount == 0) return;
 
-        ItemStack drop = loot.getItem().supplyItem(plugin, table);
+        ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
         drop.setAmount(amount);
 
-        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), cause, false);
+        LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), (Cause) cause, false);
         Bukkit.getPluginManager().callEvent(dropEvent);
 
         if (dropEvent.isCancelled()) return;
@@ -164,14 +166,15 @@ public abstract class LootHandler {
         return pool.rollLoot(loot -> {
             if (loot.hasRequirements() && RequirementCheck.failed(loot.getRequirements(), skillsUser)) {
                 return false;
-            } else if (providedContext instanceof SourceContext sourceContext) {
+            } else if (providedContext instanceof SourceContext(XpSource providedSource)) {
+
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists
-                if (lootContexts != null && sourceContext.source() != null) {
+                if (lootContexts != null && providedSource != null) {
                     boolean matched = false;
                     for (LootContext context : lootContexts) { // Go through LootContext and cast to Source
-                        if (context instanceof SourceContext sourceLootContext) {
-                            if (sourceLootContext.source().equals(sourceContext.source())) { // Check if source matches one of the contexts
+                        if (context instanceof SourceContext(XpSource configuredSource)) {
+                            if (configuredSource.equals(providedSource)) { // Check if source matches one of the contexts
                                 matched = true;
                                 break;
                             }
@@ -179,13 +182,13 @@ public abstract class LootHandler {
                     }
                     return matched;
                 }
-            } else if (providedContext instanceof MobContext mobContext) {
+            } else if (providedContext instanceof MobContext(EntityType providedType)) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("mobs");
-                if (lootContexts != null && mobContext.entityType() != null) {
+                if (lootContexts != null && providedType != null) {
                     boolean matched = false;
                     for (LootContext context : lootContexts) {
-                        if (context instanceof MobContext mobLootContext) {
-                            if (mobLootContext.entityType().equals(mobContext.entityType())) {
+                        if (context instanceof MobContext(EntityType configuredType)) {
+                            if (configuredType.equals(providedType)) {
                                 matched = true;
                             }
                         }
@@ -223,8 +226,35 @@ public abstract class LootHandler {
         }
     }
 
-    private int generateAmount(int minAmount, int maxAmount) {
-        return new Random().nextInt(maxAmount - minAmount + 1) + minAmount;
+    private ItemStack generateDamaged(ItemStack drop, double minDamage, double maxDamage) {
+        if (minDamage >= 0.0 && minDamage <= 1.0 &&
+                maxDamage >= 0.0 && maxDamage <= 1.0 &&
+                minDamage <= maxDamage) {
+
+            // Check if the item is damageable.
+            if (drop == null) {
+                return drop;
+            }
+
+            ItemMeta meta = drop.getItemMeta();
+            if (meta instanceof Damageable damageable) {
+                int damage = 0; // Default to 0 damage
+                short durability = drop.getType().getMaxDurability();
+                int minDamageValue = (int) (durability * minDamage); // E.g. 1561 * 0.0 = 0 -> resulting in an undamaged item.
+                int maxDamageValue = (int) (durability * maxDamage); // E.g. 1561 * 0.5 = 780 -> resulting in a max 50% damaged item.
+
+                if (minDamage == maxDamage) {
+                    damage = maxDamageValue;
+                } else {
+                    damage = ThreadLocalRandom.current().nextInt(minDamageValue, maxDamageValue);
+                }
+
+                damageable.setDamage(damage);
+                drop.setItemMeta(meta);
+            }
+        }
+
+        return drop;
     }
 
     private void attemptSendMessage(Player player, Loot loot) {
@@ -248,21 +278,6 @@ public abstract class LootHandler {
         user.sendMessage(tf.toComponent(message));
     }
 
-    public double getCommonChance(LootPool pool, User user) {
-        double chancePerLuck = pool.getOption("chance_per_luck", Double.class, 0.0) / 100;
-        return pool.getBaseChance() + chancePerLuck * user.getStatLevel(Stats.LUCK);
-    }
-
-    public double getAbilityModifiedChance(double chance, Ability ability, User user) {
-        // Check option to scale base chance
-        if (ability.optionBoolean("scale_base_chance", false)) {
-            chance *= 1 + (ability.getValue(user.getAbilityLevel(ability)) / 100);
-        } else { // Otherwise add to base chance
-            chance += (ability.getValue(user.getAbilityLevel(ability)) / 100);
-        }
-        return chance;
-    }
-
     protected boolean failsChecks(Player player, Location location, boolean disableInCreative) {
         if (disableInCreative && player.getGameMode() == GameMode.CREATIVE) { // Only drop loot in survival mode
             return true;
@@ -274,25 +289,6 @@ public abstract class LootHandler {
             return plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(location, player, FlagKey.CUSTOM_LOOT);
         }
         return false;
-    }
-
-    protected boolean isPoolUnobtainable(LootPool pool, XpSource source) {
-        for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("sources", new HashSet<>());
-            // Loot will be reachable if it has no contexts
-            if (contexts.isEmpty()) {
-                return false;
-            }
-            // Loot is reachable if at least one context matches the entity type
-            for (LootContext context : contexts) {
-                if (context instanceof SourceContext sourceContext) {
-                    if (sourceContext.source().equals(source)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
     }
 
 }

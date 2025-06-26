@@ -38,7 +38,7 @@ public class ReloadExecutor {
         plugin.getLevelManager().loadXpRequirements();
         plugin.getUiProvider().getBossBarManager().loadOptions();
         plugin.getRewardManager().loadRewards();
-        plugin.getLootTableManager().loadLootTables();
+        plugin.getLootManager().loadLootTables();
         plugin.getTraitManager().getTraitImpl(DamageReductionTrait.class).resetFormula();
         plugin.getTraitManager().getTraitImpl(AnvilDiscountTrait.class).resetFormula();
         plugin.getLevelManager().getLeveler(BlockLeveler.class).clearSourceCache();

@@ -3,11 +3,10 @@ package dev.aurelium.auraskills.common.reward.parser;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.reward.SkillReward;
-import dev.aurelium.auraskills.common.util.data.Parser;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
-public abstract class RewardParser extends Parser {
+public abstract class RewardParser {
 
     protected final AuraSkillsPlugin plugin;
     protected final Skill skill;

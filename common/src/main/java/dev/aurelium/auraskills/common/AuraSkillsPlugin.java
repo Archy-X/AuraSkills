@@ -20,6 +20,7 @@ import dev.aurelium.auraskills.common.message.MessageKey;
 import dev.aurelium.auraskills.common.message.MessageProvider;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.modifier.ModifierManager;
+import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.region.WorldManager;
 import dev.aurelium.auraskills.common.reward.RewardManager;
 import dev.aurelium.auraskills.common.scheduler.Scheduler;
@@ -110,6 +111,14 @@ public interface AuraSkillsPlugin {
 
     ModifierManager getModifierManager();
 
+    /**
+     * Get a user instance from a player reference instance
+     *
+     * @param ref the reference
+     * @return the user
+     */
+    User getUser(PlayerRef ref);
+
     // Message convenience methods
 
     /**
@@ -182,5 +191,9 @@ public interface AuraSkillsPlugin {
     void saveResource(String path, boolean replace);
 
     File getPluginFolder();
+
+    boolean isAtLeastVersion(int majorVersion);
+
+    boolean isAtLeastVersion(int majorVersion, int minorVersion);
 
 }

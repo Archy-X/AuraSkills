@@ -12,10 +12,10 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
-import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementCheck;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
+import dev.aurelium.auraskills.common.loot.CommandLoot;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.*;
@@ -52,7 +52,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
         User user = plugin.getUser(player);
 
-        LootTable table = plugin.getLootTableManager().getLootTable(NamespacedId.fromDefault("mob"));
+        LootTable table = plugin.getLootManager().getLootTable(NamespacedId.fromDefault("mob"));
         if (table == null) return;
 
         DamageCause damageCause = getCause(event.getEntity().getLastDamageCause());

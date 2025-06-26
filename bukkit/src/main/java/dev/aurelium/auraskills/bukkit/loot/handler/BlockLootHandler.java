@@ -1,8 +1,8 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.loot.Loot;
+import dev.aurelium.auraskills.api.loot.LootDropCause;
 import dev.aurelium.auraskills.api.loot.LootPool;
 import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -13,14 +13,14 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.SlimefunHook;
-import dev.aurelium.auraskills.bukkit.loot.context.SourceContext;
-import dev.aurelium.auraskills.bukkit.loot.provider.SkillLootProvider;
-import dev.aurelium.auraskills.bukkit.loot.type.CommandLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.requirement.RequirementCheck;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.SkillLootProvider;
+import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -104,7 +104,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
         // Get the loot provider for getting chance and cause
         SkillLootProvider provider = lootProviders.get(skill);
 
-        LootTable table = plugin.getLootTableManager().getLootTable(skill);
+        LootTable table = plugin.getLootManager().getLootTable(skill);
         if (table == null) return;
 
         SkillsUser skillsUser = plugin.getApi().getUserManager().getUser(player.getUniqueId());
@@ -127,11 +127,11 @@ public class BlockLootHandler extends LootHandler implements Listener {
                 chance = getCommonChance(pool, user);
             }
 
-            LootDropEvent.Cause cause;
+            LootDropCause cause;
             if (provider != null) {
                 cause = provider.getCause(pool);
             } else {
-                cause = LootDropEvent.Cause.UNKNOWN;
+                cause = Cause.UNKNOWN;
             }
             // Select pool and give loot
             if (selectBlockLoot(table, pool, player, chance, source, event, skill, cause)) {
@@ -140,7 +140,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
         }
     }
 
-    private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropEvent.Cause cause) {
+    private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropCause cause) {
         double rolled = random.nextDouble();
         if (rolled < chance) { // Pool is selected
             SkillsUser skillsUser = plugin.getApi().getUserManager().getUser(player.getUniqueId());
