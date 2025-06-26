@@ -5,7 +5,6 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.loot.*;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
-import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;

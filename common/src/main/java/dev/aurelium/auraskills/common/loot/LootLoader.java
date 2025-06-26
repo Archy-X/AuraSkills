@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.config.Option;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
@@ -104,9 +105,14 @@ public abstract class LootLoader {
         ConfigurationNode poolsNode = config.node("pools");
         if (poolsNode.virtual()) return null;
 
+        List<ConfigurationNode> configRequirements = parseRequirements(null, config);
+
         List<LootPool> pools = new ArrayList<>();
         for (ConfigurationNode poolNode : poolsNode.childrenMap().values()) {
             String poolName = (String) poolNode.key();
+
+            // Use the configRequirements by default but overwrite if the pool has requirements.
+            List<ConfigurationNode> requirements = parseRequirements(configRequirements, poolNode);
 
             double baseChance = poolNode.node("base_chance").getDouble(0) / 100; // Converts from percent chance to decimal
             int selectionPriority = poolNode.node("selection_priority").getInt(1);
@@ -129,6 +135,8 @@ public abstract class LootLoader {
                 try {
                     String lootTypeName = lootNode.node("type").getString("");
                     LootType lootType = LootType.valueOf(lootTypeName.toUpperCase(Locale.ROOT));
+                    // Use the configRequirements by default but overwrite if the pool has requirements.
+                    List<ConfigurationNode> lootRequirements = parseRequirements(requirements, lootNode);
                     // Item loot
                     LootParsingContext context = new LootParsingContextImpl(manager);
                     if (lootType == LootType.ITEM) {
@@ -139,12 +147,12 @@ public abstract class LootLoader {
                             continue;
                         }
 
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode));
+                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), ApiConfigNode.toApi(lootRequirements));
                     } else if (lootType == LootType.COMMAND) { // Command loot
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode));
+                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), ApiConfigNode.toApi(lootRequirements));
                         // Entity loot, mainly for fishing
                     } else if (lootType == LootType.ENTITY) {
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode));
+                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), ApiConfigNode.toApi(lootRequirements));
                     } else {
                         // Parse custom loot registered from API
                         LootParser customParser = manager.getCustomLootParsers().get(lootTypeName);
@@ -152,7 +160,7 @@ public abstract class LootLoader {
                             throw new IllegalArgumentException("Unknown loot type: " + lootTypeName);
                         }
 
-                        loot = customParser.parse(context, ApiConfigNode.toApi(lootNode));
+                        loot = customParser.parse(context, ApiConfigNode.toApi(lootNode), ApiConfigNode.toApi(lootRequirements));
                     }
                 } catch (Exception e) {
                     manager.getPlugin().logger().warn("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
@@ -164,7 +172,7 @@ public abstract class LootLoader {
                 index++;
             }
             // Create pool
-            LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot, options);
+            LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot, options, ApiConfigNode.toApi(requirements));
             pools.add(pool);
         }
         // Sort pools by selection priority
@@ -215,6 +223,29 @@ public abstract class LootLoader {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected List<ConfigurationNode> parseRequirements(List<ConfigurationNode> requirements, ConfigurationNode config) {
+        List<ConfigurationNode> parsedRequirements = requirements;
+
+        if (config.hasChild("requirements")) {
+            try {
+                parsedRequirements = config.node("requirements").getList(ConfigurationNode.class);
+            } catch (SerializationException e) {
+                throw new RuntimeException(e);
+            }
+
+            Boolean appendRequirements = false;
+            if (config.hasChild("appendRequirements")) {
+                appendRequirements = config.node("appendRequirements").getBoolean();
+            }
+            // Append if enabled so both requirements can be utilized.
+            if (parsedRequirements != null && appendRequirements == true) {
+                parsedRequirements.addAll(requirements);
+            }
+        }
+
+        return parsedRequirements;
     }
 
 }
