@@ -338,7 +338,7 @@ commands:
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Toegevoegde status aanpassen aan harnas met status: {stat}, waarde: {value}, werking: {operation}"
         already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
         desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
