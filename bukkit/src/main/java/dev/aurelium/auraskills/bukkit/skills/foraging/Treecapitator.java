@@ -103,10 +103,10 @@ public class Treecapitator extends ReadiedManaAbility {
             Material newTarget = Material.matchMaterial(blockOrigin);
             if (newTarget.isBlock()) {
                 XpSource newSource = plugin.getSkillManager().getSourceById(NamespacedId.fromDefault(newTarget.toString().toLowerCase(Locale.ROOT)));
-                return plugin.getSkillManager().hasTag(newSource, SourceTag.TREECAPITATOR_APPLICABLE);
+                return plugin.getSkillManager().hasTag(newSource, SourceTag.TRUNKS);
             }
         } else {
-            return plugin.getSkillManager().hasTag(source, SourceTag.TREECAPITATOR_APPLICABLE);
+            return plugin.getSkillManager().hasTag(source, SourceTag.TRUNKS);
         }
 
         return false;
