@@ -105,7 +105,7 @@ abilities:
     info: "+{value}% Epische Loot"
   retrieval:
     name: Ophalen
-    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    desc: "Pijlen die je mist, zullen meteen opgehaald worden na {time}blokken van {value} weg."
     info: "{value} Afstand"
   archer:
     name: Boogschutter
