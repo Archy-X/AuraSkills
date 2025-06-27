@@ -7,7 +7,7 @@ import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
@@ -34,7 +34,7 @@ import org.bukkit.util.Vector;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class FightingAbilities extends AbilityImpl {
+public class FightingAbilities extends BukkitAbilityImpl {
 
     public static final String BLEED_DAMAGER_KEY = "bleed_damager";
     private final String parryKey = "parry_ready";
@@ -165,9 +165,8 @@ public class FightingAbilities extends AbilityImpl {
                         plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_ENEMY_BLEEDING, locale));
                     }
                 }
-                if (entity instanceof Player) {
+                if (entity instanceof Player player) {
                     if (ability.optionBoolean("enable_self_message", true)) {
-                        Player player = (Player) entity;
                         Locale locale = user.getLocale();
                         plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_SELF_BLEEDING, locale));
                     }
@@ -228,9 +227,8 @@ public class FightingAbilities extends AbilityImpl {
                         container.remove(key);
                     }
                 }
-                if (entity instanceof Player) {
+                if (entity instanceof Player player) {
                     if (ability.optionBoolean("enable_stop_message", true)) {
-                        Player player = (Player) entity;
                         Locale locale = user.getLocale();
                         plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
                     }

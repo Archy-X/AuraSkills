@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.damage;
 import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
+import dev.aurelium.auraskills.common.damage.DamageResult;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;

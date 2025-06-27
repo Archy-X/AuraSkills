@@ -194,7 +194,8 @@ public class StatInfoMenu {
                         case ADD -> formatValue(t, "value_add");
                         case MULTIPLY -> formatValue(t, "value_multiply");
                         case ADD_PERCENT -> formatValue(t, "value_add_percent");
-                    });
+                    }
+            );
             template.replace("type_name", t -> {
                 var type = instance(t.menu(), t.value()).parent();
                 if (type instanceof Stat || stat(t).hasDirectTrait()) {

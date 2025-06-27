@@ -1,4 +1,3 @@
-import org.gradle.api.tasks.Copy
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
@@ -6,6 +5,7 @@ plugins {
     id("com.gradleup.shadow") version "8.3.5"
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
     id("com.modrinth.minotaur") version "2.+"
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 java {
@@ -56,7 +56,6 @@ dependencies {
     compileOnly("net.luckperms:api:5.4")
     compileOnly("com.github.TownyAdvanced:Towny:0.98.3.6")
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
-    compileOnly("com.mojang:authlib:1.5.25")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
 }
@@ -114,10 +113,16 @@ tasks {
         options.forkOptions.executable = compiler.map { it.executablePath }.get().toString()
     }
 
+    val projectVersion = project.version.toString()
+
     processResources {
         filesMatching("plugin.yml") {
-            expand("projectVersion" to project.version)
+            expand("projectVersion" to projectVersion)
         }
+    }
+
+    runServer {
+        minecraftVersion("1.21.5")
     }
 }
 

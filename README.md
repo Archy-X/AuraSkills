@@ -18,17 +18,22 @@ The ultra-versatile Minecraft RPG skills plugin
 
 ## About
 
-**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds skills, stats, abilities, and other RPG-related features. The plugin is fully configurable and customizable, enabling usage on a wide range of server types.
+**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds skills, stats, abilities, and other
+RPG-related features. The plugin is fully configurable and customizable, enabling usage on a wide range of server types.
 
 Features include:
+
 - **Skills** - Gain skill XP to level skills through general Minecraft tasks, such as Farming or Mining.
-- **Stats** - Get player buffs like increased health and damage by leveling skills, which can be as independent modifiers and on items.
+- **Stats** - Get player buffs like increased health and damage by leveling skills, which can be as independent
+  modifiers and on items.
 - **Abilities** - Skills have passive and active abilities that add gameplay mechanics, plus a full mana system.
 - **Menus** - Players can see everything related to skills in fully-configurable inventory GUIs.
 - **Rewards** - Customize rewards given for leveling skills, such as running commands or giving items.
 - **Loot** - Create custom loot tables for fishing, blocks, and mobs.
 
-See the [official website](https://aurelium.dev/auraskills) and [wiki](https://wiki.aurelium.dev/auraskills) for a more complete list of features. The wiki also contains the list of [server requirements](https://wiki.aurelium.dev/auraskills/server-requirements) to run the plugin.
+See the [official website](https://aurelium.dev/auraskills) and [wiki](https://wiki.aurelium.dev/auraskills) for a more
+complete list of features. The wiki also contains the list
+of [server requirements](https://wiki.aurelium.dev/auraskills/server-requirements) to run the plugin.
 
 ## Building
 
@@ -63,29 +68,36 @@ The output jar can be found in the `build/libs` directory.
 
 AuraSkills has an extensive developer API.
 
-Read the full API documentation on the [wiki](https://wiki.aurelium.dev/auraskills/api), or view the [Javadocs](https://docs.aurelium.dev/auraskills-api-bukkit/).
+Read the full API documentation on the [wiki](https://wiki.aurelium.dev/auraskills/api), or view
+the [Javadocs](https://docs.aurelium.dev/auraskills-api-bukkit/).
 
-Release versions are published to the Maven central repository. Snapshot versions require adding the Sonatype OSS repository.
+Release versions are published to the Maven central repository. Snapshot versions require adding the Sonatype OSS
+repository.
 
 ### Maven
 
 ```xml
+
 <repository>
     <id>sonatype-oss-snapshots1</id>
     <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
 </repository>
 ```
+
 ```xml
+
 <dependency>
     <groupId>dev.aurelium</groupId>
     <artifactId>auraskills-api-bukkit</artifactId>
-    <version>2.2.8</version>
+    <version>2.3.3</version>
     <scope>provided</scope>
 </dependency>
 ```
+
 ### Gradle
 
 **Groovy DSL:**
+
 ```gradle
 repositories {
     mavenCentral()
@@ -93,10 +105,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.2.8'
+    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.3.3'
 }
 ```
+
 **Kotlin DSL:**
+
 ```Gradle Kotlin DSL
 repositories { 
     mavenCentral()
@@ -104,9 +118,11 @@ repositories {
 }
 
 dependencies { 
-    compileOnly("dev.aurelium:auraskills-api-bukkit:2.2.8")
+    compileOnly("dev.aurelium:auraskills-api-bukkit:2.3.3")
 }
 ```
 
 ## Contributing
-Contributions are welcome, just open a pull request.
+
+We welcome contributions from the community. Please read the [contributing guide](CONTRIBUTING.md) for instructions
+on setting up a development environment and important guidelines you should know before submitting a pull request.

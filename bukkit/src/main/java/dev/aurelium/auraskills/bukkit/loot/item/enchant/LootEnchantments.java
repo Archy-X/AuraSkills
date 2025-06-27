@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.loot.item.enchant;
 
 import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.ref.ItemRef;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -11,9 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
+
 public record LootEnchantments(Map<LootEnchantList, Integer> possibleEnchants) {
 
-    public void applyEnchantments(ItemStack item, AuraSkills plugin, LootTable table) {
+    public void applyEnchantments(ItemRef ref, AuraSkills plugin, LootTable table) {
+        ItemStack item = unwrap(ref);
+
         LootEnchantList list = selectEnchantList(); // Select the list of enchants to apply
         if (list == null) return;
 

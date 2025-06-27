@@ -5,7 +5,7 @@ import dev.aurelium.auraskills.api.damage.DamageMeta;
 import dev.aurelium.auraskills.api.damage.DamageModifier;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.user.User;
@@ -23,7 +23,7 @@ import org.bukkit.potion.PotionEffectTypeCategory;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class DefenseAbilities extends AbilityImpl {
+public class DefenseAbilities extends BukkitAbilityImpl {
 
     public DefenseAbilities(AuraSkills plugin) {
         super(plugin, Abilities.SHIELDING, Abilities.DEFENDER, Abilities.MOB_MASTER, Abilities.IMMUNITY, Abilities.NO_DEBUFF);

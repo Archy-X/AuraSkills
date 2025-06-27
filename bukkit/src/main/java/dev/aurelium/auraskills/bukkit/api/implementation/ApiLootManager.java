@@ -17,12 +17,12 @@ public class ApiLootManager implements LootManager {
 
     @Override
     public @Nullable LootTable getLootTable(NamespacedId id) {
-        return plugin.getLootTableManager().getLootTable(id);
+        return plugin.getLootManager().getLootTable(id);
     }
 
     @Override
     public void registerLootType(String name, LootParser parser) {
-        plugin.getLootTableManager().getLootManager().registerCustomLootParser(name, parser);
+        plugin.getLootManager().registerCustomLootParser(name, parser);
     }
 
 }

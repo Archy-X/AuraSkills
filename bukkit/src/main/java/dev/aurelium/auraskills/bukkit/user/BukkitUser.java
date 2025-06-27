@@ -3,8 +3,6 @@ package dev.aurelium.auraskills.bukkit.user;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.antiafk.CheckData;
-import dev.aurelium.auraskills.bukkit.antiafk.CheckType;
 import dev.aurelium.auraskills.bukkit.hooks.BukkitLuckPermsHook;
 import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.item.UserEquipment;
@@ -17,7 +15,9 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Set;
+import java.util.UUID;
 
 public class BukkitUser extends User {
 
@@ -25,15 +25,18 @@ public class BukkitUser extends User {
     private final Player player;
     private final AuraSkills plugin;
     // Non-persistent data
-    private final Map<CheckType, CheckData> checkData;
     private final UserEquipment equipment;
 
     public BukkitUser(UUID uuid, @Nullable Player player, AuraSkills plugin) {
         super(uuid, plugin);
         this.player = player;
         this.plugin = plugin;
-        this.checkData = new HashMap<>();
         this.equipment = UserEquipment.empty();
+    }
+
+    @Nullable
+    public static Player getPlayer(User user) {
+        return ((BukkitUser) user).getPlayer();
     }
 
     @Nullable
@@ -43,11 +46,6 @@ public class BukkitUser extends User {
 
     public static BukkitUser getUser(SkillsUser skillsUser) {
         return (BukkitUser) ((ApiSkillsUser) skillsUser).getUser();
-    }
-
-    @NotNull
-    public CheckData getCheckData(CheckType type) {
-        return checkData.computeIfAbsent(type, t -> new CheckData());
     }
 
     @NotNull
@@ -64,6 +62,24 @@ public class BukkitUser extends User {
     public String getUsername() {
         String name = Bukkit.getOfflinePlayer(uuid).getName();
         return name != null ? name : "?";
+    }
+
+    @Override
+    public void sendMessage(String message) {
+        if (player != null) {
+            player.sendMessage(message);
+        }
+    }
+
+    @Override
+    public void sendMessage(Component component) {
+        // Don't send empty messages
+        if (plugin.getMessageProvider().componentToString(component).isEmpty()) {
+            return;
+        }
+        if (player != null) {
+            plugin.getAudiences().player(player).sendMessage(component);
+        }
     }
 
     @Override
@@ -194,6 +210,14 @@ public class BukkitUser extends User {
     }
 
     @Override
+    public boolean hasPermission(String permission) {
+        if (player == null) {
+            return false;
+        }
+        return player.hasPermission(permission);
+    }
+
+    @Override
     public boolean canSelectJob(@NotNull Skill skill) {
         if (player == null) return true;
 
@@ -212,17 +236,6 @@ public class BukkitUser extends User {
             }
         }
         return true;
-    }
-
-    @Override
-    public void sendMessage(Component component) {
-        // Don't send empty messages
-        if (plugin.getMessageProvider().componentToString(component).isEmpty()) {
-            return;
-        }
-        if (player != null) {
-            plugin.getAudiences().player(player).sendMessage(component);
-        }
     }
 
     @Override

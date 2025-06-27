@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.api.event.loot;
 
+import dev.aurelium.auraskills.api.loot.LootDropCause;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -166,7 +167,7 @@ public class LootDropEvent extends Event implements Cancellable {
         return handlers;
     }
 
-    public enum Cause {
+    public enum Cause implements LootDropCause {
 
         /**
          * Caused by the Treasure Hunter ability, configured as the "rare" Fishing loot table.

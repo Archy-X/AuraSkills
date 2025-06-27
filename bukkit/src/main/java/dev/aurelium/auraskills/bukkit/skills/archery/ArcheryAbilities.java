@@ -8,7 +8,7 @@ import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.ability.AbilityImpl;
+import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.AttributeCompat;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
@@ -38,7 +38,7 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public class ArcheryAbilities extends AbilityImpl {
+public class ArcheryAbilities extends BukkitAbilityImpl {
 
     private final UUID legacyStunId = UUID.fromString("886ccad1-20f0-48e4-8634-53f3a76cf2ea");
     private final String legacyStunName = "AureliumSkills-Stun";
