@@ -36,7 +36,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":api-bukkit"))
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    implementation("de.tr7zw:item-nbt-api:2.14.2-SNAPSHOT")
+    implementation("de.tr7zw:item-nbt-api:2.15.1-SNAPSHOT")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.3")
@@ -120,7 +120,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.5")
+        minecraftVersion("1.21.6")
     }
 }
 
