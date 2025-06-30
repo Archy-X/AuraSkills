@@ -15,6 +15,7 @@ import java.util.Map;
 public class BlockSource extends Source implements BlockXpSource {
 
     private final String[] blocks;
+    private final Integer maxBlocks;
     private final BlockTriggers[] triggers;
     private final boolean checkReplace;
     private final BlockXpSourceState[] states;
@@ -24,9 +25,10 @@ public class BlockSource extends Source implements BlockXpSource {
     private final boolean trunk;
     private final boolean leaf;
 
-    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
+    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, Integer maxBlocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
         super(plugin, values);
         this.blocks = blocks;
+        this.maxBlocks = maxBlocks;
         this.triggers = triggers;
         this.checkReplace = checkReplace;
         this.states = states;
@@ -45,6 +47,10 @@ public class BlockSource extends Source implements BlockXpSource {
     @Override
     public String[] getBlocks() {
         return blocks;
+    }
+
+    public int getMaxBlocks() {
+        return maxBlocks;
     }
 
     @Override

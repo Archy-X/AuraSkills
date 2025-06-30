@@ -23,6 +23,7 @@ public class BlockSourceParser extends SourceParser<BlockSource> {
     @Override
     public BlockSource parse(ConfigurationNode source, ConfigurateSourceContext context) throws SerializationException {
         String[] blocks = context.requiredPluralizedArray("block", source, String.class);
+        int maxBlocks = source.node("maxBlocks").getInt(100);
         BlockXpSource.BlockTriggers[] triggers = context.requiredPluralizedArray("trigger", source, BlockXpSource.BlockTriggers.class);
         boolean checkReplace = source.node("check_replace").getBoolean(true);
         BlockXpSource.BlockXpSourceState[] states = context.pluralizedArray("state", source, BlockXpSource.BlockXpSourceState.class);
@@ -33,7 +34,7 @@ public class BlockSourceParser extends SourceParser<BlockSource> {
         boolean trunk = source.node("trunk").getBoolean(false);
         boolean leaf = source.node("leaf").getBoolean(false);
 
-        return new BlockSource(plugin, context.parseValues(source), blocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, trunk, leaf);
+        return new BlockSource(plugin, context.parseValues(source), blocks, maxBlocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, trunk, leaf);
     }
 
     public static class BlockSourceStateParser implements UtilityParser<BlockXpSource.BlockXpSourceState> {
