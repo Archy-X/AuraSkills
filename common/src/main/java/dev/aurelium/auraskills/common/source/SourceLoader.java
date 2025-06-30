@@ -201,8 +201,18 @@ public class SourceLoader {
         }
     }
 
-    private Collection<XpSource> getFilteredSource(List<XpSource> sources, String filter) {
-        return sources.stream().filter(source -> source.name().toLowerCase().contains(filter.replace("!", "").replace("*", "").toLowerCase())).collect(Collectors.toList());
+    private Collection<XpSource> getFilteredSource(List<XpSource> sources, String rawFilter) {
+        String filter = rawFilter.replace("!", "").replace("*", "").toLowerCase();
+        Boolean isEndingWildcard = rawFilter.endsWith("*");
+        Boolean isBeginningWildcard = rawFilter.startsWith("*") || rawFilter.startsWith("!");
+
+        if (isBeginningWildcard && !isEndingWildcard) {
+            return sources.stream().filter(source -> source.name().toLowerCase().endsWith(filter)).collect(Collectors.toList());
+        } else if (isEndingWildcard && !isBeginningWildcard) {
+            return sources.stream().filter(source -> source.name().toLowerCase().startsWith(filter)).collect(Collectors.toList());
+        } else {
+            return sources.stream().filter(source -> source.name().toLowerCase().contains(filter)).collect(Collectors.toList());
+        }
     }
 
     private void addToMap(ConfigurationNode root, Map<String, ConfigurationNode> sourcesMap) {
