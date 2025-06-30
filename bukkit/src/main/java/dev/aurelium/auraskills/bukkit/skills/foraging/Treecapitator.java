@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
+import com.sk89q.worldedit.WorldEdit;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -10,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.bukkit.util.BlockFaceUtil;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -43,10 +45,16 @@ public class Treecapitator extends ReadiedManaAbility {
     }
 
     @Override
-    protected boolean materialMatches(String checked) {
-        // Don't ready world edit axe
-        if (checked.equals("WOODEN_AXE") || checked.equals("WOOD_AXE")) {
-            if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
+    protected boolean materialMatches(String checked, Player player) {
+        // Don't ready WorldEdit axe if WorldEdit is available and the player has permission for the wand.
+        if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit") && player.hasPermission("worldedit.wand")) {
+            String wandItem = WorldEdit.getInstance().getConfiguration().wandItem;
+            String wandString = wandItem.contains(":") ? wandItem.split(":")[1] : wandItem;
+            Material wandMaterial = Material.matchMaterial(wandString.toUpperCase());
+            String checkString = checked.contains(":") ? checked.split(":")[1] : checked;
+            Material checkMaterial = Material.matchMaterial(checkString.toUpperCase());
+
+            if (wandMaterial == checkMaterial) {
                 return false;
             }
         }
