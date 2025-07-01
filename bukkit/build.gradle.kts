@@ -29,6 +29,7 @@ repositories {
     maven("https://maven.enginehub.org/repo/")
     maven("https://repo.nexomc.com/snapshots/")
     maven("https://repo.nexomc.com/releases/")
+    maven("https://repo.papermc.io/repository/maven-public/")
     mavenLocal()
 }
 
@@ -57,6 +58,11 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.59.0")
+    testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation(platform("org.junit:junit-bom:5.13.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 val compiler = javaToolchains.compilerFor {
@@ -121,6 +127,20 @@ tasks {
 
     runServer {
         minecraftVersion("1.21.6")
+    }
+
+    test {
+        useJUnitPlatform()
+
+        dependsOn(shadowJar)
+
+        doFirst {
+            val mainOutputs = sourceSets["main"].output.files
+            val shadedJarFile = shadowJar.get().archiveFile.get().asFile
+
+            classpath = files(shadedJarFile) +
+                    files(classpath.filter { it !in mainOutputs })
+        }
     }
 }
 

@@ -36,7 +36,7 @@ public class BukkitSourceMenuItems extends SourceMenuItems<ItemStack> {
 
                 registerMenuItem(source, itemStack);
             } catch (Exception e) {
-                plugin.logger().info("Error parsing source menu item for source " + source.getId());
+                plugin.logger().warn("Error parsing source menu item for source " + source.getId());
                 e.printStackTrace();
             }
         } else {

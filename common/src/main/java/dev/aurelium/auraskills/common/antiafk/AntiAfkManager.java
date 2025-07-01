@@ -28,8 +28,6 @@ public abstract class AntiAfkManager {
         if (!plugin.configBoolean(Option.ANTI_AFK_ENABLED)) return;
 
         loadLogThresholdExpression();
-
-        registerChecks();
     }
 
     public abstract void registerCheckEvents(Check check);
@@ -37,6 +35,8 @@ public abstract class AntiAfkManager {
     public abstract void unregisterCheckEvents(Check check);
 
     public abstract LogLocation getLogLocation(PlayerRef ref);
+
+    protected abstract Constructor<?> getCheckConstructor(Class<? extends Check> checkClass) throws NoSuchMethodException;
 
     public Optional<Check> getCheck(CheckType type) {
         return Optional.ofNullable(checkMap.get(type));
@@ -92,7 +92,9 @@ public abstract class AntiAfkManager {
         }
     }
 
-    private void registerChecks() {
+    public void registerChecks() {
+        if (!plugin.configBoolean(Option.ANTI_AFK_ENABLED)) return;
+
         for (CheckType type : getCheckTypes()) {
             constructCheck(type).ifPresent(check -> {
                 registerCheckEvents(check);
@@ -104,7 +106,7 @@ public abstract class AntiAfkManager {
     private Optional<Check> constructCheck(CheckType type) {
         Class<? extends Check> checkClass = type.getCheckClass();
         try {
-            Constructor<?> constructor = checkClass.getDeclaredConstructor(CheckType.class, AntiAfkManager.class);
+            Constructor<?> constructor = getCheckConstructor(checkClass);
             Object checkObj = constructor.newInstance(type, this);
             if (checkObj instanceof Check check) {
                 return Optional.of(check);
