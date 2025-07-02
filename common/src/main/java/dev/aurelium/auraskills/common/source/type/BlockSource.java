@@ -15,17 +15,15 @@ import java.util.Map;
 public class BlockSource extends Source implements BlockXpSource {
 
     private final String[] blocks;
-    private final Integer maxBlocks;
+    private final int maxBlocks;
     private final BlockTriggers[] triggers;
     private final boolean checkReplace;
     private final BlockXpSourceState[] states;
     private final BlockXpSourceState[] afterStates;
     private final String stateMultiplier;
     private final SupportBlockType supportBlockType;
-    private final boolean trunk;
-    private final boolean leaf;
 
-    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, Integer maxBlocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean trunk, boolean leaf) {
+    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, int maxBlocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType) {
         super(plugin, values);
         this.blocks = blocks;
         this.maxBlocks = maxBlocks;
@@ -35,8 +33,6 @@ public class BlockSource extends Source implements BlockXpSource {
         this.afterStates = afterStates;
         this.stateMultiplier = stateMultiplier;
         this.supportBlockType = supportBlockType;
-        this.trunk = trunk;
-        this.leaf = leaf;
     }
 
     @Override
@@ -102,16 +98,6 @@ public class BlockSource extends Source implements BlockXpSource {
 
     public SupportBlockType getSupportBlockType() {
         return supportBlockType;
-    }
-
-    @Override
-    public boolean isTrunk() {
-        return trunk;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return leaf;
     }
 
     @Override

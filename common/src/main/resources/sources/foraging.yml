@@ -11,25 +11,25 @@ sources:
   spruce_log:
     block: spruce_log
     xp: 8.0
-    maxBlocks: 125
+    max_blocks: 125
   birch_log:
     block: birch_log
     xp: 8.0
   jungle_log:
     block: jungle_log
     xp: 8.0
-    maxBlocks: 220
+    max_blocks: 220
   acacia_log:
     block: acacia_log
     xp: 8.0
   dark_oak_log:
     block: dark_oak_log
     xp: 8.0
-    maxBlocks: 150
+    max_blocks: 150
   mangrove_log:
     block: mangrove_log
     xp: 8.0
-    maxBlocks: 125
+    max_blocks: 125
   cherry_log:
     block: cherry_log
     xp: 8.0
@@ -60,11 +60,11 @@ sources:
   crimson_stem:
     block: crimson_stem
     xp: 10.0
-    maxBlocks: 125
+    max_blocks: 125
   warped_stem:
     block: warped_stem
     xp: 12.0
-    maxBlocks: 125
+    max_blocks: 125
   nether_wart_block:
     block: nether_wart_block
     xp: 1.0
@@ -123,7 +123,7 @@ sources:
   pale_oak_log:
     block: pale_oak_log
     xp: 8.0
-    maxBlocks: 150
+    max_blocks: 150
   pale_oak_leaves:
     block: pale_oak_leaves
     xp: 0.8

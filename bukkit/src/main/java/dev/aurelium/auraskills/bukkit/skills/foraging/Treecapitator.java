@@ -94,7 +94,7 @@ public class Treecapitator extends ReadiedManaAbility {
         if (target.contains("STRIPPED")) {
             String blockOrigin = target.replace("STRIPPED_", "");
             Material newTarget = Material.matchMaterial(blockOrigin);
-            if (newTarget.isBlock()) {
+            if (newTarget != null && newTarget.isBlock()) {
                 XpSource newSource = plugin.getSkillManager().getSourceById(NamespacedId.fromDefault(newTarget.toString().toLowerCase(Locale.ROOT)));
                 return plugin.getSkillManager().hasTag(newSource, SourceTag.TRUNKS);
             }
