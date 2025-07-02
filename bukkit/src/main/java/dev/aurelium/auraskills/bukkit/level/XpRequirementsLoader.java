@@ -47,7 +47,6 @@ public class XpRequirementsLoader {
             }
 
             // Load skill sections
-            int numLoaded = 0;
             for (Skill skill : plugin.getSkillManager().getSkillValues()) {
                 requirements.removeSkillXpRequirements(skill); // Remove to account for deleted sections
 
@@ -64,7 +63,6 @@ public class XpRequirementsLoader {
                         plugin.logger().warn("Failed to evaluate XP requirement expression for skill " + skill);
                         e.printStackTrace();
                     }
-                    numLoaded++;
                 }
             }
         } catch (IOException e) {
