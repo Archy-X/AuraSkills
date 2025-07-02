@@ -132,8 +132,10 @@ tags:
     - '*'
   treecapitator_applicable:
     - '*_log'
-    - '*_stem'
     - '*_leaves'
+    - '*_stem'
+    - '*_mushroom_block'
+    - '*_wart_block'
   trunks:
     - '*_log'
     - '*_stem'
