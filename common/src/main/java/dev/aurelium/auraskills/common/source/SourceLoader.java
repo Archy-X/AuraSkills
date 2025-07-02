@@ -202,7 +202,7 @@ public class SourceLoader {
     }
 
     private Collection<XpSource> getFilteredSource(List<XpSource> sources, String rawFilter) {
-        String filter = rawFilter.replace("!", "").replace("*", "").toLowerCase();
+        String filter = rawFilter.replace("!", "").replace("*", "").toLowerCase(Locale.ROOT);
         boolean isEndingWildcard = rawFilter.endsWith("*");
         boolean isBeginningWildcard = rawFilter.startsWith("*") || rawFilter.startsWith("!");
 
