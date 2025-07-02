@@ -131,7 +131,9 @@ tags:
   foraging_luck_applicable:
     - '*'
   treecapitator_applicable:
-    - '*'
+    - '*_log'
+    - '*_stem'
+    - '*_leaves'
   trunks:
     - '*_log'
     - '*_stem'
