@@ -39,10 +39,10 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     }
 
     protected boolean isHoldingMaterial(Player player) {
-        return materialMatches(player.getInventory().getItemInMainHand().getType().toString());
+        return materialMatches(player.getInventory().getItemInMainHand().getType().toString(), player);
     }
 
-    protected boolean materialMatches(String checked) {
+    protected boolean materialMatches(String checked, Player player) {
         for (String material : materials) {
             if (checked.contains(material)) {
                 return true;
