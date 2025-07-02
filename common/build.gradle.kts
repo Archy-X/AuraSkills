@@ -14,7 +14,7 @@ dependencies {
     api("net.kyori:adventure-api:4.17.0")
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
     api("net.kyori:adventure-text-serializer-legacy:4.17.0")
-    api("dev.aurelium:polyglot:1.2.3")
+    api("dev.aurelium:polyglot:1.2.4")
     api("com.ezylang:EvalEx:3.3.0")
     api("org.spongepowered:configurate-yaml:4.2.0")
     implementation("com.zaxxer:HikariCP:5.1.0") {
@@ -25,9 +25,9 @@ dependencies {
     compileOnly("com.google.guava:guava:33.2.1-jre")
     compileOnly("com.google.code.gson:gson:2.10")
     compileOnly("net.luckperms:api:5.4")
+    testImplementation(platform("org.junit:junit-bom:5.13.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(platform("org.junit:junit-bom:5.11.0-M1"))
     testImplementation("org.yaml:snakeyaml:2.2")
 }
 

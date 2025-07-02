@@ -14,6 +14,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Constructor;
+
 import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.unwrap;
 
 public class BukkitAntiAfkManager extends AntiAfkManager {
@@ -49,6 +51,11 @@ public class BukkitAntiAfkManager extends AntiAfkManager {
         String worldName = world != null ? world.getName() : "";
 
         return new LogLocation(coords, worldName);
+    }
+
+    @Override
+    protected Constructor<?> getCheckConstructor(Class<? extends Check> checkClass) throws NoSuchMethodException {
+        return checkClass.getDeclaredConstructor(BukkitCheckType.class, BukkitAntiAfkManager.class);
     }
 
     @Override
