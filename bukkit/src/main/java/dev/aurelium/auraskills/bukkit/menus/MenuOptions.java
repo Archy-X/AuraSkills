@@ -27,6 +27,7 @@ public class MenuOptions {
                 .loreWrappingWidth(plugin.configInt(Option.MENUS_LORE_WRAPPING_WIDTH))
                 .itemMetaParsers(getMetaParsers())
                 .removalProtection(plugin.configBoolean(Option.MENUS_REMOVAL_PROTECTION))
+                .isMock(plugin.isMock())
                 .build();
     }
 

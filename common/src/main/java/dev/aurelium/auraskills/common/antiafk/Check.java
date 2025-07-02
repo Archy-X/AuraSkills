@@ -5,6 +5,7 @@ import com.ezylang.evalex.parser.ParseException;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.ref.PlayerRef;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Locale;
 
@@ -57,7 +58,8 @@ public class Check {
         }
     }
 
-    protected boolean isDisabled() {
+    @VisibleForTesting
+    public boolean isDisabled() {
         return !plugin.configBoolean(enabledOption);
     }
 
