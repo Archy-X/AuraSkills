@@ -28,7 +28,6 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.13.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.yaml:snakeyaml:2.2")
 }
 
 val compiler = javaToolchains.compilerFor {
