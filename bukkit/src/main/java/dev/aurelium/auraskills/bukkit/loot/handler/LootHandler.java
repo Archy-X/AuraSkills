@@ -11,6 +11,7 @@ import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.Loot.LootRequirement;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
@@ -159,8 +160,13 @@ public abstract class LootHandler extends AbstractLootHandler {
     }
 
     @Nullable
-    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext) {
+    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext, User user) {
         return pool.rollLoot(loot -> {
+            // Check if the loot requirements are met (if set)
+            if (!LootRequirement.passes(loot.getRequirements(), user, plugin)) {
+                return false;
+            }
+
             if (providedContext instanceof SourceContext(XpSource providedSource)) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists

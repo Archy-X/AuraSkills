@@ -12,4 +12,8 @@ public abstract class Loot {
         return values;
     }
 
+    public LootRequirements getRequirements() {
+        return values.getRequirements();
+    }
+
 }

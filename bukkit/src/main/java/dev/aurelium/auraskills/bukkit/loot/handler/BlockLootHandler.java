@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.SlimefunHook;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.Loot.LootRequirement;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
@@ -104,6 +105,12 @@ public class BlockLootHandler extends LootHandler implements Listener {
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
         if (table == null) return;
+
+        // Check if the table requirements are met (if set)
+        if (!LootRequirement.passes(table.getRequirements(), user, plugin)) {
+            return;
+        }
+
         for (LootPool pool : table.getPools()) {
             // Ignore non-applicable sources
             if (provider != null && !provider.isApplicable(pool, source)) {
@@ -112,6 +119,12 @@ public class BlockLootHandler extends LootHandler implements Listener {
             if (isPoolUnobtainable(pool, source)) {
                 continue;
             }
+
+            // Check if the pool requirements are met (if set)
+            if (!LootRequirement.passes(pool.getRequirements(), user, plugin)) {
+                continue;
+            }
+
             // Calculate chance for pool
             double chance;
             if (provider != null) {
@@ -136,7 +149,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
     private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropCause cause) {
         double rolled = random.nextDouble();
         if (rolled < chance) { // Pool is selected
-            Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource));
+            Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource), plugin.getUser(player));
             // Give loot
             if (selectedLoot != null) {
                 if (selectedLoot instanceof ItemLoot itemLoot) {
