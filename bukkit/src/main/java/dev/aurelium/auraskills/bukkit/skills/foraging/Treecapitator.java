@@ -50,9 +50,8 @@ public class Treecapitator extends ReadiedManaAbility {
         if (plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit") && player.hasPermission("worldedit.wand")) {
             String wandItem = WorldEdit.getInstance().getConfiguration().wandItem;
             String wandString = wandItem.contains(":") ? wandItem.split(":")[1] : wandItem;
-            Material wandMaterial = Material.matchMaterial(wandString.toUpperCase());
-            String checkString = checked.contains(":") ? checked.split(":")[1] : checked;
-            Material checkMaterial = Material.matchMaterial(checkString.toUpperCase());
+            Material wandMaterial = Material.matchMaterial(wandString.toUpperCase(Locale.ROOT));
+            Material checkMaterial = Material.matchMaterial(checked.toUpperCase(Locale.ROOT));
 
             if (wandMaterial == checkMaterial) {
                 return false;
