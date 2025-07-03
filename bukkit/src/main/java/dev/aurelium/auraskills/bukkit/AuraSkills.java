@@ -110,6 +110,10 @@ import org.spongepowered.configurate.ConfigurationNode;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitPlayerRef.unwrap;
 
@@ -162,6 +166,25 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private PlatformUtil platformUtil;
     private BukkitAntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
+    // For unit tests
+    private final boolean isMock;
+    private final Map<Option, Object> configOverrides;
+
+    public AuraSkills() {
+        this.isMock = false;
+        this.configOverrides = Map.of();
+    }
+
+    public AuraSkills(Map<Option, Object> configOverrides) {
+        this.isMock = true;
+        this.configOverrides = configOverrides;
+        // Suppress INFO level logging for tests
+        Logger root = Logger.getLogger("");
+        root.setLevel(Level.WARNING);
+        for (Handler h : root.getHandlers()) {
+            h.setLevel(Level.WARNING);
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -208,7 +231,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         MigrationManager migrationManager = new MigrationManager(this);
         migrationManager.attemptConfigMigration();
         // Load config.yml file
-        configProvider = new BukkitConfigProvider(this);
+        configProvider = new BukkitConfigProvider(this, configOverrides);
         configProvider.loadOptions(); // Also loads external plugin hooks
         initializeNbtApi();
         initializeMenus(); // Generate menu files
@@ -234,11 +257,18 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         messageProvider.setACFMessages(commandManager);
         levelManager = new BukkitLevelManager(this);
         antiAfkManager = new BukkitAntiAfkManager(this); // Requires config loaded
+        antiAfkManager.registerChecks();
         registerPriorityEvents();
         // Enabled bStats
-        Metrics metrics = new Metrics(this, 21318);
+        @Nullable Metrics metrics;
+        try {
+            metrics = new Metrics(this, 21318);
+        } catch (IllegalStateException ignored) {
+            metrics = null;
+        }
 
         // Stuff to be run on the first tick
+        @Nullable Metrics finalMetrics = metrics;
         scheduler.executeSync(() -> {
             loadSkills(); // Load skills, stats, abilities, etc from configs
             levelManager.registerLevelers(); // Requires skills loaded
@@ -261,7 +291,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             leaderboardManager.startLeaderboardUpdater(); // 5 minute interval
             statManager.scheduleTemporaryModifierTask();
             // bStats custom charts
-            new MetricsUtil(getInstance()).registerCustomCharts(metrics);
+            if (finalMetrics != null) {
+                new MetricsUtil(getInstance()).registerCustomCharts(finalMetrics);
+            }
 
             if (this.configBoolean(Option.CHECK_FOR_UPDATES)) {
                 UpdateChecker updateChecker = new UpdateChecker(this);
@@ -724,6 +756,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private AuraSkills getInstance() {
         return this;
+    }
+
+    public boolean isMock() {
+        return isMock;
     }
 
 }

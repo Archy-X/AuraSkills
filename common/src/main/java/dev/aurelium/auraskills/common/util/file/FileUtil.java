@@ -107,7 +107,7 @@ public class FileUtil {
 
         Map<String, String> env = new HashMap<>();
         env.put("create", "true");
-        if (createFileSystem) {
+        if (createFileSystem && "jar".equals(uri.getScheme())) {
             try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
                 return loadFromUri(uri);
             }

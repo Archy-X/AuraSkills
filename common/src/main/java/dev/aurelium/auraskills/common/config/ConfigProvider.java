@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Represents a provider for the plugin's main configuration.
@@ -22,9 +23,11 @@ public abstract class ConfigProvider {
 
     private final AuraSkillsPlugin plugin;
     protected final Map<Option, OptionValue> options = new HashMap<>();
+    private Map<Option, Object> overrides;
 
-    public ConfigProvider(AuraSkillsPlugin plugin) {
+    public ConfigProvider(AuraSkillsPlugin plugin, Map<Option, Object> overrides) {
         this.plugin = plugin;
+        this.overrides = overrides;
     }
 
     public abstract void registerHooks(ConfigurationNode config);
@@ -80,6 +83,10 @@ public abstract class ConfigProvider {
 
             File file = new File(plugin.getPluginFolder(), "config.yml");
             loader.saveConfigIfUpdated(file, embedded, user, config);
+
+            for (Entry<Option, Object> entry : overrides.entrySet()) {
+                options.put(entry.getKey(), new OptionValue(entry.getValue()));
+            }
 
             long end = System.currentTimeMillis();
             logger.info("Loaded " + loaded + " config options in " + (end - start) + " ms");
@@ -139,6 +146,10 @@ public abstract class ConfigProvider {
         boolean economyEnabled = plugin.getHookManager().isRegistered(EconomyHook.class);
         boolean selectionEnabled = plugin.configBoolean(Option.JOBS_SELECTION_REQUIRE_SELECTION);
         return plugin.configBoolean(Option.JOBS_ENABLED) && economyEnabled && selectionEnabled;
+    }
+
+    public void setOverrides(Map<Option, Object> overrides) {
+        this.overrides = overrides;
     }
 
 }

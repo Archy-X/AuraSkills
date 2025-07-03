@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     `java-library`
     `maven-publish`
@@ -16,11 +14,10 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("dev.aurelium:slate:1.1.14") {
-        exclude("org.yaml", "snakeyaml")
+    api("dev.aurelium:slate:1.1.16") {
         exclude("org.spongepowered", "configurate-yaml")
     }
-    // api(files("../../Slate/build/libs/Slate-1.1.12-all.jar"))
+    // api(files("../../Slate/build/libs/Slate-1.1.16-all.jar"))
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
 }
@@ -53,17 +50,28 @@ java {
     }
 }
 
-if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePassword")) {
+if (project.properties.keys.containsAll(setOf("developerId", "developerUsername", "developerEmail", "developerUrl"))) {
     publishing {
         repositories {
             maven {
-                val releasesRepoUrl = URI.create("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                val snapshotsRepoUrl = URI.create("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-                url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+                name = "StagingDeploy"
+                url = uri(layout.buildDirectory.dir("staging-deploy"))
+            }
+            if (project.properties.keys.containsAll(
+                    setOf(
+                        "sonatypeUsername",
+                        "sonatypePassword"
+                    )
+                ) && project.version.toString().endsWith("-SNAPSHOT")
+            ) {
+                maven {
+                    name = "Snapshot"
+                    url = uri("https://central.sonatype.com/repository/maven-snapshots/")
 
-                credentials {
-                    username = project.property("sonatypeUsername").toString()
-                    password = project.property("sonatypePassword").toString()
+                    credentials {
+                        username = project.property("sonatypeUsername").toString()
+                        password = project.property("sonatypePassword").toString()
+                    }
                 }
             }
         }
