@@ -409,6 +409,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void initializeNbtApi() {
         // Check if NBT API is supported for the version
+        MinecraftVersion.disablePackageWarning();
         if (MinecraftVersion.getVersion() == MinecraftVersion.UNKNOWN) {
             getLogger().warning("NBT API is not yet supported for your Minecraft version, some legacy conversion and item nbt parsing functionality may be disabled!");
             nbtApiEnabled = false;
@@ -487,10 +488,6 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public ConfirmManager getConfirmManager() {
         return confirmManager;
-    }
-
-    public BukkitAntiAfkManager getAntiAfkManager() {
-        return antiAfkManager;
     }
 
     public AuraSkillsBukkit getApiBukkit() {
@@ -670,6 +667,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public BukkitModifierManager getModifierManager() {
         return modifierManager;
+    }
+
+    @Override
+    public BukkitAntiAfkManager getAntiAfkManager() {
+        return antiAfkManager;
     }
 
     @Override

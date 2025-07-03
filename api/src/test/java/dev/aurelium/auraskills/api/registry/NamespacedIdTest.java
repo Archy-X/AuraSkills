@@ -1,6 +1,5 @@
-package dev.aurelium.auraskills.test;
+package dev.aurelium.auraskills.api.registry;
 
-import dev.aurelium.auraskills.api.registry.NamespacedId;
 import org.junit.jupiter.api.Test;
 
 public class NamespacedIdTest {
