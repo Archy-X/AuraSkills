@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -35,7 +36,7 @@ public class BlockLeveler extends SourceLeveler {
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BLOCK);
         this.helper = new BlockLevelerHelper(plugin);
-        this.sourceCache = new HashMap<>();
+        this.sourceCache = new ConcurrentHashMap<>();
     }
 
     public void clearSourceCache() {
@@ -105,7 +106,7 @@ public class BlockLeveler extends SourceLeveler {
 
         Material materialBefore = block.getType();
         if (source.getAfterStates() != null) {
-            plugin.getScheduler().scheduleSync(() -> {
+            plugin.getScheduler().scheduleAtLocation(block.getLocation(), () -> {
                 // Checks that the block after one tick is the same material and matches the after_state/after_states
                 if (materialBefore == block.getType() && matchesStates(block, source.getAfterStates())) {
                     plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);

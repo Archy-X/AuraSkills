@@ -123,7 +123,7 @@ public class Treecapitator extends ReadiedManaAbility {
                 return;
             }
             // Break the next blocks
-            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtLocation(adjacentBlock.getLocation(), () -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
         }
     }
 

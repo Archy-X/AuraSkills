@@ -104,35 +104,37 @@ public class HealthRegenTraits extends TraitImpl {
     }
 
     private void handleCustomRegen(Player player, Trait trait, Function<Player, Boolean> regenCondition, CustomRegenEvent.Reason reason) {
-        User user = plugin.getUser(player);
+        plugin.getScheduler().executeAtEntity(player, (t) -> {
+            User user = plugin.getUser(player);
 
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
 
-        if (player.isDead()) return;
+            if (player.isDead()) return;
 
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
-        if (attribute == null) return;
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
+            if (attribute == null) return;
 
-        if (!(player.getHealth() < attribute.getValue())) return;
+            if (!(player.getHealth() < attribute.getValue())) return;
 
-        if (regenCondition.apply(player)) {
-            double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait), attribute.getValue() - player.getHealth());
+            if (regenCondition.apply(player)) {
+                double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait), attribute.getValue() - player.getHealth());
 
-            final double gainThreshold = 0.001;
-            if (amountGained < gainThreshold) {
-                return;
-            }
+                final double gainThreshold = 0.001;
+                if (amountGained < gainThreshold) {
+                    return;
+                }
 
-            CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
-            Bukkit.getPluginManager().callEvent(event);
+                CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
+                Bukkit.getPluginManager().callEvent(event);
 
-            if (!event.isCancelled()) {
-                player.setHealth(player.getHealth() + amountGained);
-                if (player.getFoodLevel() - 1 >= 0) {
-                    player.setFoodLevel(player.getFoodLevel() - 1);
+                if (!event.isCancelled()) {
+                    player.setHealth(player.getHealth() + amountGained);
+                    if (player.getFoodLevel() - 1 >= 0) {
+                        player.setFoodLevel(player.getFoodLevel() - 1);
+                    }
                 }
             }
-        }
+        });
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.user;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -76,9 +77,10 @@ public abstract class User {
         this.unclaimedItems = new LinkedList<>();
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
-        this.multipliers = new HashMap<>();
-        this.jobs = new HashSet<>();
+        this.multipliers = new ConcurrentHashMap<>();
+        this.jobs = Sets.newConcurrentHashSet();
         this.jobsBatchData = new JobsBatchData();
+        // This should be fine as a regular list
         this.sessionAntiAfkLogs = new ArrayList<>();
         this.lastJobSelectTime = 0;
     }

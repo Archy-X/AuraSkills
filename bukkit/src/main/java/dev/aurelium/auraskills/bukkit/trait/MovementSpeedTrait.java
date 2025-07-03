@@ -32,21 +32,23 @@ public class MovementSpeedTrait extends TraitImpl {
 
     @Override
     protected void reload(Player player, Trait trait) {
-        double walkSpeedRatio = 500;
-        double value = getValue(player, trait, walkSpeedRatio);
+        plugin.getScheduler().executeAtEntity(player, (t) -> {
+            double walkSpeedRatio = 500;
+            double value = getValue(player, trait, walkSpeedRatio);
 
-        if (!trait.isEnabled()) return;
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            player.setWalkSpeed(0.2f);
-            return;
-        }
-        double max = trait.optionDouble("max") / walkSpeedRatio;
-        if (0.2 + value > max) {
-            player.setWalkSpeed((float) (max));
-            return;
-        }
+            if (!trait.isEnabled()) return;
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+                player.setWalkSpeed(0.2f);
+                return;
+            }
+            double max = trait.optionDouble("max") / walkSpeedRatio;
+            if (0.2 + value > max) {
+                player.setWalkSpeed((float) (max));
+                return;
+            }
 
-        player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+            player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+        });
     }
 
     @EventHandler
@@ -56,6 +58,7 @@ public class MovementSpeedTrait extends TraitImpl {
 
     @Override
     public void changeWorld(PlayerChangedWorldEvent event, Trait trait) {
+        // TODO: this event doesn't fire on folia
         if (!trait.equals(Traits.MOVEMENT_SPEED)) return;
 
         reload(event.getPlayer(), getTraits()[0]);

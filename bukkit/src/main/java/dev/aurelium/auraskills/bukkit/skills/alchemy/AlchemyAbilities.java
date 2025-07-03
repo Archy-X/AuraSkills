@@ -74,13 +74,13 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
         if (failsChecks(player, ability)) return;
 
         User user = plugin.getUser(player);
-        updateBrewingStand(inventory, user, user.getLocale());
+        updateBrewingStand(event, inventory, user, user.getLocale());
     }
 
-    private void updateBrewingStand(BrewerInventory inventory, User user, Locale locale) {
+    private void updateBrewingStand(BrewEvent event, BrewerInventory inventory, User user, Locale locale) {
         var ability = Abilities.ALCHEMIST;
 
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtLocation(event.getBlock().getLocation(), () -> {
             ItemStack[] contents = inventory.getContents();
             double multiplier = 1 + (getValue(ability, user) / 100);
             for (int i = 0; i < contents.length; i++) {
