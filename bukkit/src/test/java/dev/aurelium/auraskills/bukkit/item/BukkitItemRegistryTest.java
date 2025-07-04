@@ -47,7 +47,7 @@ public class BukkitItemRegistryTest {
     }
 
     @Test
-    public void testRegister() {
+    void testRegister() {
         BukkitItemRegistry registry = new BukkitItemRegistry(plugin);
 
         var id = NamespacedId.of("auraskills", "some_item");
@@ -64,7 +64,7 @@ public class BukkitItemRegistryTest {
     }
 
     @Test
-    public void testGiveItem() {
+    void testGiveItem() {
         BukkitItemRegistry registry = new BukkitItemRegistry(plugin);
 
         PlayerMock player = server.addPlayer();
@@ -97,7 +97,7 @@ public class BukkitItemRegistryTest {
 
     @Test
     @SuppressWarnings("deprecation")
-    public void testGetEffectiveItemName() {
+    void testGetEffectiveItemName() {
         BukkitItemRegistry registry = new BukkitItemRegistry(plugin);
 
         var id1 = NamespacedId.of("auraskills", "stone");
@@ -122,7 +122,7 @@ public class BukkitItemRegistryTest {
 
     @Test
     @SuppressWarnings("deprecation")
-    public void testPassesFilter() {
+    void testPassesFilter() {
         BukkitItemRegistry registry = new BukkitItemRegistry(plugin);
 
         ItemStack item = new ItemStack(Material.POTION, 1);
@@ -155,7 +155,7 @@ public class BukkitItemRegistryTest {
     }
 
     @Test
-    public void testPassesFilterWithLootItemFilter() {
+    void testPassesFilterWithLootItemFilter() {
         BukkitItemRegistry registry = new BukkitItemRegistry(plugin);
 
         LootItemFilter filter = new LootSourceItem(

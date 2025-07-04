@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class LeaderboardSorterTest {
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         LeaderboardSorter sorter = new LeaderboardSorter();
 
         assertEquals(0, sorter.compare(new SkillValue(UUID.randomUUID(), 0, 0.0), new SkillValue(UUID.randomUUID(), 0, 0.0)));

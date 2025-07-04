@@ -46,7 +46,7 @@ public class LeaderboardManagerTest {
     }
 
     @Test
-    public void testOnlineUsers() {
+    void testOnlineUsers() {
         LeaderboardManager leaderboardManager = new LeaderboardManager(plugin, new BukkitLeaderboardExclusion(plugin));
 
         User user1 = addUser(new SkillLevelMaps(Map.of(AGILITY, 3, FARMING, 5), Map.of(AGILITY, 10.0)));
@@ -139,7 +139,7 @@ public class LeaderboardManagerTest {
     }
 
     @Test
-    public void testOfflineUsers() {
+    void testOfflineUsers() {
         plugin.setScheduler(new SyncOnlyScheduler(plugin));
 
         UUID uuid = UUID.fromString("4954374f-e6c8-4c0d-b5fb-686cde397d8d");
@@ -171,7 +171,7 @@ public class LeaderboardManagerTest {
     }
 
     @Test
-    public void testInvalidUuid() {
+    void testInvalidUuid() {
         LeaderboardManager leaderboardManager = new LeaderboardManager(plugin, new BukkitLeaderboardExclusion(plugin));
 
         assertEquals(0, leaderboardManager.getSkillRank(FARMING, UUID.randomUUID()));
@@ -180,7 +180,7 @@ public class LeaderboardManagerTest {
     }
 
     @Test
-    public void testExcludedUsers() {
+    void testExcludedUsers() {
         LeaderboardManager leaderboardManager = new LeaderboardManager(plugin, new BukkitLeaderboardExclusion(plugin));
         server.getPluginManager().registerEvents(((BukkitLeaderboardExclusion) leaderboardManager.getLeaderboardExclusion()), plugin);
 

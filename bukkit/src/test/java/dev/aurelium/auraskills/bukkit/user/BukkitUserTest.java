@@ -35,7 +35,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testGetPlayer() {
+    void testGetPlayer() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -57,7 +57,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testGetUser() {
+    void testGetUser() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -67,7 +67,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testGetUsername() {
+    void testGetUsername() {
         PlayerMock player = server.addPlayer("SomeUsername");
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -75,7 +75,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testSendMessage() {
+    void testSendMessage() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -89,7 +89,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testPermissionMultipliers() {
+    void testPermissionMultipliers() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -119,7 +119,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testPermissionJobLimit() {
+    void testPermissionJobLimit() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -135,7 +135,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testGetWorld() {
+    void testGetWorld() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -147,7 +147,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testHasPermission() {
+    void testHasPermission() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 
@@ -169,7 +169,7 @@ public class BukkitUserTest {
     }
 
     @Test
-    public void testCanSelectJob() {
+    void testCanSelectJob() {
         PlayerMock player = server.addPlayer();
         BukkitUser user = new BukkitUser(player.getUniqueId(), player, plugin);
 

@@ -30,7 +30,7 @@ public class BukkitLeaderboardExclusionTest {
     }
 
     @Test
-    public void testLoadAndSave() {
+    void testLoadAndSave() {
         copyResourceToTemp(LeaderboardExclusion.FILE_PATH, plugin);
 
         LeaderboardExclusion leaderboardExclusion = new BukkitLeaderboardExclusion(plugin);
