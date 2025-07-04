@@ -35,3 +35,5 @@ buildNumber.properties
 build.xml
 
 bukkit/run/
+
+htmlReport/

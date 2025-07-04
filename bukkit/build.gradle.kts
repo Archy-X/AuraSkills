@@ -132,16 +132,6 @@ tasks {
 
     test {
         useJUnitPlatform()
-
-        dependsOn(shadowJar)
-
-        doFirst {
-            val mainOutputs = sourceSets["main"].output.files
-            val shadedJarFile = shadowJar.get().archiveFile.get().asFile
-
-            classpath = files(shadedJarFile) +
-                    files(classpath.filter { it !in mainOutputs })
-        }
     }
 }
 

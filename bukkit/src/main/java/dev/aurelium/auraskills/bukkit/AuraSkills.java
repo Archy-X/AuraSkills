@@ -93,6 +93,7 @@ import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.trait.TraitRegistry;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.PlatformUtil;
+import dev.aurelium.auraskills.common.util.TestSession;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.slate.Slate;
 import dev.aurelium.slate.inv.InventoryManager;
@@ -105,12 +106,12 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
-import java.util.Map;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,16 +169,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private boolean nbtApiEnabled;
     // For unit tests
     private final boolean isMock;
-    private final Map<Option, Object> configOverrides;
+    private final TestSession testSession;
 
     public AuraSkills() {
         this.isMock = false;
-        this.configOverrides = Map.of();
+        this.testSession = TestSession.create();
     }
 
-    public AuraSkills(Map<Option, Object> configOverrides) {
+    public AuraSkills(TestSession testSession) {
         this.isMock = true;
-        this.configOverrides = configOverrides;
+        this.testSession = testSession;
         // Suppress INFO level logging for tests
         Logger root = Logger.getLogger("");
         root.setLevel(Level.WARNING);
@@ -231,7 +232,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         MigrationManager migrationManager = new MigrationManager(this);
         migrationManager.attemptConfigMigration();
         // Load config.yml file
-        configProvider = new BukkitConfigProvider(this, configOverrides);
+        configProvider = new BukkitConfigProvider(this, testSession.configOverrides());
         configProvider.loadOptions(); // Also loads external plugin hooks
         initializeNbtApi();
         initializeMenus(); // Generate menu files
@@ -622,6 +623,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public Scheduler getScheduler() {
         return scheduler;
+    }
+
+    @VisibleForTesting
+    public void setScheduler(Scheduler scheduler) {
+        this.scheduler = scheduler;
     }
 
     @Override

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class OptionTest {
 
     @Test
-    public void testOptionMatchesConfigFile() throws IOException {
+    void testOptionMatchesConfigFile() throws IOException {
         ConfigurationNode config = FileUtil.loadEmbeddedYamlFile("config.yml", AuraSkillsPlugin.class.getClassLoader(), true);
 
         for (Option option : Option.values()) {

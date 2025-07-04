@@ -29,6 +29,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.13.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testFixturesImplementation("com.google.guava:guava:33.2.1-jre")
     testFixturesImplementation(platform("org.junit:junit-bom:5.13.2"))
     testFixturesImplementation("org.junit.jupiter:junit-jupiter")
     testFixturesRuntimeOnly("org.junit.platform:junit-platform-launcher")

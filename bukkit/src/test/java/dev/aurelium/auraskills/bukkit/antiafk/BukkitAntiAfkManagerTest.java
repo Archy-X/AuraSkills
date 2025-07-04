@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.antiafk.AntiAfkManagerTest;
 import dev.aurelium.auraskills.common.antiafk.CheckType;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.util.TestSession;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.mockbukkit.mockbukkit.MockBukkit;
 
@@ -18,13 +20,19 @@ public class BukkitAntiAfkManagerTest extends AntiAfkManagerTest {
     }
 
     @BeforeAll
-    public static void setUp() {
+    static void setUp() {
         MockBukkit.mock();
-        plugin = MockBukkit.load(AuraSkills.class, Map.of(Option.ANTI_AFK_ENABLED, true));
+        plugin = MockBukkit.load(AuraSkills.class, new TestSession(Map.of(Option.ANTI_AFK_ENABLED, true)));
+    }
+
+    @AfterAll
+    static void unload() {
+        MockBukkit.unmock();
     }
 
     @Override
-    public CheckType[] getCheckTypes() {
+    protected CheckType[] getCheckTypes() {
         return BukkitCheckType.values();
     }
+
 }

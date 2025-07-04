@@ -10,7 +10,7 @@ import java.util.*;
 
 public abstract class LeaderboardExclusion {
 
-    private static final String FILE_PATH = ".metadata/leaderboard_metadata.yml";
+    public static final String FILE_PATH = ".metadata/leaderboard_metadata.yml";
     protected final AuraSkillsPlugin plugin;
     private final Set<UUID> excludedPlayers = new HashSet<>();
 

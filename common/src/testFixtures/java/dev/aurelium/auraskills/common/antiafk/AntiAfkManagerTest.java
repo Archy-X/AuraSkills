@@ -17,17 +17,17 @@ public abstract class AntiAfkManagerTest {
         this.plugin = plugin;
     }
 
-    public abstract CheckType[] getCheckTypes();
+    protected abstract CheckType[] getCheckTypes();
 
     @Test
-    public void testChecksLoad() {
+    void testChecksLoad() {
         for (CheckType checkType : getCheckTypes()) {
             assertTrue(plugin.getAntiAfkManager().getCheck(checkType).isPresent());
         }
     }
 
     @Test
-    public void testReload() {
+    void testReload() {
         // Checks stay loaded on reload
         plugin.getAntiAfkManager().reload();
         for (CheckType checkType : getCheckTypes()) {
