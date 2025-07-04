@@ -12,6 +12,7 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.Loot.LootRequirement;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
 import dev.aurelium.auraskills.common.user.User;
@@ -53,6 +54,11 @@ public class MobLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootManager().getLootTable(NamespacedId.fromDefault("mob"));
         if (table == null) return;
 
+        // Check if the table requirements are met (if set)
+        if (!LootRequirement.passes(table.getRequirements(), user, plugin)) {
+            return;
+        }
+
         DamageCause damageCause = getCause(event.getEntity().getLastDamageCause());
 
         EntityLeveler leveler = plugin.getLevelManager().getLeveler(EntityLeveler.class);
@@ -72,6 +78,11 @@ public class MobLootHandler extends LootHandler implements Listener {
                 continue;
             }
 
+            // Check if the pool requirements are met (if set)
+            if (!LootRequirement.passes(pool.getRequirements(), user, plugin)) {
+                continue;
+            }
+
             double chance = getCommonChance(pool, user);
 
             LootDropEvent.Cause cause = LootDropEvent.Cause.MOB_LOOT_TABLE;
@@ -80,7 +91,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
             double rolled = random.nextDouble();
             if (rolled < chance) {
-                Loot selectedLoot = selectLoot(pool, context);
+                Loot selectedLoot = selectLoot(pool, context, user);
                 // Give loot
                 if (selectedLoot == null) {
                     break;
