@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     `java-library`
     `maven-publish`
@@ -12,6 +10,10 @@ repositories {
 
 dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
+    testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation(platform("org.junit:junit-bom:5.13.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<JavaCompile> {
@@ -30,6 +32,10 @@ tasks {
             charset("UTF-8")
         }
     }
+
+    test {
+        useJUnitPlatform()
+    }
 }
 
 java {
@@ -40,17 +46,28 @@ java {
     }
 }
 
-if (project.hasProperty("sonatypeUsername") && project.hasProperty("sonatypePassword")) {
+if (project.properties.keys.containsAll(setOf("developerId", "developerUsername", "developerEmail", "developerUrl"))) {
     publishing {
         repositories {
             maven {
-                val releasesRepoUrl = URI.create("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-                val snapshotsRepoUrl = URI.create("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-                url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+                name = "StagingDeploy"
+                url = uri(layout.buildDirectory.dir("staging-deploy"))
+            }
+            if (project.properties.keys.containsAll(
+                    setOf(
+                        "sonatypeUsername",
+                        "sonatypePassword"
+                    )
+                ) && project.version.toString().endsWith("-SNAPSHOT")
+            ) {
+                maven {
+                    name = "Snapshot"
+                    url = uri("https://central.sonatype.com/repository/maven-snapshots/")
 
-                credentials {
-                    username = project.property("sonatypeUsername").toString()
-                    password = project.property("sonatypePassword").toString()
+                    credentials {
+                        username = project.property("sonatypeUsername").toString()
+                        password = project.property("sonatypePassword").toString()
+                    }
                 }
             }
         }

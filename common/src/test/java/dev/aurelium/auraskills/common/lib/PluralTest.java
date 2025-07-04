@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.test;
+package dev.aurelium.auraskills.common.lib;
 
 import org.atteo.evo.inflector.English;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class PluralTest {
 
     @Test
-    public void testPlural() {
+    void testPlural() {
         assert English.plural("mana_ability").equals("mana_abilities");
         assert English.plural("state").equals("states");
         assert English.plural("cause").equals("causes");

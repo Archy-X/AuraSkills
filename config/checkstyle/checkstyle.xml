@@ -24,10 +24,6 @@
         <property name="message" value="Blank line before end of file"/>
     </module>
     <module name="RegexpMultiline">
-        <property name="format" value="[^\n{]\n\}\n"/>
-        <property name="message" value="Leave blank line before end of class"/>
-    </module>
-    <module name="RegexpMultiline">
         <property name="format" value="->\s*\{\s+\}"/>
         <property name="message" value="Whitespace inside empty lambda body"/>
     </module>

@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common;
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.ability.AbilityRegistry;
+import dev.aurelium.auraskills.common.antiafk.AntiAfkManager;
 import dev.aurelium.auraskills.common.api.implementation.ApiProvider;
 import dev.aurelium.auraskills.common.config.ConfigProvider;
 import dev.aurelium.auraskills.common.config.Option;
@@ -110,6 +111,8 @@ public interface AuraSkillsPlugin {
     ApiProvider getApiProvider();
 
     ModifierManager getModifierManager();
+
+    AntiAfkManager getAntiAfkManager();
 
     /**
      * Get a user instance from a player reference instance

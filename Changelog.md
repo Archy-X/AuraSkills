@@ -2,9 +2,57 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.5
+
+### Bug Fixes
+
+- Fix item loot not stacking with normal items
+- Fix Fishing sources that specify loot_pool not working
+- Fix item reward amount value not working
+
+## 2.3.4
+
+### New Features
+
+- Add 1.21.6/1.21.7 support
+- Add chance-based enchantments to loot
+  - An element in an `enchantments` list can also now be a mapping instead of a string
+  - This mapping has the following keys:
+    - `name` - The name of the enchantment
+    - `level` - The level of the enchantment, supports ranges
+    - `chance` - The chance that this enchantment is added to the item, from 0-1 (defaults to 1)
+  - The existing string enchantment format of `unbreaking 3` and `unbreaking 1-3` still works
+- Add configurable damaged loot
+  - The `damage` option can be set on an item loot entry to set the ratio of total durability that should be removed from the given item
+    - For example, an item with `damage: 0.4` will have 40% less durability than max, or be at 60% of total durability
+  - A random amount of damage can be assigned using the `damage.min` and `damage.max` options, which will select a random damage ratio between the values every time the loot is dropped
+- Add skill addlevel command to add to a player's skill level
+  - Syntax: `/skills skill addlevel <player> <skill> <level>`
+- Add income placeholder to source template in sources menu
+- Add option to subtract a percentage of skill XP on death
+- Add support for start/end wildcards in source tags
+
+### Changes
+
+- Include item multiplier value in multiplier command
+- Change BlockBreakEvent event priority for requirements to lowest
+- Improve WorldEdit wand exclusion from Treecapitator
+
+### Bug Fixes
+
+- Fix stat rewards applying when skill permission is negated
+- Fix mana not resetting when entering disabled world
+- Fix Repairing ability not adding repair cost
+- Fix NPE if StatModifier stat is null
+- Fix NPE in ArmorModifierListener
+- Fix No Debuff ability not working for some effects
+- Fix tooltips not hidden on some menu fill items
+- Fix requirements being applied in disabled worlds
+
 ## 2.3.3
 
 ### Bug Fixes
+
 - Fix languages with country codes not working
 - Fix NoSuchFieldError when holding items in 1.20-1.20.3
 - Fix NPE when applying modifiers
@@ -12,28 +60,34 @@ Changelog for versions since 2.0.0.
 ## 2.3.2
 
 ### New Features
+
 - Add auraskills.leaderboard.exclude permission to hide players from the leaderboard
   - Setting this to online players requires a relog to take effect (leaderboard still takes time to update)
 
 ### Bug Fixes
+
 - Remove legacy item conversion to fix item stacking
 - Fix stat info menu not opening with disabled traits
 
 ## 2.3.1
 
 ### New Features
+
 - Add menus.stat_info.enabled option to disable stat_info menu in config.yml
 
 ### Bug Fixes
+
 - Fix item duplication when auto_convert_from_legacy is true
 
 ## 2.3.0
 
 ### Breaking Changes
+
 - The plugin now requires at least Java 21
 - Support for Minecraft 1.18.x and 1.19.x has been dropped
 
 ### New Features
+
 - Add 1.21.5 support
 - Add stat_info menu
   - This allows players to see exactly how their stat and trait levels are calculated
@@ -104,6 +158,7 @@ Changelog for versions since 2.0.0.
 - Add Nexo support
 
 ### Changes
+
 - Update Polish, Chinese Simplified, and German messages
 - Storing modifiers with SQL has been moved from the key_values table to a new modifiers table
   - Existing modifiers will be migrated automatically
@@ -111,15 +166,18 @@ Changelog for versions since 2.0.0.
 - Remove Oraxen support
 
 ### Bug Fixes
+
 - Fix default item options like glow being saved when updating files
 - Fix errors when Anvil Discount is not loaded
 
 ## 2.2.8
 
 ### Changes
+
 - Update French, Russian, and Brazilian Portuguese messages
 
 ### Bug Fixes
+
 - Fix Jumper and Runner abilities applying to the wrong skill
 - Fix error when parsing some damage source cause values
 - Fix idle action bar message not updating on reload
@@ -127,6 +185,7 @@ Changelog for versions since 2.0.0.
 - Update stats on join on the main thread to fix errors
 
 ### API Changes
+
 - Add api methods to load and save offline users
   - Use UserManager#loadUser to load a user into memory
   - Use SkillsUser#save to save the user to storage asynchronously
@@ -134,17 +193,20 @@ Changelog for versions since 2.0.0.
 ## 2.2.7
 
 ### New Features
+
 - Add 1.21.4 support
 - Add pale garden blocks to Foraging sources
 - Add support for external items anywhere that accepts an item key
 
 ### Changes
+
 - Change MythicDamageEvent priority from high to normal
 - Support {color} placeholder in leveled_by component of stats menu
 - Make anvil discount trait formula configurable in stats.yml
 - Change update checker to use Modrinth with loader and version filters
 
 ### Bug Fixes
+
 - Fix slimes and groups of mobs attacking rapidly with no cooldown
 - Fix hex colors not working in loot entry message
 - Fix xp-gain and custom-loot WorldGuard flags with Fishing loot
@@ -154,22 +216,27 @@ Changelog for versions since 2.0.0.
 ## 2.2.6
 
 ### Bug Fixes
+
 - Fix IncompatibleClassChangeError on 1.21.1 and below caused by 2.2.5 update
 
 ## 2.2.5
 
 ### New Features
+
 - Add 1.21.3 support
 
 ### Changes
+
 - The `{skill}` and `{skill_key}` placeholders can now be used anywhere in the level progression menu
 
 ### Bug Fixes
+
 - Prevent errors from abnormal server version strings
 
 ## 2.2.4
 
 ### New Features
+
 - Add more permission nodes with child permissions
   - auraskills.* contains permissions for all commands
   - auraskills.command.user contains permissions users have by default
@@ -179,16 +246,19 @@ Changelog for versions since 2.0.0.
   - auraskills.command.admin contains permissions for all admin/op commands
 
 ### Changes
+
 - Respect cancelled drops when applying block luck
 - Only show loaded skills in profile command
 - Update Chinese Simplified, Chinese Traditional, and Indonesian messages
 
 ### Bug Fixes
+
 - Fix health value must be between error when changing worlds
 - Fix boss bar progress must be between error when max skill level
 - Fix NPE when updating leaderboards on MySQL
 
 ### API Changes
+
 - SkillsUser#setSkillLevel will now refresh stats, permissions, rewards, and item modifiers
 - Add setSkillLevel method with boolean parameter to control whether to refresh stats
 - Add CustomManaAbilityBuilder#infoFormats to set the list of menu format names to use in the menu description
@@ -196,6 +266,7 @@ Changelog for versions since 2.0.0.
 ## 2.2.3
 
 ### New Features
+
 - Add new damage source options
   - Add excluded_damager/excluded_damagers to prevent XP gain from specific entity types
   - Add cooldown_ms to define a delay before XP can be gained again in milliseconds (200 by default)
@@ -203,10 +274,12 @@ Changelog for versions since 2.0.0.
 - Add job selection cooldown option (jobs.selection.cooldown_sec)
 
 ### Changes
+
 - Update German, Polish, and Italian messages
 - Make all region loading async
 
 ### Bug Fixes
+
 - Fix error loading menu on Spigot 1.21
 - Fix typos in excavation loot file
 - Implement error handling for global requirement material names
@@ -216,22 +289,26 @@ Changelog for versions since 2.0.0.
 ## 2.2.2
 
 ### New Features
+
 - Add 1.21.1 support
 - Add use_permission_cache option to disable LuckPerms multiplier permission cache
 
 ### Bug Fixes
+
 - Fix anti-AFK being force enabled after reload
 - Skip sending item give command message if empty
 
 ## 2.2.1
 
 ### Bug Fixes
+
 - Fix cannot measure distance error in PositionHandler
 - Fix logs table not being created
 
 ## 2.2.0
 
 ### New Features
+
 - Add anti-AFK system for preventing AFK XP gain
   - This is an optional feature that detects and blocks repetitive AFK skill XP gain, encouraging active play
   - Must be manually enabled with the `anti_afk.enabled` option in the main config
@@ -242,7 +319,8 @@ Changelog for versions since 2.0.0.
     - The `min_count` option is the number of identical XP gain conditions in a row for the player to be blocked from gaining XP
     - The `max_distance` option for some checks is the threshold for which movement below that value is still considered identical
   - Logging for failing anti-AFK checks can be enabled with the `anti_afk.logging_enabled` option
-    - The `log_threshold` is an expression determining the count of identical conditions required for logging an event. The min_count variable can be used in this expression to reference the min_count in the checks section for a check type.
+    - The
+      `log_threshold` is an expression determining the count of identical conditions required for logging an event. The min_count variable can be used in this expression to reference the min_count in the checks section for a check type.
     - Logs will be sent to any online player with the auraskills.antiafk.notify permission (op by default)
     - Logs are saved to storage can can be viewed for any player with the `/skills antiafk logs <player> [page] [perPage]` command (auraskills.command.antiafk.logs permission)
   - Important disclaimer: A player failing checks and being logged does not necessarily mean they are cheating or using a macro, as false positives can be common for legitmate players, especially if min_count is low. An example is a player using a mob farm manually can still trigger anti-AFK checks. Always check logged players manually before taking any action.
@@ -265,18 +343,21 @@ Changelog for versions since 2.0.0.
   - Use a `commands` list of strings on a command loot entry instead of `command`
 
 ### Changes
+
 - Optimize leaderboard updating for SQL
 - Optimize SQL user loading and saving
   - A user is now loaded in a single statement with subqueries
   - Saving key_values will now utilize batched statements
 
 ### Bug Fixes
+
 - Fix disabled abilities still showing in abilities menu
 - Fix level up title not working in 1.20.5+
 - Fix XP Convert giving extremely high experience values
 - Fix boss bar income showing for jobs enabled without economy
 
 ### API Changes
+
 - Relocate and create Configurate API wrapper (breaking change)
   - ConfigurationNode has been replaced with the ConfigNode wrapper class in api and api-bukkit
   - Configurate is no longer included in the api module as a dependency
@@ -290,6 +371,7 @@ Changelog for versions since 2.0.0.
 ## 2.1.5
 
 ### New Features
+
 - Add Oraxen support
   - Oraxen note blocks defined in sources will now give XP properly
   - Custom blocks can now be easily defined in sources by prefixing the `block` option of a block source with `oraxen:`
@@ -307,6 +389,7 @@ Changelog for versions since 2.0.0.
   - These should not be changed unless you have issues with connection stability and know what you are doing
 
 ### Bug Fixes
+
 - Fix power leaderboard not adding custom skills
 - Fix leaderboard still showing for disabled skills
 - Fix global requirements and world options not being updated on skills reload
@@ -318,15 +401,18 @@ Changelog for versions since 2.0.0.
 ## 2.1.4
 
 ### New Features
+
 - Add jobs income batching options to reduce economy lag
   - If jobs.income.batching.enabled is true, accumulated income will be given in an interval instead of immediately
   - The interval_ms option controls the minimum delay between when money is given
   - If display_individual is true, the boss bar will display the original individual income instead of batched
 
 ### Changes
+
 - Optimize checking for disabled sources using cache
 
 ### Bug Fixes
+
 - Fix XP duplication exploit with land claiming plugins
 - Fix resethealth command not working on 1.21
 - Fix modifier is already applied error with stun
@@ -337,6 +423,7 @@ Changelog for versions since 2.0.0.
 ## 2.1.3
 
 ### New Features
+
 - Minecraft 1.21 support
   - Add bogged and breeze to Fighting and Archery sources
 - Add new action_bar options to main config
@@ -344,9 +431,11 @@ Changelog for versions since 2.0.0.
   - update_async - If true, the idle action bar will be updated and sent asynchronously. This is an experimental option (false by default).
 
 ### Changes
+
 - The option modifier.auto_convert_from_legacy is now false by default
 
 ### Bug Fixes
+
 - Fix Lightning Blade attribute modifier not being removed
 - Fix backup debug message spam
 - Fix disabled traits not being fully disabled sometimes
@@ -356,6 +445,7 @@ Changelog for versions since 2.0.0.
 ## 2.1.2
 
 ### New Features
+
 - Add roman and int placeholders for abilities (thanks Erik)
   - `%auraskills_[ability]_roman%` - Gets ability level as a Roman numeral
   - `%auraskills_[ability]_value_int%` - Gets ability value rounded to an integer
@@ -367,10 +457,12 @@ Changelog for versions since 2.0.0.
   - Available values are border, top_row, bottom_row, left_column, and right_column
 
 ### Changes
+
 - Revert unnecessary AdvancedEnchantments event ignores, fixing compatibility
 - Update German and Chinese Simplified messages
 
 ### Bug Fixes
+
 - Fix split slimes and magma cubes not applying spawner_multiplier
 - Fix double reloading on addStatModifier (thanks Erik)
   - This fixes extra health resets with plugins like MMOItems
@@ -384,20 +476,24 @@ Changelog for versions since 2.0.0.
 ## 2.1.1
 
 ### New Features
+
 - Add auraskills.jobs.block.[skill] permission to prevent skills from being selected as jobs if set to true (ex: auraskills.jobs.block.mining)
 - Add `%auraskils_jobs_active_[skill]%` placeholder that returns true/false whether the job is active (ex: %auraskills_jobs_active_farming%)
 
 ### Changes
+
 - Support property placeholders in menu placeholder conditions, such as {skill} for the skill name in certain menus
 - Slightly tweaked the jobs item lore style in the level_progression menu
 
 ### Bug Fixes
+
 - Fix grindstone experience exploit
 - Fix NoSuchMethodError on older versions
 
 ## 2.1.0
 
 ### New Features
+
 - Add jobs system
   - Jobs is an optional feature that allows players to select skills as jobs to earn money while gaining XP.
   - To use jobs, the jobs.enabled option must be set to true in config.yml
@@ -457,6 +553,7 @@ Changelog for versions since 2.0.0.
 - Add `%auraskills_xp_bar_[skill]%` placeholder that gets the XP progress bar shown in the menus
 
 ### Changes
+
 - Optimize menus to significantly improve performance for idle open menus
 - Change the default skills and level_progression menu files to fully use block style YAML syntax
 - The default contexts materials of the skill template in the level_progression menu now match the materials in the skills menu
@@ -466,6 +563,7 @@ Changelog for versions since 2.0.0.
 - Update Japanese, Polish, and Chinese Simplified messages
 
 ### Bug Fixes
+
 - Fix Bleed and Absorption particle errors on 1.20.5+
 - Fix mana add command always setting mana to max
 - Fix hex colors in ability messages not working
@@ -477,6 +575,7 @@ Changelog for versions since 2.0.0.
 - Fix Alchemist duration lore stacking on the same potion
 
 ### API Changes
+
 - Add job methods to SkillsUser
 - Add Trait#getMenuDisplay to get the trait value formatted as shown in the stats menu
 - Fix MenuManager#buildMenu not working when called multiple times to extend the same menu
@@ -486,6 +585,7 @@ Changelog for versions since 2.0.0.
 Note: If you are using the 15 skill legacy preset and previously updated to 2.0.8, your sources files for alchemy, agility, and enchanting may have been forcefully updated to include duplicate sources due to a bug in source updating. While this update fixes the bug going forward, you may have to manually remove sources that are duplicated with healing, endurance, and forging, respectively.
 
 ### New Features
+
 - Add menu conditions system
   - Conditions on items are used to add requirements for viewing or clicking an item
   - View conditions will hide the item if not all conditions are met
@@ -528,21 +628,25 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
   - Specify a list of slot values with the `pos` key instead of a single value
 
 ### Changes
+
 - Click action types will now be automatically detected, so specifying a `type` is no longer required
 
 ### Bug Fixes
+
 - Fix duplicate source updating for legacy preset
 - Fix command actions not working without PlaceholderAPI
 
 ## 2.0.8
 
 ### New Features
+
 - Minecraft 1.20.5 and 1.20.6 support
 - Add hide_tooltip option to items in menus/loot to completely hide the tooltip
   - Tooltips are hidden automatically for menu fill items
   - Only works on 1.20.5+
 
 ### Changes
+
 - Various optimizations for servers with high player counts
   - Optimize BlockLeveler with cache for sources
   - Optimize multiplier permission lookup with cache using LuckPerms events
@@ -552,11 +656,13 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 - Update Korean messages
 
 ### Bug Fixes
+
 - Fix hex colors in skill names not working fully in menus
 - Fix mana ability is not loaded error
 - Fix Grappler ignoring region protection
 
 ### API Changes
+
 - Slate is now relocated in the AuraSkills jar, so if you use dev.aurelium.slate packages with the api, you should relocate them to dev.aurelium.auraskills.slate using the Gradle Shadow or Maven Shade plugin
 - Add MainConfig#getStartLevel and getHighestMaxLevel
 - Add MenuManager#registerGlobalReplacer
@@ -564,6 +670,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.7
 
 ### New Features
+
 - Add trait placeholders
   - `%auraskills_trait_[trait]%` gets the effective level of a trait
   - `%auraskills_trait_[trait]_bonus%` gets the bonus level of a trait (level excluding the base value)
@@ -585,10 +692,12 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
   - This option does not affect vanilla item drops
 
 ### Changes
+
 - Bleed no longer creates invulnerable damage frames
 - Add Turkish, Finnish, and Thai messages
 
 ### Bug Fixes
+
 - Fix disabled abilities showing in level progression menu items
 - Fix hex colors in stat names not working in menus
 - Fix the WorldGuard hook not loading blocked_check_replace_regions option
@@ -597,6 +706,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 - Fix CustomSkill not showing defined messages in menus
 
 ### API Changes
+
 - Add openMenu methods and registerContext to MenuManager
 - Add parseItem and parseMultipleItems to ItemManager, allowing parsing of ItemStack from a ConfigurationNode
 - Add passesFilter to ItemManager
@@ -608,6 +718,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.6
 
 ### New Features
+
 - Add support for custom menus
   - Create a new file in the menus folder to create a custom menu
   - Follows the same format as existing menus, though templates and components will not work
@@ -627,6 +738,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
   - AuraSkills placeholders will now show in the tab completion of /papi parse
 
 ### Bug Fixes
+
 - Disable level up chat message for empty string
 - Fix Minecraft version parsing error on initial releases like 1.20
 - Placed saplings that grow into logs will now give XP
@@ -636,6 +748,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 - Fix Terraform crash with AdvancedEnchantments
 
 ### API Changes
+
 - Add MenuManager API to extend existing and create custom menus
   - Accessible with AuraSkillsBukkit#getMenuManager
   - Can be used to define behavior for custom items and templates in default or custom menus
@@ -645,15 +758,18 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.5
 
 ### New Features
+
 - Add track and use_track options to sources menu
   - Used to rearrange the source items in any way rather than just a rectangle
 - Add custom_model_data option to source item filter meta
   - To use, add it to a custom XP source item filter section for filtering a specific model data
 
 ### Changes
+
 - Update messages and move identical messages across languages to global.yml
 
 ### Bug Fixes
+
 - Fix Regions API errors
 - Fix hex colors not working in titles and boss bar
 - Fix trailing color codes not working in stat symbols
@@ -670,14 +786,17 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.4
 
 ### New Features
+
 - Add xp_format and percent_format boss bar options
 - Add options to sources menu to change source template area
 
 ### Changes
+
 - Reduce jar size by removing unnecessary libraries
 - Update it and ru messages (regen required to get changes)
 
 ### Bug Fixes
+
 - Fix mana ability cooldowns not being saved when re-logging
 - Fix placeholders not working after PlaceholderAPI reload
 - Fix NoSuchMethodError on older versions
@@ -693,12 +812,14 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.3
 
 ### New Features
+
 - Add formula option to damage_reduction trait
 - Add scale_xp_with_health entity source option
   - This is true by default for entity sources with damage trigger
 - Add mana.enabled option to more easily disable mana
 
 ### Bug Fixes
+
 - Fix skills menu migration breaking
 - Fix permission-blocked skills increasing stat levels
 - Fix entity sources with damage trigger not scaling XP with damage
@@ -707,15 +828,18 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 - Fix skill name commands not working
 
 ### API Changes
+
 - Add DamageXpGainEvent
 
 ## 2.0.2
 
 ### New Features
+
 - Add excluded_enchantments option for Enchanted Strength in abilities.yml
 - Add lore_wrapping_width option in config.yml
 
 ### Bug Fixes
+
 - Fix NPCs being unable to attack mobs
 - Fix Fleeting not being removed after heal commands
 - Fix console error when using Vault without an economy plugin
@@ -723,9 +847,11 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.1
 
 ### New Features
+
 - Add formula support in money rewards
 
 ### Bug Fixes
+
 - Fix item modifier NBT conversion breaking items
 - Fix action_bar.enabled option not fully working
 - Fix message file headers
@@ -734,6 +860,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
 ## 2.0.0
 
 ### New Features
+
 - Customizable XP sources
   - New config files for configuring sources of each skill in the sources folder.
   - Each source now has a specific type and options that fully define when XP is gained. For example, all sources for breaking blocks have type block.
@@ -783,6 +910,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
   - Any skill with block sources can now have their own custom loot tables, including farming. Create a file named after the skill, such as loot/farming.yml.
 
 ### Changes
+
 - The plugin has been renamed from AureliumSkills to AuraSkills. This means the data folder is now plugins/AuraSkills.
   - Why? The new name is shorter, simpler, and more meaningful. The original plugin name didn't have a meaning when first made, and was pretty long to say and type.
   - For plugins that hook into AureliumSkills, the renaming means compatibility with Beta versions won't break, and a new hook system can be implemented by developers with the brand new and improved API.
@@ -850,6 +978,7 @@ Note: If you are using the 15 skill legacy preset and previously updated to 2.0.
   - This means the percent increases for Crit Damage, tool master abilities, and First Strike will be added together before multiplying the damage.
 
 ### Technical Changes
+
 - Codebase structure
   - The codebase has been split into multiple modules to allow the api to be independent from implementation.
   - The package for the plugin classes is now dev.aurelium.auraskills instead of com.archyx.aureliumskills.

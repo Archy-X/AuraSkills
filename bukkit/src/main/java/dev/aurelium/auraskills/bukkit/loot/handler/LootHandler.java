@@ -78,6 +78,7 @@ public abstract class LootHandler extends AbstractLootHandler {
     protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropCause cause, LootTable table) {
         Block block = breakEvent.getBlock();
         ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
+        if (drop == null) return;
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
         Location location = block.getLocation().add(0.5, 0.5, 0.5);
 
@@ -89,6 +90,7 @@ public abstract class LootHandler extends AbstractLootHandler {
 
     protected void giveMobItemLoot(Player player, ItemLoot loot, Location location, Skill skill, LootDropCause cause, LootTable table) {
         ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
+        if (drop == null) return;
         drop.setAmount(generateAmount(loot.getMinAmount(), loot.getMaxAmount()));
 
         giveDropItemLoot(player, location, cause, drop);
@@ -115,6 +117,7 @@ public abstract class LootHandler extends AbstractLootHandler {
         if (amount == 0) return;
 
         ItemStack drop = generateDamaged(unwrap(loot.getItem().supplyItem(plugin, table)), loot.getMinDamage(), loot.getMaxDamage());
+        if (drop == null) return;
         drop.setAmount(amount);
 
         LootDropEvent dropEvent = new LootDropEvent(player, plugin.getUser(player).toApi(), drop, event.getHook().getLocation(), (Cause) cause, false);
@@ -227,13 +230,16 @@ public abstract class LootHandler extends AbstractLootHandler {
     }
 
     private ItemStack generateDamaged(ItemStack drop, double minDamage, double maxDamage) {
+        if (minDamage == 0.0 && maxDamage == 0.0) {
+            return drop;
+        }
         if (minDamage >= 0.0 && minDamage <= 1.0 &&
                 maxDamage >= 0.0 && maxDamage <= 1.0 &&
                 minDamage <= maxDamage) {
 
             // Check if the item is damageable.
             if (drop == null) {
-                return drop;
+                return null;
             }
 
             ItemMeta meta = drop.getItemMeta();

@@ -58,17 +58,24 @@ public class ConfigurateLoader {
 
         Map<String, String> env = new HashMap<>();
         env.put("create", "true");
-        try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
-
-            YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .path(Path.of(uri))
-                    .defaultOptions(opts ->
-                            opts.shouldCopyDefaults(false).serializers(build -> build.registerAll(serializers))
-                    )
-                    .build();
-
-            return loader.load();
+        if ("jar".equals(uri.getScheme())) {
+            try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {
+                return loadFromUri(uri);
+            }
+        } else {
+            return loadFromUri(uri);
         }
+    }
+
+    private ConfigurationNode loadFromUri(URI uri) throws ConfigurateException {
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
+                .path(Path.of(uri))
+                .defaultOptions(opts ->
+                        opts.shouldCopyDefaults(false).serializers(build -> build.registerAll(serializers))
+                )
+                .build();
+
+        return loader.load();
     }
 
     /**
