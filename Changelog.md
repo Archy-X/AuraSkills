@@ -2,6 +2,14 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.5
+
+### Bug Fixes
+
+- Fix item loot not stacking with normal items
+- Fix Fishing sources that specify loot_pool not working
+- Fix item reward amount value not working
+
 ## 2.3.4
 
 ### New Features
