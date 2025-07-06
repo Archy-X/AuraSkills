@@ -10,6 +10,10 @@ repositories {
 
 dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
+    testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation(platform("org.junit:junit-bom:5.13.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<JavaCompile> {
@@ -27,6 +31,10 @@ tasks {
             encoding("UTF-8")
             charset("UTF-8")
         }
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 

@@ -275,11 +275,10 @@ public class BossBarManager implements Listener {
 
     public void incrementAction(Player player, Skill skill) {
         UUID playerId = player.getUniqueId();
-        if (!singleCheckCurrentActions.containsKey(playerId)) singleCheckCurrentActions.put(playerId, 0);
         if (!checkCurrentActions.containsKey(playerId)) checkCurrentActions.put(playerId, new HashMap<>());
         // Increment current action
         if (mode.equals("single")) {
-            singleCheckCurrentActions.put(playerId, singleCheckCurrentActions.get(playerId) + 1);
+            singleCheckCurrentActions.put(playerId, singleCheckCurrentActions.getOrDefault(playerId, -1) + 1);
         } else {
             Integer currentAction = checkCurrentActions.get(playerId).get(skill);
             if (currentAction != null) {
@@ -341,11 +340,11 @@ public class BossBarManager implements Listener {
 
     public int getCurrentAction(Player player, Skill skill) {
         if (mode.equals("single")) {
-            return singleCheckCurrentActions.get(player.getUniqueId());
+            return singleCheckCurrentActions.getOrDefault(player.getUniqueId(), -1);
         } else {
             Map<Skill, Integer> multiCurrentActions = checkCurrentActions.get(player.getUniqueId());
             if (multiCurrentActions != null) {
-                return multiCurrentActions.get(skill);
+                return multiCurrentActions.getOrDefault(skill, -1);
             }
         }
         return -1;
