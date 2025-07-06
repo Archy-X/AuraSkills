@@ -22,6 +22,13 @@ public interface BlockXpSource extends XpSource {
     String[] getBlocks();
 
     /**
+     * Gets the max blocks of the source.
+     *
+     * @return The max blocks
+     */
+    int getMaxBlocks();
+
+    /**
      * Gets an array of triggers of the source.
      *
      * @return The triggers. If there is only one trigger, it will return an array with one element.
@@ -73,10 +80,6 @@ public interface BlockXpSource extends XpSource {
      * @return Whether the source requires a support block
      */
     boolean requiresSupportBlock(SupportBlockType direction);
-
-    boolean isTrunk();
-
-    boolean isLeaf();
 
     interface BlockXpSourceState {
 
