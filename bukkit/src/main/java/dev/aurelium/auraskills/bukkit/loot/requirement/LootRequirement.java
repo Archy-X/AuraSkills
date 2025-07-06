@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.requirement.Loot;
+package dev.aurelium.auraskills.bukkit.loot.requirement;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
@@ -15,7 +15,11 @@ import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +61,8 @@ public class LootRequirement {
                     return checkBiome(config, user);
                 case "region":
                     return checkRegion(config, user, plugin);
+                case "enchantment":
+                    return checkEnchantment(config, user);
             }
         }
 
@@ -175,6 +181,38 @@ public class LootRequirement {
                     }
                 }
             }
+        }
+
+        return true;
+    }
+
+    protected static boolean checkEnchantment(ConfigNode config, User user) {
+        if (config.hasChild("enchantment")) {
+            Player player = Bukkit.getPlayer(user.getUuid());
+            ItemStack heldItem = player.getInventory().getItemInMainHand();
+
+            Enchantment enchantment = null;
+
+            String[] splitEntry = config.node("enchantment").getString("").split(" ");
+            String enchantmentName = splitEntry[0].toLowerCase(Locale.ROOT);
+            int enchantmentLevel = splitEntry.length > 1 ? Integer.parseInt(splitEntry[1]) : 0;
+
+            NamespacedKey enchantmentKey = NamespacedKey.minecraft(enchantmentName);
+            if (enchantmentKey != null) {
+                enchantment = Registry.ENCHANTMENT.get(enchantmentKey);
+            }
+
+            if (enchantment == null) {
+                return true;
+            }
+
+            if (heldItem != null && heldItem.hasItemMeta() && heldItem.getItemMeta().hasEnchants() && heldItem.getItemMeta().hasEnchant(enchantment)) {
+                if (enchantmentLevel == 0 || heldItem.getEnchantmentLevel(enchantment) == enchantmentLevel) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         return true;
