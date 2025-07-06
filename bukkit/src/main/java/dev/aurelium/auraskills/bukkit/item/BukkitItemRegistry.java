@@ -27,6 +27,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
+
 public class BukkitItemRegistry implements ItemRegistry {
 
     private final AuraSkills plugin;
@@ -57,12 +59,15 @@ public class BukkitItemRegistry implements ItemRegistry {
     public ItemStack getItem(NamespacedId key) {
         ItemStack item = items.get(key);
         if (item != null) {
-            return item.clone();
+            return item;
         }
 
         ExternalItemProvider provider = externalItemProviders.get(key.getNamespace());
         if (provider != null) {
-            return provider.getItem(key.getOriginalKey());
+            ItemStack external = provider.getItem(key.getOriginalKey());
+            if (external != null) {
+                return external.clone();
+            }
         }
 
         return null;
@@ -89,6 +94,8 @@ public class BukkitItemRegistry implements ItemRegistry {
         }
 
         plugin.getScheduler().executeAtEntity(player, (task) -> {
+            item.setAmount(amount);
+
             ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
             // Handle items that could not fit in the inventory
             if (leftoverItem != null) {
@@ -131,13 +138,13 @@ public class BukkitItemRegistry implements ItemRegistry {
     }
 
     public boolean passesFilter(ItemStack item, LootItemFilter filter, Skill skill) {
-        String lootTableName = filter.lootPool();
-        if (lootTableName != null) {
+        String lootPoolName = filter.lootPool();
+        if (lootPoolName != null) {
             LootTable lootTable = plugin.getLootManager().getLootTable(skill);
             if (lootTable == null) {
                 return false;
             }
-            LootPool pool = lootTable.getPool(lootTableName);
+            LootPool pool = lootTable.getPool(lootPoolName);
             if (pool == null) {
                 return false;
             }
@@ -146,7 +153,7 @@ public class BukkitItemRegistry implements ItemRegistry {
                 if (!(loot instanceof ItemLoot itemLoot)) {
                     continue;
                 }
-                if (item.equals(itemLoot.getItem().supplyItem(plugin, lootTable))) {
+                if (item.equals(unwrap(itemLoot.getItem().supplyItem(plugin, lootTable)))) {
                     return true;
                 }
             }

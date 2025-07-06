@@ -626,7 +626,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @VisibleForTesting
-    public void setScheduler(Scheduler scheduler) {
+    public void setScheduler(BukkitScheduler scheduler) {
         this.scheduler = scheduler;
     }
 

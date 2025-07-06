@@ -74,6 +74,7 @@ public class BukkitItemRegistryTest {
         registry.register(id, new ItemStack(Material.DIAMOND));
 
         registry.giveItem(user, id, 1);
+        server.getScheduler().performOneTick();
 
         ItemStack item0 = player.getInventory().getItem(0);
         assertNotNull(item0);
@@ -82,6 +83,7 @@ public class BukkitItemRegistryTest {
 
         // Fill the entire inventory to test leftovers
         registry.giveItem(user, id, 64 * 36);
+        server.getScheduler().performOneTick();
 
         for (int i = 0; i < 36; i++) {
             ItemStack item = player.getInventory().getItem(i);
