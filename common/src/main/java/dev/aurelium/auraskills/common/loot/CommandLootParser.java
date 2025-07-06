@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
+import dev.aurelium.auraskills.api.loot.LootRequirements;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.util.data.Validate;
 
@@ -13,7 +14,7 @@ import java.util.Locale;
 public class CommandLootParser implements LootParser {
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config) {
+    public Loot parse(LootParsingContext context, ConfigNode config, LootRequirements requirements) {
         String executorName = config.node("executor").getString("console");
         CommandExecutor executor = CommandExecutor.valueOf(executorName.toUpperCase(Locale.ROOT));
 
