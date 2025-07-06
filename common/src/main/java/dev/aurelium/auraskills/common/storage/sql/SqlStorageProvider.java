@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SqlStorageProvider extends StorageProvider {
 
@@ -82,8 +83,8 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private SkillLevelMaps loadSkillLevels(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<Skill, Integer> levelsMap = new HashMap<>();
-        Map<Skill, Double> xpMap = new HashMap<>();
+        Map<Skill, Integer> levelsMap = new ConcurrentHashMap<>();
+        Map<Skill, Double> xpMap = new ConcurrentHashMap<>();
 
         String loadQuery = "SELECT * FROM " + TABLE_PREFIX + "skill_levels WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
@@ -110,7 +111,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private Map<String, StatModifier> loadStatModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<String, StatModifier> modifiers = new HashMap<>();
+        Map<String, StatModifier> modifiers = new ConcurrentHashMap<>();
         String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
                 TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -143,7 +144,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private Map<String, TraitModifier> loadTraitModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<String, TraitModifier> modifiers = new HashMap<>();
+        Map<String, TraitModifier> modifiers = new ConcurrentHashMap<>();
         String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
                 TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -244,7 +245,7 @@ public class SqlStorageProvider extends StorageProvider {
                     statement.executeUpdate();
                 }
             }
-            Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+            Map<String, AuraSkillsModifier<?>> modifiers = new ConcurrentHashMap<>();
             modifiers.putAll(state.statModifiers());
             modifiers.putAll(state.traitModifiers());
 
@@ -345,7 +346,7 @@ public class SqlStorageProvider extends StorageProvider {
     private void saveModifiersTable(Connection connection, User user, int userId) throws SQLException {
         deleteModifiers(connection, userId);
 
-        Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+        Map<String, AuraSkillsModifier<?>> modifiers = new ConcurrentHashMap<>();
         modifiers.putAll(user.getStatModifiers());
         modifiers.putAll(user.getTraitModifiers());
 
@@ -623,8 +624,8 @@ public class SqlStorageProvider extends StorageProvider {
     public List<UserState> loadStates(boolean ignoreOnline, boolean skipModifiers) throws Exception {
         List<UserState> states = new ArrayList<>();
 
-        Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new HashMap<>();
-        Map<Integer, Map<Skill, Double>> loadedSkillXp = new HashMap<>();
+        Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new ConcurrentHashMap<>();
+        Map<Integer, Map<Skill, Double>> loadedSkillXp = new ConcurrentHashMap<>();
 
         try (Connection connection = pool.getConnection()) {
             String skillLevelsQuery = "SELECT user_id, skill_name, skill_level, skill_xp FROM " + TABLE_PREFIX + "skill_levels;";
@@ -639,8 +640,8 @@ public class SqlStorageProvider extends StorageProvider {
                         int level = resultSet.getInt("skill_level");
                         double xp = resultSet.getDouble("skill_xp");
 
-                        loadedSkillLevels.computeIfAbsent(userId, k -> new HashMap<>()).put(skill, level);
-                        loadedSkillXp.computeIfAbsent(userId, k -> new HashMap<>()).put(skill, xp);
+                        loadedSkillLevels.computeIfAbsent(userId, k -> new ConcurrentHashMap<>()).put(skill, level);
+                        loadedSkillXp.computeIfAbsent(userId, k -> new ConcurrentHashMap<>()).put(skill, xp);
                     }
                 }
             }
@@ -667,8 +668,8 @@ public class SqlStorageProvider extends StorageProvider {
                             traitModifiers = Collections.emptyMap();
                         }
 
-                        Map<Skill, Integer> skillLevelMap = loadedSkillLevels.getOrDefault(userId, new HashMap<>());
-                        Map<Skill, Double> skillXpMap = loadedSkillXp.getOrDefault(userId, new HashMap<>());
+                        Map<Skill, Integer> skillLevelMap = loadedSkillLevels.getOrDefault(userId, new ConcurrentHashMap<>());
+                        Map<Skill, Double> skillXpMap = loadedSkillXp.getOrDefault(userId, new ConcurrentHashMap<>());
 
                         UserState state = new UserState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
                         states.add(state);

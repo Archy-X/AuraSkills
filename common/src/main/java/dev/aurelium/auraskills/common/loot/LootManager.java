@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.loot;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -8,11 +9,12 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class LootManager {
 
     private final AuraSkillsPlugin plugin;
-    private final Map<NamespacedId, LootTable> lootTables = new HashMap<>();
+    private final Map<NamespacedId, LootTable> lootTables = new ConcurrentHashMap<>();
     private final Map<String, ContextProvider> contextProviders;
     private final Set<String> lootOptionKeys;
     private final Set<String> poolOptionKeys;
@@ -20,10 +22,10 @@ public abstract class LootManager {
 
     public LootManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.contextProviders = new HashMap<>();
-        this.lootOptionKeys = new HashSet<>();
-        this.poolOptionKeys = new HashSet<>();
-        this.customLootParsers = new HashMap<>();
+        this.contextProviders = new ConcurrentHashMap<>();
+        this.lootOptionKeys = Sets.newConcurrentHashSet();
+        this.poolOptionKeys = Sets.newConcurrentHashSet();
+        this.customLootParsers = new ConcurrentHashMap<>();
 
         registerContextProvider(new SourceContextProvider(plugin));
         addLootOptionKeys("xp");

@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Registry<T, P> {
 
@@ -22,7 +22,7 @@ public abstract class Registry<T, P> {
         this.plugin = plugin;
         this.type = type;
         this.providerType = providerType;
-        this.registryMap = new HashMap<>();
+        this.registryMap = new ConcurrentHashMap<>();
     }
 
     public abstract void registerDefaults();

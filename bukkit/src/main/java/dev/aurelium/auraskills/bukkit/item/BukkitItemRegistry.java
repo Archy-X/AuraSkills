@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.item.*;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootPool;
@@ -26,16 +27,17 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
 
 public class BukkitItemRegistry implements ItemRegistry {
 
     private final AuraSkills plugin;
-    private final Map<NamespacedId, ItemStack> items = new HashMap<>();
+    private final Map<NamespacedId, ItemStack> items = new ConcurrentHashMap<>();
     private final BukkitSourceMenuItems sourceMenuItems;
     private final ItemRegistryStorage storage;
-    private final Map<String, ExternalItemProvider> externalItemProviders = new HashMap<>();
+    private final Map<String, ExternalItemProvider> externalItemProviders = new ConcurrentHashMap<>();
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
@@ -281,7 +283,7 @@ public class BukkitItemRegistry implements ItemRegistry {
     }
 
     private Set<ItemCategory> getItemCategories(ItemStack item, Material mat) {
-        Set<ItemCategory> found = new HashSet<>();
+        Set<ItemCategory> found = Sets.newConcurrentHashSet();
         String name = mat.toString();
         if (name.contains("_SWORD") || mat == Material.BOW || mat == Material.CROSSBOW || mat == Material.TRIDENT) {
             found.add(ItemCategory.WEAPON);

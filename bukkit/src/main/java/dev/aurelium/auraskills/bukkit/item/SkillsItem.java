@@ -33,6 +33,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillsItem {
 
@@ -293,7 +294,7 @@ public class SkillsItem {
 
     public Map<Skill, Integer> getRequirements(ModifierType type) {
         PersistentDataContainer container = getContainer(MetaType.REQUIREMENT, type);
-        Map<Skill, Integer> requirements = new HashMap<>();
+        Map<Skill, Integer> requirements = new ConcurrentHashMap<>();
 
         for (NamespacedKey key : container.getKeys()) {
             int value = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
@@ -396,7 +397,7 @@ public class SkillsItem {
     }
 
     public Map<Skill, Integer> getGlobalRequirements(ModifierType type) {
-        Map<Skill, Integer> requirements = new HashMap<>();
+        Map<Skill, Integer> requirements = new ConcurrentHashMap<>();
         for (GlobalRequirement global : plugin.getRequirementManager().getGlobalRequirementsType(type)) {
             if (global.getMaterial() == item.getType()) {
                 requirements.putAll(global.getRequirements());

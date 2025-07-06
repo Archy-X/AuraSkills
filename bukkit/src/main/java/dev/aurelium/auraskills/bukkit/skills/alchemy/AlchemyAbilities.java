@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.alchemy;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -324,7 +325,7 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
                     if (!player.getActivePotionEffects().isEmpty()) {
                         if (failsChecks(player, ability)) continue;
                         // Get unique active potion effects
-                        Set<PotionEffectType> uniqueTypesSet = new HashSet<>();
+                        Set<PotionEffectType> uniqueTypesSet = Sets.newConcurrentHashSet();
                         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                             uniqueTypesSet.add(potionEffect.getType());
                         }

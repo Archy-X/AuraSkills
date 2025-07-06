@@ -9,8 +9,8 @@ import dev.aurelium.slate.option.SlateOptions;
 import dev.aurelium.slate.option.SlateOptionsBuilder;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MenuOptions {
 
@@ -32,7 +32,7 @@ public class MenuOptions {
     }
 
     public Map<String, ItemMetaParser> getMetaParsers() {
-        Map<String, ItemMetaParser> parsers = new HashMap<>();
+        Map<String, ItemMetaParser> parsers = new ConcurrentHashMap<>();
 
         parsers.put("potion_data", (item, config) -> {
             new ConfigurateItemParser(plugin).parsePotionData(item, config);

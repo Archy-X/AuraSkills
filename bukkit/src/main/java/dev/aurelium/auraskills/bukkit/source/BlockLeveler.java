@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -35,7 +36,7 @@ public class BlockLeveler extends SourceLeveler {
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BLOCK);
         this.helper = new BlockLevelerHelper(plugin);
-        this.sourceCache = new HashMap<>();
+        this.sourceCache = new ConcurrentHashMap<>();
     }
 
     public void clearSourceCache() {
@@ -232,7 +233,7 @@ public class BlockLeveler extends SourceLeveler {
     }
 
     public static Map<String, Object> parseFromBlockData(String input) {
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new ConcurrentHashMap<>();
         // Check if the input is valid
         if (input == null || input.isEmpty()) {
             return result;

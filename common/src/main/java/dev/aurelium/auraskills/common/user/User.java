@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.common.user;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
@@ -38,6 +37,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class User {
 
@@ -68,7 +68,7 @@ public abstract class User {
     // Not persistent data
     private final Map<String, Multiplier> multipliers;
     private final JobsBatchData jobsBatchData;
-    private final Map<CheckType, CheckData> checkData = new HashMap<>();
+    private final Map<CheckType, CheckData> checkData = new ConcurrentHashMap<>();
     @Nullable
     private List<AntiAfkLog> storedAntiAfkLogs;
     private double currentOriginalDamage;
@@ -76,17 +76,17 @@ public abstract class User {
     public User(UUID uuid, AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.skillLevels = Maps.newConcurrentMap();
-        this.skillXp = Maps.newConcurrentMap();
+        this.skillLevels = new ConcurrentHashMap<>();
+        this.skillXp = new ConcurrentHashMap<>();
         this.userStats = new UserStats(plugin, this);
-        this.abilityData = Maps.newConcurrentMap();
-        this.manaAbilityData = Maps.newConcurrentMap();
-        this.metadata = Maps.newConcurrentMap();
-        this.actionBarSettings = Maps.newConcurrentMap();
+        this.abilityData = new ConcurrentHashMap<>();
+        this.manaAbilityData = new ConcurrentHashMap<>();
+        this.metadata = new ConcurrentHashMap<>();
+        this.actionBarSettings = new ConcurrentHashMap<>();
         this.unclaimedItems = new LinkedList<>();
         this.shouldSave = true;
         this.mana = Traits.MAX_MANA.isEnabled() ? Traits.MAX_MANA.optionDouble("base") : 0.0;
-        this.multipliers = Maps.newConcurrentMap();
+        this.multipliers = new ConcurrentHashMap<>();
         this.jobs = Sets.newConcurrentHashSet();
         this.jobsBatchData = new JobsBatchData();
         this.sessionAntiAfkLogs = new ArrayList<>();
@@ -511,10 +511,10 @@ public abstract class User {
     }
 
     public UserState getState() {
-        Map<Skill, Integer> copiedLevels = new HashMap<>(skillLevels);
-        Map<Skill, Double> copiedXp = new HashMap<>(skillXp);
-        Map<String, StatModifier> copiedStatModifiers = new HashMap<>(userStats.getStatModifiers());
-        Map<String, TraitModifier> copiedTraitModifiers = new HashMap<>(userStats.getTraitModifiers());
+        Map<Skill, Integer> copiedLevels = new ConcurrentHashMap<>(skillLevels);
+        Map<Skill, Double> copiedXp = new ConcurrentHashMap<>(skillXp);
+        Map<String, StatModifier> copiedStatModifiers = new ConcurrentHashMap<>(userStats.getStatModifiers());
+        Map<String, TraitModifier> copiedTraitModifiers = new ConcurrentHashMap<>(userStats.getTraitModifiers());
         return new UserState(uuid, copiedLevels, copiedXp, copiedStatModifiers, copiedTraitModifiers, mana);
     }
 

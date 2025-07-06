@@ -18,8 +18,8 @@ import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileUtil {
 
@@ -105,7 +105,7 @@ public class FileUtil {
             throw new IllegalArgumentException("File " + fileName + " does not exist");
         }
 
-        Map<String, String> env = new HashMap<>();
+        Map<String, String> env = new ConcurrentHashMap<>();
         env.put("create", "true");
         if (createFileSystem && "jar".equals(uri.getScheme())) {
             try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {

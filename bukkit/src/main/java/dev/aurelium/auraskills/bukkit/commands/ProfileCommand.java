@@ -17,9 +17,9 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @CommandAlias("%skills_alias")
 @Subcommand("profile")
@@ -113,7 +113,7 @@ public class ProfileCommand extends BaseCommand {
         String message = plugin.getMsg(CommandMessage.PROFILE_STATS_HEADER, locale);
         message = TextUtil.replace(message, "{name}", username, "{uuid}", uuid.toString());
 
-        Map<Stat, Double> baseStats = new HashMap<>();
+        Map<Stat, Double> baseStats = new ConcurrentHashMap<>();
         for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
             Map<Stat, Double> skillRewardedStats = plugin.getRewardManager().getRewardTable(skill).getStatLevels(skillLevels.getOrDefault(skill, plugin.config().getStartLevel()));
             for (Map.Entry<Stat, Double> entry : skillRewardedStats.entrySet()) {
@@ -122,13 +122,13 @@ public class ProfileCommand extends BaseCommand {
             }
         }
 
-        Map<Stat, Double> modifiedStats = new HashMap<>();
+        Map<Stat, Double> modifiedStats = new ConcurrentHashMap<>();
         for (StatModifier modifier : statModifiers.values()) {
             double existing = modifiedStats.getOrDefault(modifier.stat(), 0.0);
             modifiedStats.put(modifier.stat(), existing + modifier.value());
         }
 
-        Map<Stat, Double> totalStats = new HashMap<>();
+        Map<Stat, Double> totalStats = new ConcurrentHashMap<>();
         for (Stat stat : plugin.getStatManager().getEnabledStats()) {
             double base = baseStats.getOrDefault(stat, 0.0);
             double modified = modifiedStats.getOrDefault(stat, 0.0);

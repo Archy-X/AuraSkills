@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootContext;
@@ -25,7 +26,6 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
@@ -97,7 +97,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
     private boolean isPoolUnobtainable(LootPool pool, EntityType entityType) {
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("mobs", new HashSet<>());
+            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("mobs", Sets.newConcurrentHashSet());
             // Loot will be reachable if it has no contexts
             if (contexts.isEmpty()) {
                 return false;

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -11,7 +12,6 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class BukkitModifierManager implements ModifierManager {
@@ -29,7 +29,7 @@ public class BukkitModifierManager implements ModifierManager {
 
         ItemStack mainHand = player.getInventory().getItemInMainHand();
         var toReloadMain = manager.changeItemInSlot(user, player, mainHand, EquipmentSlot.HAND, false, true, false);
-        Set<ReloadableIdentifier> toReload = new HashSet<>(toReloadMain);
+        Set<ReloadableIdentifier> toReload = Sets.newConcurrentHashSet(toReloadMain);
 
         ItemStack itemOffHand = player.getInventory().getItemInOffHand();
         toReload.addAll(manager.changeItemInSlot(user, player, itemOffHand, EquipmentSlot.OFF_HAND, false, true, false));

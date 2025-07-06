@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.loot;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootContext;
@@ -8,7 +9,6 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.common.user.User;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,7 +31,7 @@ public abstract class AbstractLootHandler {
 
     protected boolean isPoolUnobtainable(LootPool pool, XpSource source) {
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("sources", new HashSet<>());
+            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("sources", Sets.newConcurrentHashSet());
             // Loot will be reachable if it has no contexts
             if (contexts.isEmpty()) {
                 return false;

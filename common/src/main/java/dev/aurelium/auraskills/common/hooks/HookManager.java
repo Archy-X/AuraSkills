@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.common.hooks;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages hooks into external plugins.
@@ -11,7 +11,7 @@ public class HookManager {
     private final Map<Class<? extends Hook>, Hook> hooks;
 
     public HookManager() {
-        this.hooks = new HashMap<>();
+        this.hooks = new ConcurrentHashMap<>();
     }
 
     /**

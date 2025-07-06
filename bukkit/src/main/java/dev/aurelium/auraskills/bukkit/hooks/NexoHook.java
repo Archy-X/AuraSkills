@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 import com.nexomc.nexo.api.NexoBlocks;
 import com.nexomc.nexo.api.NexoItems;
 import com.nexomc.nexo.api.events.custom_block.noteblock.NexoNoteBlockBreakEvent;
@@ -115,7 +116,7 @@ public class NexoHook extends Hook implements Listener {
     }
 
     private Set<ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
-        Set<ItemStack> unique = new HashSet<>();
+        Set<ItemStack> unique = Sets.newConcurrentHashSet();
         for (Loot loot : drop.lootToDrop(player)) {
             ItemStack item = loot.getItemStack();
 

@@ -313,7 +313,7 @@ public class UserStats {
 
     // Gets the total amount of the stat awarded by each skill
     public Map<Skill, Double> getLevelRewardedBySkill(Stat stat) {
-        Map<Skill, Double> map = new HashMap<>();
+        Map<Skill, Double> map = new ConcurrentHashMap<>();
         for (Skill skill : plugin.getSkillManager().getEnabledSkills()) {
             double sum = 0;
             for (Entry<Stat, Double> entry : getStatLevelRewards(stat, skill)) {

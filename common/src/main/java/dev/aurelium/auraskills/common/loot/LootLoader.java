@@ -14,6 +14,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class LootLoader {
 
@@ -113,7 +114,7 @@ public abstract class LootLoader {
             boolean overrideVanillaLoot = poolNode.node("override_vanilla_loot").getBoolean(false);
 
             // Load pool options
-            Map<String, Object> options = new HashMap<>();
+            Map<String, Object> options = new ConcurrentHashMap<>();
             for (String optionKey : manager.getPoolOptionKeys()) {
                 if (poolNode.hasChild(optionKey)) {
                     Object option = poolNode.node(optionKey).raw();

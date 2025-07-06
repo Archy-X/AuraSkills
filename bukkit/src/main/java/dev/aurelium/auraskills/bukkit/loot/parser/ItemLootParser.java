@@ -20,6 +20,7 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.wrap;
 
@@ -69,7 +70,7 @@ public class ItemLootParser implements LootParser {
     }
 
     private Map<LootEnchantList, Integer> parsePossibleEnchants(ConfigurationNode config) throws SerializationException {
-        Map<LootEnchantList, Integer> possibleEnchants = new HashMap<>();
+        Map<LootEnchantList, Integer> possibleEnchants = new ConcurrentHashMap<>();
         if (config.hasChild("enchantments")) { // Single enchant list
             LootEnchantList singleList = parseSingleEnchantList(config);
             possibleEnchants.put(singleList, 1);

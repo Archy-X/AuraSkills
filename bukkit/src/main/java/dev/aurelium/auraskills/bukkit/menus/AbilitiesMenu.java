@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
@@ -52,7 +53,7 @@ public class AbilitiesMenu {
             template.definedContexts(m -> {
                 Skill skill = (Skill) m.menu().getProperty("skill");
                 User user = plugin.getUser(m.player());
-                Set<Ability> lockedAbilities = new HashSet<>();
+                Set<Ability> lockedAbilities = Sets.newConcurrentHashSet();
                 // Add abilities that player has not unlocked yet
                 for (Ability ability : skill.getAbilities()) {
                     if (user.getAbilityLevel(ability) <= 0 && ability.isEnabled()) {
@@ -71,7 +72,7 @@ public class AbilitiesMenu {
             template.definedContexts(m -> {
                 Skill skill = (Skill) m.menu().getProperty("skill");
                 User user = plugin.getUser(m.player());
-                Set<Ability> unlockedAbilities = new HashSet<>();
+                Set<Ability> unlockedAbilities = Sets.newConcurrentHashSet();
                 // Add abilities that player has not unlocked yet
                 for (Ability ability : skill.getAbilities()) {
                     if (user.getAbilityLevel(ability) >= 1 && ability.isEnabled()) {
@@ -96,7 +97,7 @@ public class AbilitiesMenu {
                 Skill skill = (Skill) m.menu().getProperty("skill");
                 ManaAbility manaAbility = skill.getManaAbility();
 
-                Set<ManaAbility> locked = new HashSet<>();
+                Set<ManaAbility> locked = Sets.newConcurrentHashSet();
                 if (manaAbility != null && manaAbility.isEnabled() && plugin.getUser(m.player()).getManaAbilityLevel(manaAbility) <= 0) {
                     locked.add(manaAbility);
                 }
@@ -112,7 +113,7 @@ public class AbilitiesMenu {
             template.definedContexts(m -> {
                 Skill skill = (Skill) m.menu().getProperty("skill");
                 User user = plugin.getUser(m.player());
-                Set<ManaAbility> unlocked = new HashSet<>();
+                Set<ManaAbility> unlocked = Sets.newConcurrentHashSet();
                 // Add abilities that player has not unlocked yet
                 ManaAbility manaAbility = skill.getManaAbility();
                 if (manaAbility != null && manaAbility.isEnabled() && user.getManaAbilityLevel(manaAbility) >= 1) {

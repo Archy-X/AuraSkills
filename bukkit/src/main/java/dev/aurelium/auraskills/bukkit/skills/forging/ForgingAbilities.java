@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.forging;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.skill.XpGainEvent;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -95,7 +96,7 @@ public class ForgingAbilities extends BukkitAbilityImpl {
             }
         }
 
-        Set<EnchantmentValue> enchants = new HashSet<>();
+        Set<EnchantmentValue> enchants = Sets.newConcurrentHashSet();
         // Add enchants to disenchant
         checkEnchants(first, enchants);
         checkEnchants(second, enchants);

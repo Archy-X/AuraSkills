@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -179,7 +180,7 @@ public class SourcesMenu {
                 int toIndex = Math.min((page + 1) * itemsPerPage, filteredSources.size());
                 List<XpSource> shownSources = filteredSources.subList(page * itemsPerPage, toIndex);
                 activeMenu.setProperty("sources", shownSources); // Set sorted sources property for easy access in other methods
-                return new HashSet<>(shownSources);
+                return Sets.newConcurrentHashSet(shownSources);
             });
 
             template.modify(t -> {

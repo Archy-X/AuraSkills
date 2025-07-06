@@ -17,6 +17,7 @@ import dev.aurelium.auraskills.common.util.data.Pair;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SqlUserMigrator {
 
@@ -163,7 +164,7 @@ public class SqlUserMigrator {
     }
 
     private Map<Skill, Pair<Integer, Double>> getOldSkillLevelsAndXp(ResultSet rs) throws SQLException {
-        Map<Skill, Pair<Integer, Double>> map = new HashMap<>();
+        Map<Skill, Pair<Integer, Double>> map = new ConcurrentHashMap<>();
         map.put(Skills.AGILITY, new Pair<>(rs.getInt("AGILITY_LEVEL"), rs.getDouble("AGILITY_XP")));
         map.put(Skills.ALCHEMY, new Pair<>(rs.getInt("ALCHEMY_LEVEL"), rs.getDouble("ALCHEMY_XP")));
         map.put(Skills.ARCHERY, new Pair<>(rs.getInt("ARCHERY_LEVEL"), rs.getDouble("ARCHERY_XP")));
@@ -206,7 +207,7 @@ public class SqlUserMigrator {
     }
 
     private Map<AbstractAbility, AbilityData> parseAbilityData(String abilityData) {
-        Map<AbstractAbility, AbilityData> map = new HashMap<>();
+        Map<AbstractAbility, AbilityData> map = new ConcurrentHashMap<>();
         if (abilityData == null) {
             return map;
         }

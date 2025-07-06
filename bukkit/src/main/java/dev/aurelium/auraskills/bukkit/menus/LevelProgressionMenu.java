@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
@@ -28,7 +29,6 @@ import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -242,7 +242,7 @@ public class LevelProgressionMenu {
                 int level = plugin.getUser(m.player()).getSkillLevel((Skill) m.menu().getProperty("skill"));
                 int itemsPerPage = levelItem.itemsPerPage(m.menu());
 
-                Set<Integer> levels = new HashSet<>();
+                Set<Integer> levels = Sets.newConcurrentHashSet();
                 for (int i = 0; i < itemsPerPage; i++) {
                     if (levelItem.startLevel(m.menu()) + m.menu().getCurrentPage() * itemsPerPage + i <= level) {
                         levels.add(levelItem.startLevel(m.menu()) + i + m.menu().getCurrentPage() * itemsPerPage);
@@ -272,7 +272,7 @@ public class LevelProgressionMenu {
                 if (level >= offset + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + offset) {
                     return Set.of(level + 1);
                 }
-                return new HashSet<>();
+                return Sets.newConcurrentHashSet();
             });
 
             template.slotPos(levelItem::slotPos);
@@ -286,7 +286,7 @@ public class LevelProgressionMenu {
                 int level = plugin.getUser(m.player()).getSkillLevel((Skill) m.menu().getProperty("skill"));
                 int itemsPerPage = levelItem.itemsPerPage(m.menu());
 
-                Set<Integer> levels = new HashSet<>();
+                Set<Integer> levels = Sets.newConcurrentHashSet();
                 for (int i = itemsPerPage - 1; i >= 0; i--) {
                     if (levelItem.startLevel(m.menu()) - 1 + m.menu().getCurrentPage() * itemsPerPage + i > level) {
                         levels.add(levelItem.startLevel(m.menu()) + i + m.menu().getCurrentPage() * itemsPerPage);

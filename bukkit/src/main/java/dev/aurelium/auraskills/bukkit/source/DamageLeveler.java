@@ -16,13 +16,13 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DamageLeveler extends SourceLeveler {
 
-    private final Map<UUID, Long> lastGainTime = new HashMap<>();
+    private final Map<UUID, Long> lastGainTime = new ConcurrentHashMap<>();
 
     public DamageLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.DAMAGE);

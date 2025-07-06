@@ -1,7 +1,7 @@
 package dev.aurelium.auraskills.api.item;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemContext {
 
@@ -21,7 +21,7 @@ public class ItemContext {
 
     public static class ItemContextBuilder {
 
-        private final Map<String, Object> map = new HashMap<>();
+        private final Map<String, Object> map = new ConcurrentHashMap<>();
 
         /**
          * Defines the base material of the context item. This should be a valid Minecraft item name

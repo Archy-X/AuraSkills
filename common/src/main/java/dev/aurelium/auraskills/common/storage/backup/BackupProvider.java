@@ -21,6 +21,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BackupProvider {
 
@@ -124,14 +125,14 @@ public class BackupProvider {
             UUID uuid = getFromKey(userNode);
             if (uuid == null) continue;
 
-            Map<Skill, Integer> skillLevels = new HashMap<>();
-            Map<Skill, Double> skillXp = new HashMap<>();
+            Map<Skill, Integer> skillLevels = new ConcurrentHashMap<>();
+            Map<Skill, Double> skillXp = new ConcurrentHashMap<>();
 
             for (ConfigurationNode skillNode : userNode.node("skills").childrenMap().values()) {
                 loadSkillNode(skillNode, skillLevels, skillXp);
             }
             // Load modifiers
-            Map<String, StatModifier> statModifiers = new HashMap<>();
+            Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
             for (ConfigurationNode modifierNode : userNode.node("stat_modifiers").childrenList()) {
                 String name = modifierNode.node("name").getString();
 
@@ -145,7 +146,7 @@ public class BackupProvider {
                 StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
                 statModifiers.put(name, statModifier);
             }
-            Map<String, TraitModifier> traitModifiers = new HashMap<>();
+            Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
             for (ConfigurationNode modifierNode : userNode.node("trait_modifiers").childrenList()) {
                 String name = modifierNode.node("name").getString();
 
@@ -173,14 +174,14 @@ public class BackupProvider {
             UUID uuid = getFromKey(playerNode);
             if (uuid == null) continue;
 
-            Map<Skill, Integer> skillLevels = new HashMap<>();
-            Map<Skill, Double> skillXp = new HashMap<>();
+            Map<Skill, Integer> skillLevels = new ConcurrentHashMap<>();
+            Map<Skill, Double> skillXp = new ConcurrentHashMap<>();
 
             for (ConfigurationNode skillNode : playerNode.childrenMap().values()) {
                 loadSkillNode(skillNode, skillLevels, skillXp);
             }
             // Create user state from level and xp maps with empty modifiers and mana
-            UserState state = new UserState(uuid, skillLevels, skillXp, new HashMap<>(), new HashMap<>(), 0);
+            UserState state = new UserState(uuid, skillLevels, skillXp, new ConcurrentHashMap<>(), new ConcurrentHashMap<>(), 0);
 
             plugin.getStorageProvider().applyState(state); // Save the state
         }

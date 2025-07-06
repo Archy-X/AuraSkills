@@ -24,6 +24,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillLoader {
 
@@ -169,7 +170,7 @@ public class SkillLoader {
     }
 
     private SkillOptions loadSkillOptions(ConfigurationNode config) {
-        Map<String, Object> optionMap = new HashMap<>();
+        Map<String, Object> optionMap = new ConcurrentHashMap<>();
         for (Object key : config.childrenMap().keySet()) { // Loop through all keys in options node
             if (!(key instanceof String)) continue; // Skip if key is not string
 

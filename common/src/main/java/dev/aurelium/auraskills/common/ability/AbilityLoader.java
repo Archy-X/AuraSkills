@@ -13,8 +13,8 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AbilityLoader {
 
@@ -48,7 +48,7 @@ public class AbilityLoader {
         ConfigurationNode abilityNode = root.node("abilities", ability.getId().toString());
 
         // Add all values in ability to a map
-        Map<String, Object> configMap = new HashMap<>();
+        Map<String, Object> configMap = new ConcurrentHashMap<>();
         for (Object keyObj : abilityNode.childrenMap().keySet()) {
             String key = (String) keyObj;
             Object value = abilityNode.node(key).raw();

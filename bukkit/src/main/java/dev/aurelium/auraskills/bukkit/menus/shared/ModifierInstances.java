@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ModifierInstances {
 
@@ -50,7 +51,7 @@ public class ModifierInstances {
         } else if (parent instanceof Trait trait) {
             return getTraitInstances(user, excludeLinkedStats, trait);
         }
-        return new HashMap<>();
+        return new ConcurrentHashMap<>();
     }
 
     public Map<String, ModifierInstance> sortAndReindex(Map<String, ModifierInstance> instances) {
@@ -72,7 +73,7 @@ public class ModifierInstances {
         );
 
         // Reindex the sorted ModifierInstance objects
-        Map<String, ModifierInstance> reindexedList = new HashMap<>();
+        Map<String, ModifierInstance> reindexedList = new ConcurrentHashMap<>();
         for (int i = 0; i < sortedList.size(); i++) {
             // Use withIndex to create a new instance with the new index
             ModifierInstance indexed = sortedList.get(i).withIndex(i);
@@ -83,7 +84,7 @@ public class ModifierInstances {
     }
 
     private Map<String, ModifierInstance> getTraitInstances(User user, boolean excludeLinkedStats, Trait trait) {
-        Map<String, ModifierInstance> instances = new HashMap<>();
+        Map<String, ModifierInstance> instances = new ConcurrentHashMap<>();
         int index = 0;
         // Base value if it exists
         double base = plugin.getTraitManager().getBaseLevel(user, trait);
@@ -129,7 +130,7 @@ public class ModifierInstances {
     }
 
     private Map<String, ModifierInstance> getStatInstances(User user, Stat stat) {
-        Map<String, ModifierInstance> instances = new HashMap<>();
+        Map<String, ModifierInstance> instances = new ConcurrentHashMap<>();
         int index = 0;
         // Add instances for each skill that gives the stat as a reward
         for (Entry<Skill, Double> entry : user.getUserStats().getLevelRewardedBySkill(stat).entrySet()) {
