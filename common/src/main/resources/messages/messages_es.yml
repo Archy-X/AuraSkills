@@ -479,7 +479,7 @@ commands:
       remove:
         does_not_exist: "<yellow>Tu objeto no tiene un <dark_aqua>{skill}<yellow> requerimiento!"
         removed: "<dark_aqua>{skill}<gray> elementos requeridos fueron eliminados de tu objeto"
-        desc: Removes an item requirement from the item held, and the lore associated with it by default.
+        desc: .
       list:
         header: "<white>Requisitos encontrados:"
         desc: Lists the item requirements on the item held.
