@@ -338,6 +338,14 @@ public interface SkillsUser {
     void pauseActionBar(int duration, TimeUnit timeUnit);
 
     /**
+     * Sends a message to the player either as an action bar if the ability action bar is enabled, otherwise
+     * to the player's chat.
+     *
+     * @param message the message to send
+     */
+    void sendAbilityMessage(String message);
+
+    /**
      * Saves the user to persistent storage asynchronously. This is only recommended if the SkillsUser represents an
      * offline user, as changes for online users are saved automatically on logout.
      *

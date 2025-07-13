@@ -34,6 +34,8 @@ public abstract class AbilityManager {
 
     public abstract void registerAbilityImplementations();
 
+    public abstract void sendAbilityMessage(User user, String message);
+
     protected void addImplToMap(AbilityImpl abilityImpl) {
         abilityImpls.put(abilityImpl.getClass(), abilityImpl);
     }

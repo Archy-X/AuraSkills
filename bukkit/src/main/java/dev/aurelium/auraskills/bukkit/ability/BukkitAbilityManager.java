@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.bukkit.skills.foraging.ForagingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.forging.ForgingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.healing.HealingAbilities;
 import dev.aurelium.auraskills.bukkit.skills.mining.MiningAbilities;
+import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.ability.AbilityManager;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
@@ -46,6 +47,14 @@ public class BukkitAbilityManager extends AbilityManager {
         registerAbilityImpl(new MiningAbilities(plugin));
         registerAbilityImpl(new ExcavationAbilities(plugin));
         registerAbilityImpl(new DefenseAbilities(plugin));
+    }
+
+    @Override
+    public void sendAbilityMessage(User user, String message) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player != null) {
+            sendMessage(player, message);
+        }
     }
 
     public void registerAbilityImpl(BukkitAbilityImpl abilityImpl) {
