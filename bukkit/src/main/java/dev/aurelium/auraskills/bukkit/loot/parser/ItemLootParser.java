@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
+import dev.aurelium.auraskills.api.loot.LootRequirements;
 import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantEntry;
@@ -34,7 +35,7 @@ public class ItemLootParser implements LootParser {
     }
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config) {
+    public Loot parse(LootParsingContext context, ConfigNode config, LootRequirements requirements) {
         ItemSupplier item = null;
         ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
         for (CustomItemParser parser : manager.getCustomItemParsers()) {
