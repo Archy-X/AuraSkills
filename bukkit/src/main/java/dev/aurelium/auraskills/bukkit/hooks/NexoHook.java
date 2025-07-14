@@ -108,9 +108,8 @@ public class NexoHook extends Hook implements Listener {
             }
 
             // May be modified: blocks, states
-            return new BlockSource(plugin, block.getValues(), blocks, block.getTriggers(), block.checkReplace(),
-                    states, block.getAfterStates(), block.getStateMultiplier(), block.getSupportBlockType(),
-                    block.isTrunk(), block.isLeaf());
+            return new BlockSource(plugin, block.getValues(), blocks, 100, block.getTriggers(), block.checkReplace(),
+                    states, block.getAfterStates(), block.getStateMultiplier(), block.getSupportBlockType());
         });
     }
 
