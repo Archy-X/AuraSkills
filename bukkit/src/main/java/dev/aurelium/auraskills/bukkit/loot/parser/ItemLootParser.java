@@ -5,15 +5,15 @@ import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
 import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
-import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
-import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantEntry;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantLevel;
-import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantList;
-import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantments;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import dev.aurelium.auraskills.common.loot.CustomItemParser;
+import dev.aurelium.auraskills.common.loot.ItemSupplier;
+import dev.aurelium.auraskills.common.loot.enchant.LootEnchantEntry;
+import dev.aurelium.auraskills.common.loot.enchant.LootEnchantList;
+import dev.aurelium.auraskills.common.loot.enchant.LootEnchantments;
 import dev.aurelium.auraskills.common.util.data.Validate;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -39,7 +39,7 @@ public class ItemLootParser implements LootParser {
         ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
         for (CustomItemParser parser : manager.getCustomItemParsers()) {
             if (parser.shouldUseParser(backing)) {
-                item = new ItemSupplier(parser.parseCustomItem(backing), null);
+                item = parser.parseCustomItem(backing);
                 break;
             }
         }
@@ -65,10 +65,10 @@ public class ItemLootParser implements LootParser {
         // Parse possible enchantments, value of the map is the weight
         Map<LootEnchantList, Integer> possibleEnchants = parsePossibleEnchants(config);
 
-        return new ItemSupplier(wrap(baseItem), new LootEnchantments(possibleEnchants));
+        return new ItemSupplier(wrap(baseItem), null, new LootEnchantments(possibleEnchants));
     }
 
-    private Map<LootEnchantList, Integer> parsePossibleEnchants(ConfigurationNode config) throws SerializationException {
+    private Map<LootEnchantList, Integer> parsePossibleEnchants(ConfigurationNode config) {
         Map<LootEnchantList, Integer> possibleEnchants = new HashMap<>();
         if (config.hasChild("enchantments")) { // Single enchant list
             LootEnchantList singleList = parseSingleEnchantList(config);

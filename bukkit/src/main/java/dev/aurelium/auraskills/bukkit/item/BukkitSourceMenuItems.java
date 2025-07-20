@@ -23,7 +23,7 @@ public class BukkitSourceMenuItems extends SourceMenuItems<ItemStack> {
 
     @Override
     public void parseAndRegisterMenuItem(XpSource source, ConfigurationNode config) {
-        if (config.isMap()) {
+        if (config.isMap() && config.node("key").empty()) {
             // Explicit item map
             ConfigurateItemParser parser = new ConfigurateItemParser(plugin);
             try {
@@ -41,32 +41,14 @@ public class BukkitSourceMenuItems extends SourceMenuItems<ItemStack> {
             }
         } else {
             // Get item from external plugin or item registry
-            String itemId = config.getString();
+            String itemId = config.isMap() ? config.node("key").getString() : config.getString();
             if (itemId == null) {
                 registerMenuItem(source, new ItemStack(getFallbackMaterial(source)));
                 return;
             }
-
-            String[] split = itemId.split(":", 2);
-
-            if (split.length >= 2) {
-                // Has namespace
-                String namespace = split[0];
-                String key = split[1];
-
-                ExternalItemProvider provider = plugin.getItemRegistry().getExternalItemProvider(namespace);
-                if (provider == null) {
-                    registerMenuItem(source, new ItemStack(getFallbackMaterial(source)));
-                    return;
-                }
-
-                ItemStack item = provider.getItem(key);
-                registerMenuItem(source, Objects.requireNonNullElseGet(item, () -> new ItemStack(getFallbackMaterial(source))));
-            } else {
-                // Try get from built-in item registry
-                ItemStack item = plugin.getItemRegistry().getItem(NamespacedId.fromDefault(split[0]));
-                registerMenuItem(source, Objects.requireNonNullElseGet(item, () -> new ItemStack(getFallbackMaterial(source))));
-            }
+            NamespacedId namespacedId = NamespacedId.fromDefaultWithColon(itemId);
+            ItemStack item = plugin.getItemRegistry().getItem(namespacedId, reloaded -> registerMenuItem(source, reloaded));
+            registerMenuItem(source, Objects.requireNonNullElseGet(item, () -> new ItemStack(getFallbackMaterial(source))));
         }
     }
 

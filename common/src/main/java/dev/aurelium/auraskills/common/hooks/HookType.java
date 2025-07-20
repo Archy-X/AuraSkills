@@ -6,4 +6,6 @@ public interface HookType {
 
     String getPluginName();
 
+    boolean requiresEnabledFirst();
+
 }

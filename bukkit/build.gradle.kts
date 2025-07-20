@@ -70,6 +70,11 @@ val compiler = javaToolchains.compilerFor {
     languageVersion = JavaLanguageVersion.of(21)
 }
 
+val jetbrainsLauncher = javaToolchains.launcherFor {
+    vendor = JvmVendorSpec.JETBRAINS
+    languageVersion = JavaLanguageVersion.of(21)
+}
+
 tasks {
     withType<ShadowJar> {
         val projectVersion: String by project
@@ -126,8 +131,13 @@ tasks {
         }
     }
 
+    withType(xyz.jpenilla.runtask.task.AbstractRun::class) {
+        javaLauncher = jetbrainsLauncher
+        jvmArgs("-XX:+AllowEnhancedClassRedefinition")
+    }
+
     runServer {
-        minecraftVersion("1.21.6")
+        minecraftVersion("1.21.7")
     }
 
     test {
