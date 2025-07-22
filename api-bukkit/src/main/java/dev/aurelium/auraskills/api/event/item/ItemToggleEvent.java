@@ -9,7 +9,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
@@ -21,10 +20,10 @@ public class ItemToggleEvent extends Event {
     private final SkillsUser user;
     private final ItemStack item;
     private final ModifierType type;
-    private final @Nullable EquipmentSlot slot;
+    private final @NotNull EquipmentSlot slot;
     private final Set<ReloadableIdentifier> toReload;
 
-    public ItemToggleEvent(Player player, SkillsUser user, ItemStack item, ModifierType type, @Nullable EquipmentSlot slot, Set<ReloadableIdentifier> toReload) {
+    public ItemToggleEvent(Player player, SkillsUser user, ItemStack item, ModifierType type, @NotNull EquipmentSlot slot, Set<ReloadableIdentifier> toReload) {
         this.player = player;
         this.user = user;
         this.item = item;
@@ -53,7 +52,7 @@ public class ItemToggleEvent extends Event {
         return type;
     }
 
-    @Nullable
+    @NotNull
     public EquipmentSlot getSlot() {
         return slot;
     }

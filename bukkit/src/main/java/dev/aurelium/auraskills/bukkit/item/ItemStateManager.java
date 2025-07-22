@@ -95,7 +95,7 @@ public class ItemStateManager {
         }
     }
 
-    private Result removeItem(ItemStack item, BukkitUser user, Player player, EquipmentSlot slot) {
+    private Result removeItem(ItemStack item, BukkitUser user, Player player, @NotNull EquipmentSlot slot) {
         ModifierType type = getModifierType(slot);
         Set<ReloadableIdentifier> toReload = new HashSet<>();
         SkillsItem skillsItem = new SkillsItem(item, plugin);
@@ -119,7 +119,7 @@ public class ItemStateManager {
         return new Result(item, event.getToReload());
     }
 
-    private Result addItem(ItemStack item, BukkitUser user, Player player, EquipmentSlot slot) {
+    private Result addItem(ItemStack item, BukkitUser user, Player player, @NotNull EquipmentSlot slot) {
         Set<ReloadableIdentifier> toReload = new HashSet<>();
         ModifierType type = getModifierType(slot);
 
