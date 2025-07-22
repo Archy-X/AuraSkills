@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.loot;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.loot.CustomItemParser;
-import dev.aurelium.auraskills.common.ref.ItemRef;
+import dev.aurelium.auraskills.common.loot.ItemSupplier;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -23,13 +23,13 @@ public class ItemKeyParser implements CustomItemParser {
     }
 
     @Override
-    public ItemRef parseCustomItem(ConfigurationNode config) {
-        NamespacedId itemKey = NamespacedId.fromDefault(config.node("key").getString(""));
+    public ItemSupplier parseCustomItem(ConfigurationNode config) {
+        NamespacedId itemKey = NamespacedId.fromDefaultWithColon(config.node("key").getString(""));
         ItemStack item = plugin.getItemRegistry().getItem(itemKey);
         if (item != null) {
-            return wrap(item);
+            return new ItemSupplier(wrap(item), null, null);
         } else {
-            throw new IllegalArgumentException("Item with key " + itemKey + " not found in item registry");
+            return new ItemSupplier(null, itemKey, null);
         }
     }
 

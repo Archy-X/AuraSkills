@@ -114,6 +114,19 @@ public class NamespacedId {
         return new NamespacedId(split[0], split[1]);
     }
 
+    public static NamespacedId fromDefaultWithColon(String string) {
+        String[] split = string.split("/");
+        if (split.length == 1) {
+            split = string.split(":");
+            if (split.length == 1) {
+                return new NamespacedId(NamespacedId.AURASKILLS, split[0]); // Use default namespace if not specified
+            }
+        } else if (split.length != 2) {
+            throw new IllegalArgumentException("Invalid NamespacedId: " + string);
+        }
+        return new NamespacedId(split[0], split[1]);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

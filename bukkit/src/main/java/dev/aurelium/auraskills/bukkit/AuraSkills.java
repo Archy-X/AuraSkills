@@ -421,7 +421,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     private void registerAndLoadMenus() {
         new MenuRegistrar(this).register();
-        menuFileManager.loadMenus();
+        menuFileManager.loadMenusOnStartup();
     }
 
     private void initStorageProvider() {

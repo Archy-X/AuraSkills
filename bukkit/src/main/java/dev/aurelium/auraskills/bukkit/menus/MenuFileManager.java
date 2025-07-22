@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.menus;
 
 import dev.aurelium.auraskills.api.registry.NamespacedRegistry;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.NexoHook;
 import dev.aurelium.auraskills.bukkit.menus.shared.SkillItem;
 import dev.aurelium.auraskills.common.api.ApiAuraSkills;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MenuFileManager {
 
@@ -46,6 +48,21 @@ public class MenuFileManager {
         SkillItem.loadFormats(plugin);
 
         plugin.getLogger().info("Loaded " + menusLoaded + " menus");
+    }
+
+    // Should only be called on startup
+    public void loadMenusOnStartup() {
+        if (plugin.getHookManager().isRegistered(NexoHook.class)) {
+            // Timeout for loading menus in case the event in NexoHook didn't fire
+            plugin.getScheduler().scheduleSync(() -> {
+                NexoHook hook = plugin.getHookManager().getHook(NexoHook.class);
+                if (!hook.getItemsLoadedCallbacks().isEmpty()) {
+                    loadMenus();
+                }
+            }, 5 * 50, TimeUnit.MILLISECONDS);
+        } else {
+            loadMenus();
+        }
     }
 
     public void updateMenus() {

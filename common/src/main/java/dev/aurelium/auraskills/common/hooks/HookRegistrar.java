@@ -20,12 +20,18 @@ public abstract class HookRegistrar {
 
     public abstract boolean isPluginEnabled(String name);
 
+    public abstract boolean isPluginLoaded(String name);
+
     public void registerHooks(ConfigurationNode config, HookType[] hooks) {
         for (HookType hookType : hooks) {
             // Don't re-register hooks
             if (manager.isRegistered(hookType.getHookClass())) continue;
             // Make sure the plugin that hooks into is enabled
-            if (!isPluginEnabled(hookType.getPluginName())) {
+            if (hookType.requiresEnabledFirst()) {
+                if (!isPluginEnabled(hookType.getPluginName())) {
+                    continue;
+                }
+            } else if (!isPluginLoaded(hookType.getPluginName())) {
                 continue;
             }
 
