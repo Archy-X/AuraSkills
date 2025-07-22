@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.loot.item.BukkitItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
@@ -27,6 +28,7 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
@@ -38,6 +40,8 @@ public class BukkitItemRegistry implements ItemRegistry {
     private final BukkitSourceMenuItems sourceMenuItems;
     private final ItemRegistryStorage storage;
     private final Map<String, ExternalItemProvider> externalItemProviders = new ConcurrentHashMap<>();
+    // Maps the ID of the unresolved item to a consumer that when called, will try to register the item again wherever it is needed (sources, loot)
+    private final Map<NamespacedId, Consumer<ItemStack>> unresolvedExternalItems = new ConcurrentHashMap<>();
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
@@ -57,8 +61,31 @@ public class BukkitItemRegistry implements ItemRegistry {
         return items.keySet();
     }
 
+    /**
+     * Tries to load unresolved external items from a given namespace again, calling the callback
+     * registered when the item load initially failed.
+     *
+     * @param namespace the namespace to reload
+     */
+    public void reloadUnresolvedItems(String namespace) {
+        unresolvedExternalItems.entrySet().removeIf(entry -> {
+            if (!entry.getKey().getNamespace().equals(namespace)) return false;
+            ItemStack reloaded = getItem(entry.getKey());
+            if (reloaded != null) {
+                entry.getValue().accept(reloaded);
+                return true; // Remove the entry after it's resolved
+            }
+            return false; // Keep as unresolved
+        });
+    }
+
     @Nullable
     public ItemStack getItem(NamespacedId key) {
+        return getItem(key, null);
+    }
+
+    @Nullable
+    public ItemStack getItem(NamespacedId key, @Nullable Consumer<ItemStack> unresolvedConsumer) {
         ItemStack item = items.get(key);
         if (item != null) {
             return item;
@@ -69,6 +96,8 @@ public class BukkitItemRegistry implements ItemRegistry {
             ItemStack external = provider.getItem(key.getOriginalKey());
             if (external != null) {
                 return external.clone();
+            } else if (unresolvedConsumer != null) {
+                unresolvedExternalItems.put(key, unresolvedConsumer);
             }
         }
 
@@ -113,7 +142,7 @@ public class BukkitItemRegistry implements ItemRegistry {
     public int getItemAmount(NamespacedId key) {
         ItemStack item = getItem(key);
         if (item == null) {
-            return 0;
+            return 1;
         }
         return item.getAmount();
     }
@@ -155,7 +184,8 @@ public class BukkitItemRegistry implements ItemRegistry {
                 if (!(loot instanceof ItemLoot itemLoot)) {
                     continue;
                 }
-                if (item.equals(unwrap(itemLoot.getItem().supplyItem(plugin, lootTable)))) {
+                BukkitItemSupplier bukkitItemSupplier = new BukkitItemSupplier(itemLoot.getItem());
+                if (item.equals(unwrap(bukkitItemSupplier.supplyItem(plugin, lootTable)))) {
                     return true;
                 }
             }
@@ -196,15 +226,6 @@ public class BukkitItemRegistry implements ItemRegistry {
 
     public ItemRegistryStorage getStorage() {
         return storage;
-    }
-
-    public Map<String, ExternalItemProvider> getExternalItemProviders() {
-        return externalItemProviders;
-    }
-
-    @Nullable
-    public ExternalItemProvider getExternalItemProvider(String namespace) {
-        return externalItemProviders.get(namespace);
     }
 
     public void registerExternalItemProvider(String namespace, ExternalItemProvider provider) {
