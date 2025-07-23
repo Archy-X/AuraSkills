@@ -8,83 +8,69 @@ sources:
   oak_log:
     block: oak_log
     xp: 8.0
-    trunk: true
   spruce_log:
     block: spruce_log
     xp: 8.0
-    trunk: true
+    max_blocks: 125
   birch_log:
     block: birch_log
     xp: 8.0
-    trunk: true
   jungle_log:
     block: jungle_log
     xp: 8.0
-    trunk: true
+    max_blocks: 220
   acacia_log:
     block: acacia_log
     xp: 8.0
-    trunk: true
   dark_oak_log:
     block: dark_oak_log
     xp: 8.0
-    trunk: true
+    max_blocks: 150
   mangrove_log:
     block: mangrove_log
     xp: 8.0
-    trunk: true
+    max_blocks: 125
   cherry_log:
     block: cherry_log
     xp: 8.0
-    trunk: true
   oak_leaves:
     block: oak_leaves
     xp: 0.8
-    leaf: true
   spruce_leaves:
     block: spruce_leaves
     xp: 0.8
-    leaf: true
   birch_leaves:
     block: birch_leaves
     xp: 0.8
-    leaf: true
   jungle_leaves:
     block: jungle_leaves
     xp: 0.8
-    leaf: true
   acacia_leaves:
     block: acacia_leaves
     xp: 0.8
-    leaf: true
   dark_oak_leaves:
     block: dark_oak_leaves
     xp: 0.8
-    leaf: true
   mangrove_leaves:
     block: mangrove_leaves
     xp: 0.8
-    leaf: true
   cherry_leaves:
     block: cherry_leaves
     xp: 0.8
-    leaf: true
   crimson_stem:
     block: crimson_stem
     xp: 10.0
-    trunk: true
+    max_blocks: 125
   warped_stem:
     block: warped_stem
     xp: 12.0
-    trunk: true
+    max_blocks: 125
   nether_wart_block:
     block: nether_wart_block
     xp: 1.0
-    leaf: true
   warped_wart_block:
     block: warped_wart_block
     xp: 1.0
-    leaf: true
   moss_block:
     block: moss_block
     xp: 6.4
@@ -103,11 +89,9 @@ sources:
   azalea_leaves:
     block: azalea_leaves
     xp: 3.0
-    leaf: true
   flowering_azalea_leaves:
     block: flowering_azalea_leaves
     xp: 4.0
-    leaf: true
   mangrove_roots:
     block: mangrove_roots
     xp: 4.0
@@ -139,11 +123,20 @@ sources:
   pale_oak_log:
     block: pale_oak_log
     xp: 8.0
-    trunk: true
+    max_blocks: 150
   pale_oak_leaves:
     block: pale_oak_leaves
     xp: 0.8
-    leaf: true
 tags:
   foraging_luck_applicable:
     - '*'
+  treecapitator_applicable:
+    - '*_log'
+    - '*_leaves'
+    - '*_stem'
+    - '*_mushroom_block'
+    - '*_wart_block'
+  trunks:
+    - '*_log'
+    - '*_stem'
+file_version: 1
