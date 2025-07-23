@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class BlockSource extends Source implements BlockXpSource {
 
+    public static final int DEFAULT_MAX_BLOCKS = 100;
+
     private final String[] blocks;
     private final int maxBlocks;
     private final BlockTriggers[] triggers;
