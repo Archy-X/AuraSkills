@@ -227,6 +227,11 @@ public class OfflineSkillsUser implements SkillsUser {
     }
 
     @Override
+    public void sendAbilityMessage(String message) {
+
+    }
+
+    @Override
     public CompletableFuture<Boolean> save(boolean removeFromMemory) {
         var future = new CompletableFuture<Boolean>();
         future.complete(false);

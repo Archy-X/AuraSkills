@@ -256,6 +256,11 @@ public class ApiSkillsUser implements SkillsUser {
     }
 
     @Override
+    public void sendAbilityMessage(String message) {
+        plugin.getAbilityManager().sendAbilityMessage(user, message);
+    }
+
+    @Override
     public CompletableFuture<Boolean> save(boolean removeFromMemory) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
         plugin.getScheduler().executeAsync(() -> {

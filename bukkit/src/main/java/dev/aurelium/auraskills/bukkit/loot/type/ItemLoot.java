@@ -3,7 +3,7 @@ package dev.aurelium.auraskills.bukkit.loot.type;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootValues;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
-import dev.aurelium.auraskills.bukkit.loot.item.ItemSupplier;
+import dev.aurelium.auraskills.common.loot.ItemSupplier;
 
 public class ItemLoot extends Loot {
 

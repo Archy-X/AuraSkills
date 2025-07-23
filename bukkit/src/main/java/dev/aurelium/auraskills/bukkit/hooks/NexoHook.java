@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.hooks;
 import com.google.common.collect.ImmutableMap;
 import com.nexomc.nexo.api.NexoBlocks;
 import com.nexomc.nexo.api.NexoItems;
+import com.nexomc.nexo.api.events.NexoItemsLoadedEvent;
 import com.nexomc.nexo.api.events.custom_block.noteblock.NexoNoteBlockBreakEvent;
 import com.nexomc.nexo.api.events.custom_block.noteblock.NexoNoteBlockPlaceEvent;
 import com.nexomc.nexo.items.ItemBuilder;
@@ -32,17 +33,23 @@ public class NexoHook extends Hook implements Listener {
     private final AuraSkills plugin;
     @Nullable
     private BlockLeveler blockLeveler;
+    private final List<Runnable> itemsLoadedCallbacks = new ArrayList<>();
 
     public NexoHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
         this.plugin = plugin;
         registerExternalItemProvider();
         registerBlockParsingExtension();
+        itemsLoadedCallbacks.add(() -> plugin.getMenuFileManager().loadMenus());
     }
 
     @Override
     public Class<? extends Hook> getTypeClass() {
         return NexoHook.class;
+    }
+
+    public List<Runnable> getItemsLoadedCallbacks() {
+        return itemsLoadedCallbacks;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -61,6 +68,13 @@ public class NexoHook extends Hook implements Listener {
             blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
         }
         blockLeveler.handleBreak(player, block, event, trait -> getUniqueNexoDrops(player, event.getDrop()));
+    }
+
+    @EventHandler
+    public void onItemsRegister(NexoItemsLoadedEvent event) {
+        plugin.getItemRegistry().reloadUnresolvedItems("nexo");
+        itemsLoadedCallbacks.forEach(Runnable::run);
+        itemsLoadedCallbacks.clear();
     }
 
     public void registerExternalItemProvider() {

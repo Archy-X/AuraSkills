@@ -27,4 +27,9 @@ public class BukkitHookRegistrar extends HookRegistrar {
         return plugin.getServer().getPluginManager().isPluginEnabled(name);
     }
 
+    @Override
+    public boolean isPluginLoaded(String name) {
+        return plugin.getServer().getPluginManager().getPlugin(name) != null;
+    }
+
 }

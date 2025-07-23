@@ -154,9 +154,7 @@ public class ConfigurateItemParser {
             parseNBT(item, config.childrenMap());
         } else if (config.getString() != null) {
             String nbtString = config.getString("nbt");
-            if (nbtString != null) {
-                parseNBTString(item, nbtString);
-            }
+            parseNBTString(item, nbtString);
         }
         return item;
     }
@@ -179,7 +177,7 @@ public class ConfigurateItemParser {
 
     @Nullable
     private ItemStack parseItemKey(String key) {
-        return plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key));
+        return plugin.getItemRegistry().getItem(NamespacedId.fromDefaultWithColon(key));
     }
 
     private void parseDurability(ConfigurationNode section, ItemStack item) {
