@@ -11,9 +11,10 @@ import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-import dev.aurelium.auraskills.bukkit.loot.requirement.LootRequirement;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
@@ -59,8 +60,10 @@ public class FishingLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootManager().getLootTable(skill);
         if (table == null) return;
 
+        RequirementManager manager = plugin.getRequirementManager();
+        LootRequirement tableRequirements = manager.getLootRequirementByID(table.getId());
         // Check if the table requirements are met (if set)
-        if (!LootRequirement.passes(table.getRequirements(), user, plugin)) {
+        if (tableRequirements != null && !tableRequirements.check(player)) {
             return;
         }
 
@@ -70,8 +73,9 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (!event.getHook().isInOpenWater()) continue;
             }
 
-            // Check if the pool requirements are met (if set)
-            if (!LootRequirement.passes(pool.getRequirements(), user, plugin)) {
+            LootRequirement poolRequirement = manager.getLootRequirementByID(pool.getId());
+            // // Check if the pool requirements are met (if set)
+            if (poolRequirement != null && !poolRequirement.check(player)) {
                 continue;
             }
 

@@ -7,11 +7,9 @@ import java.util.Map;
 public class LootOptioned {
 
     protected final Map<String, Object> options;
-    protected final LootRequirements requirements;
 
-    public LootOptioned(Map<String, Object> options, LootRequirements requirements) {
+    public LootOptioned(Map<String, Object> options) {
         this.options = options;
-        this.requirements = requirements;
     }
 
     public Map<String, Object> getOptions() {
@@ -29,10 +27,6 @@ public class LootOptioned {
         Object o = options.get(key);
         if (o == null) return def;
         return type.cast(o);
-    }
-
-    public LootRequirements getRequirements() {
-        return requirements;
     }
 
 }

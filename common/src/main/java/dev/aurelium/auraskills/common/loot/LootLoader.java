@@ -107,6 +107,7 @@ public abstract class LootLoader {
         List<LootPool> pools = new ArrayList<>();
         for (ConfigurationNode poolNode : poolsNode.childrenMap().values()) {
             String poolName = (String) poolNode.key();
+            NamespacedId poolId = NamespacedId.fromDefault(id.toString() + ":" + poolNode.key().toString());
 
             double baseChance = poolNode.node("base_chance").getDouble(0) / 100; // Converts from percent chance to decimal
             int selectionPriority = poolNode.node("selection_priority").getInt(1);
@@ -128,10 +129,10 @@ public abstract class LootLoader {
                 Loot loot = null;
                 try {
                     String lootTypeName = lootNode.node("type").getString("");
+                    NamespacedId lootId = NamespacedId.fromDefault(poolId.toString() + ":" + index);
                     LootType lootType = LootType.valueOf(lootTypeName.toUpperCase(Locale.ROOT));
                     // Item loot
                     LootParsingContext context = new LootParsingContextImpl(manager);
-                    LootRequirements lootRequirements = LootRequirements.parse(ApiConfigNode.toApi(lootNode));
 
                     if (lootType == LootType.ITEM) {
                         // Ignore loot if below the ignore_below major version
@@ -141,12 +142,12 @@ public abstract class LootLoader {
                             continue;
                         }
 
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), lootRequirements);
+                        loot = getParser(lootType).parse(lootId, context, ApiConfigNode.toApi(lootNode));
                     } else if (lootType == LootType.COMMAND) { // Command loot
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), lootRequirements);
+                        loot = getParser(lootType).parse(lootId, context, ApiConfigNode.toApi(lootNode));
                         // Entity loot, mainly for fishing
                     } else if (lootType == LootType.ENTITY) {
-                        loot = getParser(lootType).parse(context, ApiConfigNode.toApi(lootNode), lootRequirements);
+                        loot = getParser(lootType).parse(lootId, context, ApiConfigNode.toApi(lootNode));
                     } else {
                         // Parse custom loot registered from API
                         LootParser customParser = manager.getCustomLootParsers().get(lootTypeName);
@@ -154,7 +155,7 @@ public abstract class LootLoader {
                             throw new IllegalArgumentException("Unknown loot type: " + lootTypeName);
                         }
 
-                        loot = customParser.parse(context, ApiConfigNode.toApi(lootNode), lootRequirements);
+                        loot = customParser.parse(lootId, context, ApiConfigNode.toApi(lootNode));
                     }
                 } catch (Exception e) {
                     manager.getPlugin().logger().warn("Error parsing loot in file loot/" + file.getName() + " at path pools." + poolName + ".loot." + index + ", see below for error:");
@@ -166,13 +167,13 @@ public abstract class LootLoader {
                 index++;
             }
             // Create pool
-            LootPool pool = new LootPool(poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot, options, LootRequirements.parse(ApiConfigNode.toApi(poolNode)));
+            LootPool pool = new LootPool(poolId, poolName, lootList, baseChance, selectionPriority, overrideVanillaLoot, options);
             pools.add(pool);
         }
         // Sort pools by selection priority
         pools.sort((pool1, pool2) -> pool2.getSelectionPriority() - pool1.getSelectionPriority());
         // Create table
-        return new LootTable(id, UUID.randomUUID(), type, pools, LootRequirements.parse(ApiConfigNode.toApi(config)));
+        return new LootTable(id, UUID.randomUUID(), type, pools);
     }
 
     private void generateDefaultLootTables() {

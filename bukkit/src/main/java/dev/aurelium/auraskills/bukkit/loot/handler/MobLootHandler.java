@@ -11,8 +11,9 @@ import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
-import dev.aurelium.auraskills.bukkit.loot.requirement.LootRequirement;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
 import dev.aurelium.auraskills.common.user.User;
@@ -54,8 +55,10 @@ public class MobLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootManager().getLootTable(NamespacedId.fromDefault("mob"));
         if (table == null) return;
 
+        RequirementManager manager = plugin.getRequirementManager();
+        LootRequirement tableRequirements = manager.getLootRequirementByID(table.getId());
         // Check if the table requirements are met (if set)
-        if (!LootRequirement.passes(table.getRequirements(), user, plugin)) {
+        if (tableRequirements != null && !tableRequirements.check(player)) {
             return;
         }
 
@@ -78,8 +81,9 @@ public class MobLootHandler extends LootHandler implements Listener {
                 continue;
             }
 
-            // Check if the pool requirements are met (if set)
-            if (!LootRequirement.passes(pool.getRequirements(), user, plugin)) {
+            LootRequirement poolRequirement = manager.getLootRequirementByID(pool.getId());
+            // // Check if the pool requirements are met (if set)
+            if (poolRequirement != null && !poolRequirement.check(player)) {
                 continue;
             }
 

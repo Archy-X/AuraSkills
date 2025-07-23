@@ -12,14 +12,12 @@ public class LootTable {
     private final UUID uuid;
     private final LootTableType type;
     private final List<LootPool> pools;
-    private final LootRequirements requirements;
 
-    public LootTable(NamespacedId id, UUID uuid, LootTableType type, List<LootPool> pools, LootRequirements requirements) {
+    public LootTable(NamespacedId id, UUID uuid, LootTableType type, List<LootPool> pools) {
         this.id = id;
         this.uuid = uuid;
         this.type = type;
         this.pools = pools;
-        this.requirements = requirements;
     }
 
     public NamespacedId getId() {
@@ -46,10 +44,6 @@ public class LootTable {
 
     public List<LootPool> getPools() {
         return pools;
-    }
-
-    public LootRequirements getRequirements() {
-        return requirements;
     }
 
 }
