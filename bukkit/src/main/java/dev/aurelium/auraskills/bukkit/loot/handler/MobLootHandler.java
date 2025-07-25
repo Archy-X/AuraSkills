@@ -12,6 +12,8 @@ import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
 import dev.aurelium.auraskills.common.user.User;
@@ -53,6 +55,13 @@ public class MobLootHandler extends LootHandler implements Listener {
         LootTable table = plugin.getLootManager().getLootTable(NamespacedId.fromDefault("mob"));
         if (table == null) return;
 
+        RequirementManager manager = plugin.getRequirementManager();
+        LootRequirement tableRequirements = manager.getLootRequirementByID(table.getId());
+        // Check if the table requirements are met (if set)
+        if (tableRequirements != null && !tableRequirements.check(player)) {
+            return;
+        }
+
         DamageCause damageCause = getCause(event.getEntity().getLastDamageCause());
 
         EntityLeveler leveler = plugin.getLevelManager().getLeveler(EntityLeveler.class);
@@ -72,6 +81,12 @@ public class MobLootHandler extends LootHandler implements Listener {
                 continue;
             }
 
+            LootRequirement poolRequirement = manager.getLootRequirementByID(pool.getId());
+            // // Check if the pool requirements are met (if set)
+            if (poolRequirement != null && !poolRequirement.check(player)) {
+                continue;
+            }
+
             double chance = getCommonChance(pool, user);
 
             LootDropEvent.Cause cause = LootDropEvent.Cause.MOB_LOOT_TABLE;
@@ -80,7 +95,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
             double rolled = random.nextDouble();
             if (rolled < chance) {
-                Loot selectedLoot = selectLoot(pool, context);
+                Loot selectedLoot = selectLoot(pool, context, user);
                 // Give loot
                 if (selectedLoot == null) {
                     break;

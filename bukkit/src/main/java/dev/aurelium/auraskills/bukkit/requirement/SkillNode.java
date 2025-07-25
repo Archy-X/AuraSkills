@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.requirement.blocks;
+package dev.aurelium.auraskills.bukkit.requirement;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;

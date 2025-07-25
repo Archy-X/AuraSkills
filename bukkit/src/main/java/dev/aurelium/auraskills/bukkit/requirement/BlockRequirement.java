@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.requirement.blocks;
+package dev.aurelium.auraskills.bukkit.requirement;
 
 import org.bukkit.Material;
 

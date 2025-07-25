@@ -13,6 +13,8 @@ import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
+import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
+import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
@@ -57,11 +59,26 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
         if (table == null) return;
+
+        RequirementManager manager = plugin.getRequirementManager();
+        LootRequirement tableRequirements = manager.getLootRequirementByID(table.getId());
+        // Check if the table requirements are met (if set)
+        if (tableRequirements != null && !tableRequirements.check(player)) {
+            return;
+        }
+
         for (LootPool pool : table.getPools()) {
             // Check if in open water
             if (pool.getOption("require_open_water", Boolean.class, false) && VersionUtils.isAtLeastVersion(16, 5)) {
                 if (!event.getHook().isInOpenWater()) continue;
             }
+
+            LootRequirement poolRequirement = manager.getLootRequirementByID(pool.getId());
+            // // Check if the pool requirements are met (if set)
+            if (poolRequirement != null && !poolRequirement.check(player)) {
+                continue;
+            }
+
             // Calculate chance for pool
             XpSource source = null;
             double chance = getCommonChance(pool, user);
@@ -88,7 +105,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
             if (random.nextDouble() < chance) { // Pool is selected
                 XpSource contextSource = originalSource != null ? originalSource.source() : null;
-                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
+                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource), user);
                 // Give loot
                 if (selectedLoot == null) { // Continue iterating pools
                     continue;
