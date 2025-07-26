@@ -79,8 +79,8 @@ repository.
 ```xml
 
 <repository>
-    <id>sonatype-oss-snapshots1</id>
-    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    <id>maven-central-snapshots</id>
+    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
 </repository>
 ```
 
@@ -89,7 +89,7 @@ repository.
 <dependency>
     <groupId>dev.aurelium</groupId>
     <artifactId>auraskills-api-bukkit</artifactId>
-    <version>2.3.3</version>
+    <version>2.3.5</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -101,11 +101,11 @@ repository.
 ```gradle
 repositories {
     mavenCentral()
-    maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots/' }
+    maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
 }
 
 dependencies {
-    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.3.3'
+    compileOnly 'dev.aurelium:auraskills-api-bukkit:2.3.5'
 }
 ```
 
@@ -114,11 +114,11 @@ dependencies {
 ```Gradle Kotlin DSL
 repositories { 
     mavenCentral()
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    maven("https://central.sonatype.com/repository/maven-snapshots/")
 }
 
 dependencies { 
-    compileOnly("dev.aurelium:auraskills-api-bukkit:2.3.3")
+    compileOnly("dev.aurelium:auraskills-api-bukkit:2.3.5")
 }
 ```
 
