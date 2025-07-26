@@ -81,6 +81,8 @@ public abstract class ConfigProvider {
             }
             registerHooks(config);
 
+            config.removeChild("experimental"); // Don't save the experimental options
+
             File file = new File(plugin.getPluginFolder(), "config.yml");
             loader.saveConfigIfUpdated(file, embedded, user, config);
 

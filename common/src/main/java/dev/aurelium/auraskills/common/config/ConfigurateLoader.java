@@ -135,7 +135,13 @@ public class ConfigurateLoader {
     public int countMissing(ConfigurationNode embedded, ConfigurationNode user) {
         int count = 0;
         Stack<ConfigurationNode> stack = new Stack<>();
-        stack.addAll(embedded.childrenMap().values());
+        List<? extends ConfigurationNode> nonExperimentalNodes = embedded.childrenMap()
+                .values()
+                .stream()
+                .filter(n -> !String.valueOf(n.key()).equals("experimental")) // Don't check the experimental section since we don't want to save this
+                .toList();
+
+        stack.addAll(nonExperimentalNodes);
         while (!stack.isEmpty()) {
             ConfigurationNode node = stack.pop();
             if (node.isMap()) { // A section node, push children to search

@@ -19,6 +19,7 @@ public class LeaderboardManager {
     private List<SkillValue> powerLeaderboard;
     private List<SkillValue> averageLeaderboard;
     private volatile boolean sorting = false;
+    private long previousFetchTime = 0; // The first time leaderboards sort, all users should be fetched
 
     public LeaderboardManager(AuraSkillsPlugin plugin, LeaderboardExclusion leaderboardExclusion) {
         this.plugin = plugin;
@@ -39,12 +40,13 @@ public class LeaderboardManager {
         }, 5 * 60, 5 * 60, TimeUnit.SECONDS);
     }
 
-    public void updateLeaderboards() {
-        updateLeaderboardsSync();
+    public long updateLeaderboards() {
+        return updateLeaderboardsSync();
     }
 
-    private void updateLeaderboardsSync() {
-        if (sorting) return;
+    private long updateLeaderboardsSync() {
+        if (sorting) return 0;
+        long start = System.currentTimeMillis();
         try {
             setSorting(true);
             // Initialize lists
@@ -57,16 +59,20 @@ public class LeaderboardManager {
             // Add players already in memory
             addLoadedPlayersToLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
             // Add offline players
-            addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard);
+            addOfflinePlayers(skillLeaderboards, powerLeaderboard, averageLeaderboard, previousFetchTime);
             // Sort leaderboards and set as current
             sortLeaderboards(skillLeaderboards, powerLeaderboard, averageLeaderboard);
 
             setSorting(false);
+            previousFetchTime = start;
+
+            return System.currentTimeMillis() - start;
         } catch (Exception e) {
             plugin.logger().warn("Error updating leaderboards: " + e.getMessage());
             e.printStackTrace();
             setSorting(false);
         }
+        return System.currentTimeMillis() - start;
     }
 
     public List<SkillValue> getLeaderboard(Skill skill) {
@@ -199,8 +205,8 @@ public class LeaderboardManager {
         }
     }
 
-    private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb) throws Exception {
-        List<UserState> offlineStates = plugin.getStorageProvider().loadStates(true, true);
+    private void addOfflinePlayers(Map<Skill, List<SkillValue>> skillLb, List<SkillValue> powerLb, List<SkillValue> averageLb, long previousFetchTime) throws Exception {
+        List<UserState> offlineStates = plugin.getStorageProvider().loadStates(true, true, previousFetchTime);
         for (UserState state : offlineStates) {
             if (leaderboardExclusion.isExcludedPlayer(state.uuid())) {
                 continue;

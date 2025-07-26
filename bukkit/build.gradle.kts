@@ -61,6 +61,7 @@ dependencies {
     testImplementation(testFixtures(project(":common")))
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.59.0")
     testImplementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation("com.mysql:mysql-connector-j:9.3.0")
     testImplementation(platform("org.junit:junit-bom:5.13.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

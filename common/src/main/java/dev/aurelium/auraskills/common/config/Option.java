@@ -12,6 +12,7 @@ public enum Option {
     SQL_LOAD_DELAY("sql.load_delay", OptionType.INT),
     SQL_ALWAYS_LOAD_ON_JOIN("sql.always_load_on_join", OptionType.BOOLEAN),
     SQL_SSL("sql.ssl", OptionType.BOOLEAN),
+    SQL_OPTIMIZE_LEADERBOARD_UPDATING("experimental.optimize_leaderboard_updating", OptionType.BOOLEAN),
     SQL_POOL_MAXIMUM_POOL_SIZE("sql.pool.maximum_pool_size", OptionType.INT),
     SQL_POOL_MINIMUM_IDLE("sql.pool.minimum_idle", OptionType.INT),
     SQL_POOL_CONNECTION_TIMEOUT("sql.pool.connection_timeout", OptionType.INT),
