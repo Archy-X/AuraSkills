@@ -230,7 +230,7 @@ public class RequirementManager implements Listener {
         return blockRequirements;
     }
 
-    public LootRequirement getLootRequirementByID(NamespacedId id) {
+    public LootRequirement getLootRequirementById(NamespacedId id) {
         for (LootRequirement requirement : lootRequirements) {
             if (requirement.getId().equals(id))
                 return requirement;

@@ -61,7 +61,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         if (table == null) return;
 
         RequirementManager manager = plugin.getRequirementManager();
-        LootRequirement tableRequirements = manager.getLootRequirementByID(table.getId());
+        LootRequirement tableRequirements = manager.getLootRequirementById(table.getId());
         // Check if the table requirements are met (if set)
         if (tableRequirements != null && !tableRequirements.check(player)) {
             return;
@@ -73,8 +73,8 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (!event.getHook().isInOpenWater()) continue;
             }
 
-            LootRequirement poolRequirement = manager.getLootRequirementByID(pool.getId());
-            // // Check if the pool requirements are met (if set)
+            LootRequirement poolRequirement = manager.getLootRequirementById(pool.getId());
+            // Check if the pool requirements are met (if set)
             if (poolRequirement != null && !poolRequirement.check(player)) {
                 continue;
             }

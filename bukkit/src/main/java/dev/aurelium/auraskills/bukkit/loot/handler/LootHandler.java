@@ -173,8 +173,8 @@ public abstract class LootHandler extends AbstractLootHandler {
         RequirementManager manager = plugin.getRequirementManager();
 
         return pool.rollLoot(loot -> {
-            LootRequirement requirement = manager.getLootRequirementByID(loot.getId());
-            // // Check if the pool requirements are met (if set)
+            LootRequirement requirement = manager.getLootRequirementById(loot.getId());
+            // Check if the pool requirements are met (if set)
             if (requirement != null && !requirement.check(player)) {
                 return false;
             }
