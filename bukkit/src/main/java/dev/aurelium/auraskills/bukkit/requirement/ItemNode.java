@@ -1,12 +1,11 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
-
-import java.util.Locale;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Locale;
 
 public class ItemNode extends RequirementNode {
 
