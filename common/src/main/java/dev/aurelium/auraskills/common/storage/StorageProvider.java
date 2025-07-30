@@ -113,7 +113,11 @@ public abstract class StorageProvider {
 
     public abstract void delete(UUID uuid) throws Exception;
 
-    public abstract List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception;
+    public List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues) throws Exception {
+        return loadStates(ignoreOnline, skipKeyValues, 0);
+    }
+
+    public abstract List<UserState> loadStates(boolean ignoreOnline, boolean skipKeyValues, long previousFetchTime) throws Exception;
 
     public abstract List<AntiAfkLog> loadAntiAfkLogs(UUID uuid);
 

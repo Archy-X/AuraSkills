@@ -14,6 +14,7 @@ import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.source.parser.BlockSourceParser;
 import dev.aurelium.auraskills.common.source.parser.ParsingExtension;
 import dev.aurelium.auraskills.common.source.parser.util.*;
+import dev.aurelium.auraskills.common.util.file.ConfigUpdate;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,7 @@ public class SourceLoader {
 
     private final AuraSkillsPlugin plugin;
     private final ConfigurateLoader configurateLoader;
+    private final SourceFileUpdates fileUpdates = new SourceFileUpdates();
 
     public SourceLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -71,7 +73,7 @@ public class SourceLoader {
             Map<String, ConfigurationNode> userSources = new ConcurrentHashMap<>();
             addToMap(user, userSources);
 
-            if (updateUserFile(embeddedSources, userSources, sourceFile, user)) {
+            if (updateUserFile(embeddedSources, userSources, sourceFile, embedded, user, skill)) {
                 // Reload file if updated
                 user = configurateLoader.loadUserFile(sourceFile);
                 userDefault = user.node("default");
@@ -122,33 +124,67 @@ public class SourceLoader {
     }
 
     public boolean updateUserFile(Map<String, ConfigurationNode> embeddedSources, Map<String, ConfigurationNode> userSources,
-            File userFile, ConfigurationNode user) throws IOException {
+            File userFile, @Nullable ConfigurationNode embedded, ConfigurationNode user, Skill skill) throws IOException {
         String skillName = userFile.getName();
-        if (skillName.contains("alchemy") || skillName.contains("agility") || skillName.contains("enchanting")) {
+
+        if (embedded == null) {
             return false;
         }
 
-        int added = 0;
-        for (Entry<String, ConfigurationNode> embeddedEntry : embeddedSources.entrySet()) {
-            String sourceName = embeddedEntry.getKey();
-            // Skip if already in user source
-            if (userSources.containsKey(sourceName)) {
-                continue;
+        boolean updatedFileVersion = false;
+
+        int embeddedVersion = embedded.node("file_version").getInt(0);
+        int userVersion = user.node("file_version").getInt(0);
+
+        if (userVersion < embeddedVersion) {
+            Map<Integer, ConfigUpdate> updates = fileUpdates.getFileUpdates().getOrDefault(skill, new HashMap<>());
+            // Apply all the numbered updates from versions user + 1 to embedded
+            for (int updateTo = userVersion + 1; updateTo <= embeddedVersion; updateTo++) {
+                ConfigUpdate configUpdate = updates.get(updateTo);
+                if (configUpdate != null) {
+                    configUpdate.apply(embedded, user);
+                }
             }
-            ConfigurationNode embeddedSource = embeddedEntry.getValue();
-            // Set embedded source to user file
-            user.node("sources").node(sourceName).set(embeddedSource);
-            added++;
+
+            user.node("file_version").set(embeddedVersion);
+            updatedFileVersion = true;
         }
 
-        if (added > 0) {
-            FileUtil.saveYamlFile(userFile, user);
-            String path = plugin.getPluginFolder().toPath().relativize(userFile.toPath()).toString();
-            plugin.logger().info("Updated " + path + " with " + added + " new source(s). " +
-                    "If you had removed default sources they will be added back. Set the xp of the source to 0 to disable them instead.");
-            return true;
+        // We won't update the file if the file_version in the user file is not behind
+        if (!updatedFileVersion) {
+            return false;
         }
-        return false;
+
+        int addedSources = 0;
+        // Don't update these skills with new sources because users on the legacy preset will have sources duplicated between multiple skills
+        if (!skillName.contains("alchemy") && !skillName.contains("agility") && !skillName.contains("enchanting")) {
+            for (Entry<String, ConfigurationNode> embeddedEntry : embeddedSources.entrySet()) {
+                String sourceName = embeddedEntry.getKey();
+                // Skip if already in user source
+                if (userSources.containsKey(sourceName)) {
+                    continue;
+                }
+                ConfigurationNode embeddedSource = embeddedEntry.getValue();
+                // Set embedded source to user file
+                user.node("sources").node(sourceName).set(embeddedSource);
+                addedSources++;
+            }
+        }
+
+        int addedTags = 0;
+        // Copy missing tags
+        for (Object tagKey : embedded.node("tags").childrenMap().keySet()) {
+            if (user.node("tags", tagKey).empty()) {
+                user.node("tags", tagKey).set(embedded.node("tags", tagKey));
+                addedTags++;
+            }
+        }
+
+        FileUtil.saveYamlFile(userFile, user);
+        String path = plugin.getPluginFolder().toPath().relativize(userFile.toPath()).toString();
+        plugin.logger().info("Updated " + path + " with " + addedSources + " new source(s) and " + addedTags + " new tag(s). " +
+                "If you had removed default sources they will be added back. Set the xp of the source to 0 to disable them instead.");
+        return true;
     }
 
     public Map<SourceTag, List<XpSource>> loadTags(Skill skill, File contentDirectory) {

@@ -4,7 +4,8 @@ import java.util.Locale;
 
 public enum Migrations {
 
-    V1__MODIFIERS_TABLE;
+    V1__MODIFIERS_TABLE,
+    V2__LAST_UPDATED_COL;
 
     // Excluding .sql
     private final String fileName;

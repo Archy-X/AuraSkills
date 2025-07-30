@@ -282,6 +282,8 @@ automatic_backups:
   minimum_interval_hours: 24
   max_users: 50000
 save_blank_profiles: false
+experimental:
+  optimize_leaderboard_updating: false
 metadata:
   config_migration_complete: false
   file_user_migration_complete: false

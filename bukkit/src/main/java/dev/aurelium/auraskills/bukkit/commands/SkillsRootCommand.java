@@ -185,13 +185,23 @@ public class SkillsRootCommand extends BaseCommand {
     @Subcommand("updateleaderboards")
     @CommandPermission("auraskills.command.updateleaderboards")
     @Description("%desc_updateleaderboards")
-    public void onUpdateLeaderboards(CommandSender sender) {
+    public void onUpdateLeaderboards(CommandSender sender, @Default("1") int samples) {
         Locale locale = plugin.getLocale(sender);
         if (plugin.getLeaderboardManager().isNotSorting()) {
             plugin.getScheduler().executeAsync(() -> {
-                plugin.getLeaderboardManager().updateLeaderboards();
+                long sum = 0;
+                for (int i = 0; i < samples; i++) {
+                    long timeMs = plugin.getLeaderboardManager().updateLeaderboards();
+                    sum += timeMs;
+                }
+                double avg = sum / (double) samples;
 
-                plugin.getScheduler().executeSync(() -> sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UPDATELEADERBOARDS_UPDATED, locale)));
+                plugin.getScheduler().executeSync(() -> {
+                    sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UPDATELEADERBOARDS_UPDATED, locale));
+                    if (samples > 1) {
+                        sender.sendMessage(plugin.getPrefix(locale) + "Average update time over " + samples + " samples: " + Math.round(avg) + " ms");
+                    }
+                });
             });
         } else {
             sender.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.UPDATELEADERBOARDS_ALREADY_UPDATING, locale));

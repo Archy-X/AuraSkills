@@ -98,6 +98,7 @@ public class NexoHook extends Hook implements Listener {
             // Modify states
             final String nexoPrefix = "nexo:";
 
+            boolean modified = false;
             for (int i = 0; i < blocks.length; i++) {
                 String blockId = blocks[i];
                 if (!blockId.startsWith(nexoPrefix)) {
@@ -116,16 +117,20 @@ public class NexoHook extends Hook implements Listener {
 
                 // Replace nexo: prefixed block name with actual material name
                 blocks[i] = blockData.getMaterial().getKey().getKey().toLowerCase(Locale.ROOT);
+                modified = true;
             }
+            if (!modified) {
+                return source;
+            }
+
             // Convert stateBuilder List to states array and assign
             if (!stateBuilder.isEmpty()) {
                 states = stateBuilder.toArray(new BlockXpSourceState[0]);
             }
 
             // May be modified: blocks, states
-            return new BlockSource(plugin, block.getValues(), blocks, block.getTriggers(), block.checkReplace(),
-                    states, block.getAfterStates(), block.getStateMultiplier(), block.getSupportBlockType(),
-                    block.isTrunk(), block.isLeaf());
+            return new BlockSource(plugin, block.getValues(), blocks, block.getMaxBlocks(), block.getTriggers(), block.checkReplace(),
+                    states, block.getAfterStates(), block.getStateMultiplier(), block.getSupportBlockType());
         });
     }
 
