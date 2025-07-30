@@ -137,7 +137,7 @@ public class SourceLoader {
         int userVersion = user.node("file_version").getInt(0);
 
         if (userVersion < embeddedVersion) {
-            Map<Integer, ConfigUpdate> updates = fileUpdates.getFileUpdates().getOrDefault(skill, new HashMap<>());
+            Map<Integer, ConfigUpdate> updates = fileUpdates.getFileUpdates().getOrDefault(skill, new ConcurrentHashMap<>());
             // Apply all the numbered updates from versions user + 1 to embedded
             for (int updateTo = userVersion + 1; updateTo <= embeddedVersion; updateTo++) {
                 ConfigUpdate configUpdate = updates.get(updateTo);

@@ -25,12 +25,14 @@ import dev.aurelium.auraskills.common.user.SkillLevelMaps;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserState;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
+import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class SqlStorageProvider extends StorageProvider {
 
@@ -220,7 +222,7 @@ public class SqlStorageProvider extends StorageProvider {
     @Override
     public void applyState(UserState state) throws Exception {
         // Insert into users database
-        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana=?";
+        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, mana) VALUES (?, ?) ON DUPLICATE KEY UPDATE mana = ?, last_updated = CURRENT_TIMESTAMP";
         try (Connection connection = pool.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
                 statement.setString(1, state.uuid().toString());
@@ -285,17 +287,22 @@ public class SqlStorageProvider extends StorageProvider {
         }
 
         try (Connection connection = pool.getConnection()) {
+            connection.setAutoCommit(false); // Start transaction
+
             saveUsersTable(connection, user);
             saveSkillLevelsTable(connection, user);
             int userId = getUserId(connection, user.getUuid());
             saveKeyValuesTable(connection, user, userId);
             saveModifiersTable(connection, user, userId);
             saveLogsTable(connection, user);
+
+            connection.commit();
+            connection.setAutoCommit(true);
         }
     }
 
     private void saveUsersTable(Connection connection, User user) throws SQLException {
-        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale=?, mana=?";
+        String usersQuery = "INSERT INTO " + TABLE_PREFIX + "users (player_uuid, locale, mana) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE locale = ?, mana = ?, last_updated = CURRENT_TIMESTAMP";
         try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
             statement.setString(1, user.getUuid().toString());
             int curr = 2; // Current index to set
@@ -589,7 +596,6 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private void saveAntiAfkLogs(List<AntiAfkLog> logs, Connection connection, User user) throws SQLException {
-        connection.setAutoCommit(false);
         final String query = "INSERT IGNORE INTO " + TABLE_PREFIX + "logs (log_type, log_time, log_level, log_message, player_uuid, player_coords, world_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             for (AntiAfkLog log : logs) {
@@ -603,11 +609,6 @@ public class SqlStorageProvider extends StorageProvider {
                 ps.addBatch();
             }
             ps.executeBatch();
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.setAutoCommit(true);
         }
     }
 
@@ -621,63 +622,95 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     @Override
-    public List<UserState> loadStates(boolean ignoreOnline, boolean skipModifiers) throws Exception {
+    public List<UserState> loadStates(boolean ignoreOnline, boolean skipModifiers, long previousFetchTime) throws Exception {
+        boolean enableLastUpdatedFilter = previousFetchTime > 0 && plugin.configBoolean(Option.SQL_OPTIMIZE_LEADERBOARD_UPDATING);
+        String query = getLoadStatesQuery(enableLastUpdatedFilter);
+
         List<UserState> states = new ArrayList<>();
 
-        Map<Integer, Map<Skill, Integer>> loadedSkillLevels = new ConcurrentHashMap<>();
-        Map<Integer, Map<Skill, Double>> loadedSkillXp = new ConcurrentHashMap<>();
+        Map<String, Skill> skillCache = plugin.getSkillRegistry()
+            .getValues()
+            .stream()
+            .collect(Collectors.toMap(s -> s.getId().toString(), s -> s));
 
-        try (Connection connection = pool.getConnection()) {
-            String skillLevelsQuery = "SELECT user_id, skill_name, skill_level, skill_xp FROM " + TABLE_PREFIX + "skill_levels;";
-            try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int userId = resultSet.getInt("user_id");
-                        String skillName = resultSet.getString("skill_name");
-                        Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromString(skillName));
-                        if (skill == null) continue;
-
-                        int level = resultSet.getInt("skill_level");
-                        double xp = resultSet.getDouble("skill_xp");
-
-                        loadedSkillLevels.computeIfAbsent(userId, k -> new ConcurrentHashMap<>()).put(skill, level);
-                        loadedSkillXp.computeIfAbsent(userId, k -> new ConcurrentHashMap<>()).put(skill, xp);
-                    }
-                }
+        try (Connection connection = pool.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            if (enableLastUpdatedFilter) {
+                statement.setTimestamp(1, new Timestamp(previousFetchTime));
             }
-            String usersQuery = "SELECT user_id, player_uuid, mana FROM " + TABLE_PREFIX + "users;";
-            try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int userId = resultSet.getInt("user_id");
-                        UUID uuid = UUID.fromString(resultSet.getString("player_uuid"));
+            try (ResultSet rs = statement.executeQuery()) {
+                int currentId = -1;
+                UUID uuid = null;
+                double mana = 0;
 
-                        if (ignoreOnline && userManager.hasUser(uuid)) {
-                            continue; // Skip if player is online
-                        }
+                Map<Skill, Integer> lvl = new ConcurrentHashMap<>();
+                Map<Skill, Double> xp = new ConcurrentHashMap<>();
 
-                        double mana = resultSet.getDouble("mana");
+                while (rs.next()) {
+                    int userId = rs.getInt(1);
 
-                        Map<String, StatModifier> statModifiers;
-                        Map<String, TraitModifier> traitModifiers;
-                        if (!skipModifiers) {
-                            statModifiers = loadStatModifiers(connection, uuid, userId);
-                            traitModifiers = loadTraitModifiers(connection, uuid, userId);
-                        } else {
-                            statModifiers = Collections.emptyMap();
-                            traitModifiers = Collections.emptyMap();
-                        }
+                    if (userId != currentId) { // Flush previous user
+                        checkAddUserState(ignoreOnline, skipModifiers, states, connection, currentId, uuid, mana, lvl, xp);
 
-                        Map<Skill, Integer> skillLevelMap = loadedSkillLevels.getOrDefault(userId, new ConcurrentHashMap<>());
-                        Map<Skill, Double> skillXpMap = loadedSkillXp.getOrDefault(userId, new ConcurrentHashMap<>());
+                        // Start new user
+                        currentId = userId;
+                        uuid = UUID.fromString(rs.getString(2));
+                        mana = rs.getDouble(3);
+                        lvl = new ConcurrentHashMap<>();
+                        xp = new ConcurrentHashMap<>();
+                    }
 
-                        UserState state = new UserState(uuid, skillLevelMap, skillXpMap, statModifiers, traitModifiers, mana);
-                        states.add(state);
+                    Skill skill = skillCache.get(rs.getString(4));
+                    if (skill != null) {
+                        lvl.put(skill, rs.getInt(5));
+                        xp.put(skill, rs.getDouble(6));
                     }
                 }
+
+                checkAddUserState(ignoreOnline, skipModifiers, states, connection, currentId, uuid, mana, lvl, xp);
             }
         }
         return states;
+    }
+
+    @NotNull
+    @Language("SQL")
+    private String getLoadStatesQuery(boolean enableLastUpdatedFilter) {
+        @Language("SQL") String query;
+        if (enableLastUpdatedFilter) {
+            query = """
+                    SELECT u.user_id, player_uuid, mana, skill_name, skill_level, skill_xp
+                    FROM auraskills_users u
+                    LEFT JOIN auraskills_skill_levels s USING (user_id)
+                    WHERE last_updated > ?
+                    ORDER BY u.user_id
+                    """;
+        } else {
+            query = """
+                    SELECT u.user_id, player_uuid, mana, skill_name, skill_level, skill_xp
+                    FROM auraskills_users u
+                    LEFT JOIN auraskills_skill_levels s USING (user_id)
+                    ORDER BY u.user_id
+                    """;
+        }
+        return query;
+    }
+
+    private void checkAddUserState(boolean ignoreOnline, boolean skipModifiers, List<UserState> states, Connection connection, int currentId, UUID uuid, double mana, Map<Skill, Integer> lvl, Map<Skill, Double> xp) throws SQLException {
+        if (currentId != -1) {
+            boolean online = userManager.hasUser(uuid);
+            if (!ignoreOnline || !online) {
+                Map<String, StatModifier> statMods;
+                Map<String, TraitModifier> traitMods;
+                if (!skipModifiers) {
+                    statMods = loadStatModifiers(connection, uuid, currentId);
+                    traitMods = loadTraitModifiers(connection, uuid, currentId);
+                } else {
+                    statMods = Collections.emptyMap();
+                    traitMods = Collections.emptyMap();
+                }
+                states.add(new UserState(uuid, lvl, xp, statMods, traitMods, mana));
+            }
+        }
     }
 
     @Override
