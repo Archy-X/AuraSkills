@@ -166,8 +166,13 @@ public abstract class LootHandler extends AbstractLootHandler {
     }
 
     @Nullable
-    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext) {
+    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext, User user) {
+        Player player = Bukkit.getPlayer(user.getUuid());
         return pool.rollLoot(loot -> {
+            if (!loot.checkRequirements(player.getUniqueId())) {
+                return false;
+            }
+
             if (providedContext instanceof SourceContext(XpSource providedSource)) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists

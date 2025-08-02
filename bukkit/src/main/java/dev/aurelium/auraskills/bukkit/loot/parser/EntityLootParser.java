@@ -4,6 +4,8 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
+import dev.aurelium.auraskills.api.loot.LootRequirements;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.entity.EntitySupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
@@ -20,7 +22,7 @@ public class EntityLootParser implements LootParser {
     }
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config) {
+    public Loot parse(NamespacedId id, LootParsingContext context, ConfigNode config, LootRequirements requirements) {
         ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
 
         String entityType = backing.node("entity").getString();
@@ -36,7 +38,7 @@ public class EntityLootParser implements LootParser {
 
         Validate.notNull(entity, "Couldn't parse entity loot with entity type: " + entityType);
 
-        return new EntityLoot(context.parseValues(config), entity);
+        return new EntityLoot(id, context.parseValues(config, requirements), entity);
     }
 
 }
