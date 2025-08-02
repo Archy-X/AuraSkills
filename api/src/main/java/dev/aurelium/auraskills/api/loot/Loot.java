@@ -2,6 +2,8 @@ package dev.aurelium.auraskills.api.loot;
 
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 
+import java.util.UUID;
+
 public abstract class Loot {
 
     protected final NamespacedId id;
@@ -18,6 +20,10 @@ public abstract class Loot {
 
     public LootValues getValues() {
         return values;
+    }
+
+    public boolean checkRequirements(UUID uuid) {
+        return values.checkRequirements(uuid);
     }
 
 }

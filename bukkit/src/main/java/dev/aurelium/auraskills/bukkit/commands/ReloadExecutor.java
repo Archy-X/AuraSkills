@@ -31,7 +31,6 @@ public class ReloadExecutor {
         plugin.getMessageProvider().loadDefaultLanguageOption();
         plugin.getRequirementManager().load();
         plugin.getRequirementManager().loadBlocks();
-        plugin.getRequirementManager().loadLoot();
         // Load blocked/disabled worlds lists
         plugin.getWorldManager().loadWorlds();
         // Load skills

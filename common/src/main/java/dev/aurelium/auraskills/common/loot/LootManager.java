@@ -1,11 +1,13 @@
 package dev.aurelium.auraskills.common.loot;
 
 import dev.aurelium.auraskills.api.loot.LootParser;
+import dev.aurelium.auraskills.api.loot.LootRequirements;
 import dev.aurelium.auraskills.api.loot.LootTable;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.*;
 
@@ -29,6 +31,8 @@ public abstract class LootManager {
         addLootOptionKeys("xp");
         addPoolOptionKeys("chance_per_luck", "require_open_water");
     }
+
+    public abstract LootRequirements getLootRequirements(ConfigurationNode config);
 
     public AuraSkillsPlugin getPlugin() {
         return plugin;

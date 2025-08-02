@@ -1,22 +1,22 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
-import dev.aurelium.auraskills.api.registry.NamespacedId;
+import dev.aurelium.auraskills.api.loot.LootRequirements;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
-public class LootRequirement {
+public class BukkitLootRequirements extends LootRequirements {
 
-    private final NamespacedId id;
     private final List<RequirementNode> nodes;
 
-    public LootRequirement(NamespacedId id, List<RequirementNode> nodes) {
-        this.id = id;
+    public BukkitLootRequirements(List<RequirementNode> nodes) {
         this.nodes = nodes;
     }
 
-    public NamespacedId getId() {
-        return id;
+    public boolean checkByUuid(UUID uuid) {
+        return check(Bukkit.getPlayer(uuid));
     }
 
     public boolean check(Player player) {

@@ -13,8 +13,6 @@ import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.SlimefunHook;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
-import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
-import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
@@ -32,6 +30,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 public class BlockLootHandler extends LootHandler implements Listener {
 
@@ -100,19 +99,13 @@ public class BlockLootHandler extends LootHandler implements Listener {
         }
 
         User user = plugin.getUser(player);
+        UUID uuid = player.getUniqueId();
 
         // Get the loot provider for getting chance and cause
         SkillLootProvider provider = lootProviders.get(skill);
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
-        if (table == null) return;
-
-        RequirementManager manager = plugin.getRequirementManager();
-        LootRequirement tableRequirements = manager.getLootRequirementById(table.getId());
-        // Check if the table requirements are met (if set)
-        if (tableRequirements != null && !tableRequirements.check(player)) {
-            return;
-        }
+        if (table == null || !table.checkRequirements(uuid)) return;
 
         for (LootPool pool : table.getPools()) {
             // Ignore non-applicable sources
@@ -123,9 +116,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
                 continue;
             }
 
-            LootRequirement poolRequirement = manager.getLootRequirementById(pool.getId());
-            // Check if the pool requirements are met (if set)
-            if (poolRequirement != null && !poolRequirement.check(player)) {
+            if (!pool.checkRequirements(uuid)) {
                 continue;
             }
 

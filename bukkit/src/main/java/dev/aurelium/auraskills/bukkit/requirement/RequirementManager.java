@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +22,6 @@ public class RequirementManager implements Listener {
 
     private Set<GlobalRequirement> globalRequirements;
     private List<BlockRequirement> blockRequirements;
-    private List<LootRequirement> lootRequirements;
     private final Map<UUID, Integer> errorMessageTimer;
     private final AuraSkills plugin;
 
@@ -32,7 +30,6 @@ public class RequirementManager implements Listener {
         this.plugin = plugin;
         load();
         loadBlocks();
-        loadLoot();
         tickTimer();
     }
 
@@ -80,46 +77,8 @@ public class RequirementManager implements Listener {
         }
     }
 
-    public void loadLoot() {
-        this.lootRequirements = new ArrayList<>();
-        File lootDirectory = new File(plugin.getPluginFolder() + "/loot");
-        if (lootDirectory.exists() && lootDirectory.isDirectory()) {
-
-            File[] files = lootDirectory.listFiles((dir, name) -> name.endsWith(".yml"));
-            if (files == null) return;
-
-            ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
-
-            for (File lootTableFile : files) {
-                try {
-                    ConfigurationNode config = loader.loadUserFile(lootTableFile);
-
-                    NamespacedId tableId = NamespacedId.fromDefault(lootTableFile.getName().replace(".yml", ""));
-                    LootRequirement tableRequirement = new LootRequirement(tableId, parseTypes(config.node("requirements").childrenList()));
-                    lootRequirements.add(tableRequirement);
-
-                    ConfigurationNode poolsNode = config.node("pools");
-                    if (poolsNode.virtual()) continue;
-
-                    for (ConfigurationNode poolNode : poolsNode.childrenMap().values()) {
-                        NamespacedId poolId = NamespacedId.fromDefault(tableId.toString() + ":" + poolNode.key().toString());
-                        LootRequirement poolRequirement = new LootRequirement(poolId, parseTypes(poolNode.node("requirements").childrenList()));
-                        lootRequirements.add(poolRequirement);
-
-                        int index = 0;
-                        for (ConfigurationNode lootNode : poolNode.node("loot").childrenList()) {
-                            NamespacedId lootId = NamespacedId.fromDefault(poolId.toString() + ":" + index);
-                            LootRequirement lootRequirement = new LootRequirement(lootId, parseTypes(lootNode.node("requirements").childrenList()));
-                            lootRequirements.add(lootRequirement);
-                            index++;
-                        }
-                    }
-                } catch (IOException e) {
-                    plugin.logger().warn("Error loading block requirements: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
-        }
+    public BukkitLootRequirements getLootRequirements(ConfigurationNode config) {
+        return new BukkitLootRequirements(parseTypes(config.node("requirements").childrenList()));
     }
 
     public void loadBlocks() {
@@ -184,7 +143,7 @@ public class RequirementManager implements Listener {
                     }
                     case "biome" -> {
                         String biome = requirementNode.node("biome").getString();
-                        nodes.add(new WorldNode(plugin, biome, message));
+                        nodes.add(new BiomeNode(plugin, biome, message));
                     }
                     case "region" -> {
                         String region = requirementNode.node("region").getString();
@@ -228,14 +187,6 @@ public class RequirementManager implements Listener {
 
     public List<BlockRequirement> getBlocks() {
         return blockRequirements;
-    }
-
-    public LootRequirement getLootRequirementById(NamespacedId id) {
-        for (LootRequirement requirement : lootRequirements) {
-            if (requirement.getId().equals(id))
-                return requirement;
-        }
-        return null;
     }
 
     public Set<GlobalRequirement> getGlobalRequirementsType(ModifierType type) {

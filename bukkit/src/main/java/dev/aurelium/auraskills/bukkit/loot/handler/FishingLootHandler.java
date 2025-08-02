@@ -13,8 +13,6 @@ import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
-import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
-import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
@@ -30,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class FishingLootHandler extends LootHandler implements Listener {
 
@@ -50,6 +49,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         if (event.getExpToDrop() == 0) return;
 
         User user = plugin.getUser(player);
+        UUID uuid = player.getUniqueId();
 
         ItemStack originalItem = ((Item) event.getCaught()).getItemStack();
 
@@ -58,14 +58,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         Skill skill = originalSource != null ? originalSource.skill() : Skills.FISHING;
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
-        if (table == null) return;
-
-        RequirementManager manager = plugin.getRequirementManager();
-        LootRequirement tableRequirements = manager.getLootRequirementById(table.getId());
-        // Check if the table requirements are met (if set)
-        if (tableRequirements != null && !tableRequirements.check(player)) {
-            return;
-        }
+        if (table == null || !table.checkRequirements(uuid)) return;
 
         for (LootPool pool : table.getPools()) {
             // Check if in open water
@@ -73,9 +66,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (!event.getHook().isInOpenWater()) continue;
             }
 
-            LootRequirement poolRequirement = manager.getLootRequirementById(pool.getId());
-            // Check if the pool requirements are met (if set)
-            if (poolRequirement != null && !poolRequirement.check(player)) {
+            if (!pool.checkRequirements(uuid)) {
                 continue;
             }
 

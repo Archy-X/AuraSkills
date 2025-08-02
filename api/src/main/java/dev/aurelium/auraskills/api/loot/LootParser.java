@@ -6,6 +6,6 @@ import dev.aurelium.auraskills.api.registry.NamespacedId;
 @FunctionalInterface
 public interface LootParser {
 
-    Loot parse(NamespacedId id, LootParsingContext context, ConfigNode config);
+    Loot parse(NamespacedId id, LootParsingContext context, ConfigNode config, LootRequirements requirements);
 
 }

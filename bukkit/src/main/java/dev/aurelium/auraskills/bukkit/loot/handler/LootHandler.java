@@ -12,8 +12,6 @@ import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.item.BukkitItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
-import dev.aurelium.auraskills.bukkit.requirement.LootRequirement;
-import dev.aurelium.auraskills.bukkit.requirement.RequirementManager;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
@@ -170,12 +168,8 @@ public abstract class LootHandler extends AbstractLootHandler {
     @Nullable
     protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext, User user) {
         Player player = Bukkit.getPlayer(user.getUuid());
-        RequirementManager manager = plugin.getRequirementManager();
-
         return pool.rollLoot(loot -> {
-            LootRequirement requirement = manager.getLootRequirementById(loot.getId());
-            // Check if the pool requirements are met (if set)
-            if (requirement != null && !requirement.check(player)) {
+            if (!loot.checkRequirements(player.getUniqueId())) {
                 return false;
             }
 
