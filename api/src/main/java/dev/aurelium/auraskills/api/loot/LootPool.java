@@ -1,13 +1,10 @@
 package dev.aurelium.auraskills.api.loot;
 
-import dev.aurelium.auraskills.api.registry.NamespacedId;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LootPool extends LootOptioned {
 
-    private final NamespacedId id;
     private final String name;
     private final List<Loot> loot;
     private final double baseChance;
@@ -15,18 +12,13 @@ public class LootPool extends LootOptioned {
     private final boolean overrideVanillaLoot;
     private final Random random = new Random();
 
-    public LootPool(NamespacedId id, String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot, Map<String, Object> options, LootRequirements requirements) {
+    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot, Map<String, Object> options, LootRequirements requirements) {
         super(options, requirements);
-        this.id = id;
         this.name = name;
         this.loot = loot;
         this.baseChance = baseChance;
         this.selectionPriority = selectionPriority;
         this.overrideVanillaLoot = overrideVanillaLoot;
-    }
-
-    public NamespacedId getId() {
-        return id;
     }
 
     public String getName() {

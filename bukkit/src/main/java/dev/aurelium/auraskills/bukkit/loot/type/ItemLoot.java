@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.bukkit.loot.type;
 
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootValues;
-import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.common.loot.ItemSupplier;
 
 public class ItemLoot extends Loot {
@@ -13,8 +12,8 @@ public class ItemLoot extends Loot {
     protected double minDamage;
     protected double maxDamage;
 
-    public ItemLoot(NamespacedId id, LootValues values, ItemSupplier item, int minAmount, int maxAmount, double minDamage, double maxDamage) {
-        super(id, values);
+    public ItemLoot(LootValues values, ItemSupplier item, int minAmount, int maxAmount, double minDamage, double maxDamage) {
+        super(values);
         this.item = item;
         this.minAmount = minAmount;
         this.maxAmount = maxAmount;

@@ -14,6 +14,10 @@ public class PermissionNode extends RequirementNode {
 
     @Override
     public boolean check(Player player) {
+        if (permission == null) {
+            return true;
+        }
+
         return player.hasPermission(permission);
     }
 
