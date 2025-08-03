@@ -16,7 +16,10 @@ public class BukkitLootRequirements extends LootRequirements {
     }
 
     public boolean checkByUuid(UUID uuid) {
-        return check(Bukkit.getPlayer(uuid));
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) return false;
+
+        return check(player);
     }
 
     public boolean check(Player player) {

@@ -7,6 +7,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import org.bukkit.entity.Player;
 
 public class RegionNode extends RequirementNode {
@@ -20,7 +21,7 @@ public class RegionNode extends RequirementNode {
 
     @Override
     public boolean check(Player player) {
-        if (plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
+        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
             RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
             RegionManager regions = container.get(BukkitAdapter.adapt(player.getWorld()));
 
