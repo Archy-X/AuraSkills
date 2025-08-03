@@ -105,6 +105,7 @@ public class Terraform extends ReadiedManaAbility {
                 count++;
             }
         }
+        setHoldingMaterialDurability(player, count, manaAbility.optionDouble("durability_multiplier", 0));
     }
 
     private void breakBlock(Player player, Block block) {

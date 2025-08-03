@@ -10,15 +10,19 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
@@ -49,6 +53,29 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             }
         }
         return false;
+    }
+
+    protected void setHoldingMaterialDurability(Player player, int count, double multiplier) {
+        if (multiplier <= 0) return;
+
+        int damage = (int) (count * multiplier);
+        if (damage <= 0) return;
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta meta = Objects.requireNonNull(item.getItemMeta());
+        if (meta == null || meta.isUnbreakable()) return;
+
+        if (meta instanceof Damageable damageable) {
+            int currentDamage = damageable.getDamage();
+            int unbreakingLevel = item.getEnchantmentLevel(Enchantment.UNBREAKING);
+
+            if (unbreakingLevel > 0) {
+                damage = (int) (damage * (1.0 - (1 / (unbreakingLevel + 1))));
+            }
+
+            damageable.setDamage(currentDamage + damage);
+            item.setItemMeta(meta);
+        }
     }
 
     protected boolean isExcludedBlock(Block block) {

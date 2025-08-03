@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -128,6 +129,8 @@ public class Treecapitator extends ReadiedManaAbility {
             // Break the next blocks
             plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
         }
+
+        setHoldingMaterialDurability(Bukkit.getPlayer(user.getUuid()), tree.getBlocksBroken(), manaAbility.optionDouble("durability_multiplier", 0));
     }
 
     @Nullable
