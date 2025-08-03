@@ -7,6 +7,8 @@ import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.*;
@@ -22,7 +24,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
@@ -58,11 +59,11 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
     protected void setHoldingMaterialDurability(Player player, int count, double multiplier) {
         if (multiplier <= 0) return;
 
-        int damage = (int) (count * multiplier);
-        if (damage <= 0) return;
+        int takenDamage = (int) (count * multiplier);
+        if (takenDamage <= 0) return;
 
         ItemStack item = player.getInventory().getItemInMainHand();
-        ItemMeta meta = Objects.requireNonNull(item.getItemMeta());
+        ItemMeta meta = item.getItemMeta();
         if (meta == null || meta.isUnbreakable()) return;
 
         if (meta instanceof Damageable damageable) {
@@ -70,11 +71,20 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             int unbreakingLevel = item.getEnchantmentLevel(Enchantment.UNBREAKING);
 
             if (unbreakingLevel > 0) {
-                damage = (int) (damage * (1.0 - (1 / (unbreakingLevel + 1))));
+                takenDamage = (int) (takenDamage * (1.0 - (1.0 / (unbreakingLevel + 1))));
             }
 
-            damageable.setDamage(currentDamage + damage);
-            item.setItemMeta(meta);
+            int newDamage = currentDamage + takenDamage;
+            int maxDamage = item.getType().getMaxDurability();
+
+            if (newDamage >= maxDamage) {
+                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+                player.getWorld().spawnParticle(Particle.ITEM, player.getLocation(), 30, 0.2, 0.5, 0.2, new ItemStack(item.getType()));
+            } else {
+                damageable.setDamage(newDamage);
+                item.setItemMeta(meta);
+            }
         }
     }
 
