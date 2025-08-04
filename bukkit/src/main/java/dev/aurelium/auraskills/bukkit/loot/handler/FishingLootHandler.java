@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class FishingLootHandler extends LootHandler implements Listener {
 
@@ -48,6 +49,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
         if (event.getExpToDrop() == 0) return;
 
         User user = plugin.getUser(player);
+        UUID uuid = player.getUniqueId();
 
         ItemStack originalItem = ((Item) event.getCaught()).getItemStack();
 
@@ -56,12 +58,18 @@ public class FishingLootHandler extends LootHandler implements Listener {
         Skill skill = originalSource != null ? originalSource.skill() : Skills.FISHING;
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
-        if (table == null) return;
+        if (table == null || !table.checkRequirements(uuid)) return;
+
         for (LootPool pool : table.getPools()) {
             // Check if in open water
             if (pool.getOption("require_open_water", Boolean.class, false) && VersionUtils.isAtLeastVersion(16, 5)) {
                 if (!event.getHook().isInOpenWater()) continue;
             }
+
+            if (!pool.checkRequirements(uuid)) {
+                continue;
+            }
+
             // Calculate chance for pool
             XpSource source = null;
             double chance = getCommonChance(pool, user);
@@ -88,7 +96,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
 
             if (random.nextDouble() < chance) { // Pool is selected
                 XpSource contextSource = originalSource != null ? originalSource.source() : null;
-                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource));
+                Loot selectedLoot = selectLoot(pool, new SourceContext(contextSource), user);
                 // Give loot
                 if (selectedLoot == null) { // Continue iterating pools
                     continue;
