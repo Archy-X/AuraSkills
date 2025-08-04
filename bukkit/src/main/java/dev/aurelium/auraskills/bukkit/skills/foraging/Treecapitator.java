@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import com.sk89q.worldedit.WorldEdit;
+import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockBreakEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -13,6 +14,7 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -21,6 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -78,6 +81,12 @@ public class Treecapitator extends ReadiedManaAbility {
             return;
         }
 
+        if (manaAbility.optionBoolean("use_events", false) &&
+                block.hasMetadata("AureliumSkills-Treecapitator") &&
+                event.getClass() != BlockBreakEvent.class) {
+            return;
+        }
+
         BlockXpSource source = getNonStrippedSource(block);
         if (source == null) {
             return;
@@ -90,20 +99,20 @@ public class Treecapitator extends ReadiedManaAbility {
             User user = plugin.getUser(player);
 
             if (isActivated(user)) {
-                breakTree(user, block, source);
+                breakTree(player, user, block, source);
                 return;
             }
             if (isHoldingMaterial(player) && checkActivation(player)) {
-                breakTree(user, block, source);
+                breakTree(player, user, block, source);
             }
         }
     }
 
-    public void breakTree(User user, Block block, BlockXpSource source) {
-        breakBlock(user, block, new TreecapitatorTree(block, source));
+    public void breakTree(Player player, User user, Block block, BlockXpSource source) {
+        breakBlock(player, user, block, new TreecapitatorTree(block, source));
     }
 
-    private void breakBlock(User user, Block block, TreecapitatorTree tree) {
+    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
             return;
         }
@@ -115,7 +124,19 @@ public class Treecapitator extends ReadiedManaAbility {
             if (plugin.getRegionManager().isPlacedBlock(adjacentBlock)) {
                 continue;
             }
-            adjacentBlock.breakNaturally();
+
+            if (manaAbility.optionBoolean("use_events", false)) {
+                adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
+                ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
+                Bukkit.getPluginManager().callEvent(event);
+                if (!event.isCancelled()) {
+                    adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
+                }
+                adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
+            } else {
+                adjacentBlock.breakNaturally();
+            }
+
             tree.incrementBlocksBroken();
             if (adjSource != null && giveXp) {
                 plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
@@ -126,7 +147,7 @@ public class Treecapitator extends ReadiedManaAbility {
                 return;
             }
             // Break the next blocks
-            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
         }
     }
 
