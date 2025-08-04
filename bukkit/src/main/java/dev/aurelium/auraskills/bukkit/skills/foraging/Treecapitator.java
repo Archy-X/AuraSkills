@@ -13,7 +13,6 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -26,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Treecapitator extends ReadiedManaAbility {
 
@@ -91,21 +91,31 @@ public class Treecapitator extends ReadiedManaAbility {
             User user = plugin.getUser(player);
 
             if (isActivated(user)) {
-                breakTree(user, block, source);
+                breakTree(player, user, block, source);
                 return;
             }
             if (isHoldingMaterial(player) && checkActivation(player)) {
-                breakTree(user, block, source);
+                breakTree(player, user, block, source);
             }
         }
     }
 
-    public void breakTree(User user, Block block, BlockXpSource source) {
-        breakBlock(user, block, new TreecapitatorTree(block, source));
+    public void breakTree(Player player, User user, Block block, BlockXpSource source) {
+        AtomicInteger taskCount = new AtomicInteger(1);
+        TreecapitatorTree tree = new TreecapitatorTree(block, source);
+        double multiplier = manaAbility.optionDouble("durability_multiplier", 0);
+
+        breakBlock(user, block, tree, taskCount, () -> {
+            taskCount.decrementAndGet();
+            if (taskCount.get() == 0) {
+                setHoldingMaterialDurability(player, tree.getBlocksBroken(), multiplier);
+            }
+        });
     }
 
-    private void breakBlock(User user, Block block, TreecapitatorTree tree) {
+    private void breakBlock(User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
+            onComplete.run();
             return;
         }
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
@@ -124,13 +134,15 @@ public class Treecapitator extends ReadiedManaAbility {
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
             if (adjacentBlock.getX() > originalBlock.getX() + 6 || adjacentBlock.getZ() > originalBlock.getZ() + 6 || adjacentBlock.getY() > originalBlock.getY() + 31) {
+                onComplete.run();
                 return;
             }
             // Break the next blocks
-            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+            taskCount.incrementAndGet();
+            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
 
-        setHoldingMaterialDurability(Bukkit.getPlayer(user.getUuid()), tree.getBlocksBroken(), manaAbility.optionDouble("durability_multiplier", 0));
+        onComplete.run();
     }
 
     @Nullable
