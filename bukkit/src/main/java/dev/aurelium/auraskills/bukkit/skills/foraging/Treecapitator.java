@@ -110,7 +110,7 @@ public class Treecapitator extends ReadiedManaAbility {
             tree.setMaxBlocks(getHoldingMaterialDurability(player, tree.getMaxBlocks()));
         }
 
-        breakBlock(user, block, tree, taskCount, () -> {
+        breakBlock(player, user, block, tree, taskCount, () -> {
             taskCount.decrementAndGet();
             if (taskCount.get() == 0) {
                 setHoldingMaterialDurability(player, tree.getBlocksBroken(), multiplier);
@@ -118,7 +118,7 @@ public class Treecapitator extends ReadiedManaAbility {
         });
     }
 
-    private void breakBlock(User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
+    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
             onComplete.run();
             return;
@@ -144,7 +144,7 @@ public class Treecapitator extends ReadiedManaAbility {
             }
             // Break the next blocks
             taskCount.incrementAndGet();
-            plugin.getScheduler().scheduleSync(() -> breakBlock(user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
 
         onComplete.run();
