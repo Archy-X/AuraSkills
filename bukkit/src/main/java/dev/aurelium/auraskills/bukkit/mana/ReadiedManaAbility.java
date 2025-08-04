@@ -88,6 +88,17 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         }
     }
 
+    protected int getHoldingMaterialDurability(Player player, int limit) {
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null && !meta.isUnbreakable() && meta instanceof Damageable damageable) {
+            int durability = item.getType().getMaxDurability() - damageable.getDamage();
+            return Math.min(limit, durability);
+        }
+
+        return limit;
+    }
+
     protected boolean isExcludedBlock(Block block) {
         return hasInteraction(block);
     }

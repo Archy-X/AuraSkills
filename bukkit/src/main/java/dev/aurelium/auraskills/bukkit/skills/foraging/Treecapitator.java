@@ -105,6 +105,11 @@ public class Treecapitator extends ReadiedManaAbility {
         TreecapitatorTree tree = new TreecapitatorTree(block, source);
         double multiplier = manaAbility.optionDouble("durability_multiplier", 0);
 
+        // Make sure the max blocks does not exceed the durability, when applicable.
+        if (manaAbility.optionBoolean("max_limit_durability", false)) {
+            tree.setMaxBlocks(getHoldingMaterialDurability(player, tree.getMaxBlocks()));
+        }
+
         breakBlock(user, block, tree, taskCount, () -> {
             taskCount.decrementAndGet();
             if (taskCount.get() == 0) {
@@ -198,6 +203,10 @@ public class Treecapitator extends ReadiedManaAbility {
 
         public int getMaxBlocks() {
             return maxBlocks;
+        }
+
+        public void setMaxBlocks(int maxBlocks) {
+            this.maxBlocks = maxBlocks;
         }
 
         private void setMaxBlocks(BlockXpSource source) {
