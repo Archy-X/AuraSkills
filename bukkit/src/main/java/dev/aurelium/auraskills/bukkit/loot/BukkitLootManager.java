@@ -4,12 +4,14 @@ import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContextProvider;
 import dev.aurelium.auraskills.bukkit.loot.entity.VanillaEntityParser;
 import dev.aurelium.auraskills.bukkit.loot.parser.CustomEntityParser;
+import dev.aurelium.auraskills.bukkit.requirement.BukkitLootRequirements;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.loot.CustomItemParser;
 import dev.aurelium.auraskills.common.loot.LootLoader;
 import dev.aurelium.auraskills.common.loot.LootManager;
 import org.bukkit.inventory.ItemStack;
+import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,10 @@ public class BukkitLootManager extends LootManager {
 
     public void loadLootTables() {
         lootLoader.loadLootTables();
+    }
+
+    public BukkitLootRequirements getLootRequirements(ConfigurationNode config) {
+        return plugin.getRequirementManager().getLootRequirements(config);
     }
 
     public boolean toInventory(ItemStack held) {
