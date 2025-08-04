@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ManaAbilityBlockBreakEvent extends BlockBreakEvent {
+public class TerraformBlockBreakEvent extends BlockBreakEvent {
 
-    public ManaAbilityBlockBreakEvent(@NotNull Block theBlock, @NotNull Player player) {
+    public TerraformBlockBreakEvent(@NotNull Block theBlock, @NotNull Player player) {
         super(theBlock, player);
     }
 

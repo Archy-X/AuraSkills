@@ -51,7 +51,7 @@ public class MobLootHandler extends LootHandler implements Listener {
         User user = plugin.getUser(player);
 
         LootTable table = plugin.getLootManager().getLootTable(NamespacedId.fromDefault("mob"));
-        if (table == null || !table.checkRequirements(player.getUniqueId())) return;
+        if (table == null) return;
 
         DamageCause damageCause = getCause(event.getEntity().getLastDamageCause());
 
@@ -72,10 +72,6 @@ public class MobLootHandler extends LootHandler implements Listener {
                 continue;
             }
 
-            if (!pool.checkRequirements(player.getUniqueId())) {
-                continue;
-            }
-
             double chance = getCommonChance(pool, user);
 
             LootDropEvent.Cause cause = LootDropEvent.Cause.MOB_LOOT_TABLE;
@@ -84,7 +80,7 @@ public class MobLootHandler extends LootHandler implements Listener {
 
             double rolled = random.nextDouble();
             if (rolled < chance) {
-                Loot selectedLoot = selectLoot(pool, context, user);
+                Loot selectedLoot = selectLoot(pool, context);
                 // Give loot
                 if (selectedLoot == null) {
                     break;

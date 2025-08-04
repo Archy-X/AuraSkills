@@ -42,7 +42,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
@@ -167,11 +166,8 @@ public abstract class LootHandler extends AbstractLootHandler {
     }
 
     @Nullable
-    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext, User user) {
-        UUID uuid = user.getUuid();
+    protected Loot selectLoot(LootPool pool, @NotNull LootContext providedContext) {
         return pool.rollLoot(loot -> {
-            if (!loot.checkRequirements(uuid)) return false;
-
             if (providedContext instanceof SourceContext(XpSource providedSource)) {
                 Set<LootContext> lootContexts = loot.getValues().getContexts().get("sources");
                 // Make sure the loot defines a sources context and the provided context exists

@@ -30,7 +30,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 public class BlockLootHandler extends LootHandler implements Listener {
 
@@ -99,14 +98,12 @@ public class BlockLootHandler extends LootHandler implements Listener {
         }
 
         User user = plugin.getUser(player);
-        UUID uuid = player.getUniqueId();
 
         // Get the loot provider for getting chance and cause
         SkillLootProvider provider = lootProviders.get(skill);
 
         LootTable table = plugin.getLootManager().getLootTable(skill);
-        if (table == null || !table.checkRequirements(uuid)) return;
-
+        if (table == null) return;
         for (LootPool pool : table.getPools()) {
             // Ignore non-applicable sources
             if (provider != null && !provider.isApplicable(pool, source)) {
@@ -115,11 +112,6 @@ public class BlockLootHandler extends LootHandler implements Listener {
             if (isPoolUnobtainable(pool, source)) {
                 continue;
             }
-
-            if (!pool.checkRequirements(uuid)) {
-                continue;
-            }
-
             // Calculate chance for pool
             double chance;
             if (provider != null) {
@@ -144,7 +136,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
     private boolean selectBlockLoot(LootTable table, LootPool pool, Player player, double chance, XpSource originalSource, BlockBreakEvent event, Skill skill, LootDropCause cause) {
         double rolled = random.nextDouble();
         if (rolled < chance) { // Pool is selected
-            Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource), plugin.getUser(player));
+            Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource));
             // Give loot
             if (selectedLoot != null) {
                 if (selectedLoot instanceof ItemLoot itemLoot) {

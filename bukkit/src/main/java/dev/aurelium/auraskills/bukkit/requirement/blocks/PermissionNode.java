@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.requirement;
+package dev.aurelium.auraskills.bukkit.requirement.blocks;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.entity.Player;
@@ -14,10 +14,6 @@ public class PermissionNode extends RequirementNode {
 
     @Override
     public boolean check(Player player) {
-        if (permission == null) {
-            return true;
-        }
-
         return player.hasPermission(permission);
     }
 

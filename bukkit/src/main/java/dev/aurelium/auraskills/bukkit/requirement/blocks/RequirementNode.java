@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.requirement;
+package dev.aurelium.auraskills.bukkit.requirement.blocks;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.entity.Player;

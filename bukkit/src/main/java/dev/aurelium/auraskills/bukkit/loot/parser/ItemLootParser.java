@@ -4,7 +4,6 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootParser;
 import dev.aurelium.auraskills.api.loot.LootParsingContext;
-import dev.aurelium.auraskills.api.loot.LootRequirements;
 import dev.aurelium.auraskills.bukkit.loot.BukkitLootManager;
 import dev.aurelium.auraskills.bukkit.loot.item.enchant.LootEnchantLevel;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
@@ -35,7 +34,7 @@ public class ItemLootParser implements LootParser {
     }
 
     @Override
-    public Loot parse(LootParsingContext context, ConfigNode config, LootRequirements requirements) {
+    public Loot parse(LootParsingContext context, ConfigNode config) {
         ItemSupplier item = null;
         ConfigurationNode backing = ((ApiConfigNode) config).getBacking();
         for (CustomItemParser parser : manager.getCustomItemParsers()) {
@@ -57,7 +56,7 @@ public class ItemLootParser implements LootParser {
         int[] amounts = parseAmount(backing);
         double[] durability = parseDurability(backing);
 
-        return new ItemLoot(context.parseValues(config, requirements), item, amounts[0], amounts[1], durability[0], durability[1]);
+        return new ItemLoot(context.parseValues(config), item, amounts[0], amounts[1], durability[0], durability[1]);
     }
 
     private ItemSupplier parseItem(ConfigurationNode config) throws SerializationException {
