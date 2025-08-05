@@ -334,7 +334,7 @@ commands:
     logs:
       header: "<gray>Registros de Anti-AFK para <red>{player} <gray>({count} total) <dark_gray> <gray>Página {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Mostrar log anti-AFK para um dado jogador.
   armor:
     modifier:
       add:
