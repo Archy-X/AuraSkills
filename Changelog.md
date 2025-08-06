@@ -2,6 +2,47 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.6
+
+### New Features
+
+- Add loot requirements to tables, pools, and loot
+  - The `requirements` option can be set on the loot table, a pool, or loot entry
+  - Requirements accept the already available Block Requirements types
+- The following new requirement types have been added
+  - `world`, `biome`, `region`, `item`, and `enchantment`
+  - Each type has specific keys below that must be added to define type behavior. These keys are added in the same indent level as `type`.
+  - The `world` type requires the player to be in the specified world. Keys:
+    - `world` - The name of the world the player is required to be in
+  - The `biome` type requires the player to be in the specified biome. Keys:
+    - `biome` - The name of the biome the player is required to be in
+  - The `region` type requires the player to be in the specified WorldGuard region. Keys:
+    - `region` - The name of the WorldGuard region the player is required to be in
+  - The `item` type requires the player to hold a specific item. Keys:
+    - `item` - The material name of the item the player is required to hold
+  - The `enchantment` type requires the player to have a specific enchantment on their held item. Keys:
+    - `enchantment` - The name of the enchantment to add a requirement for
+    - `level` - The required enchantment level, either singular or a min-max (optional)
+    - Examples of valid levels are `1` and `1-3`
+- Add new options and tags to customize Treecapitator
+  - Add `trunks` tag to the Foraging sources file to configure which sources can activate Treecapitator
+  - Add `treecapitator_applicable` tag to the Foraging sources file to configure which sources are broken by Treecapitator
+  - Add `max_blocks` option to block sources to set the max number of blocks Treecapitator can break for this trunk type
+- Add experimental config options
+  - Experimental options are not included in the config by default
+  - Each option you want to enable must be manually added in an `experimental` section
+  - Add experimental option `experimental.optimize_leaderboard_updating`
+    - Whether to enable optimized fetching of user data from the SQL database for leaderboard updates. When enabled, only users updated in the database since the last leaderboard
+      update will be fetched after the initial load.
+
+### Bug Fixes
+
+- Fix Nexo hook
+
+### API Changes
+
+- Add SkillsUser#sendAbiltyMessage
+
 ## 2.3.5
 
 ### Bug Fixes

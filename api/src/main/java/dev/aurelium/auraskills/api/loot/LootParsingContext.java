@@ -4,6 +4,6 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 
 public interface LootParsingContext {
 
-    LootValues parseValues(ConfigNode config);
+    LootValues parseValues(ConfigNode config, LootRequirements requirements);
 
 }
