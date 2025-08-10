@@ -46,6 +46,10 @@ public class UserStats {
         }
     }
 
+    public Map<Stat, Double> getStatLevels() {
+        return statLevels;
+    }
+
     public double getStatLevel(Stat stat) {
         return statLevels.getOrDefault(stat, 0.0);
     }

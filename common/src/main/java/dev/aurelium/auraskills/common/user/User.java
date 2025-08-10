@@ -118,6 +118,19 @@ public abstract class User {
         return skillLevels;
     }
 
+    public double getStatAverage() {
+        int sum = 0;
+        int numEnabled = 0;
+        for (Map.Entry<Stat, Double> entry : userStats.getStatLevels().entrySet()) {
+            if (entry.getKey().isEnabled()) {
+                sum += entry.getValue();
+                numEnabled++;
+            }
+        }
+
+        return numEnabled > 0 ? sum / (double) numEnabled : 0.0;
+    }
+
     public double getSkillAverage() {
         int sum = 0;
         int numEnabled = 0;
