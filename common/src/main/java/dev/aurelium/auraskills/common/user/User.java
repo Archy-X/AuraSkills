@@ -118,6 +118,17 @@ public abstract class User {
         return skillLevels;
     }
 
+    public double getStatAverage() {
+        double sum = 0;
+        int numEnabled = 0;
+        for (Stat stat : plugin.getStatManager().getEnabledStats()) {
+            sum += userStats.getStatLevel(stat);
+            numEnabled++;
+        }
+
+        return numEnabled > 0 ? sum / numEnabled : 0.0;
+    }
+
     public double getSkillAverage() {
         int sum = 0;
         int numEnabled = 0;
