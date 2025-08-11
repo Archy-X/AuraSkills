@@ -94,17 +94,17 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
         }
 
         // Gets skill average
-        if (identifier.equals("average_skill")) {
+        if (identifier.equals("average")) {
             User user = plugin.getUser(player);
             return String.valueOf(user.getSkillAverage());
         }
         // Get skill average as integer
-        if (identifier.equals("average_skill_int")) {
+        if (identifier.equals("average_int")) {
             User user = plugin.getUser(player);
             return String.valueOf(Math.round(user.getSkillAverage()));
         }
         // Get skill average rounded to 1 decimal
-        if (identifier.equals("average_skill_1")) {
+        if (identifier.equals("average_1")) {
             User user = plugin.getUser(player);
             return NumberUtil.format1(user.getSkillAverage());
         }
