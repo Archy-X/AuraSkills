@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
+import dev.aurelium.auraskills.api.stat.Stats;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.trait.Traits;
@@ -119,16 +120,14 @@ public abstract class User {
     }
 
     public double getStatAverage() {
-        int sum = 0;
+        double sum = 0;
         int numEnabled = 0;
-        for (Map.Entry<Stat, Double> entry : userStats.getStatLevels().entrySet()) {
-            if (entry.getKey().isEnabled()) {
-                sum += entry.getValue();
-                numEnabled++;
-            }
+        for (Stat stat : plugin.getStatManager().getEnabledStats()) {
+            sum += userStats.getStatLevel(stat);
+            numEnabled++;
         }
 
-        return numEnabled > 0 ? sum / (double) numEnabled : 0.0;
+        return numEnabled > 0 ? sum / numEnabled : 0.0;
     }
 
     public double getSkillAverage() {
