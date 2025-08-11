@@ -11,7 +11,7 @@ import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
-import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
+import dev.aurelium.auraskills.common.scheduler.Task;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.*;
@@ -33,6 +33,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FightingAbilities extends BukkitAbilityImpl {
 
@@ -187,11 +188,14 @@ public class FightingAbilities extends BukkitAbilityImpl {
 
     private void scheduleBleedTicks(LivingEntity entity, User user, Ability ability) {
         // Schedules bleed ticks
-        var task = new TaskRunnable() {
-            @Override
-            public void run() {
+        final AtomicReference<Task> taskRef = new AtomicReference<>();
+
+        Task task = plugin.getScheduler().timerAtEntity(entity, () -> {
                 if (!entity.isValid()) { // Stop if entity died/transformed
-                    cancel();
+                    Task t = taskRef.get();
+                    if (t != null) {
+                        t.cancel();
+                    }
                     return;
                 }
                 PersistentDataContainer container = entity.getPersistentDataContainer();
@@ -233,10 +237,14 @@ public class FightingAbilities extends BukkitAbilityImpl {
                         plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
                     }
                 }
-                cancel();
-            }
-        };
-        plugin.getScheduler().timerSync(task, 40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+                Task t = taskRef.get();
+                if (t != null) {
+                    t.cancel();
+                }
+            },
+            40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+
+        taskRef.set(task);
     }
 
     private void displayBleedParticles(LivingEntity entity, Ability ability) {
