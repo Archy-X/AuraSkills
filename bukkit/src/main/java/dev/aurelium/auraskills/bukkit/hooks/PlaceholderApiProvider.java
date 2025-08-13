@@ -76,6 +76,23 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             return String.valueOf(user.getPowerLevel());
         }
 
+        // Gets stat average
+        if (identifier.equals("average_stat")) {
+            User user = plugin.getUser(player);
+            return String.valueOf(user.getStatAverage());
+        }
+
+        // Get stat average as integer
+        if (identifier.equals("average_stat_int")) {
+            User user = plugin.getUser(player);
+            return String.valueOf(Math.round(user.getStatAverage()));
+        }
+        // Get stat average rounded to 1 decimal
+        if (identifier.equals("average_stat_1")) {
+            User user = plugin.getUser(player);
+            return NumberUtil.format1(user.getStatAverage());
+        }
+
         // Gets skill average
         if (identifier.equals("average")) {
             User user = plugin.getUser(player);
