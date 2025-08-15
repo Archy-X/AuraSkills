@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.source;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.type.JumpingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -12,13 +13,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class JumpingLeveler extends SourceLeveler {
 
-    private final Set<UUID> prevPlayersOnGround = new HashSet<>();
+    private final Set<UUID> prevPlayersOnGround = Sets.newConcurrentHashSet();
 
     public JumpingLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.JUMPING);

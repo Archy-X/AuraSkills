@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.armor.ArmorEquipEvent;
@@ -14,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -56,7 +56,7 @@ public class ArmorModifierListener implements Listener {
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     User user = plugin.getUser(player);
-                    Set<ReloadableIdentifier> toReload = new HashSet<>();
+                    Set<ReloadableIdentifier> toReload = Sets.newConcurrentHashSet();
 
                     for (ArmorType armorType : ArmorType.values()) { // Go through each armor slot
                         ItemStack wearing = player.getInventory().getItem(armorType.getEquipmentSlot()); // Get the armor player is currently wearing

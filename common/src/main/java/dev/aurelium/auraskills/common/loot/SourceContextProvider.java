@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.loot;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -23,7 +24,7 @@ public class SourceContextProvider extends ContextProvider {
     @Override
     @Nullable
     public Set<LootContext> parseContext(ConfigurationNode config) throws SerializationException {
-        Set<LootContext> contexts = new HashSet<>();
+        Set<LootContext> contexts = Sets.newConcurrentHashSet();
         if (config.node("sources").virtual()) {
             return contexts;
         }

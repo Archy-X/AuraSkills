@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.alchemy;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.stat.StatModifier;
@@ -74,13 +75,13 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
         if (failsChecks(player, ability)) return;
 
         User user = plugin.getUser(player);
-        updateBrewingStand(inventory, user, user.getLocale());
+        updateBrewingStand(event, inventory, user, user.getLocale());
     }
 
-    private void updateBrewingStand(BrewerInventory inventory, User user, Locale locale) {
+    private void updateBrewingStand(BrewEvent event, BrewerInventory inventory, User user, Locale locale) {
         var ability = Abilities.ALCHEMIST;
 
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtLocation(event.getBlock().getLocation(), () -> {
             ItemStack[] contents = inventory.getContents();
             double multiplier = 1 + (getValue(ability, user) / 100);
             for (int i = 0; i < contents.length; i++) {
@@ -324,7 +325,7 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
                     if (!player.getActivePotionEffects().isEmpty()) {
                         if (failsChecks(player, ability)) continue;
                         // Get unique active potion effects
-                        Set<PotionEffectType> uniqueTypesSet = new HashSet<>();
+                        Set<PotionEffectType> uniqueTypesSet = Sets.newConcurrentHashSet();
                         for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                             uniqueTypesSet.add(potionEffect.getType());
                         }

@@ -27,15 +27,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BlockLootHandler extends LootHandler implements Listener {
 
     private final Random random = new Random();
-    private final Map<Skill, SkillLootProvider> lootProviders = new HashMap<>();
+    private final Map<Skill, SkillLootProvider> lootProviders = new ConcurrentHashMap<>();
 
     public BlockLootHandler(AuraSkills plugin) {
         super(plugin);

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.skill;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -17,6 +18,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillManager {
 
@@ -25,12 +27,12 @@ public class SkillManager {
     private final Map<SourceTag, List<XpSource>> sourceTagMap;
     private final SkillSupplier supplier;
     private final Set<File> contentDirectories;
-    private final Map<SourceType, Boolean> sourceEnabledCache = new HashMap<>();
+    private final Map<SourceType, Boolean> sourceEnabledCache = new ConcurrentHashMap<>();
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.skillMap = new LinkedHashMap<>();
-        this.sourceTagMap = new HashMap<>();
+        this.sourceTagMap = new ConcurrentHashMap<>();
         this.supplier = new SkillSupplier(this, plugin.getMessageProvider());
         this.contentDirectories = new LinkedHashSet<>();
     }
@@ -61,7 +63,7 @@ public class SkillManager {
     }
 
     public Set<Skill> getSkillValues() {
-        Set<Skill> skills = new HashSet<>();
+        Set<Skill> skills = Sets.newConcurrentHashSet();
         for (LoadedSkill loaded : skillMap.values()) {
             skills.add(loaded.skill());
         }
@@ -172,7 +174,7 @@ public class SkillManager {
      * @return a map from skill to whether it is enabled
      */
     public Map<Skill, Boolean> loadConfigEnabledMap() {
-        Map<Skill, Boolean> map = new HashMap<>();
+        Map<Skill, Boolean> map = new ConcurrentHashMap<>();
         ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
         try {
             ConfigurationNode root = loader.loadUserFile(new File(plugin.getPluginFolder(), "skills.yml"));

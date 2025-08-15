@@ -7,8 +7,8 @@ import dev.aurelium.auraskills.common.user.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manager for storing and retrieving mana ability configs. Does not handle
@@ -20,7 +20,7 @@ public abstract class ManaAbilityManager {
     private final ManaAbilitySupplier supplier;
 
     public ManaAbilityManager(AuraSkillsPlugin plugin) {
-        this.manaAbilityMap = new HashMap<>();
+        this.manaAbilityMap = new ConcurrentHashMap<>();
         this.supplier = new ManaAbilitySupplier(plugin, this);
     }
 

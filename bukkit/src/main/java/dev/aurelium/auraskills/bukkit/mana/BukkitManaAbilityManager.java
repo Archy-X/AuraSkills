@@ -20,10 +20,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitManaAbilityManager extends ManaAbilityManager {
 
@@ -33,7 +33,7 @@ public class BukkitManaAbilityManager extends ManaAbilityManager {
     public BukkitManaAbilityManager(AuraSkills plugin) {
         super(plugin);
         this.plugin = plugin;
-        this.providerMap = new HashMap<>();
+        this.providerMap = new ConcurrentHashMap<>();
     }
 
     public void registerProviders() {

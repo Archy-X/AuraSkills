@@ -22,6 +22,7 @@ repositories {
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://repo.helpch.at/releases")
+    maven("https://repo.tcoded.com/releases")
     maven("https://jitpack.io")
     maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://mvn.lumine.io/repository/maven-public/")
@@ -40,6 +41,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("net.kyori:adventure-platform-bukkit:4.3.3")
+    implementation("com.tcoded:FoliaLib:0.5.1")
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
@@ -93,6 +95,7 @@ tasks {
         relocate("net.querz", "dev.aurelium.auraskills.querz")
         relocate("com.archyx.polyglot", "dev.aurelium.auraskills.polyglot")
         relocate("org.atteo.evo.inflector", "dev.aurelium.auraskills.inflector")
+        relocate("com.tcoded.folialib", "dev.aurelium.auraskills.folialib")
 
         exclude("acf-*.properties")
 

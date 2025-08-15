@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class OfflineSkillsUser implements SkillsUser {
@@ -133,7 +134,7 @@ public class OfflineSkillsUser implements SkillsUser {
 
     @Override
     public Map<String, StatModifier> getStatModifiers() {
-        return new HashMap<>();
+        return new ConcurrentHashMap<>();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.leaderboard;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -12,7 +13,7 @@ public abstract class LeaderboardExclusion {
 
     public static final String FILE_PATH = ".metadata/leaderboard_metadata.yml";
     protected final AuraSkillsPlugin plugin;
-    private final Set<UUID> excludedPlayers = new HashSet<>();
+    private final Set<UUID> excludedPlayers = Sets.newConcurrentHashSet();
 
     public LeaderboardExclusion(AuraSkillsPlugin plugin) {
         this.plugin = plugin;

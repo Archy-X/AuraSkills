@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 public class MovementSpeedTrait extends TraitImpl {
@@ -32,21 +33,23 @@ public class MovementSpeedTrait extends TraitImpl {
 
     @Override
     protected void reload(Player player, Trait trait) {
-        double walkSpeedRatio = 500;
-        double value = getValue(player, trait, walkSpeedRatio);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            double walkSpeedRatio = 500;
+            double value = getValue(player, trait, walkSpeedRatio);
 
-        if (!trait.isEnabled()) return;
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
-            player.setWalkSpeed(0.2f);
-            return;
-        }
-        double max = trait.optionDouble("max") / walkSpeedRatio;
-        if (0.2 + value > max) {
-            player.setWalkSpeed((float) (max));
-            return;
-        }
+            if (!trait.isEnabled()) return;
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) {
+                player.setWalkSpeed(0.2f);
+                return;
+            }
+            double max = trait.optionDouble("max") / walkSpeedRatio;
+            if (0.2 + value > max) {
+                player.setWalkSpeed((float) (max));
+                return;
+            }
 
-        player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+            player.setWalkSpeed(Math.min((float) (0.2 + value), 1f));
+        });
     }
 
     @EventHandler
