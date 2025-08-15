@@ -481,13 +481,17 @@ public class ConfigurateItemParser {
 
     public void parseHideTooltip(ConfigurationNode config, ItemStack item) {
         if (!config.node("hide_tooltip").virtual()) {
-            boolean hideTooltip = config.node("hide_tooltip").getBoolean();
-            ItemMeta meta = getMeta(item);
-            if (VersionUtils.isAtLeastVersion(20, 5)) {
-                meta.setHideTooltip(hideTooltip);
-            }
-            item.setItemMeta(meta);
+            parseHideTooltipNode(config.node("hide_tooltip"), item);
         }
+    }
+
+    public void parseHideTooltipNode(ConfigurationNode tooltipNode, ItemStack item) {
+        boolean hideTooltip = tooltipNode.getBoolean();
+        ItemMeta meta = getMeta(item);
+        if (VersionUtils.isAtLeastVersion(20, 5)) {
+            meta.setHideTooltip(hideTooltip);
+        }
+        item.setItemMeta(meta);
     }
 
 }

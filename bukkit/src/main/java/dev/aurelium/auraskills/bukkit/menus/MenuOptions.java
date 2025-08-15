@@ -42,7 +42,7 @@ public class MenuOptions {
         parsers.put("nbt", (item, config) -> new ConfigurateItemParser(plugin).parseNBT(item, config));
 
         parsers.put("hide_tooltip", (item, config) -> {
-            new ConfigurateItemParser(plugin).parseHideTooltip(config, item);
+            new ConfigurateItemParser(plugin).parseHideTooltipNode(config, item);
             return item;
         });
 
