@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class NexoHook extends Hook implements Listener {
 
@@ -40,7 +41,8 @@ public class NexoHook extends Hook implements Listener {
         this.plugin = plugin;
         registerExternalItemProvider();
         registerBlockParsingExtension();
-        itemsLoadedCallbacks.add(() -> plugin.getMenuFileManager().loadMenus());
+        itemsLoadedCallbacks.add(() ->
+                plugin.getScheduler().scheduleSync(() -> plugin.getMenuFileManager().loadMenus(), 50L, TimeUnit.MILLISECONDS));
     }
 
     @Override
