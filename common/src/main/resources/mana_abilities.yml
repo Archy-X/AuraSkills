@@ -32,7 +32,7 @@ mana_abilities:
     sneak_offhand_bypass: true
     max_blocks_multiplier: 1
     give_xp: true
-    use_events: false
+    call_block_break_event: false
   auraskills/speed_mine:
     enabled: true
     base_value: 10.0
