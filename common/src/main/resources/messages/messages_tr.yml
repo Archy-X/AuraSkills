@@ -334,7 +334,7 @@ commands:
     logs:
       header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Hedef oyuncunun anti-AFK kayıtlarını göster.
   armor:
     modifier:
       add:
@@ -406,7 +406,7 @@ commands:
       error: "<red>Yedekleme yüklenirken hata oluştu: {error}"
       must_be_yaml: "<yellow>Dosya bir .yml dosyası olmalıdır!"
       file_not_found: "<yellow>Backups klasöründe bu dosya adına ait bir yedek mevcut değil!"
-      desc: Loads a backup from a given file.
+      desc: Hedef dosyadan backup yükle.
     save:
       saving: "<white>Yedekleme kaydetme..."
       saved: "<white>olarak yedeklenen {type} verileri {file}"
@@ -712,7 +712,7 @@ menus:
     trait: "Trait"
     trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
     trait_level: "Trait Level"
-    base: "Base"
+    base: "Taban"
     modifiers_additive: "Modifiers (Additive)"
     modifiers_multiplicative: "Modifiers (Multiplicative)"
   skills:
@@ -725,7 +725,7 @@ menus:
     stats: "İstatistikler"
     stats_desc: "Yeteneklerinin seviyesini yükselterek istatistik güçlendirmeleri kazanın"
     stats_click: "Daha fazla bilgi edinmek veya istatistiklerinizi görüntülemek için tıklayın"
-    active_job: Active Job
+    active_job: Aktif İş
   level_progression:
     level_progression_title: "{skill} Seviye - Sayfa {page}"
     your_ranking: "Yetenek Sıralamanız"
@@ -743,7 +743,7 @@ menus:
     abilities_desc: "<2>Yetenekler</2> <1>yeteneklerinizin seviyesini yükselttikçe açtığınız ve yükselttiğiniz pasif avantajlardır.</1>"
     mana_abilities_desc: "<3>Mana Yetenekleri</3> <1>aktivasyon gerektiren ve mana tüketen özel bir yetenek türüdür.</1>"
     abilities_click: "{skill} yeteneklerini görüntülemek için tıklayın"
-    job: Job
+    job: İş
     job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
     job_select: Left click to select {skill} as your job
     job_active: Zaten bu görevdesin
