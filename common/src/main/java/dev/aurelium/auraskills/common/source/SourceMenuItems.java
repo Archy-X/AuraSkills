@@ -5,8 +5,8 @@ import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class SourceMenuItems<T> {
 
@@ -14,8 +14,8 @@ public abstract class SourceMenuItems<T> {
     private final Map<XpSource, String> sourceUnits;
 
     public SourceMenuItems(AuraSkillsPlugin plugin) {
-        this.menuItems = new HashMap<>();
-        this.sourceUnits = new HashMap<>();
+        this.menuItems = new ConcurrentHashMap<>();
+        this.sourceUnits = new ConcurrentHashMap<>();
     }
 
     public abstract void parseAndRegisterMenuItem(XpSource source, ConfigurationNode config);

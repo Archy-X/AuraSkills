@@ -12,9 +12,9 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldGuardFlags {
 
@@ -23,7 +23,7 @@ public class WorldGuardFlags {
 
     public WorldGuardFlags(AuraSkills plugin) {
         this.plugin = plugin;
-        this.stateFlags = new HashMap<>();
+        this.stateFlags = new ConcurrentHashMap<>();
     }
 
     @Nullable

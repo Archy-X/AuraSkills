@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.trait;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.TraitHandler;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.text.NumberFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class TraitManager {
 
@@ -19,7 +21,7 @@ public abstract class TraitManager {
 
     public TraitManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.traitMap = new HashMap<>();
+        this.traitMap = new ConcurrentHashMap<>();
         this.supplier = new TraitSupplier(this, plugin.getMessageProvider());
     }
 
@@ -47,7 +49,7 @@ public abstract class TraitManager {
     }
 
     public Set<Trait> getEnabledTraits() {
-        Set<Trait> skills = new HashSet<>();
+        Set<Trait> skills = Sets.newConcurrentHashSet();
         for (LoadedTrait loaded : traitMap.values()) {
             if (loaded.trait().isEnabled()) {
                 skills.add(loaded.trait());
@@ -57,7 +59,7 @@ public abstract class TraitManager {
     }
 
     public Set<Stat> getLinkedStats(Trait trait) {
-        Set<Stat> set = new HashSet<>();
+        Set<Stat> set = Sets.newConcurrentHashSet();
         for (Stat stat : plugin.getStatManager().getEnabledStats()) {
             if (stat.getTraits().contains(trait)) {
                 set.add(stat);

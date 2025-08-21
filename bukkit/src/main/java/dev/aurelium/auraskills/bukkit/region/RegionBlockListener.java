@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.bukkit.util.BlockFaceUtil;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.scheduler.Task;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -21,8 +22,8 @@ import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 
@@ -68,22 +69,22 @@ public class RegionBlockListener implements Listener {
                 regionManager.removePlacedBlock(block);
                 Entity entity = event.getEntity();
                 AtomicInteger counter = new AtomicInteger();
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        Block currentBlock = entity.getLocation().getBlock();
-                        if (entity.isDead() || !entity.isValid()) {
-                            if (currentBlock.getType() == type) {
-                                regionManager.addPlacedBlock(entity.getLocation().getBlock());
-                            }
-                            cancel();
-                        } else if (currentBlock.getType().toString().contains("WEB")) {
-                            cancel();
-                        } else if (counter.incrementAndGet() >= 200) {
-                            cancel();
+
+                final Task[] taskHolder = new Task[1];
+
+                taskHolder[0] = plugin.getScheduler().timerAtEntity(entity, () -> {
+                    Block currentBlock = entity.getLocation().getBlock();
+                    if (entity.isDead() || !entity.isValid()) {
+                        if (currentBlock.getType() == type) {
+                            regionManager.addPlacedBlock(entity.getLocation().getBlock());
                         }
+                        taskHolder[0].cancel();
+                    } else if (currentBlock.getType().toString().contains("WEB")) {
+                        taskHolder[0].cancel();
+                    } else if (counter.incrementAndGet() >= 200) {
+                        taskHolder[0].cancel();
                     }
-                }.runTaskTimer(plugin, 1L, 1L);
+                }, 50, 50, TimeUnit.MILLISECONDS);
             }
         }
     }
@@ -148,18 +149,15 @@ public class RegionBlockListener implements Listener {
     private void checkSupportBelow(Block block) {
         // Check if the block above requires support
         Block above = block.getRelative(BlockFace.UP);
-        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(above, BlockXpSource.BlockTriggers.BREAK);
         BlockXpSource source = skillSource == null ? null : skillSource.source();
         if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.BELOW) && regionManager.isPlacedBlock(above)) {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    // Remove if block was destroyed
-                    if (blockLeveler.isDifferentSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
-                        regionManager.removePlacedBlock(above);
-                    }
+            plugin.getScheduler().scheduleAtLocation(above.getLocation(), () -> {
+                // Remove if block was destroyed
+                if (blockLeveler.isDifferentSource(above, source, BlockXpSource.BlockTriggers.BREAK)) {
+                    regionManager.removePlacedBlock(above);
                 }
-            }.runTaskLater(plugin, 1);
+            }, 50, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -167,18 +165,15 @@ public class RegionBlockListener implements Listener {
         // Check each side
         for (BlockFace face : BlockFaceUtil.getBlockSides()) {
             Block checkedBlock = block.getRelative(face);
-            SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+            SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(checkedBlock, BlockXpSource.BlockTriggers.BREAK);
             BlockXpSource source = skillSource == null ? null : skillSource.source();
             if (source != null && source.requiresSupportBlock(BlockXpSource.SupportBlockType.SIDE) && regionManager.isPlacedBlock(checkedBlock)) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        // Remove if block was destroyed
-                        if (blockLeveler.isDifferentSource(block, source, BlockXpSource.BlockTriggers.BREAK)) {
-                            regionManager.removePlacedBlock(block);
-                        }
+                plugin.getScheduler().scheduleAtLocation(checkedBlock.getLocation(), () -> {
+                    // Remove if block was destroyed
+                    if (blockLeveler.isDifferentSource(checkedBlock, source, BlockXpSource.BlockTriggers.BREAK)) {
+                        regionManager.removePlacedBlock(checkedBlock);
                     }
-                }.runTaskLater(plugin, 1);
+                }, 50, TimeUnit.MILLISECONDS);
             }
         }
     }

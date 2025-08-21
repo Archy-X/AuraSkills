@@ -15,14 +15,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.text.NumberFormat;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class BukkitTraitManager extends TraitManager {
 
     private final AuraSkills plugin;
-    private final Map<Class<?>, BukkitTraitHandler> traitImpls = new HashMap<>();
+    private final Map<Class<?>, BukkitTraitHandler> traitImpls = new ConcurrentHashMap<>();
 
     public BukkitTraitManager(AuraSkills plugin) {
         super(plugin);

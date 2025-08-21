@@ -7,6 +7,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 public class ApiConfigNode implements ConfigNode {
@@ -91,7 +92,7 @@ public class ApiConfigNode implements ConfigNode {
 
     @Override
     public Map<Object, ? extends ConfigNode> childrenMap() {
-        Map<Object, ConfigNode> nodes = new HashMap<>();
+        Map<Object, ConfigNode> nodes = new ConcurrentHashMap<>();
         for (Map.Entry<Object, ? extends ConfigurationNode> entry : backing.childrenMap().entrySet()) {
             nodes.put(entry.getKey(), toApi(entry.getValue()));
         }
