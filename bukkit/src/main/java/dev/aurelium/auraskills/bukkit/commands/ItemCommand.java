@@ -343,7 +343,7 @@ public class ItemCommand extends BaseCommand {
                     if (!message.isEmpty()) {
                         player.sendMessage(plugin.getPrefix(locale) + message);
                     }
-            }
+                }
                 // Add to unclaimed items if leftover
                 if (leftoverItem != null) {
                     User user = plugin.getUser(player);

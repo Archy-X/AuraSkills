@@ -191,58 +191,58 @@ public class FightingAbilities extends BukkitAbilityImpl {
         final AtomicReference<Task> taskRef = new AtomicReference<>();
 
         Task task = plugin.getScheduler().timerAtEntity(entity, () -> {
-                if (!entity.isValid()) { // Stop if entity died/transformed
-                    Task t = taskRef.get();
-                    if (t != null) {
-                        t.cancel();
-                    }
-                    return;
-                }
-                PersistentDataContainer container = entity.getPersistentDataContainer();
-                NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
-
-                if (container.has(key, PersistentDataType.INTEGER)) {
-                    int bleedTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
-                    if (bleedTicks > 0) {
-                        // Apply bleed
-                        double damage = ability.getSecondaryValue(user.getAbilityLevel(ability));
-                        double healthBefore = entity.getHealth();
-                        // Mark entity with damager UUID for leveler
-                        NamespacedKey damagerKey = new NamespacedKey(plugin, BLEED_DAMAGER_KEY);
-                        container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
-
-                        entity.damage(damage);
-                        // Disable invulnerable frames
-                        entity.setNoDamageTicks(0);
-                        // Remove damager data
-                        container.remove(damagerKey);
-                        double healthAfter = entity.getHealth();
-                        if (healthAfter != healthBefore) { // Only display particles if damage was actually done
-                            displayBleedParticles(entity, ability);
-                        }
-                        // Decrement bleed ticks
-                        if (bleedTicks != 1) {
-                            container.set(key, PersistentDataType.INTEGER, bleedTicks - 1);
-                        } else {
-                            container.remove(key);
-                        }
-                        return;
-                    } else {
-                        container.remove(key);
-                    }
-                }
-                if (entity instanceof Player player) {
-                    if (ability.optionBoolean("enable_stop_message", true)) {
-                        Locale locale = user.getLocale();
-                        plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
-                    }
-                }
+            if (!entity.isValid()) { // Stop if entity died/transformed
                 Task t = taskRef.get();
                 if (t != null) {
                     t.cancel();
                 }
-            },
-            40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+                return;
+            }
+            PersistentDataContainer container = entity.getPersistentDataContainer();
+            NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
+
+            if (container.has(key, PersistentDataType.INTEGER)) {
+                int bleedTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
+                if (bleedTicks > 0) {
+                    // Apply bleed
+                    double damage = ability.getSecondaryValue(user.getAbilityLevel(ability));
+                    double healthBefore = entity.getHealth();
+                    // Mark entity with damager UUID for leveler
+                    NamespacedKey damagerKey = new NamespacedKey(plugin, BLEED_DAMAGER_KEY);
+                    container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
+
+                    entity.damage(damage);
+                    // Disable invulnerable frames
+                    entity.setNoDamageTicks(0);
+                    // Remove damager data
+                    container.remove(damagerKey);
+                    double healthAfter = entity.getHealth();
+                    if (healthAfter != healthBefore) { // Only display particles if damage was actually done
+                        displayBleedParticles(entity, ability);
+                    }
+                    // Decrement bleed ticks
+                    if (bleedTicks != 1) {
+                        container.set(key, PersistentDataType.INTEGER, bleedTicks - 1);
+                    } else {
+                        container.remove(key);
+                    }
+                    return;
+                } else {
+                    container.remove(key);
+                }
+            }
+            if (entity instanceof Player player) {
+                if (ability.optionBoolean("enable_stop_message", true)) {
+                    Locale locale = user.getLocale();
+                    plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
+                }
+            }
+            Task t = taskRef.get();
+            if (t != null) {
+                t.cancel();
+            }
+        },
+        40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
 
         taskRef.set(task);
     }

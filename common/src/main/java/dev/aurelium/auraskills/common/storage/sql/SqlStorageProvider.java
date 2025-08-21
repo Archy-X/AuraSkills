@@ -629,9 +629,9 @@ public class SqlStorageProvider extends StorageProvider {
         List<UserState> states = new ArrayList<>();
 
         Map<String, Skill> skillCache = plugin.getSkillRegistry()
-            .getValues()
-            .stream()
-            .collect(Collectors.toMap(s -> s.getId().toString(), s -> s));
+                .getValues()
+                .stream()
+                .collect(Collectors.toMap(s -> s.getId().toString(), s -> s));
 
         try (Connection connection = pool.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             if (enableLastUpdatedFilter) {

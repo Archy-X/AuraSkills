@@ -409,12 +409,12 @@ public class SkillsRootCommand extends BaseCommand {
             }
         } else {
             plugin.getScheduler().executeAsync(() -> {
-				try {
-					future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
-				} catch (Exception e) {
-					future.complete(null);
-					e.printStackTrace();
-				}
+                try {
+                    future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
+                } catch (Exception e) {
+                    future.complete(null);
+                    e.printStackTrace();
+                }
             });
         }
         return future;

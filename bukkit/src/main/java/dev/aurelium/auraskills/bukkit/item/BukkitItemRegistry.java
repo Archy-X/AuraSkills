@@ -28,8 +28,8 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
 

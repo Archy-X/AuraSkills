@@ -9,7 +9,6 @@ import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 public class MovementSpeedTrait extends TraitImpl {
