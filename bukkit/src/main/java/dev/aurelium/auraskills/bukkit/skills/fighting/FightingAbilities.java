@@ -241,8 +241,7 @@ public class FightingAbilities extends BukkitAbilityImpl {
             if (t != null) {
                 t.cancel();
             }
-        },
-                40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+        }, 40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
 
         taskRef.set(task);
     }
