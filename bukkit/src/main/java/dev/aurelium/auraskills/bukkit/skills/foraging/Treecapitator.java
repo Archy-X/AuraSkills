@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Treecapitator extends ReadiedManaAbility {
 
@@ -109,11 +110,26 @@ public class Treecapitator extends ReadiedManaAbility {
     }
 
     public void breakTree(Player player, User user, Block block, BlockXpSource source) {
-        breakBlock(player, user, block, new TreecapitatorTree(block, source));
+        AtomicInteger taskCount = new AtomicInteger(1);
+        TreecapitatorTree tree = new TreecapitatorTree(block, source);
+        double multiplier = manaAbility.optionDouble("durability_multiplier", 0);
+
+        // Make sure the max blocks does not exceed the durability, when applicable.
+        if (manaAbility.optionBoolean("max_limit_durability", false)) {
+            tree.setMaxBlocks(getHoldingMaterialDurability(player, tree.getMaxBlocks()));
+        }
+
+        breakBlock(player, user, block, tree, taskCount, () -> {
+            taskCount.decrementAndGet();
+            if (taskCount.get() == 0) {
+                setHoldingMaterialDurability(player, tree.getBlocksBroken(), multiplier);
+            }
+        });
     }
 
-    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree) {
+    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
+            onComplete.run();
             return;
         }
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
@@ -144,11 +160,15 @@ public class Treecapitator extends ReadiedManaAbility {
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
             if (adjacentBlock.getX() > originalBlock.getX() + 6 || adjacentBlock.getZ() > originalBlock.getZ() + 6 || adjacentBlock.getY() > originalBlock.getY() + 31) {
+                onComplete.run();
                 return;
             }
             // Break the next blocks
-            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree), 50, TimeUnit.MILLISECONDS);
+            taskCount.incrementAndGet();
+            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
+
+        onComplete.run();
     }
 
     @Nullable
@@ -204,6 +224,10 @@ public class Treecapitator extends ReadiedManaAbility {
 
         public int getMaxBlocks() {
             return maxBlocks;
+        }
+
+        public void setMaxBlocks(int maxBlocks) {
+            this.maxBlocks = maxBlocks;
         }
 
         private void setMaxBlocks(BlockXpSource source) {

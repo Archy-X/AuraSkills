@@ -7,15 +7,20 @@ import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -49,6 +54,49 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             }
         }
         return false;
+    }
+
+    protected void setHoldingMaterialDurability(Player player, int count, double multiplier) {
+        if (multiplier <= 0) return;
+
+        int takenDamage = (int) (count * multiplier);
+        if (takenDamage <= 0) return;
+
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null || meta.isUnbreakable()) return;
+
+        if (meta instanceof Damageable damageable) {
+            int currentDamage = damageable.getDamage();
+            int unbreakingLevel = item.getEnchantmentLevel(Enchantment.UNBREAKING);
+
+            if (unbreakingLevel > 0) {
+                takenDamage = (int) (takenDamage * (1.0 - (1.0 / (unbreakingLevel + 1))));
+            }
+
+            int newDamage = currentDamage + takenDamage;
+            int maxDamage = item.getType().getMaxDurability();
+
+            if (newDamage >= maxDamage) {
+                player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
+                player.playSound(player.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+                player.getWorld().spawnParticle(Particle.ITEM, player.getLocation(), 30, 0.2, 0.5, 0.2, new ItemStack(item.getType()));
+            } else {
+                damageable.setDamage(newDamage);
+                item.setItemMeta(meta);
+            }
+        }
+    }
+
+    protected int getHoldingMaterialDurability(Player player, int limit) {
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta meta = item.getItemMeta();
+        if (meta != null && !meta.isUnbreakable() && meta instanceof Damageable damageable) {
+            int durability = item.getType().getMaxDurability() - damageable.getDamage();
+            return Math.min(limit, durability);
+        }
+
+        return limit;
     }
 
     protected boolean isExcludedBlock(Block block) {
