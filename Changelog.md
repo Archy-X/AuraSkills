@@ -4,7 +4,7 @@ Changelog for versions since 2.0.0.
 
 ## 2.3.7
 
-## New Features
+### New Features
 
 - Add average stat placeholders
   - Add average_stat, average_stat_int, and average_stat_1 placeholders for the player's average stat level
@@ -14,7 +14,7 @@ Changelog for versions since 2.0.0.
   - The `max_limit_durability` determines if the number of blocks broken should always be equal or less than the item's durability.
     The default value of false makes the ability only use the `max_blocks` value to limit blocks broken.
 
-## Bug Fixes
+### Bug Fixes
 
 - Fix Valor, Stamina, and item modifiers not applying in off-hand
 - Fix hide_tooltip not working on items
