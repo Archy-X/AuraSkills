@@ -9,7 +9,7 @@ public enum Hooks implements HookType {
     DECENT_HOLOGRAMS(DecentHologramsHook.class, "DecentHolograms"),
     HOLOGRAPHIC_DISPLAYS(HolographicDisplaysHook.class, "HolographicDisplays"),
     LUCK_PERMS(BukkitLuckPermsHook.class, "LuckPerms"),
-    PLACEHOLDER_API(PlaceholderApiHook.class, "PlaceholderAPI"),
+    PLACEHOLDER_API(PlaceholderApiHook.class, "PlaceholderAPI", false),
     PROTOCOL_LIB(ProtocolLibHook.class, "ProtocolLib"),
     SLIMEFUN(SlimefunHook.class, "Slimefun"),
     TOWNY(TownyHook.class, "Towny"),

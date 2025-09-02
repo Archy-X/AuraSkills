@@ -13,8 +13,16 @@ public class PlaceholderApiHook extends PlaceholderHook {
 
     public PlaceholderApiHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
-        new PlaceholderApiProvider(plugin, "auraskills").register();
-        new PlaceholderApiProvider(plugin, "aureliumskills").register();
+        if (!plugin.getServer().getPluginManager().isPluginEnabled(Hooks.PLACEHOLDER_API.getPluginName())) {
+            // Defer if plugin is loaded but not enabled yet
+            plugin.getScheduler().executeSync(() -> {
+                new PlaceholderApiProvider(plugin, "auraskills").register();
+                new PlaceholderApiProvider(plugin, "aureliumskills").register();
+            });
+        } else {
+            new PlaceholderApiProvider(plugin, "auraskills").register();
+            new PlaceholderApiProvider(plugin, "aureliumskills").register();
+        }
     }
 
     @Override
