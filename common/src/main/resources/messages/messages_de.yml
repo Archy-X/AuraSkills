@@ -682,6 +682,7 @@ leveler:
   mana_ability_unlock: Manafähigkeit freigeschaltet
   mana_ability_level_up: Manafähigkeiten Levelaufstieg
   unclaimed_item: "<red>Du hast unbeanspruchte Gegenstände, weil dein Inventar voll war, benutze <yellow>/Skills um <red>to sie zu beanspruchen"
+  limit_reached: "<red>Limit erreicht, noch {time} Sekunden übrig"
 menus:
   common:
     close: "Schließen"

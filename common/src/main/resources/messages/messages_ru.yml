@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Мана способность разблокирована
   mana_ability_level_up: Уровень мана способности повышен
   unclaimed_item: "<red>У вас есть не собранные предметы, потому что ваш инвентарь был заполнен, используйте <yellow>/skills claimitems <red>для их получения"
+  limit_reached: "<red>Достигнут лимит, осталось {time} секунд"
 menus:
   common:
     close: "Закрыть"

@@ -196,6 +196,14 @@ auto_save:
   enabled: true
   interval_ticks: 12000
 leveler:
+  limiter:
+    enabled: false
+    notify_player: true
+    partial_xp_gain: true
+    per_skill: true
+    global:
+      cap: 5000
+      time: 60
   title:
     enabled: true
     fade_in: 5
