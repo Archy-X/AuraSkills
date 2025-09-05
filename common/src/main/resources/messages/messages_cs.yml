@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Mana Ability Odemčený
   mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>Máš nevyzvednuté položky, protože tvůj inventář byl plný, použij <yellow>/skills claimitems <red>pro vyzvednuti"
+  limit_reached: "<red>Limit dosažen, zbývá {time} sekund"
 menus:
   common:
     close: "Zavřít"

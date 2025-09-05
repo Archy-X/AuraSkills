@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Habilidad de Maná Desbloqueada
   mana_ability_level_up: Nuevo Nivel de Habilidad de Maná
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
+  limit_reached: "<red>Límite alcanzado, quedan {time} segundos"
 menus:
   common:
     close: "Cerrar"

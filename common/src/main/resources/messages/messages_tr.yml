@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Mana Yeteneği Kilidini Açma
   mana_ability_level_up: Mana Yeteneği Seviye Yükseltme
   unclaimed_item: "<red>Envanteriniz dolu olduğu için sahipsiz eşyalarınız var, onları sahiplenmek için <yellow>/skills claimitems <red>kullanın"
+  limit_reached: "<red>Sınır aşıldı, {time} saniye kaldı"
 menus:
   common:
     close: "Kapat"

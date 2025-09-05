@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Kĩ năng ma pháp
   mana_ability_level_up: Lên cắp Kĩ năng Ma pháp
   unclaimed_item: "<red>Bạn có vật phẩm chưa nhận do kho đồ đã đầy, dùng <yellow>/skills claimitems <red>để nhận"
+  limit_reached: "<red>Đã đạt giới hạn, còn lại {time} giây"
 menus:
   common:
     close: "Đóng"

@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Mana Ability Unlock
   mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  limit_reached: "<red>Limit reached, {time} seconds remaining"
 menus:
   common:
     close: "Close"

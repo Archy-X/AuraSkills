@@ -114,6 +114,12 @@ public enum Option {
     AUTO_SAVE_ENABLED("auto_save.enabled", OptionType.BOOLEAN),
     AUTO_SAVE_INTERVAL_TICKS("auto_save.interval_ticks", OptionType.INT),
     // Leveler options
+    LEVELER_LIMITER_ENABLED("leveler.limiter.enabled", OptionType.BOOLEAN),
+    LEVELER_LIMITER_PER_SKILL("leveler.limiter.per_skill", OptionType.BOOLEAN),
+    LEVELER_LIMITER_PARTIAL_XP_GAIN("leveler.limiter.partial_xp_gain", OptionType.BOOLEAN),
+    LEVELER_LIMITER_NOTIFY_PLAYER("leveler.limiter.notify_player", OptionType.BOOLEAN),
+    LEVELER_LIMITER_GLOBAL_CAP("leveler.limiter.global.cap", OptionType.INT),
+    LEVELER_LIMITER_GLOBAL_TIME("leveler.limiter.global.time", OptionType.INT),
     LEVELER_TITLE_ENABLED("leveler.title.enabled", OptionType.BOOLEAN),
     LEVELER_TITLE_FADE_IN("leveler.title.fade_in", OptionType.INT),
     LEVELER_TITLE_STAY("leveler.title.stay", OptionType.INT),

@@ -13,7 +13,8 @@ public enum LevelerMessage implements MessageKey {
     ABILITY_LEVEL_UP,
     MANA_ABILITY_UNLOCK,
     MANA_ABILITY_LEVEL_UP,
-    UNCLAIMED_ITEM;
+    UNCLAIMED_ITEM,
+    LIMIT_REACHED;
 
     @Override
     public String getPath() {

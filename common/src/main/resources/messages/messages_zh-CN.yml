@@ -682,6 +682,7 @@ leveler:
   mana_ability_unlock: 解锁魔法能力
   mana_ability_level_up: 魔法能力等级提升
   unclaimed_item: "<red>因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 <yellow>/skills claimitems <red>及时领取这些物品."
+  limit_reached: "<red>已达到限制，还剩 {time} 秒"
 menus:
   common:
     close: "关闭"

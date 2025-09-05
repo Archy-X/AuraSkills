@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: マナアビリティーアンロック
   mana_ability_level_up: マナアビリティーアンロック
   unclaimed_item: "<red>インベントリがいっぱいのため、受け取っていないアイテムがあります。 <yellow>/skills claimitems <red>で受け取る"
+  limit_reached: "<red>上限に達しました、残り{time}秒です"
 menus:
   common:
     close: "閉じる"
