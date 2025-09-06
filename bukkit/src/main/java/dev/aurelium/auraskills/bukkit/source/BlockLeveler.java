@@ -13,6 +13,9 @@ import dev.aurelium.auraskills.common.source.SourceTypes;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Levelled;
+import org.bukkit.block.data.type.Beehive;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -21,6 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -31,6 +35,23 @@ public class BlockLeveler extends SourceLeveler {
 
     private final BlockLevelerHelper helper;
     private final Map<UniqueBlock, SkillSource<BlockXpSource>> sourceCache;
+
+    private final Set<Material> collectShearBlocks = Set.of(
+            Material.BEEHIVE,
+            Material.BEE_NEST
+    );
+    private final Set<Material> collectBottleBlocks = Set.of(
+            Material.BEEHIVE,
+            Material.BEE_NEST,
+            Material.CAULDRON,
+            Material.WATER_CAULDRON
+    );
+    private final Set<Material> collectBucketBlocks = Set.of(
+            Material.CAULDRON,
+            Material.WATER_CAULDRON,
+            Material.LAVA_CAULDRON,
+            Material.POWDER_SNOW_CAULDRON
+    );
 
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BLOCK);
@@ -90,10 +111,42 @@ public class BlockLeveler extends SourceLeveler {
 
         Block block = event.getClickedBlock();
         if (block == null) return;
+        // Skip in the case the block was fertilized or filled.
+        // This can be cause by either a player or dispenser.
+        if (hasSkippableMeta(block, event)) return;
 
+        boolean collecting = false;
         SkillSource<BlockXpSource> skillSource = getSource(block, BlockXpSource.BlockTriggers.INTERACT);
         if (skillSource == null) {
-            return;
+            skillSource = getSource(block, BlockXpSource.BlockTriggers.COLLECT);
+            collecting = true;
+
+            if (skillSource == null) return;
+        }
+
+        if (collecting) {
+            ItemStack item = event.getItem();
+            if (item == null) return;
+
+            Material itemType = item.getType();
+            Material blockType = block.getType();
+            boolean collectWithShears = itemType == Material.SHEARS && collectShearBlocks.contains(blockType);
+            boolean collectWithBottles = itemType == Material.GLASS_BOTTLE && collectBottleBlocks.contains(blockType);
+            boolean collectWithBuckets = itemType == Material.BUCKET && collectBucketBlocks.contains(blockType);
+
+            if (collectWithShears || collectWithBottles || collectWithBuckets) {
+                BlockData blockData = block.getBlockData();
+                if (blockData instanceof Beehive beehive) {
+                    if (beehive.getHoneyLevel() < beehive.getMaximumHoneyLevel()) return;
+                } else if (blockData instanceof Levelled levelled) {
+                    if (levelled.getLevel() == 0 && itemType == Material.GLASS_BOTTLE) return;
+                    if (levelled.getLevel() < levelled.getMaximumLevel() && itemType == Material.BUCKET) return;
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
         }
 
         BlockXpSource source = skillSource.source();
@@ -116,6 +169,38 @@ public class BlockLeveler extends SourceLeveler {
             plugin.getLevelManager().addXp(user, skill, source, source.getXp() * multiplier);
             applyBlockLuck(skill, player, user, block, source);
         }
+    }
+
+    private boolean hasSkippableMeta(Block block, PlayerInteractEvent event) {
+        ItemStack item = event.getItem();
+        Material itemType = (item != null) ? item.getType() : Material.AIR;
+
+        boolean emptyLeveler = false;
+        if (block.getBlockData() instanceof Levelled levelled) {
+            // Buckets will empty the cauldron only at level 3
+            // Bottles will empty the cauldron only at level 1
+            if ((itemType == Material.BUCKET && levelled.getLevel() == 3) ||
+                    (itemType == Material.GLASS_BOTTLE && levelled.getLevel() == 1)) {
+                emptyLeveler = true;
+            }
+        }
+
+        for (String metaKey : List.of("fertilized", "filledManually")) {
+            List<MetadataValue> metaDataList = block.getMetadata(metaKey);
+            if (metaDataList != null && !metaDataList.isEmpty()) {
+                MetadataValue metaDataValue = metaDataList.getFirst();
+                if (metaDataValue.asBoolean()) {
+                    // Only remove the filledManually tag if levelled is empty.
+                    // Or when we are dealing with other meta keys.
+                    if ((metaKey.equals("filledManually") && emptyLeveler) || !metaKey.equals("filledManually")) {
+                        block.removeMetadata(metaKey, plugin);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void applyBlockLuck(Skill skill, Player player, User user, Block block, XpSource source) {
