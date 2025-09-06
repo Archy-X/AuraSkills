@@ -7,9 +7,9 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Requirements {
 
@@ -21,7 +21,7 @@ public class Requirements {
 
     public Map<Skill, Integer> getLegacyRequirements(ModifierType type, ReadWriteNBT nbtItem) {
         ReadWriteNBT legacyCompound = ItemUtils.getLegacyRequirementsTypeCompound(nbtItem, type);
-        Map<Skill, Integer> requirements = new HashMap<>();
+        Map<Skill, Integer> requirements = new ConcurrentHashMap<>();
 
         for (String key : legacyCompound.getKeys()) {
             Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(key.toLowerCase(Locale.ROOT)));

@@ -17,10 +17,10 @@ import dev.aurelium.auraskills.common.api.implementation.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ApiAuraSkills implements AuraSkillsApi {
 
@@ -39,7 +39,7 @@ public class ApiAuraSkills implements AuraSkillsApi {
         this.userManager = new ApiUserManager(plugin);
         this.messageManager = new ApiMessageManager(plugin);
         this.xpRequirements = new ApiXpRequirements(plugin);
-        this.namespacedRegistryMap = new HashMap<>();
+        this.namespacedRegistryMap = new ConcurrentHashMap<>();
         this.handlers = new ApiHandlers(plugin);
         this.mainConfig = new ApiMainConfig(plugin);
         this.globalRegistry = new ApiGlobalRegistry(plugin);

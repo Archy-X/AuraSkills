@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RewardManager {
 
@@ -28,7 +29,7 @@ public class RewardManager {
 
     public RewardManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.rewardTables = new HashMap<>();
+        this.rewardTables = new ConcurrentHashMap<>();
     }
 
     @NotNull

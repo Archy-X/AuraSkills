@@ -1,5 +1,7 @@
 package dev.aurelium.auraskills.common.util.text;
 
+import com.google.common.collect.Sets;
+
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -154,7 +156,7 @@ public class TextUtil {
     }
 
     private static Set<Integer> generateDelimiterSet(final char[] delimiters) {
-        final Set<Integer> delimiterHashSet = new HashSet<>();
+        final Set<Integer> delimiterHashSet = Sets.newConcurrentHashSet();
         if (delimiters == null || delimiters.length == 0) {
             if (delimiters == null) {
                 delimiterHashSet.add(Character.codePointAt(new char[]{' '}, 0));

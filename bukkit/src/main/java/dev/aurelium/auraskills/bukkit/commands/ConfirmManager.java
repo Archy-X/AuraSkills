@@ -3,15 +3,15 @@ package dev.aurelium.auraskills.bukkit.commands;
 import co.aikar.commands.CommandIssuer;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class ConfirmManager {
 
     private final AuraSkills plugin;
-    private final Map<UUID, String> confirmMap = new HashMap<>();
+    private final Map<UUID, String> confirmMap = new ConcurrentHashMap<>();
 
     public ConfirmManager(AuraSkills plugin) {
         this.plugin = plugin;

@@ -34,6 +34,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileStorageProvider extends StorageProvider {
 
@@ -115,8 +116,8 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     private SkillLevelMaps loadSkills(ConfigurationNode node) {
-        Map<Skill, Integer> levelsMap = new HashMap<>();
-        Map<Skill, Double> xpMap = new HashMap<>();
+        Map<Skill, Integer> levelsMap = new ConcurrentHashMap<>();
+        Map<Skill, Double> xpMap = new ConcurrentHashMap<>();
 
         // Load each skill section
         node.childrenMap().forEach((skillName, skillNode) -> {
@@ -135,7 +136,7 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     private Map<String, StatModifier> loadStatModifiers(ConfigurationNode node) {
-        Map<String, StatModifier> statModifiers = new HashMap<>();
+        Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
 
         node.childrenMap().forEach((index, modifierNode) -> {
             String name = modifierNode.node("name").getString();
@@ -158,7 +159,7 @@ public class FileStorageProvider extends StorageProvider {
     }
 
     private Map<String, TraitModifier> loadTraitModifiers(ConfigurationNode node) {
-        Map<String, TraitModifier> traitModifiers = new HashMap<>();
+        Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
         node.childrenMap().forEach((index, modifierNode) -> {
             String name = modifierNode.node("name").getString();
             String traitName = modifierNode.node("trait").getString();
