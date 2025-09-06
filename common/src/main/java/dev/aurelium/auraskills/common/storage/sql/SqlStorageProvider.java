@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class SqlStorageProvider extends StorageProvider {
@@ -84,8 +85,8 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private SkillLevelMaps loadSkillLevels(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<Skill, Integer> levelsMap = new HashMap<>();
-        Map<Skill, Double> xpMap = new HashMap<>();
+        Map<Skill, Integer> levelsMap = new ConcurrentHashMap<>();
+        Map<Skill, Double> xpMap = new ConcurrentHashMap<>();
 
         String loadQuery = "SELECT * FROM " + TABLE_PREFIX + "skill_levels WHERE user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
@@ -112,7 +113,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private Map<String, StatModifier> loadStatModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<String, StatModifier> modifiers = new HashMap<>();
+        Map<String, StatModifier> modifiers = new ConcurrentHashMap<>();
         String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
                 TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -145,7 +146,7 @@ public class SqlStorageProvider extends StorageProvider {
     }
 
     private Map<String, TraitModifier> loadTraitModifiers(Connection connection, UUID uuid, int userId) throws SQLException {
-        Map<String, TraitModifier> modifiers = new HashMap<>();
+        Map<String, TraitModifier> modifiers = new ConcurrentHashMap<>();
         String query = "SELECT type_id, modifier_name, modifier_value, modifier_operation, expiration_time, remaining_duration FROM " +
                 TABLE_PREFIX + "modifiers WHERE user_id=? AND modifier_type=?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -246,7 +247,7 @@ public class SqlStorageProvider extends StorageProvider {
                     statement.executeUpdate();
                 }
             }
-            Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+            Map<String, AuraSkillsModifier<?>> modifiers = new ConcurrentHashMap<>();
             modifiers.putAll(state.statModifiers());
             modifiers.putAll(state.traitModifiers());
 
@@ -352,7 +353,7 @@ public class SqlStorageProvider extends StorageProvider {
     private void saveModifiersTable(Connection connection, User user, int userId) throws SQLException {
         deleteModifiers(connection, userId);
 
-        Map<String, AuraSkillsModifier<?>> modifiers = new HashMap<>();
+        Map<String, AuraSkillsModifier<?>> modifiers = new ConcurrentHashMap<>();
         modifiers.putAll(user.getStatModifiers());
         modifiers.putAll(user.getTraitModifiers());
 
@@ -641,8 +642,8 @@ public class SqlStorageProvider extends StorageProvider {
                 UUID uuid = null;
                 double mana = 0;
 
-                Map<Skill, Integer> lvl = new HashMap<>();
-                Map<Skill, Double> xp = new HashMap<>();
+                Map<Skill, Integer> lvl = new ConcurrentHashMap<>();
+                Map<Skill, Double> xp = new ConcurrentHashMap<>();
 
                 while (rs.next()) {
                     int userId = rs.getInt(1);
@@ -654,8 +655,8 @@ public class SqlStorageProvider extends StorageProvider {
                         currentId = userId;
                         uuid = UUID.fromString(rs.getString(2));
                         mana = rs.getDouble(3);
-                        lvl = new HashMap<>();
-                        xp = new HashMap<>();
+                        lvl = new ConcurrentHashMap<>();
+                        xp = new ConcurrentHashMap<>();
                     }
 
                     Skill skill = skillCache.get(rs.getString(4));

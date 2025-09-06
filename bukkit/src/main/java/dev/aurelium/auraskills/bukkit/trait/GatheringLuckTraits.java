@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.trait;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.AuraSkillsBukkit;
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.ability.Ability;
@@ -32,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
@@ -172,7 +172,7 @@ public class GatheringLuckTraits extends TraitImpl {
     }
 
     public Set<ItemStack> getUniqueDrops(Block block, Player player) {
-        Set<ItemStack> unique = new HashSet<>();
+        Set<ItemStack> unique = Sets.newConcurrentHashSet();
         for (ItemStack item : block.getDrops(player.getInventory().getItemInMainHand(), player)) {
             // Check if a similar item already exists
             boolean alreadyAdded = false;

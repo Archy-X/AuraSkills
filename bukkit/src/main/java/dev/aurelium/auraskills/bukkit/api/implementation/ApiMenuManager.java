@@ -14,12 +14,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class ApiMenuManager implements MenuManager {
 
     private final AuraSkills plugin;
-    private final Map<String, List<Consumer<MenuBuilder>>> builders = new HashMap<>();
+    private final Map<String, List<Consumer<MenuBuilder>>> builders = new ConcurrentHashMap<>();
 
     public ApiMenuManager(AuraSkills plugin) {
         this.plugin = plugin;
@@ -71,7 +72,7 @@ public class ApiMenuManager implements MenuManager {
     }
 
     public Set<String> getNonDefaultMenuNames() {
-        Set<String> nonDefault = new HashSet<>();
+        Set<String> nonDefault = Sets.newConcurrentHashSet();
         for (String menuName : builders.keySet()) {
             if (!Sets.newHashSet(MenuFileManager.MENU_NAMES).contains(menuName)) {
                 nonDefault.add(menuName);

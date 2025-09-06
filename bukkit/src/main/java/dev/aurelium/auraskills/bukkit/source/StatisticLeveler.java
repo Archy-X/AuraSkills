@@ -12,15 +12,15 @@ import org.bukkit.GameMode;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class StatisticLeveler extends SourceLeveler {
 
-    private final Map<UUID, Map<StatisticXpSource, Integer>> tracker = new HashMap<>();
+    private final Map<UUID, Map<StatisticXpSource, Integer>> tracker = new ConcurrentHashMap<>();
 
     public StatisticLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.STATISTIC);
@@ -54,7 +54,7 @@ public class StatisticLeveler extends SourceLeveler {
                 Statistic statistic = Statistic.valueOf(source.getStatistic().toUpperCase(Locale.ROOT));
 
                 // Get the last tracked statistic value and add current value if missing
-                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>())
+                int lastValue = tracker.computeIfAbsent(player.getUniqueId(), uuid -> new ConcurrentHashMap<>())
                         .computeIfAbsent(source, s -> player.getStatistic(statistic));
 
                 int change = player.getStatistic(statistic) - lastValue;
@@ -67,7 +67,7 @@ public class StatisticLeveler extends SourceLeveler {
 
                 plugin.getLevelManager().addXp(user, entry.skill(), source, xpToAdd);
                 // Update tracker with current value
-                tracker.computeIfAbsent(player.getUniqueId(), uuid -> new HashMap<>()).put(source, player.getStatistic(statistic));
+                tracker.computeIfAbsent(player.getUniqueId(), uuid -> new ConcurrentHashMap<>()).put(source, player.getStatistic(statistic));
             } catch (IllegalArgumentException ignored) {
             }
         }

@@ -4,9 +4,9 @@ import dev.aurelium.auraskills.api.option.OptionedProvider;
 import dev.aurelium.auraskills.common.util.data.OptionProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class OptionSupplier<T> implements OptionedProvider<T> {
 
@@ -61,7 +61,7 @@ public abstract class OptionSupplier<T> implements OptionedProvider<T> {
 
     @Override
     public Map<String, Object> optionMap(T type, String key) {
-        return isLoaded(type) ? getOptions(type).getMap(key) : new HashMap<>();
+        return isLoaded(type) ? getOptions(type).getMap(key) : new ConcurrentHashMap<>();
     }
 
 }

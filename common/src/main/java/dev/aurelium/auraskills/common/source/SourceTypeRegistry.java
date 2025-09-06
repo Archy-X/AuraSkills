@@ -6,9 +6,9 @@ import dev.aurelium.auraskills.common.source.parser.ParsingExtension;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SourceTypeRegistry {
 
@@ -16,8 +16,8 @@ public class SourceTypeRegistry {
     private final Map<SourceType, List<ParsingExtension>> parsingExtensions;
 
     public SourceTypeRegistry() {
-        this.sourceTypes = new HashMap<>();
-        this.parsingExtensions = new HashMap<>();
+        this.sourceTypes = new ConcurrentHashMap<>();
+        this.parsingExtensions = new ConcurrentHashMap<>();
     }
 
     public SourceType get(NamespacedId id) throws IllegalArgumentException {

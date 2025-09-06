@@ -4,9 +4,9 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manager for storing and retrieving xp requirements for each level.
@@ -21,7 +21,7 @@ public class XpRequirements {
     public XpRequirements(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
         this.defaultXpRequirements = new ArrayList<>();
-        this.skillXpRequirements = new HashMap<>();
+        this.skillXpRequirements = new ConcurrentHashMap<>();
         addDefaultXpRequirements();
     }
 

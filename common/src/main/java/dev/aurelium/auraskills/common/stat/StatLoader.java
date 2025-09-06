@@ -14,6 +14,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class StatLoader {
 
@@ -93,7 +94,7 @@ public class StatLoader {
         // Create immutable list of traits from keys of traitConfigs
         ImmutableList<Trait> traits = ImmutableList.copyOf(traitConfigs.keySet());
 
-        Map<String, Object> configMap = new HashMap<>();
+        Map<String, Object> configMap = new ConcurrentHashMap<>();
         for (Object key : config.childrenMap().keySet()) {
             configMap.put((String) key, config.node(key).raw());
         }
@@ -112,7 +113,7 @@ public class StatLoader {
                 ConfigurationNode traitNode = config.node(traitName);
 
                 // Load child values in traitNode into map
-                Map<String, Object> traitConfigMap = new HashMap<>();
+                Map<String, Object> traitConfigMap = new ConcurrentHashMap<>();
                 for (Object childKey : traitNode.childrenMap().keySet()) {
                     traitConfigMap.put((String) childKey, traitNode.node(childKey).raw());
                 }
