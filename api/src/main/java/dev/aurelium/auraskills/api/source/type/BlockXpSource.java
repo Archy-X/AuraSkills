@@ -100,7 +100,8 @@ public interface BlockXpSource extends XpSource {
     enum BlockTriggers {
 
         BREAK,
-        INTERACT
+        INTERACT,
+        COLLECT
 
     }
 
