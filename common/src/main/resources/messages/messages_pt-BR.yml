@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Habilidades de Mana desbloqueadas
   mana_ability_level_up: Habilidade de Mana Melhorada
   unclaimed_item: "<red>Você tem itens não resgatados porque o seu inventário estava cheio, use <yellow>/skills claimitems <red>para reivindicar eles"
+  limit_reached: "<red>Limite atingido, restam {time} segundos"
 menus:
   common:
     close: "Fechar"

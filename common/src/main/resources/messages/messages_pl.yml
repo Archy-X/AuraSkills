@@ -682,6 +682,7 @@ leveler:
   mana_ability_unlock: Odblokowano Zdolność Many
   mana_ability_level_up: Nowy Poziom Zdolności Many
   unclaimed_item: "<red>Masz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj <yellow>/skills claimitems <red>aby je odebrać"
+  limit_reached: "<red>Osiągnięto limit, pozostało {time} sekund"
 menus:
   common:
     close: "Zamknij"

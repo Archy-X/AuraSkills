@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: 마나 능력 잠금 해제
   mana_ability_level_up: 마나 능력 레벨 업
   unclaimed_item: "<red>인벤토리가 가득 차서 수령하지 않은 아이템이 있습니다. <yellow>/skillsclaimitems<red>를 사용하여 수령하세요."
+  limit_reached: "<red>제한에 도달했습니다. {time}초 남았습니다"
 menus:
   common:
     close: "닫기"

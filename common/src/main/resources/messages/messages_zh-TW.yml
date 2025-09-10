@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: 法力能力解鎖
   mana_ability_level_up: 法力能力等級提升
   unclaimed_item: "<red>由於庫存已滿，您有無人認領的物品，請使用 <yellow>/skills claimitems <red>領取它們"
+  limit_reached: "<red>已達到限制，剩下 {time} 秒"
 menus:
   common:
     close: "關閉"

@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Capacité de mana débloquée
   mana_ability_level_up: Niveau de compétence de mana supérieur
   unclaimed_item: "<red>Vous avez des objets non réclamés parce que votre inventaire était plein, utilisez <yellow>/skills claimitems <red>pour les réclamer"
+  limit_reached: "<red>Limite atteinte, il reste {time} secondes"
 menus:
   common:
     close: "Fermer"

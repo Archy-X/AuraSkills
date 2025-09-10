@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Abilità Mana Sbloccata
   mana_ability_level_up: Abilità Mana Level Up
   unclaimed_item: "<red>Hai oggetti non reclamati perchè il tuo inventario era pieno, usa <yellow>/skills claimitems <red>per reclamarli"
+  limit_reached: "<red>Limite raggiunto, restano {time} secondi"
 menus:
   common:
     close: "Chiudi"
