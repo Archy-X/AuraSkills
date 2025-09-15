@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 @CommandAlias("%skills_alias")
@@ -89,7 +89,7 @@ public class StorageCommand extends BaseCommand {
                     skipped++;
                     continue;
                 }
-                UserState newState = new UserState(state.uuid(), state.skillLevels(), state.skillXp(), new HashMap<>(), new HashMap<>(), state.mana());
+                UserState newState = new UserState(state.uuid(), state.skillLevels(), state.skillXp(), Map.of(), Map.of(), state.mana());
                 try {
                     storage.applyState(newState);
                     success++;

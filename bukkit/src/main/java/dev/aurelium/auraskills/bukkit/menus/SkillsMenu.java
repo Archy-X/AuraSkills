@@ -78,6 +78,7 @@ public class SkillsMenu {
                         e.printStackTrace();
                     }
                 }
+
                 return new HashSet<>(plugin.getSkillManager().getEnabledSkills());
             });
         });

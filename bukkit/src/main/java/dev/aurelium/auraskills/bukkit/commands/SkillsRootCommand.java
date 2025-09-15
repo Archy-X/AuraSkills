@@ -26,10 +26,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 @CommandAlias("%skills_alias")
 public class SkillsRootCommand extends BaseCommand {
@@ -323,7 +323,7 @@ public class SkillsRootCommand extends BaseCommand {
             player.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.CLAIMITEMS_NO_ITEMS, locale));
             return;
         }
-        UnclaimedItemsMenu.getInventory(plugin, user).open(player);
+        plugin.getScheduler().executeAtEntity(player, (task) -> UnclaimedItemsMenu.getInventory(plugin, user).open(player));
     }
 
     @Subcommand("version")
@@ -342,7 +342,7 @@ public class SkillsRootCommand extends BaseCommand {
     @CommandCompletion("@skills @sort_types")
     @Description("%desc_sources")
     public void onSources(Player player, Skill skill, @Optional SortType sortType) {
-        Map<String, Object> properties = new HashMap<>();
+        Map<String, Object> properties = new ConcurrentHashMap<>();
         properties.put("skill", skill);
         properties.put("items_per_page", 28);
         if (sortType == null) { // Use ASCENDING as default
@@ -408,17 +408,14 @@ public class SkillsRootCommand extends BaseCommand {
                 future.complete(null);
             }
         } else {
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    try {
-                        future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
-                    } catch (Exception e) {
-                        future.complete(null);
-                        e.printStackTrace();
-                    }
+            plugin.getScheduler().executeAsync(() -> {
+                try {
+                    future.complete(plugin.getStorageProvider().loadState(player.getUniqueId()));
+                } catch (Exception e) {
+                    future.complete(null);
+                    e.printStackTrace();
                 }
-            }.runTaskAsynchronously(plugin);
+            });
         }
         return future;
     }

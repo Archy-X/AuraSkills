@@ -165,7 +165,7 @@ public class Treecapitator extends ReadiedManaAbility {
             }
             // Break the next blocks
             taskCount.incrementAndGet();
-            plugin.getScheduler().scheduleSync(() -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtLocation(adjacentBlock.getLocation(), () -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
 
         onComplete.run();

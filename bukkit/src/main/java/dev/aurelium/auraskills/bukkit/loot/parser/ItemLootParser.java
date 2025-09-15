@@ -75,7 +75,8 @@ public class ItemLootParser implements LootParser {
             LootEnchantList singleList = parseSingleEnchantList(config);
             possibleEnchants.put(singleList, 1);
         }
-        return possibleEnchants;
+
+        return Map.copyOf(possibleEnchants);
     }
 
     private LootEnchantList parseSingleEnchantList(ConfigurationNode config) {

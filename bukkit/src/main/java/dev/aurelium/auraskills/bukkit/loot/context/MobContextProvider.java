@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.loot.context;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.common.loot.ContextProvider;
 import org.bukkit.entity.EntityType;
@@ -17,7 +18,7 @@ public class MobContextProvider extends ContextProvider {
 
     @Override
     public @Nullable Set<LootContext> parseContext(ConfigurationNode config) throws SerializationException {
-        Set<LootContext> contexts = new HashSet<>();
+        Set<LootContext> contexts = Sets.newConcurrentHashSet();
         if (config.node("mobs").virtual()) {
             return contexts;
         }

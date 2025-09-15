@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.region;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.ConfigurateLoader;
 import dev.aurelium.auraskills.common.region.WorldManager;
@@ -10,7 +11,6 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 public class BukkitWorldManager implements WorldManager {
@@ -30,9 +30,9 @@ public class BukkitWorldManager implements WorldManager {
             ConfigurationNode config = loader.loadUserFile("config.yml");
 
             int blockedWorldsLoaded = 0;
-            blockedWorlds = new HashSet<>();
-            disabledWorlds = new HashSet<>();
-            blockedCheckBlockReplaceWorlds = new HashSet<>();
+            blockedWorlds = Sets.newConcurrentHashSet();
+            disabledWorlds = Sets.newConcurrentHashSet();
+            blockedCheckBlockReplaceWorlds = Sets.newConcurrentHashSet();
             for (String blockedWorld : config.node("blocked_worlds").getList(String.class, new ArrayList<>())) {
                 blockedWorlds.add(blockedWorld);
                 blockedWorldsLoaded++;

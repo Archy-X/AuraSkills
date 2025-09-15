@@ -21,16 +21,16 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class HpTrait extends TraitImpl {
 
-    private final Map<UUID, Double> worldChangeHealth = new HashMap<>();
-    private final Map<Integer, Double> hearts = new HashMap<>();
+    private final Map<UUID, Double> worldChangeHealth = new ConcurrentHashMap<>();
+    private final Map<Integer, Double> hearts = new ConcurrentHashMap<>();
     private static final double threshold = 0.1;
     private static final UUID ATTRIBUTE_ID = UUID.fromString("7d1423dd-91db-467a-8eb8-1886e30ca0b1");
     private static final String ATTRIBUTE_KEY = "hp_trait";
@@ -73,9 +73,10 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public void reload(Player player, Trait trait) {
-        setHealth(player, plugin.getUser(player));
-
-        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            setHealth(player, plugin.getUser(player));
+            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        });
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
@@ -101,7 +102,7 @@ public class HpTrait extends TraitImpl {
         }
         User user = plugin.getUser(player);
         if (Traits.HP.optionInt("update_delay") > 0) {
-            plugin.getScheduler().scheduleSync(() -> setWorldChange(event, player, user),
+            plugin.getScheduler().scheduleAtEntity(player, () -> setWorldChange(event, player, user),
                     Traits.HP.optionInt("update_delay") * 50L, TimeUnit.MILLISECONDS);
         } else {
             setWorldChange(event, player, user);

@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.common.user.UserState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class LeaderboardManager {
@@ -24,7 +25,7 @@ public class LeaderboardManager {
     public LeaderboardManager(AuraSkillsPlugin plugin, LeaderboardExclusion leaderboardExclusion) {
         this.plugin = plugin;
         this.leaderboardExclusion = leaderboardExclusion;
-        this.skillLeaderboards = new HashMap<>();
+        this.skillLeaderboards = new ConcurrentHashMap<>();
         this.powerLeaderboard = new ArrayList<>();
         this.averageLeaderboard = new ArrayList<>();
         // Load excluded players
@@ -50,7 +51,7 @@ public class LeaderboardManager {
         try {
             setSorting(true);
             // Initialize lists
-            Map<Skill, List<SkillValue>> skillLeaderboards = new HashMap<>();
+            Map<Skill, List<SkillValue>> skillLeaderboards = new ConcurrentHashMap<>();
             for (Skill skill : plugin.getSkillRegistry().getValues()) {
                 skillLeaderboards.put(skill, new ArrayList<>());
             }

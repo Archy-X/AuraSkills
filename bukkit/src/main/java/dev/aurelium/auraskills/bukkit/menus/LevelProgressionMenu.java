@@ -272,6 +272,7 @@ public class LevelProgressionMenu {
                 if (level >= offset + currentPage * itemsPerPage && level < (currentPage + 1) * itemsPerPage + offset) {
                     return Set.of(level + 1);
                 }
+
                 return new HashSet<>();
             });
 

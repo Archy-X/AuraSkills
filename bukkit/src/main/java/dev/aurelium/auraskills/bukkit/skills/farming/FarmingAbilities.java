@@ -120,7 +120,7 @@ public class FarmingAbilities extends BukkitAbilityImpl {
 
         if (state.getBlockData() instanceof Ageable ageable) {
             // Add growth stages with 1 tick delay
-            plugin.getScheduler().scheduleSync(() -> {
+            plugin.getScheduler().scheduleAtLocation(block.getLocation(), () -> {
                 if (block.getType() != state.getType()) return;
 
                 ageable.setAge(Math.min(ageable.getAge() + extraStages, ageable.getMaximumAge()));
