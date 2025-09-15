@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
-import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootContext;
@@ -66,6 +65,7 @@ public class MobLootHandler extends LootHandler implements Listener {
             skill = skillSource.skill();
         }
 
+        label:
         for (LootPool pool : table.getPools()) {
             // Skip pool if no loot in the pool match the mob context
             if (isPoolUnobtainable(pool, entity.getType())) {
@@ -86,13 +86,17 @@ public class MobLootHandler extends LootHandler implements Listener {
             if (rolled < chance) {
                 Loot selectedLoot = selectLoot(pool, context, user);
                 // Give loot
-                if (selectedLoot == null) {
-                    break;
-                }
-                if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
-                } else if (selectedLoot instanceof CommandLoot commandLoot) {
-                    giveCommandLoot(player, commandLoot, null, skill);
+                switch (selectedLoot) {
+                    case null:
+                        break label;
+                    case ItemLoot itemLoot:
+                        giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
+                        break;
+                    case CommandLoot commandLoot:
+                        giveCommandLoot(player, commandLoot, null, skill);
+                        break;
+                    default:
+                        break;
                 }
                 break;
             }
@@ -101,15 +105,15 @@ public class MobLootHandler extends LootHandler implements Listener {
 
     private boolean isPoolUnobtainable(LootPool pool, EntityType entityType) {
         for (Loot loot : pool.getLoot()) {
-            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("mobs", Sets.newConcurrentHashSet());
+            Set<LootContext> contexts = loot.getValues().getContexts().getOrDefault("mobs", Set.of());
             // Loot will be reachable if it has no contexts
             if (contexts.isEmpty()) {
                 return false;
             }
             // Loot is reachable if at least one context matches the entity type
             for (LootContext context : contexts) {
-                if (context instanceof MobContext mobContext) {
-                    if (mobContext.entityType().equals(entityType)) {
+                if (context instanceof MobContext(EntityType type)) {
+                    if (type.equals(entityType)) {
                         return false;
                     }
                 }

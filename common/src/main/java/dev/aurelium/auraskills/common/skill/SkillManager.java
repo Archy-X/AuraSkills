@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.skill;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -63,11 +64,12 @@ public class SkillManager {
     }
 
     public Set<Skill> getSkillValues() {
-        Set<Skill> skills = Sets.newConcurrentHashSet();
+        ImmutableSet.Builder<Skill> builder = ImmutableSet.builder();
         for (LoadedSkill loaded : skillMap.values()) {
-            skills.add(loaded.skill());
+            builder.add(loaded.skill());
         }
-        return skills;
+
+        return builder.build();
     }
 
     public Set<Skill> getEnabledSkills() {
@@ -174,23 +176,24 @@ public class SkillManager {
      * @return a map from skill to whether it is enabled
      */
     public Map<Skill, Boolean> loadConfigEnabledMap() {
-        Map<Skill, Boolean> map = new ConcurrentHashMap<>();
+        ImmutableMap.Builder<Skill, Boolean> builder = ImmutableMap.builder();
         ConfigurateLoader loader = new ConfigurateLoader(plugin, TypeSerializerCollection.builder().build());
         try {
             ConfigurationNode root = loader.loadUserFile(new File(plugin.getPluginFolder(), "skills.yml"));
             for (Skill skill : Skills.values()) {
                 ConfigurationNode node = root.node("skills", skill.getId().toString(), "options", "enabled");
                 if (node.virtual()) {
-                    map.put(skill, false);
+                    builder.put(skill, false);
                 } else {
-                    map.put(skill, node.getBoolean(false));
+                    builder.put(skill, node.getBoolean(false));
                 }
             }
         } catch (IOException e) {
             plugin.logger().warn("Failed to load skills.yml to check for enabled skills");
             e.printStackTrace();
         }
-        return map;
+
+        return builder.build();
     }
 
 }

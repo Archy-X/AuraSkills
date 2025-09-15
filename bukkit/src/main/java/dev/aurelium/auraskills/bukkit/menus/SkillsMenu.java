@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
@@ -16,6 +15,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.HashSet;
 import java.util.Map;
 
 public class SkillsMenu {
@@ -78,7 +78,8 @@ public class SkillsMenu {
                         e.printStackTrace();
                     }
                 }
-                return Sets.newConcurrentHashSet(plugin.getSkillManager().getEnabledSkills());
+
+                return new HashSet<>(plugin.getSkillManager().getEnabledSkills());
             });
         });
     }

@@ -70,19 +70,19 @@ public class SourceLoader {
 
             ConfigurationNode userDefault = user.node("default");
 
-            Map<String, ConfigurationNode> userSources = new ConcurrentHashMap<>();
+            Map<String, ConfigurationNode> userSources = new HashMap<>();
             addToMap(user, userSources);
 
             if (updateUserFile(embeddedSources, userSources, sourceFile, embedded, user, skill)) {
                 // Reload file if updated
                 user = configurateLoader.loadUserFile(sourceFile);
                 userDefault = user.node("default");
-                userSources = new ConcurrentHashMap<>();
+                userSources = new HashMap<>();
                 addToMap(user, userSources);
             }
 
             // Merge embedded and user sources
-            Map<String, ConfigurationNode> sources = new ConcurrentHashMap<>();
+            Map<String, ConfigurationNode> sources = new HashMap<>();
 
             for (String sourceName : userSources.keySet()) {
                 ConfigurationNode userNode = userSources.get(sourceName);

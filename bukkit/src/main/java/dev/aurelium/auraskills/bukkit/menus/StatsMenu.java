@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.bukkit.BukkitTraitHandler;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.CustomStat;
@@ -22,6 +21,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -92,7 +92,7 @@ public class StatsMenu {
                         e.printStackTrace();
                     }
                 }
-                return Sets.newConcurrentHashSet(plugin.getStatManager().getEnabledStats());
+                return new HashSet<>(plugin.getStatManager().getEnabledStats());
             });
 
             template.modify(t -> {

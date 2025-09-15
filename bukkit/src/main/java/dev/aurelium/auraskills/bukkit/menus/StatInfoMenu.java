@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.menus;
 
-import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.util.NumberUtil;
@@ -149,7 +148,7 @@ public class StatInfoMenu {
             });
 
             template.definedContexts(m -> {
-                Set<Trait> contexts = Sets.newConcurrentHashSet();
+                Set<Trait> contexts = new HashSet<>();
                 for (Trait trait : ((Stat) m.menu().property("stat")).getTraits()) {
                     if (trait.isEnabled()) {
                         contexts.add(trait);
@@ -209,7 +208,7 @@ public class StatInfoMenu {
 
             template.definedContexts(m -> {
                 Map<String, ModifierInstance> map = m.menu().property("modifiers");
-                return Sets.newConcurrentHashSet(map.keySet());
+                return new HashSet<>(map.keySet());
             });
 
             template.slotPos(t -> {

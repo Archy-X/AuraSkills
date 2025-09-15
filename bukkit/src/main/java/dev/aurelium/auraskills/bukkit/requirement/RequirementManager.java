@@ -48,7 +48,7 @@ public class RequirementManager implements Listener {
                     String[] splitText = text.split(" ");
                     try {
                         Material material = Material.valueOf(splitText[0].toUpperCase(Locale.ROOT));
-                        Map<Skill, Integer> requirements = new ConcurrentHashMap<>();
+                        Map<Skill, Integer> requirements = new HashMap<>();
                         for (int i = 1; i < splitText.length; i++) {
                             String requirementText = splitText[i];
                             try {
@@ -61,7 +61,7 @@ public class RequirementManager implements Listener {
                                 plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
                             }
                         }
-                        GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
+                        GlobalRequirement globalRequirement = new GlobalRequirement(type, material, Map.copyOf(requirements));
                         globalRequirements.add(globalRequirement);
                         loaded++;
                     } catch (IllegalArgumentException e) {

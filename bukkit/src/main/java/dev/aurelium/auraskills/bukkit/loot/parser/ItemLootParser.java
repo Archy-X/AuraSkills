@@ -21,7 +21,6 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.wrap;
 
@@ -71,12 +70,13 @@ public class ItemLootParser implements LootParser {
     }
 
     private Map<LootEnchantList, Integer> parsePossibleEnchants(ConfigurationNode config) {
-        Map<LootEnchantList, Integer> possibleEnchants = new ConcurrentHashMap<>();
+        Map<LootEnchantList, Integer> possibleEnchants = new HashMap<>();
         if (config.hasChild("enchantments")) { // Single enchant list
             LootEnchantList singleList = parseSingleEnchantList(config);
             possibleEnchants.put(singleList, 1);
         }
-        return possibleEnchants;
+
+        return Map.copyOf(possibleEnchants);
     }
 
     private LootEnchantList parseSingleEnchantList(ConfigurationNode config) {

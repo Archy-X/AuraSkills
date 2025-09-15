@@ -11,8 +11,8 @@ import dev.aurelium.auraskills.common.source.type.BlockSource;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class BlockSourceParser extends SourceParser<BlockSource> {
 
@@ -38,7 +38,7 @@ public class BlockSourceParser extends SourceParser<BlockSource> {
 
         @Override
         public BlockXpSource.BlockXpSourceState parse(ConfigNode source, BaseContext context) {
-            Map<String, Object> stateMap = new ConcurrentHashMap<>();
+            Map<String, Object> stateMap = new HashMap<>();
             // Add all keys and values in the section to the map
             for (Map.Entry<Object, ? extends ConfigNode> entry : source.childrenMap().entrySet()) {
                 String key = entry.getKey().toString();

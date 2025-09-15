@@ -233,7 +233,7 @@ public class BlockLeveler extends SourceLeveler {
     }
 
     public static Map<String, Object> parseFromBlockData(String input) {
-        Map<String, Object> result = new ConcurrentHashMap<>();
+        Map<String, Object> result = new HashMap<>();
         // Check if the input is valid
         if (input == null || input.isEmpty()) {
             return result;

@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.common.reward;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.PermissionsHook;
@@ -56,7 +57,7 @@ public class RewardTable {
      * @return A map of each level to a list of rewards of that type
      */
     public <T extends SkillReward> Map<Integer, ImmutableList<T>> searchRewards(Class<T> type) {
-        Map<Integer, ImmutableList<T>> rewardMap = new ConcurrentHashMap<>();
+        ImmutableMap.Builder<Integer, ImmutableList<T>> builder = ImmutableMap.builder();
         for (Map.Entry<Integer, List<SkillReward>> entry : rewards.entrySet()) {
             List<T> rewardList = new ArrayList<>();
             for (SkillReward reward : entry.getValue()) {
@@ -64,9 +65,11 @@ public class RewardTable {
                     rewardList.add(type.cast(reward));
                 }
             }
-            rewardMap.put(entry.getKey(), ImmutableList.copyOf(rewardList));
+            if (!rewardList.isEmpty()) {
+                builder.put(entry.getKey(), ImmutableList.copyOf(rewardList));
+            }
         }
-        return rewardMap;
+        return builder.build();
     }
 
     // Searches all rewards of a certain type at a single level

@@ -5,10 +5,10 @@ import dev.aurelium.auraskills.api.item.ItemContext;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.trait.Trait;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class CustomStat implements Stat {
 
@@ -206,7 +206,7 @@ public class CustomStat implements Stat {
     public static class Defined {
 
         private ItemContext item;
-        private final Map<Trait, Double> traits = new ConcurrentHashMap<>();
+        private final Map<Trait, Double> traits = new HashMap<>();
         private String displayName;
         private String description;
         private String color;

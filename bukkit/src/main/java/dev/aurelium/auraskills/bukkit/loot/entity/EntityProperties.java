@@ -6,9 +6,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.spongepowered.configurate.ConfigurationNode;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public record EntityProperties(
         String entityId,
@@ -27,7 +27,7 @@ public record EntityProperties(
         // Parse equipment items for each slot
         var itemParser = new ConfigurateItemParser(plugin);
 
-        Map<EquipmentSlot, ItemStack> equipment = new ConcurrentHashMap<>();
+        Map<EquipmentSlot, ItemStack> equipment = new HashMap<>();
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             ConfigurationNode itemNode = config.node(slot.toString().toLowerCase(Locale.ROOT));
             if (itemNode.empty()) continue;
@@ -44,7 +44,7 @@ public record EntityProperties(
                 config.node("damage").empty() ? null : config.node("damage").getDouble(),
                 config.node("velocity", "horizontal").empty() ? null : config.node("velocity", "horizontal").getFloat(),
                 config.node("velocity", "vertical").empty() ? null : config.node("velocity", "vertical").getFloat(),
-                equipment
+                Map.copyOf(equipment)
         );
     }
 

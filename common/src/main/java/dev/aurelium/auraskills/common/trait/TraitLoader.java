@@ -9,8 +9,8 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class TraitLoader {
 
@@ -43,7 +43,7 @@ public class TraitLoader {
         ConfigurationNode traitNode = root.node("traits", trait.getId().toString());
 
         // Add all values in trait to a map
-        Map<String, Object> configMap = new ConcurrentHashMap<>();
+        Map<String, Object> configMap = new HashMap<>();
         for (Object key : traitNode.childrenMap().keySet()) {
             configMap.put((String) key, traitNode.node(key).raw());
         }

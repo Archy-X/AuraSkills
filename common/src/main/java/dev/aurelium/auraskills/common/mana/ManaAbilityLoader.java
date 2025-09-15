@@ -11,8 +11,8 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class ManaAbilityLoader {
 
@@ -46,7 +46,7 @@ public class ManaAbilityLoader {
         ConfigurationNode abilityNode = root.node("mana_abilities", manaAbility.getId().toString());
 
         // Add all values in ability to a map
-        Map<String, Object> configMap = new ConcurrentHashMap<>();
+        Map<String, Object> configMap = new HashMap<>();
         for (Object key : abilityNode.childrenMap().keySet()) {
             configMap.put((String) key, abilityNode.node(key).raw());
         }

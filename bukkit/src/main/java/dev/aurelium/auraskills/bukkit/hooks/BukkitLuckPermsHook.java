@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
-import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import dev.aurelium.auraskills.common.hooks.LuckPermsHook;
@@ -110,7 +109,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
     private Set<String> getMultiplierPermissions(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            return Sets.newConcurrentHashSet();
+            return Set.of();
         }
 
         return player.getEffectivePermissions()
@@ -118,7 +117,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
                 .filter(PermissionAttachmentInfo::getValue)
                 .map(PermissionAttachmentInfo::getPermission)
                 .filter(p -> p.startsWith(prefix))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     @EventHandler

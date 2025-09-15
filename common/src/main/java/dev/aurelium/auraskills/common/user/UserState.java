@@ -24,7 +24,7 @@ public record UserState(UUID uuid, Map<Skill, Integer> skillLevels, Map<Skill, D
             levels.put(skill, plugin.config().getStartLevel());
             xp.put(skill, 0.0);
         }
-        return new UserState(uuid, levels, xp, new ConcurrentHashMap<>(), new ConcurrentHashMap<>(), 0.0);
+        return new UserState(uuid, levels, xp, Map.of(), Map.of(), 0.0);
     }
 
 }
