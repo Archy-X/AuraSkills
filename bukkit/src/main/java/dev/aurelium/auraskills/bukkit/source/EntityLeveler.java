@@ -284,6 +284,20 @@ public class EntityLeveler extends SourceLeveler {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void entityTransform(EntityTransformEvent event) {
+        if(event.getTransformReason() != EntityTransformEvent.TransformReason.DROWNED) return;
+
+        Entity original = event.getEntity();
+        // Ignore entities that aren't spawner mobs
+        if (!original.getPersistentDataContainer().has(spawnerMobKey, PersistentDataType.INTEGER)) return;
+
+        // Apply key to drowned entities
+        for (Entity entity : event.getTransformedEntities()) {
+            entity.getPersistentDataContainer().set(spawnerMobKey, PersistentDataType.INTEGER, 1);
+        }
+    }
+
     private double getSpawnerMultiplier(Entity entity, Skill skill) {
         if (isSpawnerSpawned(entity)) {
             return skill.optionDouble("spawner_multiplier", 1.0);
