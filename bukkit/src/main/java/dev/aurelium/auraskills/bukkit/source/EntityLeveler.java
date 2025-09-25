@@ -271,28 +271,14 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onMobSplit(EntityTransformEvent event) {
-        if (event.getTransformReason() != EntityTransformEvent.TransformReason.SPLIT) return;
+    public void onMobTransform(EntityTransformEvent event) {
+        if (!(event.getTransformReason() == EntityTransformEvent.TransformReason.SPLIT || event.getTransformReason() == EntityTransformEvent.TransformReason.DROWNED)) return;
 
         Entity original = event.getEntity();
         // Ignore entities that aren't spawner mobs
         if (!original.getPersistentDataContainer().has(spawnerMobKey, PersistentDataType.INTEGER)) return;
 
         // Apply key to split entities
-        for (Entity entity : event.getTransformedEntities()) {
-            entity.getPersistentDataContainer().set(spawnerMobKey, PersistentDataType.INTEGER, 1);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void entityTransform(EntityTransformEvent event) {
-        if(event.getTransformReason() != EntityTransformEvent.TransformReason.DROWNED) return;
-
-        Entity original = event.getEntity();
-        // Ignore entities that aren't spawner mobs
-        if (!original.getPersistentDataContainer().has(spawnerMobKey, PersistentDataType.INTEGER)) return;
-
-        // Apply key to drowned entities
         for (Entity entity : event.getTransformedEntities()) {
             entity.getPersistentDataContainer().set(spawnerMobKey, PersistentDataType.INTEGER, 1);
         }
