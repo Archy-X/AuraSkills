@@ -11,7 +11,7 @@ import dev.aurelium.auraskills.bukkit.ability.BukkitAbilityImpl;
 import dev.aurelium.auraskills.bukkit.util.CompatUtil;
 import dev.aurelium.auraskills.common.ability.AbilityData;
 import dev.aurelium.auraskills.common.message.type.AbilityMessage;
-import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
+import dev.aurelium.auraskills.common.scheduler.Task;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.*;
@@ -33,6 +33,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FightingAbilities extends BukkitAbilityImpl {
 
@@ -95,7 +96,7 @@ public class FightingAbilities extends BukkitAbilityImpl {
         int id = abilityData.getInt("counter");
         // Schedules metadata removal
         long cooldown = ability.optionInt("cooldown_ticks", 6000);
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtEntity(player, () -> {
             if (user.getAbilityData(ability).containsKey("counter")) {
                 if (user.getAbilityData(ability).getInt("counter") == id) {
                     player.removeMetadata("AureliumSkills-FirstStrike", plugin);
@@ -187,56 +188,62 @@ public class FightingAbilities extends BukkitAbilityImpl {
 
     private void scheduleBleedTicks(LivingEntity entity, User user, Ability ability) {
         // Schedules bleed ticks
-        var task = new TaskRunnable() {
-            @Override
-            public void run() {
-                if (!entity.isValid()) { // Stop if entity died/transformed
-                    cancel();
-                    return;
+        final AtomicReference<Task> taskRef = new AtomicReference<>();
+
+        Task task = plugin.getScheduler().timerAtEntity(entity, () -> {
+            if (!entity.isValid()) { // Stop if entity died/transformed
+                Task t = taskRef.get();
+                if (t != null) {
+                    t.cancel();
                 }
-                PersistentDataContainer container = entity.getPersistentDataContainer();
-                NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
+                return;
+            }
+            PersistentDataContainer container = entity.getPersistentDataContainer();
+            NamespacedKey key = new NamespacedKey(plugin, "bleed_ticks");
 
-                if (container.has(key, PersistentDataType.INTEGER)) {
-                    int bleedTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
-                    if (bleedTicks > 0) {
-                        // Apply bleed
-                        double damage = ability.getSecondaryValue(user.getAbilityLevel(ability));
-                        double healthBefore = entity.getHealth();
-                        // Mark entity with damager UUID for leveler
-                        NamespacedKey damagerKey = new NamespacedKey(plugin, BLEED_DAMAGER_KEY);
-                        container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
+            if (container.has(key, PersistentDataType.INTEGER)) {
+                int bleedTicks = container.getOrDefault(key, PersistentDataType.INTEGER, 0);
+                if (bleedTicks > 0) {
+                    // Apply bleed
+                    double damage = ability.getSecondaryValue(user.getAbilityLevel(ability));
+                    double healthBefore = entity.getHealth();
+                    // Mark entity with damager UUID for leveler
+                    NamespacedKey damagerKey = new NamespacedKey(plugin, BLEED_DAMAGER_KEY);
+                    container.set(damagerKey, PersistentDataType.STRING, user.getUuid().toString());
 
-                        entity.damage(damage);
-                        // Disable invulnerable frames
-                        entity.setNoDamageTicks(0);
-                        // Remove damager data
-                        container.remove(damagerKey);
-                        double healthAfter = entity.getHealth();
-                        if (healthAfter != healthBefore) { // Only display particles if damage was actually done
-                            displayBleedParticles(entity, ability);
-                        }
-                        // Decrement bleed ticks
-                        if (bleedTicks != 1) {
-                            container.set(key, PersistentDataType.INTEGER, bleedTicks - 1);
-                        } else {
-                            container.remove(key);
-                        }
-                        return;
+                    entity.damage(damage);
+                    // Disable invulnerable frames
+                    entity.setNoDamageTicks(0);
+                    // Remove damager data
+                    container.remove(damagerKey);
+                    double healthAfter = entity.getHealth();
+                    if (healthAfter != healthBefore) { // Only display particles if damage was actually done
+                        displayBleedParticles(entity, ability);
+                    }
+                    // Decrement bleed ticks
+                    if (bleedTicks != 1) {
+                        container.set(key, PersistentDataType.INTEGER, bleedTicks - 1);
                     } else {
                         container.remove(key);
                     }
+                    return;
+                } else {
+                    container.remove(key);
                 }
-                if (entity instanceof Player player) {
-                    if (ability.optionBoolean("enable_stop_message", true)) {
-                        Locale locale = user.getLocale();
-                        plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
-                    }
-                }
-                cancel();
             }
-        };
-        plugin.getScheduler().timerSync(task, 40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+            if (entity instanceof Player player) {
+                if (ability.optionBoolean("enable_stop_message", true)) {
+                    Locale locale = user.getLocale();
+                    plugin.getAbilityManager().sendMessage(player, plugin.getMsg(AbilityMessage.BLEED_STOP, locale));
+                }
+            }
+            Task t = taskRef.get();
+            if (t != null) {
+                t.cancel();
+            }
+        }, 40 * 50L, ability.optionInt("tick_period", 40) * 50L, TimeUnit.MILLISECONDS);
+
+        taskRef.set(task);
     }
 
     private void displayBleedParticles(LivingEntity entity, Ability ability) {
@@ -306,7 +313,7 @@ public class FightingAbilities extends BukkitAbilityImpl {
 
         Vector velBefore = player.getVelocity();
         // Disable knockback
-        plugin.getScheduler().scheduleSync(() -> player.setVelocity(velBefore),
+        plugin.getScheduler().scheduleAtEntity(player, () -> player.setVelocity(velBefore),
                 50, TimeUnit.MILLISECONDS);
 
         return new DamageModifier((1 - value / 100) - 1, DamageModifier.Operation.MULTIPLY);

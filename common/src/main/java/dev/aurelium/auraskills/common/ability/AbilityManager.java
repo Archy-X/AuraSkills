@@ -11,9 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manager for storing and retrieving ability configs. Does not handle
@@ -24,11 +24,11 @@ public abstract class AbilityManager {
     private final AuraSkillsPlugin plugin;
     private final Map<Ability, LoadedAbility> abilityMap;
     private final AbilitySupplier supplier;
-    protected final Map<Class<?>, AbilityImpl> abilityImpls = new HashMap<>();
+    protected final Map<Class<?>, AbilityImpl> abilityImpls = new ConcurrentHashMap<>();
 
     public AbilityManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
-        this.abilityMap = new HashMap<>();
+        this.abilityMap = new ConcurrentHashMap<>();
         this.supplier = new AbilitySupplier(this, plugin.getMessageProvider());
     }
 

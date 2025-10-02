@@ -44,7 +44,7 @@ public record EntityProperties(
                 config.node("damage").empty() ? null : config.node("damage").getDouble(),
                 config.node("velocity", "horizontal").empty() ? null : config.node("velocity", "horizontal").getFloat(),
                 config.node("velocity", "vertical").empty() ? null : config.node("velocity", "vertical").getFloat(),
-                equipment
+                Map.copyOf(equipment)
         );
     }
 

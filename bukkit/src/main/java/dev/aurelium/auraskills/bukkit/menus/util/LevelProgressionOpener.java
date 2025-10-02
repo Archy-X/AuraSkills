@@ -6,8 +6,8 @@ import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.slate.menu.LoadedMenu;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LevelProgressionOpener {
 
@@ -21,7 +21,7 @@ public class LevelProgressionOpener {
         User user = plugin.getUser(player);
         // Get items per page from options, default to 24
         int page = getPage(skill, user);
-        Map<String, Object> properties = new HashMap<>();
+        Map<String, Object> properties = new ConcurrentHashMap<>();
         properties.put("skill", skill);
         properties.put("previous_menu", "skills");
         plugin.getSlate().openMenu(player, "level_progression", properties, page);

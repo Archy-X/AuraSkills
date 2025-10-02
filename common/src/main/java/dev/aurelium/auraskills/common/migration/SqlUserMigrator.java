@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.common.migration;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
@@ -17,6 +18,7 @@ import dev.aurelium.auraskills.common.util.data.Pair;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SqlUserMigrator {
 
@@ -163,24 +165,24 @@ public class SqlUserMigrator {
     }
 
     private Map<Skill, Pair<Integer, Double>> getOldSkillLevelsAndXp(ResultSet rs) throws SQLException {
-        Map<Skill, Pair<Integer, Double>> map = new HashMap<>();
-        map.put(Skills.AGILITY, new Pair<>(rs.getInt("AGILITY_LEVEL"), rs.getDouble("AGILITY_XP")));
-        map.put(Skills.ALCHEMY, new Pair<>(rs.getInt("ALCHEMY_LEVEL"), rs.getDouble("ALCHEMY_XP")));
-        map.put(Skills.ARCHERY, new Pair<>(rs.getInt("ARCHERY_LEVEL"), rs.getDouble("ARCHERY_XP")));
-        map.put(Skills.DEFENSE, new Pair<>(rs.getInt("DEFENSE_LEVEL"), rs.getDouble("DEFENSE_XP")));
-        map.put(Skills.ENCHANTING, new Pair<>(rs.getInt("ENCHANTING_LEVEL"), rs.getDouble("ENCHANTING_XP")));
-        map.put(Skills.ENDURANCE, new Pair<>(rs.getInt("ENDURANCE_LEVEL"), rs.getDouble("ENDURANCE_XP")));
-        map.put(Skills.EXCAVATION, new Pair<>(rs.getInt("EXCAVATION_LEVEL"), rs.getDouble("EXCAVATION_XP")));
-        map.put(Skills.FARMING, new Pair<>(rs.getInt("FARMING_LEVEL"), rs.getDouble("FARMING_XP")));
-        map.put(Skills.FIGHTING, new Pair<>(rs.getInt("FIGHTING_LEVEL"), rs.getDouble("FIGHTING_XP")));
-        map.put(Skills.FISHING, new Pair<>(rs.getInt("FISHING_LEVEL"), rs.getDouble("FISHING_XP")));
-        map.put(Skills.FORAGING, new Pair<>(rs.getInt("FORAGING_LEVEL"), rs.getDouble("FORAGING_XP")));
-        map.put(Skills.FORGING, new Pair<>(rs.getInt("FORGING_LEVEL"), rs.getDouble("FORGING_XP")));
-        map.put(Skills.HEALING, new Pair<>(rs.getInt("HEALING_LEVEL"), rs.getDouble("HEALING_XP")));
-        map.put(Skills.MINING, new Pair<>(rs.getInt("MINING_LEVEL"), rs.getDouble("MINING_XP")));
-        map.put(Skills.SORCERY, new Pair<>(rs.getInt("SORCERY_LEVEL"), rs.getDouble("SORCERY_XP")));
+        ImmutableMap.Builder<Skill, Pair<Integer, Double>> builder = ImmutableMap.builder();
+        builder.put(Skills.AGILITY, new Pair<>(rs.getInt("AGILITY_LEVEL"), rs.getDouble("AGILITY_XP")));
+        builder.put(Skills.ALCHEMY, new Pair<>(rs.getInt("ALCHEMY_LEVEL"), rs.getDouble("ALCHEMY_XP")));
+        builder.put(Skills.ARCHERY, new Pair<>(rs.getInt("ARCHERY_LEVEL"), rs.getDouble("ARCHERY_XP")));
+        builder.put(Skills.DEFENSE, new Pair<>(rs.getInt("DEFENSE_LEVEL"), rs.getDouble("DEFENSE_XP")));
+        builder.put(Skills.ENCHANTING, new Pair<>(rs.getInt("ENCHANTING_LEVEL"), rs.getDouble("ENCHANTING_XP")));
+        builder.put(Skills.ENDURANCE, new Pair<>(rs.getInt("ENDURANCE_LEVEL"), rs.getDouble("ENDURANCE_XP")));
+        builder.put(Skills.EXCAVATION, new Pair<>(rs.getInt("EXCAVATION_LEVEL"), rs.getDouble("EXCAVATION_XP")));
+        builder.put(Skills.FARMING, new Pair<>(rs.getInt("FARMING_LEVEL"), rs.getDouble("FARMING_XP")));
+        builder.put(Skills.FIGHTING, new Pair<>(rs.getInt("FIGHTING_LEVEL"), rs.getDouble("FIGHTING_XP")));
+        builder.put(Skills.FISHING, new Pair<>(rs.getInt("FISHING_LEVEL"), rs.getDouble("FISHING_XP")));
+        builder.put(Skills.FORAGING, new Pair<>(rs.getInt("FORAGING_LEVEL"), rs.getDouble("FORAGING_XP")));
+        builder.put(Skills.FORGING, new Pair<>(rs.getInt("FORGING_LEVEL"), rs.getDouble("FORGING_XP")));
+        builder.put(Skills.HEALING, new Pair<>(rs.getInt("HEALING_LEVEL"), rs.getDouble("HEALING_XP")));
+        builder.put(Skills.MINING, new Pair<>(rs.getInt("MINING_LEVEL"), rs.getDouble("MINING_XP")));
+        builder.put(Skills.SORCERY, new Pair<>(rs.getInt("SORCERY_LEVEL"), rs.getDouble("SORCERY_XP")));
 
-        return map;
+        return builder.build();
     }
 
     private List<StatModifier> parseStatModifiers(String statModifiers) {
@@ -206,7 +208,7 @@ public class SqlUserMigrator {
     }
 
     private Map<AbstractAbility, AbilityData> parseAbilityData(String abilityData) {
-        Map<AbstractAbility, AbilityData> map = new HashMap<>();
+        Map<AbstractAbility, AbilityData> map = new ConcurrentHashMap<>();
         if (abilityData == null) {
             return map;
         }

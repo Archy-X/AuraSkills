@@ -30,7 +30,8 @@ public class Requirements {
                 requirements.put(skill, value);
             }
         }
-        return requirements;
+
+        return Map.copyOf(requirements);
     }
 
 }

@@ -3,8 +3,8 @@ package dev.aurelium.auraskills.common.ability;
 import dev.aurelium.auraskills.api.ability.AbstractAbility;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AbilityData {
 
@@ -13,7 +13,7 @@ public class AbilityData {
 
     public AbilityData(AbstractAbility ability) {
         this.ability = ability;
-        this.data = new HashMap<>();
+        this.data = new ConcurrentHashMap<>();
     }
 
     public AbstractAbility getAbility() {

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
@@ -15,7 +16,6 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -54,7 +54,7 @@ public class ItemListener implements Listener {
 
         Player player = event.getPlayer();
         User user = plugin.getUser(player);
-        Set<ReloadableIdentifier> toReload = new HashSet<>();
+        Set<ReloadableIdentifier> toReload = Sets.newConcurrentHashSet();
 
         // Get items switched
         ItemStack itemOffHand = event.getOffHandItem();

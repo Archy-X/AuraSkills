@@ -109,7 +109,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
     private Set<String> getMultiplierPermissions(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
-            return new HashSet<>();
+            return Set.of();
         }
 
         return player.getEffectivePermissions()
@@ -117,7 +117,7 @@ public class BukkitLuckPermsHook extends LuckPermsHook implements Listener {
                 .filter(PermissionAttachmentInfo::getValue)
                 .map(PermissionAttachmentInfo::getPermission)
                 .filter(p -> p.startsWith(prefix))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     @EventHandler

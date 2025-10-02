@@ -41,7 +41,7 @@ public class CriticalHandler implements Listener {
         }
         // Set metadata for holograms to detect
         player.setMetadata("skillsCritical", new FixedMetadataValue(plugin, true));
-        plugin.getScheduler().scheduleSync(() -> player.removeMetadata("skillsCritical", plugin), 50, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().scheduleAtEntity(player, () -> player.removeMetadata("skillsCritical", plugin), 50, TimeUnit.MILLISECONDS);
 
         double value = user.getEffectiveTraitLevel(Traits.CRIT_DAMAGE) / 100;
         return new DamageModifier(value, DamageModifier.Operation.ADD_COMBINED);
