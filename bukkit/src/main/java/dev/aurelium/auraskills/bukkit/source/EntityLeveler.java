@@ -271,8 +271,8 @@ public class EntityLeveler extends SourceLeveler {
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onMobSplit(EntityTransformEvent event) {
-        if (event.getTransformReason() != EntityTransformEvent.TransformReason.SPLIT) return;
+    public void onMobTransform(EntityTransformEvent event) {
+        if (!(event.getTransformReason() == EntityTransformEvent.TransformReason.SPLIT || event.getTransformReason() == EntityTransformEvent.TransformReason.DROWNED)) return;
 
         Entity original = event.getEntity();
         // Ignore entities that aren't spawner mobs
