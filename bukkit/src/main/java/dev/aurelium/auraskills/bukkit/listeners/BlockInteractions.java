@@ -17,8 +17,7 @@ public class BlockInteractions implements Listener {
     private final AuraSkills plugin;
     private final Set<ChangeReason> cauldronLevelChangeReasons = Set.of(
             CauldronLevelChangeEvent.ChangeReason.BOTTLE_EMPTY,
-            CauldronLevelChangeEvent.ChangeReason.BUCKET_EMPTY
-    );
+            CauldronLevelChangeEvent.ChangeReason.BUCKET_EMPTY);
 
     public BlockInteractions(AuraSkills plugin) {
         this.plugin = plugin;

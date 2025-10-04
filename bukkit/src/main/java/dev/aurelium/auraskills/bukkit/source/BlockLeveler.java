@@ -38,20 +38,17 @@ public class BlockLeveler extends SourceLeveler {
 
     private final Set<Material> collectShearBlocks = Set.of(
             Material.BEEHIVE,
-            Material.BEE_NEST
-    );
+            Material.BEE_NEST);
     private final Set<Material> collectBottleBlocks = Set.of(
             Material.BEEHIVE,
             Material.BEE_NEST,
             Material.CAULDRON,
-            Material.WATER_CAULDRON
-    );
+            Material.WATER_CAULDRON);
     private final Set<Material> collectBucketBlocks = Set.of(
             Material.CAULDRON,
             Material.WATER_CAULDRON,
             Material.LAVA_CAULDRON,
-            Material.POWDER_SNOW_CAULDRON
-    );
+            Material.POWDER_SNOW_CAULDRON);
 
     public BlockLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BLOCK);
