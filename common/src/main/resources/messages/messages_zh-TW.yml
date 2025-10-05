@@ -598,6 +598,7 @@ menus:
     your_skills_desc: "通過執行各種任務來升級技能, 以解鎖寶貴的屬性, 能力!"
     your_skills_hover: "滑鼠指在技能上取得更多資訊!"
     your_skills_click: "點擊一項技能可以查看等級進度!"
+    skill_xp_limited: "XP受限"
     skill_click: "點擊查看等級進度!"
     stats: "統計資料"
     stats_desc: "透過提升技能等級來獲得統計加成"

@@ -720,6 +720,7 @@ menus:
     your_skills_desc: "做各种各样的事情得到有趣的属性增强, 技能和更多!"
     your_skills_hover: "悬停在技能图标上可以了解更多!"
     your_skills_click: "点击技能图标以了解技能掌握进度!"
+    skill_xp_limited: "XP受限"
     skill_click: "点击查看技能掌握进度!"
     stats: "状态"
     stats_desc: "通过升级技能获得状态增益"

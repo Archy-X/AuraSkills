@@ -118,6 +118,8 @@ public enum Option {
     LEVELER_LIMITER_PER_SKILL("leveler.limiter.per_skill", OptionType.BOOLEAN),
     LEVELER_LIMITER_PARTIAL_XP_GAIN("leveler.limiter.partial_xp_gain", OptionType.BOOLEAN),
     LEVELER_LIMITER_NOTIFY_PLAYER("leveler.limiter.notify_player", OptionType.BOOLEAN),
+    LEVELER_LIMITER_FIXED_INTERVAL("leveler.limiter.fixed_interval", OptionType.BOOLEAN),
+    LEVELER_LIMITER_USE_XP_MULTIPLIER("leveler.limiter.use_xp_multiplier", OptionType.BOOLEAN),
     LEVELER_LIMITER_GLOBAL_CAP("leveler.limiter.global.cap", OptionType.INT),
     LEVELER_LIMITER_GLOBAL_TIME("leveler.limiter.global.time", OptionType.INT),
     LEVELER_TITLE_ENABLED("leveler.title.enabled", OptionType.BOOLEAN),

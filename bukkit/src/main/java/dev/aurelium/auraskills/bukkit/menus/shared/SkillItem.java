@@ -122,11 +122,18 @@ public class SkillItem {
         progress(menu);
         maxLevel(menu);
         skillJobActive(menu);
+        xpLimited(menu);
     }
 
     private void skillJobActive(MenuBuilder menu) {
         menu.component("skill_job_active", Skill.class, component ->
                 component.shouldShow(t -> plugin.config().jobSelectionEnabled() && plugin.getUser(t.player()).getJobs().contains(t.value())));
+    }
+
+    private void xpLimited(MenuBuilder menu) {
+        menu.component("skill_xp_limited", Skill.class, component -> {
+            component.shouldShow(t -> plugin.getXpLimiter().isSkillLimited(t.player().getUniqueId(), t.value()));
+        });
     }
 
     public void statsLeveled(MenuBuilder menu) {

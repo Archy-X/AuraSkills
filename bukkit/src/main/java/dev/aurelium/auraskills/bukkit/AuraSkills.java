@@ -24,7 +24,7 @@ import dev.aurelium.auraskills.bukkit.item.*;
 import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
 import dev.aurelium.auraskills.bukkit.leaderboard.BukkitLeaderboardExclusion;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
-import dev.aurelium.auraskills.bukkit.level.XpLimiter;
+import dev.aurelium.auraskills.bukkit.level.XpLimiterListener;
 import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -69,6 +69,7 @@ import dev.aurelium.auraskills.common.config.preset.PresetManager;
 import dev.aurelium.auraskills.common.event.EventHandler;
 import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
+import dev.aurelium.auraskills.common.level.XpLimiter;
 import dev.aurelium.auraskills.common.level.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
 import dev.aurelium.auraskills.common.menu.MenuHelper;
@@ -142,6 +143,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitLevelManager levelManager;
     private BukkitUserManager userManager;
     private XpRequirements xpRequirements;
+    private XpLimiter xpLimiter;
     private HookManager hookManager;
     private WorldGuardFlags worldGuardFlags;
     private LeaderboardManager leaderboardManager;
@@ -246,6 +248,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         regionManager = new BukkitRegionManager(this);
         backupProvider = new BackupProvider(this);
         xpRequirements = new XpRequirements(this);
+        xpLimiter = new XpLimiter(this);
         leaderboardManager = new LeaderboardManager(this, new BukkitLeaderboardExclusion(this));
         uiProvider = new BukkitUiProvider(this);
         modifierManager = new BukkitModifierManager(this);
@@ -455,7 +458,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         pm.registerEvents(new RegionBlockListener(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
         pm.registerEvents(new JobsListener(this), this);
-        pm.registerEvents(new XpLimiter(this), this);
+        pm.registerEvents(new XpLimiterListener(this), this);
         pm.registerEvents(((BukkitLeaderboardExclusion) leaderboardManager.getLeaderboardExclusion()), this);
     }
 
@@ -557,6 +560,11 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public XpRequirements getXpRequirements() {
         return xpRequirements;
+    }
+
+    @Override
+    public XpLimiter getXpLimiter() {
+        return xpLimiter;
     }
 
     @Override

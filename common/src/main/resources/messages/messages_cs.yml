@@ -565,6 +565,7 @@ menus:
     your_skills_desc: "Upragdni dovednosti pro prováděním různých úkolů odemkni cenná vylepšení stastistik, schopnosti a další!"
     your_skills_hover: "Umístěním ukazatele myši na dovednost zobrazíš další informace!"
     your_skills_click: "Kliknutím na dovednost zobrazíš postup na úroveň!"
+    skill_xp_limited: "Omezené XP"
     skill_click: "Klikni pro zobrazení Level Progression!"
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"

@@ -1,4 +1,4 @@
-package dev.aurelium.auraskills.bukkit.level;
+package dev.aurelium.auraskills.common.level;
 
 public record XpLimiterRecord(double xp, long timestamp) {
 }

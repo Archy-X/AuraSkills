@@ -565,6 +565,7 @@ menus:
     your_skills_desc: "Değerli istatistik artışları, yetenekler ve daha fazlasının kilidini açmak için çeşitli görevleri yaparak Becerileri Yükseltin!"
     your_skills_hover: "Daha fazla bilgi için bir Becerinin üzerine gelin!"
     your_skills_click: "Seviye ilerlemesini görüntülemek için bir Beceriye tıklayın!"
+    skill_xp_limited: "XP sınırlandı"
     skill_click: "Seviye İlerlemesini görmek için tıklayın!"
     stats: "İstatistikler"
     stats_desc: "Yeteneklerinin seviyesini yükselterek istatistik güçlendirmeleri kazanın"

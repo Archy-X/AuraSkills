@@ -722,6 +722,7 @@ menus:
     your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
     your_skills_hover: "Hover over a Skill for more information!"
     your_skills_click: "Click on a Skill to view level progression!"
+    skill_xp_limited: "XP limited"
     skill_click: "Click to view Level Progression!"
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"

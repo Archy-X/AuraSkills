@@ -598,6 +598,7 @@ menus:
     your_skills_desc: "Melhore Habilidades fazendo várias tarefas para desbloquear aumentos de atributos, habilidades e muito mais!"
     your_skills_hover: "Passe o mouse sobre uma Habilidade para mais informações!"
     your_skills_click: "Clique em uma Habilidade para ver o progresso do nível!"
+    skill_xp_limited: "XP limitado"
     skill_click: "Clique para ver o Progresso do Nível!"
     stats: "Estatísticas"
     stats_desc: "Ganhe atributos de bônus ao evoluir habilidades"
