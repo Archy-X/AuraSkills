@@ -6,7 +6,8 @@ description: List of requirements for using AuraSkills
 
 AuraSkills requires the following server environment to run, as of version `2.3.7`:
 
-* Paper, Purpur, or Spigot server
+* Paper, Purpur, Folia, or Spigot server
+  * Note: Spigot is not recommended. Paper is a drop-in replacement.
 * Minecraft 1.20 or newer (latest is always recommended)
 * Java 21 or newer
 

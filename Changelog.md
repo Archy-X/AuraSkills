@@ -2,6 +2,21 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.8
+
+### New Features
+
+- Add 1.21.9 and 1.21.10 support
+- Add Folia support
+- Add `call_block_break_event` option to Treecapitator
+- Add `collect` trigger for block sources
+  - Triggers when specific blocks (beehive, beenest, cauldron) are harvested with an applicable tool (shears, bottles, or buckets)
+
+### Bug Fixes
+
+- Fix PlaceholderAPI not being registered on startup sometimes
+- Fix `spawner_multiplier` for drowned transformed from zombies
+
 ## 2.3.7
 
 ### New Features

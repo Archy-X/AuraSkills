@@ -4,7 +4,8 @@ description: Welcome to the AuraSkills wiki!
 
 # AuraSkills
 
-**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds [skills](skills/), [stats](stats/), [abilities](abilities.md), and other RPG-related features. Developed for the Spigot and Paper server platforms, the plugin can be downloaded for free on the official [plugin website](https://aurelium.dev/auraskills/download), [SpigotMC](https://www.spigotmc.org/resources/81069/), [Hangar](https://hangar.papermc.io/Archy/AuraSkills), and [Modrinth](https://modrinth.com/plugin/auraskills). The plugin is fully configurable and customizable, enabling use on a wide-range of server types from small SMPs to large, custom MMORPG networks.
+**AuraSkills** (formerly **Aurelium Skills**) is a Minecraft plugin that adds [skills](skills/), [stats](stats/), [abilities](abilities.md), and other RPG-related features.
+Developed for the Spigot and Paper server platforms, the plugin can be downloaded for free on the official [plugin website](https://aurelium.dev/auraskills/download), [SpigotMC](https://www.spigotmc.org/resources/81069/), [Hangar](https://hangar.papermc.io/Archy/AuraSkills), and [Modrinth](https://modrinth.com/plugin/auraskills). The plugin is fully configurable and customizable, enabling use on a wide-range of server types from small SMPs to large, custom MMORPG networks.
 
 This wiki contains documentation on how to set up, configure, and use the plugin. Support from the developer is provided on the [Discord](https://discord.gg/Bh2EZfB) server, where users can also give suggestions, report bugs, and get announcements. AuraSkills is open-sourced on [GitHub](https://github.com/Archy-X/AuraSkills).
 

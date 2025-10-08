@@ -140,7 +140,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.9")
+        minecraftVersion("1.21.10")
     }
 
     test {
