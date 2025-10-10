@@ -682,6 +682,7 @@ leveler:
   mana_ability_unlock: Odblokowano Zdolność Many
   mana_ability_level_up: Nowy Poziom Zdolności Many
   unclaimed_item: "<red>Masz nieodebrane przedmioty, ponieważ twój ekwipunek był pełny, użyj <yellow>/skills claimitems <red>aby je odebrać"
+  limit_reached: "<red>Osiągnięto limit, pozostało {time} sekund"
 menus:
   common:
     close: "Zamknij"
@@ -719,6 +720,7 @@ menus:
     your_skills_desc: "Ulepszaj Umiejętności wykonując różne zadania, aby odblokować cenne bonusy do statystyk, zdolności i wiele więcej!"
     your_skills_hover: "Przesuń na Umiejętność aby uzyskać więcej informacji!"
     your_skills_click: "Kliknij Umiejętność, aby wyświetlić postęp poziomu!"
+    skill_xp_limited: "XP ograniczone"
     skill_click: "Kliknij, aby wyświetlić Postęp Poziomu!"
     stats: "Statystyki"
     stats_desc: "Zdobywaj bonusy do statystyk poprzez podnoszenie poziomu umiejętności"
