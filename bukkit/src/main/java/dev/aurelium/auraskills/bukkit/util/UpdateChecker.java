@@ -51,7 +51,7 @@ public class UpdateChecker {
 
     // Consumer accepts versionNumber and versionId
     public void getVersion(final BiConsumer<Optional<String>, Optional<String>> consumer) {
-        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+        plugin.getScheduler().executeAsync(() -> {
             String loader;
             String serverName = Bukkit.getServer().getName();
             if (serverName.equalsIgnoreCase("CraftBukkit") || serverName.equalsIgnoreCase("Spigot")) {

@@ -28,7 +28,7 @@ public class BukkitPlatformUtil implements PlatformUtil {
         try {
             EntityType type = EntityType.valueOf(input);
             // Check if feature flag locked entity is disabled
-            if (VersionUtils.isAtLeastVersion(20)) {
+            if (VersionUtils.isAtLeastVersion(20) && !VersionUtils.isAtLeastVersion(21, 9)) {
                 for (World world : Bukkit.getWorlds()) {
                     if (!type.isEnabledByFeature(world)) {
                         return false;

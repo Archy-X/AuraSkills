@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ public class BrewingLeveler extends SourceLeveler {
 
     public BrewingLeveler(AuraSkills plugin) {
         super(plugin, SourceTypes.BREWING);
-        this.brewingStands = new HashMap<>();
+        this.brewingStands = new ConcurrentHashMap<>();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -108,7 +109,7 @@ public class BrewingLeveler extends SourceLeveler {
         if (ingredients.isEmpty()) return;
 
         List<SkillSource<BrewingXpSource>> sources = getSources(ingredients);
-        Map<Skill, Double> totalXpMap = new HashMap<>();
+        Map<Skill, Double> totalXpMap = new ConcurrentHashMap<>();
 
         brewingSlot.setBrewed(false); // Set data to false
         brewingSlot.resetIngredients();
@@ -138,7 +139,7 @@ public class BrewingLeveler extends SourceLeveler {
         if (ingredient == null) return;
         ItemStack clonedIngredient = ingredient.clone();
         ItemStack[] beforeItems = Arrays.copyOf(before.getContents(), 3); // Items in result slots before
-        plugin.getScheduler().scheduleSync(() -> {
+        plugin.getScheduler().scheduleAtLocation(event.getBlock().getLocation(), () -> {
             BlockState blockState = event.getBlock().getState();
             if (blockState instanceof BrewingStand brewingStand) {
                 BrewerInventory after = brewingStand.getInventory();
@@ -234,7 +235,7 @@ public class BrewingLeveler extends SourceLeveler {
         private final Map<Integer, BrewingSlot> slots;
 
         public BrewingStandData() {
-            this.slots = new HashMap<>();
+            this.slots = new ConcurrentHashMap<>();
         }
 
         public BrewingSlot getSlot(int slot) {

@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.requirement;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.item.ModifierType;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
@@ -16,6 +17,7 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class RequirementManager implements Listener {
@@ -26,7 +28,7 @@ public class RequirementManager implements Listener {
     private final AuraSkills plugin;
 
     public RequirementManager(AuraSkills plugin) {
-        errorMessageTimer = new HashMap<>();
+        errorMessageTimer = new ConcurrentHashMap<>();
         this.plugin = plugin;
         load();
         loadBlocks();
@@ -38,7 +40,7 @@ public class RequirementManager implements Listener {
         try {
             ConfigurationNode config = loader.loadUserFile("config.yml");
 
-            this.globalRequirements = new HashSet<>();
+            this.globalRequirements = Sets.newConcurrentHashSet();
             int loaded = 0;
             for (ModifierType type : ModifierType.values()) {
                 List<String> list = config.node("requirement", type.name().toLowerCase(Locale.ROOT), "global").getList(String.class, new ArrayList<>());
@@ -59,7 +61,7 @@ public class RequirementManager implements Listener {
                                 plugin.logger().warn("Error parsing global skill " + type.name().toLowerCase(Locale.ROOT) + " requirement skill level pair with text " + requirementText);
                             }
                         }
-                        GlobalRequirement globalRequirement = new GlobalRequirement(type, material, requirements);
+                        GlobalRequirement globalRequirement = new GlobalRequirement(type, material, Map.copyOf(requirements));
                         globalRequirements.add(globalRequirement);
                         loaded++;
                     } catch (IllegalArgumentException e) {
@@ -190,7 +192,7 @@ public class RequirementManager implements Listener {
     }
 
     public Set<GlobalRequirement> getGlobalRequirementsType(ModifierType type) {
-        Set<GlobalRequirement> matched = new HashSet<>();
+        Set<GlobalRequirement> matched = Sets.newConcurrentHashSet();
         for (GlobalRequirement requirement : globalRequirements) {
             if (requirement.getType() == type) {
                 matched.add(requirement);

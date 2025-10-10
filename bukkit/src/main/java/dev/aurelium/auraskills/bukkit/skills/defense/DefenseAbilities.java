@@ -130,7 +130,7 @@ public class DefenseAbilities extends BukkitAbilityImpl {
         if (item.getEnchantmentLevel(Enchantment.FIRE_ASPECT) > 0) {
             double chance = getValue(ability, user) / 100;
             if (rand.nextDouble() < chance) {
-                plugin.getScheduler().scheduleSync(() -> player.setFireTicks(0), 50, TimeUnit.MILLISECONDS);
+                plugin.getScheduler().scheduleAtEntity(player, () -> player.setFireTicks(0), 50, TimeUnit.MILLISECONDS);
             }
         }
     }

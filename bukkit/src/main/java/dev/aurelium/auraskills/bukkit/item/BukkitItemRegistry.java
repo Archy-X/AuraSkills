@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.item;
 
+import com.google.common.collect.Sets;
 import dev.aurelium.auraskills.api.item.*;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootPool;
@@ -27,6 +28,7 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
@@ -34,12 +36,12 @@ import static dev.aurelium.auraskills.bukkit.ref.BukkitItemRef.unwrap;
 public class BukkitItemRegistry implements ItemRegistry {
 
     private final AuraSkills plugin;
-    private final Map<NamespacedId, ItemStack> items = new HashMap<>();
+    private final Map<NamespacedId, ItemStack> items = new ConcurrentHashMap<>();
     private final BukkitSourceMenuItems sourceMenuItems;
     private final ItemRegistryStorage storage;
-    private final Map<String, ExternalItemProvider> externalItemProviders = new HashMap<>();
+    private final Map<String, ExternalItemProvider> externalItemProviders = new ConcurrentHashMap<>();
     // Maps the ID of the unresolved item to a consumer that when called, will try to register the item again wherever it is needed (sources, loot)
-    private final Map<NamespacedId, Consumer<ItemStack>> unresolvedExternalItems = new HashMap<>();
+    private final Map<NamespacedId, Consumer<ItemStack>> unresolvedExternalItems = new ConcurrentHashMap<>();
 
     public BukkitItemRegistry(AuraSkills plugin) {
         this.plugin = plugin;
@@ -122,17 +124,18 @@ public class BukkitItemRegistry implements ItemRegistry {
             return;
         }
 
-        item.setAmount(amount);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            item.setAmount(amount);
 
-        ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
-        // Handle items that could not fit in the inventory
-        if (leftoverItem != null) {
-            // Add unclaimed item key and amount to player data
-            user.getUnclaimedItems().add(new KeyIntPair(key.toString(), leftoverItem.getAmount()));
-            // Notify player
-            plugin.getServer().getScheduler().runTaskLater(plugin, () ->
-                    player.sendMessage(plugin.getPrefix(user.getLocale()) + plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, user.getLocale())), 1);
-        }
+            ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item); // Attempt item give
+            // Handle items that could not fit in the inventory
+            if (leftoverItem != null) {
+                // Add unclaimed item key and amount to player data
+                user.getUnclaimedItems().add(new KeyIntPair(key.toString(), leftoverItem.getAmount()));
+                // Notify player
+                plugin.getScheduler().executeSync(() -> player.sendMessage(plugin.getPrefix(user.getLocale()) + plugin.getMsg(LevelerMessage.UNCLAIMED_ITEM, user.getLocale())));
+            }
+        });
     }
 
     @Override
@@ -301,7 +304,7 @@ public class BukkitItemRegistry implements ItemRegistry {
     }
 
     private Set<ItemCategory> getItemCategories(ItemStack item, Material mat) {
-        Set<ItemCategory> found = new HashSet<>();
+        Set<ItemCategory> found = Sets.newConcurrentHashSet();
         String name = mat.toString();
         if (name.contains("_SWORD") || mat == Material.BOW || mat == Material.CROSSBOW || mat == Material.TRIDENT) {
             found.add(ItemCategory.WEAPON);

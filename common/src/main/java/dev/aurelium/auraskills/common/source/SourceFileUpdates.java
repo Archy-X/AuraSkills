@@ -6,12 +6,12 @@ import dev.aurelium.auraskills.common.util.file.ConfigUpdate;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SourceFileUpdates {
 
-    public final Map<Skill, Map<Integer, ConfigUpdate>> fileUpdates = new HashMap<>();
+    public final Map<Skill, Map<Integer, ConfigUpdate>> fileUpdates = new ConcurrentHashMap<>();
 
     public SourceFileUpdates() {
         define(Skills.FORAGING, 1, this::replaceTrunkAndLeafWithMaxBlocks);
@@ -22,7 +22,7 @@ public class SourceFileUpdates {
     }
 
     private void define(Skill skill, int fileVersion, ConfigUpdate update) {
-        fileUpdates.computeIfAbsent(skill, k -> new HashMap<>()).put(fileVersion, update);
+        fileUpdates.computeIfAbsent(skill, k -> new ConcurrentHashMap<>()).put(fileVersion, update);
     }
 
     private void replaceTrunkAndLeafWithMaxBlocks(ConfigurationNode embedded, ConfigurationNode user) throws SerializationException {

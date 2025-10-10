@@ -11,10 +11,10 @@ import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents a provider for the plugin's main configuration.
@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 public abstract class ConfigProvider {
 
     private final AuraSkillsPlugin plugin;
-    protected final Map<Option, OptionValue> options = new HashMap<>();
+    protected final Map<Option, OptionValue> options = new ConcurrentHashMap<>();
     private Map<Option, Object> overrides;
 
     public ConfigProvider(AuraSkillsPlugin plugin, Map<Option, Object> overrides) {

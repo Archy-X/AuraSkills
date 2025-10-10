@@ -1,9 +1,9 @@
 package dev.aurelium.auraskills.common.util.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class OptionProvider {
 
@@ -71,7 +71,7 @@ public class OptionProvider {
     }
 
     public Map<String, Object> getMap(String key) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new ConcurrentHashMap<>();
         Object o = optionMap.get(key);
         if (o instanceof Map<?, ?>) {
             for (Map.Entry<?, ?> entry : ((Map<?, ?>) o).entrySet()) {

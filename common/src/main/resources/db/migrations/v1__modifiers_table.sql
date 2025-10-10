@@ -9,15 +9,16 @@ SELECT
     category_id AS type_id,
     SUBSTRING_INDEX(key_name, '||', 1) AS modifier_name,
     CAST(value AS DOUBLE) AS modifier_value,
-    IF(key_name LIKE '%||%',
-       CASE
-           WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'ADD' THEN 1
-           WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'MULTIPLY' THEN 2
-           WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'ADD_PERCENT' THEN 3
-           ELSE 1
-       END,
-       1
-    ) AS modifier_operation,
+    CASE
+        WHEN key_name LIKE '%||%' THEN
+            CASE
+                WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'ADD' THEN 1
+                WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'MULTIPLY' THEN 2
+                WHEN SUBSTRING_INDEX(key_name, '||', -1) = 'ADD_PERCENT' THEN 3
+                ELSE 1
+                END
+        ELSE 1
+    END AS modifier_operation,
     NULL AS expiration_time,
     NULL AS remaining_duration,
     NULL AS metadata
