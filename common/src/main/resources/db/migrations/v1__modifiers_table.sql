@@ -8,7 +8,7 @@ SELECT
     END AS modifier_type,
     category_id AS type_id,
     SUBSTRING_INDEX(key_name, '||', 1) AS modifier_name,
-    CAST(value AS DOUBLE) AS modifier_value,
+    CAST(`value` AS DECIMAL(30, 10)) AS modifier_value,
     CASE
         WHEN key_name LIKE '%||%' THEN
             CASE
