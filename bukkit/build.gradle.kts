@@ -48,7 +48,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") {
         exclude("org.spigotmc", "spigot-api")
     }
-    compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.9")
+    compileOnly("me.filoghost.holographicdisplays:holographicdisplays-api:3.0.5")
     compileOnly("com.github.decentsoftware-eu:decentholograms:2.5.2")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") {
         exclude("org.bukkit", "bukkit")
