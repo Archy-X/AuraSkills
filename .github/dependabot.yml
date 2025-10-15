@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      all:
+        applies-to: version-updates
+        patterns:
+          - "*"
+    commit-message:
+      prefix: chore
+      include: scope
+    open-pull-requests-limit: 10
