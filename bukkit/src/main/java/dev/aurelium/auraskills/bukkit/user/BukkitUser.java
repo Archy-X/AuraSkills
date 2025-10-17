@@ -84,6 +84,15 @@ public class BukkitUser extends User {
 
     @Override
     public double getPermissionMultiplier(@Nullable Skill skill) {
+        return getPermissionMultiplierByPrefix(skill, "auraskills.multiplier.");
+    }
+
+    @Override
+    public double getPermissionLimitMultiplier(@Nullable Skill skill) {
+        return getPermissionMultiplierByPrefix(skill, "auraskills.multiplier.limit.");
+    }
+
+    private double getPermissionMultiplierByPrefix(@Nullable Skill skill, String prefix) {
         if (player == null) {
             return 0.0;
         }
@@ -93,21 +102,20 @@ public class BukkitUser extends User {
                 && plugin.getHookManager().getHook(BukkitLuckPermsHook.class).usePermissionCache()) {
             Set<String> permissions = plugin.getHookManager().getHook(BukkitLuckPermsHook.class).getMultiplierPermissions(player);
             for (String permission : permissions) {
-                multiplier += getMultiplierFromPermission(permission, skill);
+                multiplier += getMultiplierFromPermission(permission, skill, prefix);
             }
             return multiplier;
         } else {
             for (PermissionAttachmentInfo permission : player.getEffectivePermissions()) {
                 if (!permission.getValue()) continue;
-                multiplier += getMultiplierFromPermission(permission.getPermission(), skill);
+                multiplier += getMultiplierFromPermission(permission.getPermission(), skill, prefix);
             }
         }
 
         return multiplier;
     }
 
-    private double getMultiplierFromPermission(String permission, @Nullable Skill skill) {
-        final String prefix = "auraskills.multiplier.";
+    private double getMultiplierFromPermission(String permission, @Nullable Skill skill, String prefix) {
         if (!permission.startsWith(prefix)) {
             return 0.0;
         }

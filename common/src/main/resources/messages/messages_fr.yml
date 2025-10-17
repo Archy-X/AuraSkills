@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Capacité de mana débloquée
   mana_ability_level_up: Niveau de compétence de mana supérieur
   unclaimed_item: "<red>Vous avez des objets non réclamés parce que votre inventaire était plein, utilisez <yellow>/skills claimitems <red>pour les réclamer"
+  limit_reached: "<red>Limite atteinte, il reste {time} secondes"
 menus:
   common:
     close: "Fermer"
@@ -597,6 +598,7 @@ menus:
     your_skills_desc: "Améliorez vos compétences en effectuant diverses tâches pour débloquer des améliorations de statistiques, des capacités et plus encore"
     your_skills_hover: "Survolez une compétence pour plus d'informations!"
     your_skills_click: "Cliquez sur une compétence pour voir la progression du niveau!"
+    skill_xp_limited: "XP limité"
     skill_click: "Cliquez pour voir la progression des niveaux!"
     stats: "Stats"
     stats_desc: "Gagnez des buffs de stats en augmentant le niveau de compétences"
