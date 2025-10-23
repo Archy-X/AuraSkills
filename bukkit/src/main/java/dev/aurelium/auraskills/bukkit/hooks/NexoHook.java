@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
@@ -136,7 +137,7 @@ public class NexoHook extends Hook implements Listener {
         });
     }
 
-    private ImmutableSet<ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
+    private ImmutableSet<@NotNull ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
         if (player == null) {
             return ImmutableSet.of();
         }
@@ -144,6 +145,7 @@ public class NexoHook extends Hook implements Listener {
         Set<ItemStack> unique = new HashSet<>();
         for (Loot loot : drop.lootToDrop(player)) {
             ItemStack item = loot.getItemStack();
+            if (item == null) continue;
 
             boolean alreadyAdded = false;
             for (ItemStack existing : unique) {
