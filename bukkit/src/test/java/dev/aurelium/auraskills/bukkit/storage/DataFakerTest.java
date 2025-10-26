@@ -38,7 +38,7 @@ public class DataFakerTest {
 
         DatabaseCredentials credentials = new DatabaseCredentials(
                 getenvOrDefault("MYSQL_HOST", "localhost"),
-                Integer.parseInt(getenvOrDefault(System.getenv("MYSQL_PORT"), "3306")),
+                Integer.parseInt(getenvOrDefault("MYSQL_PORT", "3306")),
                 getenvOrDefault("MYSQL_DATABASE", "auraskills"),
                 getenvOrDefault("MYSQL_USERNAME", "root"),
                 getenvOrDefault("MYSQL_PASSWORD", ""),
