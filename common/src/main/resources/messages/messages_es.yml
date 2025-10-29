@@ -338,9 +338,9 @@ commands:
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Añadido modificador de estadísticas a la armadura con estadística: {stat}, valor: {value}, operación: {operation}"
         already_exists: "<yellow>¡Ya existe un modificador de armadura con la estadística {color}{stat}<yellow>! Quítalo con /sk armor modifier remove"
-        desc: Adds an armor stat modifier to the item held, along with lore by default.
+        desc: Agrega un modificador de estadísticas de armadura al objeto agarrado, junto con una descripción por defecto.
       remove:
         does_not_exist: "<yellow>¡Tu objeto no tiene un modificador para {color}{stat}<yellow>!"
         removed: "<gray>Modificador de {color}{stat} <gray>fue eliminado de tu objeto"
