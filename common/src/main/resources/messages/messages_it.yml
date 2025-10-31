@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Abilità Mana Sbloccata
   mana_ability_level_up: Abilità Mana Level Up
   unclaimed_item: "<red>Hai oggetti non reclamati perchè il tuo inventario era pieno, usa <yellow>/skills claimitems <red>per reclamarli"
+  limit_reached: "<red>Limite raggiunto, restano {time} secondi"
 menus:
   common:
     close: "Chiudi"
@@ -597,6 +598,7 @@ menus:
     your_skills_desc: "Potenzia le tue abilità facendo vari compiti per sbloccare preziosi potenziamenti delle statistiche, abilità, ed altro!"
     your_skills_hover: "Passa il mouse sopra un'abilità per più informazioni!"
     your_skills_click: "Clicca su un'abilità per vedere la progressione del livello!"
+    skill_xp_limited: "XP limitato"
     skill_click: "Clicca per vedere la progressione del livello!"
     stats: "Statistiche"
     stats_desc: "Guadagna potenziamenti delle statistiche livellando le abilità"
