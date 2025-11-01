@@ -71,8 +71,21 @@ The following traits are modified during PvP when the feature is enabled:
 
 1. **Attack Damage (Strength)** - Only equipment-based attack damage applies
 2. **Damage Reduction** - Only equipment-based damage reduction applies
+3. **Crit Chance** - Base value (from config) + equipment-based bonus only
+4. **Crit Damage** - Only equipment-based critical hit damage multiplier applies
 
-Other traits and abilities that don't directly affect damage calculation continue to work normally.
+### Traits Not Affected (Technical Limitations)
+
+The following traits continue to use all modifiers even in PvP mode due to technical constraints:
+
+1. **HP (Max Health)** - Applied via Minecraft attributes continuously, cannot be dynamically changed per-combat
+2. **Movement Speed** - Applied continuously to player's walk speed, not during combat events
+3. **Max Mana** - Calculated outside of combat events
+4. **Mana Regen** - Applied continuously over time, not during combat
+5. **Hunger Regen / Saturation Regen** - Applied during health regeneration events, not direct combat
+
+These traits affect the player's persistent state rather than combat calculations, making it impractical to toggle them
+based on combat scenarios without implementing a complex combat tracking system.
 
 ## Use Cases
 

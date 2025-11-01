@@ -251,6 +251,16 @@ pvp:
   # When enabled, only equipment stats (from items and armor) will be applied during player vs player combat.
   # This ensures that two players with the same equipment have equal stats in PvP, regardless of their skill levels.
   # Skills and other non-equipment modifiers will still apply in PvE combat.
+  #
+  # Affected traits in PvP:
+  # - Attack Damage (Strength): Only equipment bonuses apply to damage dealt
+  # - Damage Reduction: Only equipment bonuses apply to damage received
+  # - Crit Chance: Base value + equipment bonuses only
+  # - Crit Damage: Only equipment bonuses apply to critical hit multiplier
+  #
+  # Note: HP, Movement Speed, Max Mana, and Regen traits cannot be dynamically changed during combat
+  # and will continue to use all modifiers. These traits affect the player's state continuously,
+  # not just during combat calculations.
   only_equipment_stats: false
 critical:
   enabled:
