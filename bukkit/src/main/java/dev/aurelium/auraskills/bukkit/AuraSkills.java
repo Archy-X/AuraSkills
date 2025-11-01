@@ -25,6 +25,7 @@ import dev.aurelium.auraskills.bukkit.item.*;
 import dev.aurelium.auraskills.bukkit.jobs.JobsListener;
 import dev.aurelium.auraskills.bukkit.leaderboard.BukkitLeaderboardExclusion;
 import dev.aurelium.auraskills.bukkit.level.BukkitLevelManager;
+import dev.aurelium.auraskills.bukkit.listeners.BlockInteractions;
 import dev.aurelium.auraskills.bukkit.listeners.CriticalHandler;
 import dev.aurelium.auraskills.bukkit.listeners.DamageListener;
 import dev.aurelium.auraskills.bukkit.listeners.PlayerDeath;
@@ -78,7 +79,6 @@ import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.migration.MigrationManager;
 import dev.aurelium.auraskills.common.ref.PlayerRef;
 import dev.aurelium.auraskills.common.reward.RewardManager;
-import dev.aurelium.auraskills.common.scheduler.Scheduler;
 import dev.aurelium.auraskills.common.skill.SkillLoader;
 import dev.aurelium.auraskills.common.skill.SkillManager;
 import dev.aurelium.auraskills.common.skill.SkillRegistry;
@@ -98,6 +98,7 @@ import dev.aurelium.auraskills.common.util.TestSession;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import dev.aurelium.slate.Slate;
 import dev.aurelium.slate.inv.InventoryManager;
+import dev.aurelium.slate.scheduler.Scheduler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -147,7 +148,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private LeaderboardManager leaderboardManager;
     private BukkitUiProvider uiProvider;
     private RewardManager rewardManager;
-    private Scheduler scheduler;
+    private BukkitScheduler scheduler;
     private StorageProvider storageProvider;
     private Slate slate;
     private MenuFileManager menuFileManager;
@@ -250,7 +251,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         leaderboardManager = new LeaderboardManager(this, new BukkitLeaderboardExclusion(this));
         uiProvider = new BukkitUiProvider(this);
         modifierManager = new BukkitModifierManager(this);
-        inventoryManager = new InventoryManager(this, dev.aurelium.slate.scheduler.Scheduler.createScheduler(this));
+        inventoryManager = new InventoryManager(this, Scheduler.createScheduler(this));
         inventoryManager.init();
         rewardManager = new RewardManager(this); // Loaded later
         lootManager = new BukkitLootManager(this); // Loaded later
@@ -373,7 +374,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             metaConfig.node("last_automatic_backup").set(System.currentTimeMillis());
             FileUtil.saveYamlFile(metaFile, metaConfig);
 
-            backupProvider.saveBackup(false);
+            backupProvider.saveBackupSync(false);
         }
     }
 
@@ -446,6 +447,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new DamageListener(this), this);
         pm.registerEvents(new CriticalHandler(this), this);
+        pm.registerEvents(new BlockInteractions(this), this);
         pm.registerEvents(new BlockLootHandler(this), this);
         pm.registerEvents(new FishingLootHandler(this), this);
         pm.registerEvents(new MobLootHandler(this), this);
@@ -626,12 +628,12 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     @Override
-    public Scheduler getScheduler() {
+    public BukkitScheduler getScheduler() {
         return scheduler;
     }
 
     @VisibleForTesting
-    public void setScheduler(Scheduler scheduler) {
+    public void setScheduler(BukkitScheduler scheduler) {
         this.scheduler = scheduler;
     }
 
@@ -714,14 +716,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void runConsoleCommand(String command) {
-        getServer().dispatchCommand(getServer().getConsoleSender(), command);
+        scheduler.executeSync(() -> getServer().dispatchCommand(getServer().getConsoleSender(), command));
     }
 
     @Override
     public void runPlayerCommand(User user, String command) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player != null) {
-            getServer().dispatchCommand(player, command);
+            scheduler.executeAtEntity(player, (task) -> player.performCommand(command));
         }
     }
 

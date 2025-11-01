@@ -16,6 +16,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ConfigurateLoader {
 
@@ -56,7 +57,7 @@ public class ConfigurateLoader {
             return null;
         }
 
-        Map<String, String> env = new HashMap<>();
+        Map<String, String> env = new ConcurrentHashMap<>();
         env.put("create", "true");
         if ("jar".equals(uri.getScheme())) {
             try (FileSystem ignored = FileSystems.newFileSystem(uri, env)) {

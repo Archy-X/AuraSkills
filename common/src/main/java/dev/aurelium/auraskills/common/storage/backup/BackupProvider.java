@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.trait.TraitModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.user.UserManager;
 import dev.aurelium.auraskills.common.user.UserState;
@@ -20,7 +21,13 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class BackupProvider {
 
@@ -41,7 +48,22 @@ public class BackupProvider {
         }
     }
 
-    public File saveBackup(boolean savePlayerData) throws Exception {
+    public CompletableFuture<File> saveBackupAsync(boolean savePlayerData) {
+        CompletableFuture<File> future = new CompletableFuture<>();
+
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                File file = saveBackupSync(savePlayerData);
+                future.complete(file);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        return future;
+    }
+
+    public File saveBackupSync(boolean savePlayerData) throws Exception {
         // Save online players
         if (savePlayerData) {
             for (User user : plugin.getUserManager().getOnlineUsers()) {
@@ -103,7 +125,17 @@ public class BackupProvider {
         return backupFile;
     }
 
-    public void loadBackup(File file) throws Exception {
+    public void loadBackupAsync(File file, Runnable onComplete, Consumer<Throwable> onError) {
+        plugin.getScheduler().executeAsync(() -> {
+            try {
+                plugin.getBackupProvider().loadBackup(file, onComplete);
+            } catch (Exception e) {
+                onError.accept(e);
+            }
+        });
+    }
+
+    private void loadBackup(File file, Runnable onComplete) throws Exception {
         ConfigurationNode root = YamlConfigurationLoader.builder()
                 .defaultOptions(opts -> opts.shouldCopyDefaults(false))
                 .path(file.toPath()).build().load();
@@ -111,7 +143,7 @@ public class BackupProvider {
         int version = root.node("backup_version").getInt(0);
 
         if (version == 2) {
-            loadV2(root);
+            loadV2(root, onComplete);
         } else if (version == 1) {
             loadV1(root);
         } else {
@@ -119,53 +151,96 @@ public class BackupProvider {
         }
     }
 
-    private void loadV2(ConfigurationNode config) throws Exception {
-        for (ConfigurationNode userNode : config.node("users").childrenMap().values()) {
-            UUID uuid = getFromKey(userNode);
-            if (uuid == null) continue;
+    private void loadV2(ConfigurationNode config, Runnable onComplete) throws Exception {
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            Map<Object, ? extends ConfigurationNode> usersMap = config.node("users").childrenMap();
+            int numUsers = usersMap.size();
+            AtomicInteger applied = new AtomicInteger();
 
-            Map<Skill, Integer> skillLevels = new HashMap<>();
-            Map<Skill, Double> skillXp = new HashMap<>();
+            var semaphore = new Semaphore(getConcurrencySize());
+            for (ConfigurationNode userNode : usersMap.values()) {
+                UserState state = getUserState(userNode);
+                if (state == null) continue;
 
-            for (ConfigurationNode skillNode : userNode.node("skills").childrenMap().values()) {
-                loadSkillNode(skillNode, skillLevels, skillXp);
+                executor.submit(() -> {
+                    try {
+                        semaphore.acquire();
+
+                        plugin.getStorageProvider().applyState(state); // Save the state
+
+                        int curr = applied.incrementAndGet();
+
+                        if (curr % (numUsers / 10) == 0) {
+                            int percent = (int) Math.round(curr / (double) numUsers * 100);
+                            plugin.logger().info("Applying backup: " + percent + "%");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        semaphore.release();
+                    }
+                });
             }
-            // Load modifiers
-            Map<String, StatModifier> statModifiers = new HashMap<>();
-            for (ConfigurationNode modifierNode : userNode.node("stat_modifiers").childrenList()) {
-                String name = modifierNode.node("name").getString();
 
-                String statName = modifierNode.node("stat").getString();
-                if (statName == null) continue;
-                Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(statName));
-                String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
-
-                double value = modifierNode.node("value").getDouble();
-
-                StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
-                statModifiers.put(name, statModifier);
+            executor.shutdown();
+            if (!executor.awaitTermination(3, TimeUnit.MINUTES)) {
+                plugin.logger().severe("Some backup loading tasks did not finish in time");
             }
-            Map<String, TraitModifier> traitModifiers = new HashMap<>();
-            for (ConfigurationNode modifierNode : userNode.node("trait_modifiers").childrenList()) {
-                String name = modifierNode.node("name").getString();
-
-                String traitName = modifierNode.node("trait").getString();
-                if (traitName == null) continue;
-                Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(traitName));
-                String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
-
-                double value = modifierNode.node("value").getDouble();
-
-                TraitModifier traitModifier = new TraitModifier(name, trait, value, Operation.parse(operationName));
-                traitModifiers.put(name, traitModifier);
-            }
-            double mana = userNode.node("mana").getDouble();
-
-            // Create user state
-            UserState state = new UserState(uuid, skillLevels, skillXp, statModifiers, traitModifiers, mana);
-
-            plugin.getStorageProvider().applyState(state); // Save the state
         }
+        onComplete.run();
+    }
+
+    private int getConcurrencySize() {
+        if (plugin.getStorageProvider() instanceof SqlStorageProvider) {
+            return plugin.configInt(Option.SQL_POOL_MAXIMUM_POOL_SIZE);
+        } else {
+            return 10;
+        }
+    }
+
+    private @Nullable UserState getUserState(ConfigurationNode userNode) {
+        UUID uuid = getFromKey(userNode);
+        if (uuid == null) return null;
+
+        Map<Skill, Integer> skillLevels = new ConcurrentHashMap<>();
+        Map<Skill, Double> skillXp = new ConcurrentHashMap<>();
+
+        for (ConfigurationNode skillNode : userNode.node("skills").childrenMap().values()) {
+            loadSkillNode(skillNode, skillLevels, skillXp);
+        }
+        // Load modifiers
+        Map<String, StatModifier> statModifiers = new ConcurrentHashMap<>();
+        for (ConfigurationNode modifierNode : userNode.node("stat_modifiers").childrenList()) {
+            String name = modifierNode.node("name").getString();
+
+            String statName = modifierNode.node("stat").getString();
+            if (statName == null) continue;
+            Stat stat = plugin.getStatRegistry().get(NamespacedId.fromString(statName));
+            String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
+
+            double value = modifierNode.node("value").getDouble();
+
+            StatModifier statModifier = new StatModifier(name, stat, value, Operation.parse(operationName));
+            statModifiers.put(name, statModifier);
+        }
+        Map<String, TraitModifier> traitModifiers = new ConcurrentHashMap<>();
+        for (ConfigurationNode modifierNode : userNode.node("trait_modifiers").childrenList()) {
+            String name = modifierNode.node("name").getString();
+
+            String traitName = modifierNode.node("trait").getString();
+            if (traitName == null) continue;
+            Trait trait = plugin.getTraitRegistry().get(NamespacedId.fromString(traitName));
+            String operationName = modifierNode.node("operation").getString(Operation.ADD.toString());
+
+            double value = modifierNode.node("value").getDouble();
+
+            TraitModifier traitModifier = new TraitModifier(name, trait, value, Operation.parse(operationName));
+            traitModifiers.put(name, traitModifier);
+        }
+        double mana = userNode.node("mana").getDouble();
+
+        // Create user state
+        return new UserState(uuid, skillLevels, skillXp, statModifiers, traitModifiers, mana);
     }
 
     private void loadV1(ConfigurationNode config) throws Exception {
@@ -173,14 +248,14 @@ public class BackupProvider {
             UUID uuid = getFromKey(playerNode);
             if (uuid == null) continue;
 
-            Map<Skill, Integer> skillLevels = new HashMap<>();
-            Map<Skill, Double> skillXp = new HashMap<>();
+            Map<Skill, Integer> skillLevels = new ConcurrentHashMap<>();
+            Map<Skill, Double> skillXp = new ConcurrentHashMap<>();
 
             for (ConfigurationNode skillNode : playerNode.childrenMap().values()) {
                 loadSkillNode(skillNode, skillLevels, skillXp);
             }
             // Create user state from level and xp maps with empty modifiers and mana
-            UserState state = new UserState(uuid, skillLevels, skillXp, new HashMap<>(), new HashMap<>(), 0);
+            UserState state = new UserState(uuid, skillLevels, skillXp, new ConcurrentHashMap<>(), new ConcurrentHashMap<>(), 0);
 
             plugin.getStorageProvider().applyState(state); // Save the state
         }

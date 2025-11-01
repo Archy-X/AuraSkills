@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 
 @CommandAlias("%skills_alias")
 @Subcommand("backup")
@@ -31,23 +32,24 @@ public class BackupCommand extends BaseCommand {
     @Description("%desc_backup_save")
     public void onBackupSave(CommandIssuer issuer) {
         BackupProvider backupProvider = plugin.getBackupProvider();
-        if (backupProvider != null) {
-            Locale locale = plugin.getLocale(issuer);
-            issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_SAVE_SAVING, locale));
-            try {
-                File file = backupProvider.saveBackup(true);
-                if (file != null) {
-                    MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_SAVE_SAVED,
-                            "type", plugin.getStorageProvider().getClass().getSimpleName(),
-                            "file", file.getName()).send(issuer);
-                } else {
-                    throw new IllegalArgumentException("Did not save backup due to too many entries");
-                }
-            } catch (Exception e) {
+
+        Locale locale = plugin.getLocale(issuer);
+        issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_SAVE_SAVING, locale));
+
+        CompletableFuture<File> future = backupProvider.saveBackupAsync(true);
+        future.whenComplete((file, exception) -> plugin.getScheduler().executeSync(() -> {
+            if (file != null) {
+                MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_SAVE_SAVED,
+                        "type", plugin.getStorageProvider().getClass().getSimpleName(),
+                        "file", file.getName()).send(issuer);
+            } else {
                 issuer.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.BACKUP_SAVE_ERROR, locale),
                         "{type}", plugin.getStorageProvider().getClass().getSimpleName()));
+                if (exception != null) {
+                    exception.printStackTrace();
+                }
             }
-        }
+        }));
     }
 
     @Subcommand("load")
@@ -81,14 +83,21 @@ public class BackupCommand extends BaseCommand {
 
     private void loadBackup(File file, CommandIssuer issuer, Locale locale) {
         issuer.sendMessage(plugin.getPrefix(locale) + plugin.getMsg(CommandMessage.BACKUP_LOAD_LOADING, locale));
-        try {
-            plugin.getBackupProvider().loadBackup(file);
-            MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_LOAD_LOADED).send(issuer);
-        } catch (Exception e) {
-            issuer.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.BACKUP_LOAD_ERROR, locale),
-                    "{error}", e.getMessage()));
+        long start = System.currentTimeMillis();
+
+        plugin.getBackupProvider().loadBackupAsync(file, () -> {
+            long end = System.currentTimeMillis();
+
+            plugin.getScheduler().executeSync(() -> {
+                MessageBuilder.create(plugin).locale(locale).prefix().message(CommandMessage.BACKUP_LOAD_LOADED).send(issuer);
+                issuer.sendMessage("Loaded backup in " + (end - start) + "ms");
+            });
+        }, e -> {
+            plugin.getScheduler().executeSync(() ->
+                    issuer.sendMessage(plugin.getPrefix(locale) + TextUtil.replace(plugin.getMsg(CommandMessage.BACKUP_LOAD_ERROR, locale),
+                            "{error}", e.getMessage())));
             e.printStackTrace();
-        }
+        });
     }
 
 }

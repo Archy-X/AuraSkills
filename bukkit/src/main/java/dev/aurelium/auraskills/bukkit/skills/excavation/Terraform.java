@@ -93,8 +93,13 @@ public class Terraform extends ReadiedManaAbility {
         BlockFace[] faces = new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
+
         int count = 0;
         int maxCount = manaAbility.optionInt("max_blocks", 61);
+        if (manaAbility.optionBoolean("max_limit_durability", false)) {
+            maxCount = getHoldingMaterialDurability(player, maxCount);
+        }
+
         while ((block = toCheck.poll()) != null && count < maxCount) {
             if (block.getType() == material) {
                 block.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
@@ -105,6 +110,8 @@ public class Terraform extends ReadiedManaAbility {
                 count++;
             }
         }
+
+        setHoldingMaterialDurability(player, count, manaAbility.optionDouble("durability_multiplier", 0));
     }
 
     private void breakBlock(Player player, Block block) {

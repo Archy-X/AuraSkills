@@ -18,10 +18,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @CommandAlias("%skills_alias")
 @Subcommand("openmenu")
@@ -74,7 +74,7 @@ public class OpenMenuCommand extends BaseCommand {
         BuiltMenu builtMenu = plugin.getSlate().getBuiltMenu(menuName);
         MenuInfo menuInfo = new MenuInfo(plugin.getSlate(), player, ActiveMenu.empty(plugin.getSlate(), player));
         // Get menu default properties
-        Map<String, Object> properties = new HashMap<>(builtMenu.propertyProvider().get(menuInfo));
+        Map<String, Object> properties = new ConcurrentHashMap<>(builtMenu.propertyProvider().get(menuInfo));
         // Parse property string
         if (propString != null) {
             String jsonString = propString.json();
@@ -88,7 +88,7 @@ public class OpenMenuCommand extends BaseCommand {
 
     private JsonDeserializer<Map<String, Object>> getDeserializer() {
         return (json, typeOfT, context) -> {
-            Map<String, Object> resultMap = new HashMap<>();
+            Map<String, Object> resultMap = new ConcurrentHashMap<>();
             JsonObject jsonObject = json.getAsJsonObject();
             Set<Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
 

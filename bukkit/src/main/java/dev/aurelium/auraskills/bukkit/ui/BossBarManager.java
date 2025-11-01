@@ -23,10 +23,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class BossBarManager implements Listener {
@@ -50,13 +50,13 @@ public class BossBarManager implements Listener {
     private boolean animateProgress;
 
     public BossBarManager(AuraSkills plugin) {
-        this.bossBars = new HashMap<>();
-        this.currentActions = new HashMap<>();
+        this.bossBars = new ConcurrentHashMap<>();
+        this.currentActions = new ConcurrentHashMap<>();
         this.plugin = plugin;
-        this.singleBossBars = new HashMap<>();
-        this.singleCurrentActions = new HashMap<>();
-        this.checkCurrentActions = new HashMap<>();
-        this.singleCheckCurrentActions = new HashMap<>();
+        this.singleBossBars = new ConcurrentHashMap<>();
+        this.singleCurrentActions = new ConcurrentHashMap<>();
+        this.checkCurrentActions = new ConcurrentHashMap<>();
+        this.singleCheckCurrentActions = new ConcurrentHashMap<>();
         loadNumberFormats();
         this.animateProgress = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
     }
@@ -92,8 +92,8 @@ public class BossBarManager implements Listener {
         loadNumberFormats();
         mode = plugin.configString(Option.BOSS_BAR_MODE);
         stayTime = plugin.configInt(Option.BOSS_BAR_STAY_TIME);
-        colors = new HashMap<>();
-        overlays = new HashMap<>();
+        colors = new ConcurrentHashMap<>();
+        overlays = new ConcurrentHashMap<>();
         animateProgress = plugin.configBoolean(Option.BOSS_BAR_ANIMATE_PROGRESS);
         for (String entry : plugin.configStringList(Option.BOSS_BAR_FORMAT)) {
             String[] splitEntry = entry.split(" ");
@@ -157,7 +157,7 @@ public class BossBarManager implements Listener {
         if (mode.equals("single")) {
             bossBar = singleBossBars.get(playerId);
         } else {
-            if (!bossBars.containsKey(playerId)) bossBars.put(playerId, new HashMap<>());
+            if (!bossBars.containsKey(playerId)) bossBars.put(playerId, new ConcurrentHashMap<>());
             bossBar = bossBars.get(playerId).get(skill);
         }
         String text = getBossBarText(player, skill, currentXp, (long) levelXp, xpGained, level, maxed, income, plugin.getLocale(player));
@@ -186,7 +186,7 @@ public class BossBarManager implements Listener {
         if (mode.equals("single")) {
             singleCurrentActions.compute(playerId, (id, num) -> (num == null) ? 0 : num + 1);
         } else {
-            currentActions.computeIfAbsent(playerId, k -> new HashMap<>()).compute(skill, (sk, num) -> (num == null) ? 0 : num + 1);
+            currentActions.computeIfAbsent(playerId, k -> new ConcurrentHashMap<>()).compute(skill, (sk, num) -> (num == null) ? 0 : num + 1);
         }
         scheduleHide(playerId, skill, bossBar); // Schedule tasks to hide the boss bar
     }
@@ -201,7 +201,7 @@ public class BossBarManager implements Listener {
         if (!animateProgress) {  // If the config option is disabled, immediately show new progress
             bossBar.progress(progressNew);
         } else {  // Update the progress later to display its animation from progressOld to progressNew
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtEntity(player, () -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
         }
         plugin.getAudiences().player(player).showBossBar(bossBar);
 
@@ -220,7 +220,7 @@ public class BossBarManager implements Listener {
         if (!animateProgress) {  // Update boss bar progress immediately
             bossBar.progress(progress);
         } else {  // Update progress later, so the player sees the animation from previous progress (from reused boss bar) to new
-            plugin.getScheduler().scheduleSync(() -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
+            plugin.getScheduler().scheduleAtEntity(player, () -> bossBar.progress(progress), 2 * 50, TimeUnit.MILLISECONDS);
         }
         bossBar.name(name); // Update the boss bar to the new text value
         bossBar.color(getColor(skill));
@@ -275,7 +275,7 @@ public class BossBarManager implements Listener {
 
     public void incrementAction(Player player, Skill skill) {
         UUID playerId = player.getUniqueId();
-        if (!checkCurrentActions.containsKey(playerId)) checkCurrentActions.put(playerId, new HashMap<>());
+        if (!checkCurrentActions.containsKey(playerId)) checkCurrentActions.put(playerId, new ConcurrentHashMap<>());
         // Increment current action
         if (mode.equals("single")) {
             singleCheckCurrentActions.put(playerId, singleCheckCurrentActions.getOrDefault(playerId, -1) + 1);

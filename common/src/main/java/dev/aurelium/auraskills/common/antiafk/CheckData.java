@@ -1,11 +1,11 @@
 package dev.aurelium.auraskills.common.antiafk;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CheckData {
 
-    private final Map<String, Object> cache = new HashMap<>();
+    private final Map<String, Object> cache = new ConcurrentHashMap<>();
 
     public <T> T getCache(String key, Class<T> type, T def) {
         Object val = cache.get(key);

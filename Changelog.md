@@ -2,6 +2,39 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.8
+
+### New Features
+
+- Add 1.21.9 and 1.21.10 support
+- Add Folia support
+- Add `call_block_break_event` option to Treecapitator
+- Add `collect` trigger for block sources
+  - Triggers when specific blocks (beehive, beenest, cauldron) are harvested with an applicable tool (shears, bottles, or buckets)
+
+### Bug Fixes
+
+- Fix PlaceholderAPI not being registered on startup sometimes
+- Fix `spawner_multiplier` for drowned transformed from zombies
+
+## 2.3.7
+
+### New Features
+
+- Add average stat placeholders
+  - Add average_stat, average_stat_int, and average_stat_1 placeholders for the player's average stat level
+- Add options for Treecapitator and Terraform to consume durability
+  - The `durability_multiplier` option determines how much durability should be decreased per block broken
+    (1 = 1 durability per block). The default is 0 (disabled).
+  - The `max_limit_durability` determines if the number of blocks broken should always be equal or less than the item's durability.
+    The default value of false makes the ability only use the `max_blocks` value to limit blocks broken.
+
+### Bug Fixes
+
+- Fix Valor, Stamina, and item modifiers not applying in off-hand
+- Fix hide_tooltip not working on items
+- Fix some menu items not showing with Nexo
+
 ## 2.3.6
 
 ### New Features

@@ -86,7 +86,7 @@ public class HealthRegenTraits extends TraitImpl {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, Traits.HUNGER_REGEN.optionInt("delay", 60) * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerAsync(task, 0, Traits.HUNGER_REGEN.optionInt("delay", 60) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void startSaturationRegen() {
@@ -100,39 +100,40 @@ public class HealthRegenTraits extends TraitImpl {
                 }
             }
         };
-        plugin.getScheduler().timerSync(task, 0, Traits.SATURATION_REGEN.optionInt("delay", 20) * 50L, TimeUnit.MILLISECONDS);
+        plugin.getScheduler().timerAsync(task, 0, Traits.SATURATION_REGEN.optionInt("delay", 20) * 50L, TimeUnit.MILLISECONDS);
     }
 
     private void handleCustomRegen(Player player, Trait trait, Function<Player, Boolean> regenCondition, CustomRegenEvent.Reason reason) {
-        User user = plugin.getUser(player);
+        plugin.getScheduler().executeAtEntity(player, (task) -> {
+            User user = plugin.getUser(player);
 
-        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
+            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation())) return;
 
-        if (player.isDead()) return;
+            if (player.isDead()) return;
 
-        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
-        if (attribute == null) return;
+            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
+            if (attribute == null) return;
 
-        if (!(player.getHealth() < attribute.getValue())) return;
+            if (!(player.getHealth() < attribute.getValue())) return;
 
-        if (regenCondition.apply(player)) {
-            double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait), attribute.getValue() - player.getHealth());
+            if (regenCondition.apply(player)) {
+                double amountGained = Math.min(trait.optionDouble("base") + user.getBonusTraitLevel(trait), attribute.getValue() - player.getHealth());
 
-            final double gainThreshold = 0.001;
-            if (amountGained < gainThreshold) {
-                return;
-            }
+                final double gainThreshold = 0.001;
+                if (amountGained < gainThreshold) {
+                    return;
+                }
 
-            CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
-            Bukkit.getPluginManager().callEvent(event);
+                CustomRegenEvent event = new CustomRegenEvent(player, user.toApi(), amountGained, reason);
+                Bukkit.getPluginManager().callEvent(event);
 
-            if (!event.isCancelled()) {
-                player.setHealth(player.getHealth() + amountGained);
-                if (player.getFoodLevel() - 1 >= 0) {
-                    player.setFoodLevel(player.getFoodLevel() - 1);
+                if (!event.isCancelled()) {
+                    player.setHealth(player.getHealth() + amountGained);
+                    if (player.getFoodLevel() - 1 >= 0) {
+                        player.setFoodLevel(player.getFoodLevel() - 1);
+                    }
                 }
             }
-        }
+        });
     }
-
 }

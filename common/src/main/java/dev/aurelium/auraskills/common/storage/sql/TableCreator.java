@@ -138,7 +138,7 @@ public class TableCreator {
                         remaining_duration bigint       null,
                         metadata           text         null,
                         constraint modifiers_uk
-                            unique (user_id, modifier_type, modifier_name),
+                            unique (user_id, modifier_type(64), modifier_name(128)),
                         constraint modifiers_users_user_id_fk
                             foreign key (user_id) references %susers (user_id)
                     )

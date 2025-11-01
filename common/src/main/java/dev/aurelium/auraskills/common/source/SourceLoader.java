@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class SourceLoader {
@@ -52,7 +53,7 @@ public class SourceLoader {
         File sourceFile = new File(contentDirectory, "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
         String fileName = "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml";
         try {
-            Map<String, ConfigurationNode> embeddedSources = new HashMap<>();
+            Map<String, ConfigurationNode> embeddedSources = new ConcurrentHashMap<>();
             ConfigurationNode fileDefault = null;
             // Attempt to load embedded file
             ConfigurationNode embedded = configurateLoader.loadEmbeddedFileOrNull(fileName);
@@ -136,7 +137,7 @@ public class SourceLoader {
         int userVersion = user.node("file_version").getInt(0);
 
         if (userVersion < embeddedVersion) {
-            Map<Integer, ConfigUpdate> updates = fileUpdates.getFileUpdates().getOrDefault(skill, new HashMap<>());
+            Map<Integer, ConfigUpdate> updates = fileUpdates.getFileUpdates().getOrDefault(skill, new ConcurrentHashMap<>());
             // Apply all the numbered updates from versions user + 1 to embedded
             for (int updateTo = userVersion + 1; updateTo <= embeddedVersion; updateTo++) {
                 ConfigUpdate configUpdate = updates.get(updateTo);
@@ -189,7 +190,7 @@ public class SourceLoader {
     public Map<SourceTag, List<XpSource>> loadTags(Skill skill, File contentDirectory) {
         File sourceFile = new File(contentDirectory, "sources/" + skill.name().toLowerCase(Locale.ROOT) + ".yml");
         try {
-            Map<SourceTag, List<XpSource>> tagMap = new HashMap<>();
+            Map<SourceTag, List<XpSource>> tagMap = new ConcurrentHashMap<>();
 
             ConfigurationNode user = configurateLoader.loadUserFile(sourceFile);
 
@@ -229,7 +230,7 @@ public class SourceLoader {
             plugin.logger().warn("Error loading tags in sources file " + sourceFile.getName() + ": " + e.getMessage());
             e.printStackTrace();
             // Return map with empty lists for each tag
-            Map<SourceTag, List<XpSource>> fallback = new HashMap<>();
+            Map<SourceTag, List<XpSource>> fallback = new ConcurrentHashMap<>();
             for (SourceTag tag : SourceTag.ofSkill(skill)) {
                 fallback.put(tag, new ArrayList<>());
             }

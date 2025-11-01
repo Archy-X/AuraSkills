@@ -12,14 +12,14 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AntiAfkManager {
 
     private final AuraSkillsPlugin plugin;
-    private final Map<CheckType, Check> checkMap = new HashMap<>();
+    private final Map<CheckType, Check> checkMap = new ConcurrentHashMap<>();
     private Expression logThresholdExpression;
 
     public AntiAfkManager(AuraSkillsPlugin plugin) {

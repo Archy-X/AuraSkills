@@ -45,12 +45,12 @@ public class LuckTrait extends TraitImpl {
 
     @EventHandler
     public void onJoin(UserLoadEvent event) {
-        setLuck(event.getPlayer());
+        plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> setLuck(event.getPlayer()));
     }
 
     @Override
     public void reload(Player player, Trait trait) {
-        setLuck(player);
+        plugin.getScheduler().executeAtEntity(player, (task) -> setLuck(player));
     }
 
     @Override

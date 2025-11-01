@@ -32,6 +32,9 @@ mana_abilities:
     sneak_offhand_bypass: true
     max_blocks_multiplier: 1
     give_xp: true
+    durability_multiplier: 0
+    max_limit_durability: false
+    call_block_break_event: false
   auraskills/speed_mine:
     enabled: true
     base_value: 10.0
@@ -76,6 +79,8 @@ mana_abilities:
     check_offhand: true
     sneak_offhand_bypass: true
     max_blocks: 61
+    durability_multiplier: 0
+    max_limit_durability: false
   auraskills/charged_shot:
     enabled: true
     base_value: 0.5
@@ -118,4 +123,4 @@ mana_abilities:
     require_sneak: false
     check_offhand: true
     sneak_offhand_bypass: true
-file_version: 3
+file_version: 4

@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.hooks;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.nexomc.nexo.api.NexoBlocks;
 import com.nexomc.nexo.api.NexoItems;
 import com.nexomc.nexo.api.events.NexoItemsLoadedEvent;
@@ -23,10 +24,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class NexoHook extends Hook implements Listener {
 
@@ -40,7 +43,8 @@ public class NexoHook extends Hook implements Listener {
         this.plugin = plugin;
         registerExternalItemProvider();
         registerBlockParsingExtension();
-        itemsLoadedCallbacks.add(() -> plugin.getMenuFileManager().loadMenus());
+        itemsLoadedCallbacks.add(() ->
+                plugin.getScheduler().scheduleSync(() -> plugin.getMenuFileManager().loadMenus(), 50L, TimeUnit.MILLISECONDS));
     }
 
     @Override
@@ -133,10 +137,15 @@ public class NexoHook extends Hook implements Listener {
         });
     }
 
-    private Set<ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
+    private ImmutableSet<@NotNull ItemStack> getUniqueNexoDrops(Player player, Drop drop) {
+        if (player == null) {
+            return ImmutableSet.of();
+        }
+
         Set<ItemStack> unique = new HashSet<>();
         for (Loot loot : drop.lootToDrop(player)) {
             ItemStack item = loot.getItemStack();
+            if (item == null) continue;
 
             boolean alreadyAdded = false;
             for (ItemStack existing : unique) {
@@ -149,7 +158,8 @@ public class NexoHook extends Hook implements Listener {
                 unique.add(item);
             }
         }
-        return unique;
+
+        return ImmutableSet.copyOf(unique);
     }
 
 }
