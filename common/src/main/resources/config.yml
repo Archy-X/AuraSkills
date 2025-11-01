@@ -248,19 +248,25 @@ damage:
   correct_last_damage: true
 # PvP balance settings
 pvp:
-  # When enabled, only equipment stats (from items and armor) will be applied during player vs player combat.
+  # When enabled, players in PvP combat (10 second duration after last hit) will only have equipment stats applied.
   # This ensures that two players with the same equipment have equal stats in PvP, regardless of their skill levels.
-  # Skills and other non-equipment modifiers will still apply in PvE combat.
+  # Combat state begins when players damage each other and lasts for 10 seconds after the last hit.
+  # Skills and other non-equipment modifiers will still apply in PvE combat and when not in combat.
   #
-  # Affected traits in PvP:
+  # Affected traits during PvP combat:
   # - Attack Damage (Strength): Only equipment bonuses apply to damage dealt
   # - Damage Reduction: Only equipment bonuses apply to damage received
   # - Crit Chance: Base value + equipment bonuses only
   # - Crit Damage: Only equipment bonuses apply to critical hit multiplier
+  # - HP (Max Health): Only equipment bonuses apply to max health
+  # - Movement Speed: Only equipment bonuses apply to walk speed
+  # - Max Mana: Only equipment bonuses apply to mana pool
+  # - Mana Regen: Only equipment bonuses apply to mana regeneration
+  # - Hunger Regen: Only equipment bonuses apply to health regen
+  # - Saturation Regen: Only equipment bonuses apply to health regen
   #
-  # Note: HP, Movement Speed, Max Mana, and Regen traits cannot be dynamically changed during combat
-  # and will continue to use all modifiers. These traits affect the player's state continuously,
-  # not just during combat calculations.
+  # Combat is tracked automatically - when you attack or are attacked by another player,
+  # you enter combat mode for 10 seconds. Your stats will dynamically adjust.
   only_equipment_stats: false
 critical:
   enabled:

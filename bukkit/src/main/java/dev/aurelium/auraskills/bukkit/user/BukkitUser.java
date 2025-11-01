@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.user;
 
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.user.SkillsUser;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.BukkitLuckPermsHook;
@@ -243,6 +244,25 @@ public class BukkitUser extends User {
         super.cleanUp();
         // Remove fleeting
         removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
+    }
+
+    @Override
+    public double getBonusTraitLevel(Trait trait) {
+        // Check if player is in PvP combat and feature is enabled
+        if (player != null && plugin.getCombatTracker().isInCombat(player)) {
+            return super.getBonusTraitLevelEquipmentOnly(trait);
+        }
+        return super.getBonusTraitLevel(trait);
+    }
+
+    @Override
+    public double getEffectiveTraitLevel(Trait trait) {
+        // Check if player is in PvP combat and feature is enabled
+        if (player != null && plugin.getCombatTracker().isInCombat(player)) {
+            double base = plugin.getTraitManager().getBaseLevel(this, trait);
+            return base + super.getBonusTraitLevelEquipmentOnly(trait);
+        }
+        return super.getEffectiveTraitLevel(trait);
     }
 
 }
