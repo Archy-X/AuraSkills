@@ -249,7 +249,7 @@ public class BukkitUser extends User {
     @Override
     public double getBonusTraitLevel(Trait trait) {
         // Check if player is in PvP combat and feature is enabled
-        if (player != null && plugin.getCombatTracker().isInCombat(player)) {
+        if (player != null && plugin.getCombatTracker().isInCombat(this)) {
             return super.getBonusTraitLevelEquipmentOnly(trait);
         }
         return super.getBonusTraitLevel(trait);
@@ -258,7 +258,7 @@ public class BukkitUser extends User {
     @Override
     public double getEffectiveTraitLevel(Trait trait) {
         // Check if player is in PvP combat and feature is enabled
-        if (player != null && plugin.getCombatTracker().isInCombat(player)) {
+        if (player != null && plugin.getCombatTracker().isInCombat(this)) {
             double base = plugin.getTraitManager().getBaseLevel(this, trait);
             return base + super.getBonusTraitLevelEquipmentOnly(trait);
         }

@@ -2,7 +2,11 @@ package dev.aurelium.auraskills.bukkit.combat;
 
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.message.MessageBuilder;
+import dev.aurelium.auraskills.common.message.type.CombatMessage;
 import dev.aurelium.auraskills.common.scheduler.TaskRunnable;
+import dev.aurelium.auraskills.common.user.User;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -35,28 +39,34 @@ public class CombatTracker {
             return; // Feature disabled
         }
 
-        UUID uuid = player.getUniqueId();
-        boolean wasInCombat = isInCombat(player);
-        combatTimestamps.put(uuid, System.currentTimeMillis());
+        User user = plugin.getUser(player);
+
+        boolean wasInCombat = isInCombat(user);
+        combatTimestamps.put(user.getUuid(), System.currentTimeMillis());
 
         if (!wasInCombat) {
             // Player just entered combat, reload their traits
-            plugin.getStatManager().reloadAllTraits(plugin.getUser(player));
+            plugin.getStatManager().reloadAllTraits(user);
+            // Send combat entry message
+            String message = MessageBuilder.create(plugin).locale(user.getLocale())
+                    .rawMessage(CombatMessage.ENTER).toString();
+            Component component = plugin.getMessageProvider().stringToComponent(message);
+            user.sendMessage(component);
         }
     }
 
     /**
      * Checks if a player is currently in PvP combat.
      *
-     * @param player the player to check
+     * @param user the player to check
      * @return true if the player is in combat, false otherwise
      */
-    public boolean isInCombat(Player player) {
+    public boolean isInCombat(User user) {
         if (!plugin.configBoolean(Option.PVP_ONLY_EQUIPMENT_STATS)) {
             return false; // Feature disabled, no one is in combat
         }
 
-        Long timestamp = combatTimestamps.get(player.getUniqueId());
+        Long timestamp = combatTimestamps.get(user.getUuid());
         if (timestamp == null) {
             return false;
         }
@@ -68,16 +78,21 @@ public class CombatTracker {
     /**
      * Forces a player to exit combat state.
      *
-     * @param player the player to remove from combat
+     * @param user the player to remove from combat
      */
-    public void exitCombat(Player player) {
-        UUID uuid = player.getUniqueId();
-        boolean wasInCombat = isInCombat(player);
-        combatTimestamps.remove(uuid);
+    public void exitCombat(User user) {
+        boolean wasInCombat = isInCombat(user);
+        combatTimestamps.remove(user.getUuid());
 
         if (wasInCombat) {
             // Player just exited combat, reload their traits
-            plugin.getStatManager().reloadAllTraits(plugin.getUser(player));
+            plugin.getStatManager().reloadAllTraits(user);
+
+            // Send combat exit message
+            String message = MessageBuilder.create(plugin).locale(user.getLocale())
+                    .rawMessage(CombatMessage.EXIT).toString();
+            Component component = plugin.getMessageProvider().stringToComponent(message);
+            user.sendMessage(component);
         }
     }
 
@@ -93,10 +108,16 @@ public class CombatTracker {
                     long timeSinceLastCombat = currentTime - entry.getValue();
                     if (timeSinceLastCombat >= COMBAT_TIMEOUT_MS) {
                         // Player's combat timer expired
-                        Player player = plugin.getServer().getPlayer(entry.getKey());
-                        if (player != null && player.isOnline()) {
+                        User user = plugin.getUserManager().getUser(entry.getKey());
+                        if (user != null) {
                             // Reload traits to restore non-equipment bonuses
-                            plugin.getStatManager().reloadAllTraits(plugin.getUser(player));
+                            plugin.getStatManager().reloadAllTraits(user);
+                            // Send combat exit message
+                            String message = MessageBuilder.create(plugin).locale(user.getLocale())
+                                    .rawMessage(CombatMessage.EXIT).toString();
+
+                            Component component = plugin.getMessageProvider().stringToComponent(message);
+                            user.sendMessage(component);
                         }
                         return true; // Remove from map
                     }
@@ -105,8 +126,8 @@ public class CombatTracker {
             }
         };
 
-        // Run every second to check for combat timeouts
-        plugin.getScheduler().scheduleSync(task, 1, TimeUnit.SECONDS);
+        // Run every second to check for combat timeouts (delay: 1s, period: 1s)
+        plugin.getScheduler().timerSync(task, 1, 1, TimeUnit.SECONDS);
     }
 
     /**
@@ -121,15 +142,15 @@ public class CombatTracker {
     /**
      * Gets the number of seconds until the player exits combat.
      *
-     * @param player the player to check
+     * @param user the player to check
      * @return seconds remaining, or 0 if not in combat
      */
-    public int getSecondsRemaining(Player player) {
-        if (!isInCombat(player)) {
+    public int getSecondsRemaining(User user) {
+        if (!isInCombat(user)) {
             return 0;
         }
 
-        Long timestamp = combatTimestamps.get(player.getUniqueId());
+        Long timestamp = combatTimestamps.get(user.getUuid());
         if (timestamp == null) {
             return 0;
         }
