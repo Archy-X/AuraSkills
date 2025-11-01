@@ -246,6 +246,12 @@ requirement:
     list: [ ]
 damage:
   correct_last_damage: true
+# PvP balance settings
+pvp:
+  # When enabled, only equipment stats (from items and armor) will be applied during player vs player combat.
+  # This ensures that two players with the same equipment have equal stats in PvP, regardless of their skill levels.
+  # Skills and other non-equipment modifiers will still apply in PvE combat.
+  only_equipment_stats: false
 critical:
   enabled:
     sword: true

@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -50,7 +51,14 @@ public class DamageReductionTrait extends TraitImpl {
 
         if (player != null) {
             User user = plugin.getUser(player);
-            double reduction = user.getEffectiveTraitLevel(Traits.DAMAGE_REDUCTION);
+            double reduction;
+
+            // Check if PvP equipment-only mode is enabled
+            if (meta.isPvP() && plugin.configBoolean(Option.PVP_ONLY_EQUIPMENT_STATS)) {
+                reduction = user.getBonusTraitLevelEquipmentOnly(Traits.DAMAGE_REDUCTION);
+            } else {
+                reduction = user.getEffectiveTraitLevel(Traits.DAMAGE_REDUCTION);
+            }
 
             meta.addDefenseModifier(
                     new DamageModifier((1 - getReductionValue(reduction)) - 1, DamageModifier.Operation.MULTIPLY));
