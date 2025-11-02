@@ -253,21 +253,31 @@ pvp:
   # Combat state begins when players damage each other and lasts for 10 seconds after the last hit.
   # Skills and other non-equipment modifiers will still apply in PvE combat and when not in combat.
   #
-  # Affected traits during PvP combat:
-  # - Attack Damage (Strength): Only equipment bonuses apply to damage dealt
-  # - Damage Reduction: Only equipment bonuses apply to damage received
-  # - Crit Chance: Base value + equipment bonuses only
-  # - Crit Damage: Only equipment bonuses apply to critical hit multiplier
-  # - HP (Max Health): Only equipment bonuses apply to max health
-  # - Movement Speed: Only equipment bonuses apply to walk speed
-  # - Max Mana: Only equipment bonuses apply to mana pool
-  # - Mana Regen: Only equipment bonuses apply to mana regeneration
-  # - Hunger Regen: Only equipment bonuses apply to health regen
-  # - Saturation Regen: Only equipment bonuses apply to health regen
-  #
   # Combat is tracked automatically - when you attack or are attacked by another player,
   # you enter combat mode for 10 seconds. Your stats will dynamically adjust.
   only_equipment_stats: false
+  # List of abilities to disable during PvP combat.
+  # This works independently of the only_equipment_stats option above.
+  # Players in combat (10 second duration) will not be able to use these abilities.
+  disabled_abilities:
+    - 'auraskills/bow_master'
+    - 'auraskills/stun'
+    - 'auraskills/charged_shot'
+    - 'auraskills/parry'
+    - 'auraskills/fighter'
+    - 'auraskills/sword_master'
+    - 'auraskills/first_strike'
+    - 'auraskills/bleed'
+    - 'auraskills/shielding'
+    - 'auraskills/immunity'
+    - 'auraskills/no_debuff'
+    - 'auraskills/scythe_master'
+    - 'auraskills/axe_master'
+    - 'auraskills/valor'
+    - 'auraskills/shredder'
+    - 'auraskills/pick_master'
+    - 'auraskills/stamina'
+    - 'auraskills/enchanted_strength'
 critical:
   enabled:
     sword: true
