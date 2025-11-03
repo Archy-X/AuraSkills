@@ -471,6 +471,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             // Register commands
             commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.ShopCommand(this));
             commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.SkillCoinsCommand(this));
+            commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.PayCommand(this));
+            commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.SellCommand(this));
             
             getLogger().info("SkillCoins system initialized successfully!");
         } catch (Exception e) {

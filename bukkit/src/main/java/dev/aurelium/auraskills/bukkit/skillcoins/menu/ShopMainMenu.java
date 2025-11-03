@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.skillcoins.EconomyProvider;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -175,10 +176,18 @@ public class ShopMainMenu implements Listener {
         List<ShopSection> sections = plugin.getShopLoader().getSections();
         for (ShopSection section : sections) {
             if (slot == section.getSlot()) {
-                // Special handling for Token Exchange - open custom menu
-                if (section.getId().equalsIgnoreCase("TokenExchange")) {
+                String sectionId = section.getId();
+                
+                // Special handling for token services
+                if (sectionId.equalsIgnoreCase("TokenExchange")) {
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
                     new TokenExchangeMenu(plugin, economy).open(player);
+                } else if (sectionId.equalsIgnoreCase("SkillLevels")) {
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+                    new SkillLevelPurchaseMenu(plugin, economy).open(player);
                 } else {
+                    // Regular shop section
+                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
                     new ShopSectionMenu(plugin, economy, section).open(player, 0);
                 }
                 return;
