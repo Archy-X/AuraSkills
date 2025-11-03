@@ -81,6 +81,8 @@ public interface BlockXpSource extends XpSource {
      */
     boolean requiresSupportBlock(SupportBlockType direction);
 
+    boolean allowBoneMeal();
+
     interface BlockXpSourceState {
 
         Map<String, Object> getStateMap();

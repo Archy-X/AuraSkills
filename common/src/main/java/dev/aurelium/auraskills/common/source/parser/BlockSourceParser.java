@@ -30,8 +30,9 @@ public class BlockSourceParser extends SourceParser<BlockSource> {
         BlockXpSource.BlockXpSourceState[] afterStates = context.pluralizedArray("after_state", source, BlockXpSource.BlockXpSourceState.class);
         String stateMultiplier = source.node("state_multiplier").getString("");
         BlockXpSource.SupportBlockType supportBlockType = source.node("support_block").get(BlockXpSource.SupportBlockType.class, BlockXpSource.SupportBlockType.NONE);
+        boolean allowBoneMeal = source.node("allow_bone_meal").getBoolean(true);
 
-        return new BlockSource(plugin, context.parseValues(source), blocks, maxBlocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType);
+        return new BlockSource(plugin, context.parseValues(source), blocks, maxBlocks, triggers, checkReplace, states, afterStates, stateMultiplier, supportBlockType, allowBoneMeal);
     }
 
     public static class BlockSourceStateParser implements UtilityParser<BlockXpSource.BlockXpSourceState> {
