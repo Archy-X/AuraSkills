@@ -37,3 +37,21 @@ build.xml
 bukkit/run/
 
 htmlReport/
+
+# EconomyShopGUI (not part of this project)
+EconomyShopGUI/
+
+# Deployment backups
+*.jar.*.bak
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Mac
+.DS_Store

@@ -168,6 +168,66 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
             return String.valueOf(Math.round(user.getMaxMana()));
         }
 
+        // Gets SkillCoins balance
+        if (identifier.equals("skillcoins") || identifier.equals("coins")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.COINS);
+                return NumberUtil.format0(balance);
+            }
+            return "0";
+        }
+
+        // Gets SkillCoins balance with 1 decimal
+        if (identifier.equals("skillcoins_1") || identifier.equals("coins_1")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.COINS);
+                return NumberUtil.format1(balance);
+            }
+            return "0.0";
+        }
+
+        // Gets SkillCoins balance with 2 decimals
+        if (identifier.equals("skillcoins_2") || identifier.equals("coins_2")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.COINS);
+                return NumberUtil.format2(balance);
+            }
+            return "0.00";
+        }
+
+        // Gets SkillTokens balance
+        if (identifier.equals("skilltokens") || identifier.equals("tokens")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.TOKENS);
+                return NumberUtil.format0(balance);
+            }
+            return "0";
+        }
+
+        // Gets SkillTokens balance with 1 decimal
+        if (identifier.equals("skilltokens_1") || identifier.equals("tokens_1")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.TOKENS);
+                return NumberUtil.format1(balance);
+            }
+            return "0.0";
+        }
+
+        // Gets SkillTokens balance with 2 decimals
+        if (identifier.equals("skilltokens_2") || identifier.equals("tokens_2")) {
+            if (plugin.getSkillCoinsEconomy() != null) {
+                double balance = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), 
+                        dev.aurelium.auraskills.common.skillcoins.CurrencyType.TOKENS);
+                return NumberUtil.format2(balance);
+            }
+            return "0.00";
+        }
+
         if (identifier.startsWith("mability_")) {
             NamespacedId id = NamespacedId.fromDefault(
                     identifier.replace("mability_", "")

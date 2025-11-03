@@ -168,6 +168,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private PlatformUtil platformUtil;
     private BukkitAntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
+    // SkillCoins system
+    private dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy skillCoinsEconomy;
+    private dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader shopLoader;
     // For unit tests
     private final boolean isMock;
     private final TestSession testSession;
@@ -260,6 +263,8 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         levelManager = new BukkitLevelManager(this);
         antiAfkManager = new BukkitAntiAfkManager(this); // Requires config loaded
         antiAfkManager.registerChecks();
+        // Initialize SkillCoins system
+        initializeSkillCoins();
         registerPriorityEvents();
         // Enabled bStats
         @Nullable Metrics metrics;
@@ -338,6 +343,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             regionManager.clearRegionMap();
         }
         leaderboardManager.getLeaderboardExclusion().saveToFile(); // Save excluded leaderboard players
+        // Save SkillCoins data
+        if (skillCoinsEconomy != null) {
+            try {
+                skillCoinsEconomy.saveAll();
+                getLogger().info("Saved all SkillCoins data");
+            } catch (Exception e) {
+                logger.warn("Error saving SkillCoins data");
+                e.printStackTrace();
+            }
+        }
         try {
             backupAutomatically();
         } catch (Exception e) {
@@ -433,6 +448,35 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         StorageFactory storageFactory = new BukkitStorageFactory(this);
         storageProvider = storageFactory.createStorageProvider(type);
         storageProvider.startAutoSaving();
+    }
+
+    private void initializeSkillCoins() {
+        try {
+            // Initialize storage
+            dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage storage = 
+                    new dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage(this);
+            storage.initialize();
+            
+            // Initialize economy
+            skillCoinsEconomy = new dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy(this, storage);
+            
+            // Initialize shop loader
+            shopLoader = new dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader(this);
+            shopLoader.load();
+            
+            // Register token reward listener
+            getServer().getPluginManager().registerEvents(
+                    new dev.aurelium.auraskills.bukkit.skillcoins.TokenRewardListener(this), this);
+            
+            // Register commands
+            commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.ShopCommand(this));
+            commandManager.registerCommand(new dev.aurelium.auraskills.bukkit.skillcoins.command.SkillCoinsCommand(this));
+            
+            getLogger().info("SkillCoins system initialized successfully!");
+        } catch (Exception e) {
+            getLogger().severe("Failed to initialize SkillCoins system!");
+            e.printStackTrace();
+        }
     }
 
     private void registerPriorityEvents() {
@@ -772,6 +816,14 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public boolean isMock() {
         return isMock;
+    }
+
+    public dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy getSkillCoinsEconomy() {
+        return skillCoinsEconomy;
+    }
+
+    public dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader getShopLoader() {
+        return shopLoader;
     }
 
 }

@@ -45,6 +45,12 @@ public class PlayerJoinQuit implements Listener {
                 loadUserAsync(player);
             }
         }
+        // Load SkillCoins data
+        if (plugin.getSkillCoinsEconomy() != null) {
+            plugin.getScheduler().executeAsync(() -> {
+                plugin.getSkillCoinsEconomy().load(player.getUniqueId());
+            });
+        }
         sendUpdateMessage(player);
     }
 
@@ -61,6 +67,10 @@ public class PlayerJoinQuit implements Listener {
             try {
                 plugin.getStorageProvider().saveSafely(user);
                 plugin.getUserManager().removeUser(player.getUniqueId());
+                // Unload SkillCoins data
+                if (plugin.getSkillCoinsEconomy() != null) {
+                    plugin.getSkillCoinsEconomy().unload(player.getUniqueId());
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

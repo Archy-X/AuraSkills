@@ -1,0 +1,148 @@
+pages:
+  page1:
+    items:
+      # Basic Food
+      '1':
+        material: APPLE
+        buy: 5
+        sell: 1
+      '2':
+        material: BREAD
+        buy: 8
+        sell: 2
+      '3':
+        material: BAKED_POTATO
+        buy: 6
+        sell: 1.5
+      '4':
+        material: CARROT
+        buy: 3
+        sell: 0.75
+      '5':
+        material: POTATO
+        buy: 3
+        sell: 0.75
+      '6':
+        material: BEETROOT
+        buy: 3
+        sell: 0.75
+      '7':
+        material: SWEET_BERRIES
+        buy: 2
+        sell: 0.5
+      '8':
+        material: GLOW_BERRIES
+        buy: 4
+        sell: 1
+      
+      # Cooked Meats
+      '9':
+        material: COOKED_BEEF
+        buy: 10
+        sell: 2.5
+      '10':
+        material: COOKED_PORKCHOP
+        buy: 10
+        sell: 2.5
+      '11':
+        material: COOKED_CHICKEN
+        buy: 10
+        sell: 2.5
+      '12':
+        material: COOKED_MUTTON
+        buy: 10
+        sell: 2.5
+      '13':
+        material: COOKED_RABBIT
+        buy: 10
+        sell: 2.5
+      '14':
+        material: COOKED_SALMON
+        buy: 12
+        sell: 3
+      '15':
+        material: COOKED_COD
+        buy: 8
+        sell: 2
+      
+      # Raw Meats
+      '16':
+        material: BEEF
+        buy: 8
+        sell: 2
+      '17':
+        material: PORKCHOP
+        buy: 8
+        sell: 2
+      '18':
+        material: CHICKEN
+        buy: 8
+        sell: 2
+      '19':
+        material: MUTTON
+        buy: 8
+        sell: 2
+      '20':
+        material: RABBIT
+        buy: 8
+        sell: 2
+      '21':
+        material: SALMON
+        buy: 10
+        sell: 2.5
+      '22':
+        material: COD
+        buy: 6
+        sell: 1.5
+      
+      # Special Foods
+      '23':
+        material: GOLDEN_APPLE
+        buy: 100
+        sell: 30
+      '24':
+        material: GOLDEN_CARROT
+        buy: 15
+        sell: 4
+      '25':
+        material: COOKIE
+        buy: 3
+        sell: 0.75
+      '26':
+        material: CAKE
+        buy: 50
+        sell: 12
+      '27':
+        material: PUMPKIN_PIE
+        buy: 12
+        sell: 3
+      '28':
+        material: MUSHROOM_STEW
+        buy: 15
+        sell: 4
+      '29':
+        material: RABBIT_STEW
+        buy: 20
+        sell: 5
+      '30':
+        material: BEETROOT_SOUP
+        buy: 15
+        sell: 4
+      '31':
+        material: SUSPICIOUS_STEW
+        buy: 25
+        sell: 6
+      
+      # Honey & Sugar
+      '32':
+        material: HONEY_BOTTLE
+        buy: 10
+        sell: 2.5
+      '33':
+        material: HONEYCOMB
+        buy: 8
+        sell: 2
+      '34':
+        material: SUGAR
+        buy: 5
+        sell: 1

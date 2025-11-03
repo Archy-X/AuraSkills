@@ -1,0 +1,230 @@
+pages:
+  page1:
+    items:
+      # Mob Drops
+      '1':
+        material: BONE
+        buy: 5
+        sell: 1
+      '2':
+        material: STRING
+        buy: 3
+        sell: 0.75
+      '3':
+        material: GUNPOWDER
+        buy: 10
+        sell: 2.5
+      '4':
+        material: ROTTEN_FLESH
+        buy: 2
+        sell: 0.5
+      '5':
+        material: SPIDER_EYE
+        buy: 8
+        sell: 2
+      '6':
+        material: SLIME_BALL
+        buy: 20
+        sell: 5
+      '7':
+        material: PHANTOM_MEMBRANE
+        buy: 35
+        sell: 9
+      '8':
+        material: SCUTE
+        buy: 50
+        sell: 12
+      '9':
+        material: NAUTILUS_SHELL
+        buy: 100
+        sell: 25
+      '10':
+        material: HEART_OF_THE_SEA
+        buy: 300
+        sell: 75
+      
+      # Dyes
+      '11':
+        material: WHITE_DYE
+        buy: 3
+        sell: 0.75
+      '12':
+        material: BLACK_DYE
+        buy: 3
+        sell: 0.75
+      '13':
+        material: RED_DYE
+        buy: 3
+        sell: 0.75
+      '14':
+        material: GREEN_DYE
+        buy: 3
+        sell: 0.75
+      '15':
+        material: BLUE_DYE
+        buy: 3
+        sell: 0.75
+      '16':
+        material: YELLOW_DYE
+        buy: 3
+        sell: 0.75
+      '17':
+        material: LIGHT_BLUE_DYE
+        buy: 3
+        sell: 0.75
+      '18':
+        material: LIME_DYE
+        buy: 3
+        sell: 0.75
+      '19':
+        material: PINK_DYE
+        buy: 3
+        sell: 0.75
+      '20':
+        material: PURPLE_DYE
+        buy: 3
+        sell: 0.75
+      '21':
+        material: ORANGE_DYE
+        buy: 3
+        sell: 0.75
+      '22':
+        material: CYAN_DYE
+        buy: 3
+        sell: 0.75
+      '23':
+        material: MAGENTA_DYE
+        buy: 3
+        sell: 0.75
+      '24':
+        material: BROWN_DYE
+        buy: 3
+        sell: 0.75
+      '25':
+        material: LIGHT_GRAY_DYE
+        buy: 3
+        sell: 0.75
+      '26':
+        material: GRAY_DYE
+        buy: 3
+        sell: 0.75
+      
+      # Decoration
+      '27':
+        material: PAINTING
+        buy: 20
+        sell: 5
+      '28':
+        material: ITEM_FRAME
+        buy: 15
+        sell: 4
+      '29':
+        material: GLOW_ITEM_FRAME
+        buy: 25
+        sell: 6
+      '30':
+        material: ARMOR_STAND
+        buy: 50
+        sell: 12
+      '31':
+        material: BANNER
+        buy: 30
+        sell: 7
+      '32':
+        material: SHIELD
+        buy: 60
+        sell: 15
+      
+      # Music Discs
+      '33':
+        material: MUSIC_DISC_13
+        buy: 100
+        sell: 25
+      '34':
+        material: MUSIC_DISC_CAT
+        buy: 100
+        sell: 25
+      '35':
+        material: MUSIC_DISC_BLOCKS
+        buy: 100
+        sell: 25
+      '36':
+        material: MUSIC_DISC_CHIRP
+        buy: 100
+        sell: 25
+      '37':
+        material: MUSIC_DISC_FAR
+        buy: 100
+        sell: 25
+      '38':
+        material: MUSIC_DISC_MALL
+        buy: 100
+        sell: 25
+      '39':
+        material: MUSIC_DISC_MELLOHI
+        buy: 100
+        sell: 25
+      '40':
+        material: MUSIC_DISC_STAL
+        buy: 100
+        sell: 25
+      '41':
+        material: MUSIC_DISC_STRAD
+        buy: 100
+        sell: 25
+      '42':
+        material: MUSIC_DISC_WARD
+        buy: 100
+        sell: 25
+      '43':
+        material: MUSIC_DISC_11
+        buy: 100
+        sell: 25
+      '44':
+        material: MUSIC_DISC_WAIT
+        buy: 100
+        sell: 25
+      
+      # Books & Paper
+      '45':
+        material: BOOK
+        buy: 15
+        sell: 4
+      '46':
+        material: WRITABLE_BOOK
+        buy: 20
+        sell: 5
+      '47':
+        material: PAPER
+        buy: 5
+        sell: 1
+      '48':
+        material: MAP
+        buy: 30
+        sell: 7
+      
+      # Other
+      '49':
+        material: CLOCK
+        buy: 50
+        sell: 12
+      '50':
+        material: COMPASS
+        buy: 50
+        sell: 12
+      '51':
+        material: SPYGLASS
+        buy: 80
+        sell: 20
+      '52':
+        material: LEAD
+        buy: 25
+        sell: 6
+      '53':
+        material: NAME_TAG
+        buy: 100
+        sell: 25
+      '54':
+        material: SADDLE
+        buy: 150
+        sell: 37
