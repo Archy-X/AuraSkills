@@ -160,4 +160,3 @@ public class CombatTracker {
         return (int) Math.ceil(timeRemaining / 1000.0);
     }
 }
-

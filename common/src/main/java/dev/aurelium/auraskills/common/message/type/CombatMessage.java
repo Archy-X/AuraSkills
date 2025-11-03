@@ -13,6 +13,4 @@ public enum CombatMessage implements MessageKey {
     public String getPath() {
         return "combat." + this.toString().toLowerCase(Locale.ROOT);
     }
-
 }
-
