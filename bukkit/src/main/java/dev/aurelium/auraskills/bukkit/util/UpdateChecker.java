@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -133,11 +134,9 @@ public class UpdateChecker {
         consumer.accept(Optional.empty(), Optional.empty());
     }
 
-    private boolean isOutdated(String localVersion, String resourceVersion) {
+    @VisibleForTesting
+    public boolean isOutdated(String localVersion, String resourceVersion) {
         if (localVersion.equalsIgnoreCase(resourceVersion)) { // Versions match exactly
-            return false;
-        }
-        if (localVersion.contains("Pre-Release") || localVersion.contains("Build") || localVersion.contains("pre") || localVersion.contains("SNAPSHOT")) { // Ignore Pre-Release or dev builds
             return false;
         }
         String[] localSplit = localVersion.split(" ");
@@ -156,10 +155,12 @@ public class UpdateChecker {
         }
         // Remove part after any hyphens including the hyphen
         int localIndex = localNum.indexOf("-");
+        int localSuffix = getSuffix(localNum);
         if (localIndex != -1) {
             localNum = localNum.substring(0, localIndex);
         }
         int resourceIndex = resourceNum.indexOf("-");
+        int resourceSuffix = getSuffix(resourceNum);
         if (resourceIndex != -1) {
             resourceNum = resourceNum.substring(0, resourceIndex);
         }
@@ -183,7 +184,31 @@ public class UpdateChecker {
             } catch (NumberFormatException ignored) {
             }
         }
+        if (localSuffix != -1 && resourceSuffix != -1) {
+            return resourceSuffix > localSuffix;
+        }
         return true;
+    }
+
+    private int getSuffix(String str) {
+        int resourceIndex = str.indexOf("-");
+        if (resourceIndex != -1) {
+            String suffixStr = str.substring(resourceIndex + 1);
+            if (suffixStr.contains("+")) {
+                String[] arr = dev.aurelium.slate.util.TextUtil.substringsBetween(suffixStr, ".", "+");
+                if (arr != null && arr.length >= 1) {
+                    try {
+                        return Integer.parseInt(arr[0]);
+                    } catch (NumberFormatException ignored) {}
+                }
+            } else {
+                String buildNumStr = suffixStr.substring(suffixStr.indexOf(".") + 1);
+                try {
+                    return Integer.parseInt(buildNumStr);
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return -1;
     }
 
 }

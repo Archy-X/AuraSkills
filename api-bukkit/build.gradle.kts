@@ -1,7 +1,6 @@
 plugins {
     `java-library`
     `maven-publish`
-    signing
 }
 
 repositories {
@@ -84,6 +83,7 @@ if (project.properties.keys.containsAll(setOf("developerId", "developerUsername"
                 name.set("AuraSkills API Bukkit")
                 description.set("API for AuraSkills, the ultra-versatile RPG skills plugin for Minecraft")
                 url.set("https://wiki.aurelium.dev/auraskills")
+                inceptionYear.set("2020")
                 licenses {
                     license {
                         name.set("The GNU General Public License, Version 3.0")
@@ -107,10 +107,5 @@ if (project.properties.keys.containsAll(setOf("developerId", "developerUsername"
 
             from(components["java"])
         }
-    }
-
-    signing {
-        sign(publishing.publications.getByName("mavenJava"))
-        isRequired = true
     }
 }
