@@ -18,12 +18,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
 
 /**
- * Token Exchange menu for buying tokens with coins
- * Clean rewrite with proper event handling and no conflicts
+ * Token Exchange menu for buying tokens with coins - FULLY REWRITTEN
+ * 
+ * Features:
+ * - Thread-safe quantity tracking with ConcurrentHashMap
+ * - Comprehensive balance validation
+ * - Overflow protection on calculations
+ * - Atomic transaction processing
+ * - Proper error handling and logging
  */
-public class TokenExchangeMenu implements Listener {
+public class TokenExchangeMenu {
     
     private static final String MENU_TITLE = "§a✦ §fToken Exchange";
     private static final String PRESET_TITLE = "§e⚡ §fQuick Select Amount";
@@ -35,36 +43,109 @@ public class TokenExchangeMenu implements Listener {
     private final AuraSkills plugin;
     private final EconomyProvider economy;
     
-    // Player-specific data storage
-    private final Map<UUID, Integer> playerQuantities = new HashMap<>();
+    // Thread-safe player-specific data storage
+    private final Map<UUID, Integer> playerQuantities = new ConcurrentHashMap<>();
     
     public TokenExchangeMenu(AuraSkills plugin, EconomyProvider economy) {
+        if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
+        if (economy == null) throw new IllegalArgumentException("Economy provider cannot be null");
         this.plugin = plugin;
         this.economy = economy;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
     /**
-     * Open the main token exchange menu
+     * Open the main token exchange menu with validation
      */
     public void open(Player player) {
-        playerQuantities.putIfAbsent(player.getUniqueId(), MIN_QUANTITY);
-        updateExchangeMenu(player);
+        if (player == null) {
+            plugin.getLogger().warning("Attempted to open token exchange for null player");
+            return;
+        }
+        
+        if (!player.isOnline()) {
+            plugin.getLogger().warning("Attempted to open token exchange for offline player: " + player.getName());
+            return;
+        }
+        
+        try {
+            playerQuantities.putIfAbsent(player.getUniqueId(), MIN_QUANTITY);
+            
+            MenuManager manager = MenuManager.getInstance(plugin);
+            if (manager != null) {
+                manager.registerTokenMenu(player, this);
+            }
+            
+            updateExchangeMenu(player);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Error opening token exchange for " + player.getName(), e);
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening token exchange!");
+        }
     }
     
     /**
-     * Update the main exchange menu with current quantity
+     * Check if a title matches this menu
+     */
+    public boolean isMenuTitle(String title) {
+        return title.equals(MENU_TITLE) || title.equals(PRESET_TITLE);
+    }
+    
+    /**
+     * Update the main exchange menu with current quantity (updates existing inventory)
      */
     private void updateExchangeMenu(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 54, MENU_TITLE);
+        if (player == null || !player.isOnline()) return;
         
-        UUID uuid = player.getUniqueId();
-        int quantity = playerQuantities.getOrDefault(uuid, MIN_QUANTITY);
-        int totalCoins = COINS_PER_TOKEN * quantity;
-        double coinBalance = economy.getBalance(uuid, CurrencyType.COINS);
-        double tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
+        try {
+            // Get the player's CURRENT open inventory - if they don't have one open, create new
+            Inventory inv = null;
+            boolean isNewInventory = false;
+            
+            try {
+                Inventory currentInv = player.getOpenInventory().getTopInventory();
+                if (currentInv != null && currentInv.getSize() == 54 && 
+                    player.getOpenInventory().getTitle().equals(MENU_TITLE)) {
+                    inv = currentInv; // Reuse existing inventory
+                }
+            } catch (Exception e) {
+                // Inventory check failed, will create new one
+            }
+            
+            if (inv == null) {
+                // Create new inventory (first open or invalid state)
+                inv = Bukkit.createInventory(null, 54, MENU_TITLE);
+                isNewInventory = true;
+                if (inv == null) {
+                    plugin.getLogger().severe("Failed to create inventory");
+                    return;
+                }
+            }
+            
+            UUID uuid = player.getUniqueId();
+            int quantity = playerQuantities.getOrDefault(uuid, MIN_QUANTITY);
+            
+            // Clamp quantity to valid range to prevent overflow
+            quantity = Math.max(MIN_QUANTITY, Math.min(MAX_QUANTITY, quantity));
+            playerQuantities.put(uuid, quantity);
+            
+            // Calculate cost with overflow protection
+            long totalCoinsLong = (long) COINS_PER_TOKEN * quantity;
+            if (totalCoinsLong > Integer.MAX_VALUE) {
+                plugin.getLogger().warning("Overflow detected in token cost calculation");
+                totalCoinsLong = Integer.MAX_VALUE;
+            }
+            int totalCoins = (int) totalCoinsLong;
+            
+            double coinBalance = 0.0;
+            double tokenBalance = 0.0;
+            try {
+                coinBalance = economy.getBalance(uuid, CurrencyType.COINS);
+                tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.WARNING, "Error getting balance for " + player.getName(), e);
+            }
         
-        // Fill border with black glass pane
+        // Clear and refill the inventory
+        inv.clear();
         fillBorder(inv);
         
         // Token display (slot 13 - center top)
@@ -211,7 +292,18 @@ public class TokenExchangeMenu implements Listener {
         }
         inv.setItem(53, back);
         
-        player.openInventory(inv);
+            if (isNewInventory) {
+                // First time opening - need to show the inventory
+                player.openInventory(inv);
+            } else {
+                // Already open - just force client update
+                player.updateInventory();
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Error updating exchange menu for " + player.getName(), e);
+            player.closeInventory();
+            player.sendMessage(ChatColor.of("#FF5555") + "Error opening exchange menu. Please try again.");
+        }
     }
     
     /**
@@ -247,19 +339,13 @@ public class TokenExchangeMenu implements Listener {
     }
     
     /**
-     * Single unified event handler for all clicks
+     * Handle click events (called by MenuManager)
      */
-    @EventHandler
-    public void onClick(InventoryClickEvent event) {
+    public void handleClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) return;
         
         String title = event.getView().getTitle();
         Player player = (Player) event.getWhoClicked();
-        
-        // Only handle our menus
-        if (!title.equals(MENU_TITLE) && !title.equals(PRESET_TITLE)) {
-            return;
-        }
         
         event.setCancelled(true);
         
@@ -347,44 +433,112 @@ public class TokenExchangeMenu implements Listener {
     /**
      * Perform the actual token purchase
      */
+    /**
+     * Perform the actual token purchase with atomic transaction
+     */
     private void performPurchase(Player player, int quantity, UUID uuid) {
-        int totalCoins = COINS_PER_TOKEN * quantity;
-        double coinBalance = economy.getBalance(uuid, CurrencyType.COINS);
-        
-        // Validation
-        if (coinBalance < totalCoins) {
-            player.sendMessage(ChatColor.of("#FF5555") + "✖ Not enough coins!");
-            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+        if (player == null || uuid == null) {
+            plugin.getLogger().warning("Null player or UUID in performPurchase");
             return;
         }
         
-        // Execute transaction
-        economy.subtractBalance(uuid, CurrencyType.COINS, totalCoins);
-        economy.addBalance(uuid, CurrencyType.TOKENS, quantity);
+        if (!player.isOnline()) {
+            plugin.getLogger().warning("Player " + player.getName() + " went offline during purchase");
+            return;
+        }
         
-        // Success messages
-        player.sendMessage(ChatColor.of("#55FF55") + "✔ Purchase Successful!");
-        player.sendMessage(ChatColor.of("#FFFFFF") + "Purchased " + ChatColor.of("#00FFFF") + quantity + 
-                " token" + (quantity > 1 ? "s" : "") + ChatColor.of("#FFFFFF") + " for " + 
-                ChatColor.of("#FFD700") + MONEY_FORMAT.format(totalCoins) + " Coins");
-        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        
-        // Reset and refresh
-        playerQuantities.put(uuid, MIN_QUANTITY);
-        updateExchangeMenu(player);
+        try {
+            // Calculate with overflow protection
+            long totalCoinsLong = (long) COINS_PER_TOKEN * quantity;
+            if (totalCoinsLong > Integer.MAX_VALUE) {
+                player.sendMessage(ChatColor.of("#FF5555") + "✖ Purchase amount too large!");
+                return;
+            }
+            int totalCoins = (int) totalCoinsLong;
+            
+            double coinBalance = economy.getBalance(uuid, CurrencyType.COINS);
+            
+            // Validation
+            if (coinBalance < totalCoins) {
+                player.sendMessage(ChatColor.of("#FF5555") + "✖ Not enough coins!");
+                playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+                return;
+            }
+            
+            // Additional validation
+            if (quantity < MIN_QUANTITY || quantity > MAX_QUANTITY) {
+                player.sendMessage(ChatColor.of("#FF5555") + "✖ Invalid quantity!");
+                plugin.getLogger().warning("Invalid quantity " + quantity + " for player " + player.getName());
+                return;
+            }
+            
+            // Atomic transaction with error handling
+            try {
+                economy.subtractBalance(uuid, CurrencyType.COINS, totalCoins);
+                economy.addBalance(uuid, CurrencyType.TOKENS, quantity);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "Transaction failed, attempting rollback", e);
+                // Attempt rollback
+                try {
+                    economy.addBalance(uuid, CurrencyType.COINS, totalCoins);
+                    player.sendMessage(ChatColor.of("#FF5555") + "✖ Transaction failed! Funds refunded.");
+                } catch (Exception rollbackError) {
+                    plugin.getLogger().log(Level.SEVERE, "CRITICAL: Rollback failed!", rollbackError);
+                    player.sendMessage(ChatColor.of("#FF5555") + "✖ CRITICAL ERROR! Contact an administrator.");
+                }
+                return;
+            }
+            
+            // Success messages
+            player.sendMessage(ChatColor.of("#55FF55") + "✔ Purchase Successful!");
+            player.sendMessage(ChatColor.of("#FFFFFF") + "Purchased " + ChatColor.of("#00FFFF") + quantity + 
+                    " token" + (quantity > 1 ? "s" : "") + ChatColor.of("#FFFFFF") + " for " + 
+                    ChatColor.of("#FFD700") + MONEY_FORMAT.format(totalCoins) + " Coins");
+            playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
+            
+            // Reset and refresh
+            playerQuantities.put(uuid, MIN_QUANTITY);
+            updateExchangeMenu(player);
+            
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Unexpected error in performPurchase", e);
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ An error occurred!");
+        }
     }
     
-    @EventHandler
-    public void onClose(InventoryCloseEvent event) {
-        String title = event.getView().getTitle();
-        if (title.equals(MENU_TITLE) || title.equals(PRESET_TITLE)) {
+    /**
+     * Play sound safely
+     */
+    private void playSound(Player player, Sound sound, float volume, float pitch) {
+        if (player == null || sound == null) return;
+        
+        try {
+            player.playSound(player.getLocation(), sound, volume, pitch);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error playing sound", e);
+        }
+    }
+    
+    /**
+     * Handle close events (called by MenuManager)
+     */
+    public void handleClose(InventoryCloseEvent event) {
+        if (event == null || !(event.getPlayer() instanceof Player)) return;
+        
+        try {
             UUID uuid = event.getPlayer().getUniqueId();
             // Delay cleanup to allow navigation between menus
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                if (event.getPlayer().getOpenInventory().getTopInventory().getSize() == 0) {
-                    cleanupPlayerData(uuid);
+                try {
+                    if (event.getPlayer().getOpenInventory().getTopInventory().getSize() == 0) {
+                        cleanupPlayerData(uuid);
+                    }
+                } catch (Exception e) {
+                    plugin.getLogger().log(Level.WARNING, "Error in delayed cleanup", e);
                 }
             }, 2L);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error handling token menu close", e);
         }
     }
     

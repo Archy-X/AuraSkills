@@ -169,8 +169,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private BukkitAntiAfkManager antiAfkManager;
     private boolean nbtApiEnabled;
     // SkillCoins system
+    private dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage skillCoinsStorage;
     private dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy skillCoinsEconomy;
     private dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader shopLoader;
+    private dev.aurelium.auraskills.bukkit.skillcoins.vault.VaultEconomyManager vaultEconomyManager;
     // For unit tests
     private final boolean isMock;
     private final TestSession testSession;
@@ -353,6 +355,25 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
                 e.printStackTrace();
             }
         }
+        // Close SkillCoins storage (flushes pending async saves)
+        if (skillCoinsStorage != null) {
+            try {
+                skillCoinsStorage.close();
+                getLogger().info("Closed SkillCoins storage and flushed pending saves");
+            } catch (Exception e) {
+                logger.warn("Error closing SkillCoins storage");
+                e.printStackTrace();
+            }
+        }
+        // Unregister Vault economy provider
+        if (vaultEconomyManager != null) {
+            try {
+                vaultEconomyManager.unregister();
+            } catch (Exception e) {
+                logger.warn("Error unregistering Vault economy provider");
+                e.printStackTrace();
+            }
+        }
         try {
             backupAutomatically();
         } catch (Exception e) {
@@ -453,16 +474,29 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private void initializeSkillCoins() {
         try {
             // Initialize storage
-            dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage storage = 
-                    new dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage(this);
-            storage.initialize();
+            skillCoinsStorage = new dev.aurelium.auraskills.common.skillcoins.FileSkillCoinsStorage(this);
+            skillCoinsStorage.initialize();
             
             // Initialize economy
-            skillCoinsEconomy = new dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy(this, storage);
+            skillCoinsEconomy = new dev.aurelium.auraskills.common.skillcoins.SkillCoinsEconomy(this, skillCoinsStorage);
+            
+            // Initialize Vault economy provider (CRITICAL: exposes SkillCoins to other plugins)
+            vaultEconomyManager = new dev.aurelium.auraskills.bukkit.skillcoins.vault.VaultEconomyManager(
+                    this, skillCoinsEconomy);
+            // Configure Vault to be PRIMARY economy provider
+            boolean enableVault = true;         // Enable Vault integration
+            boolean useCoins = true;            // Expose COINS currency (true) or TOKENS (false)
+            boolean forceOverride = true;       // CRITICAL: Override other economy plugins (HIGHEST priority)
+            boolean throwErrorOnConflict = false; // Don't throw errors, just warn about conflicts
+            vaultEconomyManager.configure(enableVault, useCoins, forceOverride, throwErrorOnConflict);
+            vaultEconomyManager.register(); // Register with Vault
             
             // Initialize shop loader
             shopLoader = new dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader(this);
             shopLoader.load();
+            
+            // Initialize centralized menu manager (CRITICAL: prevents duplicate event listeners)
+            dev.aurelium.auraskills.bukkit.skillcoins.menu.MenuManager.getInstance(this);
             
             // Register token reward listener
             getServer().getPluginManager().registerEvents(
@@ -826,6 +860,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     public dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopLoader getShopLoader() {
         return shopLoader;
+    }
+
+    public dev.aurelium.auraskills.bukkit.skillcoins.vault.VaultEconomyManager getVaultEconomyManager() {
+        return vaultEconomyManager;
     }
 
 }

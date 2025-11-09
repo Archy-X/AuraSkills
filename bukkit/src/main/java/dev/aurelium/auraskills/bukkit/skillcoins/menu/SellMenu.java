@@ -25,7 +25,7 @@ import java.util.*;
  * Sell Menu - Double chest GUI where players can place items to sell
  * Items are automatically sold when menu is closed or sell button is clicked
  */
-public class SellMenu implements Listener {
+public class SellMenu {
     
     private static final String MENU_TITLE = "§e⚖ §fSell Items";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,##0.00");
@@ -40,13 +40,15 @@ public class SellMenu implements Listener {
     public SellMenu(AuraSkills plugin, EconomyProvider economy) {
         this.plugin = plugin;
         this.economy = economy;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     
     /**
      * Open the sell menu for a player
      */
     public void open(Player player) {
+        // Register this menu instance with MenuManager
+        MenuManager.getInstance(plugin).registerSellMenu(player, this);
+        
         Inventory inv = Bukkit.createInventory(null, INVENTORY_SIZE, MENU_TITLE);
         
         // Create info item (top center)
@@ -89,12 +91,18 @@ public class SellMenu implements Listener {
         player.openInventory(inv);
     }
     
-    @EventHandler
-    public void onClick(InventoryClickEvent event) {
+    /**
+     * Check if a title matches this menu
+     */
+    public boolean isMenuTitle(String title) {
+        return title.equals(MENU_TITLE);
+    }
+    
+    /**
+     * Handle click events (called by MenuManager)
+     */
+    public void handleClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) return;
-        
-        String title = event.getView().getTitle();
-        if (!title.equals(MENU_TITLE)) return;
         
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
@@ -112,12 +120,11 @@ public class SellMenu implements Listener {
         // Allow placing/removing items in other slots
     }
     
-    @EventHandler
-    public void onClose(InventoryCloseEvent event) {
+    /**
+     * Handle close events (called by MenuManager)
+     */
+    public void handleClose(InventoryCloseEvent event) {
         if (!(event.getPlayer() instanceof Player)) return;
-        
-        String title = event.getView().getTitle();
-        if (!title.equals(MENU_TITLE)) return;
         
         Player player = (Player) event.getPlayer();
         UUID uuid = player.getUniqueId();

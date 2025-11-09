@@ -32,8 +32,8 @@ public class SkillCoinsEconomy implements EconomyProvider {
     public void setBalance(UUID uuid, CurrencyType type, double amount) {
         balances.computeIfAbsent(uuid, k -> new ConcurrentHashMap<>())
                 .put(type, Math.max(0, amount));
-        // Auto-save on balance change
-        storage.saveAsync(uuid, type, amount);
+        // CRITICAL: Save immediately to disk on every change (prevents data loss)
+        storage.save(uuid, type, amount);
     }
     
     @Override
