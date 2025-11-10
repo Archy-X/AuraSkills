@@ -30,6 +30,7 @@ repositories {
     maven("https://repo.nexomc.com/snapshots/")
     maven("https://repo.nexomc.com/releases/")
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.fancyinnovations.com/releases")
     mavenLocal()
 }
 
@@ -59,6 +60,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
+    compileOnly("de.oliver:FancyHolograms:2.8.0")
     testImplementation(testFixtures(project(":common")))
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.59.0")
     testImplementation("org.slf4j:slf4j-simple:2.0.17")

@@ -5,6 +5,7 @@ import dev.aurelium.auraskills.common.hooks.Hook;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.concurrent.TimeUnit;
@@ -19,7 +20,7 @@ public class HolographicDisplaysHook extends HologramsHook {
     }
 
     @Override
-    public void createHologram(Location location, String text) {
+    public void createHologram(Location location, String text, Player player) {
         HolographicDisplaysAPI api = HolographicDisplaysAPI.get(plugin);
         Hologram hologram = api.createHologram(location);
         hologram.getLines().appendText(text);

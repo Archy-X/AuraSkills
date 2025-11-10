@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.hooks.HookType;
 public enum Hooks implements HookType {
 
     DECENT_HOLOGRAMS(DecentHologramsHook.class, "DecentHolograms"),
+    FANCY_HOLOGRAMS(FancyHologramsHook.class, "FancyHolograms"),
     HOLOGRAPHIC_DISPLAYS(HolographicDisplaysHook.class, "HolographicDisplays"),
     LUCK_PERMS(BukkitLuckPermsHook.class, "LuckPerms"),
     PLACEHOLDER_API(PlaceholderApiHook.class, "PlaceholderAPI", false),

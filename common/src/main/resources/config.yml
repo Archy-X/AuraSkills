@@ -32,6 +32,8 @@ hooks:
     enabled: false
   DecentHolograms:
     enabled: true
+  FancyHolograms:
+    enabled: false
   LuckPerms:
     enabled: true
     use_permission_cache: true
