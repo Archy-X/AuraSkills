@@ -242,7 +242,7 @@ public class BukkitUser extends User {
     public void cleanUp() {
         super.cleanUp();
         // Remove fleeting
-        removeTraitModifier(TraitModifiers.FLEETING.getModifierId());
+        removeTraitModifier(TraitModifiers.FLEETING.getModifierId(), false);
     }
 
 }
