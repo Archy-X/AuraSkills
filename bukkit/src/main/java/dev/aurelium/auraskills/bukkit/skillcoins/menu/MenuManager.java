@@ -250,19 +250,9 @@ public class MenuManager implements Listener {
     private boolean handleSkillMenu(UUID playerId, String title, InventoryClickEvent event) {
         try {
             SkillLevelPurchaseMenu menu = skillMenus.get(playerId);
-            plugin.getLogger().info("[MenuManager] handleSkillMenu - PlayerId: " + playerId + 
-                    ", Menu: " + (menu != null ? "found" : "null") + 
-                    ", Title: " + title);
-            
-            if (menu != null) {
-                boolean matches = menu.isMenuTitle(title);
-                plugin.getLogger().info("[MenuManager] Title match result: " + matches);
-                
-                if (matches) {
-                    plugin.getLogger().info("[MenuManager] Delegating to menu.handleClick()");
-                    menu.handleClick(event);
-                    return true;
-                }
+            if (menu != null && menu.isMenuTitle(title)) {
+                menu.handleClick(event);
+                return true;
             }
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error in skill menu click", e);
@@ -344,7 +334,8 @@ public class MenuManager implements Listener {
             SkillLevelPurchaseMenu menu = skillMenus.get(playerId);
             if (menu != null && menu.isMenuTitle(title)) {
                 menu.handleClose(event);
-                skillMenus.remove(playerId);
+                // DON'T remove here - let the menu's handleClose decide when to cleanup
+                // skillMenus.remove(playerId); // REMOVED - causes menu to disappear when navigating between screens
             }
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Error closing skill menu", e);

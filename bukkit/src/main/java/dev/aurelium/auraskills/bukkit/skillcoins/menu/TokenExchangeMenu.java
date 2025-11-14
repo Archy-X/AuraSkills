@@ -149,7 +149,7 @@ public class TokenExchangeMenu {
         fillBorder(inv);
         
         // Token display (slot 13 - center top)
-        ItemStack tokenDisplay = new ItemStack(Material.EMERALD, Math.min(quantity, 64));
+        ItemStack tokenDisplay = new ItemStack(Material.PAPER, Math.min(quantity, 64));
         ItemMeta tokenMeta = tokenDisplay.getItemMeta();
         if (tokenMeta != null) {
             tokenMeta.setDisplayName(ChatColor.of("#00FFFF") + "✦ Skill Tokens");
@@ -180,46 +180,46 @@ public class TokenExchangeMenu {
         }
         inv.setItem(13, tokenDisplay);
         
-        // Quantity controls (row 3, centered)
-        // -10 (slot 20)
-        createButton(inv, 20, Material.RED_TERRACOTTA, 
+        // Quantity controls (row 3: slots 19-25) - EXACT same layout as TransactionMenu
+        // -10 (slot 19)
+        createButton(inv, 19, Material.RED_TERRACOTTA, 
                 ChatColor.of("#FF5555") + "▼▼ -10", 
                 quantity > 10, 
                 "Remove 10 tokens");
         
-        // -1 (slot 21)
-        createButton(inv, 21, Material.ORANGE_TERRACOTTA, 
+        // -1 (slot 20)
+        createButton(inv, 20, Material.ORANGE_TERRACOTTA, 
                 ChatColor.of("#FF5555") + "▼ -1", 
                 quantity > MIN_QUANTITY, 
                 "Remove 1 token");
         
         // Quantity display (slot 22 - center)
-        ItemStack qtyDisplay = new ItemStack(Material.EMERALD, Math.min(quantity, 64));
+        ItemStack qtyDisplay = new ItemStack(Material.PAPER, Math.min(quantity, 64));
         ItemMeta qtyMeta = qtyDisplay.getItemMeta();
         if (qtyMeta != null) {
-            qtyMeta.setDisplayName(ChatColor.of("#FFFF00") + "Amount: " + ChatColor.of("#FFFFFF") + quantity);
+            qtyMeta.setDisplayName(ChatColor.of("#FFFF00") + "Quantity: " + ChatColor.of("#FFFFFF") + quantity);
             List<String> qtyLore = new ArrayList<>();
             qtyLore.add("");
             qtyLore.add(ChatColor.of("#808080") + "Tokens to purchase");
-            qtyLore.add(ChatColor.of("#808080") + "Use +/- to adjust");
+            qtyLore.add(ChatColor.of("#808080") + "Use the buttons to adjust");
             qtyMeta.setLore(qtyLore);
             qtyDisplay.setItemMeta(qtyMeta);
         }
         inv.setItem(22, qtyDisplay);
         
-        // +1 (slot 23)
-        createButton(inv, 23, Material.LIME_TERRACOTTA, 
+        // +1 (slot 24)
+        createButton(inv, 24, Material.LIME_TERRACOTTA, 
                 ChatColor.of("#55FF55") + "▲ +1", 
                 quantity < MAX_QUANTITY, 
                 "Add 1 token");
         
-        // +10 (slot 24)
-        createButton(inv, 24, Material.GREEN_TERRACOTTA, 
+        // +10 (slot 25)
+        createButton(inv, 25, Material.GREEN_TERRACOTTA, 
                 ChatColor.of("#55FF55") + "▲▲ +10", 
                 quantity + 10 <= MAX_QUANTITY, 
                 "Add 10 tokens");
         
-        // Quick select button (slot 31)
+        // Quick select button (slot 31 - below quantity controls)
         ItemStack quickSelect = new ItemStack(Material.NETHER_STAR);
         ItemMeta quickMeta = quickSelect.getItemMeta();
         if (quickMeta != null) {
