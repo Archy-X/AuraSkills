@@ -1,0 +1,16 @@
+enable: false
+slot: 22
+material: NETHER_STAR
+displayname: '&6★ &fPremium Tokens'
+title: 'Premium Tokens Shop'
+hidden: false
+sub-section: false
+display-item: false
+fill-item:
+  material: AIR
+nav-bar:
+  mode: ON
+  back-item:
+    material: BARRIER
+    displayname: '&c✖ Close'
+    slot: 53

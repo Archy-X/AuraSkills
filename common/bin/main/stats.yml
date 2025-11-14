@@ -1,0 +1,139 @@
+stats:
+  auraskills/strength:
+    enabled: true
+    traits:
+      auraskills/attack_damage:
+        modifier: 0.4
+  auraskills/health:
+    enabled: true
+    traits:
+      auraskills/hp:
+        modifier: 1
+  auraskills/regeneration:
+    enabled: true
+    traits:
+      auraskills/saturation_regen:
+        modifier: 0.02
+      auraskills/hunger_regen:
+        modifier: 0.02
+      auraskills/mana_regen:
+        modifier: 0.02
+  auraskills/luck:
+    enabled: true
+    traits:
+      auraskills/farming_luck:
+        modifier: 0.5
+      auraskills/foraging_luck:
+        modifier: 0.5
+      auraskills/mining_luck:
+        modifier: 0.5
+      auraskills/fishing_luck:
+        modifier: 0.5
+      auraskills/excavation_luck:
+        modifier: 0.5
+  auraskills/wisdom:
+    enabled: true
+    traits:
+      auraskills/experience_bonus:
+        modifier: 0.4
+      auraskills/anvil_discount:
+        modifier: 0.1
+      auraskills/max_mana:
+        modifier: 2.0
+  auraskills/toughness:
+    enabled: true
+    traits:
+      auraskills/damage_reduction:
+        modifier: 0.3
+  auraskills/crit_chance:
+    enabled: true
+    traits:
+      auraskills/crit_chance:
+        modifier: 1
+  auraskills/crit_damage:
+    enabled: true
+    traits:
+      auraskills/crit_damage:
+        modifier: 1
+  auraskills/speed:
+    enabled: true
+    traits:
+      auraskills/movement_speed:
+        modifier: 1
+traits:
+  auraskills/attack_damage:
+    enabled: true
+    hand_damage: true
+    bow_damage: true
+    display_damage_with_health_scaling: true
+    use_percent: true
+  auraskills/hp:
+    enabled: true
+    health_scaling: true
+    hearts:
+      '10': 20
+      '11': 22
+      '12': 24
+      '13': 26
+      '14': 30
+      '15': 34
+      '16': 40
+      '17': 48
+      '18': 58
+      '19': 70
+      '20': 84
+    action_bar_scaling: 1
+    update_delay: 0
+    force_base_health: false
+    keep_full_on_increase: false
+    ensure_scaling_disabled: true
+  auraskills/saturation_regen:
+    enabled: true
+    use_custom_delay: false
+    delay: 20
+    base: 1
+  auraskills/hunger_regen:
+    enabled: true
+    use_custom_delay: false
+    delay: 60
+    base: 1
+  auraskills/mana_regen:
+    enabled: true
+    base: 0.1
+  auraskills/farming_luck:
+    enabled: true
+  auraskills/foraging_luck:
+    enabled: true
+  auraskills/mining_luck:
+    enabled: true
+  auraskills/fishing_luck:
+    enabled: true
+  auraskills/excavation_luck:
+    enabled: true
+  auraskills/experience_bonus:
+    enabled: true
+  auraskills/anvil_discount:
+    enabled: true
+    formula: -1 * 1.025^(-1 * value) + 1
+  auraskills/max_mana:
+    enabled: true
+    allow_overflow: false
+    base: 20
+  auraskills/damage_reduction:
+    enabled: true
+    formula: -1 * 1.01^(-1 * value) + 1
+  auraskills/crit_chance:
+    enabled: true
+    base: 0
+  auraskills/crit_damage:
+    enabled: true
+    base: 0
+  auraskills/movement_speed:
+    enabled: true
+    max: 300.0
+  auraskills/luck:
+    enabled: true
+  auraskills/double_drop:
+    enabled: true
+    max_percent: 100
+file_version: 4

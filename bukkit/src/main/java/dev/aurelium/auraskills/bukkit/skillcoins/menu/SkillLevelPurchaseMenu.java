@@ -11,8 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -25,79 +23,57 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 /**
- * Skill Level Purchase Menu - Buy skill levels with tokens - FULLY REWRITTEN
+ * Skill Level Purchase Menu - Buy skill levels with tokens
  * 
- * Features:
- * - Thread-safe skill/quantity tracking
- * - Skill availability validation
- * - Level cap enforcement
- * - User data validation
- * - Comprehensive error handling
- * - Atomic transactions with rollback
+ * Clean implementation with proper menu flow:
+ * 1. Skill Selection -> Choose which skill to level up
+ * 2. Purchase Menu -> Adjust quantity and confirm
+ * 3. Quick Select -> Preset level amounts (1, 5, 10, 25, MAX)
  */
 public class SkillLevelPurchaseMenu {
     
     private static final String MENU_TITLE = "§b✪ §fSkill Level Purchase";
     private static final String SELECTION_TITLE = "§b✪ §fSelect Skill";
+    private static final String QUICK_SELECT_TITLE = "§b✪ §fQuick Select Levels";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,##0.00");
-    private static final int TOKENS_PER_LEVEL = 10; // Base cost per level
+    private static final int TOKENS_PER_LEVEL = 10;
     
     private final AuraSkills plugin;
     private final EconomyProvider economy;
     
-    // Thread-safe player-specific data storage
+    // Thread-safe player session data
     private final Map<UUID, Skill> selectedSkills = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> purchaseQuantities = new ConcurrentHashMap<>();
     
     public SkillLevelPurchaseMenu(AuraSkills plugin, EconomyProvider economy) {
-        if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
-        if (economy == null) throw new IllegalArgumentException("Economy provider cannot be null");
         this.plugin = plugin;
         this.economy = economy;
     }
     
     /**
-     * Open the main skill level purchase menu with validation
+     * Open the skill selection menu
      */
     public void open(Player player) {
-        if (player == null) {
-            plugin.getLogger().warning("Attempted to open skill purchase for null player");
-            return;
-        }
-        
-        if (!player.isOnline()) {
-            plugin.getLogger().warning("Attempted to open skill purchase for offline player: " + player.getName());
-            return;
-        }
-        
-        try {
-            MenuManager manager = MenuManager.getInstance(plugin);
-            if (manager != null) {
-                manager.registerSkillMenu(player, this);
-            }
-            
-            openSkillSelection(player);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Error opening skill purchase for " + player.getName(), e);
-            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening skill purchase!");
-        }
+        MenuManager.getInstance(plugin).registerSkillMenu(player, this);
+        openSkillSelection(player);
     }
     
     /**
      * Check if a title matches this menu
      */
     public boolean isMenuTitle(String title) {
-        return title.equals(MENU_TITLE) || title.equals(SELECTION_TITLE);
+        return title.equals(MENU_TITLE) || 
+               title.equals(SELECTION_TITLE) || 
+               title.equals(QUICK_SELECT_TITLE);
     }
     
+    // ==================== MENU BUILDERS ====================
+    
     /**
-     * Open skill selection menu
+     * Open skill selection menu (first screen)
      */
     private void openSkillSelection(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, SELECTION_TITLE);
-        
-        UUID uuid = player.getUniqueId();
-        double tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
         User user = plugin.getUser(player);
         
         if (user == null) {
@@ -105,28 +81,30 @@ public class SkillLevelPurchaseMenu {
             return;
         }
         
-        // Fill border with black glass
+        UUID uuid = player.getUniqueId();
+        double tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
+        
         fillBorder(inv);
         
-        // Player info (slot 0)
-        ItemStack playerInfo = new ItemStack(Material.EXPERIENCE_BOTTLE);
-        ItemMeta playerMeta = playerInfo.getItemMeta();
-        if (playerMeta != null) {
-            playerMeta.setDisplayName(ChatColor.of("#00FFFF") + "✪ Skill Level Shop");
+        // Info display (slot 0)
+        ItemStack info = new ItemStack(Material.EXPERIENCE_BOTTLE);
+        ItemMeta infoMeta = info.getItemMeta();
+        if (infoMeta != null) {
+            infoMeta.setDisplayName(ChatColor.of("#00FFFF") + "✪ Skill Level Shop");
             List<String> lore = new ArrayList<>();
             lore.add("");
-            lore.add(ChatColor.of("#808080") + "Purchase additional skill levels");
-            lore.add(ChatColor.of("#808080") + "using your Skill Tokens.");
+            lore.add(ChatColor.of("#808080") + "Purchase skill levels");
+            lore.add(ChatColor.of("#808080") + "using Skill Tokens");
             lore.add("");
             lore.add(ChatColor.of("#FFFF00") + "Select a skill below!");
-            playerMeta.setLore(lore);
-            playerInfo.setItemMeta(playerMeta);
+            infoMeta.setLore(lore);
+            info.setItemMeta(infoMeta);
         }
-        inv.setItem(0, playerInfo);
+        inv.setItem(0, info);
         
         // Token balance (slot 8)
-        ItemStack balanceItem = new ItemStack(Material.EMERALD);
-        ItemMeta balanceMeta = balanceItem.getItemMeta();
+        ItemStack balance = new ItemStack(Material.EMERALD);
+        ItemMeta balanceMeta = balance.getItemMeta();
         if (balanceMeta != null) {
             balanceMeta.setDisplayName(ChatColor.of("#00FFFF") + "Your Tokens");
             List<String> lore = new ArrayList<>();
@@ -137,11 +115,11 @@ public class SkillLevelPurchaseMenu {
             lore.add(ChatColor.of("#808080") + "Cost: " + ChatColor.of("#00FFFF") + 
                     TOKENS_PER_LEVEL + " tokens per level");
             balanceMeta.setLore(lore);
-            balanceItem.setItemMeta(balanceMeta);
+            balance.setItemMeta(balanceMeta);
         }
-        inv.setItem(8, balanceItem);
+        inv.setItem(8, balance);
         
-        // Display all enabled skills (centered grid)
+        // Display enabled skills (centered grid)
         int[] skillSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
         int slotIndex = 0;
         
@@ -151,18 +129,19 @@ public class SkillLevelPurchaseMenu {
             int currentLevel = user.getSkillLevel(skill);
             int maxLevel = skill.getMaxLevel();
             
-            // Skip if at max level
+            // Skip skills already at max level
             if (currentLevel >= maxLevel) continue;
             
             Material icon = getSkillIcon(skill);
             ItemStack skillItem = new ItemStack(icon);
             ItemMeta meta = skillItem.getItemMeta();
+            
             if (meta != null) {
                 meta.setDisplayName(ChatColor.of("#00FFFF") + skill.getDisplayName(user.getLocale()));
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.of("#808080") + "Current Level: " + ChatColor.of("#FFFFFF") + currentLevel);
-                lore.add(ChatColor.of("#808080") + "Max Level: " + ChatColor.of("#FFFFFF") + maxLevel);
+                lore.add(ChatColor.of("#808080") + "Current: " + ChatColor.of("#FFFFFF") + 
+                        currentLevel + ChatColor.of("#808080") + " / " + maxLevel);
                 lore.add(ChatColor.of("#808080") + "Available: " + ChatColor.of("#55FF55") + 
                         (maxLevel - currentLevel) + " levels");
                 lore.add("");
@@ -173,6 +152,7 @@ public class SkillLevelPurchaseMenu {
                 meta.setLore(lore);
                 skillItem.setItemMeta(meta);
             }
+            
             inv.setItem(skillSlots[slotIndex++], skillItem);
         }
         
@@ -181,10 +161,10 @@ public class SkillLevelPurchaseMenu {
         ItemMeta backMeta = back.getItemMeta();
         if (backMeta != null) {
             backMeta.setDisplayName(ChatColor.of("#FF5555") + "← Back");
-            List<String> backLore = new ArrayList<>();
-            backLore.add("");
-            backLore.add(ChatColor.of("#808080") + "Return to main shop");
-            backMeta.setLore(backLore);
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            lore.add(ChatColor.of("#808080") + "Return to main shop");
+            backMeta.setLore(lore);
             back.setItemMeta(backMeta);
         }
         inv.setItem(53, back);
@@ -193,58 +173,50 @@ public class SkillLevelPurchaseMenu {
     }
     
     /**
-     * Open purchase interface for specific skill
+     * Open purchase menu for a specific skill
      */
     private void openPurchaseMenu(Player player, Skill skill) {
+        plugin.getLogger().info("[SkillMenu] openPurchaseMenu called for skill: " + skill.name());
+        
         selectedSkills.put(player.getUniqueId(), skill);
         purchaseQuantities.putIfAbsent(player.getUniqueId(), 1);
-        updatePurchaseMenu(player, skill);
+        
+        plugin.getLogger().info("[SkillMenu] Creating inventory...");
+        Inventory inv = Bukkit.createInventory(null, 54, MENU_TITLE);
+        
+        plugin.getLogger().info("[SkillMenu] Updating menu content...");
+        updatePurchaseMenuContent(inv, player, skill);
+        
+        plugin.getLogger().info("[SkillMenu] Opening inventory for player...");
+        player.openInventory(inv);
+        
+        plugin.getLogger().info("[SkillMenu] Purchase menu opened successfully");
     }
     
     /**
-     * Update the purchase menu with current quantity (updates existing inventory)
+     * Update purchase menu content (used for quantity changes)
      */
-    private void updatePurchaseMenu(Player player, Skill skill) {
-        // Get the player's CURRENT open inventory - if they don't have one open, create new
-        Inventory inv = null;
-        boolean isNewInventory = false;
+    private void updatePurchaseMenuContent(Inventory inv, Player player, Skill skill) {
+        plugin.getLogger().info("[SkillMenu] updatePurchaseMenuContent started");
         
-        try {
-            Inventory currentInv = player.getOpenInventory().getTopInventory();
-            if (currentInv != null && currentInv.getSize() == 54 && 
-                player.getOpenInventory().getTitle().equals(MENU_TITLE)) {
-                inv = currentInv; // Reuse existing inventory
-            }
-        } catch (Exception e) {
-            // Inventory check failed, will create new one
+        User user = plugin.getUser(player);
+        if (user == null) {
+            plugin.getLogger().warning("[SkillMenu] User is null! Cannot update menu content");
+            return;
         }
         
-        if (inv == null) {
-            // Create new inventory (first open or invalid state)
-            inv = Bukkit.createInventory(null, 54, MENU_TITLE);
-            isNewInventory = true;
-            if (inv == null) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Error creating menu!");
-                return;
-            }
-        }
+        plugin.getLogger().info("[SkillMenu] User found, getting data...");
         
         UUID uuid = player.getUniqueId();
         int quantity = purchaseQuantities.getOrDefault(uuid, 1);
         double tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
-        User user = plugin.getUser(player);
-        
-        if (user == null) {
-            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error loading your data!");
-            return;
-        }
         
         int currentLevel = user.getSkillLevel(skill);
         int maxLevel = skill.getMaxLevel();
         int availableLevels = maxLevel - currentLevel;
         int totalCost = TOKENS_PER_LEVEL * quantity;
         
-        // Clear and refill the inventory
+        // Clear and rebuild
         inv.clear();
         fillBorder(inv);
         
@@ -280,13 +252,11 @@ public class SkillLevelPurchaseMenu {
         inv.setItem(13, display);
         
         // Quantity controls (row 3, centered)
-        // -10 (slot 20)
         createButton(inv, 20, Material.RED_TERRACOTTA, 
                 ChatColor.of("#FF5555") + "▼▼ -10", 
                 quantity > 10, 
                 "Remove 10 levels");
         
-        // -1 (slot 21)
         createButton(inv, 21, Material.ORANGE_TERRACOTTA, 
                 ChatColor.of("#FF5555") + "▼ -1", 
                 quantity > 1, 
@@ -306,13 +276,11 @@ public class SkillLevelPurchaseMenu {
         }
         inv.setItem(22, qtyDisplay);
         
-        // +1 (slot 23)
         createButton(inv, 23, Material.LIME_TERRACOTTA, 
                 ChatColor.of("#55FF55") + "▲ +1", 
                 quantity < availableLevels, 
                 "Add 1 level");
         
-        // +10 (slot 24)
         createButton(inv, 24, Material.GREEN_TERRACOTTA, 
                 ChatColor.of("#55FF55") + "▲▲ +10", 
                 quantity + 10 <= availableLevels, 
@@ -326,7 +294,7 @@ public class SkillLevelPurchaseMenu {
             List<String> quickLore = new ArrayList<>();
             quickLore.add("");
             quickLore.add(ChatColor.of("#808080") + "Quickly set to:");
-            quickLore.add(ChatColor.of("#FFD700") + "  • " + ChatColor.of("#FFFFFF") + "1, 5, 10, or MAX levels");
+            quickLore.add(ChatColor.of("#FFD700") + "  • " + ChatColor.of("#FFFFFF") + "1, 5, 10, 25, or MAX levels");
             quickLore.add("");
             quickLore.add(ChatColor.of("#FFFF00") + "▸ Click to open!");
             quickMeta.setLore(quickLore);
@@ -371,7 +339,7 @@ public class SkillLevelPurchaseMenu {
                 if (tokenBalance < totalCost) {
                     confirmLore.add(ChatColor.of("#FF5555") + "Not enough tokens!");
                 } else {
-                    confirmLore.add(ChatColor.of("#FF5555") + "Exceeds available levels!");
+                    confirmLore.add(ChatColor.of("#FF5555") + "Invalid quantity!");
                 }
                 confirmMeta.setLore(confirmLore);
             }
@@ -391,22 +359,12 @@ public class SkillLevelPurchaseMenu {
             back.setItemMeta(backMeta);
         }
         inv.setItem(53, back);
-        
-        if (isNewInventory) {
-            // First time opening - need to show the inventory
-            player.openInventory(inv);
-        } else {
-            // Already open - just force client update
-            player.updateInventory();
-        }
     }
     
     /**
      * Open quick select preset menu
      */
     private void openQuickSelect(Player player, Skill skill) {
-        Inventory inv = Bukkit.createInventory(null, 27, "§b✪ §fQuick Select Levels");
-        
         User user = plugin.getUser(player);
         if (user == null) return;
         
@@ -414,6 +372,7 @@ public class SkillLevelPurchaseMenu {
         int maxLevel = skill.getMaxLevel();
         int available = maxLevel - currentLevel;
         
+        Inventory inv = Bukkit.createInventory(null, 27, QUICK_SELECT_TITLE);
         fillBorder(inv);
         
         // Preset buttons
@@ -449,43 +408,62 @@ public class SkillLevelPurchaseMenu {
         player.openInventory(inv);
     }
     
+    // ==================== EVENT HANDLERS ====================
+    
     /**
      * Handle click events (called by MenuManager)
      */
     public void handleClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player)) return;
         
-        String title = event.getView().getTitle();
         Player player = (Player) event.getWhoClicked();
-        ItemStack clicked = event.getCurrentItem();
         
+        // CRITICAL: Cancel ALL clicks IMMEDIATELY to prevent item pickup
         event.setCancelled(true);
         
+        plugin.getLogger().info("[SkillMenu] Click event - Player: " + player.getName() + 
+                ", Slot: " + event.getSlot() + 
+                ", Title: " + event.getView().getTitle() +
+                ", Cancelled: " + event.isCancelled());
+        
+        String title = event.getView().getTitle();
+        ItemStack clicked = event.getCurrentItem();
+        int slot = event.getSlot();
+        
+        // Ignore null, air, and border items
         if (clicked == null || clicked.getType() == Material.AIR || 
             clicked.getType() == Material.BLACK_STAINED_GLASS_PANE) {
+            plugin.getLogger().info("[SkillMenu] Ignoring click - null/air/border");
             return;
         }
         
-        int slot = event.getSlot();
-        UUID uuid = player.getUniqueId();
+        plugin.getLogger().info("[SkillMenu] Processing click - Material: " + clicked.getType());
         
-        // Handle skill selection menu
+        // Route to correct handler
         if (title.equals(SELECTION_TITLE)) {
+            plugin.getLogger().info("[SkillMenu] Routing to selection handler");
             handleSelectionClick(player, slot, clicked);
-        }
-        // Handle purchase menu
-        else if (title.equals(MENU_TITLE)) {
+        } else if (title.equals(MENU_TITLE)) {
+            plugin.getLogger().info("[SkillMenu] Routing to purchase handler");
             handlePurchaseClick(player, slot);
-        }
-        // Handle quick select menu
-        else if (title.contains("Quick Select")) {
+        } else if (title.equals(QUICK_SELECT_TITLE)) {
+            plugin.getLogger().info("[SkillMenu] Routing to quick select handler");
             handleQuickSelectClick(player, slot);
+        } else {
+            plugin.getLogger().warning("[SkillMenu] Unknown title: " + title);
         }
     }
     
+    /**
+     * Handle skill selection menu clicks
+     */
     private void handleSelectionClick(Player player, int slot, ItemStack clicked) {
+        plugin.getLogger().info("[SkillMenu] handleSelectionClick - Slot: " + slot);
+        
         // Back button
         if (slot == 53) {
+            plugin.getLogger().info("[SkillMenu] Back button clicked");
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             new ShopMainMenu(plugin, economy).open(player);
             return;
         }
@@ -494,49 +472,64 @@ public class SkillLevelPurchaseMenu {
         int[] validSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
         for (int validSlot : validSlots) {
             if (slot == validSlot) {
-                // Find skill by item name
+                plugin.getLogger().info("[SkillMenu] Valid slot matched: " + validSlot);
                 ItemMeta meta = clicked.getItemMeta();
+                plugin.getLogger().info("[SkillMenu] ItemMeta: " + (meta != null ? "exists" : "null"));
+                
                 if (meta != null && meta.hasDisplayName()) {
                     String displayName = ChatColor.stripColor(meta.getDisplayName());
+                    plugin.getLogger().info("[SkillMenu] Display name: " + displayName);
+                    
                     Skill foundSkill = findSkillByDisplayName(player, displayName);
+                    plugin.getLogger().info("[SkillMenu] Found skill: " + (foundSkill != null ? foundSkill.name() : "null"));
+                    
                     if (foundSkill != null) {
                         player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+                        plugin.getLogger().info("[SkillMenu] Opening purchase menu for: " + foundSkill.name());
                         openPurchaseMenu(player, foundSkill);
                         return;
+                    } else {
+                        plugin.getLogger().warning("[SkillMenu] Could not find skill for display name: " + displayName);
                     }
+                } else {
+                    plugin.getLogger().warning("[SkillMenu] ItemMeta is null or has no display name");
                 }
             }
         }
+        plugin.getLogger().warning("[SkillMenu] No valid slot matched for slot: " + slot);
     }
     
+    /**
+     * Handle purchase menu clicks
+     */
     private void handlePurchaseClick(Player player, int slot) {
         UUID uuid = player.getUniqueId();
         Skill skill = selectedSkills.get(uuid);
         if (skill == null) return;
         
-        int quantity = purchaseQuantities.getOrDefault(uuid, 1);
         User user = plugin.getUser(player);
         if (user == null) return;
         
+        int quantity = purchaseQuantities.getOrDefault(uuid, 1);
         int available = skill.getMaxLevel() - user.getSkillLevel(skill);
         
         // Quantity controls
         if (slot == 20 && quantity > 10) { // -10
             purchaseQuantities.put(uuid, quantity - 10);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 0.8f);
-            updatePurchaseMenu(player, skill);
+            refreshPurchaseMenu(player, skill);
         } else if (slot == 21 && quantity > 1) { // -1
             purchaseQuantities.put(uuid, quantity - 1);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 0.9f);
-            updatePurchaseMenu(player, skill);
+            refreshPurchaseMenu(player, skill);
         } else if (slot == 23 && quantity < available) { // +1
             purchaseQuantities.put(uuid, quantity + 1);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.1f);
-            updatePurchaseMenu(player, skill);
+            refreshPurchaseMenu(player, skill);
         } else if (slot == 24 && quantity + 10 <= available) { // +10
             purchaseQuantities.put(uuid, Math.min(available, quantity + 10));
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.2f);
-            updatePurchaseMenu(player, skill);
+            refreshPurchaseMenu(player, skill);
         } else if (slot == 31) { // Quick select
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             openQuickSelect(player, skill);
@@ -548,6 +541,9 @@ public class SkillLevelPurchaseMenu {
         }
     }
     
+    /**
+     * Handle quick select menu clicks
+     */
     private void handleQuickSelectClick(Player player, int slot) {
         UUID uuid = player.getUniqueId();
         Skill skill = selectedSkills.get(uuid);
@@ -556,9 +552,14 @@ public class SkillLevelPurchaseMenu {
         // Back button
         if (slot == 22) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-            updatePurchaseMenu(player, skill);
+            openPurchaseMenu(player, skill);
             return;
         }
+        
+        User user = plugin.getUser(player);
+        if (user == null) return;
+        
+        int available = skill.getMaxLevel() - user.getSkillLevel(skill);
         
         // Preset buttons
         Map<Integer, Integer> presets = new HashMap<>();
@@ -566,138 +567,75 @@ public class SkillLevelPurchaseMenu {
         presets.put(11, 5);
         presets.put(13, 10);
         presets.put(15, 25);
+        presets.put(16, available); // MAX
         
         if (presets.containsKey(slot)) {
             purchaseQuantities.put(uuid, presets.get(slot));
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-            updatePurchaseMenu(player, skill);
-        } else if (slot == 16) { // MAX button
-            User user = plugin.getUser(player);
-            if (user != null) {
-                int available = skill.getMaxLevel() - user.getSkillLevel(skill);
-                purchaseQuantities.put(uuid, available);
-                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                updatePurchaseMenu(player, skill);
-            }
+            openPurchaseMenu(player, skill);
+        }
+    }
+    
+    /**
+     * Refresh purchase menu (update existing inventory)
+     */
+    private void refreshPurchaseMenu(Player player, Skill skill) {
+        Inventory current = player.getOpenInventory().getTopInventory();
+        if (current != null && player.getOpenInventory().getTitle().equals(MENU_TITLE)) {
+            updatePurchaseMenuContent(current, player, skill);
+            player.updateInventory();
         }
     }
     
     /**
      * Perform the actual purchase
      */
-    /**
-     * Perform the actual purchase with comprehensive validation
-     */
     private void performPurchase(Player player, Skill skill, int quantity) {
-        if (player == null || skill == null) {
-            plugin.getLogger().warning("Null player or skill in performPurchase");
+        UUID uuid = player.getUniqueId();
+        User user = plugin.getUser(player);
+        
+        if (user == null) {
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error loading your data!");
             return;
         }
         
-        if (!player.isOnline()) {
-            plugin.getLogger().warning("Player " + player.getName() + " went offline during purchase");
+        int totalCost = TOKENS_PER_LEVEL * quantity;
+        double tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
+        int currentLevel = user.getSkillLevel(skill);
+        int maxLevel = skill.getMaxLevel();
+        
+        // Validation
+        if (tokenBalance < totalCost) {
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ Not enough tokens!");
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
             return;
         }
         
+        if (currentLevel + quantity > maxLevel) {
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ Would exceed max level!");
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+            return;
+        }
+        
+        // Execute transaction
         try {
-            UUID uuid = player.getUniqueId();
-            User user = plugin.getUser(player);
+            economy.subtractBalance(uuid, CurrencyType.TOKENS, totalCost);
+            user.setSkillLevel(skill, currentLevel + quantity);
             
-            if (user == null) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Error loading your data!");
-                plugin.getLogger().severe("User data null for " + player.getName());
-                return;
-            }
-            
-            // Calculate with overflow protection
-            long totalCostLong = (long) TOKENS_PER_LEVEL * quantity;
-            if (totalCostLong > Integer.MAX_VALUE) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Purchase amount too large!");
-                return;
-            }
-            int totalCost = (int) totalCostLong;
-            
-            double tokenBalance = 0.0;
-            try {
-                tokenBalance = economy.getBalance(uuid, CurrencyType.TOKENS);
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.WARNING, "Error getting token balance", e);
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Error checking balance!");
-                return;
-            }
-            
-            int currentLevel = user.getSkillLevel(skill);
-            int maxLevel = skill.getMaxLevel();
-            
-            // Comprehensive validation
-            if (tokenBalance < totalCost) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Not enough tokens!");
-                playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
-                return;
-            }
-            
-            if (currentLevel + quantity > maxLevel) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Would exceed max level!");
-                playSound(player, Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
-                return;
-            }
-            
-            if (quantity <= 0) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Invalid quantity!");
-                plugin.getLogger().warning("Invalid quantity " + quantity + " for player " + player.getName());
-                return;
-            }
-            
-            // Store original level for rollback
-            int originalLevel = currentLevel;
-            
-            // Atomic transaction with rollback capability
-            try {
-                economy.subtractBalance(uuid, CurrencyType.TOKENS, totalCost);
-                user.setSkillLevel(skill, currentLevel + quantity);
-            } catch (Exception e) {
-                plugin.getLogger().log(Level.SEVERE, "Skill purchase failed, attempting rollback", e);
-                // Attempt rollback
-                try {
-                    economy.addBalance(uuid, CurrencyType.TOKENS, totalCost);
-                    user.setSkillLevel(skill, originalLevel);
-                    player.sendMessage(ChatColor.of("#FF5555") + "✖ Transaction failed! Tokens refunded.");
-                } catch (Exception rollbackError) {
-                    plugin.getLogger().log(Level.SEVERE, "CRITICAL: Rollback failed!", rollbackError);
-                    player.sendMessage(ChatColor.of("#FF5555") + "✖ CRITICAL ERROR! Contact an administrator.");
-                }
-                return;
-            }
-            
-            // Success messages
             player.sendMessage(ChatColor.of("#55FF55") + "✔ Purchase Successful!");
             player.sendMessage(ChatColor.of("#FFFFFF") + "Purchased " + ChatColor.of("#FFFF00") + quantity + 
                     " level" + (quantity > 1 ? "s" : "") + ChatColor.of("#FFFFFF") + " in " + 
                     ChatColor.of("#00FFFF") + skill.getDisplayName(user.getLocale()));
             player.sendMessage(ChatColor.of("#808080") + "New Level: " + ChatColor.of("#55FF55") + 
                     (currentLevel + quantity) + ChatColor.of("#808080") + " / " + maxLevel);
-            playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 2.0f);
+            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 2.0f);
             
-            // Cleanup and close
             cleanupPlayerData(uuid);
             player.closeInventory();
             
         } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Unexpected error in performPurchase", e);
-            player.sendMessage(ChatColor.of("#FF5555") + "✖ An error occurred!");
-        }
-    }
-    
-    /**
-     * Play sound safely
-     */
-    private void playSound(Player player, Sound sound, float volume, float pitch) {
-        if (player == null || sound == null) return;
-        
-        try {
-            player.playSound(player.getLocation(), sound, volume, pitch);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error playing sound", e);
+            plugin.getLogger().log(Level.SEVERE, "Purchase failed for " + player.getName(), e);
+            player.sendMessage(ChatColor.of("#FF5555") + "✖ Purchase failed!");
         }
     }
     
@@ -705,27 +643,21 @@ public class SkillLevelPurchaseMenu {
      * Handle close events (called by MenuManager)
      */
     public void handleClose(InventoryCloseEvent event) {
-        if (event == null || !(event.getPlayer() instanceof Player)) return;
+        if (!(event.getPlayer() instanceof Player)) return;
         
-        try {
-            UUID uuid = event.getPlayer().getUniqueId();
-            // Don't cleanup immediately - let navigation work
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                try {
-                    if (event.getPlayer().getOpenInventory().getTopInventory().getSize() == 0) {
-                        cleanupPlayerData(uuid);
-                    }
-                } catch (Exception e) {
-                    plugin.getLogger().log(Level.WARNING, "Error in delayed cleanup", e);
-                }
-            }, 2L);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, "Error handling skill menu close", e);
-        }
+        UUID uuid = event.getPlayer().getUniqueId();
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            if (event.getPlayer().getOpenInventory().getTopInventory().getSize() == 0) {
+                cleanupPlayerData(uuid);
+            }
+        }, 2L);
     }
     
-    // Helper methods
+    // ==================== HELPER METHODS ====================
     
+    /**
+     * Fill inventory border with glass panes
+     */
     private void fillBorder(Inventory inv) {
         ItemStack border = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta meta = border.getItemMeta();
@@ -738,6 +670,9 @@ public class SkillLevelPurchaseMenu {
         }
     }
     
+    /**
+     * Create a button with enable/disable state
+     */
     private void createButton(Inventory inv, int slot, Material material, String name, 
                              boolean enabled, String description) {
         ItemStack button = new ItemStack(enabled ? material : Material.GRAY_STAINED_GLASS_PANE);
@@ -755,6 +690,9 @@ public class SkillLevelPurchaseMenu {
         inv.setItem(slot, button);
     }
     
+    /**
+     * Create a preset button for quick select
+     */
     private void createPresetButton(Inventory inv, int slot, int amount, String name, Material material) {
         ItemStack button = new ItemStack(material);
         ItemMeta meta = button.getItemMeta();
@@ -772,6 +710,9 @@ public class SkillLevelPurchaseMenu {
         inv.setItem(slot, button);
     }
     
+    /**
+     * Get icon material for a skill
+     */
     private Material getSkillIcon(Skill skill) {
         switch (skill.name().toUpperCase()) {
             case "FARMING": return Material.WHEAT;
@@ -793,6 +734,9 @@ public class SkillLevelPurchaseMenu {
         }
     }
     
+    /**
+     * Find skill by display name
+     */
     private Skill findSkillByDisplayName(Player player, String displayName) {
         User user = plugin.getUser(player);
         if (user == null) return null;
@@ -805,6 +749,9 @@ public class SkillLevelPurchaseMenu {
         return null;
     }
     
+    /**
+     * Cleanup player session data
+     */
     private void cleanupPlayerData(UUID uuid) {
         selectedSkills.remove(uuid);
         purchaseQuantities.remove(uuid);

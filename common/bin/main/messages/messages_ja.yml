@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: 豊穣の収穫
+    desc: "+{value}%追加ドロップする。"
+    info: "+{value}%豊穣の神から祝福を受ける"
+  farmer:
+    name: 農夫
+    desc: "農業経験値を{value}%増やす。"
+    info: "+{value}% 経験値"
+  scythe_master:
+    name: 鎌の達人
+    desc: "クワから与えられるダメージを{value}%増やす。"
+    info: "+{value}% クワダメージ"
+  geneticist:
+    name: 遺伝子学者
+    desc: "植物ベースの食品から得られる満腹度を{value}増やす。"
+    info: "+{value} 満腹度____今こそ豚の遺伝子を弄ろう！"
+  growth_aura:
+    name: 成長オーラ
+    desc: "あなたの半径{radius}ブロック以内の成長速度を{value}%早くする。"
+    info: "+{value}% 成長"
+  lumberjack:
+    name: 伐採工
+    desc: "伐採運が+{value}%上昇し、追加ドロップ率が上がる"
+    info: "+{value}% 山の神から祝福を受ける"
+  forager:
+    name: 採集家
+    desc: "採集経験値を{value}%増やす。"
+    info: "+{value}% 経験値"
+  axe_master:
+    name: 斧の達人
+    desc: "斧から与えられるダメージを{value}%増やす。"
+    info: "+{value}% ダメージ"
+  valor:
+    name: 勇気
+    desc: "斧を持っている間、+{value}%の力を付与します"
+    info: "+{value}%の勇気____愛と勇気だけがすべてじゃない"
+  shredder:
+    name: シュレッダー
+    desc: "斧で攻撃時、{value}%の確率で3倍の耐久度ダメージを与えます。"
+    info: "{value}%の3倍の耐久度ダメージ"
+  lucky_miner:
+    name: 幸運の鉱夫
+    desc: "採掘運が+{value}% 上昇し、追加ドロップ率が上がる"
+    info: "+{value} 採掘運"
+  miner:
+    name: 鉱夫
+    desc: "採掘経験値を{value}%増やします。"
+    info: "+{value}%の経験値"
+  pick_master:
+    name: ツルハシの達人
+    desc: "ピッケルで{value}%の追加ダメージを与えます。"
+    info: "+{value}%のピッケルダメージ"
+  stamina:
+    name: スタミナ
+    desc: "ピッケルを持っている間、+{value}%の靭性を付与します。"
+    info: "+{value}%の靭性"
+  hardened_armor:
+    name: 硬化アーマー
+    desc: "装備の耐久度低下を{value}%無効化します。"
+    info: "{value}%の耐久度低下無効化"
+  lucky_catch:
+    name: 海の恵み
+    desc: "+{value}% 釣り運が上昇し、追加ドロップの確率が上昇する。"
+    info: "+{value} %釣り運が上昇____さあ、魚を空高く掲げてあの言葉を。"
+  fisher:
+    name: 釣り人
+    desc: "釣りで{value}%の追加経験値を得ます。"
+    info: "+{value}%の経験値"
+  treasure_hunter:
+    name: トレジャーハンター
+    desc: "釣りでレアなアイテムを獲得する確率が{value}%増加します。"
+    info: "+{value}%のレアなアイテム"
+  grappler:
+    name: グラップラー
+    desc: "鉤縄でエンティティを{value}%速く引き寄せます。"
+    info: "+{value}%の鉤縄速度"
+  epic_catch:
+    name: エピックキャッチ
+    desc: "釣りで貴重なアイテムを獲得する確率が{value}%増加します。(トレジャーハンターの上位互換？)"
+    info: "+{value}%の貴重なアイテム"
+  metal_detector:
+    name: 鉱石採掘
+    desc: "採掘時に、{value}%の追加レアドロップの取得確率が上がる。"
+    info: "+{value}% レアドロップ"
+  excavator:
+    name: 採掘マスター
+    desc: "採掘時の経験値が{value}%増加する。"
+    info: "+{value}% 経験値"
+  spade_master:
+    name: シャベルマスター
+    desc: "シャベルで与えるダメージが{value}%増加する。"
+    info: "+{value}% シャベルダメージ"
+  bigger_scoop:
+    name: 大型スコップ
+    desc: "採掘運が+{value}% 上昇し、追加ドロップの確率を増加させる。"
+    info: "+{value}% 採掘運____車両系建設機械運転技能講習は修了していますか？"
+  lucky_spades:
+    name: 幸運のシャベル
+    desc: "採掘時に{value}%の追加貴重なドロップの取得確率が上がる。"
+    info: "+{value}% 貴重なドロップ"
+  retrieval:
+    name: 回収
+    desc: "外した矢は  {value} ブロック先までなら{time}秒後に即座に回収される"
+    info: "{value} ブロック"
+  archer:
+    name: アーチャー
+    desc: "射撃時の経験値が{value}%増加する。"
+    info: "+{value}% 経験値"
+  bow_master:
+    name: 弓マスター
+    desc: "弓で与えるダメージが{value}%増加する。"
+    info: "+{value}% 弓ダメージ____狙って、狙って...今だ！"
+  piercing:
+    name: 鋭い矢
+    desc: "矢が敵を貫通する確率が{value}%になる。"
+    info: "{value}% 貫通確率"
+  stun:
+    name: 重い一撃
+    desc: "敵の移動速度を2秒間20%低下させる確率が{value}%になる。"
+    info: "{value}% 確率"
+  shielding:
+    name: 根性
+    desc: "しゃがんでいる間に受けるダメージを{value}%軽減する"
+    info: "しゃがんでいる間 -{value}% 軽減する"
+  defender:
+    name: ディフェンダー
+    desc: "防御経験値が{value}%アップする"
+    info: "+{value}% 経験値"
+  mob_master:
+    name: モブマスター
+    desc: "敵モブから受けるダメージを{value}%軽減する"
+    info: "-{value}% モブダメージ"
+  immunity:
+    name: 免疫
+    desc: "敵の攻撃を完全に無効化する確率が{value}%上がる"
+    info: "{value}% 無効化____ウイルスなのか？"
+  no_debuff:
+    name: ワクチン
+    desc: "有害なポーション効果を適用されない確率が{value}%上がる"
+    info: "{value}% デバフ無効"
+  parry:
+    name: 受け流し
+    desc: "命中するまでの{time}の間に剣を振ると、ダメージが{value}%減少し、ノックバックがキャンセルされる。"
+    info: "{value}% ダメージ減少"
+    parried: "<red>攻撃を受け流した！"
+  fighter:
+    name: 格闘家
+    desc: "戦闘において{value}%多くの経験値を獲得"
+    info: "+{value}% 経験値"
+  sword_master:
+    name: 剣術家
+    desc: "剣で{value}%ダメージ増加"
+    info: "+{value}% 剣ダメージ"
+  first_strike:
+    name: 先制攻撃先制攻撃
+    desc: "最初の攻撃で{value}%ダメージ増加"
+    info: "+{value}% 先制攻撃ダメージ"
+    dealt: "<red>最初の攻撃が命中！"
+  bleed:
+    name: 出血
+    desc: "{value}%の確率で敵を{base_ticks}出血させ、1ティックにつき{value_2}ダメージを与える。{added_ticks}ティックは既に出血している敵に追加される。"
+    info: "{value}% の確率で, {value_2} ダメージ"
+    enemy_bleeding: "<red>敵が出血しています！"
+    self_bleeding: "<red>出血しています！"
+    stop: "<white>出血が止まりました。"
+  anti_hunger:
+    name: 絶食活動
+    desc: "空腹度の低下を{value}%抑制する。"
+    info: "{value}% 空腹度低下防止____過度な減量は心身ともに悪影響を及ぼす可能性があります。"
+  runner:
+    name: ランナー
+    desc: "エンデュランス経験値を{value}%獲得する。"
+    info: "+{value}% XP____なんて訳せばいいのさ"
+  golden_heal:
+    name: 黄金の癒し
+    desc: "回復効果による体力回復を{value}%増加させる。"
+    info: "+{value}% 回復効果"
+  recovery:
+    name: 生存本能
+    desc: "半分以下の体力の時に、自然回復量が{value}%増加する。"
+    info: "+{value}% 回復増加"
+  meal_steal:
+    name: コソ泥
+    desc: "プレイヤーを攻撃した時に、{value}%の確率で1の空腹度を盗む。"
+    info: "{value}% 盗む____ねずみめ"
+  light_fall:
+    name: 足腰強化
+    desc: "落下ダメージを{value}%減少する。"
+    info: "-{value}% 減少____スクワット始めたの？"
+  jumper:
+    name: ジャンパー
+    desc: "アジリティー経験値を{value}%獲得する。"
+    info: "+{value}% XP____ダイエットはほどほどにしないと体壊すよ"
+  sugar_rush:
+    name: シュガーラッシュ
+    desc: "消費したスピード/ジャンプブーストのポーション効果の持続時間が{value}%延長される。"
+    info: "{value}% 持続時間延長"
+  fleeting:
+    name: 身を削るようなダイエット
+    desc: "体力が20%以下になると、移動速度が+{value}%になる。"
+    info: "+{value}% 移動速度____ほら、いわんこっちゃない"
+    start: "<white>移動速度が一時的に上昇しました！ <gray>(+{value}% 移動速度)"
+    end: "<gray>一時的な移動速度上昇効果が切れました。"
+  thunder_fall:
+    name: 落雷
+    desc: "落下中にスニーキングを行った場合、{value}%の確率で半径3ブロック内のMobに{value_2}%の落下ダメージを与える。"
+    info: "{value}% の確率で、{value_2}% のダメージを与える。____リバウンドしたからってかっこいい技名つけても...なんでもない"
+  alchemist:
+    name: 錬金術師
+    desc: "醸造したポーションの効果時間が{value}%増加します。"
+    info: "+{value}% 効果時間____オオカミとアレックス、どこに行った？"
+  brewer:
+    name: 醸造家
+    desc: "アルケミーXPを{value}%獲得します。"
+    info: "+{value}% XP"
+  splasher:
+    name: スプラッシャー
+    desc: "スプラッシュポーションは、影響を受けるプレイヤーごとに{value}%効果時間が長くなります。"
+    info: "+{value}%/プレイヤー 効果時間____梨汁の妖精、元気かな"
+  lingering:
+    name: リンガリング
+    desc: "リンガリングポーションの腐敗が{value}%遅くなり、影響を受けるエンティティごとに{value_2}%減少します。"
+    info: "-{value}% 自然腐敗, -{value_2}% エンティティ腐敗____リンガリング...残留？"
+  wise_effect:
+    name: ワイズエフェクト
+    desc: "アクティブな一意のポーションエフェクトごとに{value}の知識を獲得します。"
+    info: "+{value}/エフェクト 知識"
+  xp_convert:
+    name: XPコンバート
+    desc: "{value}スキルXPごとに1つのMinecraft経験値を獲得します。"
+    info: "1 EXP/{value}スキルXP"
+  enchanter:
+    name: エンチャンター
+    desc: "エンチャントXPを{value}%獲得します。"
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XPウォリアー
+    desc: "倒したMobが{value}%の確率で2倍の経験値を落とします。"
+    info: "{value}% 2倍のMob XP"
+  enchanted_strength:
+    name: エンチャント強化
+    desc: "所持しているアイテムの一意のエンチャントごとに{value}の力を獲得します。"
+    info: "{value}/エンチャント パワー____エンチャントをエンチャント！"
+  lucky_table:
+    name: ラッキーテーブル
+    desc: "エンチャントテーブルを使用してエンチャントをする場合、最大レベルではない場合、{value}%の確率で<エンチャントレベルが1つ上昇します。"
+    info: "{value}% エンチャント上昇確率"
+  life_essence:
+    name: 生命のエッセンス
+    desc: 即時回復のポーション効果が{value}%強化されます。
+    info: "+{value}% インスタントヘルス"
+  healer:
+    name: ヒーラー
+    desc: ヒーリングスキルの経験値が{value}%増加します。
+    info: "+{value}% 経験値"
+  life_steal:
+    name: お命頂戴
+    desc: 倒した敵対モブやプレイヤーの最大HPの{value}%を回復します。
+    info: "{value}% HP泥棒____命よりお金頂戴"
+  golden_heart:
+    name: 黄金の心臓
+    desc: 吸収ハートに受けるダメージが{value}%軽減されます。
+    info: "-{value}% 吸収ダメージ____このジョルノ・スティーブには夢がある！"
+  revival:
+    name: 復活
+    desc: リスポーン後、30秒間、+{value}ヘルスと+{value_2}再生効果を獲得します。
+    info: "+{value} ヘルス, +{value_2} 再生効果"
+    message: "<white>復活ボーナスを30秒間獲得しました！ <white>(<red>+{value}ヘルス, <gold>+{value_2}再生効果<white>)"
+  disenchanter:
+    name: ディスエンチャンター
+    desc: 砥石を使ってアイテムを解体すると{value}% もの経験値を獲得できます。
+    info: "+{value}% 砥石経験値____エンチャンター、深く息を吸うんだ。いいね？"
+  forger:
+    name: 鍛造家
+    desc: 鍛冶のスキル経験値を{value}% も獲得できます。
+    info: "+{value}% 経験値"
+  repairing:
+    name: 修理
+    desc: アイテムを金床で修復する際に元の素材を使うと {value}% 耐久力が回復します。
+    info: "+{value}% 金床修復"
+  anvil_master:
+    name: カナトコマスター
+    desc: 修復に必要な経験値が{value} 以上になる前に使える金床の上限が増えます。
+    info: "最大{value}コスト"
+  skill_mender:
+    name: スキルメンダー
+    desc: スキルの経験値を獲得する際に{value}% の確率で、持ち物の「修繕」エンチャントを持ったアイテムを修復できます。(1スキルXPにつき耐久力が1回復)
+    info: "{value}% 修復確率____変換ケーブル持っててよかったね"
+acf:
+  core:
+    permission_denied: "<red>申し訳ありませんが、このコマンドを実行する権限がありません。"
+    permission_denied_parameter: "<red>申し訳ありませんが、このコマンドを実行する権限がありません。"
+    error_generic_logged: "<red>エラーが発生しました。この問題はログに記録されました。ご不便をおかけして申し訳ありません。"
+    unknown_command: "<red>不明なコマンドです。<yellow>/sk help<red>を入力してください。"
+    invalid_syntax: "<yellow>使用法：<yellow>{command} <green>{syntax}"
+    error_prefix: "<red>エラー：{message}"
+    error_performing_command: "<red>申し訳ありませんが、このコマンドを実行中にエラーが発生しました。"
+    please_specify_one_of: "<red>エラー：次のいずれかを指定してください（<yellow>{valid}<red>）"
+    must_be_a_number: "<red>エラー：{num}は数字でなければなりません。"
+    must_be_min_length: "<red>エラー：{min}文字以上である必要があります。"
+    must_be_max_length: "<red>エラー：{max}文字以下である必要があります。"
+    please_specify_at_most: "<red>エラー：値を{max}以下で指定してください。"
+    please_specify_at_least: "<red>エラー：値を{min}以上で指定してください。"
+    not_allowed_on_console: "<red>エラー：コンソールではこのコマンドを実行できません。"
+    could_not_find_player: "<red>エラー：プレイヤーが見つかりませんでした：<yellow>{search}"
+    no_command_matched_search: "<red>\"{search}\"に一致するコマンドはありません。"
+    help_page_information: "<aqua> - ページ <green>{page} <aqua>/ <green>{totalpages} <aqua>（<yellow>{results}<aqua>件の結果を表示中）。"
+    help_no_results: "<aqua>エラー：これ以上の結果はありません。"
+    help_header: "<yellow>=== <aqua>{commandprefix}{command}のヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>{commandprefix}{command}の詳細なヘルプを表示しています <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>{commandprefix}{command} {search} の検索結果 ==="
+  minecraft:
+    invalid_world: "<red>エラー：そのワールドは存在しません。"
+    you_must_be_holding_item: "<red>エラー：メインハンドにアイテムを持っている必要があります。"
+    player_is_vanished_confirm: "<yellow>警告：<green>{vanished} <yellow>は姿を隠しています。そのことを知られないようにしてください！\\n<yellow>確認する場合は、彼らの名前の最後に<green>:confirm <yellow>を追加してください。\\n<yellow>例：{vanished}:confirm"
+    username_too_short: "<red>エラー：ユーザー名が短すぎます。最低でも3文字必要です。"
+    is_not_a_valid_name: "<red>エラー：<yellow>{name} <red>は有効なユーザー名ではありません。"
+    multiple_players_match: "<red>エラー：<aqua>{search} <yellow>({all})<red> に複数のプレイヤーが該当しました。より具体的に指定してください。"
+    no_player_found_server: "<red>このサーバーには、<yellow>{search} <red>に一致するプレイヤーはいませんでした。"
+    no_player_found_offline: "<red>プレイヤー名 <yellow>{search}<red> に一致するプレイヤーは見つかりませんでした。"
+    no_player_found: "<red>プレイヤー名 <yellow>{search}<red> に一致するプレイヤーは見つかりませんでした。"
+    location_please_specify_world: "<red>エラー：ワールドを指定してください。例：<yellow>world:x,y,z。"
+    location_please_specify_xyz: "<red>エラー：座標x、y、zを指定してください。例：<yellow>world:x,y,z。"
+    location_console_not_relative: "<red>エラー：コンソールは、座標を相対的に使用できません。"
+commands:
+  prefix: "<dark_gray>[<aqua>スキル<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat} <gray>モディファイヤがレベル<aqua>{value} <gray>でアイテムに追加されました"
+        already_exists: "<yellow>{color}{stat} <yellow>のモディファイヤは既にアイテムに存在しています！まずは/sk armor modifier removeで削除してください"
+      remove:
+        does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>のモディファイヤはありません！"
+        removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
+      list:
+        header: "<white>見つかったアーマーモディファイヤー:"
+      removeall:
+        removed: "<gray>アイテムから全てのアーマーモディファイヤーが削除されました"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
+        already_exists: "<yellow>すでに <aqua>{target} <yellow>のアーマーマルチプライヤーがアイテムに存在します！ /sk armor multiplier remove コマンドで先に削除してください"
+        skill_lore: "<gray>装備時：<aqua>+{value}% {skill} 経験値"
+        skill_lore_subtract: "<gray>装備時：<aqua>-{value}% {skill} 経験値"
+        global_lore: "<gray>装備時：<blue>+{value}% 全スキル経験値"
+        global_lore_subtract: "<gray>装備時：<blue>-{value}% 全スキル経験値"
+      remove:
+        does_not_exist: "<yellow>アイテムに <aqua>{target} <yellow>のアーマーマルチプライヤーが存在しません！"
+        removed: "<aqua>{target} <gray>のアーマーマルチプライヤーがアイテムから削除されました"
+      list:
+        header: "<white>以下のアーマーマルチプライヤーが見つかりました："
+      removeall:
+        removed: "<gray>すべてのアーマーマルチプライヤーがアイテムから削除されました"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray>のアーマー要件がレベル <aqua>{level} <gray>でアイテムに追加されました"
+        already_exists: "<yellow>アイテムにすでに <dark_aqua>{skill}<yellow> のアーマー要件が存在します！<gold>/sk armor requirement remove <yellow>commandで先に削除してください"
+        lore: "<red>要件：<dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>アイテムに <dark_aqua>{skill}<yellow> のアーマー要件が存在しません！"
+        removed: "<dark_aqua>{skill}<gray>のアーマー要件がアイテムから削除されました"
+      list:
+        header: "<white>以下のアーマー要件が見つかりました："
+      removeall:
+        removed: "<gray>すべてのアーマー要件がアイテムから削除されました"
+      equip: "<yellow>このアイテムを装備するための要件を満たしていません：{requirements}"
+  backup:
+    load:
+      confirm: "<red>バックアップを読み込むと、プレイヤーのすべてのスキルデータが元に戻ります。この操作は元に戻すことができません。バックアップを読み込む前にバックアップを保存することをお勧めします。このアクションを確認するには、もう一度コマンドを入力してください"
+      loading: "<white>バックアップを読み込んでいます..."
+      loaded: "<green>バックアップを正常に読み込みました"
+      error: "<red>バックアップの読み込み中にエラーが発生しました: {error}"
+      must_be_yaml: "<yellow>ファイルは.yml形式でなければなりません！"
+      file_not_found: "<yellow>バックアップフォルダにこのファイル名のバックアップが存在しません！"
+    save:
+      saving: "<white>バックアップを保存しています..."
+      saved: "<white>{type}データを{file}としてバックアップしました"
+      error: "<red>{type}データのバックアップ中にエラーが発生しました！詳細については、コンソール/下記のエラーを確認してください"
+  claimitems:
+    no_items: "<yellow>受け取るアイテムがありません"
+  item:
+    give:
+      sender: "<white>{player}に<aqua>{amount}個の{key}を与えました"
+      receiver: "<white>{amount}個の{key}が与えられました"
+    modifier:
+      add:
+        added: "<gray>{value}レベルの{color}{stat} <gray>モディファイヤがアイテムに追加されました"
+        already_exists: "<yellow>アイテムにはすでに{color}{stat} <yellow>スタッツを持つモディファイヤが存在しています！/sk item modifier removeで削除してください"
+      remove:
+        does_not_exist: "<yellow>アイテムに{color}{stat} <yellow>モディファイヤが存在しません！"
+        removed: "{color}{stat} <gray>モディファイヤがアイテムから削除されました"
+      list:
+        header: "<white>以下のアイテムモディファイヤが見つかりました："
+      removeall:
+        removed: "<gray>すべてのアイテムモディファイヤがアイテムから削除されました"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>の値が <aqua>{value} <gray>のマルチプライヤーがアイテムに追加されました"
+        already_exists: "<yellow>すでに <aqua>{target} <gray>のマルチプライヤーがアイテムに追加されています！削除するには /sk item multiplier remove を使用してください"
+        skill_lore: "<gray>手に持っていると: <aqua>+{value}% {skill} 経験値"
+        skill_lore_subtract: "<gray>手に持っていると: <aqua>-{value}% {skill} 経験値"
+        global_lore: "<gray>手に持っていると: <blue>+{value}% 全スキルの経験値"
+        global_lore_subtract: "<gray>手に持っていると: <blue>-{value}% 全スキルの経験値"
+      remove:
+        does_not_exist: "<yellow>アイテムに <aqua>{target} <gray>のマルチプライヤーはありません！"
+        removed: "<aqua>{target} <gray>のマルチプライヤーがアイテムから削除されました"
+      list:
+        header: "<white>以下のアイテムマルチプライヤーが見つかりました:"
+      removeall:
+        removed: "<gray>アイテムからすべてのマルチプライヤーが削除されました"
+    register:
+      registered: "<white>アイテムをキー {key} に登録しました"
+      already_registered: "<yellow>すでにキー <white>{key}<yellow>に登録されているアイテムがあります。最初にそれを解除するには <white>/skills item unregister <yellow>を使用してください"
+      no_spaces: "<yellow>アイテムキーには空白を含めることはできません！"
+    requirement:
+      add:
+        added: "<gray>アイテムに <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件が追加されました"
+        already_exists: "<yellow>アイテムにはすでに <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件があります！最初に <gold>/sk item requirement remove <yellow>を使用して削除してください"
+        lore: "<red>必要スキル: <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>アイテムには <dark_aqua>{skill} <gray>レベル <aqua>{level}<gray> のアイテム要件はありません！"
+        removed: "<dark_aqua>{skill}<gray>のアイテム要件がアイテムから削除されました"
+      list:
+        header: "<white>以下のアイテム要件が見つかりました:"
+      removeall:
+        removed: "<gray>すべてのアイテム要件がアイテムから削除されました"
+      use: "<yellow>このアイテムを使用するための要件を満たしていません：{requirements}"
+    unregister:
+      unregistered: "<white>キーが{key}のアイテムが登録解除されました"
+      not_registered: "<yellow>キーが{key}のアイテムは登録されていません"
+  lang:
+    set: "<gray>言語が<aqua>{lang}<gray>に設定されました"
+    not_found: "<yellow>言語が見つかりません！"
+  mana:
+    display: "<white>あなたの{mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{player}の{mana_unit}: <aqua>{current}/{max}"
+    add: "<gold>{player}<gray>に<aqua>{amount} {mana_unit}<gray>を追加しました"
+    remove: "<gold>{player}<gray>から<aqua>{amount} {mana_unit}<gray>を削除しました"
+    set: "<gold>{player}<gray>を<aqua>{amount} {mana_unit}<gray>に設定しました"
+    at_least_zero: "<yellow>{mana_unit}は0以上でなければなりません！"
+    console_specify_player: "<yellow>コンソールはプレイヤーを指定する必要があります！"
+  modifier:
+    add:
+      added: "<gold>{player}<gray>に{name} <gray>({color}{stat}<gray>レベル<aqua>{value}<gray>)のモディファイヤを追加しました"
+      already_exists: "<yellow>{player}にすでに名前が{name}のモディファイヤが存在しています！削除するには<gold>/sk modifier remove {player} {name}<yellow>を使用してください"
+    remove:
+      not_found: "<yellow>{player}の{name}モディファイヤが見つかりませんでした"
+      removed: "<gold>{player}<gray>から{name}のモディファイヤを削除しました"
+    list:
+      all_stats_header: "<gold>{player}のステータスモディファイヤ:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>レベル<gold>{value}"
+      one_stat_header: "<gold>{player}の{color}{stat}<gray>ステータスモディファイヤ:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>レベル<gold>{value}"
+      players_only: "<yellow>プレイヤーのみ自分のモディファイヤをリストできます！プレイヤーを指定してください"
+    removeall:
+      removed_all_stats: "<gold>{player}<gray>から<aqua>{num}<gray>個のステータスモディファイヤを削除しました"
+      removed_one_stat: "<gold>{player}<gray>から<aqua>{num}個の{color}{stat}<gray>ステータスモディファイヤを削除しました"
+      players_only: "<yellow>プレイヤーのみ自分のモディファイヤを削除できます！プレイヤーを指定してください"
+  multiplier:
+    global: グローバル
+    list: "<gold>{player}<white>のグローバルXP乗数: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP乗数: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>プレイヤーのみ自分の乗数を表示できます。プレイヤー名を指定してください！"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
+  profile:
+    skills: "Aurelium Skillsのプロフィール: <gold>{name}:<gray>UUID: <white>{uuid}<gray>スキル:{skill_entries}"
+    skill_entry: " <dark_aqua>{skill} <gray>- レベル: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Aurelium Skillsの統計プロフィール: <gold>{name}:<gray>UUID: <white>{uuid}<gray>統計情報:{stat_entries}"
+    stat_entry: " <dark_aqua>{stat} <gray>- 総レベル: <white>{total_level}<gray>, 基本レベル: <white>{base_level}<gray>, 変更されたレベル: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>あなたのスキルランキング</bold>"
+    power: "<yellow>パワー <gray>(全スキル): <white>#{rank} / {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} / {total}"
+  reload: "<green>設定をリロードしました！"
+  save:
+    already_saving: "<yellow>データは既に保存されています！"
+    mysql_not_enabled: "<yellow>MySQLがサーバーの起動時に有効にされていません。ファイルに保存します！"
+    saved: "<green>スキルデータが保存されました！"
+  skill:
+    setall:
+      set: "<gold>{player}のすべてのスキルがレベル{level}に設定されました"
+    setlevel:
+      set: "<gold>{player}の{skill}スキルがレベル{level}に設定されました"
+    at_least: "<yellow>Level must be at least {level}!"
+  toggle:
+    enabled: "<green>スキルアクションバーが有効になりました"
+    disabled: "<red>スキルアクションバーが無効になりました"
+    not_enabled: "<yellow>このサーバーではスキルアクションバーが有効になっていません！"
+  top:
+    power_header: "<white>--==<aqua><bold>全スキルリーダーボード</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>全スキルリーダーボード </bold><white>(ページ{page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill}リーダーボード</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill}リーダーボード </bold><white>(ページ{page})==--"
+    average_header: "<white>--==<aqua><bold>スキル平均リーダーボード</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>スキル平均リーダーボード </bold><white>(ページ{page})==--"
+    usage: "<yellow>使い方: <green>/sk top <white><ページ> <gray>または <green>/sk top <white>[skill] <ページ>"
+  transfer:
+    success: "<green>プレイヤーデータを <gray>{from} <green>から <gray>{to} <green>に正常に移動しました"
+    error: "<red>プレイヤーデータの移動中にエラーが発生しました。コンソールを確認してください。"
+  updateleaderboards:
+    already_updating: "<yellow>リーダーボードはすでに更新中です！"
+    updated: "<green>リーダーボードが更新されました！"
+  version: "<white>AuraSkillsのバージョンは<aqua>{current_version}<white>です。最新バージョンは<aqua>{latest_version}<white>です"
+  xp:
+    add: "<gray>プレイヤー<gray>{player}<aqua>{amount}{skill}<gray>XPが追加されました"
+    set: "<gray>プレイヤー<gray>{player}<aqua>{skill}<gray>XPが{amount}に設定されました"
+    remove: "<gray>プレイヤー<gold>{player}<aqua>{amount}{skill}<gray>XPが削除されました"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+  unknown_skill: "<yellow>未知のスキルです！"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>プレイヤーにスキルプロファイルがありません。ゲームから抜けて、再度入り直すか、サーバーを再起動してください。"
+leveler:
+  level_up: "{skill} レベルアップ"
+  skill_level_up: スキルレベルアップ
+  rewards: 報酬
+  ability_unlock: アビリティーアンロック
+  ability_level_up: アビリティーレベルアップ
+  mana_ability_unlock: マナアビリティーアンロック
+  mana_ability_level_up: マナアビリティーアンロック
+  unclaimed_item: "<red>インベントリがいっぱいのため、受け取っていないアイテムがあります。 <yellow>/skills claimitems <red>で受け取る"
+menus:
+  common:
+    close: "閉じる"
+    level: "レベル"
+    progress_to_level: "レベルの進捗"
+    max_level: "最大レベル"
+    ability_levels: "アビリティーレベル"
+    stats_leveled: "統計レベル"
+    mana_ability: "マナアビリティー"
+    duration: "期間"
+    mana_cost: "マナコスト"
+    cooldown: "クールダウン"
+    damage: "ダメージ"
+    max_mana_cost: "最大マナコスト"
+    attack_speed: "攻撃速度"
+    back: "戻る"
+    back_click: "{menu_name} メニューに戻る"
+    unlocked: "アンロック済み"
+    in_progress: "進行中"
+    locked: "ロック中"
+    your_level: "あなたのレベル"
+    next_page: "次のページ"
+    next_page_click: "クリックして次のページへ"
+    previous_page: "前のページ"
+    previous_page_click: "クリックして前のページへ"
+  skills:
+    skills_title: "あなたのスキル"
+    your_skills: "あなたのスキル"
+    your_skills_desc: "様々なタスクをこなしてスキルをアップグレードし、貴重なステータスブーストやアビリティなどをアンロックしよう！"
+    your_skills_hover: "スキルにカーソルを合わせると詳細が表示されます！"
+    your_skills_click: "スキルをクリックすると、レベルアップが表示されます！"
+    skill_click: "クリックするとレベル進行が表示されます！"
+    stats: "統計"
+    stats_desc: "スキルのレベルアップでステータスバフを獲得"
+    stats_click: "クリックすると詳細が表示されます。"
+  level_progression:
+    level_progression_title: "{skill} レベル - ページ {page}"
+    your_ranking: "あなたのスキルランキング"
+    rank_out_of: "<1>あなたは{total}のうち<2>{rank}</2>にランクされています</1>。"
+    rank_percent: "<1>プレイヤーの上位<2>{percent}%</2>にいる</1>。"
+    rewards: "報酬"
+    ability_unlock: "アビリティーアンロック"
+    mana_ability_unlock: "マナアビリティーアンロック"
+    progress: "進捗状況"
+    leaderboard_click: "{skill}リーダーボードを見るにはクリックしてください。"
+    sources: "XP ソース"
+    sources_desc: "ソースメニューには、スキルでXPを獲得できるすべての方法と、各ソースで獲得できるXPが表示されます。"
+    sources_click: "{skill}ソースを表示するにはクリックしてください。"
+    abilities: "アビリティー"
+    abilities_desc: "<2>アビリティ</2> <1>スキルのレベルアップに伴ってアンロック、アップグレードされるパッシブな特典。"
+    mana_abilities_desc: "<3>マナ能力</3> <1>は起動を必要とし、マナを消費する特殊な能力である。"
+    abilities_click: "{skill}の能力を見るにはクリックしてください。"
+  stats:
+    stats_title: あなたの統計
+    skills: "スキル"
+    added_drop: "+{value} ドロップ"
+    added_drops: "+{value} ドロップ"
+    chance_drop: "{chance}% で +{value} ドロップ"
+    chance_drops: "{chance}% で +{value} ドロップ"
+  unclaimed_items:
+    unclaimed_items_title: "アイテムを受け取る"
+    inventory_full: "あなたのインベントリには、そのアイテムを受け取るのに十分なスペースがありません。"
+    click_to_claim: "クリックして受け取る！"
+  leaderboard:
+    leaderboard_title: "{skill} リーダーボード"
+  sources:
+    sources_title: "{skill} XP ソース"
+    sorter: "ソートXPソース"
+    descending: "最高から最低まで"
+    ascending: "最低から最高まで"
+    alphabetical: "名前順 (A-Z)"
+    reverse_alphabetical: "名前 (Z-A)"
+    sort_click: "クリックしてソートタイプを循環させる"
+    multiplied_xp: "乗算 {xp_unit}"
+    multiplied_desc: "これは、現在のXP倍率に基づいて実際に獲得できるXPです。"
+  abilities:
+    abilities_title: "{skill} アビリティー"
+    description: "説明"
+    unlocked_at: "<1>ロック解除 <2>{skill} {level}"
+    next_upgrade_at: "<1>次のアップグレード <2>{skill} {level}"
+mana_abilities:
+  replenish:
+    name: 再生
+    desc: "{value} 秒間、作物を自動的に再植します。<1>[クワを右クリックして、作物を壊すとアクティブになります]"
+    raise: "<gray>クワを持ち上げます"
+    lower: "<gray>クワを下げます"
+    start: "<gold>再生をアクティブにしました！<gray>(-{mana} {mana_unit})"
+    end: "<gray>再生が切れました"
+  treecapitator:
+    name: トゥリーキャピテーター
+    desc: "{value} 秒間、木を一瞬で壊します。<1>[斧を右クリックして、原木を壊すとアクティブになります]"
+    raise: "<gray>斧を持ち上げます"
+    lower: "<gray>斧を下げます"
+    start: "<gold>トゥリーキャピテーターをアクティブにしました！<gray>(-{mana} {mana_unit})"
+    end: "<gray>トゥリーキャピテーターが切れました"
+  speed_mine:
+    name: スピードマイン
+    desc: "{value} 秒間、採掘速度がHaste {haste_level}に上昇します。<1>[ツルハシを右クリックして、ブロックを壊すとアクティブになります]"
+    raise: "<gray>ツルハシを持ち上げます"
+    lower: "<gray>ツルハシを下げます"
+    start: "<gold>スピードマインをアクティブにしました！<gray>(-{mana} {mana_unit})"
+    end: "<gray>スピードマインが切れました"
+  absorption:
+    name: アブソープション
+    desc: "{value} 秒間、受けるダメージが、Minecraftのダメージの2倍分、体力ではなくマナを減少させます。アブソープションがアクティブの間は、マナは回復しません。<1>[盾を左クリックして、ダメージを受けるとアクティブになります]"
+    raise: "<gray>盾を持ち上げます"
+    lower: "<gray>盾を下げます"
+    start: "<gold>アブソープションをアクティブにしました！<gray>(-{mana} {mana_unit})"
+    end: "<gray>アブソープションが切れました"
+  terraform:
+    name: テラフォーム
+    desc: "ブロックを掘る時、{value}秒間、{radius}ブロックの半径で水平に繋がったブロックを即座に壊す。<1>[シャベルを右クリックし、ブロックを掘ると発動]。"
+    raise: "<gray>シャベルを上げました"
+    lower: "<gray>シャベルを下げました"
+    start: "<gold>テラフォームをアクティブ化しました！ <gray>(-{mana} {mana_unit})"
+    end: "<gray>テラフォームが終了しました"
+  sharp_hook:
+    name: Sharp Hook
+    desc: "釣竿を左クリックすると、フックされたエンティティに{value}ダメージを与えます。"
+    use: "<gold>シャープフックを使用しました！ <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: チャージショット
+    desc: "弓を引くと、消費したマナに応じて矢のダメージが{value}%増加します。<1>[弓を左クリックしてチャージドショットモードを切り替えます]"
+    enable: "<gray>チャージドショットモードを有効にしました"
+    disable: "<gray>チャージドショットモードを無効にしました"
+    shoot: "<gold>チャージドショットを使用しました！ <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: ライトニング・ブレード
+    desc: 攻撃速度が{value}%増加し、{duration}秒間持続します。<1>[剣を右クリックしてモブを攻撃することでアクティブ化]
+    raise: "<gray>剣を構えました"
+    lower: "<gray>剣を下げました"
+    start: "<gold>ライトニングブレードをアクティブ化しました！ <gray>(-{mana} {mana_unit})"
+    end: "<gray>ライトニングブレードが終了しました"
+  not_ready: "<red>能力はまだ使用できません！ <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>マナが足りません！ <gray>({mana} {mana_unit} 必要です)"
+skills:
+  farming:
+    name: 農耕
+    desc: "作物を収穫して農耕 {xp_unit} を獲得します"
+  foraging:
+    name: 伐採
+    desc: "木を切って伐採 {xp_unit} を獲得します"
+  mining:
+    name: 採掘
+    desc: "岩石や鉱石を採掘して採掘 {xp_unit} を獲得します"
+  fishing:
+    name: 釣り
+    desc: "魚を釣って釣り {xp_unit} を獲得します"
+  excavation:
+    name: 掘削
+    desc: "シャベルで掘ることで掘削 {xp_unit} を獲得します"
+  archery:
+    name: 射撃
+    desc: "弓でエンティティを撃って射撃 {xp_unit} を獲得します"
+  defense:
+    name: 防御
+    desc: "エンティティからダメージを受けて防御 {xp_unit} を獲得します"
+  fighting:
+    name: 戦闘
+    desc: "近接武器でエンティティと戦って戦闘 {xp_unit} を獲得します"
+  endurance:
+    name: スタミナ
+    desc: "歩いたり走ったりしてスタミナ {xp_unit} を獲得します"
+  agility:
+    name: 敏捷性
+    desc: "移動して落下ダメージを受け、敏捷{xp_unit}を獲得する。"
+  alchemy:
+    name: 錬金術
+    desc: "錬金術の{xp_unit}を獲得するために、ポーションを醸造し、飛び散らせる。"
+  enchanting:
+    name: エンチャント
+    desc: "アイテムをエンチャント、合成、砥石化すると、エンチャント{xp_unit}を獲得できる。"
+  sorcery:
+    name: ソーサリー
+    desc: "マナアビリティを使用してソーサリー {xp_unit} を獲得しよう"
+  healing:
+    name: ヒーリング
+    desc: "ポーションを飲んだり、投げたりしてヒーリング {xp_unit} を獲得しよう"
+  forging:
+    name: フォージング
+    desc: "本やアイテムを合成して、金床での作業でフォージング {xp_unit} を獲得しよう"
+sources:
+  fishing:
+    cod: 鱈
+    salmon: 鮭
+    tropical_fish: 熱帶魚
+    pufferfish: フグ
+    treasure: 財宝アイテム
+    junk: ジャンクアイテム
+    rare: レアな戦利品
+    epic: エピックな戦利品
+  damage:
+    mob_damage: モブからのダメージ
+    player_damage: プレイヤーからのダメージ
+    fall_damage: 落下ダメージ
+  statistic:
+    walk_per_meter: ウォーキング
+    sprint_per_meter: スプリント
+    swim_per_meter: 水泳
+  jumping:
+    jump_per_100: ジャンプ
+  brewing:
+    awkward: 不器用なポーションを作る
+    regular: レギュラー・ポーションを作る
+    extended: 持続時間延長ポーションを作る
+    upgraded: アップグレード・ポーションを作る
+    splash: スプラッシュポーションを作る
+    lingering: 余韻のポーションを作る
+  enchanting:
+    weapon_per_level: 武器エンチャント
+    armor_per_level: エンチャント・アーマー
+    tool_per_level: エンチャントツール
+    book_per_level: エンチャント・ブック
+  mana_ability_use:
+    mana_ability_use: マナ・アビリティの使用
+  item_consume:
+    drink_regular: レギュラー・ポーションを飲む
+    drink_extended: 持続時間延長ポーションを飲む
+    drink_upgraded: アップグレード・ポーションを飲む
+    golden_apple: ゴールデンアップルの消費
+    enchanted_golden_apple: 魅惑のゴールデン・アップルを消費する
+  potion_splash:
+    splash_regular: スプラッシュ・レギュラー・ポーション
+    splash_extended: スプラッシュ持続時間延長ポーション
+    splash_upgraded: スプラッシュ・アップグレード・ポーション
+    lingering_regular: 通常の余韻ポーションを使う
+    lingering_extended: 効果時間延長の余韻ポーションを使う
+    lingering_upgraded: アップグレードした余韻ポーションを使う
+  anvil:
+    combine_books_per_level: エンチャンテッド・ブックスを組み合わせる
+    combine_weapon_per_level: 武器と本を組み合わせる
+    combine_armor_per_level: 鎧と本を組み合わせる
+    combine_tool_per_level: 道具と本を組み合わせる
+  grindstone:
+    grindstone_per_level: 砥石でアイテムをディスエンチャント
+  units:
+    damage: ダメージ
+    meter: メートル
+    100_jumps: 100回のジャンプ
+    mana: 消費マナ
+    combine_level: 金床で必要な経験値
+    grindstone_level: アイテムのエンチャントレベル
+    enchant_level: 受け取るエンチャントのレベル
+stats:
+  strength:
+    name: 強さ
+    desc: "強さは、様々な武器での攻撃力を向上させます"
+  health:
+    name: 体力
+    desc: "体力は、{hp_unit}の量を増やし、戦闘中に長持ちできます"
+  regeneration:
+    name: 回復力
+    desc: "回復力は、体力とマナの回復速度を上げます"
+  luck:
+    name: 幸運
+    desc: "運が良ければ、スキルを集めているときにブロックからの追加ドロップの確率が上がる。"
+  wisdom:
+    name: 知恵
+    desc: "知恵は、最大マナを増やし、経験値の獲得を増やし、金床で必要な経験値を減らします"
+  toughness:
+    name: 耐久力
+    desc: "耐久力は、敵の攻撃から受けるダメージを減らします"
+  crit_chance:
+    name: クリティカルチャンス
+    desc: "クリティカル確率は、クリティカルヒットを与える確率です。"
+  crit_damage:
+    name: クリティカルダメージ
+    desc: "クリティカルダメージは、クリティカルヒットを与えたときのダメージ増加率を示す。"
+  speed:
+    name: スピード
+    desc: "スピードは、歩いたり走ったりする速度を上げる"
+traits:
+  attack_damage:
+    name: アタックダメージ
+  hp:
+    name: HP
+  saturation_regen:
+    name: 飽和回復
+  hunger_regen:
+    name: 空腹回復
+  mana_regen:
+    name: マナ回復
+  luck:
+    name: 幸運属性
+  double_drop:
+    name: ダブルドロップ
+  experience_bonus:
+    name: 経験者ボーナス
+  anvil_discount:
+    name: アンヴィル・ディスカウント
+  max_mana:
+    name: 最大マナ
+  damage_reduction:
+    name: ダメージ軽減
+  crit_chance:
+    name: クリティカルチャンス
+  crit_damage:
+    name: クリティカルダメージ
+  movement_speed:
+    name: 移動速度
+  farming_luck:
+    name: 農業運
+  foraging_luck:
+    name: 採集運
+  mining_luck:
+    name: 鉱山運
+  excavation_luck:
+    name: 発掘運
+  fishing_luck:
+    name: 釣り運
+ui:
+  maxed: MAXED
+units:
+  mana: マナ
+  hp: 体力
+  xp: 経験値
+file_version: 32

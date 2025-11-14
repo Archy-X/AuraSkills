@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: 풍성한 수확
+    desc: "+{value} 의 농업 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 농업 행운"
+  farmer:
+    name: 농부
+    desc: "농사 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  scythe_master:
+    name: 괭이 장인
+    desc: "괭이로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 괭이 피해"
+  geneticist:
+    name: 유전학자
+    desc: "식물성 음식 포만감을 {value} 만큼 증가시킵니다."
+    info: "+{value} 포만감"
+  growth_aura:
+    name: 성장 오라
+    desc: "{radius} 블록 내에 성장 단계가 있는 작물은 {value}% 더 빨리 자랍니다."
+    info: "+{value}% 성장"
+  lumberjack:
+    name: 나무꾼
+    desc: "+{value} 의 채집 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 행운 채집"
+  forager:
+    name: 채집
+    desc: "채집 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  axe_master:
+    name: 도끼 장인
+    desc: "도끼로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 도끼 피해"
+  valor:
+    name: 용맹
+    desc: "도끼를 들고 있는 동안 힘이 +{value} 만큼 부여됩니다."
+    info: "+{value} 힘"
+  shredder:
+    name: 분쇄
+    desc: "도끼로 공격 시 {value}% 확률로 상대에게 3배 내구도 피해."
+    info: "{value}% 3x 내구도 피해"
+  lucky_miner:
+    name: 행운의 광부
+    desc: "+{value} 채굴 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 채굴 행운"
+  miner:
+    name: 광부
+    desc: "채굴 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  pick_master:
+    name: 곡괭이 장인
+    desc: "곡괭이로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 곡괭이 피해"
+  stamina:
+    name: 기력
+    desc: "곡괭이를 들고 있는 동안 단단함이 +{value} 만큼 부여됩니다."
+    info: "+{value} 단단함"
+  hardened_armor:
+    name: 단단한 갑옷
+    desc: "{value}% 확률로 방어구 내구도 피해가 무효화됩니다."
+    info: "{value}% 내구도 손실 없음"
+  lucky_catch:
+    name: 행운의 낚시꾼
+    desc: "+{value} 낚시 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value} 낚시 행운"
+  fisher:
+    name: 낚시꾼
+    desc: "낚시 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  treasure_hunter:
+    name: 보물 사냥꾼
+    desc: "낚시를 할 때 레어 전리품 획득 확률이 {value}% 증가합니다."
+    info: "+{value}% 레어 전리품"
+  grappler:
+    name: 그래플러
+    desc: "낚싯바늘 던지기 속도가 {value}% 증가합니다."
+    info: "+{value}% 낚싯바늘 속도"
+  epic_catch:
+    name: 에픽 전리품
+    desc: "낚시를 할 때 에픽 전리품 획득 확률이 {value}% 증가합니다."
+    info: "+{value}% 에픽 전리품"
+  metal_detector:
+    name: 금속 탐지기
+    desc: "땅을 팔 때 레어 전리품 획득 확률 {value}% 증가합니다."
+    info: "+{value}% 레어 전리품"
+  excavator:
+    name: 굴착기
+    desc: "발굴 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  spade_master:
+    name: 삽 장인
+    desc: "삽으로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 삽 피해"
+  bigger_scoop:
+    name: 큰 삽
+    desc: "+{value} 발굴 행운을 부여하여 추가 드롭 확률을 높입니다."
+    info: "+{value}% 발굴 행운"
+  lucky_spades:
+    name: 행운의 스페이드
+    desc: "땅을 팔 때 에픽 전리품 획득 확률 {value}% 증가합니다."
+    info: "+{value}% 에픽 전리품"
+  retrieval:
+    name: 검색
+    desc: "놓친 화살표는 최대 {value} 블록 떨어진 {time} 후에 즉시 검색됩니다."
+    info: "{value} 거리"
+  archer:
+    name: 궁수
+    desc: "궁술 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  bow_master:
+    name: 활 장인
+    desc: "활로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 활 피해"
+  piercing:
+    name: 관통
+    desc: "{value}% 확률로 화살이 몹을 관통합니다."
+    info: "{value}% 관통 확률"
+  stun:
+    name: 기절
+    desc: "{value}% 확률로 적의 이동 속도가 2초 간 20% 감소합니다."
+    info: "{value}% 기절 확률"
+  shielding:
+    name: 방어술
+    desc: "앉아 있는 동안 입는 피해 {value}% 감소합니다."
+    info: "-{value}% 앉아서 입는 피해"
+  defender:
+    name: 방어자
+    desc: "방어 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  mob_master:
+    name: 몹 장인
+    desc: "몹으로부터 받는 피해가 {value}% 감소합니다."
+    info: "-{value}% 몹 피해"
+  immunity:
+    name: 면역
+    desc: "적의 공격을 {value}% 확률로무효화합니다."
+    info: "{value}% 피해무효"
+  no_debuff:
+    name: 디버프 저항
+    desc: "{value}% 확률로 해로운 물약 효과를무효화합니다."
+    info: "{value}% 디버프 저항"
+  parry:
+    name: 받아치기
+    desc: "공격을 받기 전 {time}초 내에 검을 휘두르지 못하면 데미지가 {value}% 감소하고 넉백이 취소됩니다."
+    info: "{value}% 데미지 감소"
+    parried: "<red>공격이 막혔습니다."
+  fighter:
+    name: 싸움꾼
+    desc: "전투 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  sword_master:
+    name: 검 장인
+    desc: "검으로 인한 피해가 {value}% 증가합니다."
+    info: "+{value}% 검 피해"
+  first_strike:
+    name: 선제 공격
+    desc: "선제 공격 시 입히는 피해가 {value}% 증가합니다."
+    info: "+{value}% 선제공격 피해"
+    dealt: "<red>선제 공격!"
+  bleed:
+    name: 출혈
+    desc: "{value}%의 확률로 적에게 {base_ticks} 출혈 틱 동안 출혈을 주어 틱당 {value_2} 피해를 입힙니다. 이미 출혈 중인 적에게는 {added_ticks} 틱이 추가됩니다."
+    info: "{value}% 확률로 {value_2} 피해"
+    enemy_bleeding: "<red>적이 피를 흘리고 있습니다!"
+    self_bleeding: "<red>피를 흘리고 있습니다!"
+    stop: "<white>출혈이 멎었습니다."
+  anti_hunger:
+    name: 허기 저항
+    desc: "{value}% 확률로 허기 감소가 멈춥니다."
+    info: "{value}% 허기 저항"
+  runner:
+    name: 육상선수
+    desc: "지구력 경험치가 {value} 증가합니다."
+    info: "+{value}% 경험치"
+  golden_heal:
+    name: 고급 치유
+    desc: "재생, 체력 회복 효과가 {value}% 증가합니다."
+    info: "+{value}% 회복력 증가"
+  recovery:
+    name: 복구
+    desc: "체력이 50% 이하로 내려갈 시 {value}% 확률로자연 재생 속도가 소폭 증가합니다."
+    info: "+{value}% 소폭 재생"
+  meal_steal:
+    name: 밥도둑
+    desc: "플레이어 공격 시 {value}% 확률로 허기를 1칸 훔칩니다."
+    info: "{value}% 허기 강탈"
+  light_fall:
+    name: 가벼운 착지
+    desc: "모든 낙하 피해가 {value}% 감소합니다."
+    info: "-{value}% 낙하 피해"
+  jumper:
+    name: 점퍼
+    desc: "민첩 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  sugar_rush:
+    name: 도핑
+    desc: "속도 증가, 점프력 강화 물약 효과 시간이 {value}% 연장됩니다."
+    info: "{value}% 이동 효과 지속"
+  fleeting:
+    name: 도주
+    desc: "체력이 20% 미만일 때 이동속도가 +{value}% 증가합니다."
+    info: "+{value}% 속도"
+    start: "<white>순간적으로 속도가 빨라졌습니다.! <gray>(+{value}% Speed)"
+    end: "<gray>순간적인 속도 상승이 사라졌습니다."
+  thunder_fall:
+    name: 번개 낙하
+    desc: "추락 앉아서 착지할 시 {value}% 확률로 3블럭 이내의 적에게 {value_2}% 만큼의 충격 피해를 입힙니다."
+    info: "{value}% 확률로 {value_2}% 피해"
+  alchemist:
+    name: 연금술사
+    desc: "지속시간이 {value}% 더 긴 물약을 만듭니다."
+    info: "+{value}% 물약 지속시간"
+  brewer:
+    name: 양조자
+    desc: "연급술 경험치가 {value}% 증가합니다"
+    info: "+{value}% 경험치"
+  splasher:
+    name: 투척 강화
+    desc: "투척형 물약의 영향을 받는 플레이어 수에 비례해 지속시간이 {value}% 씩 증가합니다."
+    info: "+{value}% 지속시간/플레이어"
+  lingering:
+    name: 잔류 강화
+    desc: "잔류형 물약은 {value}% 만큼 더 오래남아있고영향을 받는 엔티티 당 {value_2}% 감소합니다."
+    info: "-{value}% 자연지속, 엔티티 당 -{value_2}% 감소"
+  wise_effect:
+    name: 효과 지식
+    desc: "모든 유니크 활성 물약 효과에 대한 {value} 지식을 얻음"
+    info: "+{value} 지식/효과"
+  xp_convert:
+    name: 경험치 변환
+    desc: "마인크래프트 경험치 1당 {value} 만큼의 스킬 경험치로 변환합니다."
+    info: "1 EXP/{value} 스킬 XP"
+  enchanter:
+    name: 부여술사
+    desc: "부여마법 경험치가 {value}% 증가합니다."
+    info: "+{value}% 경험치"
+  xp_warrior:
+    name: 노련한 전사
+    desc: "몹 처치 시 {value}% 확률로 경험치 획득량이 2배가 됩니다."
+    info: "{value}% 2x 몹 경험치"
+  enchanted_strength:
+    name: 부여된 힘
+    desc: "마법부여 된 아이템 보유 시 {value} 만큼의 힘이 부여됩니다."
+    info: "{value} 힘/마법부여"
+  lucky_table:
+    name: 행운의 부여술사
+    desc: "마법부여대에서 부여가능한 마법이 최대 레벨이 아닐경우 {value}% 확률로 등급이 상승합니다."
+    info: "{value}% 마법부여 승 확률"
+  life_essence:
+    name: 생명의 정수
+    desc: 즉시 건강 물약은 {value}% 더 치유합니다.
+    info: "+{value}% 즉시 회복"
+  healer:
+    name: 치유사
+    desc: '{value}% 더 많은 치유 XP를 획득하세요.'
+    info: "+{value}% 경험치"
+  life_steal:
+    name: 생명 강탈
+    desc: 당신이 죽인 적대적인 몹과 플레이어의 최대 HP의 {value}%를 치유하십시오.
+    info: "{value}% HP를 훔칩니다."
+  golden_heart:
+    name: 골든 하트
+    desc: 흡수 하트에 가해지는 피해가 {value}%만큼 감소합니다.
+    info: "-{value}% 흡수 데미지"
+  revival:
+    name: 회복
+    desc: 부활 후 30초 동안 +{value} 체력과 +{value_2} 재생력을 얻습니다.
+    info: "+{value} 건강, +{value_2} 재생"
+    message: "<white>30초 동안 부활 보너스를 받았습니다! <white>(<red>+{value} 체력,<gold>+{{value_2} 재생<white>)"
+  disenchanter:
+    name: 마법 파훼자
+    desc: 숫돌을 사용하여 아이템을 추출할 때 {value}% 더 많은 경험치를 얻습니다.
+    info: "+{value}% 숫돌 경험치"
+  forger:
+    name: 대장장이
+    desc: '{value}% 더 많은 단조 XP를 획득하세요.'
+    info: "+{value}% 경험치"
+  repairing:
+    name: 수리공
+    desc: 모루에 있는 아이템을 수리하여 만든 원자재를 사용하여 아이템을 수리하면 내구도가 {value}% 더 늘어납니다.
+    info: "+{value}% 모루 수리"
+  anvil_master:
+    name: 모루 장인
+    desc: '{value} 경험치에 너무 비싸지기 전에 모루의 최대 수리 비용을 늘립니다.'
+    info: "{value} 최댓값"
+  skill_mender:
+    name: 수선 스킬
+    desc: 스킬 경험치 획득 시 {value}% 확률로 스킬경험치 2 당 내구도 1%를 수선합니다.
+    info: "{value}% 수선 확률"
+acf:
+  core:
+    permission_denied: "<red>죄송합니다. 이 명령을 수행할 수 있는 권한이 없습니다."
+    permission_denied_parameter: "<red>죄송합니다. 이 명령을 수행할 수 있는 권한이 없습니다."
+    error_generic_logged: "<red>오류가 발생했습니다. 이 문제가 기록되었습니다. 불편을 드려 죄송합니다."
+    unknown_command: "<red>알 수 없는 명령어입니다. <yellow>/sk help 를 입력하십시오."
+    invalid_syntax: "<yellow>사용: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>오류: {message}"
+    error_performing_command: "<red>죄송합니다. 이 명령을 수행하는 동안 오류가 발생했습니다."
+    please_specify_one_of: "<red>오류: (<yellow>{valid}<red>) 중 하나를 지정하십시오."
+    must_be_a_number: "<red>오류: {num} 은(는) 숫자여야 합니다."
+    must_be_min_length: "<red>오류: 최소 {min} 보다 길어야 합니다."
+    must_be_max_length: "<red>오류: 최대 {max} 보다 짧아야 합니다."
+    please_specify_at_most: "<red>오류: 최댓값은 {max} 입니다."
+    please_specify_at_least: "<red>오류: 최소값은 {min} 입니다."
+    not_allowed_on_console: "<red>오류: 콘솔에서 이 명령어를 실행할 수 없습니다."
+    could_not_find_player: "<red>오류: <yellow>{search} <red>이름을 가진 플레이어를 찾을 수 없습니다."
+    no_command_matched_search: "<yellow>{search} <red>과 일치하는 명령어가 없습니다."
+    help_page_information: "<aqua> - 페이지 표시 <green>{page} <aqua>중 <green>{totalpages} <aqua>(<yellow>{results}<aqua> 찾음)."
+    help_no_results: "<aqua>오류: 더 이상 찾을 수 없습니다."
+    help_header: "<yellow>=== <aqua>도움말 표시 <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>자세한 도움말 표시 <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>검색 결과 대상 <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>오류: 해당 세계는 존재하지 않습니다."
+    you_must_be_holding_item: "<red>오류: 메인 손에 물건을 들고 시도해주십시오."
+    player_is_vanished_confirm: "<yellow>주의: <green>{vanished} <yellow>은(는) 사라졌습니다. 덮개를 벗기지 마십시오!\n<yellow>작업을 확인하려면 이름 끝에 <green>:confirm <yellow>을 추가하세요.\n<yellow>예시: {vanished}:confirm"
+    username_too_short: "<red>오류: 사용자 이름이 너무 짧습니다. 최소 3자 이상이어야 합니다."
+    is_not_a_valid_name: "<red>오류: <yellow>{name} <red>유효한 사용자 이름이 아닙니다."
+    multiple_players_match: "<red>오류: 여러 사용자가 일치합니다. <aqua>{search} <yellow>({all})<red>, 더 구체적으로 입력해주십시오."
+    no_player_found_server: "<red>일치하는 사용자가 없습니다. <yellow>{search} <red>이(가) 서버에 연결되어 있습니다."
+    no_player_found_offline: "<red>일치하는 사용자 없습니다. <yellow>{search}<red>을(를) 찾았습니다."
+    no_player_found: "<red>일치하는 사용자 없습니다. <yellow>{search}<red>을(를) 찾았습니다."
+    location_please_specify_world: "<red>오류: 세계를 지정하십시오. 예시: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>오류: 좌표 x, y, z를 지정해 주세요. 예시: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>오류: 콘솔으로는 상대 좌표를 사용할 수 없습니다."
+commands:
+  prefix: "<dark_gray>[<aqua>스킬<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat}가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
+        already_exists: "<yellow>방어구에 {color}{stat} 이(가) 이미 존재합니다. <gold>/sk armor modifier remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
+      remove:
+        does_not_exist: "<yellow>아이템에 {color}{stat} <yellow>이(가) 없습니다!"
+        removed: "{color}{stat} <gray>이(가) 아이템에서 제거되었습니다."
+      list:
+        header: "<white>방어구 효과 찾음:"
+      removeall:
+        removed: "<gray>아이템에서 모든 방어구 효과가 제거되었습니다."
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
+        already_exists: "<yellow>방어구에 {target} 이(가) 이미 존재합니다. <gold>/sk armor modifier remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
+        skill_lore: "<gray>착용 시: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>착용 시: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>착용 시: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>착용 시: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>아이템에 <aqua>{target} <yellow>효과가 없습니다!"
+        removed: "&{target}& 배율이 방어구에서 제거되었습니다."
+      list:
+        header: "<white>방어구 배율 찾음:"
+      removeall:
+        removed: "<gray>모든 방어구 배율이 아이템에서 제거되었습니다."
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> 방어구 제한이 <aqua>{level}<gray>레벨 만큼 아이템에 추가되었습니다."
+        already_exists: "<yellow>방어구에 <dark_aqua>{skill}<yellow>이(가) 이미 존재합니다. <gold>/sk armor requirement remove <gray>명령어를 활용하여 제거 후 재시도하십시오."
+        lore: "<dark_aqua>{skill} {level} <red>레벨 필요"
+      remove:
+        does_not_exist: "<yellow>아이템에 <dark_aqua>{skill}<yellow>이(가) 없습니다!"
+        removed: "<gray>필요량 <dark_aqua>{skill}이(가) 아이템에서 제거되었습니다."
+      list:
+        header: "<white>방어구 제한 찾음:"
+      removeall:
+        removed: "<gray>아이템에서 모든 방어구 제한이 제거되었습니다."
+      equip: "<yellow>{requirements}을(를) 장착하기 위한 요구 조건을 충족하지 않습니다."
+  backup:
+    load:
+      confirm: "<red>백업을 불러오면 사용자의 모든 스킬 데이터가 복구됩니다. 이 작업은 영구적이므로 취소할 수 없습니다. 백업을 로드하기 전에 저장할 수도 있습니다. 이 작업을 진행하려면 명령어를 다시 입력하십시오."
+      loading: "<white>백업 불러오는 중..."
+      loaded: "<green>백업을 성공적으로 불러왔습니다."
+      error: "<red>백업 불러오기 오류: {error}"
+      must_be_yaml: "<yellow>파일은 .yml 파일이어야 합니다!"
+      file_not_found: "<yellow>해당 파일 이름의 백업이 백업 폴더에 없습니다!"
+    save:
+      saving: "<white>백업 저장 중..."
+      saved: "<white>{type} 데이터가 {file}으(로) 백업됨"
+      error: "<red>{type} 데이터를 백업하는 중 오류가 발생했습니다. 자세한 내용은 /below 명령어를 이용해 확인하십시오."
+  claimitems:
+    no_items: "<yellow>수령할 아이템이 없습니다."
+  item:
+    give:
+      sender: "<white>사용자 {player}에게 <aqua>{key}을(를) {amount}개를 주었습니다."
+      receiver: "<aqua>{key}을(를) {amount}개를 받았습니다."
+    modifier:
+      add:
+        added: "{color}{stat} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
+        already_exists: "<yellow>{color}{stat} <yellow>효과가 아이템에 이미 존재합니다. /sk item modifier remove 명령어로 제거 후 재시도하십시오."
+      remove:
+        does_not_exist: "<yellow>아이템에 {color}{stat} <yellow>효과가 없습니다!"
+        removed: "{color}{stat} <gray>효과가 아이템에서 제거되었습니다."
+      list:
+        header: "<white>아이템 효과 찾음:"
+      removeall:
+        removed: "<gray>모든 효과가 아이템에서 제거되었습니다."
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>효과가 <aqua>{value} <gray>만큼 아이템에 추가되었습니다."
+        already_exists: "<yellow>아이템에 {target} 이(가) 이미 존재합니다. /sk item multiplier remove 명령어를 활용하여 제거 후 재시도하십시오."
+        skill_lore: "<gray>유지 시: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>유지 시: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>유지 시: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>유지 시: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>아이템에 <aqua>{target} <yellow>배율이 없습니다!"
+        removed: "<aqua>{target}<gray> 배율이 아이템에서 제거되었습니다."
+      list:
+        header: "<white>아이템 효과 찾음:"
+      removeall:
+        removed: "<gray>모든 배율이 아이템에서 제거되었습니다."
+    register:
+      registered: "<white>보유 아이템을 {key}에 등록하였습니다."
+      already_registered: "<yellow><white>{key}<yellow>에 아이템이 이미 등록되어있습니다.<white>/skills item unregister <yellow>명령어로 제거 후 재시도하십시오."
+      no_spaces: "<yellow>공백을 포함할 수 없습니다!"
+    requirement:
+      add:
+        added: " <dark_aqua>{skill} <aqua>{level}<gray> 만큼의 제한이 아이템에 추가되었습니다."
+        already_exists: "<yellow>아이템에 <dark_aqua>{skill}<yellow> 제한이 존재합니다. <gold>/sk item requirement remove <yellow>명령어로 제거 후 재시도하십시오."
+        lore: "<dark_aqua>{skill} {level} <red>제한"
+      remove:
+        does_not_exist: "<yellow>이 아이템에는 <dark_aqua>{skill}<yellow> 제한이 없습니다!"
+        removed: "<dark_aqua>{skill}<gray> 제한이 아이템에서 제거되었습니다."
+      list:
+        header: "<white>아이템 제한 찾음:"
+      removeall:
+        removed: "<gray>모든 제한이 아이템에서 제거되었습니다."
+      use: "<yellow>{requirements} 을(를) 사용하기 위한 요구 조건을 충족하지 않습니다."
+    unregister:
+      unregistered: "<white>{key} 등록 해제되었습니다."
+      not_registered: "<yellow>{key}로 등록되어 있는 아이템이 없습니다."
+  lang:
+    set: "<gray>언어를 <aqua>{lang}<gray>로 설정합니다."
+    not_found: "<yellow>언어를 찾을 수 없습니다.!"
+  mana:
+    display: "<white>내 {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} 중 {player}: <aqua>{current}/{max}"
+    add: "<gray>사용자 <gold>{player}에게 <aqua>{amount} {mana_unit} <gray>가 추가되었습니다."
+    remove: "<gray>사용자 <gold>{player}에게서 <aqua>{amount} {mana_unit} <gray>가 추가되었습니다."
+    set: "<gray>플레이어 <gold>{player} <gray>를 <aqua>{amount} {mana_unit} 로 설정"
+    at_least_zero: "<yellow>{mana_unit} 가 0 이상이어야 합니다!"
+    console_specify_player: "<yellow>콘솔에서 사용자를 지정해야 합니다!"
+  modifier:
+    add:
+      added: "<gray>사용자 <gold>{player} <gray>에게 <white>{name} {color}{stat} <gray>효과 레벨이 <aqua>{value} <gray>만큼 추가되었습니다."
+      already_exists: "<yellow>사용자 <gold>{player}<yellow>에게 <yellow>{name} 효과가 이미 있습니다! <gold>/sk modifier remove {player} {name} 로 제거 후 재시도하십시오."
+    remove:
+      not_found: "<yellow>사용자 <gold>{player} <yellow>에게서 {name} 효과를 찾을 수 없습니다."
+      removed: "<gray>사용자 <gold>{player} <white>에게서 {name} <gray>효과가 제거되었습니다."
+    list:
+      all_stats_header: "<gray>사용자 <gold>{player}<gray>의 능력치 효과:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <gold>{value} <white>레벨"
+      one_stat_header: "<gray> 사용자 <gold>{player} <gray>능력치 효과 ({color}{stat}<gray>):"
+      one_stat_entry: "  <white>{name} - {color}{stat} <gold>{value} <white>레벨"
+      players_only: "<yellow>사용자만 본인의 효과를 목록화 할 수 있습니다! 사용자 지정 후 재시도하십시오."
+    removeall:
+      removed_all_stats: "<gray>사용자 <gold>{player} <gray>의 <aqua>{num} <gray>능력치 효과가 제거되었습니다"
+      removed_one_stat: "<gray>사용자 <gold>{player} <gray>의 <aqua>{color}{stat} {num} <gray>효과가 제거되었습니다."
+      players_only: "<yellow>사용자만 본인의 효과를 제거 할 수 있습니다! 사용자 지정 후 재시도하십시오."
+  multiplier:
+    global: 글로벌
+    list: "<white>사용자 <gold>{player}<white>의 경험치 배율: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP 배율: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>사용자만 본인의 경험치 배율을 확인 할 수 있습니다! 사용자 지정 후 재시도하십시오."
+  preset:
+    load:
+      confirm: "<red>사전 설정을 로드하면 구성 파일이 재정의됩니다! 다음 파일이 영향을 받습니다. <gray>(<aqua>추가<gray>, <yellow>병합<gray>,<red>교체<gray>, <dark_red>삭제됨<gray>): {entries}<red>이것은 작업은 취소할 수 없습니다. 필요한 파일을 수동으로 백업하세요. 확인하려면 명령을 다시 입력하세요."
+      loaded: 사전 설정 {name} 을(를) 성공적으로 로드했습니다. 지금 서버를 다시 시작하세요.
+      created: 파일 생성
+      modified: 수정된 파일
+      replaced: 대체된 파일
+      deleted: 파일 삭제됨
+      skipped: 건너뛴 파일
+  profile:
+    skills: "<gold>{name} 의 기술 프로필:\n<gray>UUID: <white>{uuid}\n<gray>기술:{skill_entries}"
+    skill_entry: "\n<dark_aqua>{skill}<gray>- 레벨: <white>{level}<gray> XP: <white>{xp}"
+    stats: "<gold>{name} 에 대한 통계 프로필:\n<gray>UUID:<white>{uuid}\n<gray>통계:{stat_entries}"
+    stat_entry: "\n<dark_aqua>{stat}<gray>- 전체 레벨: <white>{total_level}<gray>, 기본 레벨: <white>{base_level}<gray>, 수정 레벨: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>스킬 순위"
+    power: "<yellow>전력 <gray>(All Skills):<white>{total} 중 #{rank}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank}/{total}"
+  reload: "<green>구성 다시 불러오기가 완료되었습니다!"
+  save:
+    already_saving: "<yellow>데이터가 이미 저장 중입니다!"
+    mysql_not_enabled: "<yellow>서버 시작 시 MySQL이 활성화되어있지 않아 로컬 플러그인 폴더에 저장되었습니다!"
+    saved: "<green>스킬 데이터가 저장되었습니다!"
+  skill:
+    setall:
+      set: "<gray>사용자 <gold>{player} <gray>의 모든 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
+    setlevel:
+      set: "<gray>사용자 <gold>{player} <gray>의 <aqua>{skill} 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
+    at_least: "<yellow>레벨은 최소 {level} 이상이어야 합니다!"
+  toggle:
+    enabled: "<green>스킬 액션 표시줄이 활성화되었습니다."
+    disabled: "<red>스킬 액션 표시줄이 비활성화되었습니다."
+    not_enabled: "<yellow>이 서버에서 스킬 액션 표시줄이 사용 불가능합니다!"
+  top:
+    power_header: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold> 모든 스킬 순위 </bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} 순위</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} 순위 </bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold> 스킬 평균 순위 </bold><white>(Page {page})==--"
+    usage: "<yellow>사용: <green>/sk top <white><page> <gray>나 <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green><gray>{from} <green>에서 <gray>{to} 로 플레이어 데이터를 성공적으로 전송했습니다."
+    error: "<red>플레이어 데이터를 전송하는 중에 오류가 발생했습니다. 콘솔에 오류가 있는지 확인하세요."
+  updateleaderboards:
+    already_updating: "<yellow>순위가 이미 갱신 중입니다!"
+    updated: "<green>순위가 갱신되었습니다!"
+  version: "<white>적용된 아우렐리움 스킬 버전 <aqua>{current_version}<white>. 최신 버전은 <aqua>{latest_version} <white>입니다"
+  xp:
+    add: "<gray>사용자 <gold>{player} <gray>에게 <aqua>{skill} {amount} <gray>경험치가 추가되었습니다."
+    set: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} <gray>경험치가 <gold>{amount} <gray>로 설정되었습니다."
+    remove: "<gray>사용자 <gold>{player} <gray>의 <gold>{skill} {amount} <gray>경험치가 제거되었습니다."
+  manaability:
+    cooldown_reset: "<gray><aqua>{ability} <gray>의 재사용 대기시간이 플레이어 <gold>{player} 에 대해 재설정되었습니다."
+  unknown_skill: "<yellow>알 수 없는 스킬!"
+  unknown_mana_ability: "<yellow>알 수 없는 마나 능력!"
+  unknown_stat: "<yellow>알 수 없는 통계입니다!"
+  no_profile: "<yellow>플레이어에게 스킬 프로필이 없습니다. 게임에 다시 참여하거나 서버를 다시 시작해 보세요."
+leveler:
+  level_up: "{skill} 레벨 업"
+  skill_level_up: 스킬 레벨 상승!
+  rewards: 보상
+  ability_unlock: 능력 잠금 해제
+  ability_level_up: 능력 레벨 업
+  mana_ability_unlock: 마나 능력 잠금 해제
+  mana_ability_level_up: 마나 능력 레벨 업
+  unclaimed_item: "<red>인벤토리가 가득 차서 수령하지 않은 아이템이 있습니다. <yellow>/skillsclaimitems<red>를 사용하여 수령하세요."
+menus:
+  common:
+    close: "닫기"
+    level: "레벨"
+    progress_to_level: "레벨 진행"
+    max_level: "최대 레벨"
+    ability_levels: "능력 레벨"
+    stats_leveled: "통계 수준"
+    mana_ability: "마나 능력"
+    duration: "지속시간"
+    mana_cost: "마나 비용:"
+    cooldown: "쿨다운"
+    damage: "피해"
+    max_mana_cost: "최대 마나 비용"
+    attack_speed: "공격 속도"
+    back: "뒤로 가기"
+    back_click: "{menu_name} 메뉴로 돌아가기"
+    unlocked: "잠금 해제됨"
+    in_progress: "진행 중"
+    locked: "잠김"
+    your_level: "레벨:"
+    next_page: "다음 페이지"
+    next_page_click: "다음 페이지로 이동하려면 클릭하세요."
+    previous_page: "이전 페이지"
+    previous_page_click: "이전 페이지로 이동하려면 클릭하세요."
+  skills:
+    skills_title: "자신의 스킬"
+    your_skills: "자신의 스킬"
+    your_skills_desc: "귀중한 능력치 부스트, 능력 등을 잠금 해제하려면 다양한 작업을 수행하여 스킬을 업그레이드하세요!"
+    your_skills_hover: "자세한 내용을 보려면 스킬 위에 마우스를 올리세요!"
+    your_skills_click: "레벨 진행 상황을 보려면 스킬을 클릭하세요!"
+    skill_click: "레벨 진행 상황을 보려면 클릭하세요!"
+    stats: "스탯"
+    stats_desc: "스킬 레벨을 올려 능력치 버프를 획득하세요"
+    stats_click: "자세히 알아보거나 통계를 보려면 클릭하세요."
+  level_progression:
+    level_progression_title: "{skill} 레벨 - 페이지 {page}"
+    your_ranking: "당신의 스킬 순위"
+    rank_out_of: "<1>귀하는 총 플레이어 수 중 <2>{rank}</2>위입니다</1>"
+    rank_percent: "<1>귀하는 플레이어 중 상위 <2>{percent}%</2>에 속합니다</1>"
+    rewards: "보상"
+    ability_unlock: "능력 잠금 해제"
+    mana_ability_unlock: "마나 능력 잠금 해제"
+    progress: "진행"
+    leaderboard_click: "{skill} 순위표를 보려면 클릭하세요."
+    sources: "XP 획득 방법"
+    sources_desc: "출처 메뉴에는 기술에서 XP를 얻을 수 있는 모든 방법과 각 소스가 제공하는 XP의 양이 표시됩니다."
+    sources_click: "{skill} 출처를 보려면 클릭하세요."
+    abilities: "능력"
+    abilities_desc: "<2>능력</2> <1>기술 레벨을 올리면서 잠금 해제하고 업그레이드할 수 있는 수동적 특혜입니다.</1>"
+    mana_abilities_desc: "<3>마나 능력</3> <1>은 활성화가 필요하고 마나를 소모하는 특별한 유형의 능력입니다.</1>"
+    abilities_click: "{skill} 능력을 보려면 클릭하세요."
+  stats:
+    stats_title: 나의 능력치
+    skills: "스킬"
+    added_drop: "+{value} 하락"
+    added_drops: "+{value} 드롭"
+    chance_drop: "+{value} 드롭에 대한 {chance}%"
+    chance_drops: "+{value} 드롭에 대한 {chance}%"
+  unclaimed_items:
+    unclaimed_items_title: "청구 항목"
+    inventory_full: "해당 아이템을 받기에는 인벤토리 공간이 부족합니다."
+    click_to_claim: "클릭하여 수령하기"
+  leaderboard:
+    leaderboard_title: "{skill} 리더보드"
+  sources:
+    sources_title: "{skill} XP 원천"
+    sorter: "XP 획득 방법 정렬"
+    descending: "가장 높은 것부터 가장 낮은 것까지"
+    ascending: "가장 낮음에서 가장 높음"
+    alphabetical: "이름 (A-Z)"
+    reverse_alphabetical: "이름 (Z-A)"
+    sort_click: "클릭해서 정렬 방식 변경"
+    multiplied_xp: "곱하기 {xp_unit}"
+    multiplied_desc: "현재 경험치 배율에 따라 실제로 획득할 수 있는 경험치입니다."
+  abilities:
+    abilities_title: "{skill} 능력"
+    description: "설명"
+    unlocked_at: "<1><2>{skill} {level} 에 잠금 해제됨"
+    next_upgrade_at: "<1><2>{skill} {level} 에서 다음 업그레이드"
+mana_abilities:
+  replenish:
+    name: 재보충
+    desc: "{value}초 간 수확한 위치에 작물이 자동으로 심어집니다. <1>[괭이 우클릭이나 수확하여 발동]"
+    raise: "<gray>괭이를 준비해주십시오."
+    lower: "<gray>괭이를 내려주십시오."
+    start: "<gold>재보충 모드가 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>재보충 모드가 해제되었습니다"
+  treecapitator:
+    name: 벌목기
+    desc: "{value}초 간 나무를 즉시 파괴합니다. <1>[도끼 우클릭이나 벌목하여 발동]"
+    raise: "<gray>도끼를 준비해주십시오."
+    lower: "<gray>도끼를 내려주십시오."
+    start: "<gold>벌목기가 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>벌목기가 해제되었습니다."
+  speed_mine:
+    name: 빠른 채광
+    desc: "{value} 초 간 성급함 {haste_level} 레벨이 부여됩니다. <1>[우클릭이나 곡괭이로 블럭을 파괴하여 발동]"
+    raise: "<gray>곡괭이를 준비해주십시오."
+    lower: "<gray>곡괭이를 내려주십시오."
+    start: "<gold>빠른 채광이 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>빠른 채광이 해제되었습니다."
+  absorption:
+    name: 마나보호막
+    desc: "{value}초 간 받는 피해를 피해량의 2배의 마나로 대신 소모합니다. 마나보호막이 발동하는 동안 마나가 재생되지 않습니다. <1>[방패 좌클릭이나 피해를 받아 발동]"
+    raise: "<gray>방패를 준비해주십시오."
+    lower: "<gray>방패를 내려주십시오."
+    start: "<gold>마나보호막이 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>마나보호막이 해제되었습니다."
+  terraform:
+    name: 지형수정
+    desc: "파낼 때 {value} 초 동안 수평으로 {radius} 블록 반경에 연결된 블록을 즉시 부수십시오. <1>[삽과 블록을 마우스 오른쪽 버튼으로 클릭하여 활성화]"
+    raise: "<gray>삽을 준비해주십시오."
+    lower: "<gray>삽을 내려주십시오."
+    start: "<gold>지형수정 모드가 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>지형수정 모드가 해제되었습니다."
+  sharp_hook:
+    name: 에리한 바늘
+    desc: "낚싯바늘에 걸린 대상에게 {value} 만큼의 피해를 줍니다. <1>[낚싯대 좌클릭으로 발동]"
+    use: "<gold>예리한 바늘 발동! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: 모아 쏘기
+    desc: "활을 얼마나 당겼는지에 따라 더 많은피해를 입게 되며, 그 과정에서 마나를 소모합니다. 마나를 소모할 때마다 {value}% 더 많은 피해를 줍니다. <1>[활 좌클릭이나 사격 모드 진입으로 발동]"
+    enable: "<gray>모아쏘기 모드가 발동되었습니다."
+    disable: "<gray>모아쏘기 모드가 해제되었습니다."
+    shoot: "<gold>모아쏘기! <light_purple>+{percent}% 피해 <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: 번개 검
+    desc: 공격 속도가 {duration} 초 간 {value}% 상승합니다. <1>[검 우클릭이나 몹을 공격하여 발동]
+    raise: "<gray>검을 준비해주십시오."
+    lower: "<gray>검을 내려주십시오."
+    start: "<gold>번개 검이 발동되었습니다! <gray>(-{mana} {mana_unit})"
+    end: "<gray>번개 검이 해제되었습니다."
+  not_ready: "<red>능력이 준비되지 않았습니다! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>마나가 부족합니다! <gray>(필요량: {mana} {mana_unit})"
+skills:
+  farming:
+    name: 농사
+    desc: "작물을 수확하여 농업 {xp_unit}을 얻을 수 있습니다."
+  foraging:
+    name: 채집
+    desc: "나무를 벌목하여 채집 {xp_unit}을 얻을 수 있습니다."
+  mining:
+    name: 채광
+    desc: "채광을 통해 채광 {xp_unit}을 얻을 수 있습니다."
+  fishing:
+    name: 낚시
+    desc: "낚시를 통해 낚시 {xp_unit}를 얻을 수 있습니다."
+  excavation:
+    name: 발굴
+    desc: "삽으로 땅를 파서 발굴 {xp_unit}을 얻을 수 있습니다."
+  archery:
+    name: 궁술
+    desc: "몹, 플레이어에게 사격하여 궁술 {xp_unit}을 얻을 수 있습니다."
+  defense:
+    name: 방어
+    desc: "엔티티에게 피해를 받아 방어 {xp_unit}를 얻을 수 있습니다."
+  fighting:
+    name: 전투
+    desc: "근거리 무기로 몹을 처치하여 전투 {xp_unit}를 얻을 수 있습니다."
+  endurance:
+    name: 지구력
+    desc: "걷거나 달려서 지구력 {xp_unit}을 얻을 수 있습니다."
+  agility:
+    name: 민첩
+    desc: "이동하고 낙하 피해를 받아 민첩성 {xp_unit} 획득"
+  alchemy:
+    name: 연금술
+    desc: "연금술 {xp_unit} 을(를) 획득하려면 물약을 끓여서 뿌리세요"
+  enchanting:
+    name: 마법부여
+    desc: "인챈트, 결합, 숫돌 아이템은 인챈트 {xp_unit} 을(를) 획득합니다."
+  sorcery:
+    name: 마법
+    desc: "마나를 사용하여 마법 {xp_unit}을 얻을 수 있습니다."
+  healing:
+    name: 치유
+    desc: "물약을 마시거나 던져서 치유 {xp_unit}를 얻을 수 있습니다."
+  forging:
+    name: 단조
+    desc: "모루로 책이나 도구 병합, 도구 수리 시 단조 {xp_unit}를 얻을 수 있습니다."
+sources:
+  fishing:
+    cod: 대구
+    salmon: 연어
+    tropical_fish: 열대어
+    pufferfish: 복어
+    treasure: 보물 아이템
+    junk: 버릴 아이템
+    rare: 레어 전리품
+    epic: 에픽 전리품
+  damage:
+    mob_damage: 몬스터에 의한 데미지
+    player_damage: 다른 플레이어에게 받은 피해
+    fall_damage: 낙하 데미지
+  statistic:
+    walk_per_meter: 걷기
+    sprint_per_meter: 달리기
+    swim_per_meter: 수영
+  jumping:
+    jump_per_100: 점프
+  brewing:
+    awkward: 이상한 물약 제조
+    regular: 기본 물약
+    extended: 지속시간 연장 물약 양조
+    upgraded: 강화된 물약 양조
+    splash: 투척용 물약 양조
+    lingering: 잔류형 물약 양조
+  enchanting:
+    weapon_per_level: 마법 부여 무기
+    armor_per_level: 인첸트 방어구
+    tool_per_level: 인첸트 도구
+    book_per_level: 인첸트 북
+  mana_ability_use:
+    mana_ability_use: 마나 능력 사용
+  item_consume:
+    drink_regular: 기본 물약 마시기
+    drink_extended: 지속시간 연장 물약 마시기
+    drink_upgraded: 강화된 물약 마시기
+    golden_apple: 황금사과 소비하기
+    enchanted_golden_apple: 마법이 부여된 황금 사과 사용
+  potion_splash:
+    splash_regular: 기본 물약 던지기
+    splash_extended: 지속시간 연장 물약 던지기
+    splash_upgraded: 강화된 물약 던지기
+    lingering_regular: 일반 잔류 물약 사용
+    lingering_extended: 지속시간 연장 물약 사용
+    lingering_upgraded: 강화된 잔류형 물약 사용
+  anvil:
+    combine_books_per_level: 마법이 부여된 책 결합
+    combine_weapon_per_level: 무기와 책 결합
+    combine_armor_per_level: 방어구와 책 결합
+    combine_tool_per_level: 도구와 책 결합
+  grindstone:
+    grindstone_per_level: 숫돌로 마법 부여 해제
+  units:
+    damage: 피해
+    meter: 미터
+    100_jumps: 100번 점프
+    mana: 마나 소모
+    combine_level: 수리 XP 비용
+    grindstone_level: 아이템 마법 부여 레벨
+    enchant_level: 마법 부여 레벨
+stats:
+  strength:
+    name: 힘
+    desc: "힘은 여러 도구들의 공격 피해를 증가시킵니다."
+  health:
+    name: 체력
+    desc: "체력은 보유한 {hp_unit} 양을 증가시켜전투에서 더 오래 버틸 수 있게합니다."
+  regeneration:
+    name: 재생력
+    desc: "재생은 체력과 마나를 회복하는 속도를 증가시킵니다."
+  luck:
+    name: 행운
+    desc: "행운은 채집 기술의 블록에서 추가 드롭 확률을 증가시킵니다."
+  wisdom:
+    name: 지식
+    desc: "지식은 최대 마나와 경험치 획득량을 높이고 모루 비용을 절감시킵니다."
+  toughness:
+    name: 단단함
+    desc: "단단함은 적으로부터 입는 피해를 감소시킵니다."
+  crit_chance:
+    name: 치명타 확률
+    desc: "치명타 확률은 치명타를 가할 확률입니다."
+  crit_damage:
+    name: 크리티컬 데미지
+    desc: "치명타 피해(Crit Damage) 는 치명타를 입힐 때 피해량이 증가하는 비율입니다."
+  speed:
+    name: 속도
+    desc: "속도는 걷고 달리는 속도를 증가시킵니다."
+traits:
+  attack_damage:
+    name: 공격 데미지
+  hp:
+    name: 체력
+  saturation_regen:
+    name: 포화 시 재생
+  hunger_regen:
+    name: 배고픔 재생
+  mana_regen:
+    name: 마나 재생
+  luck:
+    name: 행운 능력
+  double_drop:
+    name: 더블 드랍
+  experience_bonus:
+    name: 경험치 보너스
+  anvil_discount:
+    name: 모루 할인
+  max_mana:
+    name: 최대 마나
+  damage_reduction:
+    name: 피해 감소
+  crit_chance:
+    name: 치명타 확률
+  crit_damage:
+    name: 크리티컬 데미지
+  movement_speed:
+    name: 이동 속도
+  farming_luck:
+    name: 농업 행운
+  foraging_luck:
+    name: 채집 행운
+  mining_luck:
+    name: 채굴 행운
+  excavation_luck:
+    name: 발굴 행운
+  fishing_luck:
+    name: 낚시 행운
+ui:
+  maxed: 최대치
+units:
+  mana: 마나
+  hp: 체력
+  xp: 경험치
+file_version: 33

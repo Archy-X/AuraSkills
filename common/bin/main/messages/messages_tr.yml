@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: Verimli Hasat
+    desc: "Ekstra ürün şansını arttıran +{value} Tarım Şansı verir."
+    info: "+{value} Tarım Şansı"
+  farmer:
+    name: Çiftçi
+    desc: "{value}% daha fazla Tarım XP'si kazanın."
+    info: "{value}% XP"
+  scythe_master:
+    name: Tırpan Ustası
+    desc: "Çapaların hasarını {value}% arttırır."
+    info: "+{value}% Çapa Hasarı"
+  geneticist:
+    name: Genetikçi
+    desc: "Sebze ve meyvelerde doygunluğu {value} arttırır."
+    info: "+{value} Doygunluk"
+  growth_aura:
+    name: Büyüme Çehresi
+    desc: "Sizden {radius} blok uzaklık içindeki büyüme bitkiler {value}% daha hızlı büyür."
+    info: "+{value}% Büyüme"
+  lumberjack:
+    name: Oduncu
+    desc: "Ekstra ürün şansını arttıran +{value} Toplama Şansı verir."
+    info: "+{value} Toplama Şansı"
+  forager:
+    name: Toplayıcılık
+    desc: "{value}% daha fazla Toplayıcılık XP'si kazanın."
+    info: "{value}% XP"
+  axe_master:
+    name: Balta Ustası
+    desc: "Balta hasarını {value}% artırır"
+    info: "+{value}% Balta Hasarı"
+  valor:
+    name: Cesaret
+    desc: "Balta tutarken +{value} Kuvvet sağlar."
+    info: "+{value} Kuvvet"
+  shredder:
+    name: Parçalayıcı
+    desc: "{value}% şans ile baltalarla üç kat dayanıklılık hasarı verir."
+    info: "{value}% 3x Dayanıklık Hasarı"
+  lucky_miner:
+    name: Şanslı Madenci
+    desc: "Ekstra ürün şansını arttıran +{value} Maden Şansı verir."
+    info: "+{value} Maden Şansı"
+  miner:
+    name: Madenci
+    desc: "{value}% daha fazla Madencilik XP'si kazanın."
+    info: "+{value}% XP"
+  pick_master:
+    name: Kazma Ustası
+    desc: "Kazma ile {value}% daha fazla hasar verin."
+    info: "+{value}% Kazma Hasarı"
+  stamina:
+    name: Direnç
+    desc: "Kazma tutarken +{value} Dayanıklılık verir."
+    info: "+{value} Sertlik"
+  hardened_armor:
+    name: Sertleştirilmiş Zırh
+    desc: "{value}% şans ile zırh dayanıklılık hasarını iptal eder."
+    info: "{value}% Dayanıklılık Kaybı Yok"
+  lucky_catch:
+    name: Şanslı Tutuş
+    desc: "Ekstra ürün şansını arttıran +{value} Balıkçılık Şansı verir."
+    info: "+{value} Balıkçılık Şansı"
+  fisher:
+    name: Balıkçı
+    desc: "{value}% daha fazla Balıkçılık XP'si kazanın."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Hazine Avcısı
+    desc: "{value}% Balıkçılıktan nadir ganimet alma şansı."
+    info: "+{value}% Nadir Ganimet"
+  grappler:
+    name: Kıskaç
+    desc: "Mob Tutma Hızı {value}% artışı."
+    info: "+{value}% Kanca Hızı"
+  epic_catch:
+    name: Destansı Ganimet
+    desc: "{value}% Balık avında destansı ganimet alma şansı."
+    info: "+{value}% Destansı Ganimet"
+  metal_detector:
+    name: Metal Dedektörü
+    desc: "{value}% Kazıdan Nadir ganimet düşme şansı eklendi."
+    info: "+{value}% Nadir Ganimet"
+  excavator:
+    name: Ekskavatör
+    desc: "Daha Fazla {value}% Ekskavatör XP kazanın."
+    info: "{value}% XP"
+  spade_master:
+    name: Kürek Ustası
+    desc: "Küreklerle {value}% daha fazla hasar verin."
+    info: "+{value}% Kürek Hasarı"
+  bigger_scoop:
+    name: Büyük Kürek
+    desc: "Ekstra ürün şansını arttıran +{value} kazı Şansı verir."
+    info: "+{value}% Kazı Şansı"
+  lucky_spades:
+    name: Şanslı Kürek
+    desc: "Kazıdan % {value} destansı eşya çıkarma şansı."
+    info: "+{value}% Destansı Ganimet"
+  retrieval:
+    name: Geri alma
+    desc: "Kaçırdığınız oklar {value} blok uzaklığa kadar {time} sonra anında geri gelicektir."
+    info: "{value} Uzaklık"
+  archer:
+    name: Okçu
+    desc: "Daha fazla {value}% Okçuluk XP'si kazanın."
+    info: "{value}% XP"
+  bow_master:
+    name: Yay Ustası
+    desc: "Yay ile {value}% daha fazla hasar vurun."
+    info: "+{value}% Yay Hasarı"
+  piercing:
+    name: Delme
+    desc: "Okların yaratıkları delme şansı {value}%."
+    info: "{value}% Delme şansı"
+  stun:
+    name: Sersemletme
+    desc: "Düşmanı 2 Saniye boyunca %20 yavaşlatma şansı {value}%"
+    info: "{value}% Sersemletme Şansı"
+  shielding:
+    name: Koruyucu
+    desc: "Gelen Hasarı Eğilirken {value}% Azaltır."
+    info: "Eğilirken Gelen Hasar -{value}%"
+  defender:
+    name: Savunmacı
+    desc: "Daha Fazla Savunma Xp si Kazan {value}%."
+    info: "{value}% XP"
+  mob_master:
+    name: Canavar ustası
+    desc: "Moblardan Gelen Hasarı Azaltır {value}%"
+    info: "-{value}% Mob Hasarı"
+  immunity:
+    name: Bağışıklık
+    desc: "{value}% şansla düşman saldırısını tamamen iptal eder."
+    info: "{value}% Bağışıklık"
+  no_debuff:
+    name: Olumsuz Etki Direnci
+    desc: "Zararlı iksir etkilerini engelleme şansı {value}%."
+    info: "{value}% Olumsuz Etki Direnci"
+  parry:
+    name: Savuştur
+    desc: "Vurulmadan önce {time} saniye içinde bir kılıç darbesini kaçırmak, hasarı {value}% azaltır ve geri tepmeyi iptal eder."
+    info: "{value}% hasar azaltma"
+    parried: "<red>Saldırı Savuşturma"
+  fighter:
+    name: Savaşçı
+    desc: "Daha fazla {value}% Savaşçı Xp si kazanın."
+    info: "{value}% XP"
+  sword_master:
+    name: Kılıç ustası
+    desc: "Kılıçlarla {value}% daha fazla hasar ver."
+    info: "+{value}% Kılıç Hasarı"
+  first_strike:
+    name: İlk Vuruş
+    desc: "İlk vuruşta {value}% daha fazla hasar verin."
+    info: "+{value}% İlk vuruşta hasar"
+    dealt: "<red>İlk Saldırı!"
+  bleed:
+    name: Kanama
+    desc: "Düşmanın {base_ticks} kanamasını sağlamak için {value}% şans, her tick başına {value_2} hasar verir. {added_ticks} tick zaten kanamakta olan düşmanlara eklenir."
+    info: "{value}% Şans, {value_2} Hasar"
+    enemy_bleeding: "<red>Düşman Kanaması!"
+    self_bleeding: "<red>Kanıyorsun!"
+    stop: "<white>Kanaman durdu"
+  anti_hunger:
+    name: Acıkmama
+    desc: "{value}% açlık kaybını durdurma şansı."
+    info: "{value}% Daha Az Acıkma"
+  runner:
+    name: Koşucu
+    desc: "%{value} Daha fazla dayanıklılık XP si kazanın."
+    info: "+{value}% Xp"
+  golden_heal:
+    name: Altın Kalp
+    desc: "Rejenerasyon etkisi sağlık kazanımını arttırır. {value}%"
+    info: "+{value}% Can Yenilenmesi Efekti"
+  recovery:
+    name: İyileşme
+    desc: "Canın Yarıdan Az kalınca {value}% Doğal Can Yenilenmesini Arttırır"
+    info: "+{value}% Düşük Can Yenilenmesi"
+  meal_steal:
+    name: Açlık Çalma
+    desc: "Oyunculara Saldırdığınızda {value}% 1 Açlık Barı Çalma Şansı."
+    info: "{value}% Açlık Çalma"
+  light_fall:
+    name: Hafif Düşüş
+    desc: "Düşme Hasarını {value}% azaltır"
+    info: "-{value}% Düşme Hasarı"
+  jumper:
+    name: Zıplama
+    desc: "{value}% Daha Fazla Çeviklik Kazanma."
+    info: "{value}% XP"
+  sugar_rush:
+    name: Şeker Koşusu
+    desc: "Tüketilen ve patlayan hız ve sıçrama artırma iksirleri {value}% daha uzun süre dayanır."
+    info: "{value}% Daha fazla Hız"
+  fleeting:
+    name: Adrenalin
+    desc: "Sağlık 20%'nin Altındayken +{value}% Haraket Hızı Kazan."
+    info: "+{value}% Hız"
+    start: "<white>Kısa süreli bir hız artışı kazandınız! <gray>(+{value}% Hız)"
+    end: "<gray>Hız Artışı Geçti"
+  thunder_fall:
+    name: Şimşek Düşüşü
+    desc: "Bir düşüş sırasında gizlenirken, 3 blok yarıçapındaki çetelere beklenen düşüş hasarının {value_2}%'sini vermek için {value}% şansınız olur."
+    info: "{value}% Şans,{value_2}% Hasar"
+  alchemist:
+    name: Simyacı
+    desc: "Hazırladığınız İksirler {value}% Daha Uzun Süresi Olur."
+    info: "+{value}% İksir Süresi"
+  brewer:
+    name: İksirci
+    desc: "{value}% daha fazla Simya XP'si kazan."
+    info: "{value}% XP"
+  splasher:
+    name: Patlayıcı
+    desc: "Fırlattığınız iksirler, etkilenen her oyuncu için {value}% daha uzun süre etkili olur."
+    info: "+{value}% Süre/Oyuncu"
+  lingering:
+    name: Kalıcı
+    desc: "Kalıcı İksirler Doğal Olarak {value}% Azalır.Daha Yavaş Ve Etkilenen Varlık başına {value_2}% Daha Az Azalır."
+    info: "-{value}% Doğal, -{value_2}% Varlık Çürümesi"
+  wise_effect:
+    name: Bilge Etkisi
+    desc: "Her benzersiz aktif iksir etkisi için {value} Bilgelik kazanın."
+    info: "+{value} Bilgelik/Efekt"
+  xp_convert:
+    name: XP Dönüştürme
+    desc: "Kazandığınız her {value} beceri XP'si için 1 Minecraft deneyimi kazanın."
+    info: "1 EXP/ {value} Yetenek XP'si"
+  enchanter:
+    name: Büyücü
+    desc: "{value}% daha fazla Büyücü XP'si kazanın."
+    info: "{value}% XP"
+  xp_warrior:
+    name: XP Savaşçısı
+    desc: "Öldürdüğünüz canlılar {value}% olasılıkla 2 kat Xp düşürür."
+    info: "{value}% 2x Mob XP"
+  enchanted_strength:
+    name: Büyülü Güç
+    desc: "Sahip olunan eşya üzerindeki her benzersiz büyü için {value} Güç kazanılır."
+    info: "{value} Büyü/Kuvvet"
+  lucky_table:
+    name: Şanslı Masa
+    desc: "Büyü masasını kullanarak büyülediğiniz öğelerin, maksimum seviye değilse büyü seviyesini 1 yükseltme şansı {value}% 'dir."
+    info: "{value}% Büyü Yükseltme Şansı"
+  life_essence:
+    name: Yaşam Özü
+    desc: Anında Sağlık iksirleri {value}% daha fazla iyileştirir.
+    info: "+{value}% Anında Sağlık"
+  healer:
+    name: Şifacı
+    desc: '{value}% daha fazla İyileştirme XP''si kazanın.'
+    info: "{value}% XP"
+  life_steal:
+    name: Can Çalma
+    desc: Öldürdüğünüz yaratıkların veya oyuncuların {value}% maksimum HP'si kadar HP dolar.
+    info: "Can çalma {value}%"
+  golden_heart:
+    name: Altın Kalp
+    desc: Aldığınız hasar verilen hasar {value}% oranında azalır
+    info: "-{value}% soğurma Hasarı"
+  revival:
+    name: Canlanma
+    desc: Yeniden doğumdan itibaren 30 saniye boyunca +{value} sağlık ve +{value_2} yenilenme.
+    info: "+{value} Sağlık, +{value_2} Yenilenme"
+    message: "<white>30 saniye boyunca bir canlanma bonusu kazandınız! <white>(<red>+{value} Sağlık, <gold>+{value_2} Yenilenme<white>)"
+  disenchanter:
+    name: Bileyici
+    desc: Bileme taşı kullanarak eşyaların büyüsünü bozarken {value}% daha fazla deneyim kazanın.
+    info: "+{value}% Bileme Taşı EXP"
+  forger:
+    name: Demirci
+    desc: '{value}% daha fazla Demircilik XP''si kazanın.'
+    info: "{value}% XP"
+  repairing:
+    name: Onarım
+    desc: Eşyanın yapıldığı hammaddeyi kullanarak örste & eşyaları onarmak {value}% daha fazla dayanıklılık sağlar.
+    info: "+{value}% Örs Onarımı"
+  anvil_master:
+    name: Örs Ustası
+    desc: Bir örsün çok pahalı hale gelmeden önceki maksimum & onarım maliyetin {value} deneyime yükseltir.
+    info: "{value} Maksimum Maliyet"
+  skill_mender:
+    name: Beceri Tamircisi
+    desc: Beceri deneyimi kazanmak, tutulan bir eşyayı veya aşınmış zırh parçasını Tamir büyüsü ile 2 beceri deneyimi başına 1 dayanıklılık ile tamir etme {value}% şansına sahiptir.
+    info: "{value}% Şansı Düzelt"
+acf:
+  core:
+    permission_denied: "<red>Bu komutu kullanabilmek için yetkiniz yok."
+    permission_denied_parameter: "<red>Bu komutu kullanabilmek için yetkiniz yok."
+    error_generic_logged: "<red>Bir hata oluştu. Bu sorun günlüğe kaydedildi. Rahatsızlıktan dolayı özür dileriz."
+    unknown_command: "<red>Bilinmeyen Komut, lütfen <yellow>/sk help yazınız."
+    invalid_syntax: "<yellow>Kullanım: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Hata: {message}"
+    error_performing_command: "<red>Üzgünüm ama bu komutu yerine getirirken bir hata oluştu."
+    please_specify_one_of: "<red>Hata: Lütfen aşağıdakilerden birini belirtin: (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Hata: {num} bir sayı olmalıdır."
+    must_be_min_length: "<red>Hata: En az {min} karakter uzunluğunda olmalıdır."
+    must_be_max_length: "<red>Hata: En fazla {max} karakter uzunluğunda olmalıdır."
+    please_specify_at_most: "<red>Hata: Lütfen en fazla bir değer belirtin {max}."
+    please_specify_at_least: "<red>Hata: Lütfen en azından bir değer belirtin {min}."
+    not_allowed_on_console: "<red>Hata: Konsol bu komutu yürütemez."
+    could_not_find_player: "<red>Hata: İsme göre bir oyuncu bulunamadı: <yellow>{search}"
+    no_command_matched_search: "<red>Hiçbir komut eşleşmedi <yellow>{search}."
+    help_page_information: "<aqua> - Sayfa gösteriliyor <green>{page} <aqua> <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Hata: Daha fazla sonuç yok."
+    help_header: "<yellow>=== <aqua>İçin yardım gösteriliyor <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>İçin ayrıntılı yardım gösteriliyor <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>İçin arama sonuçları <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>Hata: O dünya yok."
+    you_must_be_holding_item: "<red>Hata: Bir öğeyi ana elinizde tutuyor olmalısınız."
+    player_is_vanished_confirm: "<yellow>Uyarı: <green> {vanished} <yellow> kayboldu. Onların gizliliğini bozma!\n<yellow>Eyleminizi onaylamak için adlarının sonuna <green>:onayla <yellow> ekleyin.\n<yellow>Ör: {vanished}: onayla"
+    username_too_short: "<red>Hata: Kullanıcı adı çok kısa, en az üç karakter olmalıdır."
+    is_not_a_valid_name: "<red>Hata: <yellow>{name} <red>geçerli bir kullanıcı adı değil."
+    multiple_players_match: "<red>Hata: Birden fazla oyuncu <aqua> {search} <yellow> ({all}) <red> ile eşleşti, lütfen daha spesifik olun."
+    no_player_found_server: "<red>Bu sunucuya <yellow>{search} <red> ile eşleşen hiçbir oyuncu bağlı değildir."
+    no_player_found_offline: "<red><yellow>{search}<red> ile eşleşen hiçbir oyuncu bulunamadı."
+    no_player_found: "<red><yellow>{search} <red> ile eşleşen hiçbir oyuncu bulunamadı."
+    location_please_specify_world: "<red>Hata: Lütfen dünyayı belirtin. Örnek: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Hata: Lütfen x, y ve z koordinatlarını belirtin. Örnek: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Hata: Konsol konum için göreli koordinatlar kullanmayabilir."
+commands:
+  prefix: "<dark_gray>[<aqua>Yetenekler<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat} <gray>öğenize <aqua>{value} <gray> düzeyinde bir değiştirici eklendi"
+        already_exists: "<yellow>Zırhınızda {color} {stat} <yellow> durumuna sahip bir zırh değiştirici zaten var! Önce onu çıkarın /sk armor modifier remove"
+      remove:
+        does_not_exist: "<yellow>Öğenizde {color}{stat} <yellow> değiştiricisi yok!"
+        removed: "{color}{stat} <gray>değiştirici öğenizden kaldırıldı"
+      list:
+        header: "<white>Zırh değiştiriciler bulundu:"
+      removeall:
+        removed: "<gray>Tüm zırh değiştiriciler öğenizden kaldırıldı"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>öğenize <aqua>{value} <gray> değerine sahip çarpan eklendi"
+        already_exists: "<yellow>Zırhınızda <aqua> {target} <yellow> hedefine sahip bir zırh çarpanı zaten var! Önce / sk armor multiplier remove ile çıkarın"
+        skill_lore: "<gray>Giyildiğinde: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Giyildiğinde: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Giyildiğinde: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>Giyildiğinde: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Öğenizde <aqua>{target} <yellow> zırh çarpanı yok!"
+        removed: "<aqua>{target} <gray>zırh çarpanı öğenizden kaldırıldı"
+      list:
+        header: "<white>Zırh çarpanları bulundu:"
+      removeall:
+        removed: "<gray>Tüm zırh çarpanları öğenizden kaldırıldı"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> öğenize <aqua>{level}<gray> seviyesine sahip zırh gereksinimi eklendi"
+        already_exists: "<yellow>Öğenin zaten bir <dark_aqua> {skill} <yellow> zırh gereksinimi var! Önce <gold> / sk armor requirement remove ile çıkarın kaldır"
+        lore: "<red>Gerekli <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Eşyanızın <dark_aqua>{skill}<yellow> zırh gereksinimi yok!"
+        removed: "<dark_aqua>{skill}<gray> zırh gereksinimi öğenizden kaldırıldı"
+      list:
+        header: "<white>Zırh gereksinimleri bulundu:"
+      removeall:
+        removed: "<gray>Tüm zırh gereksinimleri öğenizden kaldırıldı"
+      equip: "<yellow>Bu öğeyi donatmak için gereken şartları karşılamıyorsunuz: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Bir yedeğin yüklenmesi oyuncuların tüm beceri verilerini geri alır. Bu eylem kalıcıdır ve geri alınamaz. Bir yedek yüklemeden önce bir yedek kaydetmek isteyebilirsiniz. Bu eylemi onaylamak için komutu tekrar yazın"
+      loading: "<white>Yedekleme yükleniyor..."
+      loaded: "<green>Yedekleme başarıyla yüklendi"
+      error: "<red>Yedekleme yüklenirken hata oluştu: {error}"
+      must_be_yaml: "<yellow>Dosya bir .yml dosyası olmalıdır!"
+      file_not_found: "<yellow>Backups klasöründe bu dosya adına ait bir yedek mevcut değil!"
+    save:
+      saving: "<white>Yedekleme kaydetme..."
+      saved: "<white>olarak yedeklenen {type} verileri {file}"
+      error: "<red>{type} verilerini yedeklerken hata oluştu! Ayrıntılar için konsolda/aşağıda hataya bakın"
+  claimitems:
+    no_items: "<yellow>Talep edeceğiniz bir şey yok"
+  item:
+    give:
+      sender: "<white><aqua>{amount}x {key} <white>'a verdi {player}"
+      receiver: "<white>Sana verildi <aqua>{amount}x {key}"
+    modifier:
+      add:
+        added: "{color}{stat} <gray> seviye <aqua>{value} ile değiştirici <gray> öğenize eklendi"
+        already_exists: "<yellow>Stat {color}{stat} ile bir eşya değiştiricisi <yellow>zırhınızda zaten var! Önce /sk item modifier remove ile kaldırın"
+      remove:
+        does_not_exist: "<yellow>Öğenizin bir {color}{stat}'ı yok <yellow>değiştirici!"
+        removed: "{color}{stat} <gray>değiştirici öğenizden kaldırıldı"
+      list:
+        header: "<white>Öğe değiştiricileri bulundu:"
+      removeall:
+        removed: "<gray>Tüm öğe değiştiricileri öğenizden kaldırıldı"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray> değeri ile çarpan <aqua>{value} <gray> öğenize eklendi"
+        already_exists: "<yellow> Hedef <aqua>{target} ile bir eşya çarpanı <yellow> eşyanızda zaten var! Önce /sk item multiplier remove ile kaldırın"
+        skill_lore: "<gray>Tutulduğunda: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Tutulduğunda: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Tutulduğunda: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>Tutulduğunda: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow> Öğenizin bir <aqua>{target}'i yok <yellow> öğe çarpanı!"
+        removed: "<aqua>{target} <gray>öğe çarpanı öğenizden kaldırıldı"
+      list:
+        header: "<white>Öğe çarpanları bulundu:"
+      removeall:
+        removed: "<gray>Tüm öğe çarpanları öğenizden kaldırıldı"
+    register:
+      registered: "<white>Kayıtlı tutulan öğe anahtara {key}"
+      already_registered: "<yellow><white>{key}<yellow> anahtarına zaten kayıtlı bir öğe var, önce kaydı kaldırmak için <white>/skills item unregister <yellow> öğesini kullanın"
+      no_spaces: "<yellow>Öğe anahtarı boşluk içeremez!"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> öğenize <aqua>{level}<gray> seviyeli öğe gereksinimi eklendi"
+        already_exists: "<yellow>Öğenin zaten bir <dark_aqua>{skill}<yellow> öğe gereksinimi var! Önce <gold>/sk item requirement remove ile kaldırın"
+        lore: "<red>Gerekli <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Eşyanızın <dark_aqua>{skill}<yellow> eşya gereksinimi yok!"
+        removed: "<dark_aqua>{skill}<gray> öğe gereksinimi öğenizden kaldırıldı"
+      list:
+        header: "<white>Ürün gereksinimleri bulundu:"
+      removeall:
+        removed: "<gray>Tüm öğe gereksinimleri öğenizden kaldırıldı"
+      use: "<yellow>Bu öğeyi kullanmak için gereken şartları karşılamıyorsunuz: {requirements}"
+    unregister:
+      unregistered: "<white>Anahtarlı kayıtsız öğe {key}"
+      not_registered: "<yellow>Anahtar ile kayıtlı bir öğe yok {key}"
+  lang:
+    set: "<gray>Dil şu şekilde ayarlandı <aqua>{lang}"
+    not_found: "<yellow>Dil bulunamadı!"
+  mana:
+    display: "<white>Senin {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    add: "<gray>Oyuncuya <aqua>{amount} {mana_unit} <gray>eklendi <gold>{player}"
+    remove: "<gray>Oyuncudan <aqua>{amount} {mana_unit} <gray>çıkarıldı <gold>{player}"
+    set: "<gray>Oyuncuyu şu şekilde <gold>{player} <gray>ayarlayın <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} en az sıfır olmalıdır!"
+    console_specify_player: "<yellow>Konsol bir oyuncu belirtmelidir!"
+  modifier:
+    add:
+      added: "{color}{stat} <gray> değiştirici seviyesi <aqua>{value} <gray> oyuncuya <white>{name} <gray> adı ile eklendi <gold>{player}"
+      already_exists: "<yellow>Oyuncu <gold>{player}<yellow> üzerinde {name} isimli değiştirici zaten mevcut! <gold>/sk modifier remove ile kaldırın {player} {name}"
+    remove:
+      not_found: "<yellow>Oyuncu için {name} değiştiricisi bulunamadı <gold>{player}"
+      removed: "<gray>Değiştirici <white>{name} <gray> oyuncudan kaldırıldı <gold>{player}"
+    list:
+      all_stats_header: "<gray>Oyuncu için istatistik değiştiriciler <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Oyuncu için ({color}{stat}<gray>) istatistik değiştiriciler <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Sadece oyuncular kendi değiştiricilerini listeleyebilir! Bir oyuncu belirtmeyi deneyin"
+    removeall:
+      removed_all_stats: "<gray><aqua>{num} kaldırıldı <gray> oyuncudan gelen durum değiştiriciler <gold>{player}"
+      removed_one_stat: "<gray>Kaldırıldı <aqua>{num} {color}{stat} <gray> oyuncudan gelen değiştiriciler <gold>{player}"
+      players_only: "<yellow>Sadece oyuncular kendi değiştiricilerini kaldırabilir! Bir oyuncu belirtmeyi deneyin"
+  multiplier:
+    global: Küresel
+    list: "<white>için global XP çarpanı <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP çarpanı: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Sadece oyuncular kendi çarpanlarını listeleyebilir! Bir oyuncu belirtin!"
+  preset:
+    load:
+      confirm: "<red>Bir ön ayar yüklemek yapılandırma dosyalarınızı geçersiz kılacaktır! Aşağıdaki dosyalar etkilenecektir <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>Bu eylem geri alınamaz, gereken dosyaları manuel olarak yedekleyin. Onaylamak için komutu tekrar yazın."
+      loaded: Ön ayar {name} başarıyla yüklendi, sunucuyu şimdi yeniden başlatın.
+      created: Oluşturulan dosyalar
+      modified: Değiştirilmiş dosyalar
+      replaced: Değiştirilen dosyalar
+      deleted: Silinmiş dosyalar
+      skipped: Atlanan dosyalar
+  profile:
+    skills: "Şunlar için yetenek profili <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Yetenekler:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "İstatistik profili için <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>İstatistik:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Toplam Seviye: <white>{total_level}<gray>, Temel Seviye: <white>{base_level}<gray>, Değiştirilmiş Seviye: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>Yetenek Sıralamanız"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+  reload: "<green>Yapılandırma yeniden yüklendi!"
+  save:
+    already_saving: "<yellow>Veriler zaten kaydediliyor!"
+    mysql_not_enabled: "<yellow>MySQL sunucu başlangıcında etkinleştirilmedi, bunun yerine dosyaya kaydedildi!"
+    saved: "<green>Kaydedilen yetenek verileri!"
+  skill:
+    setall:
+      set: "<gray>Tüm beceriler <aqua>{level} seviyesine ayarlandı <gray>oyuncu için <gold>{player}"
+    setlevel:
+      set: "<gray>Yetenek <aqua>{skill} <gray>seviye <aqua>{level} olarak ayarlandı <gray> oyuncu için <gold>{player}"
+    at_least: "<yellow>Seviye en az aşağıdaki gibi olmalıdır {level}!"
+  toggle:
+    enabled: "<green>Becerilerinizin eylem çubuğu etkinleştirildi"
+    disabled: "<red>Becerilerinizin eylem çubuğu devre dışı bırakıldı"
+    not_enabled: "<yellow>Skills eylem çubuğu bu sunucuda etkin değil!"
+  top:
+    power_header: "<white>--==<aqua><bold>Tüm Beceriler Liderlik Tablosu</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Tüm Beceriler Liderlik Tablosu</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Liderlik Tablosu</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Liderlik Tablosu</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Beceri Ortalaması Lider Tablosu</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Beceri Ortalaması Lider Tablosu</bold><white>(Page {page})==--"
+    usage: "<yellow>Kullanım: <green>/sk top <white><page> <gray>veya <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Oyuncu verileri <gray>{from} <green>'den <gray>{to}'ya başarıyla aktarıldı"
+    error: "<red>Oyuncu verilerini aktarırken bir hata oluştu. Hatalar için konsolu kontrol et."
+  updateleaderboards:
+    already_updating: "<yellow>Lider tablosu zaten güncelleniyor!"
+    updated: "<green>Lider tablosu güncellendi!"
+  version: "<white>Kullandığın AuraSkills sürümü <aqua>{current_version}<white>. Son sürüm <aqua>{latest_version}"
+  xp:
+    add: "<gray>Oyuncuya <aqua>{amount} {skill} <gray>XP eklendi <gray>{player}"
+    set: "<gray>Oyuncu <gray>{player} için <aqua>{skill} <gray>XP ayarlayın <gray> {amount}"
+    remove: "<gray>Oyuncudan <aqua>{amount} {skill} <gray>XP kaldırıldı <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+  unknown_skill: "<yellow>Bilinmeyen beceri!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Bilinmeyen statü!"
+  no_profile: "<yellow>Oyuncunun bir beceri profili yok. Lütfen oyuna tekrar katılmayı veya sunucuyu yeniden başlatmayı deneyin."
+leveler:
+  level_up: "{skill} Seviye Yükseltme"
+  skill_level_up: Beceri Seviyesi Yükseltme
+  rewards: Ödüller
+  ability_unlock: Yetenek Kilidi Açma
+  ability_level_up: Yetenek Seviyesi Yükseltme
+  mana_ability_unlock: Mana Yeteneği Kilidini Açma
+  mana_ability_level_up: Mana Yeteneği Seviye Yükseltme
+  unclaimed_item: "<red>Envanteriniz dolu olduğu için sahipsiz eşyalarınız var, onları sahiplenmek için <yellow>/skills claimitems <red>kullanın"
+menus:
+  common:
+    close: "Kapat"
+    level: "Level"
+    progress_to_level: "Seviyeye İlerleme"
+    max_level: "MAX SEVİYE"
+    ability_levels: "Yetenek Seviyeleri"
+    stats_leveled: "İstatistikler Seviyelendirildi"
+    mana_ability: "Mana Yeteneği"
+    duration: "Süre"
+    mana_cost: "Mana Maliyeti"
+    cooldown: "Bekleme Süresi"
+    damage: "Hasar"
+    max_mana_cost: "Maksimum Mana Maliyeti"
+    attack_speed: "Saldırı Hızı"
+    back: "Geri Dön"
+    back_click: "{menu_name} Menüsüne Geri Dön"
+    unlocked: "KİLİTLİ DEĞİL"
+    in_progress: "DEVAM EDİYOR"
+    locked: "KİLİTLİ"
+    your_level: "Senin Seviyen"
+    next_page: "Sonraki Sayfa"
+    next_page_click: "Sonraki sayfaya gitmek için tıklayın"
+    previous_page: "Önceki Sayfa"
+    previous_page_click: "Önceki sayfaya gitmek için tıklayın"
+  skills:
+    skills_title: "Yetenekleriniz"
+    your_skills: "Yetenekleriniz"
+    your_skills_desc: "Değerli istatistik artışları, yetenekler ve daha fazlasının kilidini açmak için çeşitli görevleri yaparak Becerileri Yükseltin!"
+    your_skills_hover: "Daha fazla bilgi için bir Becerinin üzerine gelin!"
+    your_skills_click: "Seviye ilerlemesini görüntülemek için bir Beceriye tıklayın!"
+    skill_click: "Seviye İlerlemesini görmek için tıklayın!"
+    stats: "İstatistikler"
+    stats_desc: "Yeteneklerinin seviyesini yükselterek istatistik güçlendirmeleri kazanın"
+    stats_click: "Daha fazla bilgi edinmek veya istatistiklerinizi görüntülemek için tıklayın"
+  level_progression:
+    level_progression_title: "{skill} Seviye - Sayfa {page}"
+    your_ranking: "Yetenek Sıralamanız"
+    rank_out_of: "<1>{total} oyuncular arasında <2>{rank}</2> sırasındasınız</1>"
+    rank_percent: "<1>Oyuncuların en iyi <2>{percent}%</2>'sindesiniz</1>"
+    rewards: "Ödüller"
+    ability_unlock: "Yetenek Kilidi Açma"
+    mana_ability_unlock: "Mana Yeteneği Kilidini Açma"
+    progress: "İlerleme"
+    leaderboard_click: "{skill} liderlik tablosunu görüntülemek için tıklayın"
+    sources: "XP Kaynakları"
+    sources_desc: "Kaynaklar menüsü, bir beceride XP kazanabileceğiniz tüm yolları ve her kaynağın ne kadar XP verdiğini gösterir."
+    sources_click: "{skill} kaynaklarını görüntülemek için tıklayın"
+    abilities: "Yetenekler"
+    abilities_desc: "<2>Yetenekler</2> <1>yeteneklerinizin seviyesini yükselttikçe açtığınız ve yükselttiğiniz pasif avantajlardır.</1>"
+    mana_abilities_desc: "<3>Mana Yetenekleri</3> <1>aktivasyon gerektiren ve mana tüketen özel bir yetenek türüdür.</1>"
+    abilities_click: "{skill} yeteneklerini görüntülemek için tıklayın"
+  stats:
+    stats_title: İstatistikleriniz
+    skills: "Yetenekler"
+    added_drop: "+{value} Düşer"
+    added_drops: "+{value} Düşer"
+    chance_drop: "{chance}% for +{value} Düşer"
+    chance_drops: "{chance}% for +{value} Düşer"
+  unclaimed_items:
+    unclaimed_items_title: "Talep Öğeleri"
+    inventory_full: "Envanterinizde bu öğeyi talep etmek için yeterli alanınız yok"
+    click_to_claim: "Talep etmek için tıklayın!"
+  leaderboard:
+    leaderboard_title: "{skill} Liderlik Tablosu"
+  sources:
+    sources_title: "{skill} XP Kaynakları"
+    sorter: "XP Kaynaklarını Sırala"
+    descending: "En Yüksekten En Düşüğe"
+    ascending: "En Düşükten En Yükseğe"
+    alphabetical: "Ad (A-Z)"
+    reverse_alphabetical: "Ad (Z-A)"
+    sort_click: "Sıralama türünü değiştirmek için tıklayın"
+    multiplied_xp: "Çarpılmış {xp_unit}"
+    multiplied_desc: "Bu, mevcut XP çarpanlarınıza göre gerçekte kazanacağınız XP'dir"
+  abilities:
+    abilities_title: "{skill} Yetenekler"
+    description: "Açıklama"
+    unlocked_at: "<1>Kilidi açıldı <2>{skill} {level}"
+    next_upgrade_at: "<1>Bir sonraki yükseltme <2>{skill} {level}"
+mana_abilities:
+  replenish:
+    name: Yenilemek
+    desc: "Bitkileri {value} saniye boyunca otomatik olarak yeniden eker. <1>[Etkinleştirmek için çapaya sağ tıklayın ve kırpmayı kırın]"
+    raise: "<gray>Çapanı hazırlıyorsun"
+    lower: "<gray>Çapanı indiriyorsun"
+    start: "<gold>Yenilenmen etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Yenilemenin etkisi geçti"
+  treecapitator:
+    name: Treecapitator
+    desc: "Tüm ağaçları {value} saniye boyunca anında kırar. <1>[Etkinleştirmek için baltaya sağ tıklayın ve odunu kırın]"
+    raise: "<gray>Baltanı hazırlıyorsun"
+    lower: "<gray>Baltanı indiriyorsun"
+    start: "<gold>Treecapitator etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator etkisi geçti"
+  speed_mine:
+    name: Hızlı Kazım
+    desc: "{value} saniye boyunca {haste_level} Hız verir. <1>[Etkinleştirmek için kazmaya ve maden bloğuna sağ tıklayın]"
+    raise: "<gray>Kazmanı hazırlıyorsun"
+    lower: "<gray>Kazmanı indiriyorsun"
+    start: "<gold>Hızlı Kazım etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Hızlı Kazım etkisi geçti"
+  absorption:
+    name: Emilim
+    desc: "Gelen hasar, {value} saniye boyunca sağlığınız yerine mananızı 2 kat Minecraft hasarı kadar azaltır. Absorption aktifken mana yenilenmez. <1>[Kalkana sol tıklayın ve etkinleştirmek için hasar alın]"
+    raise: "<gray>Kalkanını hazırlıyorsun"
+    lower: "<gray>Kalkanını indiriyorsun"
+    start: "<gold>Emilim etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Emilimin etkisi geçti"
+  terraform:
+    name: Terraform
+    desc: "Kazarken, bağlı blokları anında {radius} blok yarıçapında yatay olarak {value} saniye boyunca kırın. <1>[Etkinleştirmek için küreğe sağ tıklayın ve bloğu kazın]"
+    raise: "<gray>Küreğini hazırlıyorsun"
+    lower: "<gray>Küreğini indiriyorsun"
+    start: "<gold>Terraform etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform etkisi geçti"
+  sharp_hook:
+    name: Keskin Kanca
+    desc: "Olta ile sol tıklandığında oltaya takılan varlığa {value} hasarı verir"
+    use: "<gold>Kullanılmış Keskin Kanca! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: Şarjlı Atış
+    desc: "Attığınız oklar, yayın ne kadar geriye çekildiğine bağlı olarak daha fazla hasar verir ve bu sırada mana tüketir. Tüketilen mana başına {value}% daha fazla hasar verir. <1>[Şarjlı atış moduna geçmek için bir yaya sol tıklayın]"
+    enable: "<gray>Şarjlı çekim modu artık etkin"
+    disable: "<gray>Şarjlı çekim modu artık devre dışı"
+    shoot: "<gold>Kullanılmış Şarjlı Atış! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: Yıldırım Kılıcı
+    desc: Saldırı hızını {duration} saniye boyunca {value}% artırır. <1>[Etkinleştirmek için kılıca sağ tıklayın ve canavara saldırın]
+    raise: "<gray>Kılıcını hazırlıyorsun"
+    lower: "<gray>Kılıcını indiriyorsun"
+    start: "<gold>Yıldırım Kılıcı etkinleştirildi! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Yıldırım Kılıcı'nın etkisi geçti"
+  not_ready: "<red>Yetenek hazır değil! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Yeterli MANA yok! <gray>({mana} {mana_unit} gerekli)"
+skills:
+  farming:
+    name: Çiftçilik
+    desc: "Çiftçilik kazanmak için mahsülleri hasat edin {xp_unit}"
+  foraging:
+    name: Toplayıcılık
+    desc: "Toplayıcılık kazanmak için ağaç kesin {xp_unit}"
+  mining:
+    name: Madencilik
+    desc: "Madencilik kazanmak için madencilik yapın {xp_unit}"
+  fishing:
+    name: Balıkçılık
+    desc: "Balıkçılık kazanmak için balık yakalayın {xp_unit}"
+  excavation:
+    name: Ekskavatör
+    desc: "Ekskavatör kazanmak için kürekle kazım yapın {xp_unit}"
+  archery:
+    name: Okçuluk
+    desc: "Okçuluk kazanmak için canavarları ve oyuncuları yay ile vurun {xp_unit}"
+  defense:
+    name: Savunma
+    desc: "Savunma kazanmak için canavarlardan hasar alın {xp_unit}"
+  fighting:
+    name: Savaş
+    desc: "Savaş kazanmak için yakın dövüş silahlarıyla canavarlarla savaşın {xp_unit}"
+  endurance:
+    name: Dayanıklılık
+    desc: "Dayanıklılık kazanmak için yürüyün veya koşun {xp_unit}"
+  agility:
+    name: Çeviklik
+    desc: "Çeviklik kazanmak için etrafta dolaşın ve düşme hasarı alın {xp_unit}"
+  alchemy:
+    name: Simya
+    desc: "Simya kazanmak için iksirleri üretin ve kullanın {xp_unit}"
+  enchanting:
+    name: Büyüleyici
+    desc: "Büyüleme, birleştirme ve bileme taşları Büyüleme kazandırır {xp_unit}"
+  sorcery:
+    name: Büyücülük
+    desc: "Büyücülük kazanmak için mana yeteneklerini kullanın {xp_unit}"
+  healing:
+    name: İyileşme
+    desc: "Şifa kazanmak için iksir iç veya sıçrat {xp_unit}"
+  forging:
+    name: Demircilik
+    desc: "Demircilik kazanmak için kitapları bir örste birleştirin ve uygulayın {xp_unit}"
+sources:
+  fishing:
+    cod: Morina
+    salmon: Somon
+    tropical_fish: Tropikal Balık
+    pufferfish: Kirpi Balığı
+    treasure: Hazine Eşyaları
+    junk: Çöp Eşyalar
+    rare: Nadir Ganimet
+    epic: Destansı Ganimet
+  damage:
+    mob_damage: Mobların Verdiği Hasar
+    player_damage: Oyunculardan Kaynaklanan Hasar
+    fall_damage: Düşme Hasarı Alma
+  statistic:
+    walk_per_meter: Yürüme
+    sprint_per_meter: Koşma
+    swim_per_meter: Yüzme
+  jumping:
+    jump_per_100: Zıplama
+  brewing:
+    awkward: Garip İksir Üret
+    regular: Sıradan İksir Üret
+    extended: Uzatılmış Süreli İksir Üret
+    upgraded: Güçlü İksir Üret
+    splash: Patlayıcı İksir Üret
+    lingering: Kalıcı İksir Üret
+  enchanting:
+    weapon_per_level: Silah Büyüsü
+    armor_per_level: Zırh Büyüsü
+    tool_per_level: Eşya Büyüsü
+    book_per_level: Büyü Kitabı
+  mana_ability_use:
+    mana_ability_use: Mana Yeteneklerini Kullanma
+  item_consume:
+    drink_regular: Sıradan İksir İç
+    drink_extended: Uzatılmış Süreli İksiri İç
+    drink_upgraded: Güçlendirilmiş İksir İç
+    golden_apple: Altın Elma Tüketin
+    enchanted_golden_apple: Büyülü Altın Elma Tüketin
+  potion_splash:
+    splash_regular: Patlayıcı Sıradan İksir
+    splash_extended: Patlayıcı Uzun Süreli İksir
+    splash_upgraded: Patlayıcı Güçlendirilmiş İksir
+    lingering_regular: Sıradan Kalıcı İksir Kullan
+    lingering_extended: Uzun Süreli Oyalanma İksiri Kullan
+    lingering_upgraded: Güçlendirilmiş Kalıcı İksir Kullan
+  anvil:
+    combine_books_per_level: Büyülü Kitapları Birleştirin
+    combine_weapon_per_level: Silahı Kitapla Birleştirin
+    combine_armor_per_level: Zırhı Kitapla Birleştirin
+    combine_tool_per_level: Araçları Kitapla Birleştirin
+  grindstone:
+    grindstone_per_level: Öğütme Taşı ile Büyü Bozma
+  units:
+    damage: Hasar
+    meter: Metre
+    100_jumps: 100 Zıplama
+    mana: Tüketilen Mana
+    combine_level: Örs Maliyet Deneyimi
+    grindstone_level: Eşya Üzerindeki Büyü Seviyesi
+    enchant_level: Alınan Büyü Seviyesi
+stats:
+  strength:
+    name: Kuvvet
+    desc: "Kuvvet, çeşitli farklı silahlarla saldırı hasarınızı artırır."
+  health:
+    name: Sağlık
+    desc: "Sağlık, sahip olduğunuz {hp_unit} miktarını artırarak dövüşlerde daha uzun süre dayanmanızı sağlar."
+  regeneration:
+    name: Yenilenme
+    desc: "Yenilenme, hem sağlık hem de mana kazanma hızınızı artırır."
+  luck:
+    name: Şans
+    desc: "Şans, toplama becerilerinde bloklardan ekstra düşme şansını artırır."
+  wisdom:
+    name: Bilgelik
+    desc: "Bilgelik maksimum mananızı artırır, deneyim kazanımını artırır ve örs maliyetlerini azaltır."
+  toughness:
+    name: Dayanıklılık
+    desc: "Dayanıklılık, düşman saldırılarından azaltılan hasar miktarını artırır."
+  crit_chance:
+    name: Kritik Şansı
+    desc: "Kritik Şans, kritik bir vuruş yapma olasılığınızdır."
+  crit_damage:
+    name: Kritik Hasar
+    desc: "Kritik Hasar, kritik bir vuruş yapıldığında hasardaki yüzde artışıdır."
+  speed:
+    name: Hız
+    desc: "Hız, ne kadar hızlı yürüyebildiğinizi ve koşabildiğinizi artırır."
+traits:
+  attack_damage:
+    name: Saldırı Hasarı
+  hp:
+    name: HP
+  saturation_regen:
+    name: Doygunluk Yenilemesi
+  hunger_regen:
+    name: Açlık Yenilemesi
+  mana_regen:
+    name: Mana Yenilemesi
+  luck:
+    name: Şans Özelliği
+  double_drop:
+    name: Çift Düşüş
+  experience_bonus:
+    name: XP Bonusu
+  anvil_discount:
+    name: Örs İndirimi
+  max_mana:
+    name: Maksimum Mana
+  damage_reduction:
+    name: Hasar Azaltma
+  crit_chance:
+    name: Kritik Şansı
+  crit_damage:
+    name: Kritik Hasar
+  movement_speed:
+    name: Hareket Hızı
+  farming_luck:
+    name: Çiftçilik Şansı
+  foraging_luck:
+    name: Toplayıcılık Şansı
+  mining_luck:
+    name: Madencilik Şansı
+  excavation_luck:
+    name: Kazı Şansı
+  fishing_luck:
+    name: Balıkçılık Şansı
+ui:
+  maxed: MAXED
+units:
+  mana: Mana
+  hp: HP
+  xp: XP
+file_version: 32

@@ -1,0 +1,192 @@
+type: block
+pools:
+  rare:
+    base_chance: 0
+    selection_priority: 1
+    override_vanilla_loot: false
+    loot:
+      - type: item
+        material: stick
+        weight: 10
+        amount: 1-2
+        xp: 20
+      - type: item
+        material: bone
+        weight: 10
+        amount: 1-2
+        xp: 30
+      - type: item
+        material: feather
+        weight: 10
+        amount: 1
+        xp: 40
+      - type: item
+        material: potato
+        weight: 7
+        amount: 1-2
+        xp: 70
+        sources: [dirts]
+      - type: item
+        material: dried_kelp
+        weight: 7
+        amount: 1-2
+        xp: 70
+        sources: [sand, red_sand]
+      - type: item
+        material: gunpowder
+        weight: 7
+        amount: 1-2
+        xp: 70
+        sources: [gravel]
+      - type: item
+        material: coal
+        weight: 7
+        amount: 1-4
+        xp: 70
+        sources: [clay, mud]
+      - type: item
+        material: brown_mushroom
+        weight: 7
+        amount: 1-3
+        xp: 70
+        sources: [mycelium]
+      - type: item
+        material: glowstone_dust
+        weight: 7
+        amount: 2-4
+        xp: 70
+        sources: [soul_sand, soul_soil]
+  epic:
+    base_chance: 0
+    selection_priority: 2
+    override_vanilla_loot: false
+    loot:
+      - type: item
+        material: arrow
+        weight: 10
+        amount: 2-3
+        xp: 500
+      - type: item
+        material: quartz
+        weight: 10
+        amount: 2-4
+        xp: 600
+      - type: item
+        material: name_tag
+        weight: 10
+        amount: 1
+        xp: 700
+      - type: item
+        material: iron_ingot
+        weight: 7
+        amount: 1-3
+        xp: 1000
+        sources: [dirts]
+      - type: item
+        material: gold_ingot
+        weight: 7
+        amount: 1-3
+        xp: 2000
+        sources: [sand, red_sand]
+      - type: item
+        material: ink_sac
+        weight: 7
+        amount: 1-3
+        xp: 3000
+        sources: [gravel]
+      - type: item
+        material: slime_ball
+        weight: 7
+        amount: 1-2
+        xp: 3000
+        sources: [clay, mud]
+      - type: item
+        material: red_mushroom
+        weight: 7
+        amount: 3-7
+        xp: 3000
+        sources: [mycelium]
+      - type: item
+        material: nether_wart
+        weight: 7
+        amount: 1-3
+        xp: 3000
+        sources: [soul_soil, soul_sand]
+      - type: item
+        material: phantom_membrane
+        weight: 4
+        amount: 1
+        xp: 5000
+        sources: [dirts]
+      - type: item
+        material: turtle_scute
+        weight: 4
+        amount: 1
+        xp: 5000
+        sources: [sand, red_sand]
+      - type: item
+        material: nautilus_shell
+        weight: 4
+        amount: 1
+        xp: 5000
+        sources: [gravel]
+      - type: item
+        material: honeycomb
+        weight: 4
+        amount: 1-3
+        xp: 5000
+        sources: [clay, mud]
+      - type: item
+        material: ghast_tear
+        weight: 4
+        amount: 1
+        xp: 5000
+        sources: [soul_sand, soul_soil]
+      - type: item
+        material: experience_bottle
+        weight: 4
+        amount: 1-3
+        xp: 5000
+        sources: [mycelium]
+      - type: item
+        material: music_disc_blocks
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [dirts]
+      - type: item
+        material: music_disc_strad
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [sand]
+      - type: item
+        material: music_disc_mall
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [red_sand]
+      - type: item
+        material: music_disc_chirp
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [gravel]
+      - type: item
+        material: music_disc_far
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [clay, mud]
+      - type: item
+        material: music_disc_stal
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [mycelium]
+      - type: item
+        material: music_disc_ward
+        weight: 1
+        amount: 1
+        xp: 20000
+        sources: [soul_sand, soul_soil]

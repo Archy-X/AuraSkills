@@ -1,0 +1,124 @@
+# -----------------------------------
+# AuraSkills global message file
+#
+# This file defines formats and styles
+# common across all languages
+# -----------------------------------
+
+abilities:
+  alchemist:
+    lore: "<green>(+{duration})"
+action_bar:
+  idle: "{{action_bar.hp_display}}                 {{action_bar.mana_display}}"
+  hp_display: "<red>{hp}/{max_hp}❤"
+  mana_display: "<aqua>{mana}/{max_mana} {{units.mana}}"
+  xp: "{{action_bar.hp_display}}  <gold>{xp_gained} {skill} {{units.xp}} <gray>({current_xp}/{level_xp} {{units.xp}})  {{action_bar.mana_display}}"
+  maxed: "{{action_bar.hp_display}}  <gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})  {{action_bar.mana_display}}"
+  ability: "{message}"
+  boss_bar_xp: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%)"
+  boss_bar_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}})"
+  boss_bar_income: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({percent}%) <green>(+${income})"
+  boss_bar_income_maxed: "<gold>{xp_gained} {skill} {{units.xp}} <gray>({{ui.maxed}}) <green>(+${income})"
+acf:
+  core:
+    info_message: "{message}"
+    help_format: "<aqua>{commandprefix}{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_command_format: "<aqua>{command} <green>{parameters} <yellow>{separator} {description}"
+    help_detailed_parameter_format: "<green>{syntaxorname}: <yellow>{description}"
+commands:
+  armor:
+    modifier:
+      add:
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+        lore_add_percent: "<gray>{stat}: {color}+{value}%"
+        lore_subtract_percent: "<gray>{stat}: {color}-{value}%"
+        lore_multiply: "<gray>{stat}: {color}{value}x"
+      list:
+        entry: "  {color}{stat}<white> - {value}"
+    multiplier:
+      list:
+        entry: "  <aqua>{target}<white> - {value}"
+    requirement:
+      list:
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      entry: "<aqua>{skill} {level}<gray>, "
+  item:
+    modifier:
+      add:
+        lore: "<gray>{stat}: {color}+{value}"
+        lore_subtract: "<gray>{stat}: {color}-{value}"
+        lore_add_percent: "<gray>{stat}: {color}+{value}%"
+        lore_subtract_percent: "<gray>{stat}: {color}-{value}%"
+        lore_multiply: "<gray>{stat}: {color}{value}x"
+      list:
+        entry: "  {color}{stat}<white> - {value}"
+    multiplier:
+      list:
+        entry: "  <aqua>{target}<white> - {value}"
+    requirement:
+      list:
+        entry: "  <dark_aqua>{skill} <white>- <aqua>{level}"
+      entry: "<aqua>{skill} {level}<gray>, "
+  preset:
+    load:
+      appended_entry: "<aqua>(+) <white>{file}"
+      merged_entry: "<yellow>(*) <white>{file}"
+      replaced_entry: "<red>(±) <white>{file}"
+      deleted_entry: "<dark_red>(-) <white>{file}"
+  top:
+    power_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    skill_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+    average_entry: "<white>{rank}. <aqua>{player} <white>- {level}"
+leveler_format:
+  title: "<green>{{leveler.level_up}}"
+  subtitle: "<gold>{old} ➜ {new}"
+  chat: |-
+    <dark_aqua><strikethrough>----------------------------------------
+    <reset> <dark_aqua>{{leveler.skill_level_up}} <aqua><bold>{skill}</bold> <dark_gray>{old}➜<dark_aqua><bold>{new}</bold>
+    
+    <aqua> {{leveler.rewards}}:{stat_level}{ability_unlock}{ability_level_up}{mana_ability_unlock}{mana_ability_level_up}{money_reward}<reset>
+    <dark_aqua><strikethrough>----------------------------------------
+  stat_level: "\n  {color}+{num}{symbol} {stat}"
+  ability_unlock: "\n  <green>{{leveler.ability_unlock}} <gold><bold>{ability}</bold>\n      <white>{desc}"
+  ability_level_up: "\n  <green>{{leveler.ability_level_up}} <gold><bold>{ability}</bold> <dark_gray>{previous}→<gold>{level}\n      <white>{desc}"
+  mana_ability_unlock: "\n  <light_purple>{{leveler.mana_ability_unlock}} <blue><bold>{mana_ability}</bold>\n      <white>{desc}"
+  mana_ability_level_up: "\n  <light_purple>{{leveler.mana_ability_level_up}} <blue><bold>{mana_ability}</bold> <dark_gray>{previous}→<gold>{level}\n      <white>{desc}"
+  money_reward: "\n  <green>${amount}"
+  desc_upgrade_value: "<dark_gray>{current}→<white>{next}"
+  desc_wrap: "<white>      "
+rewards:
+  item:
+    default_menu_message: "\n  {display_name}"
+    default_menu_message_multiple: "\n  {display_name} {amount}x"
+    default_chat_message: "\n  {display_name}"
+    default_chat_message_multiple: "\n  {display_name} {amount}x"
+stats:
+  strength:
+    color: "<dark_red>"
+    symbol: "➽"
+  health:
+    color: "<red>"
+    symbol: "❤"
+  regeneration:
+    color: "<gold>"
+    symbol: "❥"
+  luck:
+    color: "<dark_green>"
+    symbol: "☘"
+  wisdom:
+    color: "<blue>"
+    symbol: "✿"
+  toughness:
+    color: "<dark_purple>"
+    symbol: "✦"
+  crit_chance:
+    color: "<green>"
+    symbol: "⌘"
+  crit_damage:
+    color: "<dark_aqua>"
+    symbol: "★"
+  speed:
+    color: "<white>"
+    symbol: "➤"
+file_version: 3

@@ -1,0 +1,345 @@
+# +----------------------------------------------------------------------------+ #
+# |                           AuraSkills Main Config                           | #
+# |                                                                            | #
+# |                    Discord: https://discord.gg/Bh2EZfB                     | #
+# |             Source Code: https://github.com/Archy-X/AuraSkills             | #
+# |      Config Guide: https://wiki.aurelium.dev/auraskills/main-config        | #
+# +----------------------------------------------------------------------------+ #
+# Plugin made by Archy
+
+sql:
+  enabled: false
+  type: mysql
+  host: localhost
+  port: 3306
+  database: auraskills
+  username: root
+  password: pass
+  load_delay: 0
+  always_load_on_join: false
+  ssl: false
+  pool:
+    maximum_pool_size: 10
+    minimum_idle: 10
+    connection_timeout: 5000
+    max_lifetime: 1800000
+    keepalive_time: 0
+default_language: en
+languages:
+- en
+- es
+- fr
+- de
+- zh-CN
+- zh-TW
+- pt-BR
+- it
+- cs
+- pl
+- uk
+- ko
+- nl
+- ja
+- ru
+- id
+- vi
+- tr
+- fi
+- th
+try_detect_client_language: false
+hooks:
+  HolographicDisplays:
+    enabled: false
+  DecentHolograms:
+    enabled: true
+  LuckPerms:
+    enabled: true
+    use_permission_cache: true
+  PlaceholderAPI:
+    enabled: true
+  ProtocolLib:
+    enabled: true
+  Slimefun:
+    enabled: true
+  Towny:
+    enabled: true
+  Vault:
+    enabled: true
+  WorldGuard:
+    enabled: true
+    blocked_regions:
+    - Example
+    blocked_check_replace_regions:
+    - Example
+  MythicMobs:
+    enabled: true
+    handle_damage_increase: true
+    handle_damage_reduction: true
+    prevent_regular_xp: false
+  Nexo:
+    enabled: true
+action_bar:
+  enabled: true
+  idle: true
+  ability: true
+  xp: false
+  maxed: false
+  update_period: 5
+  round_xp: false
+  placeholder_api: true
+  use_suffix: true
+  format_last: false
+  update_async: false
+boss_bar:
+  enabled: true
+  mode: single
+  stay_time: 60
+  update_every: 1
+  round_xp: false
+  display_maxed: true
+  placeholder_api: true
+  use_suffix: true
+  format:
+  - FARMING GREEN PROGRESS
+  - FORAGING RED PROGRESS
+  - MINING PURPLE PROGRESS
+  - FISHING BLUE PROGRESS
+  - EXCAVATION YELLOW PROGRESS
+  - ARCHERY PINK PROGRESS
+  - DEFENSE BLUE PROGRESS
+  - FIGHTING RED PROGRESS
+  - ENDURANCE PURPLE PROGRESS
+  - AGILITY WHITE PROGRESS
+  - ALCHEMY PINK PROGRESS
+  - ENCHANTING PURPLE PROGRESS
+  - SORCERY BLUE PROGRESS
+  - HEALING WHITE PROGRESS
+  - FORGING YELLOW PROGRESS
+  xp_format: '#.#'
+  level_xp_format: '0'
+  percent_format: '#.##'
+  money_format: '0.00'
+  animate_progress: true
+jobs:
+  enabled: false
+  selection:
+    require_selection: true
+    default_job_limit: 2
+    disable_unselected_xp: false
+    cooldown_sec: 0
+  income:
+    use_xp: true
+    use_expression: false
+    default:
+      income_per_xp: 0.1
+      expression: 0.1*xp
+    use_final_xp: true
+    batching:
+      enabled: false
+      interval_ms: 2000
+      display_individual: false
+skillcoins:
+  enabled: true
+  starting_balance: 0.0
+  vault_provider_enabled: true
+  shop:
+    enabled: true
+anti_afk:
+  enabled: true
+  logging_enabled: true
+  log_threshold: min_count*4
+  checks:
+    block_a:
+      enabled: true
+      min_count: 100
+    damage_a:
+      enabled: true
+      max_distance: 0.5
+      min_count: 15
+    damage_b:
+      enabled: true
+      min_count: 5
+    damage_c:
+      enabled: true
+      min_count: 40
+    entity_a:
+      enabled: true
+      max_distance: 0.5
+      min_count: 50
+    entity_b:
+      enabled: true
+      min_count: 50
+    entity_c:
+      enabled: true
+      min_count: 100
+    fishing_a:
+      enabled: true
+      min_count: 10
+enable_roman_numerals: false
+damage_holograms:
+  enabled: false
+  scaling: true
+  decimal:
+    display_when_less_than: 1
+    max_amount: 1
+  offset:
+    x: 0.4
+    y: 0.4
+    z: 0.4
+    random:
+      enabled: false
+      x_min: -0.5
+      x_max: 0.5
+      y_min: 0
+      y_max: 0
+      z_min: -0.5
+      z_max: 0.5
+  colors:
+    default: gray
+    critical:
+      digits:
+      - white
+      - yellow
+      - gold
+      - red
+      - dark_red
+      - dark_purple
+      - light_purple
+      - blue
+      - dark_blue
+leaderboards:
+  update_period: 6000
+  update_delay: 6000
+start_level: 0
+enable_skill_commands: true
+check_block_replace:
+  enabled: true
+  blocked_worlds:
+  - Example
+blocked_worlds:
+- Example
+disabled_worlds:
+- Example
+disable_in_creative_mode: false
+data_validation:
+  correct_over_max_level: false
+on_death:
+  reset_skills: false
+  reset_xp: false
+  reset_xp_ratio: 0
+auto_save:
+  enabled: true
+  interval_ticks: 12000
+leveler:
+  title:
+    enabled: true
+    fade_in: 5
+    stay: 80
+    fade_out: 5
+  sound:
+    enabled: true
+    type: ENTITY_PLAYER_LEVELUP
+    category: MASTER
+    volume: 1.0
+    pitch: 0.5
+  double_check_delay: 20
+mana:
+  enabled: true
+  cooldown_timer_period: 2
+modifier:
+  armor:
+    equip_blocked_materials:
+    - EXAMPLE
+    timer:
+      enabled: false
+      check_period: 3
+  item:
+    check_period: 3
+    enable_off_hand: true
+  multiplier:
+    enabled: true
+  auto_convert_from_legacy: false
+  temporary:
+    enabled: true
+    check_period: 20
+requirement:
+  enabled: true
+  override_global: true
+  item:
+    prevent_tool_use: true
+    prevent_weapon_use: true
+    prevent_block_place: true
+    prevent_interact: true
+    global:
+    - DIAMOND_PICKAXE MINING:3 EXCAVATION:1
+    - NETHERITE_PICKAXE MINING:5 EXCAVATION:2
+    - 'IRON_SWORD FIGHTING:1 '
+    - DIAMOND_SWORD FIGHTING:3
+    - NETHERITE_SWORD FIGHTING:5 AGILITY:3 ALCHEMY:2
+    - CROSSBOW ARCHERY:3 FIGHTING:3
+    - TRIDENT FIGHTING:4 ALCHEMY:2
+  armor:
+    prevent_armor_equip: true
+    global:
+    - IRON_HELMET DEFENSE:1 FIGHTING:2
+    - IRON_CHESTPLATE DEFENSE:1 FIGHTING:2
+    - IRON_LEGGINGS DEFENSE:1 FIGHTING:2
+    - IRON_BOOTS DEFENSE:1 FIGHTING:2
+    - DIAMOND_HELMET DEFENSE:3 FIGHTING:4
+    - DIAMOND_CHESTPLATE DEFENSE:3 FIGHTING:4
+    - DIAMOND_LEGGINGS DEFENSE:3 FIGHTING:4 ALCHEMY:2
+    - DIAMOND_BOOTS DEFENSE:3 FIGHTING:4 AGILITY:1
+    - NETHERITE_HELMET DEFENSE:5 FIGHTING:5 ALCHEMY:2
+    - NETHERITE_CHESTPLATE DEFENSE:5 FIGHTING:5 ENCHANTING:2
+    - NETHERITE_LEGGINGS DEFENSE:5 FIGHTING:5 FARMING:2
+    - NETHERITE_BOOTS DEFENSE:5 FIGHTING:5 ALCHEMY:2
+    - ELYTRA AGILITY:3 DEFENSE:4 FIGHTING:4 ENCHANTING:3
+  blocks:
+    enabled: true
+    bypass_in_creative_mode: true
+    bypass_if_op: false
+    list: []
+damage:
+  correct_last_damage: true
+critical:
+  enabled:
+    sword: true
+    bow: true
+    axe: true
+    pickaxe: true
+    shovel: true
+    hoe: true
+    hand: false
+    other: false
+source:
+  grindstone:
+    blocked_enchants:
+    - blinding_curse
+    - vanishing_curse
+  statistic:
+    gain_period_ticks: 12000
+  entity:
+    give_alchemy_on_potion_combat: false
+menus:
+  lore_wrapping_width: 43
+  placeholder_api: true
+  removal_protection: false
+  stats:
+    show_trait_values_directly: true
+  stat_info:
+    enabled: true
+loot:
+  update_loot_tables: true
+  directly_to_inventory: false
+check_for_updates: true
+automatic_backups:
+  enabled: true
+  minimum_interval_hours: 24
+  max_users: 50000
+save_blank_profiles: false
+experimental:
+  optimize_leaderboard_updating: false
+metadata:
+  config_migration_complete: false
+  file_user_migration_complete: false
+  sql_user_migration_complete: false

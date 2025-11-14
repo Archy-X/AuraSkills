@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: Vụ mùa bội thu
+    desc: "+{value} May mắn trồng trọt, giúp tăng cơ hội nhận thêm vật phẩm khi thu hoạch."
+    info: "+{value} May mắn trồng trọt"
+  farmer:
+    name: Nông dân
+    desc: "Nhận thêm {value}% XP Thu hoạch."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Bậc thầy lưỡi hái
+    desc: "Tăng {value}% sát thương của cuốc."
+    info: "+{value}% ST Cuốc"
+  geneticist:
+    name: Nhà di truyền học
+    desc: "Tăng độ no nê thêm {value} khi sử dụng đồ ăn từ thực vật."
+    info: "+{value} Độ no nê"
+  growth_aura:
+    name: Hào quang tăng trưởng
+    desc: "Nông sản đang mọc trong phạm vi {radius} khối xung quanh bạn sẽ phát triển nhanh hơn {value}%."
+    info: "+{value}% Khả năng phát triển"
+  lumberjack:
+    name: Lumberjack
+    desc: "+{value} May mắn chặt gỗ, giúp tăng cơ hội nhận thêm vật phẩm khi chặt gỗ."
+    info: "+{value} May mắn chặt gỗ"
+  forager:
+    name: Người hái lượm
+    desc: "Nhận thêm {value}% XP Chặt gỗ."
+    info: "+{value}% XP"
+  axe_master:
+    name: Bậc thầy múa rìu
+    desc: "Tăng {value}% sát thương của rìu"
+    info: "+{value}% ST Rìu"
+  valor:
+    name: Dũng cảm
+    desc: "+{value} Sức mạnh khi cầm rìu."
+    info: "+{value} Sức mạnh"
+  shredder:
+    name: Xé vụn
+    desc: "Có {value}% cơ hội gây mất ba lần độ bền với rìu."
+    info: "{value}% 3x Làm mất độ bền"
+  lucky_miner:
+    name: Lucky Miner
+    desc: "+{value} May mắn đào mỏ, giúp tăng cơ hội nhận thêm vật phẩm khi đào quặng."
+    info: "+{value} May mắn đào mỏ"
+  miner:
+    name: Thợ mỏ
+    desc: "Nhận thêm {value}% XP Khai thác."
+    info: "+{value}% XP"
+  pick_master:
+    name: Bậc thầy cuốc chim
+    desc: "Tăng {value}% sát thương từ cúp."
+    info: "+{value}% ST Cúp"
+  stamina:
+    name: Thể lực
+    desc: "+{value} Điểm bền bỉ khi cầm cúp."
+    info: "+{value} Điểm bền bỉ"
+  hardened_armor:
+    name: Giáp cứng
+    desc: "Có {value}% cơ hội không bị giảm độ bền của giáp khi nhận sát thương."
+    info: "{value}% Không giảm độ bền"
+  lucky_catch:
+    name: Đánh bắt bội thu
+    desc: "+{value} May mắn câu cá, giúp tăng cơ hội nhận thêm vật phẩm khi câu cá."
+    info: "+{value} May mắn câu cá"
+  fisher:
+    name: Ngư dân
+    desc: "Nhận thêm {value}% XP Câu cá."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Thợ săn kho báu
+    desc: "{value}% cơ hội tìm được vật phẩm quý hiếm khi câu cá."
+    info: "+{value}% Rơi đồ hiếm"
+  grappler:
+    name: Grappler
+    desc: "Móc thực thể bằng cần câu nhanh hơn {value}%."
+    info: "+{value}% Tốc độ móc"
+  epic_catch:
+    name: Trúng số
+    desc: "Thêm {value}% cơ hội để tìm được đồ cực hiếm từ câu cá."
+    info: "+{value}% Rơi đồ cực hiếm"
+  metal_detector:
+    name: Máy dò kim loại
+    desc: "{value}% cơ hội cao hơn để tìm được vật phẩm quý hiếm khi đào bằng xẻng."
+    info: "+{value}% Rơi đồ hiếm"
+  excavator:
+    name: Máy xúc chính hiệu
+    desc: "Nhận thêm {value}% XP Đào bới."
+    info: "+{value}% XP"
+  spade_master:
+    name: Đào mộ
+    desc: "Tăng {value}% sát thương từ xẻng."
+    info: "+{value}% ST Xẻng"
+  bigger_scoop:
+    name: Xúc lớn
+    desc: "+{value} May mắn đào bới, giúp tăng cơ hội nhận thêm vật phẩm khi đào bới bằng xẻng."
+    info: "+{value}% May mắn đào bới"
+  lucky_spades:
+    name: Cây xẻng may mắn
+    desc: "{value}% cơ hội cao hơn để tìm được vật phẩm cực hiếm khi đào bới bằng xẻng."
+    info: "+{value}% Rơi đồ cực hiếm"
+  retrieval:
+    name: Bồi thường
+    desc: "Mũi tên bạn bắn trượt sẽ được rút lại sau {time} giây trong phạm vi {value} khối."
+    info: "Khoảng cách {value}"
+  archer:
+    name: Cung thủ
+    desc: "Nhận thêm {value}% XP Cung thủ."
+    info: "+{value}% XP"
+  bow_master:
+    name: Cung thủ lão làng
+    desc: "Tăng {value}% sát thương từ cung."
+    info: "+{value}% ST Cung"
+  piercing:
+    name: Xuyên thủng
+    desc: "Có {value}% cơ hội để mũi tên xuyên qua quái vật."
+    info: "{value}% Xuyên thủng"
+  stun:
+    name: Choáng
+    desc: "{value}% tỉ lệ giảm tốc độ di chuyển của kẻ địch đi 20% trong 2 giây."
+    info: "{value}% Cơ hội làm chậm"
+  shielding:
+    name: Lá chắn
+    desc: "Giảm {value}% sát thương nhận vào trong khi đi rón rén."
+    info: "-{value}% Sát thương nhận vào khi rón rén"
+  defender:
+    name: Thủ hộ
+    desc: "Nhận thêm {value}% XP Phòng thủ."
+    info: "+{value}% XP"
+  mob_master:
+    name: Thợ săn quái vật
+    desc: "Giảm {value}% sát thương từ quái."
+    info: "-{value}% Sát thương từ quái"
+  immunity:
+    name: Miễn nhiễm
+    desc: "Có {value}% cơ hội né đòn đánh của kẻ thù."
+    info: "{value}% Miễn ST"
+  no_debuff:
+    name: No Debuff
+    desc: "Có {value}% cơ hội mất đi những hiệu ứng xấu trên người."
+    info: "{value}% Xóa hiệu ứng xấu"
+  parry:
+    name: Phản kích
+    desc: "Khi vung kiếm trượt trong vòng {time} giây trước khi nhận sát thương sẽ giảm {value}% sát thương nhận vào và không bị bật lùi."
+    info: "Giảm {value}% ST nhận"
+    parried: "<red>Đã đỡ đòn"
+  fighter:
+    name: Đấu sĩ
+    desc: "Nhận thêm {value}% XP Chiến đấu."
+    info: "+{value}% XP"
+  sword_master:
+    name: Kiếm sư
+    desc: "Tăng {value}% sát thương từ kiếm."
+    info: "+{value}% Sát thương từ kiếm"
+  first_strike:
+    name: Đòn phủ đầu
+    desc: "Tăng {value}% sát thương trong lần đánh đầu."
+    info: "+{value}% ST phát đầu"
+    dealt: "<red>Đã ra đòn phủ đầu!"
+  bleed:
+    name: Xuất huyết
+    desc: "Có {value}% khả năng làm cho kẻ địch xuất huyết trong {base_ticks} nhịp, mỗi nhịp gây {value_2} ST. Cộng thêm {added_ticks} nhịp cho kẻ địch đang xuất huyết."
+    info: "{value}% Khả năng gây xuất huyết, {value_2} ST"
+    enemy_bleeding: "<red>Kẻ địch xuất huyết!"
+    self_bleeding: "<red>Bạn đang xuất huyết!"
+    stop: "<white>Đã cầm máu"
+  anti_hunger:
+    name: No nê
+    desc: "Có {value}% khả năng dừng quá trình đói."
+    info: "{value}% Không bị đói"
+  runner:
+    name: Runner
+    desc: "Nhận thêm {value}% XP Bền bỉ."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Golden Heal
+    desc: "Tăng {value}% hiệu ứng hồi phục."
+    info: "+{value}% Hiệu ứng hồi máu"
+  recovery:
+    name: Hồi phục
+    desc: "Tăng {value}% khả năng hồi phục tự nhiên khi HP dưới 50%."
+    info: "+{value}% Hồi máu dưới 50%"
+  meal_steal:
+    name: Háu ăn
+    desc: "Có {value}% cơ hội cướp đi 1 điểm thức ăn khi tấn công một người chơi."
+    info: "{value}% Cướp điểm thức ăn"
+  light_fall:
+    name: Tựa như lông
+    desc: "Giảm {value}% ST rơi."
+    info: "-{value}% ST rơi"
+  jumper:
+    name: Nhảy cao
+    desc: "Nhận thêm {value}% XP Nhanh nhẹn."
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Nạp đường
+    desc: "Thuốc chạy nhanh và nhảy cao kéo dài lâu hơn {value}%."
+    info: "{value}% Kéo dài hiệu ứng"
+  fleeting:
+    name: Gió lướt
+    desc: "Nhận thêm {value}% Tốc độ khi máu dưới 20%."
+    info: "+{value}% Tốc độ"
+    start: "<white>Bạn đã được tăng tốc độ di chuyển! <gray>(+{value}% Tốc độ)"
+    end: "<gray>Tăng tốc độ di chuyển đã hết"
+  thunder_fall:
+    name: Chấn động
+    desc: "Khi ấn Shift trong lúc rơi, bạn có {value}% khả năng gây ra {value_2}% ST từ cú rơi cho quái vật trong phạm vi 3 khối."
+    info: "{value}% Tỉ lệ, {value_2}% Sát thương"
+  alchemist:
+    name: Dược sĩ
+    desc: "Thuốc bạn chế sẽ có thời gian kéo dài thêm {value}%."
+    info: "+{value}% Thời gian của thuốc"
+  brewer:
+    name: Người pha chế
+    desc: "Nhận thêm {value}% XP Điều chế."
+    info: "+{value}% XP"
+  splasher:
+    name: Bắn tùm lum
+    desc: "Lọ thuốc bạn ném được tăng {value}% thời lượng cho mỗi người chơi chịu phải."
+    info: "+{value}% Thời lượng/Người chơi"
+  lingering:
+    name: Kéo dài
+    desc: "Thuốc kéo biến mất chậm hơn {value}% trong tự nhiên và biến mất {value_2}% ít hơn cho mỗi thực thể bị ảnh hưởng."
+    info: "-{value}% Tự nhiên, -{value_2}% Phân rã của thực thể"
+  wise_effect:
+    name: Sáng suốt
+    desc: "Nhận {value} Trí khôn với mỗi loại hiệu ứng riêng biệt."
+    info: "+{value} Trí khôn/Hiệu ứng"
+  xp_convert:
+    name: Chuyển hoá XP
+    desc: "Nhận 1 điểm thanh kinh nghiệm cho mỗi {value} XP kĩ năng đạt được."
+    info: "1 Kinh nghiệm/{value} XP Kĩ năng"
+  enchanter:
+    name: Phù phép
+    desc: "Nhận thêm {value}% XP Phù phép."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: Chiến binh dày dặn
+    desc: "Quái bạn giết có {value}% cơ hội rớt x2 kinh nghiệm."
+    info: "{value}% x2 Kinh nghiệm giết quái"
+  enchanted_strength:
+    name: Chơi đồ
+    desc: "Nhận {value} Sức mạnh cho mỗi phù phép của món bạn cầm trên tay."
+    info: "{value} Sức mạnh/Phù phép"
+  lucky_table:
+    name: Bàn may mắn
+    desc: "Vật phẩm bạn phù phép bằng bàn phù phép có {value}% cơ hội thăng 1 cấp độ nếu chưa đạt cấp độ tối đa."
+    info: "{value}% Cơ hội nâng cấp cường hóa"
+  life_essence:
+    name: Sức sống
+    desc: Thuốc hồi máu tức thì hồi thêm {value}% HP.
+    info: "+{value}% Hồi máu tức thì"
+  healer:
+    name: Healer
+    desc: Nhận thêm {value}% XP Hồi máu.
+    info: "+{value}% XP"
+  life_steal:
+    name: Life Steal
+    desc: Hồi {value}% HP tối đa của con quái hay người chơi mà bạn giết.
+    info: "Cướp {value}% HP tối đa"
+  golden_heart:
+    name: Trái tim Vàng
+    desc: Sát thương ảnh hưởng đến tim vàng được giảm {value}%
+    info: "-{value}% Sát thương đến tim vàng"
+  revival:
+    name: Hồi sinh
+    desc: Nhận +{value} HP và +{value_2} Hồi phục trong 30 giây sau khi hồi sinh.
+    info: "+{value} HP, +{value_2} Hồi HP"
+    message: "<white>Bạn nhận được đặc quyền hồi sinh trong 30 giây! <white>(<red>+{value} Máu, <gold>+{value_2} Hồi phục<white>)"
+  disenchanter:
+    name: Người giải phép
+    desc: Tăng {value}% XP nhận được khi sử dụng bàn mài để tách phù phép.
+    info: "+{value}% XP từ bàn mài"
+  forger:
+    name: Thợ rèn
+    desc: Nhận thêm {value}% XP Thợ rèn.
+    info: "+{value}% XP"
+  repairing:
+    name: Sửa chữa
+    desc: Hồi thêm {value}% độ bền cho vật phẩm khi dùng vật liệu thô để sửa bằng đe.
+    info: "+{value}% Độ bền"
+  anvil_master:
+    name: Bậc thầy đe
+    desc: Tăng chi phí sửa chữa tối đa của đe trước khi nó quá đắt thành {value} XP.
+    info: "{value} XP tối đa"
+  skill_mender:
+    name: Sửa chữa
+    desc: Có {value}% khả năng giúp hồi 1 Độ bền/2 XP Kĩ năng cho vật phẩm đang cầm hoặc giáp đang trang bị có phù phép Sửa chữa.
+    info: "{value}% Cơ hội sửa chữa"
+acf:
+  core:
+    permission_denied: "<red>Xin lỗi, nhưng bạn không có quyền để sử dụng lệnh này."
+    permission_denied_parameter: "<red>Xin lỗi, nhưng bạn không có quyền để sử dụng lệnh này."
+    error_generic_logged: "<red>Có lỗi xảy ra. Vui lòng kiểm tra file log. Xin lỗi vì bất tiện."
+    unknown_command: "<red>Lệnh không khả dụng, vui lòng nhập <yellow>/sk help <red> để được trợ giúp"
+    invalid_syntax: "<yellow>Cách dùng: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Lỗi: {message}"
+    error_performing_command: "<red> Đã xảy ra lỗi khi bạn dùng câu lệnh này."
+    please_specify_one_of: "<red>Lỗi: Hãy cụ thể hóa một trong những cái (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Lỗi: {num} phải là một số."
+    must_be_min_length: "<red>Lỗi: Cần ít nhất {min} kí tự."
+    must_be_max_length: "<red>Lỗi: Nhiều nhất là {max} kí tự."
+    please_specify_at_most: "<red>Lỗi: Vui lòng chỉ định một giá trị tối đa {max}."
+    please_specify_at_least: "<red>Lỗi: Vui lòng chỉ định một giá trị tối thiểu {min}."
+    not_allowed_on_console: "<red>Lỗi: Không thể thực thi lệnh này trong bảng điều khiển."
+    could_not_find_player: "<red>Lỗi: Không thể tìm thấy người chơi có tên: <yellow>{search}"
+    no_command_matched_search: "<red>Không lệnh khả dụng với <yellow>{search}."
+    help_page_information: "<aqua> - Hiển thị trang <green>{page}<aqua>trên <green>{totalpages}<aqua>(<yellow>{results}<aqua> kết quả)."
+    help_no_results: "<aqua>Lỗi: Không có kết quả."
+    help_header: "<yellow>=== <aqua>Hiển thị trợ giúp cho <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Hiện thị trợ giúp cụ thể cho <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Kết quả tìm kiếm cho <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>Lỗi: Thế giới này không tồn tại."
+    you_must_be_holding_item: "<red>Lỗi: Bạn phải cầm một vật phẩm trên tay."
+    player_is_vanished_confirm: "<yellow>Cảnh báo: <green>{vanished} <yellow>đã vào chế độ ngoại tuyến. Đừng cố gắng liên hệ với họ\n<yellow>Để xác nhận hãy ấn <green>:confirm <yellow>evào cuối tên của bạn.\n<yellow> dụ: {vanished}:confirm"
+    username_too_short: "<red>Lỗi: Tên quá ngắn, cần ít nhất 3 kí tự."
+    is_not_a_valid_name: "<red>Lỗi: <yellow>{name} <red>không phải là một tên hợp lệ."
+    multiple_players_match: "<red>Lỗi: Quá nhiều người chơi phù hợp <aqua>{search} <yellow>({all})<red>, vui lòng chi tiết hơn."
+    no_player_found_server: "<red>Không người chơi phù hợp với <yellow>{search} <red>đang kết nối với máy chủ."
+    no_player_found_offline: "<red>Không người chơi phù hợp <yellow>{search}<red> có thể được tìm thấy."
+    no_player_found: "<red>Không người chơi phù hợp với <yellow>{search}<red> có thể được tìm thấy."
+    location_please_specify_world: "<red>Lỗi: Vui lòng đưa ra thế giới cụ thể. Ví dụ: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Lỗi: Vui lòng nhập tọa độ x, y, và z. Ví dụ: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Lỗi: Bảng điều khiển có thể xác định không chính xác tọa độ của người chơi."
+commands:
+  prefix: "<dark_gray>[<aqua>Khả năng<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp độ <aqua>{value} <gray>đã được thêm vào vật phẩm của bạn"
+        already_exists: "<yellow>Nâng cấp cho giáp với chỉ số {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor modifier remove"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat} <yellow>!"
+        removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+      list:
+        header: "<white>Đã tìm thấy nâng cấp của giáp:"
+      removeall:
+        removed: "<gray>Tất cả nâng cấp đã được gỡ"
+    multiplier:
+      add:
+        added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
+        already_exists: "<yellow>Chỉ số cộng thêm <aqua>{target} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk armor multiplier remove"
+        skill_lore: "<gray>Khi mặc: <aqua>+{value}% XP {skill}"
+        skill_lore_subtract: "<gray>Khi mặc: <aqua>-{value}% XP {skill}"
+        global_lore: "<gray>Khi mặc: <blue>+{value}% XP Khả năng"
+        global_lore_subtract: "<gray>Khi mặc: <blue>-{value}% XP Khả năng"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
+        removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ khỏi giáp của bạn"
+      list:
+        header: "<white>Chỉ số giáp cộng thêm đã được tìm thấy:"
+      removeall:
+        removed: "<gray>Tất cả chỉ số giáp cộng thêm đã được gỡ"
+    requirement:
+      add:
+        added: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
+        already_exists: "<yellow>Vật phẩm đã có yêu cầu giáp <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk armor requirement remove"
+        lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu giáp <dark_aqua>{skill}<yellow>!"
+        removed: "<gray>Yêu cầu giáp <dark_aqua>{skill} <gray>đã được gỡ"
+      list:
+        header: "<white>Yêu cầu giáp đã được tìm thấy:"
+      removeall:
+        removed: "<gray>Tất cả yêu cầu giáp đã được gỡ"
+      equip: "<yellow>Bạn không đủ điều kiện để trang bị vật phẩm này: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Việc áp dụng sao lưu bây giờ sẽ trả lại toàn bộ dữ liêu về Kĩ năng của người chơi dựa vào bản sao lưu đó. Điều này gây ảnh hưởng vĩnh viễn và không thể quay trở lại. Bạn có thể lưu một bản sao lưu ngay bây giờ nếu cần. Nhập lại lệnh để xác nhận áp dụng sao lưu."
+      loading: "<white>Đang áp dụng sao lưu..."
+      loaded: "<green>Đã áp dụng sao lưu"
+      error: "<red>Lỗi khi áp dụng sao lưu: {error}"
+      must_be_yaml: "<yellow>Phải là một tệp .yml !"
+      file_not_found: "<yellow>Bản sao lưu cho tệp này không có trong thư mục sao lưu!"
+    save:
+      saving: "<white>Đang lưu sao lưu..."
+      saved: "<white>Đã sao lưu dữ liệu {type} dưới dạng {file}"
+      error: "<red>Lỗi khi sao lưu dữ liệu {type}! Xem lỗi trên bảng điều khiển/các dòng dưới để xem chi tiết"
+  claimitems:
+    no_items: "<yellow>Bạn không có vật phẩm để nhận"
+  item:
+    give:
+      sender: "<white>Đã đưa <aqua>{amount}x {key} <white>cho {player}"
+      receiver: "<white>Bạn đã nhận <aqua>{amount}x {key}"
+    modifier:
+      add:
+        added: "<gray>Nâng cấp {color}{stat} <gray>với cấp <aqua>{value} <gray>đã được thêm"
+        already_exists: "<yellow>Nâng cấp với chỉ số của {color}{stat} <yellow>đã có trên giáp của bạn! Hãy gỡ nó trước với lệnh /sk item modifier remove"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có nâng cấp {color}{stat}<yellow>!"
+        removed: "<gray>Nâng cấp {color}{stat} đã được gỡ"
+      list:
+        header: "<white>Nâng cấp vật phẩm đã được tìm thấy:"
+      removeall:
+        removed: "<gray>Tất cả nâng cấp đã được gỡ"
+    multiplier:
+      add:
+        added: "<gray>Chỉ số cộng thêm <aqua>{target} <gray>với giá trị <aqua>{value} <gray>đã được thêm"
+        already_exists: "<yellow>Chỉ số cộng thêm <aqua>{target} <yellow>đã có trên vật phẩm của bạn! Hãy gỡ nó trước với lệnh /sk item multiplier remove"
+        skill_lore: "<gray>Khi cầm: <aqua>+{value}% XP {skill}"
+        skill_lore_subtract: "<gray>Khi cầm: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Khi cầm: <blue>+{value}% XP Kĩ năng"
+        global_lore_subtract: "<gray>Khi cầm: <blue>-{value}% XP Kĩ năng"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có chỉ số <aqua>{target} <yellow>cộng thêm!"
+        removed: "<gray>Chỉ số <aqua>{target} <gray>cộng thêm đã được gỡ"
+      list:
+        header: "<white>Chỉ số cộng thêm đã được tìm thấy:"
+      removeall:
+        removed: "<gray>Toàn bộ chỉ số cộng thêm đã được gỡ khỏi vật phẩm của bạn"
+    register:
+      registered: "<white>Đã đăng kí vật phẩm đang cầm thành chìa khoá {key}"
+      already_registered: "<yellow>Đã có vật phẩm được đăng kí thành chìa khoá <white>{key}<yellow>, dùng lệnh <white>/skills item unregister <yellow>để huỷ nó trước"
+      no_spaces: "<yellow>Tên chìa khoá không được có khoảng cách!"
+    requirement:
+      add:
+        added: "<gray>Yêu cầu <dark_aqua>{skill} <gray>với cấp <aqua>{level}<gray> đã được thêm"
+        already_exists: "<yellow>Vật phẩm đã có yêu cầu <dark_aqua>{skill}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk item requirement remove"
+        lore: "<red>Yêu cầu <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Vật phẩm của bạn không có yêu cầu <dark_aqua>{skill}<yellow>!"
+        removed: "<gray>Yêu cầu <dark_aqua>{skill} <gray>đã được gỡ"
+      list:
+        header: "<white>Yêu cầu vật phẩm được tìm thấy:"
+      removeall:
+        removed: "<gray>Tất cả các yêu cầu về vật phẩm đã được gỡ khỏi vật phẩm của bạn"
+      use: "<yellow>Bạn không đủ điều kiện để dùng vật phẩm này: {requirements}"
+    unregister:
+      unregistered: "<white>Đã huỷ đăng kí vật phẩm có chìa khoá {key}"
+      not_registered: "<yellow>Không có vật phẩm đăng kí thành chìa khoá {key}"
+  lang:
+    set: "<gray>Ngôn ngữ đã đặt thành <aqua>{lang}"
+    not_found: "<yellow>Không tìm thấy ngôn ngữ này!"
+  mana:
+    display: "<white>{mana_unit} của bạn: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} của {player}: <aqua>{current}/{max}"
+    add: "<gray>Đã thêm <aqua>{amount} {mana_unit} <gray>cho <gold>{player}"
+    remove: "<gray>Đã xóa bỏ <aqua>{amount} {mana_unit} <gray>từ <gold>{player}"
+    set: "<gray>Đã đặt <gold>{player} <gray> thành <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} tối thiểu là 0!"
+    console_specify_player: "<yellow>Bảng điều khiển phải chỉ định một người chơi!"
+  modifier:
+    add:
+      added: "<gray>Nâng cấp {color}{stat} <gray>cấp <aqua>{value} <gray>tên <white>{name} <gray>đã được thêm cho <gold>{player}"
+      already_exists: "<yellow>Nâng cấp tên {name} đã tồn tại trên <gold>{player}<yellow>! Hãy gỡ nó trước với lệnh <gold>/sk modifier remove {player} {name}"
+    remove:
+      not_found: "<yellow>Nâng cấp {name} không được tìm thấy ở <gold>{player}"
+      removed: "<gray>Đã gỡ nâng cấp <white>{name} <gray>khỏi <gold>{player}"
+    list:
+      all_stats_header: "<gray>Nâng cấp chỉ số của <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Cấp <gold>{value}"
+      one_stat_header: "<gray>Nâng cấp chỉ số ({color}{stat}<gray>) của <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Chỉ có thể liệt kê nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+    removeall:
+      removed_all_stats: "<gray> Đã xóa <aqua>{num} nâng cấp <gray>của <gold>{player}"
+      removed_one_stat: "<gray>Đã xóa <aqua>{num} <gray>nâng cấp {color}{stat} <gray>của <gold>{player}"
+      players_only: "<yellow>Chỉ có thể xóa nâng cấp chỉ số của một người chơi! Hãy thử nhập tên một người chơi"
+  multiplier:
+    global: Tổng quát
+    list: "<white>XP thưởng thêm cho người chơi <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white> XP thưởng: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Chỉ người chơi mới có thể liệt kê danh sách XP thưởng! Hãy nhập tên một người chơi cụ thể!"
+  preset:
+    load:
+      confirm: "<red>Tải thiết lập trước sẽ ghi đè lên thiết lập hiện tại! Những tệp sau đây sẽ bị ảnh hưởng <gray>(<aqua>Đã thêm<gray>, <yellow>Đã gộp<gray>, <red>Đã thay thế<gray>, <dark_red>Đã xóa<gray>):{entries} <red> Hành động này sẽ không thể trở lại như cũ, hãy sao lưu thủ công những tệp quan trọng. Nhập lại lệnh để xác nhận."
+      loaded: Đã tải thành công thiết lập trước "{name}", hãy khởi động lại máy chủ.
+      created: Tệp đã tạo
+      modified: Tệp đã chỉnh sửa
+      replaced: Tệp đã thay thế
+      deleted: Tệp đã xóa
+      skipped: Tệp bị bỏ qua
+  profile:
+    skills: "Khả năng cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Khả năng:{skill_entries}"
+    skill_entry: "\n<dark_aqua>{skill}<gray>- Cấp độ: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Chỉ số cá nhân của <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Chỉ số: {stat_entries}"
+    stat_entry: "\n<dark_aqua>{stat} <gray>- Tổng cấp độ: <white>{total_level}<gray>, Cấp độ cơ bản: <white>{base_level}<gray>, Cấp độ chỉnh sửa: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>Xếp hạng Khả năng của bạn"
+    power: "<yellow>Sức mạnh <gray>(Tất cả Khả năng): <white>#{rank} trên {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} trên {total}"
+  reload: "<green>Đã tải lại thiết lập!"
+  save:
+    already_saving: "<yellow>Dữ liệu đã được lưu!"
+    mysql_not_enabled: "<yellow>MySQL không được kích hoạt khi khởi động máy chủ, thay vào đó hãy lưu vào một tệp!"
+    saved: "<green>Dữ liệu về Khả năng đã được lưu lại!"
+  skill:
+    setall:
+      set: "<gray>Tất cả Khả năng đã được thành cấp <aqua>{level} <gray>cho người chơi <gold>{player}"
+    setlevel:
+      set: "<gray>Khả năng <aqua>{skill} <gray>của người chơi <gold>{player} đã được đặt thành cấp độ <aqua>{level} <gray>"
+    at_least: "<yellow>Cấp độ tối thiểu là {level}!"
+  toggle:
+    enabled: "<green>Thanh Kĩ năng của bạn đã được bật"
+    disabled: "<red>Thanh Kĩ năng của bạn đã được tắt"
+    not_enabled: "<yellow>Thanh Kĩ năng không được bật trong máy chủ này!"
+  top:
+    power_header: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Bảng xếp hạng tất cả Khả năng</bold><white>(Trang{page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Bảng xếp hạng</bold><white>(Trang {page})==--"
+    average_header: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Bảng xếp hạng trung bình Khả năng</bold><white>(Trang {page})==--"
+    usage: "<yellow>Cách dùng: <green>/sk top <white><page> <gray>hoặc <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Chuyển đổi dữ liệu người chơi từ <gray>{from} <green>to <gray>{to} thành công"
+    error: "<red>Có lỗi xảy ra khi chuyển dữ liệu người chơi. Xem lỗi trong bảng điều khiển."
+  updateleaderboards:
+    already_updating: "<yellow>Bảng xếp hạng đã đang được cập nhật!"
+    updated: "<green>Đã cập nhật bảng xếp hạng!"
+  version: "<white>Bạn đang dùng AuraSkills phiên bản <aqua>{current_version}<white>. Phiên bản mới nhất là <aqua>{latest_version}"
+  xp:
+    add: "<gray>Đã thêm <aqua>{amount} XP {skill}<gray> cho <gray>{player}"
+    set: "<gray> Đã đặt XP <aqua>{skill} <gray>cho người chơi <gray>{player} <gray>thành {amount}"
+    remove: "<gray>Đã xóa bỏ <aqua>{amount} {skill} <gray>XP từ người chơi <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+  unknown_skill: "<yellow>Khả năng không khả dụng!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Chỉ số không khả dụng!"
+  no_profile: "<yellow>Người chơi không có hồ sơ Khả năng. Hãy thử thoát ra và vào lại hoặc khởi động lại máy chủ."
+leveler:
+  level_up: "Lên cấp Khả năng {skill}"
+  skill_level_up: Lên cấp Khả năng
+  rewards: Thưởng
+  ability_unlock: Kĩ năng bị động
+  ability_level_up: Lên cấp Kĩ năng bị động
+  mana_ability_unlock: Kĩ năng ma pháp
+  mana_ability_level_up: Lên cắp Kĩ năng Ma pháp
+  unclaimed_item: "<red>Bạn có vật phẩm chưa nhận do kho đồ đã đầy, dùng <yellow>/skills claimitems <red>để nhận"
+menus:
+  common:
+    close: "Đóng"
+    level: "Cấp độ"
+    progress_to_level: "Tiến trình lên cấp"
+    max_level: "CẤP ĐỘ TỐI ĐA"
+    ability_levels: "Cấp độ Kĩ năng"
+    stats_leveled: "Chỉ số nhận được"
+    mana_ability: "Kĩ năng Ma pháp"
+    duration: "Kéo dài"
+    mana_cost: "Yêu cầu Mana"
+    cooldown: "Hồi chiêu"
+    damage: "Sát thương"
+    max_mana_cost: "Yêu cầu Mana tối đa"
+    attack_speed: "Tốc độ đánh"
+    back: "Trở lại"
+    back_click: "Trở về menu {menu_name}"
+    unlocked: "ĐÃ MỞ KHÓA"
+    in_progress: "ĐANG THỰC HIỆN"
+    locked: "ĐÃ KHÓA"
+    your_level: "Cấp độ của bạn"
+    next_page: "Trang kế"
+    next_page_click: "Nhấn để qua trang tiếp theo"
+    previous_page: "Trang trước"
+    previous_page_click: "Nhấn để trở lại trang trước"
+  skills:
+    skills_title: "Khả năng của bạn"
+    your_skills: "Khả năng của bạn"
+    your_skills_desc: "Thăng cấp Khả năng bằng cách thực hiện các nhiệm vụ khác nhau để mở khóa chỉ số, Kĩ năng và hơn thế nữa!"
+    your_skills_hover: "Di chuột qua một Khả năng để xem thêm!"
+    your_skills_click: "Nhấn vào một Khả năng để xem tiến trình!"
+    skill_click: "Nhấn để xem tiến trình thăng cấp!"
+    stats: "Chỉ số"
+    stats_desc: "Tăng Chỉ số khi thăng cấp Khả năng"
+    stats_click: "Nhấn để xem Chỉ số của bạn"
+  level_progression:
+    level_progression_title: "Cấp độ của {skill} - Trang {page}"
+    your_ranking: "Xếp hạng Khả năng của bạn"
+    rank_out_of: "<1>Bạn đứng thứ <2>{rank}</2> trong tổng số {total} người chơi</1>"
+    rank_percent: "<1>Bạn ở trong top <2>{percent}%</2> trong tổng số người chơi</1>"
+    rewards: "Thưởng"
+    ability_unlock: "[Mở khóa Kĩ năng bị động]"
+    mana_ability_unlock: "[Mở khóa Kĩ năng ma pháp]"
+    progress: "Tiến trình"
+    leaderboard_click: "Nhấn để xem bảng xếp hạng cho Khả năng {skill}"
+    sources: "Nguồn XP"
+    sources_desc: "Menu Nguồn XP cho biết các cách để nhận XP Kĩ năng, cũng như lượng XP nhận được của mỗi nguồn."
+    sources_click: "Nhấn để xem nguồn XP cho Khả năng {skill}"
+    abilities: "Kĩ năng"
+    abilities_desc: "<2>Kĩ năng bị động</2> <1>có thể được mở khóa và thăng cấp khi bạn thăng cấp Kĩ năng.</1>"
+    mana_abilities_desc: "<3>Kĩ năng Ma pháp</3> <1>là một dạng Kĩ năng đặc biệt, có thể được kích hoạt chủ động và tiêu tốn Mana.</1>"
+    abilities_click: "Nhấn để xem Kĩ năng của {skill}"
+  stats:
+    stats_title: Chỉ số của bạn
+    skills: "Khả năng"
+    added_drop: "+{value} Rơi"
+    added_drops: "+{value} Rơi"
+    chance_drop: "{chance}% cho +{value} Rơi"
+    chance_drops: "{chance}% cho +{value} Rơi"
+  unclaimed_items:
+    unclaimed_items_title: "Nhận vật phẩm"
+    inventory_full: "Bạn không đủ chỗ trống trong kho đồ để nhận vật phẩm này"
+    click_to_claim: "Nhấp để nhận!"
+  leaderboard:
+    leaderboard_title: "Bảng xếp hạng {skill}"
+  sources:
+    sources_title: "Nguồn XP cho {skill}"
+    sorter: "Phân loại nguồn XP"
+    descending: "Cao tới Thấp"
+    ascending: "Thấp tới Cao"
+    alphabetical: "Tên (A-Z)"
+    reverse_alphabetical: "Tên (Z-A)"
+    sort_click: "Ấn để đổi kiểu phân loại"
+    multiplied_xp: "Thưởng {xp_unit}"
+    multiplied_desc: "Đây là lượng XP thực tế bạn nhận được dựa trên XP Thưởng"
+  abilities:
+    abilities_title: "Kĩ năng của {skill}"
+    description: "Mô tả"
+    unlocked_at: "<1>Mở khóa khi đạt <2>{skill} {level}"
+    next_upgrade_at: "<1>Nâng cấp tiếp theo ở <2>{skill}{level}"
+mana_abilities:
+  replenish:
+    name: Tái tạo
+    desc: "Tự động trồng lại cây trồng trong {value} giây. <1>[Chuột phải vào cuốc và và phá cây trồng để kích hoạt]"
+    raise: "<gray>Bạn đã giơ cuốc lên"
+    lower: "<gray>Bạn đã hạ cuốc xuống"
+    start: "<gold>Đã kích hoạt Tái tạo! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Tái tạo kết thúc"
+  treecapitator:
+    name: Đốn hạ
+    desc: "Đốn ngã cả cây ngay lập tức trong {value} giây. <1>[Chuột phải vào rìu và chặt gỗ để kích hoạt]"
+    raise: "<gray>Bạn đã giơ rìu lên"
+    lower: "<gray>Bạn đã hạ rìu xuống"
+    start: "<gold>Đã kích hoạt Đốn hạ! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Đốn hạ kết thúc"
+  speed_mine:
+    name: Đào nhanh
+    desc: "Cung cấp hiệu ứng Đào nhanh {haste_level} trong {value} giây. <1>[Chuột phải vào cúp và đào khối để kích hoạt]"
+    raise: "<gray>Bạn đã giơ cúp lên"
+    lower: "<gray>Bạn đã hạ cúp xuống"
+    start: "<gold>Đã kích hoạt Đào nhanh! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Đào nhanh kết thúc"
+  absorption:
+    name: Hấp thụ
+    desc: "Sát thương nhận vào sẽ giảm Mana bằng 2 lần ST nhận vào thay vì mất HP trong {value} giây. Mana sẽ không hồi lại trong khi Hấp thụ được kích hoạt. <1>[Chuột trái vào khiên và nhận ST để kích hoạt]"
+    raise: "<gray>Bạn đã giơ khiên lên"
+    lower: "<gray>Bạn đã hạ khiên xuống"
+    start: "<gold>Đã kích hoạt Hấp thụ! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Hấp thụ kết thúc"
+  terraform:
+    name: Terraform
+    desc: "Các khối tương tự kết nối với nhau trong bán kính {radius} khối sẽ bị phá ngay lập tức theo chiều ngang khi đào trong {value} giây. <1>[Chuột phải vào xẻng và đào khối để kích hoạt]"
+    raise: "<gray>Bạn đã giơ xẻng lên"
+    lower: "<gray>Bạn đã hạ xẻng xuống"
+    start: "<gold>Đã kích hoạt Terraform! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform kết thúc"
+  sharp_hook:
+    name: Móc câu sắc lẹm
+    desc: "Gây thêm {value} ST khi đánh vào một thực thể bị móc bởi cần câu"
+    use: "<gold>Đã kích hoạt Móc câu sắc lẻm! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: Siêu tên
+    desc: "Mũi tên bắn ra sẽ gây thêm sát thương dựa trên lực kéo cung và làm tiêu tốn Mana. Gây thêm {value}% ST trên mỗi Mana. <1>[Chuột trái vào cung để bật/tắt Siêu tên]"
+    enable: "<gray>Đã bật Siêu tên"
+    disable: "<gray>Đã tắt Siêu tên"
+    shoot: "<gold>Đã dùng Siêu tên! <light_purple>+{percent}% ST <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: Kiếm sét
+    desc: Tăng thêm {value}% tốc độ đánh trong {duration} giây. <1>[Chuột phải vào kiếm và tấn công để kích hoạt]
+    raise: "<gray>Bạn giương kiếm lên"
+    lower: "<gray>Bạn đã xuống kiếm"
+    start: "<gold>Đã kích hoạt Kiếm sét! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Kiếm sét kết thúc"
+  not_ready: "<red>Kĩ năng chưa hồi! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Không đủ Mana! <gray>(Cần {mana} {mana_unit})"
+skills:
+  farming:
+    name: Thu hoạch
+    desc: "Thu hoạch cây trồng để nhận {xp_unit} Thu hoạch"
+  foraging:
+    name: Chặt gỗ
+    desc: "Chặt cây để nhận {xp_unit} Chặt gỗ"
+  mining:
+    name: Khai thác
+    desc: "Khai thác đá và quặng để nhận {xp_unit} Khai thác"
+  fishing:
+    name: Câu cá
+    desc: "Bắt cá để nhận {xp_unit} Câu cá"
+  excavation:
+    name: Đào bới
+    desc: "Đào bằng xẻng để nhận {xp_unit} Đào bới"
+  archery:
+    name: Cung thủ
+    desc: "Bắn các con quái vật và người chơi bằng cung để nhận {xp_unit} Cung thủ"
+  defense:
+    name: Phòng thủ
+    desc: "Nhận ST từ thực thể để nhận {xp_unit} Phòng thủ"
+  fighting:
+    name: Chiến đấu
+    desc: "Đánh các con quái với vũ khí cận chiến để nhận {xp_unit} Chiến đấu"
+  endurance:
+    name: Bền bỉ
+    desc: "Đi bộ và chạy để nhận {xp_unit} Bền bỉ"
+  agility:
+    name: Nhanh nhẹn
+    desc: "Di chuyển xung quanh và nhận ST rơi để nhận {xp_unit} Nhanh nhẹn"
+  alchemy:
+    name: Điều chế
+    desc: "Nấu và dùng thuốc hiệu ứng để nhận {xp_unit} Điều chế"
+  enchanting:
+    name: Phù phép
+    desc: "Phù phép, kết hợp và mài vật phẩm để nhận {xp_unit} Phù phép"
+  sorcery:
+    name: Ma thuật
+    desc: "Dùng Kĩ năng Ma pháp để nhận {xp_unit} Ma thuật"
+  healing:
+    name: Chữa trị
+    desc: "Uống hoặc quăng thuốc hiệu ứng để nhận {xp_unit} Chữa trị"
+  forging:
+    name: Rèn đúc
+    desc: "Hợp nhất hoặc áp dụng sách vào trang bị bằng đe để nhận {xp_unit} Rèn đúc"
+sources:
+  fishing:
+    cod: Cá tuyết
+    salmon: Cá hồi
+    tropical_fish: Cá nhiệt đới
+    pufferfish: Cá nóc
+    treasure: Báu vật
+    junk: Vật phẩm rác
+    rare: Vật phẩm hiếm
+    epic: Vật phẩm cực hiếm
+  damage:
+    mob_damage: ST từ quái
+    player_damage: ST từ người chơi
+    fall_damage: Nhận ST rơi
+  statistic:
+    walk_per_meter: Đi bộ
+    sprint_per_meter: Chạy nhanh
+    swim_per_meter: Bơi lội
+  jumping:
+    jump_per_100: Nhảy
+  brewing:
+    awkward: Nấu thuốc kì lạ
+    regular: Nấu thuốc thường
+    extended: Nấu thuốc cộng thêm thời gian
+    upgraded: Nấu thuốc được nâng cấp
+    splash: Nấu thuốc quăng được
+    lingering: Nấu thuốc kéo dài
+  enchanting:
+    weapon_per_level: Phù phép vũ khí
+    armor_per_level: Phù phép giáp
+    tool_per_level: Phù phép trang bị
+    book_per_level: Phù phép sách
+  mana_ability_use:
+    mana_ability_use: Dùng Kĩ năng Ma pháp
+  item_consume:
+    drink_regular: Uống thuốc thường
+    drink_extended: Uống thuốc cộng thêm thời gian
+    drink_upgraded: Uống thuốc được nâng cấp
+    golden_apple: Ăn Táo vàng
+    enchanted_golden_apple: Ăn Táo vàng được phù phép
+  potion_splash:
+    splash_regular: Quăng thuốc thường
+    splash_extended: Quăng thuốc cộng thêm thời gian
+    splash_upgraded: Quăng thuốc được nâng cấp
+    lingering_regular: Dùng thuốc kéo dài
+    lingering_extended: Dùng thuốc kéo dài cộng thêm thời gian
+    lingering_upgraded: Dùng thuốc kéo dài được nâng cấp
+  anvil:
+    combine_books_per_level: Kết hợp sách phù phép
+    combine_weapon_per_level: Kết hợp Vũ khí với Sách
+    combine_armor_per_level: Kết hợp Giáp với Sách
+    combine_tool_per_level: Kết hợp Công cụ với Sách
+  grindstone:
+    grindstone_per_level: Giải phù phép bằng Bàn đá mài
+  units:
+    damage: Sát thương
+    meter: Mét
+    100_jumps: Nhảy 100
+    mana: Mana đã dùng
+    combine_level: Phí XP dùng đe
+    grindstone_level: Cấp độ phù phép trên vật phẩm
+    enchant_level: Cấp độ Phù phép được nhận
+stats:
+  strength:
+    name: Sức mạnh
+    desc: "Sức mạnh tăng sát thương tấn công của bạn với các loại vũ khí khác nhau."
+  health:
+    name: Máu
+    desc: "Máu giúp tăng lượng {hp_unit} bạn có, cho bạn khả năng sống sót lâu hơn trong giao tranh."
+  regeneration:
+    name: Hồi phục
+    desc: "Hồi phục giúp tăng khả năng hồi máu và năng lượng."
+  luck:
+    name: May mắn
+    desc: "May mắn tăng khả năng nhận thêm vật phẩm từ khối ở các Kĩ năng thu thập."
+  wisdom:
+    name: Trí khôn
+    desc: "Trí khôn tăng năng lượng tối đa của bạn, tăng số kinh nghiệm bạn nhận được, và giảm giá khi sử dụng đe."
+  toughness:
+    name: Bền bỉ
+    desc: "Bền bỉ giảm lượng sát thương nhận vào khi bị tấn công."
+  crit_chance:
+    name: Tỉ lệ chí mạng
+    desc: "Tỉ lệ chí mạng là xác suất gây ra một đòn chí mạng."
+  crit_damage:
+    name: Sát thương chí mạng
+    desc: "Sát thương chí mạng là lượng sát thương theo phần trăm được tăng thêm khi gây ra 1 đòn chí mạng."
+  speed:
+    name: Tốc độ
+    desc: "Tốc độ tăng tốc độ di chuyển khi đi bộ và chạy nhanh."
+traits:
+  attack_damage:
+    name: Sát thương
+  hp:
+    name: HP
+  saturation_regen:
+    name: Hồi độ no nê
+  hunger_regen:
+    name: Hồi độ đói
+  mana_regen:
+    name: Hồi phục Mana
+  luck:
+    name: Chỉ số may mắn
+  double_drop:
+    name: x2 Rơi
+  experience_bonus:
+    name: XP thưởng
+  anvil_discount:
+    name: Giảm giá dùng đe
+  max_mana:
+    name: Mana tối đa
+  damage_reduction:
+    name: Giảm sát thương
+  crit_chance:
+    name: Tỉ lệ chí mạng
+  crit_damage:
+    name: Sát thương chí mạng
+  movement_speed:
+    name: Tốc độ di chuyển
+  farming_luck:
+    name: May mắn thu hoạch
+  foraging_luck:
+    name: May mắn chặt gỗ
+  mining_luck:
+    name: May mắn đào mỏ
+  excavation_luck:
+    name: May mắn đào bới
+  fishing_luck:
+    name: May mắn câu cá
+ui:
+  maxed: TỐI ĐA
+units:
+  mana: Mana
+  hp: HP
+  xp: XP
+file_version: 32

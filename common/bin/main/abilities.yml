@@ -1,0 +1,530 @@
+abilities:
+  auraskills/bountiful_harvest:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/farmer:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/scythe_master:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/geneticist:
+    enabled: true
+    base_value: 1.0
+    value_per_level: 2.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/growth_aura:
+    enabled: true
+    base_value: 12.0
+    value_per_level: 12.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    radius: 30
+  auraskills/lumberjack:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/forager:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/axe_master:
+    enabled: true
+    base_value: 4.0
+    value_per_level: 3.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/valor:
+    enabled: true
+    base_value: 1.0
+    value_per_level: 1.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/shredder:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 3.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/lucky_miner:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 5.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/miner:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/pick_master:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/stamina:
+    enabled: true
+    base_value: 1.0
+    value_per_level: 1.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/hardened_armor:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 3.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/lucky_catch:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 5.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/fisher:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/treasure_hunter:
+    enabled: true
+    base_value: 0.5
+    value_per_level: 0.5
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+    scale_base_value_chance: false
+  auraskills/grappler:
+    enabled: true
+    base_value: 50.0
+    value_per_level: 100.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/epic_catch:
+    enabled: true
+    base_value: 0.2
+    value_per_level: 0.2
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    scale_base_value_chance: false
+  auraskills/bigger_scoop:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/excavator:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/spade_master:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/metal_detector:
+    enabled: true
+    base_value: 0.3
+    value_per_level: 0.3
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+    scale_base_value_chance: false
+  auraskills/lucky_spades:
+    enabled: true
+    base_value: 0.05
+    value_per_level: 0.03
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    scale_base_value_chance: false
+  auraskills/retrieval:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 5.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+    delay_sec: 3
+  auraskills/archer:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/bow_master:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/piercing:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 3.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/stun:
+    enabled: true
+    base_value: 2.0
+    value_per_level: 1.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    speed_reduction: 0.2
+  auraskills/shielding:
+    enabled: true
+    base_value: 2.0
+    value_per_level: 3.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/defender:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/mob_master:
+    enabled: true
+    base_value: 2.0
+    value_per_level: 3.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/immunity:
+    enabled: true
+    base_value: 0.5
+    value_per_level: 0.4
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/no_debuff:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 5.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/parry:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 2.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 20
+    time_ms: 250
+    enable_sound: true
+  auraskills/fighter:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/sword_master:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/first_strike:
+    enabled: true
+    base_value: 15.0
+    value_per_level: 5.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+    enable_message: true
+    cooldown_ticks: 6000
+  auraskills/bleed:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 3.0
+    secondary_base_value: 0.5
+    secondary_value_per_level: 0.5
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    enable_enemy_message: true
+    enable_self_message: true
+    enable_stop_message: true
+    base_ticks: 3
+    added_ticks: 2
+    max_ticks: 11
+    tick_period: 40
+    show_particles: true
+  auraskills/anti_hunger:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 5.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/runner:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/golden_heal:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 6.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/recovery:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/meal_steal:
+    enabled: true
+    base_value: 1.0
+    value_per_level: 2.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/light_fall:
+    enabled: true
+    base_value: 2.0
+    value_per_level: 1.5
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/jumper:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/sugar_rush:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 7.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/fleeting:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+    health_percent_required: 20.0
+  auraskills/thunder_fall:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 2.0
+    secondary_base_value: 10.0
+    secondary_value_per_level: 5.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/alchemist:
+    enabled: true
+    base_value: 3.0
+    value_per_level: 4.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+    add_item_lore: true
+  auraskills/brewer:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/splasher:
+    enabled: true
+    base_value: 0.5
+    value_per_level: 0.25
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/lingering:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    secondary_base_value: 3.0
+    secondary_value_per_level: 2.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/wise_effect:
+    enabled: true
+    base_value: 1.0
+    value_per_level: 1.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/xp_convert:
+    enabled: true
+    base_value: 30.0
+    value_per_level: -0.5
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/enchanter:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/xp_warrior:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/enchanted_strength:
+    enabled: true
+    base_value: 0.5
+    value_per_level: 0.5
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+    excluded_enchantments: []
+  auraskills/lucky_table:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 1.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+  auraskills/sorcerer:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/life_essence:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 7.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/healer:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/life_steal:
+    enabled: true
+    base_value: 2.5
+    value_per_level: 1.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/golden_heart:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 3.0
+    unlock: '{start}+4'
+    level_up: 5
+    max_level: 0
+  auraskills/revival:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    secondary_base_value: 7.0
+    secondary_value_per_level: 6.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+    enable_message: true
+  auraskills/disenchanter:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 3.0
+    unlock: '{start}+1'
+    level_up: 5
+    max_level: 0
+  auraskills/forger:
+    enabled: true
+    base_value: 10.0
+    value_per_level: 10.0
+    unlock: '{start}+2'
+    level_up: 5
+    max_level: 0
+  auraskills/repairing:
+    enabled: true
+    base_value: 5.0
+    value_per_level: 4.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/anvil_master:
+    enabled: true
+    base_value: 43.0
+    value_per_level: 3.0
+    unlock: '{start}+3'
+    level_up: 5
+    max_level: 0
+  auraskills/skill_mender:
+    enabled: true
+    base_value: 2.0
+    value_per_level: 1.0
+    unlock: '{start}+5'
+    level_up: 5
+    max_level: 0
+file_version: 3

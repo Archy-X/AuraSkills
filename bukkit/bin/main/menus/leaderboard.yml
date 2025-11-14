@@ -1,0 +1,39 @@
+title: '{{leaderboard_title}}'
+size: 5
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    material: arrow
+    pos: 4,4
+    display_name: '<green>{{back}}'
+    lore:
+      - '<gray>{{back_click}}'
+templates:
+  leaderboard_player:
+    material: player_head
+    contexts:
+      1:
+        pos: 1,4
+      2:
+        pos: 2,3
+      3:
+        pos: 2,5
+      4:
+        pos: 3,1
+      5:
+        pos: 3,2
+      6:
+        pos: 3,3
+      7:
+        pos: 3,4
+      8:
+        pos: 3,5
+      9:
+        pos: 3,6
+      10:
+        pos: 3,7
+    display_name: '<yellow>{place}. <gold>{player}'
+    lore:
+      - '<gray>{{level}}: <white>{level}'

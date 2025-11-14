@@ -1,0 +1,154 @@
+pages:
+  page1:
+    items:
+      # Weapons - Swords
+      '1':
+        material: WOODEN_SWORD
+        buy: 10
+        sell: 3
+      '2':
+        material: STONE_SWORD
+        buy: 25
+        sell: 8
+      '3':
+        material: IRON_SWORD
+        buy: 75
+        sell: 25
+      '4':
+        material: GOLDEN_SWORD
+        buy: 100
+        sell: 30
+      '5':
+        material: DIAMOND_SWORD
+        buy: 250
+        sell: 80
+      '6':
+        material: NETHERITE_SWORD
+        buy: 500
+        sell: 150
+      
+      # Weapons - Axes
+      '7':
+        material: IRON_AXE
+        buy: 60
+        sell: 20
+      '8':
+        material: DIAMOND_AXE
+        buy: 200
+        sell: 65
+      '9':
+        material: NETHERITE_AXE
+        buy: 450
+        sell: 140
+      
+      # Ranged Weapons
+      '10':
+        material: BOW
+        buy: 80
+        sell: 25
+      '11':
+        material: CROSSBOW
+        buy: 120
+        sell: 40
+      '12':
+        material: ARROW
+        buy: 1
+        sell: 0.3
+      '13':
+        material: SPECTRAL_ARROW
+        buy: 5
+        sell: 1.5
+      '14':
+        material: TIPPED_ARROW
+        buy: 8
+        sell: 2.5
+      
+      # Armor - Helmets
+      '15':
+        material: IRON_HELMET
+        buy: 50
+        sell: 15
+      '16':
+        material: DIAMOND_HELMET
+        buy: 150
+        sell: 50
+      '17':
+        material: NETHERITE_HELMET
+        buy: 350
+        sell: 110
+      
+      # Armor - Chestplates
+      '18':
+        material: IRON_CHESTPLATE
+        buy: 80
+        sell: 25
+      '19':
+        material: DIAMOND_CHESTPLATE
+        buy: 240
+        sell: 80
+      '20':
+        material: NETHERITE_CHESTPLATE
+        buy: 550
+        sell: 170
+      
+      # Armor - Leggings
+      '21':
+        material: IRON_LEGGINGS
+        buy: 70
+        sell: 22
+      '22':
+        material: DIAMOND_LEGGINGS
+        buy: 210
+        sell: 70
+      '23':
+        material: NETHERITE_LEGGINGS
+        buy: 500
+        sell: 155
+      
+      # Armor - Boots
+      '24':
+        material: IRON_BOOTS
+        buy: 40
+        sell: 12
+      '25':
+        material: DIAMOND_BOOTS
+        buy: 120
+        sell: 40
+      '26':
+        material: NETHERITE_BOOTS
+        buy: 300
+        sell: 95
+      
+      # Combat Supplies
+      '27':
+        material: SHIELD
+        buy: 60
+        sell: 20
+      '28':
+        material: TOTEM_OF_UNDYING
+        buy: 1000
+        sell: 300
+      '29':
+        material: GOLDEN_APPLE
+        buy: 100
+        sell: 30
+      '30':
+        material: ENCHANTED_GOLDEN_APPLE
+        buy: 500
+        sell: 150
+      '31':
+        material: ENDER_PEARL
+        buy: 25
+        sell: 8
+      '32':
+        material: TRIDENT
+        buy: 400
+        sell: 120
+      '33':
+        material: ELYTRA
+        buy: 800
+        sell: 250
+      '34':
+        material: FIREWORK_ROCKET
+        buy: 5
+        sell: 1.5

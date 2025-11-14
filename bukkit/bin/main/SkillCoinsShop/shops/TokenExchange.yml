@@ -1,0 +1,85 @@
+pages:
+  page1:
+    items:
+      token_1:
+        material: EMERALD
+        buy: 100
+        currency: coins
+        tokens: 1
+        displayname: "&b1 Skill Token"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &6100 SkillCoins"
+          - "&7Receive: &b1 Skill Token"
+          - ""
+          - "&eClick to purchase!"
+      
+      token_5:
+        material: EMERALD
+        buy: 450
+        currency: coins
+        tokens: 5
+        displayname: "&b5 Skill Tokens"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &6450 SkillCoins"
+          - "&7Receive: &b5 Skill Tokens"
+          - ""
+          - "&a10% Discount!"
+          - "&eClick to purchase!"
+      
+      token_10:
+        material: EMERALD
+        buy: 850
+        currency: coins
+        tokens: 10
+        displayname: "&b10 Skill Tokens"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &6850 SkillCoins"
+          - "&7Receive: &b10 Skill Tokens"
+          - ""
+          - "&a15% Discount!"
+          - "&eClick to purchase!"
+      
+      token_25:
+        material: EMERALD
+        buy: 2000
+        currency: coins
+        tokens: 25
+        displayname: "&b25 Skill Tokens"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &62,000 SkillCoins"
+          - "&7Receive: &b25 Skill Tokens"
+          - ""
+          - "&a20% Discount!"
+          - "&eClick to purchase!"
+      
+      token_50:
+        material: EMERALD_BLOCK
+        buy: 3750
+        currency: coins
+        tokens: 50
+        displayname: "&b50 Skill Tokens"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &63,750 SkillCoins"
+          - "&7Receive: &b50 Skill Tokens"
+          - ""
+          - "&a25% Discount!"
+          - "&eClick to purchase!"
+      
+      token_100:
+        material: EMERALD_BLOCK
+        buy: 7000
+        currency: coins
+        tokens: 100
+        displayname: "&b100 Skill Tokens"
+        lore:
+          - "&7Exchange coins for tokens"
+          - "&7Cost: &67,000 SkillCoins"
+          - "&7Receive: &b100 Skill Tokens"
+          - ""
+          - "&a30% Discount!"
+          - "&eClick to purchase!"

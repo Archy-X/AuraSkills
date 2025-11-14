@@ -1,0 +1,1040 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: 收获满满
+    desc: "额外获得 +{value} 点耕作幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 耕作幸运"
+  farmer:
+    name: 耕作专精
+    desc: "获得额外的 {value}% 耕作熟练度."
+    info: "+{value}% 熟练度"
+  scythe_master:
+    name: 镰刀专精
+    desc: "提升 {value}% 的锄头伤害"
+    info: "+{value}% 任意 锄头 伤害"
+  geneticist:
+    name: 素食主义者
+    desc: "额外增加 {value} 点植物食物回复的饥饿度"
+    info: "+{value}% 回复的饱食度"
+  growth_aura:
+    name: 范围增生
+    desc: "将 {radius} 格范围内由你种植的农作物生成速度加快 {value}%."
+    info: "+{value}% 生长速度"
+  lumberjack:
+    name: 精准伐木
+    desc: "额外获得 +{value} 点伐木幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 伐木幸运"
+  forager:
+    name: 伐木专精
+    desc: "获得额外的 {value}% 伐木熟练度"
+    info: "+{value}% 熟练度"
+  axe_master:
+    name: 弄斧大师
+    desc: "提升 {value}% 的斧子伤害"
+    info: "+{value}% 任意 斧 伤害"
+  valor:
+    name: 怒气狂涌
+    desc: "持有 任意 斧头 时 +{value} 力量"
+    info: "+{value} 力量"
+  shredder:
+    name: 猛力一击
+    desc: "{value}% 的几率消耗三倍耐久造成更高的伤害"
+    info: "{value}% 三倍耐久损耗"
+  lucky_miner:
+    name: 幸运挖掘者
+    desc: "额外获得 +{value} 点挖矿幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 挖矿幸运"
+  miner:
+    name: 矿工专精
+    desc: "获得额外的 {value}% 挖矿熟练度"
+    info: "+{value}% 熟练度"
+  pick_master:
+    name: 镐击大师
+    desc: "提升 {value}% 的镐子伤害"
+    info: "+{value}% 任意 镐 伤害"
+  stamina:
+    name: 矿工耐力
+    desc: "持有 任意 镐 时获得 +{value} 韧性"
+    info: "+{value} 韧性"
+  hardened_armor:
+    name: 硬化盔甲
+    desc: "{value}% 的几率受伤不消耗盔甲耐久"
+    info: "{value}% 盔甲耐久损耗减免"
+  lucky_catch:
+    name: 幸运一竿
+    desc: "额外获得 +{value} 点渔技幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value} 渔技幸运"
+  fisher:
+    name: 捕鱼专精
+    desc: "获得额外的 {value}% 的钓鱼熟练度"
+    info: "+{value}% 熟练度"
+  treasure_hunter:
+    name: 宝藏猎人
+    desc: "{value}% 的几率钓上稀有掉落物"
+    info: "+{value}% 稀有 掉落物获得率"
+  grappler:
+    name: 钩爪钓竿
+    desc: "用钓竿勾住并拉过来实体的速度增加 {value}%"
+    info: "+{value}% 抓住实体速度"
+  epic_catch:
+    name: 史诗一竿
+    desc: "{value}% 的几率钓上史诗掉落物"
+    info: "+{value}% 史诗 掉落物获得率"
+  metal_detector:
+    name: 金属探测者
+    desc: "{value}% 的几率在挖掘时掉落稀有掉落物"
+    info: "+{value}% 稀有 掉落物获得率"
+  excavator:
+    name: 掘土专精
+    desc: "获得额外的 {value}% 挖掘熟练度"
+    info: "+{value}% 熟练度"
+  spade_master:
+    name: 舞铲阶级
+    desc: "提升 {value}% 的铲子伤害"
+    info: "+{value}% 任意 铲 伤害"
+  bigger_scoop:
+    name: 加倍掉落
+    desc: "额外获得 +{value} 点采掘幸运值, 能够提升获取额外掉落的几率"
+    info: "+{value}% 采掘幸运"
+  lucky_spades:
+    name: 捡漏之王
+    desc: "{value}% 的几率在挖掘时掉落史诗掉落物"
+    info: "+{value}% 史诗 掉落物获得率"
+  retrieval:
+    name: 箭矢回收
+    desc: "射出的箭在未命中且距离超过 {value} 格方块远时会在 {time} 秒内自动收回至背包."
+    info: "{value} 格距离"
+  archer:
+    name: 弓箭专精
+    desc: "获得额外的 {value}% 弓箭熟练度"
+    info: "+{value}% 熟练度"
+  bow_master:
+    name: 弓箭大师
+    desc: "提升 {value}% 的弓伤害"
+    info: "+{value}% 任意 弓 伤害"
+  piercing:
+    name: 穿透之箭
+    desc: "{value}% 的几率可以使弓穿过多个生物并造成伤害"
+    info: "{value}% 射出穿透箭几率"
+  stun:
+    name: 眩晕打击
+    desc: "有 {value}% 几率降低敌人 {reduction_percent}% 移速，持续 2 秒。"
+    info: "{value}% 晕眩攻击几率"
+  shielding:
+    name: 捂头蹲防
+    desc: "蹲下时减少 {value}% 的伤害"
+    info: "-{value}% 蹲下时受到的伤害"
+  defender:
+    name: 防御专精
+    desc: "获得额外的 {value}% 防御熟练度"
+    info: "+{value}% 熟练度"
+  mob_master:
+    name: 知己知彼
+    desc: "减少 {value}% 来自于任意生物的伤害"
+    info: "-{value}% 任意 生物伤害"
+  immunity:
+    name: 敏捷躲闪
+    desc: "{value}% 的几率无视一次敌对生物的攻击"
+    info: "{value}% 无视几率"
+  no_debuff:
+    name: 负面效果清除
+    desc: "{value}% 的几率清除获得的负面药水效果"
+    info: "{value}% 清除负面效果几率"
+  parry:
+    name: 招架
+    desc: "受击后的 {time} 秒内所受剑横扫伤害降低 {value}% 并免疫击退."
+    info: "{value}% 伤害减免"
+    parried: "<red>闪避本次攻击"
+  fighter:
+    name: 战斗专精
+    desc: "获得额外的 {value}% 战斗熟练度"
+    info: "+{value}% 熟练度"
+  sword_master:
+    name: 剑之大师
+    desc: "提升 {value}% 的剑伤害"
+    info: "+{value}% 任意 剑 伤害"
+  first_strike:
+    name: 先出之刃
+    desc: "首次攻击生物的时候造成 {value}% 的额外伤害"
+    info: "+{value}% 首次攻击伤害"
+    dealt: "<red>先出之刃!"
+  bleed:
+    name: 流血
+    desc: "{value}% 的几率使敌人流血失血3次, 每次流血伤害 {value_2} 点"
+    info: "{value}% 几率, {value_2} 伤害/次"
+    enemy_bleeding: "<red>敌人正在流血!"
+    self_bleeding: "<red>你正在流血!"
+    stop: "<white>流血已停止..."
+  anti_hunger:
+    name: 横扫饥饿
+    desc: "{value}% 的几率使饥饿度停止损失"
+    info: "{value}% 无饥饿几率"
+  runner:
+    name: 探索专精
+    desc: "获得额外 {value}% 的探索熟练度"
+    info: "+{value}% 熟练度"
+  golden_heal:
+    name: 黄金体质
+    desc: "额外提升{value}% 的生命治疗恢复效果"
+    info: "+{value}% 效果增强"
+  recovery:
+    name: 自愈增强
+    desc: "当血量低于 {value}% 时增加回血速度"
+    info: "+{value}% 低血量自愈"
+  meal_steal:
+    name: 饥饿偷取
+    desc: "{value}% 从别的玩家身上偷取 2 点饥饿值"
+    info: "{value}% 饥饿偷取几率"
+  light_fall:
+    name: 轻盈降落
+    desc: "减少 {value}% 的摔落伤害"
+    info: "-{value}% 摔落伤害"
+  jumper:
+    name: 杂技专精
+    desc: "获得额外的 {value}% 杂技熟练度"
+    info: "+{value}% 熟练度"
+  sugar_rush:
+    name: 药力增强
+    desc: "跳跃提升与速度药水的持续时间增加 {value}%"
+    info: "{value}% 持续时间延长"
+  fleeting:
+    name: 残血飞奔
+    desc: "低于 20% 生命值时获得 +{value} 的速度."
+    info: "+{value}% 速度"
+    start: "<white>你获得了残血速度提升! <gray>(+{value}% 速度)"
+    end: "<gray>残血速度提升已被关闭"
+  thunder_fall:
+    name: 落地震击
+    desc: "当按住Shift在空中掉落时有 {value}% 的几率能对半径3格内的生物造成 {value_2}% 的伤害"
+    info: "{value}% 震击几率, {value_2}% 伤害"
+  alchemist:
+    name: 炼金术士
+    desc: "制作的药水持续时间延长 {value}%"
+    info: "+{value}% 药水持续时间"
+  brewer:
+    name: 酿造专精
+    desc: "获得额外的 {value}% 酿造熟练度"
+    info: "+{value}% 熟练度"
+  splasher:
+    name: 高效喷溅
+    desc: "喷溅型药水产生的效果时间延长 {value}%"
+    info: "+{value}% 时长"
+  lingering:
+    name: 滞留增强
+    desc: "滞留型药水持续时间增加 {value}%, 并减少 {value_2}% 受影响实体的效果."
+    info: "-{value}% 自然持续时间, -{value_2}% 实体效果减退"
+  wise_effect:
+    name: 智慧专精
+    desc: "每一个药水效果能额外获得 {value} 智慧熟练度"
+    info: "+{value} 每个药水效果获得的智慧熟练度"
+  xp_convert:
+    name: 经验转化
+    desc: "每获得 {value} 点技能经验可以额外获得 1 点原版的经验值."
+    info: "1 经验值/{value} 技能经验"
+  enchanter:
+    name: 附魔专精
+    desc: "获得额外的 {value}% 附魔熟练度."
+    info: "+{value}% 熟练度"
+  xp_warrior:
+    name: 经验战士
+    desc: "你杀死的生物有 {value}% 的几率掉落双倍的经验."
+    info: "{value}% 2x 经验值"
+  enchanted_strength:
+    name: 附魔之力
+    desc: "手持物品上的附魔能额外让你获得 +{value}点/种 的力量"
+    info: "{value} 力量/单个附魔"
+  lucky_table:
+    name: 幸运附魔台
+    desc: "正在使用的物品如果携带有从附魔台得到的附魔, 则会在它到达最高级之前有 {value}% 的几率再增加 1 级"
+    info: "{value}% 附魔升级几率"
+  life_essence:
+    name: 生命源质
+    desc: 瞬间恢复(喷溅或滞留等均可) 药水能额外回复 {value}% 生命值
+    info: "+{value}% 额外回复生命"
+  healer:
+    name: 治疗专精
+    desc: 获得额外的 {value}% 治疗熟练度
+    info: "+{value}% 熟练度"
+  life_steal:
+    name: 生命窃取
+    desc: 每个击杀的生物或玩家可以为你回复 {value}% 的血量.
+    info: "偷取 {value}% 的血量"
+  golden_heart:
+    name: 黄金体质
+    desc: 有伤害吸收效果的金心时<gray>金心受到的伤害减少 {value}%
+    info: "-{value}% 金心受到的伤害"
+  revival:
+    name: 重生光环
+    desc: 复活的 30 秒内获得 +{value} 点的生命与 +{value_2} 级生命恢复效果
+    info: "+{value} 点生命值, +{value_2} 级生命回复效果"
+    message: "<white>重生之后, 你获得了 30 秒的庇护! <white>(<red>+{value} <gray>生命值, <gold>+{value_2} <gray>生命回复效果)"
+  disenchanter:
+    name: 祛魔转化
+    desc: 使用磨石时每个去掉的附魔能额外获得 {value}% 的经验
+    info: "+{value}% 磨石额外经验值"
+  forger:
+    name: 锻造专精
+    desc: 获得额外的 {value}% 锻造熟练度
+    info: "+{value}% 熟练度"
+  repairing:
+    name: 高效修复
+    desc: 使用原材料而非工具合并修复的物品可以额外回复 {value}% 的耐久度.
+    info: "+{value}% 铁砧修复度"
+  anvil_master:
+    name: 铁砧大师
+    desc: 在物品过于昂贵而无法修复之前降低修复物品时可能出现的最大消耗经验值至 {value} 级
+    info: "{value} 最大消耗"
+  skill_mender:
+    name: 技能结合者
+    desc: 手上物品拥有经验修补的物品时可以在每次获得 2 点技能经验时有 {value}% 的几率额外为此工具回复 1 点耐久
+    info: "{value}% 修复几率"
+acf:
+  core:
+    permission_denied: "<red>你没有执行此命令的权限"
+    permission_denied_parameter: "<red>你没有执行此命令的权限"
+    error_generic_logged: "<gray>发生未知错误. 问题已被记录, 抱歉给您带来不便！"
+    unknown_command: "<red>未知指令, 请输入 <yellow>/sk help 获取帮助"
+    invalid_syntax: "<yellow>指令用法: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>错误: {message}"
+    error_performing_command: "<red>抱歉, 执行命令时出现错误。"
+    please_specify_one_of: "<red>错误: 请指定一个 (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>错误: {num} 必须是一个数字。"
+    must_be_min_length: "<red>错误: 字符长度至少为 {min} 。"
+    must_be_max_length: "<red>错误: 字符长度至多为 {max} 。"
+    please_specify_at_most: "<red>错误: 请指定一个不大于 {max} 的数值."
+    please_specify_at_least: "<red>错误: 请指定一个不小于 {min} 的数值."
+    not_allowed_on_console: "<red>错误: 控制台不能执行此命令。"
+    could_not_find_player: "<red>错误: 无法找到玩家: <yellow>{search}"
+    no_command_matched_search: "<red>没有叫做 <yellow>{search} <red>的命令"
+    help_page_information: "<aqua> - 当前为第 <green>{page}<aqua>/<green>{totalpages} <aqua>页 (<aqua>找到 <yellow>{results} <aqua>个结果)"
+    help_no_results: "<aqua>错误: 没有更多结果。"
+    help_header: "<yellow>=== <green>{commandprefix}{command} <aqua>的有关帮助列表 <yellow>==="
+    help_detailed_header: "<yellow>=== <green>{commandprefix}{command} <aqua>的有关详细帮助列表 <yellow>==="
+    help_search_header: "<yellow>=== <green>{commandprefix}{command} {search} <aqua>搜索结果<yellow> ==="
+  minecraft:
+    invalid_world: "<red>错误: 不存在所指定的世界。"
+    you_must_be_holding_item: "<red>错误: 必须在主手中持有一个物品。"
+    player_is_vanished_confirm: "<yellow>警告：<green>{vanished} <yellow>is 已经消失。 不要炸毁他们的封面！\n<yellow>To 确认您的动作，添加 <green>:确认 <yellow>to 他们名字的结尾。\n<yellow>Ex: {vanished}:确认"
+    username_too_short: "<red>错误: 玩家名称太短了, 必须至少是三个字符"
+    is_not_a_valid_name: "<red>错误: <yellow>{name} <red>无效"
+    multiple_players_match: "<red>错误: 多个玩家符合条件 <aqua>{search} <yellow>(共 {all} 个)<red>, 请输入更具体的搜索条件"
+    no_player_found_server: "<red>没有符合搜索条件 <yellow>{search} <red>的玩家连接至此服务器"
+    no_player_found_offline: "<red>未找到符合 <yellow>{search}<red> 的玩家"
+    no_player_found: "<red>未找到符合 <yellow>{search}<red> 的玩家"
+    location_please_specify_world: "<red>错误: 请指定世界名称. 示例: <yellow>world:x,y,z"
+    location_please_specify_xyz: "<red>错误: 请指定一个坐标。示例: <yellow>world:x,y,z"
+    location_console_not_relative: "<red>错误: 控制台不能使用相对坐标来确定位置。"
+commands:
+  prefix: "<dark_gray>[<aqua>技能插件<dark_gray>] "
+  antiafk:
+    failed: "<red>{player} 未能通过反挂机检查 {check} <gray>(计数: {count})"
+    logs:
+      header: "<red>{player} <gray>的反挂机日志 <gray>({count} 总共) <dark_gray>| <gray>页 {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
+      desc: 显示指定玩家的反挂机日志。
+  armor:
+    modifier:
+      add:
+        added: "将如下属性修饰符添加至装备：{stat}，值：{value}，操作：{operation}"
+        already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
+        desc: 向手持物品添加装备属性修饰符，默认一并添加描述文本。
+      remove:
+        does_not_exist: "<yellow>你的物品没有属性 {color}{stat}!"
+        removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
+        desc: 移除手持物品的装备属性修饰符，默认一并移除描述文本。
+      list:
+        header: "<white>已有的属性列表:"
+        desc: 列出手持物品上所有的装备属性修饰符。
+      removeall:
+        removed: "<gray>成功清除了物品上的所有属性"
+        desc: 移除手持物品上所有的装备属性修饰符。
+    trait:
+      add:
+        added: "将如下特征修饰符添加至装备：{trait}，值：{value}，操作：{operation}"
+        already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk armor modifier remove 删除它!"
+        desc: 向手持物品添加装备特征修饰符，默认一并添加描述文本。
+      remove:
+        desc: 移除手持物品上指定的装备特征修饰符。
+      list:
+        desc: 列出手持物品上所有的装备特征修饰符。
+      removeall:
+        desc: 移除手持物品上所有的装备特征修饰符。
+    multiplier:
+      add:
+        added: "<gray>装备时属性增强<aqua> {target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
+        already_exists: "<yellow>装备时属性增强 {target} <yellow>已存在于你的盔甲上! 请先使用指令 /sk armor modifier remove 删除它!"
+        skill_lore: "<gray>当装备时: <aqua>+{value}% {skill} 经验值"
+        skill_lore_subtract: "<gray>当装备时: <aqua>-{value}% {skill} 经验值"
+        global_lore: "<gray>当装备时: <aqua>+{value}% 所有技能 经验值获取"
+        global_lore_subtract: "<gray>当装备时: <aqua>-{value}% 所有技能 经验值获取"
+        desc: 为手持物品添加特定或所有技能的经验倍率加成，可借此获得更多技能经验。
+      remove:
+        does_not_exist: "<yellow>你的盔甲没有属性增强 <aqua>{target}!"
+        removed: "<gray>装备时属性增强 {target} <gray>已从你的物品中移除"
+        desc: 移除手持物品上特定的装备经验倍率加成。
+      list:
+        header: "<white>已有的装备时生效属性列表:"
+        desc: 列出手持物品的所有装备经验倍率加成。
+      removeall:
+        removed: "<gray>成功清除了物品上的所有装备时生效属性"
+        desc: 移除手持物品上所有的装备经验倍率加成。
+    requirement:
+      add:
+        added: "<gray>等级限制为 <aqua>{level} <gray>的技能 <dark_aqua>{skill} <gray>已经添加到你的物品"
+        already_exists: "<yellow>属性 <dark_aqua>{skill} <yellow>已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!"
+        lore: "<red>需要 <dark_aqua>{level} <red>级 <dark_aqua>{skill}"
+        desc: 为手持物品添加装备条件，默认一并添加描述文本。
+      remove:
+        does_not_exist: "<yellow>你的物品没有技能 <dark_aqua>{skill}<yellow> 的条件限制!"
+        removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
+        desc: 移除手持物品的装备条件，默认一并移除描述文本。
+      list:
+        header: "<white>已存在的条件限制:"
+        desc: 列出手持物品所有的装备条件。
+      removeall:
+        removed: "<gray>所有条件限制已从你的物品上移除"
+        desc: 移除手持物品上所有的装备条件。
+      equip: "<yellow>你没有达到使用此物品的要求: {requirements}"
+  backup:
+    load:
+      confirm: "<red>加载备份将还原当前所有玩家的所有技能数据. 此操作一经确认无法撤消. 你可以在加载新备份前保存当前数据为备份. 再次输入命令以确认此操作"
+      loading: "<white>正在加载备份..."
+      loaded: "<green>成功加载了备份."
+      error: "<red>加载备份出现错误: {error}"
+      must_be_yaml: "<yellow>所选中文档需为 .yml 格式!"
+      file_not_found: "<yellow>备份文件夹内不存在符合此名称的备份文件!"
+      desc: 从指定文件加载备份。
+    save:
+      saving: "<white>保存备份中..."
+      saved: "<white>已将 {file} 数据备份为 {type}"
+      error: "<red>备份 {type} 数据时出现异常! 请查看控制台/下方堆栈报错以了解详情"
+      desc: 将当前数据以文件形式保存至备份文件夹。
+  claimitems:
+    desc: 打开界面领取多余的物品。
+    no_items: "<yellow>你没有需要领取的物品"
+  item:
+    give:
+      sender: "<white>已将 <aqua>{amount}x {key} <white>给予了 {player}"
+      receiver: "<white>你被给予了 <aqua>{amount}x {key}"
+      desc: 将物品注册列表中指定键名对应的物品给予玩家。
+    modifier:
+      add:
+        added: "将如下属性修饰符添加至物品：{stat}，值：{value}，操作：{operation}"
+        already_exists: "<yellow>属性 {color}{stat} <yellow>已存在于你的物品上! 请先使用指令 /sk item modifier remove 删除它!"
+        desc: 向手持物品添加物品属性修饰符，默认一并添加描述文本。
+      remove:
+        does_not_exist: "<yellow>你的物品没有属性 {color}{stat} <yellow>!"
+        removed: "<gray>属性 {color}{stat} <gray>已从你的物品中移除"
+        desc: 移除手持物品的物品属性修饰符，默认一并移除描述文本。
+      list:
+        header: "<white>已添加的物品属性:"
+        desc: 列出手持物品上所有的物品属性修饰符。
+      removeall:
+        removed: "<gray>成功清除了物品上的所有属性"
+        desc: 移除手持物品上所有的物品属性修饰符。
+    trait:
+      add:
+        added: "将如下特征修饰符添加至物品：{trait}，值：{value}，操作：{operation}"
+        already_exists: "<yellow>属性 {trait} <yellow>已存在于你的物品上! 请先使用指令 /sk item trait remove 删除它!"
+        desc: 向手持物品添加物品特征修饰符，默认一并添加描述文本。
+      remove:
+        desc: 移除手持物品上指定的物品特征修饰符。
+      list:
+        desc: 列出手持物品上所有的物品特征修饰符。
+      removeall:
+        desc: 移除手持物品上所有的物品特征修饰符。
+    multiplier:
+      add:
+        added: "<aqua>装备时属性增强 <aqua>{target} <gray>, 值为 <aqua>{value} <gray>已添加至你的物品"
+        already_exists: "<yellow>手持时属性翻倍 {target} <yellow>已存在于你的物品上! 请先使用指令 /sk item multiplier remove 删除它!"
+        skill_lore: "<gray>当持有时: <aqua>+{value}% {skill} 经验值"
+        skill_lore_subtract: "<gray>当持有时: <aqua>-{value}% {skill} 经验值"
+        global_lore: "<gray>当持有时: <blue>+{value}% 所有技能 经验值获取"
+        global_lore_subtract: "<gray>当持有时: <blue>-{value}% 所有技能 经验值获取"
+        desc: 为手持物品添加特定或所有技能的经验倍率加成，可借此获得更多技能经验。
+      remove:
+        does_not_exist: "<yellow>你的物品没有名为 <aqua>{target} <yellow>的属性翻倍!"
+        removed: "<aqua>{target} <gray>物品翻倍已从你的物品上移除"
+        desc: 移除手持物品上特定的物品经验倍率加成。
+      list:
+        header: "<white>已添加的物品翻倍属性:"
+        desc: 列出手持物品的所有物品经验倍率加成。
+      removeall:
+        removed: "<gray>成功清除了物品上的所有持有时生效属性"
+        desc: 移除手持物品上所有物品经验倍率加成。
+    register:
+      registered: "<white>已将手上物品注册至id: {key}"
+      already_registered: "<yellow>已有相同id <white>{key} <yellow>注册, 请输入 <white>/skills item unregister <yellow>以解除对该物品的注册"
+      no_spaces: "<yellow>id 不可包含空格"
+      desc: 将物品以指定名称注册至物品条目列表，便于配置引用这些物品。
+    requirement:
+      add:
+        added: "<gray>等级限制为 <aqua>{level} <gray>的技能 <dark_aqua>{skill} <gray>已经添加到你的物品"
+        already_exists: "<yellow>属性 <dark_aqua>{skill} <yellow>已存在条件限制! 请先使用指令 /sk armor requirement remove 删除它!"
+        lore: "<red>需要 <dark_aqua>{level} <red>级 <dark_aqua>{skill}"
+        desc: 为手持物品添加物品条件，默认一并添加描述文本。
+      remove:
+        does_not_exist: "<yellow>你的物品没有技能 <dark_aqua>{skill}<yellow> 的条件限制!"
+        removed: "<dark_aqua>{skill}<gray> 条件限制已从你的物品上移除"
+        desc: 移除手持物品的物品条件，默认一并移除描述文本。
+      list:
+        header: "<white>已存在的条件限制:"
+        desc: 列出手持物品所有的物品条件。
+      removeall:
+        removed: "<gray>所有条件限制已从你的物品上移除"
+        desc: 移除手持物品上所有的物品条件。
+      use: "<yellow>你没有达到使用此物品的要求: {requirements}"
+    unregister:
+      unregistered: "<white>id 为 {key} 的物品未被注册"
+      not_registered: "<yellow> 没有注册为 id {key} 的物品"
+      desc: 将指定键名对应的物品从物品列表中移除
+    ignore:
+      add:
+        added: "<gray>当前物品将不再触发魔法能力"
+        desc: 为物品添加禁止触发魔法能力的标签。
+      remove:
+        removed: "<gray>当前物品可再次触发魔法能力"
+        desc: 移除物品禁止触发魔法能力的标签。
+  jobs:
+    add:
+      added: "<white>职业 {job} 已成功给予玩家 {player}"
+      limited: "<yellow>不能将该职业给予玩家 {player}，因为该玩家不能拥有更多职业了"
+      existing: "<yellow>玩家 {player} 已拥有职业 {job}"
+      desc: 为自己或指定玩家选定一个技能作为职业。
+    remove:
+      removed: "<white>成功将玩家 {player} 拥有的职业 {job} 移除"
+      unchanged: "<yellow>无任何改动，因为玩家 {player} 尚未拥有职业 {job}"
+      desc: 让自己或指定玩家退出指定技能对应的职业。
+    removeall:
+      removed: "<white>成功将玩家 {player} 的所有职业移除"
+      desc: 让自己或指定玩家退出所有技能对应的职业。
+  lang:
+    set: "<gray>语言已设置为 <aqua>{lang}"
+    not_found: "<yellow>语言不存在!"
+    desc: 修改玩家显示的语言。
+  mana:
+    display: "<white>当前 {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>玩家 {player} 当前 {mana_unit}: <aqua>{current}/{max}"
+    desc: 显示自身或其他玩家的魔力值与其上限
+    add:
+      added: "<gray>为玩家 <gold>{player} <gray>添加了 <aqua>{amount} {mana_unit}"
+      desc: 为玩家添加魔力值
+    remove:
+      removed: "<gray>从玩家 <gold>{player} <gray>处扣除了 <aqua>{amount}{mana_unit}"
+      desc: 汲取玩家的魔力
+    set:
+      set: "<gray>将玩家 <gold>{player} <gray> 的魔力值设置为了 <aqua>{amount} {mana_unit}"
+      desc: 设置玩家的魔力值
+    at_least_zero: "<yellow>{mana_unit} 必须至少大于零!"
+    console_specify_player: "<yellow>后台执行此命令需指定一名玩家!"
+  modifier:
+    add:
+      added: "<gray>技能 {color}{stat} <gray>已将属性 <white>{name} <gray>的获取倍数改为 <aqua>{value} <gray>并成功应用于玩家 <gold>{player}"
+      already_exists: "<yellow>属性 <white>{name} <yellow>已存在于玩家 <gold>{player}<yellow> 身上! 请使用/sk modifier remove {player} {name} 以移除"
+      desc: 为玩家添加属性修饰符。
+    addtemp:
+      added: "为玩家 {player} 添加了临时属性 {stat} 修饰符：名称：{name}，值：{value}，持续时间：{duration}，操作：{operation}"
+      desc: 为玩家添加临时属性修饰符。
+    remove:
+      not_found: "<yellow>属性 <gray>{name} <yellow>在玩家 <gold>{player} <yellow>身上不存在"
+      removed: "<gray>成功从玩家 <gold>{player} <gray>身上移走了属性 <white>{name}"
+      desc: 移除玩家指定的属性修饰符。
+    list:
+      all_stats_header: "<gold>{player} <gray>的属性:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>等级 <gold>{value}"
+      one_stat_header: "<gold>{player} <white>的属性修改 ({color}{stat}<white>)"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>等级 <gold>{value}"
+      players_only: "<yellow>仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!"
+      desc: 列出玩家拥有指定或所有属性的修饰符。
+    removeall:
+      removed_all_stats: "<gray>删除了玩家 <gold>{player} <gray>的 <aqua>{num} <gray>属性修改"
+      removed_one_stat: "<gray>删除了玩家 <gold>{player} <gray>的 <aqua>{num} {color}{stat} <gray>属性修改"
+      players_only: "<yellow>仅玩家可以列出属于他们的属性修改! 尝试指定一名玩家!"
+      desc: 移除玩家身上的所有属性修饰符。
+  trait:
+    add:
+      already_exists: "<yellow>玩家 <gold>{player}<yellow> 已拥有 <white>{name}<yellow> 属性！请使用 <gold>/sk trait remove {player} {name} 命令来移除"
+      desc: 为玩家添加特征修饰符。
+    addtemp:
+      added: "为玩家 {player} 添加了临时特征 {trait} 修饰符：名称：{name}，值：{value}，持续时间：{duration}"
+      desc: 为玩家添加临时特征修饰符。
+    remove:
+      desc: 移除玩家指定的特征修饰符。
+    list:
+      all_traits_header: "<gray>玩家 <gold>{player} <gray>的属性："
+      one_trait_header: "<gray>玩家 <gold>{player} <gray>的属性({color}{trait}<gray>)："
+      desc: 列出玩家拥有指定或所有特征的修饰符。
+    removeall:
+      removed_all_traits: "<gray>移除了玩家 <gold>{player} 身上的 <aqua>{num} <gray>个属性"
+      desc: 移除玩家身上的所有特征修饰符。
+  multiplier:
+    global: 全局
+    list: "<white>玩家 <gold>{player} <white>的全局经验翻倍倍数为: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>经验值 翻倍倍数: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>仅玩家可以列出属于他们的经验翻倍器! 尝试指定一名玩家!"
+    desc: 显示玩家当前由权限赋予的经验加成。
+  openmenu:
+    desc: 为玩家打开指定菜单，可选传入 JSON 及页码。
+  preset:
+    load:
+      confirm: "<red>载入预设会覆盖你的配置文件! 下列文件会受到影响<gray>(<aqua>修改<gray>, <yellow>合并<gray>, <red>替换<gray>, <dark_red>删除<gray>): {entries}<red>该操作不可逆, 请预先备份好所有需要的文件. 再次输入命令以确认本次操作."
+      loaded: 成功载入预设 {name}, 正在重启服务器.
+      created: 创建文件
+      modified: 修改文件
+      replaced: 替换文件
+      deleted: 删除文件
+      skipped: 跳过文件
+      desc: 从预设文件夹载入预设配置。
+  profile:
+    skills:
+      header: "玩家 <gold>{name} <gray>的技能档案：\n<gray>UUID：<white>{uuid}\n<gray>技能：{skill_entries}"
+      entry: "\n<dark_aqua>{skill} <gray>- 等级：<white>{level}<gray>，经验值：<white>{xp}"
+      desc: 显示任意玩家技能等级与经验值，无需对方在线。
+    stats:
+      header: "玩家 <gold>{name} <gray>的属性档案：\n<gray>UUID：<white>{uuid}\n<gray>属性：{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- 总等级：\n<white>{total_level}<gray>，基础等级：<white>{base_level}<gray>，加成等级：<white>{modified_level}"
+      desc: 显示任意玩家属性等级，无需对方在线。
+  rank:
+    header: "<aqua><bold>技能排名</bold>"
+    power: "<yellow>战力 <gray>(技能综合): <white>#{rank}, 总第 {total} 名"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+    desc: 显示技能排行。
+  reload:
+    reloaded: "<green>配置已重载！"
+    desc: 重载配置、消息、菜单、战利品表、ActionBar 消息、BossBar 消息及生命与幸运属性。
+  resethealth:
+    desc: 移除 AuraSkills 添加的所有属性修饰符便于卸载插件。仅对离线玩家生效。
+  save:
+    already_saving: "<yellow>数据已正在保存!"
+    mysql_not_enabled: "<yellow>数据库保存在服务器开启时未开启, 已将存储方式改为本地存储!"
+    saved: "<green>技能数据保存成功!"
+    desc: 保存技能数据。
+  skill:
+    setall:
+      set: "<gray>玩家 <gold>{player} <gray>的所有技能等级已设置为 <aqua>{level}!"
+      desc: 将玩家的所有技能等级设置为指定值。
+    setlevel:
+      set: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>{level}"
+      desc: 将玩家的特定技能等级设置为指定值。
+    reset:
+      desc: 将玩家指定或所有技能的等级重置至初始值。
+    at_least: "<yellow>所需等级至少应为 {level}!"
+  skills:
+    desc: 打开技能菜单，浏览技能、升级进度与能力。
+  stats:
+    desc: 打开属性界面，浏览当前属性等级及其描述。
+  sources:
+    desc: 打开经验来源界面，浏览增加技能经验的所有途径。
+  toggle:
+    enabled: "<green>技能状态显示栏已打开"
+    disabled: "<red>技能状态显示栏已关闭"
+    not_enabled: "<yellow>此服务器未启用技能状态栏!"
+    desc: 切换自身技能 ActionBar 可见性。
+  top:
+    desc: 显示指定技能排行榜
+    power_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>技能综合排行榜 </bold><white>(第 {page} 页)==--"
+    skill_header: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>技能 {skill} 排行榜</bold><white>(第 {page} 页)==--"
+    average_header: "<white>--==<aqua><bold>技能综合排行榜</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>技能综合排行榜</bold><white>(第 {page} 页)==--"
+    usage: "<yellow>提示: <green>/sk top <white><page> <gray> 或 <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>成功将玩家数据从 <gray>{from} <green>转移到 <gray>{to}"
+    error: "<red>传输玩家数据时出错。请检查控制台以获取错误信息。"
+    desc: 将数据从指定 UUID 对应玩家转移至其他玩家。
+  updateleaderboards:
+    already_updating: "<yellow>排行榜正在更新!"
+    updated: "<green>排行榜更新成功!"
+    desc: 刷新并整理排行榜。
+  version:
+    version: "<white>你使用的 AuraSkills 版本为 <aqua>{current_version}<white>。最新版本是 <aqua>{latest_version}"
+    new_update: "{prefix}<white>有新版本可用！你使用的版本为 <aqua>{current_version}<white>，最新版本为 <aqua>{latest_version} {prefix}<white>，可在 Modrinth 下载：\n<yellow><underlined>{link}"
+    desc: 显示插件版本并检查可用的最新版本。
+  xp:
+    add:
+      added: "<gray>给予了玩家 {player} <aqua>{amount} <gray>点 <aqua>{skill}<gray> 经验值"
+      desc: 给予玩家指定技能的经验值。
+    set:
+      set: "<gray>将玩家 {player} 的<aqua>{skill}<gray> 经验值设置为了 {amount}"
+      desc: 将玩家的技能经验设置为指定值。
+    remove:
+      removed: "<gray>取走了玩家 <gold>{player} <aqua>{amount}<gray> 点 <aqua>{skill}<gray> 技能经验值"
+      desc: 移除玩家指定技能的经验值。
+  manaability:
+    resetcooldown:
+      cooldown_reset: "<gray>玩家 <gold>{player} <gray>的能力 <aqua>{ability}<gray> 冷却已被重置"
+      desc: 重置指定玩家魔法能力的冷却，可选回满魔力值。
+  unknown_skill: "<yellow>未知技能!"
+  unknown_mana_ability: "<yellow>未知的魔法能力！"
+  unknown_stat: "<yellow>未知属性!"
+  unknown_trait: "<yellow>未知属性！"
+  no_profile: "<yellow>玩家尚未获得自己的技能存档文件。请重新加入游戏或重启服务器。"
+leveler:
+  level_up: "{skill}升级成功"
+  skill_level_up: 技能等级提升
+  rewards: 奖励
+  ability_unlock: 解锁能力
+  ability_level_up: 能力等级提升
+  mana_ability_unlock: 解锁魔法能力
+  mana_ability_level_up: 魔法能力等级提升
+  unclaimed_item: "<red>因为背包已满, 部分无法存储在物品栏的物品已被转移至临时存储区. 请输入 <yellow>/skills claimitems <red>及时领取这些物品."
+menus:
+  common:
+    close: "关闭"
+    level: "等级"
+    progress_to_level: "升级进度"
+    max_level: "最大等级"
+    ability_levels: "技能等级"
+    stats_leveled: "属性级别"
+    mana_ability: "魔法技能"
+    duration: "持续时间"
+    mana_cost: "魔力消耗"
+    cooldown: "冷却时间"
+    damage: "伤害"
+    max_mana_cost: "最大魔力消耗"
+    attack_speed: "攻击速度"
+    back: "返回"
+    back_click: "返回至 {menu_name} 菜单"
+    unlocked: "已解锁"
+    in_progress: "正在进行"
+    locked: "已锁定"
+    your_level: "当前等级"
+    next_page: "下一页"
+    next_page_click: "点击进入下一页"
+    previous_page: "上一页"
+    previous_page_click: "点击返回上一页"
+    trait: "特征"
+    trait_gain: "<1>每 {color}1 点 {stat_name}<1>属性等级\n<1>可获得 {color}{level_modifier} {trait_name}。"
+    trait_level: "特征等级"
+    base: "基础"
+    modifiers_additive: "修饰符（叠加）"
+    modifiers_multiplicative: "修饰符（叠乘）"
+  skills:
+    skills_title: "你的技能"
+    your_skills: "你的技能"
+    your_skills_desc: "做各种各样的事情得到有趣的属性增强, 技能和更多!"
+    your_skills_hover: "悬停在技能图标上可以了解更多!"
+    your_skills_click: "点击技能图标以了解技能掌握进度!"
+    skill_click: "点击查看技能掌握进度!"
+    stats: "状态"
+    stats_desc: "通过升级技能获得状态增益"
+    stats_click: "点击了解更多或查看您的统计数据"
+    active_job: 当前职业
+  level_progression:
+    level_progression_title: "{skill} 等级 - 第 {page} 页"
+    your_ranking: "你的技能排名"
+    rank_out_of: "<1>你现在在全部的 {total} 名玩家中处于第 <2>{rank}</2> 名</1>"
+    rank_percent: "<1>你是位于前 <2>{percent}%</2> 的玩家</1>"
+    rewards: "奖励"
+    ability_unlock: "解锁能力"
+    mana_ability_unlock: "解锁魔法能力"
+    progress: "进度"
+    leaderboard_click: "点击查看 {skill} 排行榜"
+    sources: "经验来源"
+    sources_desc: "来源菜单显示了你可以在技能7获得经验值的所有方式，以及每个来源提供的经验值。"
+    sources_click: "点击查看技能 {skill} 的经验来源"
+    abilities: "能力"
+    abilities_desc: "<2>能力</2> <1>是在你解锁并升级技能过程中获得的被动增益。</1>"
+    mana_abilities_desc: "<3>魔法能力</3> <1>是一种需要手动激活且会在过程中消耗魔法值的特殊能力。</1>"
+    abilities_click: "点击查看 {skill} 的能力"
+    job: 职业
+    job_desc: 将 {skill} 选定为你的职业可以在收集经验的同时赚钱。
+    job_select: 左键点击将 {skill} 选定为当前职业
+    job_active: 你当前为该职业
+    job_quit: 右键点击退出该职业
+    job_limit: 你不能申请更多职业。请先退出其他职业再选择该职业。
+    job_cooldown: 职业选择正在冷却中。请在 {time} 秒后再次选择。
+  stats:
+    stats_title: 你的属性
+    skills: "技能"
+    added_drop: "+{value} 掉落"
+    added_drops: "+{value} 掉落"
+    chance_drop: "{chance}% 的概率获得 +{value} 掉落"
+    chance_drops: "{chance}% 的概率获得 +{value} 掉落"
+    stat_info_click: "点击浏览属性细节"
+  unclaimed_items:
+    unclaimed_items_title: "领取物品"
+    inventory_full: "你的物品栏没有足够的空间"
+    click_to_claim: "点击领取!"
+  leaderboard:
+    leaderboard_title: "{skill} 排行榜"
+  sources:
+    sources_title: "{skill} 经验来源"
+    sorter: "对经验来源进行排序"
+    descending: "从最高到最低"
+    ascending: "从最低到最高"
+    alphabetical: "名称 (A-Z)"
+    reverse_alphabetical: "名称 (Z - A)"
+    sort_click: "点击以循环排序类型"
+    multiplied_xp: "经验倍率"
+    multiplied_desc: "这是乘以当前的经验值得出所获得的经验值"
+  abilities:
+    abilities_title: "{skill} 技能"
+    description: "描述"
+    unlocked_at: "<1>在 <2>{skill} {level} 解锁。"
+    next_upgrade_at: "<2>{skill} <1>的下一等级为 {level}"
+  stat_info:
+    stat_details: "{stat_name} 属性"
+    stat: "属性"
+    stat_level: "属性等级"
+    traits_leveled: "特征已升级"
+    stat_modifiers: "属性修饰符"
+    stat_reward_desc: "由 {skill} 技能等级获得。"
+    stat_modifiers_click: "点击浏览属性修饰符"
+    trait_modifiers_click: "点击浏览特征修饰符"
+    showing_stat_modifiers: "显示属性修饰符"
+    showing_trait_modifiers: "显示特征修饰符"
+    base_level: "基础等级"
+    base_level_desc: "来源于 Minecraft 原版及其他插件的基础等级。"
+    linked_stat_desc: "由 {stat} 属性等级获得。"
+    ability_modifier_name: "{name} 能力"
+    ability_modifier_desc: "由 {ability} 能力获得。"
+    custom_modifier_desc: "由自定义修饰符给予。"
+    item_hand_desc: "由手持物品给予。"
+    item_off_hand_desc: "由副手手持物品给予。"
+    helmet_desc: "由头盔给予。"
+    chestplate_desc: "由胸甲给予。"
+    leggings_desc: "由护腿给予。"
+    boots_desc: "由靴子给予。"
+    effective_trait: "有效{trait_name}"
+mana_abilities:
+  replenish:
+    name: 自动补种
+    desc: "自动补种耕地上的作物, 持续 {value} 秒. <1>[右键锄头并破坏农作物以激活]"
+    raise: "<gray>你拿起了你的锄头"
+    lower: "<gray>你放下了你的锄头"
+    start: "<gold>自动补种已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>自动补种已结束"
+  treecapitator:
+    name: 伐树者
+    desc: "在技能激活的 {value} 秒内, 瞬间砍倒一棵树. <1>[右键斧子并破坏原木方块以激活]"
+    raise: "<gray>你拿起了你的斧头"
+    lower: "<gray>你放下了你的斧头"
+    start: "<gold>伐树者已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>伐树者技能已结束"
+  speed_mine:
+    name: 超级碎石机
+    desc: "在技能激活的 {value} 秒内获得急迫 {haste_level}. <1>[右键镐子挖掘以激活]"
+    raise: "<gray>你拿起了你的镐子"
+    lower: "<gray>你放下了你的镐子"
+    start: "<gold>超级碎石机已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>超级碎石机已关闭"
+  absorption:
+    name: 超级吸收
+    desc: "在技能触发的 {value} 秒内你受到的伤害将会会被吸收同时减少 伤害 x2 的魔法值此技能触发时魔法值无法回复. <1>[左键盾牌后受到伤害自动触发]"
+    raise: "<gray>你握紧了你的盾牌"
+    lower: "<gray>你放下了你的盾牌"
+    start: "<gold>超级吸收已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>超级吸收已关闭"
+  terraform:
+    name: 平整挖掘
+    desc: "在技能触发的 {value} 内破坏以你为中心半径为 {radius} 个方块内的所有方块手中必须持有铲子, 并且被破坏的方块只能是同一个种类并且相邻. <1>[右键铲子并挖掘方块以触发]"
+    raise: "<gray>你拿起了你的铲子"
+    lower: "<gray>你放下了你的铲子"
+    start: "<gold>平整挖掘已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>平整挖掘已关闭"
+  sharp_hook:
+    name: 锋利鱼钩
+    desc: "持有钓鱼竿攻击任何实体时造成 {value} 点额外伤害"
+    use: "<gold>使用了锋利鱼钩! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: 聚能穿射
+    desc: "你射出的箭将会额外造成伤害此伤害取决于箭落地后与你的距离并且此过程消耗魔法值. 每点魔法值的消耗能为每支箭增加 {value}% 的伤害. <1>[左键弓可触发聚能穿射]"
+    enable: "<gray>聚能穿射已启用"
+    disable: "<gray>聚能穿射已禁用"
+    shoot: "<gold>聚能穿射已启用! <light_purple>+{percent}% 伤害 <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: 狂战之刃
+    desc: 在 {duration} 秒内增加 {value}% 的攻击速度. <1>[持剑右键后攻击敌人以激活]
+    raise: "<gray>你握紧了你的剑"
+    lower: "<gray>你放下了你的剑"
+    start: "<gold>狂战之刃已激活! <gray>(-{mana} {mana_unit})"
+    end: "<gray>狂战之刃已经已经结束"
+  not_ready: "<red>技能还没有准备好! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>法力不足! <gray>({mana} {mana_unit} 需要)"
+skills:
+  farming:
+    name: 草药学
+    desc: "收获农作物以获取草药学 {xp_unit}"
+  foraging:
+    name: 伐树
+    desc: "砍倒树木以获得伐树 {xp_unit}"
+  mining:
+    name: 采掘
+    desc: "挖掘石头和矿物以获得采掘 {xp_unit}"
+  fishing:
+    name: 钓鱼
+    desc: "在水边垂钓以获得钓鱼 {xp_unit}"
+  excavation:
+    name: 挖掘
+    desc: "用铲子挖砂砾和沙子一类的方块以获得挖掘 {xp_unit}"
+  archery:
+    name: 弓箭手
+    desc: "使用弓箭射中生物或玩家以获得弓箭手 {xp_unit}"
+  defense:
+    name: 防御
+    desc: "被实体攻击以获得防御 {xp_unit}"
+  fighting:
+    name: 战士
+    desc: "使用近战武器对实体造成伤害以获得战士 {xp_unit}"
+  endurance:
+    name: 耐力
+    desc: "跑跑跳跳就可以获得耐力 {xp_unit}"
+  agility:
+    name: 敏捷
+    desc: "跑跑跳跳或从高处摔落可获得敏捷 {xp_unit}"
+  alchemy:
+    name: 炼金
+    desc: "酿造与使用药水可获得炼金 {xp_unit}"
+  enchanting:
+    name: 附魔
+    desc: "为物品使用铁砧或附魔台附魔, 或使用砂轮祛魔以获得附魔 {xp_unit}"
+  sorcery:
+    name: 法术
+    desc: "使用魔法技能以获得法术 {xp_unit}"
+  healing:
+    name: 药水学
+    desc: "饮用和扔出喷溅型药水以获得药水学 {xp_unit}"
+  forging:
+    name: 锻造
+    desc: "使用铁砧合并附魔书或修理装备以获得锻造 {xp_unit}"
+sources:
+  fishing:
+    cod: 鳕鱼
+    salmon: 鲑鱼
+    tropical_fish: 热带鱼
+    pufferfish: 河豚
+    treasure: 宝藏物品
+    junk: 垃圾
+    rare: 稀有战利品
+    epic: 史诗级战利品
+  damage:
+    mob_damage: 来自生物的伤害
+    player_damage: 来自玩家的伤害
+    fall_damage: 承受跌落伤害
+  statistic:
+    walk_per_meter: 行走
+    sprint_per_meter: 疾跑
+    swim_per_meter: 游泳
+  jumping:
+    jump_per_100: 跳跃
+  brewing:
+    awkward: 酿造粗制的药水
+    regular: 酿造平凡的药水
+    extended: 酿造长效的药水
+    upgraded: 酿造强化药水
+    splash: 酿造喷溅型药水
+    lingering: 酿造滞留型药水
+  enchanting:
+    weapon_per_level: 附魔武器
+    armor_per_level: 附魔盔甲
+    tool_per_level: 附魔工具
+    book_per_level: 附魔书
+  mana_ability_use:
+    mana_ability_use: 使用魔法技能
+  item_consume:
+    drink_regular: 饮用普通药水
+    drink_extended: 饮用延长时长的药水
+    drink_upgraded: 饮用已升级的药剂
+    golden_apple: 消耗金苹果
+    enchanted_golden_apple: 消耗附魔金苹果
+  potion_splash:
+    splash_regular: 喷洒喷溅型药水
+    splash_extended: 喷洒喷溅型延长时长的药水
+    splash_upgraded: 喷洒喷溅型已升级的药水
+    lingering_regular: 使用普通滞留型药水
+    lingering_extended: 使用滞留型延长时长的药水
+    lingering_upgraded: 使用已升级的滞留型药水
+  anvil:
+    combine_books_per_level: 合并附魔书
+    combine_weapon_per_level: 合并武器和附魔书
+    combine_armor_per_level: 合并护甲和附魔书
+    combine_tool_per_level: 合并工具和附魔书
+  grindstone:
+    grindstone_per_level: 用砂轮祛魔
+  units:
+    damage: 伤害
+    meter: 米
+    100_jumps: 跳一百次
+    mana: 已消耗的魔法值
+    combine_level: 铁砧消耗的经验值
+    grindstone_level: 物品的附魔等级
+    enchant_level: 获得的附魔等级
+stats:
+  strength:
+    name: 力量
+    desc: "力量能使你在使用各种不同的武器时提升伤害。"
+  health:
+    name: 生命值
+    desc: "生命能够提升你的最大 {hp_unit}, 也允许你在战斗中能够活得更久。"
+  regeneration:
+    name: 再生
+    desc: "再生增加你的生命和魔法值恢复速度。"
+  luck:
+    name: 幸运
+    desc: "幸运属性会增加升级技能的对应方块中产生额外掉落的几率。"
+  wisdom:
+    name: 智慧
+    desc: "智慧能够增加魔法值上限, 增加经验值获取以及减少铁砧的经验值耗费。"
+  toughness:
+    name: 韧性
+    desc: "韧性能减少敌人对你造成的伤害。"
+  crit_chance:
+    name: 猛力一击
+    desc: "暴击率为你对敌方造成高额伤害的概率。"
+  crit_damage:
+    name: 暴击伤害
+    desc: "暴击伤害是造成暴击时的伤害增幅。"
+  speed:
+    name: 速度
+    desc: "速度属性可提升你的移动速度。"
+traits:
+  attack_damage:
+    name: 攻击伤害
+  hp:
+    name: 血量
+  saturation_regen:
+    name: 饱和度回复
+  hunger_regen:
+    name: 饥饿回复
+  mana_regen:
+    name: 魔力再生
+  luck:
+    name: 幸运属性
+  double_drop:
+    name: 双倍掉落
+  experience_bonus:
+    name: 经验加成
+  anvil_discount:
+    name: 铁砧耗费减免
+  max_mana:
+    name: 最大魔力
+  damage_reduction:
+    name: 伤害减免
+  crit_chance:
+    name: 暴击几率
+  crit_damage:
+    name: 暴击伤害
+  movement_speed:
+    name: 移动速度
+  farming_luck:
+    name: 耕作幸运
+  foraging_luck:
+    name: 伐木幸运
+  mining_luck:
+    name: 挖掘幸运
+  excavation_luck:
+    name: 采掘幸运
+  fishing_luck:
+    name: 渔技幸运
+ui:
+  maxed: 满级
+units:
+  mana: 魔法值
+  hp: 血量
+  xp: 经验
+file_version: 39

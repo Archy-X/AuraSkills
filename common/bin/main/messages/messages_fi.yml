@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: Runsas Sato
+    desc: "Saat +{value} Maanviljely onnea, mikä lisää mahdollisuutta ylimääräisiin satoihin."
+    info: "+{value} Maanviljely onnea"
+  farmer:
+    name: Maanviljelijä
+    desc: "Ansaitse {value}% enemmän maanviljeljy XP:tä."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Viikatemestari
+    desc: "Lisää kuokkien aiheuttamia vaurioita{value}%."
+    info: "+{value}% Kuokkavauriot"
+  geneticist:
+    name: Geneetikko
+    desc: "Lisää kylläisyyden saantia kasvipohjaisista elintarvikkeista {value}."
+    info: "+{value} Kylläisyys"
+  growth_aura:
+    name: Kasvu Aura
+    desc: "Viljelykasvit, joiden kasvuvaiheet ovat {radius} lohkon sisällä, kasvavat {value}% nopeammin."
+    info: "+{value}% kasvu"
+  lumberjack:
+    name: Metsuri
+    desc: "Antaa +{value} Metsuri Onnea, mikä lisää mahdollisuutta saada ylimääräisiä pudotuksia."
+    info: "+{value} Onnea ravinnonhaussa"
+  forager:
+    name: Ravinnonhakija
+    desc: "Ansaitse {value}% enemmän Metsuri XP:tä."
+    info: "+{value}% XP"
+  axe_master:
+    name: Kirvesmestari
+    desc: "Lisää kirveiden aiheuttamaa vahinkoa {value}%."
+    info: "+{value}% kirveen aiheuttama vahinko"
+  valor:
+    name: Rohkeus
+    desc: "Antaa + {value} Voimaa pitäessäsi kirvestä."
+    info: "+{value} Voima"
+  shredder:
+    name: Silppuri
+    desc: "{value}% mahdollisuus tehdä kolminkertainen kestävyysvaurio kirveillä."
+    info: "{value}% 3x kestävyysvaurio"
+  lucky_miner:
+    name: Onnekas kaivosmies
+    desc: "Antaa +{value} Kaivostoiminnan onnea, mikä lisää mahdollisuutta saada ylimääräisiä pudotuksia."
+    info: "+{value} Kaivos onnea"
+  miner:
+    name: Kaivosmies
+    desc: "Ansaitse {value}% enemmän kaivostoiminnan XP:tä."
+    info: "+{value}% XP"
+  pick_master:
+    name: Hakkumesteri
+    desc: "Tee {value}% enemmän vahinkoa hakuilla."
+    info: "+{value}% hakku vaurioita"
+  stamina:
+    name: Kestävyys
+    desc: "Antaa +{value} sitkeyden hakkua pitämällä."
+    info: "+{value} sitkeys"
+  hardened_armor:
+    name: Karkaistu panssari
+    desc: "{value}% mahdollisuus kumota panssarin kestävyysvauriot."
+    info: "{value}% Ei kestävyyshäviötä"
+  lucky_catch:
+    name: Onnekas saalis
+    desc: "Antaa +{value} Kalastuksen onnea, mikä lisää mahdollisuutta saada ylimääräisiä pudotuksia."
+    info: "+{value} Kalastuksen onni"
+  fisher:
+    name: Kalastaja
+    desc: "Ansaitse{value}% enemmän kalastus XP:tä."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Aarteenmetsästäjä
+    desc: "{value}% suurempi mahdollisuus saada harvinaista saalista kalastuksesta."
+    info: "+{value}% Harvinainen saalis"
+  grappler:
+    name: Koukkija
+    desc: "Koukuta {value}% nopeammin."
+    info: "+{value}% Koukun nopeus"
+  epic_catch:
+    name: Eeppinen saalis
+    desc: "{value}% lisätty mahdollisuus saada eeppinen saalis kalastuksesta."
+    info: "+{value}% Eeppinen saalis"
+  metal_detector:
+    name: Metallipaljastin
+    desc: "{value}% lisätty mahdollisuus saada harvinaista saalista kaivamisesta."
+    info: "+{value}% Harvinainen saalis"
+  excavator:
+    name: Kaivuri
+    desc: "Ansaitse {value}% enemmän Kaivuri XP:tä."
+    info: "+{value}% XP"
+  spade_master:
+    name: Lapiomestari
+    desc: "Tee {value}% enemmän vahinkoa lapioilla."
+    info: "+{value}% Lapion vahinko"
+  bigger_scoop:
+    name: Isompi kauha
+    desc: "Antaa +{value} Kaivuri onnea, mikä lisää mahdollisuutta saada ylimääräisiä pudotuksia."
+    info: "+{value}% Kaivuri onni"
+  lucky_spades:
+    name: Onnekkaat Lapiot
+    desc: "{value}% lisätty mahdollisuus saada eeppistä saalista kaivamisesta."
+    info: "+{value}% Eeppinen saalis"
+  retrieval:
+    name: Noutaminen
+    desc: "Ohi ammutut nuolet haetaan välittömästi {time}s jälkeen jopa {value} blokin päästä."
+    info: "{value} Etäisyys"
+  archer:
+    name: Jousimies
+    desc: "Ansaitse {value}% enemmän jousiammunta XP:tä."
+    info: "+{value}% XP"
+  bow_master:
+    name: Jousimestari
+    desc: "Tee {value}% enemmän vahinkoa jousilla."
+    info: "+{value}% jousivahinko"
+  piercing:
+    name: Lävistys
+    desc: "{value}% mahdollisuus, että nuolet lävistävät viholliset."
+    info: "{value}% Lävistysmahdollisuus"
+  stun:
+    name: Tainnutus
+    desc: "{value}% mahdollisuus vähentää vihollisen liikenopeutta 20% 2 sekunnin ajaksi."
+    info: "{value}% Tainnutusmahdollisuus"
+  shielding:
+    name: Suojaus
+    desc: "Vähennä saapuvia vaurioita {value}% hiipimisen aikana."
+    info: "-{value} % Saapuva vahinko hiipiessä"
+  defender:
+    name: Puolustaja
+    desc: "Ansaitse {value}% enemmän Puolustus XP:tä."
+    info: "+{value}% XP"
+  mob_master:
+    name: Vihollisten mestari
+    desc: "Vähennä vihollisten aiheuttamia vahinkoja {value}%"
+    info: "-{value}% vihollisten vahinko"
+  immunity:
+    name: Koskemattomuus
+    desc: "{value}% mahdollisuus kumota vihollisen hyökkäys kokonaan."
+    info: "{value}% immuniteetti"
+  no_debuff:
+    name: Ei Debuffia
+    desc: "{value}% mahdollisuus kumota haitallinen juomavaikutus."
+    info: "{value}% Ei debuffia"
+  parry:
+    name: Torjunta
+    desc: "Miekan iskun väistö {time}s sisällä ennen osumaa vähentää vahinkoa {value}% ja poistaa knockbackin."
+    info: "{value}% Vahingon vähennys"
+    parried: "<red>Hyökkäys torjuttu"
+  fighter:
+    name: Taistelija
+    desc: "Ansaitse {value}% enemmän Taistelu XP:tä."
+    info: "+{value}% XP"
+  sword_master:
+    name: Miekkamestari
+    desc: "Tee {value}% enemmän vahinkoa miekoilla."
+    info: "+{value}% Miekkavaurioita"
+  first_strike:
+    name: Ensimmäinen isku
+    desc: "Tee {value}% enemmän vahinkoa ensimmäisellä osumalla."
+    info: "+{value}% Vahinkoa Ensimmäinen osuma"
+    dealt: "<red>Ensimmäinen isku lyöty!"
+  bleed:
+    name: Verenvuoto
+    desc: "{value}% mahdollisuus saada vihollinen vuotamaan verta {base_ticks} tikin ajan, aiheuttaen {value_2} vahinkoa per tikki. {added_ticks} lisätään vihollisiin, jotka jo vuotavat verta."
+    info: "{value}% Mahdollisuus, {value_2} Vahinko"
+    enemy_bleeding: "<red>Vihollinen vuotaa verta!"
+    self_bleeding: "<red>Sinä vuodat verta!"
+    stop: "<white>Verenvuoto on pysähtynyt"
+  anti_hunger:
+    name: Nälän torjunta
+    desc: "{value}% mahdollisuus pysäyttää nälänmenetys."
+    info: "{value}% Ei nälänmenetystä"
+  runner:
+    name: Juoksija
+    desc: "Ansaitse {value}% enemmän kestävyys XP:tä."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Kultainen parannus
+    desc: "Lisää regenerointivaikutuksen palautumista {value}%"
+    info: "+{value}% vaikutus palautumiseen"
+  recovery:
+    name: Toipuminen
+    desc: "Lisää luonnollista uusiutumista, kun se on alle puolet terveydestä {value} %"
+    info: "+{value}% matala HP:n palautuminen."
+  meal_steal:
+    name: Aterian varastaminen
+    desc: "{value}% mahdollisuus varastaa 1 nälkäpiste hyökkääessä pelaajaa vastaan."
+    info: "{value}% Nälän varastaminen"
+  light_fall:
+    name: Kevyt putoaminen
+    desc: "Vähentää kaikkia putoamisvaurioita {value}%"
+    info: "-{value}% putoamisvaurioita"
+  jumper:
+    name: Hyppääjä
+    desc: "Ansaitse {value}% enemmän Ketteryys XP:tä."
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Sokerihumala
+    desc: "Juodut sekä roiskuneet nopeus- ja hyppytehojuomat kestävät {value}% pidempään."
+    info: "{value}% Pidempi nopeus"
+  fleeting:
+    name: Ohikiitävä
+    desc: "Saat +{value} nopeutta, kun olet alle 20% terve."
+    info: "+{value}% nopeus"
+    start: "<white>Olet saanut ohikiitävän vauhdin! <gray>(+{value}% nopeus)"
+    end: "<gray>Väliaikainen nopeuden lisäys on kulunut pois"
+  thunder_fall:
+    name: Ukkosen putoaminen
+    desc: "Kun hiippailet putoamisen aikana, sinulla on {value}% mahdollisuus aiheuttaa {value_2}% putoamis vaurioista vihollisiin jotka ovat 3 blokin säteellä."
+    info: "{value}% mahdollisuus, {value_2}% vahinko"
+  alchemist:
+    name: Alkemisti
+    desc: "Valmistamillasi juomilla on {value}% pidempi kesto."
+    info: "+{value} % Juoman Kesto"
+  brewer:
+    name: Panimo
+    desc: "Ansaitse {value}% enemmän Alkemisti XP:tä."
+    info: "+{value}% XP"
+  splasher:
+    name: Roiskija
+    desc: "Roiskimasi juomat saavat {value}% pidemmän keston jokaiselle pelaajalle, joihin heität juoman."
+    info: "+{value}% Kesto/pelaaja"
+  lingering:
+    name: Viipyvät Juomat
+    desc: "Viipyvät juomat hajoavat luonnollisesti {value}% hitaammin ja rappeutuvat{value_2}% vähemmän vihollista kohden."
+    info: "-{value}% luonnollinen, -{value_2}% rappeutuminen"
+  wise_effect:
+    name: Viisas vaikutus
+    desc: "Hanki {value} viisautta jokaisesta ainutlaatuisesta aktiivisesta juomavaikutuksesta."
+    info: "+{value} Viisaus/vaikutus"
+  xp_convert:
+    name: XP muunnos
+    desc: "Ansaitse 1 Minecraft XP jokaista hankkimaasi {value} taito XP:tä kohden."
+    info: "1 EXP/{value} Taito XP"
+  enchanter:
+    name: Lumoaja
+    desc: "Ansaite {value}% enemmän Lumous XP:tä."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XP Soturi
+    desc: "Tappamillasi vihollisilla on {value}%:n mahdollisuus tiputtaa tuplakokemusta."
+    info: "{value}% 2x vihollis XP"
+  enchanted_strength:
+    name: Lumottu voima
+    desc: "Hanki {value} voimaa jokaisesta ainutlaatuisesta lumouksesta pidetyssä esineessä."
+    info: "{value} Vahvuus/Loitsu"
+  lucky_table:
+    name: Onnenpöytä
+    desc: "Lumouspöydällä lumoamillasi esineillä on {value}% mahdollisuus nostaa lumoustaso yhdellä, ellei se ole maksimitasolla."
+    info: "{value}% Lumouksen päivitysmahdollisuus"
+  life_essence:
+    name: Elämän ydin
+    desc: Välitönparannus -juomat parantavat {value}% enemmän.
+    info: "+{value}% Välitönparannusta"
+  healer:
+    name: Parantaja
+    desc: Ansaitse {value}% enemmän parantavaa XP:tä.
+    info: "+{value}% XP"
+  life_steal:
+    name: Elämän varastaminen
+    desc: Varasta {value}% vihollisten sekä tappamiesi pelaajien enimmäis HP:sta.
+    info: "Varastaa {value}% HP:sta"
+  golden_heart:
+    name: Kultainen sydän
+    desc: Kultaisille sydämille aiheutuvat vauriot vähenevät {value}%
+    info: "-{value} % Vahinkoa kultaiseen sydämeen"
+  revival:
+    name: Herätys
+    desc: Saat + {value} terveyttä sekä + {value_2} uudistuminen 30 sekunnin ajan uudelleensyntymisen jälkeen.
+    info: "+{value} Terveys, +{value_2} Palautuminen"
+    message: "<white>Sait elvytysbonuksen 30 sekunniksi! <white>(<red>+ {value} Terveys, <gold> + Uu {value_2} Palautuminen<white>)"
+  disenchanter:
+    name: Lumoustenpoistaja
+    desc: Hanki{value}% enemmän kokemusta, kun poistat lumouksia hiomakivellä.
+    info: "+{value}% Hiomakiven XP"
+  forger:
+    name: Takoja
+    desc: Ansaitse {value}% enemmän taonta XP:tä.
+    info: "+{value}% XP"
+  repairing:
+    name: Korjaaminen
+    desc: Korjaamalla esineitä alasimessa käyttäen raaka-ainetta josta esine on tehty, korjataan {value}% enemmän kestävyyttä.
+    info: "+{value}% Alasin korjaus"
+  anvil_master:
+    name: Alasin mestari
+    desc: Nostaa alasimen enimmäiskorjauskustannuksia ennen kuin se on liian kallista {value} kokemustasolle asti.
+    info: "{value} Maksimikustannukset"
+  skill_mender:
+    name: Taitojen korjaaja
+    desc: Taitopisteen hankkimisella on{value}% mahdollisuus korjata pidetty esine tai kulunut panssarikappale korjauslumolla yhdellä kestävyydellä kahta taitopistettä kohden.
+    info: "{value}% Korjausmahdollisuus"
+acf:
+  core:
+    permission_denied: "<red>Olen pahoillani, mutta sinulla ei ole lupaa suorittaa tätä komentoa."
+    permission_denied_parameter: "<red>Olen pahoillani, mutta sinulla ei ole lupaa suorittaa tätä komentoa."
+    error_generic_logged: "<red>Tapahtui virhe. Tämä ongelma on kirjattu. Pahoittelut aiheutuneesta haitasta."
+    unknown_command: "<red>Tuntematon komento, kirjoita <yellow> /sk help"
+    invalid_syntax: "<yellow>Käyttö: <yellow> {command} <green> {syntax}"
+    error_prefix: "<red>Virhe: {message}"
+    error_performing_command: "<red>Olen pahoillani, mutta tämän komennon suorittamisessa tapahtui virhe."
+    please_specify_one_of: "<red>Virhe: Määritä yksi (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Virhe: {num} täytyy olla numero."
+    must_be_min_length: "<red>Virhe: Pitää olla vähintään {min} merkkejä pitkä."
+    must_be_max_length: "<red>Virhe: Pitää olla enintään {max} merkkejä pitkä."
+    please_specify_at_most: "<red>Virhe: Määritä korkeintaan arvo{max}."
+    please_specify_at_least: "<red>Virhe: Määritä vähintään arvo{min}."
+    not_allowed_on_console: "<red>Virhe: Konsoli ei ehkä suorita tätä komentoa."
+    could_not_find_player: "<red>Virhe: Pelaajaa ei löytynyt nimen perusteella: <yellow> {search}"
+    no_command_matched_search: "<red>Ei löytynyt komentoa<yellow>{search} ."
+    help_page_information: "<aqua>- Näytetään sivu<green>{page}<aqua> /<green>{totalpages}<aqua> (<yellow>{results}<aqua> tulokset)."
+    help_no_results: "<aqua>Virhe: Ei enempää tuloksia."
+    help_header: "<yellow>===<aqua> Näytetään apua kohteelle<green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>===<aqua> Näytetään yksityiskohtainen ohje kohteelle<green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Hakutulokset haulle <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>Virhe: Tätä maailmaa ei ole olemassa."
+    you_must_be_holding_item: "<red>Virhe: Sinun on pidettävä esinettä pääkädessäsi."
+    player_is_vanished_confirm: "<yellow>Varoitus: <green>{vanished} <yellow>on näkymätön. Älä paljasta häntä!\n<yellow>Vahvistaaksesi toimintasi lisää <green>:confirm <yellow>hänen nimensä loppuun.\n<yellow>Esim: {vanished}:confirm"
+    username_too_short: "<red>Virhe: Käyttäjätunnus on liian lyhyt, on oltava vähintään kolme merkkiä."
+    is_not_a_valid_name: "<red>Virhe: ei <yellow> {name} <red> ole kelvollinen käyttäjänimi."
+    multiple_players_match: "<red>Virhe: Useita pelaajia löytyi<aqua>{search}<yellow> ({all} )<red> , ole hyvä ja tarkenna."
+    no_player_found_server: "<red>Yksikään pelaaja, joka vastaa <yellow>{search} <red>, ei ole yhteydessä tähän palvelimeen."
+    no_player_found_offline: "<red>Vastaavaa pelaajaa <yellow>{search}<red> ei löytynyt."
+    no_player_found: "<red>Yhtään <yellow>{search}<red> vastaavaa pelaajaa ei löytynyt."
+    location_please_specify_world: "<red>Virhe: Määritä maailma. Esimerkki: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Virhe: Määritä koordinaatit x, y ja z. Esimerkki: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Virhe: Konsoli ei välttämättä käytä suhteellisia koordinaatteja sijaintiin."
+commands:
+  prefix: "<dark_gray>[<aqua>Taidot<dark_gray>] <reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifioija, jonka taso on <aqua>{value} <gray>, lisättiin esineeseesi."
+        already_exists: "<yellow>Panssarimodifioija, jossa on stat {color}{stat} <yellow>, on jo olemassa panssarissasi! Poista se ensin komennolla /sk armor modifier remove."
+      remove:
+        does_not_exist: "<yellow>Esineelläsi ei ole {color}{stat} <yellow>-modifikaattoria!"
+        removed: "{color}{stat} <gray>modifier poistettiin esineestäsi"
+      list:
+        header: "<white>Panssarimodifikaattorit löydetty:"
+      removeall:
+        removed: "<gray>Kaikki panssarimodifikaattorit on poistettu esineestäsi."
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>kerroin arvolla <aqua>{value} <gray>lisättiin kohteeseesi"
+        already_exists: "<yellow>Panssarikerroin, jonka kohde on <aqua>{target} <yellow>panssarissasi on jo! Poista se ensin /sk-panssarikertoimen poistolla"
+        skill_lore: "<gray>Käytettäessä: <aqua> +{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Käytettäessä: <aqua> -{value}% {skill} XP"
+        global_lore: "<gray>Käytettäessä: <blue> +{value}% Taito-XP"
+        global_lore_subtract: "<gray>Käytettäessä: <blue> -{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Tuotteellasi ei ole <aqua> {target} <yellow> panssarikerrointa!"
+        removed: "<aqua>{target}<gray>panssarikerroin poistettiin esineestäsi"
+      list:
+        header: "<white>Löydetty panssarikertoimia:"
+      removeall:
+        removed: "<gray>Kaikki panssarikertoimet on poistettu esineestäsi"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray>panssarivaatimus tasoineen<aqua>{level}<gray> lisättiin tuotteeseesi"
+        already_exists: "<yellow>Tuotteella on jo a<dark_aqua>{skill}<yellow> panssari vaatimus! Poista se ensin<gold> /sk armor vaatimus poistaa"
+        lore: "<red>Vaatii<dark_aqua>{skill}{level}"
+      remove:
+        does_not_exist: "<yellow>Tuotteessasi ei ole a<dark_aqua>{skill}<yellow> panssari vaatimus!"
+        removed: "<dark_aqua>{skill}<gray>panssarivaatimus poistettiin tuotteestasi"
+      list:
+        header: "<white>Haarniskavaatimukset löydetty:"
+      removeall:
+        removed: "<gray>Kaikki panssarivaatimukset on poistettu tuotteestasi"
+      equip: "<yellow>Et täytä vaatimuksia tämän esineen varustamiseksi: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Varmuuskopion lataaminen palauttaa kaikki pelaajien taitotiedot. Tämä toiminto on pysyvä, eikä sitä voi kumota. Haluat ehkä tallentaa varmuuskopion ennen sen lataamista. Vahvista tämä toiminto kirjoittamalla komento uudelleen"
+      loading: "<white>Ladataan varmuuskopiota..."
+      loaded: "<green>Varmuuskopion lataus onnistui"
+      error: "<red>Virhe varmuuskopion lataamisessa:{error}"
+      must_be_yaml: "<yellow>Tiedoston on oltava .yml-tiedosto!"
+      file_not_found: "<yellow>Tämän tiedostonimen varmuuskopiota ei ole varmuuskopioiden kansiossa!"
+    save:
+      saving: "<white>Tallennetaan varmuuskopiota…"
+      saved: "<white>Varmuuskopioitu{type} tiedot as{file}"
+      error: "<red>Varmuuskopioinnin virhe{type} dataa! Katso lisätietoja konsolissa/alempana olevasta virheestä"
+  claimitems:
+    no_items: "<yellow>Sinulla ei ole lunastettavia kohteita"
+  item:
+    give:
+      sender: "<white>Antoi <aqua>{amount}x {key} <white>osoitteelle {player}"
+      receiver: "<white>Sinulle annettiin<aqua>{amount} x{key}"
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifioija, jonka taso on <aqua>{value} <gray>, lisättiin esineeseesi."
+        already_exists: "<yellow>Panssarissasi on {color} {stat} <yellow> jo olemassa kohteen muokkaaja, jolla on tilasto! Poista se ensin /sk-kohteen muokkaimella poista"
+      remove:
+        does_not_exist: "<yellow>Tuotteessasi ei ole {color}{stat}<yellow> muuntaja!"
+        removed: "{color}{stat}<gray>muokkaaja poistettiin tuotteestasi"
+      list:
+        header: "<white>Löytyi kohteen muokkaajia:"
+      removeall:
+        removed: "<gray>Kaikki kohteen muokkaajat on poistettu tuotteestasi"
+    multiplier:
+      add:
+        added: "<aqua>{target}<gray>kerroin arvon kanssa<aqua>{value}<gray> lisättiin tuotteeseesi"
+        already_exists: "<yellow>Tuotteessasi on jo esinekerroin, jonka kohde on <aqua>{target} <yellow>! Poista se ensin /sk-alkiokertoimella poista"
+        skill_lore: "<gray>Kun pidetään: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Pidettäessä: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Kun pidetään: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>Kun pidetään: <blue>-{value}% Skill XP"
+      remove:
+        does_not_exist: "<yellow>Tuotteellasi ei ole <aqua>{target} <yellow>kohdekerrointa!"
+        removed: "<aqua>{target}<gray>tuotekerroin poistettiin tuotteestasi"
+      list:
+        header: "<white>Tuotekertoimia löydetty:"
+      removeall:
+        removed: "<gray>Kaikki tuotekertoimet on poistettu tuotteestasi"
+    register:
+      registered: "<white>Rekisteröity hallussa oleva kohde avaimeen {key}"
+      already_registered: "<yellow>Avaimeen on jo rekisteröity kohde <white>{key}<yellow>, käytä <white>/skills item poista rekisteröinti <yellow> poistaaksesi sen rekisteröinnin ensin"
+      no_spaces: "<yellow>Nimikeavain ei voi sisältää välilyöntejä!"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray>tuotevaatimus tasolla<aqua>{level}<gray> lisättiin tuotteeseesi"
+        already_exists: "<yellow>Tuotteella on jo a<dark_aqua>{skill}<yellow> tavaravaatimus! Poista se ensin<gold> /sk kohteen vaatimus poistaa"
+        lore: "<red>Vaatii<dark_aqua>{skill}{level}"
+      remove:
+        does_not_exist: "<yellow>Tuotteessasi ei ole a<dark_aqua>{skill}<yellow> tavaravaatimus!"
+        removed: "<dark_aqua>{skill}<gray>nimikevaatimus poistettiin tuotteestasi"
+      list:
+        header: "<white>Löydetyt tuotevaatimukset:"
+      removeall:
+        removed: "<gray>Kaikki tuotevaatimukset on poistettu tuotteestasi"
+      use: "<yellow>Et täytä tämän kohteen käyttövaatimuksia:{requirements}"
+    unregister:
+      unregistered: "<white>Rekisteröimätön tuote avaimella{key}"
+      not_registered: "<yellow>Avaimella ei ole rekisteröity tuotetta{key}"
+  lang:
+    set: "<gray>Kieli asetettu<aqua>{lang}"
+    not_found: "<yellow>Kieltä ei löydy!"
+  mana:
+    display: "<white>Sinun{mana_unit} :<aqua>{current} /{max}"
+    display_other: "<white>Pelaajan {player}{mana_unit}: <aqua>{current}/{max}"
+    add: "<gray>Lisätty<aqua>{amount}{mana_unit}<gray> pelaajalle<gold>{player}"
+    remove: "<gray>Poistettu<aqua>{amount}{mana_unit}<gray> pelaajalta<gold>{player}"
+    set: "<gray>Aseta pelaajan <gold>{player} <gray> <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit}täytyy olla vähintään nolla!"
+    console_specify_player: "<yellow>Konsolin on määritettävä pelaaja!"
+  modifier:
+    add:
+      added: "{color}{stat}<gray>modifiointitaso<aqua>{value}<gray> nimen kanssa<white>{name}<gray> lisätty pelaajaan<gold>{player}"
+      already_exists: "<yellow>Muokkaus, jolla on nimi{name} on jo olemassa pelaajalla<gold>{player}<yellow> ! Poista se komennolla<gold> /sk modifier remove{player}{name}"
+    remove:
+      not_found: "<yellow>Modifier {name} ei löydy pelaajalle <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>poistettu pelaajalta <gold>{player}"
+    list:
+      all_stats_header: "<gray>Pelaajan tilastomuuntimet<gold>{player} :"
+      all_stats_entry: "  <white>{name}-{color}{stat}<white> Taso<gold>{value}"
+      one_stat_header: "<gray>Tilastomuuttajat ({color}{stat}<gray> ) pelaajalle<gold>{player} :"
+      one_stat_entry: "  <white>{name}-{color}{stat}<white> Taso<gold>{value}"
+      players_only: "<yellow>Vain pelaajat voivat luetella omat muuntajansa! Yritä määrittää pelaaja"
+    removeall:
+      removed_all_stats: "<gray>Poistettu<aqua>{num}<gray> stat-muuntimet pelaajalta<gold>{player}"
+      removed_one_stat: "<gray>Poistettu<aqua>{num}{color}{stat}<gray> modifikaatioita pelaajalta<gold>{player}"
+      players_only: "<yellow>Vain pelaajat voivat poistaa omat muokkaajansa! Yritä määrittää pelaaja"
+  multiplier:
+    global: Maailmanlaajuinen
+    list: "<white>Globaali XP-kerroin pelaajalle <gold> {player} <white><aqua> {multiplier} x/+{percent}%"
+    skill_entry: "<aqua>{skill}<white>XP-kerroin:<aqua>{multiplier} x / +{percent} %"
+    players_only: "<yellow>Vain pelaajat voivat luetella oman kertoimensa! Määritä pelaaja!"
+  preset:
+    load:
+      confirm: "<red>Esiasetuksen lataaminen ohittaa määritystiedostosi! Tämä vaikuttaa seuraaviin tiedostoihin <gray> (Liitetty<aqua>, Yhdistetty<gray>, <yellow> Kor <gray> <red> vattu<gray>, Poist <dark_red> ettu<gray>): {entries} <red> Tätä toimintoa ei voi peruuttaa, varmuuskopioi tarvittavat tiedostot manuaalisesti. Kirjoita komento uudelleen vahvistaaksesi."
+      loaded: Ladattu esiasetus onnistuneesti{name}, käynnistä palvelin uudelleen nyt.
+      created: Luodut tiedostot
+      modified: Muokatut tiedostot
+      replaced: Korvatut tiedostot
+      deleted: Poistetut tiedostot
+      skipped: Ohitetut tiedostot
+  profile:
+    skills: "Taitoprofiili <gold>{name}:\n<gray>UUID: <white> {uuid}\n<gray>Taidot: {skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill}<gray>- Taso: <white> {level}<gray>, XP: <white> {xp}"
+    stats: "Tilastot pelaajalle <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Taidot:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat}<gray>- Kokonaistaso: <white> {total_level}<gray>, Perustaso: <white> {base_level}<gray>, Muokattu taso: <white> {modified_level}"
+  rank:
+    header: "<aqua><bold>Taitoluokituksesi"
+    power: "<yellow>Voima <gray>(Kaikki taidot): <white>Sijalla #{rank} sijoituksia yhteensä {total}"
+    entry: "<aqua>{skill}<gray>: <white> #{rank} sijoituksia yhteensä {total}"
+  reload: "<green>Konfigurointi ladattu uudelleen!"
+  save:
+    already_saving: "<yellow>Tietoja tallennetaan jo!"
+    mysql_not_enabled: "<yellow>MySQL ei ollut käytössä palvelimen käynnistyksen yhteydessä. Tallennus sen sijaan tiedostoon!"
+    saved: "<green>Taitotiedot tallennettu!"
+  skill:
+    setall:
+      set: "<gray>Kaikki taidot asetettu tasolle<aqua>{level}<gray> pelaajalle<gold>{player}"
+    setlevel:
+      set: "<gray>Taito<aqua>{skill}<gray> asetettu tasolle<aqua>{level}<gray> pelaajalle<gold>{player}"
+    at_least: "<yellow>Tason on oltava vähintään{level}!"
+  toggle:
+    enabled: "<green>Taitojesi toimintopalkki on otettu käyttöön"
+    disabled: "<red>Taitojen toimintopalkki on poistettu käytöstä"
+    not_enabled: "<yellow>Taitojen toimintopalkki ei ole käytössä tällä palvelimella!"
+  top:
+    power_header: "<white>--== <aqua> <bold> Kaikkien taitojen tulostaulukko ==-- </bold> <white>"
+    power_header_page: "<white>--== <aqua> <bold> Kaikkien taitojen tulostaulu </bold> <white> (sivu{page}) ==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Tulostaulu</bold><white> ==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Tulostaulu</bold><white> (Sivu {page})==--"
+    average_header: "<white>--==<aqua><bold> Taitojen keskimääräinen tulostaulukko</bold><white> ==--"
+    average_header_page: "<white>--==<aqua><bold> Taitojen keskimääräinen tulostaulukko</bold><white> (Sivu {page})==--"
+    usage: "<yellow>Käyttö:<green> /sk top<white><page><gray> tai<green> /sk top<white> [taito]<page>"
+  transfer:
+    success: "<green>Pelaajatietojen siirto onnistui<gray>{from}<green> to<gray>{to}"
+    error: "<red>Pelaajatietojen siirtämisessä tapahtui virhe. Tarkista konsoli virheiden varalta."
+  updateleaderboards:
+    already_updating: "<yellow>Tulostaulu päivitetään jo!"
+    updated: "<green>Tulostaulu päivitetty!"
+  version: "<white>Olet Aurelium Skills -versiossa. <aqua> {current_version} <white> Uusin versio on <aqua> {latest_version}"
+  xp:
+    add: "<gray>Lisätty <aqua> {amount} {skill} <gray> XP pelaajalle <gray> {player}"
+    set: "<gray>Aseta <aqua> {skill} <gray> XP pelaajalle <gray> {player} <gray> {amount}"
+    remove: "<gray>Poistettu<aqua>{amount}{skill}<gray> XP pelaajalta<gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Jäähtymisaika taidolle <aqua>{ability} <gray>on nollattu pelaajalle <gold>{player}"
+  unknown_skill: "<yellow>Tuntematon taito!"
+  unknown_mana_ability: "<yellow>Tuntematon manakyky!"
+  unknown_stat: "<yellow>Tuntematon taito!"
+  no_profile: "<yellow>Pelaajalla ei ole taitoprofiilia. Yritä liittyä peliin uudelleen tai käynnistää palvelin uudelleen."
+leveler:
+  level_up: "{skill} Taitosi Nousi"
+  skill_level_up: Taitotaso Nousi
+  rewards: Palkinnot
+  ability_unlock: Kyky avattu
+  ability_level_up: Kyky Nousi Ylöspäin
+  mana_ability_unlock: Mana-kyky avattu
+  mana_ability_level_up: Mana-kyvyn taso nousi
+  unclaimed_item: "<red>Sinulla on lunastamattomia kohteita, koska varastosi oli täynnä. Käytä <yellow> /skills claimitems lunastaaksesi ne <red>"
+menus:
+  common:
+    close: "Sulje"
+    level: "Taso"
+    progress_to_level: "Edistyminen tasolle"
+    max_level: "MAKSIMITASO"
+    ability_levels: "Kykytasot"
+    stats_leveled: "Nostaa taitoja"
+    mana_ability: "Mana-kyky"
+    duration: "Kesto"
+    mana_cost: "Mana-hinta"
+    cooldown: "Latausaika"
+    damage: "Vahinko"
+    max_mana_cost: "Maksimi manakustannus"
+    attack_speed: "Hyökkäysnopeus"
+    back: "Palaa takaisin"
+    back_click: "Takaisin {menu_name} valikkoon"
+    unlocked: "Avattu"
+    in_progress: "Meneillään"
+    locked: "Lukittu"
+    your_level: "Sinun tasosi"
+    next_page: "Seuraava sivu"
+    next_page_click: "Napsauta siirtyäksesi seuraavalle sivulle"
+    previous_page: "Edellinen sivu"
+    previous_page_click: "Napsauta siirtyäksesi edelliselle sivulle"
+  skills:
+    skills_title: "Sinun taitosi"
+    your_skills: "Sinun taitosi"
+    your_skills_desc: "Päivitä taitojasi tekemällä erilaisia tehtäviä avataksesi arvokkaita tehostuksia, kykyjä ja paljon muuta!"
+    your_skills_hover: "Vie hiiri taidon päälle saadaksesi lisätietoja!"
+    your_skills_click: "Napsauta taitoa nähdäksesi tason etenemisen!"
+    skill_click: "Napsauta nähdäksesi tason edistyminen!"
+    stats: "Tilastot"
+    stats_desc: "Ansaitse buffeja kehittämällä taitoja"
+    stats_click: "Napsauta saadaksesi lisätietoja tai tarkastellaksesi tilastojasi"
+  level_progression:
+    level_progression_title: "{skill} Tasot - Sivu {page}"
+    your_ranking: "Taitosi sijoitus"
+    rank_out_of: "<1>Olet sijalla <2>{rank}</2>, {total} pelaajasta</1>"
+    rank_percent: "<1>Olet <2>{percent}%</2> pelaajien parhaimmistossa.</1>"
+    rewards: "Palkinnot"
+    ability_unlock: "Kyvyn lukituksen avaaminen"
+    mana_ability_unlock: "Mana-kyvyn avaus"
+    progress: "Edistyminen"
+    leaderboard_click: "Napsauta nähdäksesi {skill} tulostaulukon"
+    sources: "XP-lähteet"
+    sources_desc: "Lähteet-valikosta näet kaikki tavat, joilla voit ansaita XP:tä taidossa, sekä kuinka paljon XP:tä kukin lähde antaa."
+    sources_click: "Napsauta nähdäksesi {skill} lähteet"
+    abilities: "Kyvyt"
+    abilities_desc: "<2>Kyvyt </2><1>ovat passiivisia etuja, joita avaat ja päivität nostaessasi taito tasoja.</1>"
+    mana_abilities_desc: "<3>Mana-kyvyt </3><1>ovat erityisiä kykyjä, jotka vaativat aktivointia ja kuluttaa manaa.</1>"
+    abilities_click: "Napsauta nähdäksesi {skill} kykyjä"
+  stats:
+    stats_title: Tilastosi
+    skills: "Taidot"
+    added_drop: "+{value} Pudotus"
+    added_drops: "+{value} Pudotukset"
+    chance_drop: "{chance}% +{value} Pudotus"
+    chance_drops: "{chance}% +{value} pudotukset"
+  unclaimed_items:
+    unclaimed_items_title: "Lunasta tavaroita"
+    inventory_full: "Varastossasi ei ole tarpeeksi tilaa kyseisen tuotteen lunastamiseen"
+    click_to_claim: "Napsauta lunastaaksesi!"
+  leaderboard:
+    leaderboard_title: "{skill} Tulostaulu"
+  sources:
+    sources_title: "{skill} XP-lähteet"
+    sorter: "Lajittele XP-lähteet"
+    descending: "Korkeimmasta pienimpään"
+    ascending: "Alimmasta korkeimpaan"
+    alphabetical: "Nimi (AZ)"
+    reverse_alphabetical: "Nimi (Z-A)"
+    sort_click: "Napsauta vaihtaaksesi lajittelutyyppiä"
+    multiplied_xp: "Moninkertaistettu {xp_unit}"
+    multiplied_desc: "Tämä on XP, jonka ansaitset nykyisten XP-kertoimiesi perusteella"
+  abilities:
+    abilities_title: "{skill} Kyvyt"
+    description: "Kuvaus"
+    unlocked_at: "<1>Avautuu <2>{skill} {level}"
+    next_upgrade_at: "<1>Seuraava päivitys <2>{skill}{level}"
+mana_abilities:
+  replenish:
+    name: Täydennä
+    desc: "Istuttaa viljelykasvit automaattisesti {value} sekunnin ajan. <1>[Aktivoi napsauttamalla hiiren kakkospainikkeella kuokkaa ja riko viljelykasveja]"
+    raise: "<gray>Nostat kuokkaasi"
+    lower: "<gray>Lasket kuokkaasi"
+    start: "<gold>Täydennys aktivoitu! <gray>(- {mana}{mana_unit})"
+    end: "<gray>Täydennys on loppunut"
+  treecapitator:
+    name: Puukapitaattori
+    desc: "Katkaisee kokonaiset puut heti {value} sekunnin ajan. <1>[Napsauta hiiren kakkospainikkeella kirvestä ja katkaise puu aktivoidaksesi]"
+    raise: "<gray>Nostat kirveesi"
+    lower: "<gray>Lasket kirveesi"
+    start: "<gold>Puukapitaattori aktivoitu! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Puukapinaattori on kulunut pois"
+  speed_mine:
+    name: Nopea louhinta
+    desc: "Antaa Haste {haste_level}, {value} sekunniksi. <1>[Napsauta hiiren kakkospainikkeella hakkua ja louhi aktivoidaksesi]"
+    raise: "<gray>Nostat hakkuasi"
+    lower: "<gray>Lasket hakkuasi"
+    start: "<gold>Nopea louhinta aktivoitu! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Nopea louhinta on kulunut pois"
+  absorption:
+    name: Imeytyminen
+    desc: "Saapuva vahinko vähentää manaa 2x vaurion määrän terveytesi sijasta {value} sekunniksi. Mana ei uusiudu, kun imeytyminen on aktiivista. <1>[Napsauta kilpeä hiiren vasemmalla painikkeella ja ota vahinkoa aktivoidaksesi]"
+    raise: "<gray>Nostat kilpeäsi"
+    lower: "<gray>Lasket kilpeäsi"
+    start: "<gold>Imeytyminen aktivoitu! <gray>(- {mana}{mana_unit})"
+    end: "<gray>Imeytyminen on kulunut pois"
+  terraform:
+    name: Terraformi
+    desc: "Kun kaivat, katkaise liitetyt blokit välittömästi {radius} blokin säteellä vaakasuunnassa {value} sekunnin ajan. <1>[Napsauta hiiren kakkospainikkeella lapiota ja kaiva aktivoidaksesi]"
+    raise: "<gray>Nostat lapiosi"
+    lower: "<gray>Lasket lapiosi"
+    start: "<gold>Terraform aktivoitu! <gray>(- {mana}{mana_unit})"
+    end: "<gray>Terraform on kulunut pois"
+  sharp_hook:
+    name: Terävä koukku
+    desc: "Teet {value} vahinkoa koukussa olevaan kohteeseen napsauttamalla hiiren vasemmalla painikkeella"
+    use: "<gold>Käytetty Teräväkoukku! <gray>(- {mana}{mana_unit})"
+  charged_shot:
+    name: Ladattu laukaus
+    desc: "Ammutut nuolet aiheuttavat enemmän vahinkoa sen mukaan, kuinka pitkälle jousi vedettiin taaksepäin, kuluttaen samalla manaa. Tekee {value}% enemmän vahinkoa kulutettua manaa kohti. <1>[Napsauta jousipyssyä vasemmalla painikkeella laittaaksesi ladatun laukaustilan]"
+    enable: "<gray>Ladattu laukaisutila on nyt käytössä"
+    disable: "<gray>Ladattu laukaisutila on nyt poistettu käytöstä"
+    shoot: "<gold>Käytetty ladattu laukaus! <light_purple>+{percent}% vahinkoa <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: Salaman terä
+    desc: Lisää hyökkäysnopeutta {value}% {duration} sekunneiksi. <1>[Napsauta hiiren kakkospainikkeella miekkaa ja hyökkää vihollisiin aktivoidaksesi
+    raise: "<gray>Nostat miekkaasi"
+    lower: "<gray>Lasket miekkasi"
+    start: "<gold>Salaman terä aktivoitu! <gray>(- {mana}{mana_unit})"
+    end: "<gray>Salaman Terä on kulunut pois"
+  not_ready: "<red>Kyky ei ole valmis!<gray> ({cooldown} s)"
+  not_enough_mana: "<yellow>Ei tarpeeksi manaa!<gray> ({mana}{mana_unit} edellytetään)"
+skills:
+  farming:
+    name: Maanviljely
+    desc: "Kerää satoja ansaitaksesi maanviljelyä {xp_unit}"
+  foraging:
+    name: Metsuri
+    desc: "Hakkaa puita ansaitaksesi Metsuri {xp_unit}"
+  mining:
+    name: Kaivostoiminta
+    desc: "Louhi kiveä ja malmeja ansaitaksesi louhinta {xp_unit}"
+  fishing:
+    name: Kalastus
+    desc: "Kalasta kalaa ansaitaksesi Kalastus {xp_unit}"
+  excavation:
+    name: Kaivaminen
+    desc: "Kaiva lapiolla ansaitaksesi kaivaus {xp_unit}"
+  archery:
+    name: Jousiammunta
+    desc: "Ammu vihollisiä ja pelaajia jousella ansaitaksesi jousiammunta {xp_unit}"
+  defense:
+    name: Puolustus
+    desc: "Ota vahinkoa vihollisilta ansaitaksesi puolustus {xp_unit}"
+  fighting:
+    name: Taistelu
+    desc: "Taistele vihollisia vastaan lähitaisteluaseilla ansaitaksesi taistelu {xp_unit}"
+  endurance:
+    name: Kestävyys
+    desc: "Kävele ja juokse ansaitaksesi kestävyys {xp_unit}"
+  agility:
+    name: Ketteryys
+    desc: "Liiku ympäriinsä ja ota putoamisvaurioita ansaitaksesi ketteryys {xp_unit}"
+  alchemy:
+    name: Alkemia
+    desc: "Hauduta ja roiskuta juomia ansaitaksesi alkemia {xp_unit}"
+  enchanting:
+    name: Lumous
+    desc: "Lumoa, yhdistä ja hio ansaitaksesi Lumous {xp_unit}"
+  sorcery:
+    name: Noituus
+    desc: "Käytä mana-kykyjä ansaitaksesi noituus {xp_unit}"
+  healing:
+    name: Parantuminen
+    desc: "Ansaitse paranemista juomalla ja roiskuttamalla juomia {xp_unit}"
+  forging:
+    name: Taonta
+    desc: "Yhdistä ja käytä kirjoja alasimessa ansaitaksesi Taonta {xp_unit}"
+sources:
+  fishing:
+    cod: Turska
+    salmon: Lohi
+    tropical_fish: Trooppiset kalat
+    pufferfish: Pallokala
+    treasure: Aarreesineet
+    junk: Roskatavarat
+    rare: Harvinainen saalis
+    epic: Eeppinen saalis
+  damage:
+    mob_damage: Vihollisten aiheuttamat vahingot
+    player_damage: Pelaajien aiheuttamat vahingot
+    fall_damage: Putoamisvaurioiden ottaminen
+  statistic:
+    walk_per_meter: Kävely
+    sprint_per_meter: Sprintti
+    swim_per_meter: Uinti
+  jumping:
+    jump_per_100: Hyppiminen
+  brewing:
+    awkward: Hauduta hankala juoma
+    regular: Hauduta tavallista juomaa
+    extended: Hauduta pidennetty juoma
+    upgraded: Hauduta päivitetty juoma
+    splash: Hauduta roiskejuoma
+    lingering: Hauduta viipyvä juoma
+  enchanting:
+    weapon_per_level: Lumoa ase
+    armor_per_level: Lumoa panssari
+    tool_per_level: Lumoa työkalu
+    book_per_level: Lumoa kirja
+  mana_ability_use:
+    mana_ability_use: Mana-kykyjen käyttäminen
+  item_consume:
+    drink_regular: Juo tavallista juomaa
+    drink_extended: Juo pitkäkestoinen juoma
+    drink_upgraded: Juo päivitetty juoma
+    golden_apple: Syö kultaista omenaa
+    enchanted_golden_apple: Syö lumottua kultaista omenaa
+  potion_splash:
+    splash_regular: Roiskuta tavallinen juoma
+    splash_extended: Roiskuta pidennetty kestojuoma
+    splash_upgraded: Roiskuta päivitetty juoma
+    lingering_regular: Käytä tavallista viipyvää juomaa
+    lingering_extended: Käytä pitkäkestoista viipyvää juomaa
+    lingering_upgraded: Käytä päivitettyä viipyvää juomaa
+  anvil:
+    combine_books_per_level: Yhdistä lumotut kirjat
+    combine_weapon_per_level: Yhdistä ase kirjaan
+    combine_armor_per_level: Yhdistä panssari kirjaan
+    combine_tool_per_level: Yhdistä työkalu kirjaan
+  grindstone:
+    grindstone_per_level: Poista lumouksia esineestä hiomakivellä
+  units:
+    damage: Vahingoita
+    meter: Metri
+    100_jumps: 100 hyppyä
+    mana: Mana kulutettu
+    combine_level: Alasimen käyttö XP
+    grindstone_level: Lumoustaso tavarassa
+    enchant_level: Vastaanotettu lumous taso
+stats:
+  strength:
+    name: Voima
+    desc: "Vahvuus lisää hyökkäysvahinkoasi useilla erilaisilla aseilla."
+  health:
+    name: Terveys
+    desc: "Terveys lisää {hp_unit} määrää, jolloin voit kestää taisteluissa pidempään."
+  regeneration:
+    name: Uudistuminen
+    desc: "Uudistuminen lisää sitä, kuinka nopeasti palautat sekä terveyden että manan."
+  luck:
+    name: Onni
+    desc: "Onni lisää mahdollisuutta saada ylimääräisiä pudotuksia blokeista keräilytaidoissa."
+  wisdom:
+    name: Viisaus
+    desc: "Viisaus lisää maksimimanaasi, lisää xp:n saantia ja vähentää alasin kustannuksia."
+  toughness:
+    name: Sitkeys
+    desc: "Sitkeys lisää vihollisen hyökkäyksistä vähennettyjen vahinkojen määrää."
+  crit_chance:
+    name: Kriittisen osuman mahdollisuus
+    desc: "Kriittisen osuman mahdollisuus on todennäköisyytesi tehdä kriittinen osuma."
+  crit_damage:
+    name: Kriittinen vahinko
+    desc: "Kriittinenvaurio on vahingon prosentuaalinen kasvu kriittisen osuman yhteydessä."
+  speed:
+    name: Nopeus
+    desc: "Nopeus lisää kuinka nopeasti voit kävellä ja juosta."
+traits:
+  attack_damage:
+    name: Hyökkäysvahinko
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturaatio Palautuminen
+  hunger_regen:
+    name: Nälkä Palautuminen
+  mana_regen:
+    name: Mana Palautuminen
+  luck:
+    name: Onni ominaisuus
+  double_drop:
+    name: Kaksinkertainen pudotus
+  experience_bonus:
+    name: Kokemusbonus
+  anvil_discount:
+    name: Alasin alennus
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Vahinkojen vähentäminen
+  crit_chance:
+    name: Kriittinen-vahinko mahdollisuus
+  crit_damage:
+    name: Kriittinen vahinko
+  movement_speed:
+    name: Liikkumisnopeus
+  farming_luck:
+    name: Maanviljely onni
+  foraging_luck:
+    name: Metsuri onni
+  mining_luck:
+    name: Kaivos onni
+  excavation_luck:
+    name: Kaivamis Onni
+  fishing_luck:
+    name: Kalastus onni
+ui:
+  maxed: MAKSIMOITU
+units:
+  mana: Mana
+  hp: HP
+  xp: XP
+file_version: 33

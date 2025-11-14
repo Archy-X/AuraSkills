@@ -1,0 +1,1042 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: Bountiful Harvest
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    info: "+{value} Farming Luck"
+  farmer:
+    name: Farmer
+    desc: "Earn {value}% more Farming XP."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Scythe Master
+    desc: "Increases damage from hoes by {value}%."
+    info: "+{value}% Hoe Damage"
+  geneticist:
+    name: Geneticist
+    desc: "Increases saturation gain from plant-based foods by {value}."
+    info: "+{value} Saturation"
+  growth_aura:
+    name: Growth Aura
+    desc: "Crops with growth stages within {radius} blocks of you grow {value}% faster."
+    info: "+{value}% Growth"
+  lumberjack:
+    name: Lumberjack
+    desc: "Grants +{value} Foraging Luck, which increases the chance for extra drops."
+    info: "+{value} Foraging Luck"
+  forager:
+    name: Forager
+    desc: "Earn {value}% more Foraging XP."
+    info: "+{value}% XP"
+  axe_master:
+    name: Axe Master
+    desc: "Increases damage from axes by {value}%"
+    info: "+{value}% Axe Damage"
+  valor:
+    name: Valor
+    desc: "Grants +{value} Strength while holding an axe."
+    info: "+{value} Strength"
+  shredder:
+    name: Shredder
+    desc: "{value}% chance to deal triple durability damage with axes."
+    info: "{value}% 3x Durability Damage"
+  lucky_miner:
+    name: Lucky Miner
+    desc: "Grants +{value} Mining Luck, which increases the chance for extra drops."
+    info: "+{value} Mining Luck"
+  miner:
+    name: Miner
+    desc: "Earn {value}% more Mining XP."
+    info: "+{value}% XP"
+  pick_master:
+    name: Pick Master
+    desc: "Deal {value}% more damage with pickaxes."
+    info: "+{value}% Pickaxe Damage"
+  stamina:
+    name: Stamina
+    desc: "Grants +{value} Toughness while holding a pickaxe."
+    info: "+{value} Toughness"
+  hardened_armor:
+    name: Hardened Armor
+    desc: "{value}% chance to negate durability damage on armor."
+    info: "{value}% No Durability Loss"
+  lucky_catch:
+    name: Lucky Catch
+    desc: "Grants +{value} Fishing Luck, which increases the chance for extra drops."
+    info: "+{value} Fishing Luck"
+  fisher:
+    name: Fisher
+    desc: "Earn {value}% more Fishing XP."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Treasure Hunter
+    desc: "{value}% higher chance to get rare loot from fishing."
+    info: "+{value}% Rare Loot"
+  grappler:
+    name: Grappler
+    desc: "Hook entities with {value}% more speed."
+    info: "+{value}% Hook Speed"
+  epic_catch:
+    name: Epic Catch
+    desc: "{value}% added chance to get epic loot from fishing."
+    info: "+{value}% Epic Loot"
+  metal_detector:
+    name: Metal Detector
+    desc: "{value}% added chance to get rare loot from digging."
+    info: "+{value}% Rare Loot"
+  excavator:
+    name: Excavator
+    desc: "Earn {value}% more Excavation XP."
+    info: "+{value}% XP"
+  spade_master:
+    name: Spade Master
+    desc: "Deal {value}% more damage with shovels."
+    info: "+{value}% Shovel Damage"
+  bigger_scoop:
+    name: Bigger Scoop
+    desc: "Grants +{value} Excavation Luck, which increases the chance for extra drops."
+    info: "+{value}% Excavation Luck"
+  lucky_spades:
+    name: Lucky Spades
+    desc: "{value}% added chance to get epic loot from digging."
+    info: "+{value}% Epic Loot"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Distance"
+  archer:
+    name: Archer
+    desc: "Earn {value}% more Archery XP."
+    info: "+{value}% XP"
+  bow_master:
+    name: Bow Master
+    desc: "Deal {value}% more damage with bows."
+    info: "+{value}% Bow Damage"
+  piercing:
+    name: Piercing
+    desc: "{value}% chance for arrows to pierce through mobs."
+    info: "{value}% Pierce Chance"
+  stun:
+    name: Stun
+    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    info: "{value}% Stun Chance"
+  shielding:
+    name: Shielding
+    desc: "Reduce incoming damage by {value}% while sneaking."
+    info: "-{value}% Incoming Dmg Sneaking"
+  defender:
+    name: Defender
+    desc: "Earn {value}% more Defense XP."
+    info: "+{value}% XP"
+  mob_master:
+    name: Mob Master
+    desc: "Reduce incoming damage from mobs by {value}%"
+    info: "-{value}% Mob Dmg"
+  immunity:
+    name: Immunity
+    desc: "{value}% chance to completely negate an enemy attack."
+    info: "{value}% Immune"
+  no_debuff:
+    name: No Debuff
+    desc: "{value}% chance to negate a harmful potion effect from being applied."
+    info: "{value}% No Debuff"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
+  fighter:
+    name: Fighter
+    desc: "Earn {value}% more Fighting XP."
+    info: "+{value}% XP"
+  sword_master:
+    name: Sword Master
+    desc: "Deal {value}% more damage with swords."
+    info: "+{value}% Sword Damage"
+  first_strike:
+    name: First Strike
+    desc: "Deal {value}% more damage on the first hit."
+    info: "+{value}% Dmg First Hit"
+    dealt: "<red>First Strike Dealt!"
+  bleed:
+    name: Bleed
+    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    info: "{value}% Chance, {value_2} Damage"
+    enemy_bleeding: "<red>Enemy Bleeding!"
+    self_bleeding: "<red>You are bleeding!"
+    stop: "<white>The bleeding has stopped"
+  anti_hunger:
+    name: Anti Hunger
+    desc: "{value}% chance to stop hunger loss."
+    info: "{value}% No Hunger Loss"
+  runner:
+    name: Runner
+    desc: "Earn {value}% more Endurance XP."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Golden Heal
+    desc: "Increases regeneration effect health gain by {value}%"
+    info: "+{value}% Effect Regen"
+  recovery:
+    name: Recovery
+    desc: "Increases natural regeneration when at less than half health by {value}%"
+    info: "+{value}% Low HP Regen"
+  meal_steal:
+    name: Meal Steal
+    desc: "{value}% chance to steal 1 hunger point when attacking a player."
+    info: "{value}% Hunger Steal"
+  light_fall:
+    name: Light Fall
+    desc: "Reduces all fall damage by {value}%"
+    info: "-{value}% Fall Damage"
+  jumper:
+    name: Jumper
+    desc: "Earn {value}% more Agility XP."
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Sugar Rush
+    desc: "Consumed and splashed speed and jump boost potions last {value}% longer."
+    info: "{value}% Longer Speed"
+  fleeting:
+    name: Fleeting
+    desc: "Gain +{value} Speed when below 20% health."
+    info: "+{value}% Speed"
+    start: "<white>You have gained a fleeting speed boost! <gray>(+{value}% Speed)"
+    end: "<gray>Fleeting speed boost has worn off"
+  thunder_fall:
+    name: Thunder Fall
+    desc: "When sneaking during a fall, you have a {value}% chance to deal {value_2}% of the fall damage expected to mobs in a 3 block radius."
+    info: "{value}% Chance, {value_2}% Damage"
+  alchemist:
+    name: Alchemist
+    desc: "Potions you brew have a {value}% longer duration."
+    info: "+{value}% Potion Duration"
+  brewer:
+    name: Brewer
+    desc: "Earn {value}% more Alchemy XP."
+    info: "+{value}% XP"
+  splasher:
+    name: Splasher
+    desc: "Potions you splash gain {value}% longer duration for each player affected."
+    info: "+{value}% Duration/Player"
+  lingering:
+    name: Lingering
+    desc: "Lingering potions naturally decay {value}% slower and decay {value_2}% less per affected entity."
+    info: "-{value}% Natural, -{value_2}% Entity Decay"
+  wise_effect:
+    name: Wise Effect
+    desc: "Gain {value} Wisdom for every unique active potion effect."
+    info: "+{value} Wisdom/Effect"
+  xp_convert:
+    name: XP Convert
+    desc: "Earn 1 Minecraft experience for every {value} skill XP you gain."
+    info: "1 EXP/{value} Skill XP"
+  enchanter:
+    name: Enchanter
+    desc: "Earn {value}% more Enchanting XP."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XP Warrior
+    desc: "Mobs you kill have a {value}% chance of dropping double experience."
+    info: "{value}% 2x Mob XP"
+  enchanted_strength:
+    name: Enchanted Strength
+    desc: "Gain {value} Strength for every unique enchantment on the item held."
+    info: "{value} Strength/Enchant"
+  lucky_table:
+    name: Lucky Table
+    desc: "Items you enchant using the enchantment table have a {value}% chance of upgrading the enchantment level by 1 if not max level."
+    info: "{value}% Enchant Upgrade Chance"
+  life_essence:
+    name: Life Essence
+    desc: Instant Health potions heal {value}% more.
+    info: "+{value}% Instant Health"
+  healer:
+    name: Healer
+    desc: Earn {value}% more Healing XP.
+    info: "+{value}% XP"
+  life_steal:
+    name: Life Steal
+    desc: Heal {value}% of the max HP of hostile mobs and players you kill.
+    info: "Steal {value}% HP"
+  golden_heart:
+    name: Golden Heart
+    desc: Damage done to your absorption hearts is reduced by {value}%
+    info: "-{value}% Absorption Dmg"
+  revival:
+    name: Revival
+    desc: Gain +{value} Health and +{value_2} Regeneration for 30 seconds after respawning.
+    info: "+{value} Health, +{value_2} Regen"
+    message: "<white>You gained a revival bonus for 30 seconds! <white>(<red>+{value} Health, <gold>+{value_2} Regeneration<white>)"
+  disenchanter:
+    name: Disenchanter
+    desc: Gain {value}% more experience when disenchanting items using a grindstone.
+    info: "+{value}% Grindstone EXP"
+  forger:
+    name: Forger
+    desc: Earn {value}% more Forging XP.
+    info: "+{value}% XP"
+  repairing:
+    name: Repairing
+    desc: Repairing items in an anvil using the raw material the item was made from repairs {value}% more durability.
+    info: "+{value}% Anvil Repair"
+  anvil_master:
+    name: Anvil Master
+    desc: Increases the maximum repair cost of an anvil before it is too expensive to {value} experience.
+    info: "{value} Max Cost"
+  skill_mender:
+    name: Skill Mender
+    desc: Gaining skill XP has a {value}% chance to repair a held item or worn armor piece with the Mending enchantment by 1 durability per 2 skill XP.
+    info: "{value}% Mend Chance"
+acf:
+  core:
+    permission_denied: "<red>I'm sorry, but you do not have permission to perform this command."
+    permission_denied_parameter: "<red>I'm sorry, but you do not have permission to perform this command."
+    error_generic_logged: "<red>An error occurred. This problem has been logged. Sorry for the inconvenience."
+    unknown_command: "<red>Unknown Command, please type <yellow>/sk help"
+    invalid_syntax: "<yellow>Usage: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>I'm sorry, but there was an error performing this command."
+    please_specify_one_of: "<red>Error: Please specify one of (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} must be a number."
+    must_be_min_length: "<red>Error: Must be at least {min} characters long."
+    must_be_max_length: "<red>Error: Must be at most {max} characters long."
+    please_specify_at_most: "<red>Error: Please specify a value at most {max}."
+    please_specify_at_least: "<red>Error: Please specify a value at least {min}."
+    not_allowed_on_console: "<red>Error: Console may not execute this command."
+    could_not_find_player: "<red>Error: Could not find a player by the name: <yellow>{search}"
+    no_command_matched_search: "<red>No command matched <yellow>{search}."
+    help_page_information: "<aqua> - Showing page <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> results)."
+    help_no_results: "<aqua>Error: No more results."
+    help_header: "<yellow>=== <aqua>Showing help for <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Showing detailed help for <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Search results for <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>Error: That world does not exist."
+    you_must_be_holding_item: "<red>Error: You must be holding an item in your main hand."
+    player_is_vanished_confirm: "<yellow>Warning: <green>{vanished} <yellow>is vanished. Do not blow their cover!\n<yellow>To confirm your action add <green>:confirm <yellow>to the end of their name.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>Error: Username too short, must be at least three characters."
+    is_not_a_valid_name: "<red>Error: <yellow>{name} <red>is not a valid username."
+    multiple_players_match: "<red>Error: Multiple players matched <aqua>{search} <yellow>({all})<red>, please be more specific."
+    no_player_found_server: "<red>No player matching <yellow>{search} <red>is connected to this server."
+    no_player_found_offline: "<red>No player matching <yellow>{search}<red> could be found."
+    no_player_found: "<red>No player matching <yellow>{search}<red> could be found."
+    location_please_specify_world: "<red>Error: Please specify world. Example: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Please specify the coordinates x, y, and z. Example: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console may not use relative coordinates for location."
+commands:
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  antiafk:
+    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    logs:
+      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      entry: "<gray>{timestamp} - {message}"
+      desc: Show anti-AFK logs for a given player.
+  armor:
+    modifier:
+      add:
+        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
+        desc: Adds an armor stat modifier to the item held, along with lore by default.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
+        desc: Removes an armor stat modifier from the item held, and the lore associated with it by default.
+      list:
+        header: "<white>Armor modifiers found:"
+        desc: Lists all armor stat modifiers on the item held.
+      removeall:
+        removed: "<gray>All armor modifiers have been removed from your item"
+        desc: Removes all armor stat modifiers from the item held.
+    trait:
+      add:
+        added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An armor modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk armor trait remove"
+        desc: Adds an armor trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an armor trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all armor trait modifiers from the item held.
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An armor multiplier with target <aqua>{target} <yellow>already exists on your armor! Remove it first with /sk armor multiplier remove"
+        skill_lore: "<gray>When worn: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When worn: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When worn: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When worn: <blue>-{value}% Skill XP"
+        desc: Adds an armor multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>armor multiplier!"
+        removed: "<aqua>{target} <gray>armor multiplier was removed from your item"
+        desc: Removes an armor multiplier of the specified skill or a global multiplier from the held item.
+      list:
+        header: "<white>Armor multipliers found:"
+        desc: Lists all armor multipliers on the held item.
+      removeall:
+        removed: "<gray>All armor multipliers have been removed from your item"
+        desc: Removes all armor multipliers from the item held.
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> armor requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> armor requirement! Remove it first with <gold>/sk armor requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
+        desc: Adds an armor requirement to the item held, along with lore by default.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> armor requirement!"
+        removed: "<dark_aqua>{skill}<gray> armor requirement was removed from your item"
+        desc: Removes an armor requirement from the item held, along with the lore associated it by default.
+      list:
+        header: "<white>Armor requirements found:"
+        desc: Lists the armor requirements on the item held.
+      removeall:
+        removed: "<gray>All armor requirements have been removed from your item"
+        desc: Removes all armor requirements from the item held.
+      equip: "<yellow>You do not meet the requirements to equip this item: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Loading a backup will revert all skill data of players. This action is permanent and cannot be undone. You may want to save a backup before loading one. Type the command again to confirm this action"
+      loading: "<white>Loading backup..."
+      loaded: "<green>Successfully loaded backup"
+      error: "<red>Error loading backup: {error}"
+      must_be_yaml: "<yellow>File must be a .yml file!"
+      file_not_found: "<yellow>A backup of this file name does not exist in the backups folder!"
+      desc: Loads a backup from a given file.
+    save:
+      saving: "<white>Saving backup..."
+      saved: "<white>Backed up {type} data as {file}"
+      error: "<red>Error backing up {type} data! See error in console/below for details"
+      desc: Saves a backup of the current data to the backups folder.
+  claimitems:
+    desc: Opens the menu to claim unclaimed items.
+    no_items: "<yellow>You have no items to claim"
+  item:
+    give:
+      sender: "<white>Gave <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>You were given <aqua>{amount}x {key}"
+      desc: Gives an item with a key from the item registry to a player.
+    modifier:
+      add:
+        added: "Added stat modifier to item with stat: {stat}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An item modifier with stat {color}{stat} <yellow>already exists on your item! Remove it first with /sk item modifier remove"
+        desc: Adds an item stat modifier to the item held, along with lore by default.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier was removed from your item"
+        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
+      list:
+        header: "<white>Item modifiers found:"
+        desc: Lists all item stat modifiers on the item held.
+      removeall:
+        removed: "<gray>All item modifiers have been removed from your item"
+        desc: Removes all item stat modifiers from the item held.
+    trait:
+      add:
+        added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
+        already_exists: "<yellow>An item modifier with trait {trait} <yellow>already exists on your item! Remove it first with /sk item trait remove"
+        desc: Adds an item trait modifier to the item held, along with lore by default.
+      remove:
+        desc: Removes an item trait modifier from the item held.
+      list:
+        desc: Lists all item trait modifiers on the item held.
+      removeall:
+        desc: Removes all item trait modifiers from the item held.
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier with value <aqua>{value} <gray>was added to your item"
+        already_exists: "<yellow>An item multiplier with target <aqua>{target} <yellow>already exists on your item! Remove it first with /sk item multiplier remove"
+        skill_lore: "<gray>When held: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>When held: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>When held: <blue>+{value}% Skill XP"
+        global_lore_subtract: "<gray>When held: <blue>-{value}% Skill XP"
+        desc: Adds an item multiplier to the held item for all or a specific skill where value is the percentage more XP gained.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item multiplier was removed from your item"
+        desc: Removes an item multiplier of the specified skill or a global multiplier from the held item.
+      list:
+        header: "<white>Item multipliers found:"
+        desc: Lists all item multipliers on the held item.
+      removeall:
+        removed: "<gray>All item multipliers have been removed from your item"
+        desc: Removes all item multipliers from the item held.
+    register:
+      registered: "<white>Registered held item to key {key}"
+      already_registered: "<yellow>There is already an item registered to key <white>{key}<yellow>, use <white>/skills item unregister <yellow>to unregister it first"
+      no_spaces: "<yellow>Item key cannot contain spaces!"
+      desc: Registers an item to the item registry with a given key which can be referenced in plugin configuration.
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> item requirement with level <aqua>{level}<gray> was added to your item"
+        already_exists: "<yellow>Item already has a <dark_aqua>{skill}<yellow> item requirement! Remove it first with <gold>/sk item requirement remove"
+        lore: "<red>Requires <dark_aqua>{skill} {level}"
+        desc: Adds an item requirement to the item held, along with lore by default.
+      remove:
+        does_not_exist: "<yellow>Your item does not have a <dark_aqua>{skill}<yellow> item requirement!"
+        removed: "<dark_aqua>{skill}<gray> item requirement was removed from your item"
+        desc: Removes an item requirement from the item held, and the lore associated with it by default.
+      list:
+        header: "<white>Item requirements found:"
+        desc: Lists the item requirements on the item held.
+      removeall:
+        removed: "<gray>All item requirements have been removed from your item"
+        desc: Removes all item requirements from the item held.
+      use: "<yellow>You do not meet the requirements to use this item: {requirements}"
+    unregister:
+      unregistered: "<white>Unregistered item with key {key}"
+      not_registered: "<yellow>There is no item registered with key {key}"
+      desc: Unregisters an item from the item registry with the given key
+    ignore:
+      add:
+        added: "<gray>Your item will now be ignored by mana ability interactions"
+        desc: Adds the tag that ignores the held item from mana ability interactions.
+      remove:
+        removed: "<gray>Your item will no longer be ignored by mana ability interactions"
+        desc: Removes the tag that ignores the held item from mana ability interactions.
+  jobs:
+    add:
+      added: "<white>The job {job} was successfully added to player {player}"
+      limited: "<yellow>Cannot add this job because player {player} has reached the job limit"
+      existing: "<yellow>Player {player} already has the job {job}"
+      desc: Adds a skill as a job for yourself or a specified player.
+    remove:
+      removed: "<white>Removed job {job} from player {player}"
+      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
+      desc: Removes a skill as a job for yourself or a specified player.
+    removeall:
+      removed: "<white>Removed all jobs from player {player}"
+      desc: Removes all joined jobs for yourself or a specified player.
+  lang:
+    set: "<gray>Language set to <aqua>{lang}"
+    not_found: "<yellow>Language not found!"
+    desc: Changes your player language.
+  mana:
+    display: "<white>Your {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} of {player}: <aqua>{current}/{max}"
+    desc: Display your or another player's current and max mana
+    add:
+      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
+      desc: Adds mana to a player
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      desc: Removes mana from a player
+    set:
+      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      desc: Sets the mana of a player
+    at_least_zero: "<yellow>{mana_unit} must be at least zero!"
+    console_specify_player: "<yellow>Console must specify a player!"
+  modifier:
+    add:
+      added: "{color}{stat} <gray>modifier level <aqua>{value} <gray>with name <white>{name} <gray>added to player <gold>{player}"
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk modifier remove {player} {name}"
+      desc: Adds a stat modifier to a player.
+    addtemp:
+      added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
+      desc: Adds a temporary stat modifier to a player.
+    remove:
+      not_found: "<yellow>Modifier {name} not found for player <gold>{player}"
+      removed: "<gray>Modifier <white>{name} <gray>removed from player <gold>{player}"
+      desc: Removes a specific stat modifier from a player.
+    list:
+      all_stats_header: "<gray>Stat modifiers for player <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modifiers ({color}{stat}<gray>) for player <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Only players can list their own modifiers! Try specifying a player"
+      desc: Lists all or a specific stat's modifiers for a player.
+    removeall:
+      removed_all_stats: "<gray>Removed <aqua>{num} <gray>stat modifiers from player <gold>{player}"
+      removed_one_stat: "<gray>Removed <aqua>{num} {color}{stat} <gray>modifiers from player <gold>{player}"
+      players_only: "<yellow>Only players can remove their own modifiers! Try specifying a player"
+      desc: Removes all stat modifiers from a player.
+  trait:
+    add:
+      already_exists: "<yellow>Modifier with name {name} already exists on player <gold>{player}<yellow>! Remove it with <gold>/sk trait remove {player} {name}"
+      desc: Adds a trait modifier to a player.
+    addtemp:
+      added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
+      desc: Adds a temporary trait modifier to a player.
+    remove:
+      desc: Removes a specific trait modifier from a player.
+    list:
+      all_traits_header: "<gray>Trait modifiers for player <gold>{player}:"
+      one_trait_header: "<gray>Trait modifiers ({color}{trait}<gray>) for player <gold>{player}:"
+      desc: Lists all or a specific trait's modifiers for a player.
+    removeall:
+      removed_all_traits: "<gray>Removed <aqua>{num} <gray>trait modifiers from player <gold>{player}"
+      desc: Removes all trait modifiers from a player.
+  multiplier:
+    global: Global
+    list: "<white>Global XP multiplier for <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Only players can list their own multiplier! Specify a player!"
+    desc: Shows a player's current XP multiplier based on their permissions.
+  openmenu:
+    desc: Opens a plugin menu for a player with optional properties JSON and page number.
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
+      desc: Loads a configuration preset from the presets folder.
+  profile:
+    skills:
+      header: "Skills profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Skills:{skill_entries}"
+      entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+      desc: Shows the skill levels and XP for any player, including offline players.
+    stats:
+      header: "Stats profile for <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+      entry: "\n  <dark_aqua>{stat} <gray>- Total Level: <white>{total_level}<gray>, Base Level: <white>{base_level}<gray>, Modified Level: <white>{modified_level}"
+      desc: Shows the stat levels for any player, including offline players.
+  rank:
+    header: "<aqua><bold>Your Skill Rankings"
+    power: "<yellow>Power <gray>(All Skills): <white>#{rank} of {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} of {total}"
+    desc: Shows your skill rankings.
+  reload:
+    reloaded: "<green>Config reloaded!"
+    desc: Reloads the config, messages, menus, loot tables, action bars, boss bars, and health and luck stats.
+  resethealth:
+    desc: Removes all attribute modifiers by AuraSkills for easy uninstalling. This only works on offline players.
+  save:
+    already_saving: "<yellow>Data is already saving!"
+    mysql_not_enabled: "<yellow>MySQL was not enabled at server startup, saving to file instead!"
+    saved: "<green>Skill data saved!"
+    desc: Saves skill data.
+  skill:
+    addlevel:
+      desc: Adds a specific number of levels to a skill.
+    setall:
+      set: "<gray>All skills set to level <aqua>{level} <gray>for player <gold>{player}"
+      desc: Sets all of a player's skills to a level.
+    setlevel:
+      set: "<gray>Skill <aqua>{skill} <gray>set to level <aqua>{level} <gray>for player <gold>{player}"
+      desc: Sets a specific skill to a level for a player.
+    reset:
+      desc: Resets all skills or a specific skill to the starting level for a player.
+    at_least: "<yellow>Level must be at least {level}!"
+  skills:
+    desc: Opens the Skills menu where you can browse skills, progress, and abilities.
+  stats:
+    desc: Opens the Stats menu where you can see current stat levels and descriptions.
+  sources:
+    desc: Opens the Sources menu to see all XP sources for a skill.
+  toggle:
+    enabled: "<green>Your skills action bar has been enabled"
+    disabled: "<red>Your skills action bar has been disabled"
+    not_enabled: "<yellow>Skills action bar is not enabled on this server!"
+    desc: Toggles your own skills action bar.
+  top:
+    desc: Shows the top players in a skill
+    power_header: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>All Skills Leaderboard</bold><white>(Page {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Leaderboard</bold><white>(Page {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Average Leaderboard</bold><white>(Page {page})==--"
+    usage: "<yellow>Usage: <green>/sk top <white><page> <gray>or <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Successfully transferred player data from <gray>{from} <green>to <gray>{to}"
+    error: "<red>There was an error transferring player data. Check console for errors."
+    desc: Transfers data from one user to another given the UUIDs.
+  updateleaderboards:
+    already_updating: "<yellow>Leaderboard is already updating!"
+    updated: "<green>Leaderboard updated!"
+    desc: Updates and sorts the leaderboards.
+  version:
+    version: "<white>You are on AuraSkills <aqua>{current_version}<white>. The latest version is <aqua>{latest_version}"
+    new_update: "{prefix}<white>New update available! You are on version <aqua>{current_version}<white>, latest version is <aqua>{latest_version}\n{prefix}<white>Download it on Modrinth: <yellow><underlined>{link}"
+    desc: Shows the currently installed and latest available version of the plugin.
+  xp:
+    add:
+      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      desc: Adds skill XP to a player for a certain skill.
+    set:
+      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      desc: Sets a player's skill XP for a certain skill to an amount.
+    remove:
+      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      desc: Removes skill XP from a player in a certain skill.
+  manaability:
+    resetcooldown:
+      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      desc: Resets a specific mana ability cooldown for a player, optionally filling up mana.
+  unknown_skill: "<yellow>Unknown skill!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Unknown stat!"
+  unknown_trait: "<yellow>Unknown trait!"
+  no_profile: "<yellow>Player does not have a skills profile. Please try rejoining the game or restarting the server."
+leveler:
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
+  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+menus:
+  common:
+    close: "Close"
+    level: "Level"
+    progress_to_level: "Progress to Level"
+    max_level: "MAX LEVEL"
+    ability_levels: "Ability Levels"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "Mana Ability"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
+    trait: "Trait"
+    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_level: "Trait Level"
+    base: "Base"
+    modifiers_additive: "Modifiers (Additive)"
+    modifiers_multiplicative: "Modifiers (Multiplicative)"
+  skills:
+    skills_title: "Your Skills"
+    your_skills: "Your Skills"
+    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
+    your_skills_hover: "Hover over a Skill for more information!"
+    your_skills_click: "Click on a Skill to view level progression!"
+    skill_click: "Click to view Level Progression!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
+    active_job: Active Job
+  level_progression:
+    level_progression_title: "{skill} Levels - Page {page}"
+    your_ranking: "Your Skill Ranking"
+    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
+    rewards: "Rewards"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Progress"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
+    job: Job
+    job_desc: Selecting {skill} as your job allows you to earn money while gaining XP.
+    job_select: Left click to select {skill} as your job
+    job_active: You are actively working this job
+    job_quit: Right click to quit this job
+    job_limit: You have reached your limit on jobs. Quit an active job first to select this one.
+    job_cooldown: Job selection is on cooldown. You can select again in {time}.
+  stats:
+    stats_title: Your Stats
+    skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
+    stat_info_click: "Click to view stat details"
+  unclaimed_items:
+    unclaimed_items_title: "Claim Items"
+    inventory_full: "You do not have enough space in your inventory to claim that item"
+    click_to_claim: "Click to claim!"
+  leaderboard:
+    leaderboard_title: "{skill} Leaderboard"
+  sources:
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+  abilities:
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+  stat_info:
+    stat_details: "{stat_name} Stat"
+    stat: "Stat"
+    stat_level: "Stat Level"
+    traits_leveled: "Traits Leveled"
+    stat_modifiers: "Stat Modifiers"
+    stat_reward_desc: "Granted by your {skill} skill level."
+    stat_modifiers_click: "Click to view stat modifiers"
+    trait_modifiers_click: "Click to view trait modifiers"
+    showing_stat_modifiers: "Showing stat modifiers"
+    showing_trait_modifiers: "Showing trait modifiers"
+    base_level: "Base Level"
+    base_level_desc: "Base level from Minecraft and external sources."
+    linked_stat_desc: "Granted by your {stat} stat level."
+    ability_modifier_name: "{name} Ability"
+    ability_modifier_desc: "Granted by the {ability} ability."
+    custom_modifier_desc: "Granted by a custom modifier."
+    item_hand_desc: "Granted by item in hand."
+    item_off_hand_desc: "Granted by item in off hand."
+    helmet_desc: "Granted by helmet."
+    chestplate_desc: "Granted by chestplate."
+    leggings_desc: "Granted by leggings."
+    boots_desc: "Granted by boots."
+    effective_trait: "Effective {trait_name}"
+mana_abilities:
+  replenish:
+    name: Replenish
+    desc: "Replants crops automatically for {value} seconds. <1>[Right click hoe and break crop to activate]"
+    raise: "<gray>You raise your hoe"
+    lower: "<gray>You lower your hoe"
+    start: "<gold>Replenish Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish has worn off"
+  treecapitator:
+    name: Treecapitator
+    desc: "Breaks entire trees instantly for {value} seconds. <1>[Right click axe and break log to activate]"
+    raise: "<gray>You raise your axe"
+    lower: "<gray>You lower your axe"
+    start: "<gold>Treecapitator Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator has worn off"
+  speed_mine:
+    name: Speed Mine
+    desc: "Gives Haste {haste_level} for {value} seconds. <1>[Right click pickaxe and mine block to activate]"
+    raise: "<gray>You raise your pickaxe"
+    lower: "<gray>You lower your pickaxe"
+    start: "<gold>Speed Mine Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Speed Mine has worn off"
+  absorption:
+    name: Absorption
+    desc: "Incoming damage will decrease mana by 2x Minecraft damage instead of your health for {value} seconds. Mana will not regenerate while Absorption is active. <1>[Left click shield and take damage to activate]"
+    raise: "<gray>You raise your shield"
+    lower: "<gray>You lower your shield"
+    start: "<gold>Absorption Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorption has worn off"
+  terraform:
+    name: Terraform
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    raise: "<gray>You raise your shovel"
+    lower: "<gray>You lower your shovel"
+    start: "<gold>Terraform Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform has worn off"
+  sharp_hook:
+    name: Sharp Hook
+    desc: "Deal {value} damage to a hooked entity when left clicking with a fishing rod"
+    use: "<gold>Used Sharp Hook! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: Charged Shot
+    desc: "Arrows you shoot will deal more damage based on how far the bow was pulled back, consuming mana in the process. Does {value}% more damage per mana consumed. <1>[Left click a bow to toggle charged shot mode]"
+    enable: "<gray>Charged shot mode is now enabled"
+    disable: "<gray>Charged shot mode is now disabled"
+    shoot: "<gold>Used Charged Shot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: Lightning Blade
+    desc: Increases attack speed by {value}% for {duration} seconds. <1>[Right click sword and attack mob to activate]
+    raise: "<gray>You ready your sword"
+    lower: "<gray>You lower your sword"
+    start: "<gold>Lightning Blade Activated! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Lightning Blade has worn off"
+  not_ready: "<red>Ability not ready! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Not enough mana! <gray>({mana} {mana_unit} required)"
+skills:
+  farming:
+    name: Farming
+    desc: "Harvest crops to earn Farming {xp_unit}"
+  foraging:
+    name: Foraging
+    desc: "Cut trees to earn Foraging {xp_unit}"
+  mining:
+    name: Mining
+    desc: "Mine stone and ores to earn Mining {xp_unit}"
+  fishing:
+    name: Fishing
+    desc: "Catch fish to earn Fishing {xp_unit}"
+  excavation:
+    name: Excavation
+    desc: "Dig with a shovel to earn Excavation {xp_unit}"
+  archery:
+    name: Archery
+    desc: "Shoot mobs and players with a bow to earn Archery {xp_unit}"
+  defense:
+    name: Defense
+    desc: "Take damage from entities to earn Defense {xp_unit}"
+  fighting:
+    name: Fighting
+    desc: "Fight mobs with melee weapons to earn Fighting {xp_unit}"
+  endurance:
+    name: Endurance
+    desc: "Walk and run to earn Endurance {xp_unit}"
+  agility:
+    name: Agility
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+  alchemy:
+    name: Alchemy
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+  enchanting:
+    name: Enchanting
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+  sorcery:
+    name: Sorcery
+    desc: "Use mana abilities to earn Sorcery {xp_unit}"
+  healing:
+    name: Healing
+    desc: "Drink and splash potions to earn Healing {xp_unit}"
+  forging:
+    name: Forging
+    desc: "Combine and apply books in an anvil to earn Forging {xp_unit}"
+sources:
+  fishing:
+    cod: Cod
+    salmon: Salmon
+    tropical_fish: Tropical Fish
+    pufferfish: Pufferfish
+    treasure: Treasure Items
+    junk: Junk Items
+    rare: Rare Loot
+    epic: Epic Loot
+  damage:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
+  statistic:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  jumping:
+    jump_per_100: Jumping
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
+  mana_ability_use:
+    mana_ability_use: Using Mana Abilities
+  item_consume:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
+  potion_splash:
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+  anvil:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Damage
+    meter: Meter
+    100_jumps: 100 Jumps
+    mana: Mana Consumed
+    combine_level: Anvil Cost Experience
+    grindstone_level: Level of Enchant on Item
+    enchant_level: Level of Enchant Received
+stats:
+  strength:
+    name: Strength
+    desc: "Strength increases your attack damage with various different weapons."
+  health:
+    name: Health
+    desc: "Health increases the amount of {hp_unit} you have, allowing you to last longer in fights."
+  regeneration:
+    name: Regeneration
+    desc: "Regeneration increases how fast you recover both health and mana."
+  luck:
+    name: Luck
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+  wisdom:
+    name: Wisdom
+    desc: "Wisdom increases your max mana, increases experience gain, and decreases anvil costs."
+  toughness:
+    name: Toughness
+    desc: "Toughness increases the amount of damage reduced from enemy attacks."
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit."
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run."
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck Attribute
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
+ui:
+  maxed: MAXED
+units:
+  mana: Mana
+  hp: HP
+  xp: XP
+file_version: 39

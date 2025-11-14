@@ -250,9 +250,19 @@ public class MenuManager implements Listener {
     private boolean handleSkillMenu(UUID playerId, String title, InventoryClickEvent event) {
         try {
             SkillLevelPurchaseMenu menu = skillMenus.get(playerId);
-            if (menu != null && menu.isMenuTitle(title)) {
-                menu.handleClick(event);
-                return true;
+            plugin.getLogger().info("[MenuManager] handleSkillMenu - PlayerId: " + playerId + 
+                    ", Menu: " + (menu != null ? "found" : "null") + 
+                    ", Title: " + title);
+            
+            if (menu != null) {
+                boolean matches = menu.isMenuTitle(title);
+                plugin.getLogger().info("[MenuManager] Title match result: " + matches);
+                
+                if (matches) {
+                    plugin.getLogger().info("[MenuManager] Delegating to menu.handleClick()");
+                    menu.handleClick(event);
+                    return true;
+                }
             }
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error in skill menu click", e);

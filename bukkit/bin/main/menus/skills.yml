@@ -1,0 +1,195 @@
+title: '{{skills_title}}'
+size: 5
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  your_skills:
+    pos: 0,0
+    material: player_head
+    skull_meta:
+      base64: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjcwNWZkOTRhMGM0MzE5MjdmYjRlNjM5YjBmY2ZiNDk3MTdlNDEyMjg1YTAyYjQzOWUwMTEyZGEyMmIyZTJlYyJ9fX0=
+    display_name: '<aqua>{{your_skills}} - <gold>{player}'
+    lore:
+    - text: '{{your_skills_desc}}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - text: '{{your_skills_hover}}'
+      wrap: true
+      style: '<yellow>'
+    - text: '{{your_skills_click}}'
+      wrap: true
+      style: '<yellow>'
+  close:
+    pos: 4,8
+    material: barrier
+    display_name: '<red>{{close}}'
+  stats:
+    pos: 0,8
+    material: player_head
+    display_name: '<aqua>{{stats}}'
+    lore:
+    - '<gray>{{stats_desc}}'
+    - ' '
+    - '<yellow>{{stats_click}}'
+templates:
+  skill:
+    contexts:
+      archery:
+        group: first_row
+        order: 1
+        material: bow
+      fighting:
+        group: first_row
+        order: 2
+        material: iron_sword
+        flags:
+          - hide_attributes
+      defense:
+        group: first_row
+        order: 3
+        material: chainmail_chestplate
+        flags: hide_attributes
+      endurance:
+        group: first_row
+        order: 4
+        material: golden_apple
+      farming:
+        group: second_row
+        order: 1
+        material: iron_hoe
+        flags:
+          - hide_attributes
+      foraging:
+        group: second_row
+        order: 2
+        material: iron_axe
+        flags:
+          - hide_attributes
+      mining:
+        group: second_row
+        order: 3
+        material: iron_pickaxe
+        flags:
+          - hide_attributes
+      fishing:
+        group: second_row
+        order: 4
+        material: fishing_rod
+      excavation:
+        group: second_row
+        order: 5
+        material: iron_shovel
+        flags:
+          - hide_attributes
+      agility:
+        group: third_row
+        order: 1
+        material: feather
+      alchemy:
+        group: third_row
+        order: 2
+        material: potion
+        potion_data:
+          type: regen
+        flags:
+          - hide_potion_effects
+      enchanting:
+        group: third_row
+        order: 3
+        material: enchanting_table
+      sorcery:
+        group: third_row
+        order: 4
+        material: blaze_rod
+      healing:
+        group: third_row
+        order: 5
+        material: splash_potion
+        potion_data:
+          type: instant_heal
+        flags:
+          - hide_potion_effects
+      forging:
+        group: third_row
+        order: 6
+        material: anvil
+    groups:
+      first_row:
+        start: 1,0
+        end: 1,8
+        align: center
+      second_row:
+        start: 2,0
+        end: 2,8
+        align: center
+      third_row:
+        start: 3,0
+        end: 3,8
+        align: center
+    display_name: '<aqua>{skill} <dark_aqua>{level}'
+    lore:
+    - text: '{desc}'
+      wrap: true
+      style: '<gray>'
+    - component: stats_leveled
+    - component: ability_levels
+    - component: mana_ability_info
+    - ' '
+    - component: progress
+    - component: max_level
+    - component: skill_job_active
+    - ' '
+    - '<yellow>{{skill_click}}'
+components:
+  stats_leveled:
+    context: Skill
+    lore:
+    - ' '
+    - '<gray>{{stats_leveled}}: {entries[<gray>, ]}'
+  ability_levels:
+    context: Skill
+    lore:
+    - ' '
+    - '<gray>{{ability_levels}}: {entries[]}'
+  mana_ability_info:
+    context: Skill
+    lore:
+    - ' '
+    - '<light_purple><bold>{{mana_ability}}</bold> <blue>{name} {level}'
+    - '  {entries[\n  ](3)}'
+  progress:
+    context: Skill
+    lore:
+    - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
+    - '{bar}'
+    - '<gray>{current_xp}/{level_xp} {xp_unit}'
+  max_level:
+    context: Skill
+    lore:
+    - '<gold>{{max_level}}'
+  skill_job_active:
+    context: Skill
+    lore:
+    - ' '
+    - '<dark_gray>▶ <green>{{active_job}}'
+formats:
+  stat_leveled_entry: '{color}{stat}<gray>'
+  unlocked_ability_entry: '\n  <gold>{name} {level} <dark_gray>({info})'
+  locked_ability_entry: '\n  <dark_gray><strikethrough>{name}'
+  duration_entry: '<gray>{{duration}}: <green>{duration}s '
+  mana_cost_entry: '<gray>{{mana_cost}}: <aqua>{mana_cost} '
+  cooldown_entry: '<gray>{{cooldown}}: <yellow>{cooldown}s '
+  damage_entry: '<gray>{{damage}}: <red>{value} '
+  damage_per_mana_entry: '<gray>{{damage}}: <red>+{value}% / Mana '
+  max_mana_cost_entry: '<gray>{{max_mana_cost}}: <aqua>{mana_cost} '
+  attack_speed_entry: '<gray>{{attack_speed}}: <red>+{value}% '
+  bar_completed: '<green>■'
+  bar_current: '<yellow>■'
+  bar_remaining: '<gray>■'
+options:
+  bar_length: 20
+  percent_format: '#.##'
+  current_xp_format: '#.##'
+file_version: 1

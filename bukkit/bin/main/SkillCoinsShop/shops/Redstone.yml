@@ -1,0 +1,168 @@
+pages:
+  page1:
+    items:
+      # Basic Redstone
+      '1':
+        material: REDSTONE
+        buy: 10
+        sell: 2.5
+      '2':
+        material: REDSTONE_BLOCK
+        buy: 90
+        sell: 22
+      '3':
+        material: REDSTONE_TORCH
+        buy: 8
+        sell: 2
+      '4':
+        material: REDSTONE_LAMP
+        buy: 25
+        sell: 6
+      '5':
+        material: LEVER
+        buy: 5
+        sell: 1
+      '6':
+        material: STONE_BUTTON
+        buy: 3
+        sell: 0.75
+      '7':
+        material: OAK_BUTTON
+        buy: 3
+        sell: 0.75
+      '8':
+        material: OAK_PRESSURE_PLATE
+        buy: 5
+        sell: 1
+      '9':
+        material: STONE_PRESSURE_PLATE
+        buy: 5
+        sell: 1
+      '10':
+        material: HEAVY_WEIGHTED_PRESSURE_PLATE
+        buy: 15
+        sell: 4
+      '11':
+        material: LIGHT_WEIGHTED_PRESSURE_PLATE
+        buy: 15
+        sell: 4
+      
+      # Logic Components
+      '12':
+        material: REPEATER
+        buy: 20
+        sell: 5
+      '13':
+        material: COMPARATOR
+        buy: 25
+        sell: 6
+      '14':
+        material: OBSERVER
+        buy: 40
+        sell: 10
+      '15':
+        material: DAYLIGHT_DETECTOR
+        buy: 30
+        sell: 7
+      '16':
+        material: TRIPWIRE_HOOK
+        buy: 15
+        sell: 4
+      '17':
+        material: TARGET
+        buy: 20
+        sell: 5
+      
+      # Pistons
+      '18':
+        material: PISTON
+        buy: 45
+        sell: 11
+      '19':
+        material: STICKY_PISTON
+        buy: 60
+        sell: 15
+      '20':
+        material: SLIME_BLOCK
+        buy: 40
+        sell: 10
+      '21':
+        material: HONEY_BLOCK
+        buy: 30
+        sell: 7
+      
+      # Dispensers/Droppers
+      '22':
+        material: DISPENSER
+        buy: 40
+        sell: 10
+      '23':
+        material: DROPPER
+        buy: 35
+        sell: 9
+      '24':
+        material: HOPPER
+        buy: 80
+        sell: 20
+      
+      # Doors & Gates
+      '25':
+        material: OAK_DOOR
+        buy: 10
+        sell: 2.5
+      '26':
+        material: IRON_DOOR
+        buy: 30
+        sell: 7
+      '27':
+        material: OAK_TRAPDOOR
+        buy: 8
+        sell: 2
+      '28':
+        material: IRON_TRAPDOOR
+        buy: 25
+        sell: 6
+      '29':
+        material: OAK_FENCE_GATE
+        buy: 10
+        sell: 2.5
+      
+      # Rails
+      '30':
+        material: RAIL
+        buy: 5
+        sell: 1
+      '31':
+        material: POWERED_RAIL
+        buy: 15
+        sell: 4
+      '32':
+        material: DETECTOR_RAIL
+        buy: 10
+        sell: 2.5
+      '33':
+        material: ACTIVATOR_RAIL
+        buy: 10
+        sell: 2.5
+      '34':
+        material: MINECART
+        buy: 60
+        sell: 15
+      
+      # Special
+      '35':
+        material: TNT
+        buy: 50
+        sell: 12
+      '36':
+        material: NOTE_BLOCK
+        buy: 30
+        sell: 7
+      '37':
+        material: JUKEBOX
+        buy: 50
+        sell: 12
+      '38':
+        material: LECTERN
+        buy: 50
+        sell: 12

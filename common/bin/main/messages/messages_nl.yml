@@ -1,0 +1,852 @@
+# ----------------------------
+# AuraSkills message file
+# ----------------------------
+
+abilities:
+  bountiful_harvest:
+    name: Goede oogst
+    desc: "Geeft +{value} Oogst Geluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Oogst Geluk"
+  farmer:
+    name: Boer
+    desc: "Verdien {value}% meer landbouw XP."
+    info: "+{value}% XP"
+  scythe_master:
+    name: Schoffel meester
+    desc: "Verhoogt schade van schoffels met {value}%."
+    info: "+{value}% schoffel schade"
+  geneticist:
+    name: Geneticus
+    desc: "Verhoogt het verzadigingspunt van plantaardig voedsel met {value}."
+    info: "+{value} Verzadiging"
+  growth_aura:
+    name: Groeiaura
+    desc: "Gewassen met groeistadia binnen {radius} blokken van jou groeien {value} % sneller."
+    info: "+ {value} % Groei"
+  lumberjack:
+    name: Houthakker
+    desc: "Grants + {value} Geluk bij het Voedselzoeken, waardoor de kans op extra drops toeneemt."
+    info: "+ {value} Voedsel Verzamelen"
+  forager:
+    name: Verzamelaar
+    desc: "Verdien {value}% meer landbouw XP."
+    info: "+{value}% XP"
+  axe_master:
+    name: Bijl Meester
+    desc: "Verhoogt schade van bijlen met {value}%"
+    info: "+{value}% bijl schade"
+  valor:
+    name: Moed
+    desc: "Geeft +{value} Kracht terwijl je een bijl vasthoudt."
+    info: "+{value} Kracht"
+  shredder:
+    name: Versnipperaar
+    desc: "{value}% kans op drievoudige duurzaamheid schade met bijlen."
+    info: "{value}% 3x Duurzaamheid Schade"
+  lucky_miner:
+    name: Gelukkige Mijnwerker
+    desc: "Geeft +{value} Mijngeluk, wat de kans op extra druppels verhoogt."
+    info: "+{value} Mijngeluk"
+  miner:
+    name: Mijnwerker
+    desc: "Verdien {value}% meer mijnbouw XP."
+    info: "+{value}% XP"
+  pick_master:
+    name: Houweel meester
+    desc: "Breng {value}% meer schade toe met pickaxe."
+    info: "+{value}% Pickaxe schade"
+  stamina:
+    name: Uithoudingsvermogen
+    desc: "Geeft +{value} Taaiheid terwijl een pikhouweel vastgehouden word."
+    info: "+{value} Taaiheid"
+  hardened_armor:
+    name: Gehard Armor
+    desc: "{value}% kans om duurzaamheid te ontzeggen schade op armor."
+    info: "{value}% Geen Duurzaamheid Verlies"
+  lucky_catch:
+    name: Geluk vangst
+    desc: "Geeft + {value} Vis geluk, wat de kans op extra drops verhoogt."
+    info: "+{value} Vis geluk"
+  fisher:
+    name: Visser
+    desc: "Verdien {value}% meer vissen XP."
+    info: "+{value}% XP"
+  treasure_hunter:
+    name: Schatten Jager
+    desc: "{value}% grotere kans om zeldzame loot te krijgen van het vissen."
+    info: "+{value}% Zeldzame Loot"
+  grappler:
+    name: Grijphaak
+    desc: "Vang entiteiten met {value}% meer snelheid."
+    info: "+{value}% Haak Snelheid"
+  epic_catch:
+    name: Epische vangst
+    desc: "{value}% extra kans om epische buit te krijgen van vissen."
+    info: "+{value}% Zeldzame Loot"
+  metal_detector:
+    name: Metaaldetector
+    desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
+    info: "+{value}% Zeldzame Loot"
+  excavator:
+    name: Graafmachine
+    desc: "Verdien {value}% meer Uitgraving XP."
+    info: "+{value}% XP"
+  spade_master:
+    name: Spade Meester
+    desc: "Breng {value}% meer schade toe met een schep."
+    info: "+{value}% schep schade"
+  bigger_scoop:
+    name: Grotere Scoop
+    desc: "Geeft + {value} Graaf Geluk, wat de kans op extra drops verhoogt."
+    info: "+{value}% Graaf geluk"
+  lucky_spades:
+    name: Lucky Spades
+    desc: "{value}% grotere kans om zeldzame buit te krijgen van de graven."
+    info: "+{value}% Epische Loot"
+  retrieval:
+    name: Retrieval
+    desc: "Arrows you miss will be instantly retrieved after {time}s up to {value} blocks away."
+    info: "{value} Afstand"
+  archer:
+    name: Boogschutter
+    desc: "Verdien {value}% meer Boogschutters XP."
+    info: "+{value}% XP"
+  bow_master:
+    name: Boogmeester
+    desc: "Breng {value}% meer schade toe met een boog."
+    info: "+{value}% boog schade"
+  piercing:
+    name: Piercing
+    desc: "{value}% kans voor pijlen om door mobs heen te gaan."
+    info: "{value}% Pierce Kans"
+  stun:
+    name: Verstijven
+    desc: "{value}% kans om vijand bewegingssnelheid met 20% te verlagen gedurende 2 seconden."
+    info: "{value}% Stun Kans"
+  shielding:
+    name: Beschermd
+    desc: "Verminder inkomende schade met {value}% terwijl je sluipt."
+    info: "-{value}% Inkomende Dmg tijdens het Sluipen"
+  defender:
+    name: Verdediger
+    desc: "Verdien {value}% meer Verdediging XP."
+    info: "+{value}% XP"
+  mob_master:
+    name: Mobmeester
+    desc: "Verminder inkomende schade van mobs met {value}%"
+    info: "-{value}% mob dmg"
+  immunity:
+    name: Immuniteit
+    desc: "{value}% kans om een vijandelijke aanval volledig te vernietigen."
+    info: "{value}% immuniteit"
+  no_debuff:
+    name: Geen Debuff
+    desc: "{value}% kans om een schadelijk drankeffect te ontwijken."
+    info: "{value}% Geen Debuff"
+  parry:
+    name: Parry
+    desc: "Missing a sword swing within {time}s before being hit reduces damage by {value}% and cancels knockback."
+    info: "{value}% Dmg Reduction"
+    parried: "<red>Attack parried"
+  fighter:
+    name: Vechter
+    desc: "Verdien {value}% meer Vecht XP."
+    info: "+{value}% XP"
+  sword_master:
+    name: Zwaardmeester
+    desc: "Breng {value}% meer schade met zwaard."
+    info: "+{value}% Zwaard Schade"
+  first_strike:
+    name: Eerste aanval
+    desc: "Doe {value}% meer schade bij de eerste slag."
+    info: "+{value}% Dmg eerste slag"
+    dealt: "<red>Eerste Aanval Dealt!"
+  bleed:
+    name: Bloeden
+    desc: "{value}% chance to make the enemy bleed for {base_ticks} bleed ticks, dealing {value_2} damage per tick. {added_ticks} ticks are added to enemies already bleeding."
+    info: "{value}% kans, {value_2} Schade"
+    enemy_bleeding: "<red>Vijandelijke Bloeding!"
+    self_bleeding: "<red>Je bloedt!"
+    stop: "<white>De bloeding is gestopt"
+  anti_hunger:
+    name: Anti Honger
+    desc: "{value}% kans om het hongerverlies te stoppen."
+    info: "{value}% Geen Honger Verlies"
+  runner:
+    name: Renner
+    desc: "Verdien {value}% meer Uithoudingsvermogen XP."
+    info: "+{value}% XP"
+  golden_heal:
+    name: Gouden Genezing
+    desc: "Verhoogt regeneratie effect Gezondheidswinst met {value}%"
+    info: "+{value}% Effect Regen"
+  recovery:
+    name: Herstel
+    desc: "Verhoogt natuurlijke regeneratie met minder dan de helft gezondheid met {value}%"
+    info: "+{value}% Lage HP Regeneratie"
+  meal_steal:
+    name: Maaltijd Steel
+    desc: "{value}% kans om 1 hongerbar te stelen bij het aanvallen van een speler."
+    info: "{value}% Honger Steel"
+  light_fall:
+    name: Lichte val
+    desc: "Vermindert alle val schade met {value}%"
+    info: "-{value}% Val Schade"
+  jumper:
+    name: Springer
+    desc: "Verdien {value}% meer Behendigheid XP."
+    info: "+{value}% XP"
+  sugar_rush:
+    name: Suiker Rush
+    desc: "Verbruikt en gespatte snelheid en sprong vergroting toverdranken duren {value}% langer."
+    info: "{value}% Langere Snelheid"
+  fleeting:
+    name: Vluchtig
+    desc: "Krijg +{value}% bewegingssnelheid wanneer je minder dan 20% gezondheid hebt."
+    info: "+{value}% Snelheid"
+    start: "<white>Je hebt een snelheid boost gekregen! <gray>(+{value}% Snelheid)"
+    end: "<gray>Vloot snelheidsboost is versleten"
+  thunder_fall:
+    name: Donder Val
+    desc: "Bij sluipen tijdens een val je hebt een {value}% kans om {value_2}% van de schade die wordt verwacht aan mobs in een straal van 3 blokken te doen."
+    info: "{value}% kans, {value_2}% Schade"
+  alchemist:
+    name: Alchemist
+    desc: "Drankjes die je brouwt, hebben een {value}% meer duur."
+    info: "+{value}% Drankduur"
+  brewer:
+    name: Brouwer
+    desc: "Verdien {value}% meer Alchemie XP."
+    info: "+{value}% XP"
+  splasher:
+    name: Splasher
+    desc: "Drankjes die je spuwt krijgen {value}% langer duur voor elke betrokken speler."
+    info: "+{value}% Duur/Speler"
+  lingering:
+    name: Lingering
+    desc: "Vertragende drankjes vervallen natuurlijk {value}% langzamer en vervallen {value_2}% minder per getroffen entiteit."
+    info: "-{value}% Natuur, -{value_2}% Entiteit Verval"
+  wise_effect:
+    name: Wijze Effect
+    desc: "Krijg {value} Wisdom voor elk uniek actief drankeffect."
+    info: "+{value} Wijsdom/Effect"
+  xp_convert:
+    name: XP Converteren
+    desc: "Verdien 1 Minecraft ervaring voor elke {value} vaardigheid XP die je wint."
+    info: "1 EXP/{value} Vaardigheid XP"
+  enchanter:
+    name: Betoverder
+    desc: "Verdien {value}% meer betovering XP."
+    info: "+{value}% XP"
+  xp_warrior:
+    name: XP Strijder
+    desc: "Mobs die je dood hebben een kans van {value}% dubbele-ervaring laten vallen."
+    info: "{value}% 2x mob XP"
+  enchanted_strength:
+    name: Betoverde Kracht
+    desc: "Krijg {value} Kracht voor elke unieke betovering van het vastgehouden item."
+    info: "{value} Kracht/Betover"
+  lucky_table:
+    name: Gelukkige tafel
+    desc: "Items die je betoverd met behulp van de betovering tabel hebben een {value}% kans om het betoverings te upgraden level met 1 indien niet het maximale level."
+    info: "{value}% Betover Verbetering kans"
+  life_essence:
+    name: Levenslang Essentie
+    desc: Directe gezondheidsdrankjes genezen {value}% meer.
+    info: "+{value}% Directe Gezondheid"
+  healer:
+    name: Genezer
+    desc: Verdien {value}% meer Genezing XP.
+    info: "+{value}% XP"
+  life_steal:
+    name: Levens Stelen
+    desc: Genees {value}% van de max HP vijandige mobs en spelers die je doodt.
+    info: "Steel {value}% HP"
+  golden_heart:
+    name: Gouden hart
+    desc: De schade aan je absorptie harts is verminderd met {value}%
+    info: "-{value}% Absorptie Dmg"
+  revival:
+    name: Terugkomen
+    desc: Krijg +{value} Gezondheid en +{value_2} Regeneratie voor 30 seconden na respawnen.
+    info: "+{value} Gezondheid, +{value_2} Regeneratie"
+    message: "<white>Je hebt een reactievorm bonus gekregen voor 30 seconden! <white>(<red>+{value} Gezondheid, <gold>+{value_2} Regeneratie<white>)"
+  disenchanter:
+    name: Disenchanter
+    desc: Krijg {value}% meer ervaring wanneer je voorwerpen met behulp van een hoofdsteen disenchant.
+    info: "+{value}% Grindstone EXP"
+  forger:
+    name: Smederij
+    desc: Verdien {value}% meer smeden XP.
+    info: "+{value}% XP"
+  repairing:
+    name: Repareren
+    desc: Repareer voorwerpen in een aambeeld met behulp van de ruwe materiaal dat het voorwerp gemaakt is van reparaties {value}% meer duurzaamheid.
+    info: "+{value}% Aambeeld reparatie"
+  anvil_master:
+    name: Aambeeld Meester
+    desc: Verhoogt de maximale reparatiekosten van een aambeeld voordat het te duur is voor {value} ervaring.
+    info: "{value} Max Kosten"
+  skill_mender:
+    name: Vaardigheid Mender
+    desc: Verkrijg vaardigheid XP heeft een {value}% kans om te repareren een vastgehouden voorwerp of een gedragen harnas stuk met de Mending betovering met 1 duurzaamheid per 2 vaardigheid XP.
+    info: "{value}% Mend Kans"
+acf:
+  core:
+    permission_denied: "<red>Het spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren."
+    permission_denied_parameter: "<red>Het spijt me, maar je hebt geen toestemming om deze opdracht uit te voeren."
+    error_generic_logged: "<red>Er is een fout opgetreden. Dit probleem is geregistreerd. Sorry voor het ongemak."
+    unknown_command: "<red>Onbekend commando, typ alstublieft <yellow>/sk hulp"
+    invalid_syntax: "<yellow>Gebruik: <yellow>{command} <green>{syntax}"
+    error_prefix: "<red>Error: {message}"
+    error_performing_command: "<red>Het spijt me, maar er is een fout opgetreden bij het uitvoeren van deze opdracht."
+    please_specify_one_of: "<red>fout: Specificeer één van (<yellow>{valid}<red>)"
+    must_be_a_number: "<red>Error: {num} moet een getal zijn."
+    must_be_min_length: "<red>Fout: Moet minstens {min} tekens lang zijn."
+    must_be_max_length: "<red>fout: mag maximaal {max} tekens lang zijn."
+    please_specify_at_most: "<red>Error: Specificeer maximaal een waarde {max}."
+    please_specify_at_least: "<red>Fout: Geef ten minste een waarde {min} op."
+    not_allowed_on_console: "<red>Error: Console mag dit commando niet uitvoeren."
+    could_not_find_player: "<red>Error: Kan geen speler vinden op de naam: <yellow>{search}"
+    no_command_matched_search: "<red>Geen commando komt overeen met <yellow>{search}."
+    help_page_information: "<aqua> - Pagina <green>{page} <aqua>of <green>{totalpages} <aqua>(<yellow>{results}<aqua> resultaten)."
+    help_no_results: "<aqua>Error: Geen resultaten meer."
+    help_header: "<yellow>=== Hulp weergeven voor <green>{commandprefix}{command}<yellow> ==="
+    help_detailed_header: "<yellow>=== <aqua>Toont gedetailleerde hulp voor <green>{commandprefix}{command}<yellow> ==="
+    help_search_header: "<yellow>=== <aqua>Zoek resultaten voor <green>{commandprefix}{command} {search}<yellow> ==="
+  minecraft:
+    invalid_world: "<red>fout: Die wereld bestaat niet."
+    you_must_be_holding_item: "<red>Error: Je moet een item in je hoofdhand houden."
+    player_is_vanished_confirm: "<yellow>Waarschuwing: <yellow>en{vanished} <yellow>is verdwenen. Blad hun omslag niet in!\n<yellow>Om je actie te bevestigen voeg <green>:bevestig <yellow>aan het einde van hun naam.\n<yellow>Ex: {vanished}:confirm"
+    username_too_short: "<red>fout: Gebruikersnaam te kort, moet ten minste drie tekens bevatten."
+    is_not_a_valid_name: "<red>fout: <yellow>{name} <red>is geen geldige gebruikersnaam."
+    multiple_players_match: "<red>Error: Meerdere spelers kwamen overeen met <aqua>{search} <yellow>({all})<red>, graag specifieker."
+    no_player_found_server: "<red>Geen speler die overeenkomt met <yellow>{search} <red>is verbonden met deze server."
+    no_player_found_offline: "<red>Geen speler die overeenkomt met <yellow>{search}<red> kan worden gevonden."
+    no_player_found: "<red>Geen speler die overeenkomt met <yellow>{search}<red> kan worden gevonden."
+    location_please_specify_world: "<red>Error: Specificeer wereld. Voorbeeld: <yellow>world:x,y,z."
+    location_please_specify_xyz: "<red>Error: Specificeer de coördinaten x, y en z. Voorbeeld: <yellow>world:x,y,z."
+    location_console_not_relative: "<red>Error: Console mag geen relatieve coördinaten gebruiken voor locatie."
+commands:
+  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  armor:
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
+      remove:
+        does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier is verwijderd van je item"
+      list:
+        header: "<white>Armor modifiers gevonden:"
+      removeall:
+        removed: "<gray>Alle armor modifiers zijn verwijderd van je voorwerp"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een harnasvermenigvuldiger met doel <aqua>{target} <yellow>al bestaat al op je harnassen! Verwijder deze eerst met /sk armor multiplier remove"
+        skill_lore: "<gray>Wanneer versleten: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Wanneer versleten: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Wanneer versleten: <blue>+{value}% Vaardigheid XP"
+        global_lore_subtract: "<gray>Wanneer versleten: <blue>-{value}% Vaardigheid XP"
+      remove:
+        does_not_exist: "<yellow>Jouw item heeft geen <aqua>{target} <yellow>armor vermenigvuldiger!"
+        removed: "<aqua>{target} <gray>armor vermenigvuldiger is verwijderd uit je item"
+      list:
+        header: "<white>Armor vermenigvuldigers gevonden:"
+      removeall:
+        removed: "<gray>Alle harnasvermenigvuldigers zijn verwijderd uit je item"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> harnas vereiste met level <aqua>{level}<gray> is toegevoegd aan je voorwerp"
+        already_exists: "<yellow>voorwerp heeft al een <dark_aqua>{skill}<yellow> harnas vereist! Verwijder het eerst met <gold>/sk uitrusting vereiste verwijderen"
+        lore: "<red>Vereist <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Je voorwerp heeft geen <dark_aqua>{skill}<yellow> armor vereist!"
+        removed: "<dark_aqua>{skill}<gray> harnaseis is verwijderd uit je artikel"
+      list:
+        header: "<white>Armor vereisten gevonden:"
+      removeall:
+        removed: "<gray>Alle harnas vereisten zijn verwijderd uit je voorwerp"
+      equip: "<yellow>Je voldoet niet aan de vereisten om dit voorwerp uit te rusten: {requirements}"
+  backup:
+    load:
+      confirm: "<red>Het laden van een back-up zal alle vaardigheidsgegevens van spelers herstellen. Deze actie is permanent en kan niet ongedaan worden gemaakt. Je wilt misschien een back-up opslaan voordat je deze laadt. Typ de opdracht opnieuw om deze actie te bevestigen"
+      loading: "<white>Laden backup..."
+      loaded: "<green>Back-up geladen"
+      error: "<red>Fout tijdens laden back-up: {error}"
+      must_be_yaml: "<yellow>File moet een .yml bestand zijn!"
+      file_not_found: "<yellow>A back-up van deze bestandsnaam bestaat niet in de backups map!"
+    save:
+      saving: "<white>Backup opslaan..."
+      saved: "<yellow>en back-up gemaakt van {type} als {file}"
+      error: "<red>Fout bij het back-uppen van {type} gegevens! Bekijk de fout in console/beneden voor details"
+  claimitems:
+    no_items: "<yellow>Je hebt geen items om te claimen"
+  item:
+    give:
+      sender: "<white>Gaf <aqua>{amount}x {key} <white>to {player}"
+      receiver: "<white>Je hebt <aqua>{amount}x {key} gekregen"
+    modifier:
+      add:
+        added: "{color}{stat} <gray>modifier met level <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item modifier met statistiek {color}{stat} <yellow> bestaat al in je harnassen! Verwijder het eerst met /sk item modifier remove"
+      remove:
+        does_not_exist: "&Je item heeft geen {color}{stat} <yellow>modifier!"
+        removed: "{color}{stat} <gray>modifier is verwijderd van je item"
+      list:
+        header: "<white>Item wijzigers gevonden:"
+      removeall:
+        removed: "<gray>Alle item modifiers zijn verwijderd uit je item"
+    multiplier:
+      add:
+        added: "<aqua>{target} <gray>multiplier met de waarde <aqua>{value} <gray>is toegevoegd aan je item"
+        already_exists: "<yellow>Een item vermenigvuldiger met doel <aqua>{target} <yellow> bestaat al op je item! Verwijder deze eerst met /sk item vermenigvuldiger verwijderen"
+        skill_lore: "<gray>Wanneer verwijderd: <aqua>+{value}% {skill} XP"
+        skill_lore_subtract: "<gray>Wanneer verwijderd: <aqua>-{value}% {skill} XP"
+        global_lore: "<gray>Wanneer verwijderd: <blue>+{value}% Vaardigheid XP"
+        global_lore_subtract: "<gray>Wanneer verwijderd: <blue>-{value}% Vaardigheid XP"
+      remove:
+        does_not_exist: "<yellow>Je item heeft geen <aqua>{target} <yellow>item multiplier!"
+        removed: "<aqua>{target} <gray>item vermenigvuldiger is verwijderd uit je item"
+      list:
+        header: "<white>Item multipliers gevonden:"
+      removeall:
+        removed: "<gray>Alle item vermenigvuldigers zijn verwijderd uit je item"
+    register:
+      registered: "<white>Geregistreerd vastgehouden item naar sleutel {key}"
+      already_registered: "<yellow>Er is al een item geregistreerd voor de sleutel{key}<yellow>, gebruik <white>/vaardigheden item deregister <yellow>to deregistreren eerst"
+      no_spaces: "<yellow>Item sleutel kan geen spaties bevatten!"
+    requirement:
+      add:
+        added: "<dark_aqua>{skill}<gray> item vereiste met level <aqua>{level}<gray> is toegevoegd aan uw item"
+        already_exists: "<yellow>Item heeft al een <dark_aqua>{skill}<yellow> item vereist! Verwijder het eerst met <gold>/sk item vereiste verwijderen"
+        lore: "<red>Vereist <dark_aqua>{skill} {level}"
+      remove:
+        does_not_exist: "<yellow>Je item heeft geen <dark_aqua>{skill}<yellow> vereiste artikel!"
+        removed: "<dark_aqua>{skill}<gray> artikelvereiste is verwijderd van uw artikel"
+      list:
+        header: "<white>Item vereisten gevonden:"
+      removeall:
+        removed: "<gray>Alle item vereisten zijn verwijderd uit je artikel"
+      use: "<yellow>Je voldoet niet aan de vereisten om dit item te gebruiken: {requirements}"
+    unregister:
+      unregistered: "<white>Ongeregistreerd item met sleutel {key}"
+      not_registered: "<yellow>Er is geen item geregistreerd met sleutel {key}"
+  lang:
+    set: "<gray>Taal ingesteld op <aqua>{lang}"
+    not_found: "<yellow>Taal niet gevonden!"
+  mana:
+    display: "<white>Jouw {mana_unit}: <aqua>{current}/{max}"
+    display_other: "<white>{mana_unit} van {player}: <aqua>{current}/{max}"
+    add: "<gray>Toegevoegd <aqua>{amount} {mana_unit} <gray>aan speler <gold>{player}"
+    remove: "<gray>Verwijderd <aqua>{amount} {mana_unit} <gray>van speler <gold>{player}"
+    set: "<gray>Zet speler <gold>{player} <gray>naar <aqua>{amount} {mana_unit}"
+    at_least_zero: "<yellow>{mana_unit} moet ten minste nul zijn!"
+    console_specify_player: "<yellow>Console moet een speler opgeven!"
+  modifier:
+    add:
+      added: "{color}{stat} <gray>modifier niveau <aqua>{value} <gray>met de naam <white>{name} <gray>toegevoegd aan speler <gold>{player}"
+      already_exists: "<yellow>Modifier met naam {name} bestaat al op speler <gold>{player}&! Verwijder deze met <gold>/sk modifier verwijder {player} {name}"
+    remove:
+      not_found: "<yellow>Modifier {name} niet gevonden voor speler <gold>{player}"
+      removed: "<gray>Wijziger <white>{name} <gray>verwijderd van speler <gold>{player}"
+    list:
+      all_stats_header: "<gray>Stat modificaties voor speler <gold>{player}:"
+      all_stats_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      one_stat_header: "<gray>Stat modificaties ({color}{stat}<gray>) voor speler <gold>{player}:"
+      one_stat_entry: "  <white>{name} - {color}{stat} <white>Level <gold>{value}"
+      players_only: "<yellow>Alleen spelers kunnen hun eigen parameters aanmaken! Probeer een speler te specificeren"
+    removeall:
+      removed_all_stats: "<gray>Verwijderd <aqua>{num} <gray>stat modifiers van speler <gold>{player}"
+      removed_one_stat: "<gray>Verwijderd <aqua>{num} {color}{stat} <gray>modifiers van speler <gold>{player}"
+      players_only: "<yellow>Alleen spelers kunnen hun eigen parameters verwijderen! Probeer een speler te specificeren"
+  multiplier:
+    global: Wereldwijd
+    list: "<white>Globale XP vermenigvuldiger voor <gold>{player}<white>: <aqua>{multiplier}x / +{percent}%"
+    skill_entry: "<aqua>{skill} <white>XP multiplier: <aqua>{multiplier}x / +{percent}%"
+    players_only: "<yellow>Alleen spelers kunnen hun eigen multiplier vermelden! Geef een speler op!"
+  preset:
+    load:
+      confirm: "<red>Loading a preset will override your config files! The following files will be affected <gray>(<aqua>Appended<gray>, <yellow>Merged<gray>, <red>Replaced<gray>, <dark_red>Deleted<gray>): {entries} <red>This action cannot be undone, manually backup any files needed. Type the command again to confirm."
+      loaded: Successfully loaded preset {name}, restart the server now.
+      created: Created files
+      modified: Modified files
+      replaced: Replaced files
+      deleted: Deleted files
+      skipped: Skipped files
+  profile:
+    skills: "Vaardigheden profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Vaardigheden:{skill_entries}"
+    skill_entry: "\n  <dark_aqua>{skill} <gray>- Level: <white>{level}<gray>, XP: <white>{xp}"
+    stats: "Statistieken profiel voor <gold>{name}:\n<gray>UUID: <white>{uuid}\n<gray>Stats:{stat_entries}"
+    stat_entry: "\n  <dark_aqua>{stat} <gray>- Totaal Level: <white>{total_level}<gray>, Basis Level: <white>{base_level}<gray>, Gewijzigd Level: <white>{modified_level}"
+  rank:
+    header: "<aqua><bold>Jouw Vaardigheid Rang"
+    power: "<yellow>Kracht <gray>(Alle Vaardigheden): <white>#{rank} van {total}"
+    entry: "<aqua>{skill}<gray>: <white>#{rank} van {total}"
+  reload: "<green>Configuratie herladen!"
+  save:
+    already_saving: "<yellow>Data wordt al opgeslagen!"
+    mysql_not_enabled: "<yellow>MySQL was niet ingeschakeld bij het opstarten van de server, in plaats daarvan het opslaan naar bestand!"
+    saved: "<green>Skill gegevens opgeslagen!"
+  skill:
+    setall:
+      set: "<gray>Alle vaardigheden ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
+    setlevel:
+      set: "<gray>Vaardigheid &{skill} <gray>ingesteld op niveau <aqua>{level} <gray>voor speler <gold>{player}"
+    at_least: "<yellow>Level must be at least {level}!"
+  toggle:
+    enabled: "<green>Jouw vaardigheidsactiebalk is ingeschakeld"
+    disabled: "<red>Jouw vaardigheidsactiebalk is uitgeschakeld"
+    not_enabled: "<yellow>Skills actiebalk is niet ingeschakeld op deze server!"
+  top:
+    power_header: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord</bold><white>==--"
+    power_header_page: "<white>--==<aqua><bold>Alle Vaardigheden Scorebord </bold><white>(Pagina {page})==--"
+    skill_header: "<white>--==<aqua><bold>{skill} Scorebord</bold><white>==--"
+    skill_header_page: "<white>--==<aqua><bold>{skill} Scorebord </bold><white>(Pagina {page})==--"
+    average_header: "<white>--==<aqua><bold>Skill Gemiddeld Scorebord</bold><white>==--"
+    average_header_page: "<white>--==<aqua><bold>Skill Gemiddelde Scorebord </bold><white>(Pagina {page})==--"
+    usage: "<yellow>Gebruik: <green>/sk top <white><page> <gray>of <green>/sk top <white>[skill] <page>"
+  transfer:
+    success: "<green>Succesvol spelersgegevens overgedragen van <gray>{from} <green>to <gray>{to}"
+    error: "Er is een fout opgetreden bij het overzetten van spelergegevens. Controleer de console voor fouten."
+  updateleaderboards:
+    already_updating: "<yellow>Leaderboard is al aan het updaten!"
+    updated: "<green>Leaderboard bijgewerkt!"
+  version: "<white>Je bent op Aurelium Skills versie <aqua>{current_version}<white>. De laatste versie is <aqua>{latest_version}"
+  xp:
+    add: "<gray>Toegevoegd <aqua>{amount} {skill} <gray>XP aan speler <gray>{player}"
+    set: "<gray>Stel <aqua>{skill} <gray>XP in voor speler <gray>{player} <gray>naar {amount}"
+    remove: "<gray>Verwijderd <aqua>{amount} {skill} <gray>XP van speler <gold>{player}"
+  manaability:
+    cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+  unknown_skill: "<yellow>Onbekende vaardigheid!"
+  unknown_mana_ability: "<yellow>Unknown mana ability!"
+  unknown_stat: "<yellow>Unknown stat!"
+  no_profile: "<yellow>Player heeft geen vaardighedenprofiel. Probeer het spel opnieuw aan te sluiten of de server opnieuw te starten."
+leveler:
+  level_up: "{skill} Level Up"
+  skill_level_up: Skill Level Up
+  rewards: Rewards
+  ability_unlock: Ability Unlock
+  ability_level_up: Ability Level Up
+  mana_ability_unlock: Mana Ability Unlock
+  mana_ability_level_up: Mana Ability Level Up
+  unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+menus:
+  common:
+    close: "Close"
+    level: "Level"
+    progress_to_level: "Progress to Level"
+    max_level: "MAX LEVEL"
+    ability_levels: "Ability Levels"
+    stats_leveled: "Stats Leveled"
+    mana_ability: "Mana Ability"
+    duration: "Duration"
+    mana_cost: "Mana Cost"
+    cooldown: "Cooldown"
+    damage: "Damage"
+    max_mana_cost: "Max Mana Cost"
+    attack_speed: "Attack Speed"
+    back: "Go Back"
+    back_click: "Back to {menu_name} Menu"
+    unlocked: "UNLOCKED"
+    in_progress: "IN PROGRESS"
+    locked: "LOCKED"
+    your_level: "Your Level"
+    next_page: "Next Page"
+    next_page_click: "Click to go to next page"
+    previous_page: "Previous Page"
+    previous_page_click: "Click to go to previous page"
+  skills:
+    skills_title: "Your Skills"
+    your_skills: "Your Skills"
+    your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
+    your_skills_hover: "Hover over a Skill for more information!"
+    your_skills_click: "Click on a Skill to view level progression!"
+    skill_click: "Click to view Level Progression!"
+    stats: "Stats"
+    stats_desc: "Earn stat buffs by leveling up skills"
+    stats_click: "Click to learn more or view your stats"
+  level_progression:
+    level_progression_title: "{skill} Levels - Page {page}"
+    your_ranking: "Your Skill Ranking"
+    rank_out_of: "<1>You are ranked <2>{rank}</2> out of {total} players</1>"
+    rank_percent: "<1>You are in the top <2>{percent}%</2> of players</1>"
+    rewards: "Rewards"
+    ability_unlock: "Ability Unlock"
+    mana_ability_unlock: "Mana Ability Unlock"
+    progress: "Progress"
+    leaderboard_click: "Click to view the {skill} leaderboard"
+    sources: "XP Sources"
+    sources_desc: "The sources menu shows all the ways you can earn XP in a skill, as well as how much XP each source gives."
+    sources_click: "Click to view {skill} sources"
+    abilities: "Abilities"
+    abilities_desc: "<2>Abilities</2> <1>are passive perks you unlock and upgrade as you level up skills.</1>"
+    mana_abilities_desc: "<3>Mana Abilities</3> <1>are a special type of ability that requires activation and consumes mana.</1>"
+    abilities_click: "Click to view {skill} abilities"
+  stats:
+    stats_title: Your Stats
+    skills: "Skills"
+    added_drop: "+{value} Drop"
+    added_drops: "+{value} Drops"
+    chance_drop: "{chance}% for +{value} Drop"
+    chance_drops: "{chance}% for +{value} Drops"
+  unclaimed_items:
+    unclaimed_items_title: "Claim Items"
+    inventory_full: "You do not have enough space in your inventory to claim that item"
+    click_to_claim: "Click to claim!"
+  leaderboard:
+    leaderboard_title: "{skill} Leaderboard"
+  sources:
+    sources_title: "{skill} XP Sources"
+    sorter: "Sort XP Sources"
+    descending: "Highest to Lowest"
+    ascending: "Lowest to Highest"
+    alphabetical: "Name (A-Z)"
+    reverse_alphabetical: "Name (Z-A)"
+    sort_click: "Click to cycle sort type"
+    multiplied_xp: "Multiplied {xp_unit}"
+    multiplied_desc: "This is the XP you will actually earn based on your current XP multipliers"
+  abilities:
+    abilities_title: "{skill} Abilities"
+    description: "Description"
+    unlocked_at: "<1>Unlocked at <2>{skill} {level}"
+    next_upgrade_at: "<1>Next upgrade at <2>{skill} {level}"
+mana_abilities:
+  replenish:
+    name: Aanvullen
+    desc: "Replants worden automatisch gewassen voor {value} seconden. <1>[Rechtsklik schoffel en breekt de bijsnijd om te activeren]"
+    raise: "<gray>Je verhoogt je schoffel"
+    lower: "<gray>Je verlaagt je schoffel"
+    start: "<gold>Replenish Geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Replenish is versleten uit"
+  treecapitator:
+    name: Treecapitator
+    desc: "Breekt complete bomen meteen voor {value} seconden. <1>[Rechtsklik bijl en breek logboek om te activeren]"
+    raise: "<gray>Je verhoogt je bijl"
+    lower: "<gray>Je verlaagt je bijl"
+    start: "<gold>Treecapitator geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Treecapitator is uitgeput"
+  speed_mine:
+    name: Snelheid Mijn
+    desc: "Geeft Haast {haste_level} voor {value} seconden. <1>[Rechtsklik pikhouweel en mijn blok om te activeren]"
+    raise: "<gray>Je verhoogt je pikhouweel"
+    lower: "<gray>Je verlaagt je pikhouweel"
+    start: "<gold>Snelheidsmijn geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Snelheidsmijn is uitgeput"
+  absorption:
+    name: Absorptie
+    desc: "Inkomende schade vermindert mana bij 2x Minecraft schade in plaats van je gezondheid voor {value} seconden. Mana zal niet regenereren terwijl Absorptie actief is. <1>[Klik met de linkermuisknop en neem schade om te activeren]"
+    raise: "<gray>U verhoogt uw schild"
+    lower: "<gray>Je verlaagt je schild"
+    start: "<gold>Absorptie geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Absorptie is versleten uit"
+  terraform:
+    name: Terraform
+    desc: "When digging, break connected blocks instantly in a {radius} block radius horizontally for {value} seconds. <1>[Right click shovel and dig block to activate]"
+    raise: "<gray>Je verhoogt je schep"
+    lower: "<gray>Je verlaagt je schep"
+    start: "<gold>Terraform geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Terraform is uitgeput"
+  sharp_hook:
+    name: Scherpe Haak
+    desc: "Breng {value} schade toe aan een gehakte entiteit als je links klikt met een vishengel"
+    use: "<gold>Gebruikt Scherpe Hook! <gray>(-{mana} {mana_unit})"
+  charged_shot:
+    name: Geladen Schot
+    desc: "Pijlen die je schiet brengen meer schade toe op basis van hoe ver de boog werd teruggetrokken, mana consumeert in dit proces. Doet {value}% meer schade per mana verbruikt. <1>[linkermuisklik een boog om te schakelen van geladen opname modus]"
+    enable: "<gray>Geladen opname modus is nu ingeschakeld"
+    disable: "<gray>Geladen opname modus is nu uitgeschakeld"
+    shoot: "<gold>Gebruikt Opgeladen Schot! <light_purple>+{percent}% DMG <gray>(-{mana} {mana_unit})"
+  lightning_blade:
+    name: Bliksem Zwaard
+    desc: Verhoogt aanvalsnelheid met {value}% gedurende {duration} seconden. <1>[Rechtsklik zwaard en valt mob aan om te activeren]
+    raise: "<gray>Je maakt je zwaard klaar"
+    lower: "<gray>Je verlaagt je zwaard"
+    start: "<gold>Bliksem Zwaard Geactiveerd! <gray>(-{mana} {mana_unit})"
+    end: "<gray>Bliksemmes is uitgeput"
+  not_ready: "<red>Mogelijkheid niet gereed! <gray>({cooldown}s)"
+  not_enough_mana: "<yellow>Niet genoeg mana! <gray>({mana} {mana_unit} vereist)"
+skills:
+  farming:
+    name: Landbouw
+    desc: "Oogst gewassen om Landbouw {xp_unit} te verdienen"
+  foraging:
+    name: Smeden
+    desc: "Knip bomen om houtkap {xp_unit} te verdienen"
+  mining:
+    name: Mijnbouw
+    desc: "Mijn steen en erts om Mijnbouw {xp_unit} te verdienen"
+  fishing:
+    name: Vissen
+    desc: "Vis om vissen te verdienen {xp_unit}"
+  excavation:
+    name: Opgraving
+    desc: "Graaf met een schep om de Uitgraving te verdienen {xp_unit}"
+  archery:
+    name: Boogschieten
+    desc: "Schiet mobs en spelers met een boog om verdien Boogschutter {xp_unit}"
+  defense:
+    name: Verdediging
+    desc: "Neem schade van entiteiten om Verdediging te verdienen {xp_unit}"
+  fighting:
+    name: Vechten
+    desc: "Vecht mobs met slagwapens om Vecht {xp_unit} te verdienen"
+  endurance:
+    name: Uithoudingsvermogen
+    desc: "Loop en rennen om Uithoudingsvermogen te verdienen {xp_unit}"
+  agility:
+    name: Geloof
+    desc: "Move around and take fall damage to earn Agility {xp_unit}"
+  alchemy:
+    name: Alchemie
+    desc: "Brew and splash potions to earn Alchemy {xp_unit}"
+  enchanting:
+    name: Betovering
+    desc: "Enchant, combine, and grindstone items earn Enchanting {xp_unit}"
+  sorcery:
+    name: Sorcery
+    desc: "Gebruik mana vaardigheden om Sorcery {xp_unit} te verdienen"
+  healing:
+    name: Genezing
+    desc: "Drink en drankjes splash om Genezing {xp_unit} te verdienen"
+  forging:
+    name: Smeden
+    desc: "Combineer en pas boeken in een aambeeld toe op verdien met {xp_unit}"
+sources:
+  fishing:
+    cod: Kabeljauw
+    salmon: Zalm
+    tropical_fish: Tropische vis
+    pufferfish: Kogelvis
+    treasure: Schat Voorwerpen
+    junk: Ongewenste items
+    rare: Rare Loot
+    epic: Epische Buit
+  damage:
+    mob_damage: Damage from Mobs
+    player_damage: Damage from Players
+    fall_damage: Taking Fall Damage
+  statistic:
+    walk_per_meter: Walking
+    sprint_per_meter: Sprinting
+    swim_per_meter: Swimming
+  jumping:
+    jump_per_100: Jumping
+  brewing:
+    awkward: Brew Awkward Potion
+    regular: Brew Regular Potion
+    extended: Brew Extended Duration Potion
+    upgraded: Brew Upgraded Potion
+    splash: Brew Splash Potion
+    lingering: Brew Lingering Potion
+  enchanting:
+    weapon_per_level: Enchant Weapon
+    armor_per_level: Enchant Armor
+    tool_per_level: Enchant Tool
+    book_per_level: Enchant Book
+  mana_ability_use:
+    mana_ability_use: Using Mana Abilities
+  item_consume:
+    drink_regular: Drink Regular Potion
+    drink_extended: Drink Extended Duration Potion
+    drink_upgraded: Drink Upgraded Potion
+    golden_apple: Consume Golden Apple
+    enchanted_golden_apple: Consume Enchanted Golden Apple
+  potion_splash:
+    splash_regular: Splash Regular Potion
+    splash_extended: Splash Extended Duration Potion
+    splash_upgraded: Splash Upgraded Potion
+    lingering_regular: Use Regular Lingering Potion
+    lingering_extended: Use Extended Duration Lingering Potion
+    lingering_upgraded: Use Upgraded Lingering Potion
+  anvil:
+    combine_books_per_level: Combine Enchanted Books
+    combine_weapon_per_level: Combine Weapon with Book
+    combine_armor_per_level: Combine Armor with Book
+    combine_tool_per_level: Combine Tool with Book
+  grindstone:
+    grindstone_per_level: Disenchant Item with Grindstone
+  units:
+    damage: Schade
+    meter: Meter
+    100_jumps: 100 Sprongen
+    mana: Mana Verbruikt
+    combine_level: Aambeeld Kost XP
+    grindstone_level: Niveau van Betovering op Item
+    enchant_level: Niveau van Betover ontvangen
+stats:
+  strength:
+    name: Kracht
+    desc: "Kracht verhoogt uw aanvalsschade met verschillende wapens."
+  health:
+    name: Gezondheid
+    desc: "Gezondheid verhoogt het aantal van {hp_unit} jij hebt waardoor je langer kunt meedoen in gevechten."
+  regeneration:
+    name: Regeneratie
+    desc: "Regeneratie verhoogt hoe snel je herstel zowel gezondheid als mana."
+  luck:
+    name: Luck
+    desc: "Luck increases the chance of extra drops from blocks in gathering skills."
+  wisdom:
+    name: Wijsdom
+    desc: "Wisdom verhoogt je max mana, verhoogt ervaring winst en vermindert de aambeeld kosten."
+  toughness:
+    name: Hardheid
+    desc: "Hardheid verhoogt het aantal schade verminderd door vijandelijke aanvallen."
+  crit_chance:
+    name: Crit Chance
+    desc: "Crit Chance is your odds to deal a critical hit."
+  crit_damage:
+    name: Crit Damage
+    desc: "Crit Damage is the percentage increase in damage when dealing a critical hit."
+  speed:
+    name: Speed
+    desc: "Speed increases how fast you can walk and run."
+traits:
+  attack_damage:
+    name: Attack Damage
+  hp:
+    name: HP
+  saturation_regen:
+    name: Saturation Regen
+  hunger_regen:
+    name: Hunger Regen
+  mana_regen:
+    name: Mana Regen
+  luck:
+    name: Luck Attribute
+  double_drop:
+    name: Double Drop
+  experience_bonus:
+    name: Experience Bonus
+  anvil_discount:
+    name: Anvil Discount
+  max_mana:
+    name: Max Mana
+  damage_reduction:
+    name: Damage Reduction
+  crit_chance:
+    name: Crit Chance
+  crit_damage:
+    name: Crit Damage
+  movement_speed:
+    name: Movement Speed
+  farming_luck:
+    name: Farming Luck
+  foraging_luck:
+    name: Foraging Luck
+  mining_luck:
+    name: Mining Luck
+  excavation_luck:
+    name: Excavation Luck
+  fishing_luck:
+    name: Fishing Luck
+ui:
+  maxed: MAXED
+units:
+  mana: Mana
+  hp: HP
+  xp: XP
+file_version: 32

@@ -1,0 +1,208 @@
+title: '{{stat_details}}'
+size: 6
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+  shapes:
+  - shape: border
+  - column: 7
+items:
+  back:
+    material: arrow
+    pos: 5,0
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
+templates:
+  stat:
+    pos: 0,8
+    contexts:
+      strength:
+        material: red_stained_glass
+      health:
+        material: orange_stained_glass
+      regeneration:
+        material: yellow_stained_glass
+      luck:
+        material: green_stained_glass
+      wisdom:
+        material: blue_stained_glass
+      toughness:
+        material: purple_stained_glass
+      crit_chance:
+        material: lime_stained_glass
+      crit_damage:
+        material: cyan_stained_glass
+      speed:
+        material: white_stained_glass
+    display_name: '{color}{stat_name}'
+    lore:
+    - '<dark_gray>{{stat}}'
+    - ' '
+    - text: '{stat_desc}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>{{stat_level}}: {color}{level}'
+    - '  <dark_gray>{{base}}: {base_level}'
+    - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
+    - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
+    - component: traits_leveled
+    - ''
+    - component: stat_modifiers_click
+    - component: showing_stat_modifiers
+  trait:
+    options:
+      slots:
+      - 1,8
+      - 2,8
+      - 3,8
+      - 4,8
+      - 5,8
+    contexts:
+      attack_damage:
+        material: red_dye
+      hp:
+        material: orange_dye
+      saturation_regen:
+        material: golden_carrot
+      hunger_regen:
+        material: bread
+      mana_regen:
+        material: light_blue_dye
+      luck:
+        material: green_dye
+      farming_luck:
+        material: golden_hoe
+      foraging_luck:
+        material: golden_axe
+      mining_luck:
+        material: golden_pickaxe
+      fishing_luck:
+        material: fishing_rod
+      excavation_luck:
+        material: golden_shovel
+      double_drop:
+        material: lime_dye
+      experience_bonus:
+        material: experience_bottle
+      anvil_discount:
+        material: anvil
+      max_mana:
+        material: magenta_dye
+      damage_reduction:
+        material: chainmail_chestplate
+      crit_chance:
+        material: golden_sword
+      crit_damage:
+        material: iron_sword
+      movement_speed:
+        material: sugar
+    display_name: '{color}{trait_name}'
+    lore:
+    - '<dark_gray>{{trait}}'
+    - ' '
+    - text: '{{trait_gain}}'
+      wrap: true
+      styles:
+        1: '<gray>'
+    - ' '
+    - '<gray>{{trait_level}}: {color}{level}'
+    - '  <dark_gray>{{base}}: {base_level}'
+    - '  <dark_gray>{{modifiers_additive}}: +{add_percent_modifiers}%'
+    - '  <dark_gray>{{modifiers_multiplicative}}: {multiply_modifiers}x'
+    - component: effective_trait_value
+    - ' '
+    - component: trait_modifiers_click
+    - component: showing_trait_modifiers
+  modifier:
+    options:
+      start: 1,1
+      end: 4,6
+    material: gray_dye
+    contexts:
+      base_level_hp:
+        material: orange_dye
+      base_level_movement_speed:
+        material: white_dye
+      base_level_mana_regen:
+        material: light_blue_dye
+      base_level_max_mana:
+        material: magenta_dye
+      linked_stat_strength:
+        material: red_stained_glass
+      linked_stat_regeneration:
+        material: yellow_stained_glass
+      linked_stat_luck:
+        material: green_stained_glass
+      linked_stat_wisdom:
+        material: blue_stained_glass
+      linked_stat_toughness:
+        material: purple_stained_glass
+      ability_valor:
+        material: stone_axe
+        flags:
+        - hide_attributes
+      ability_stamina:
+        material: stone_pickaxe
+        flags:
+        - hide_attributes
+      ability_bountiful_harvest:
+        material: wheat
+      ability_lumberjack:
+        material: oak_log
+      ability_lucky_miner:
+        material: stone
+      ability_lucky_catch:
+        material: cod
+      ability_bigger_scoop:
+        material: sand
+      ability_fleeting:
+        material: feather
+      ability_enchanted_strength:
+        material: enchanted_book
+      ability_wise_effect:
+        material: potion
+        potion_data:
+          type: turtle_master
+        flags:
+        - hide_potion_effects
+    display_name: '<white>{display_name}'
+    lore:
+    - text: '{description}'
+      wrap: true
+      style: '<gray>'
+    - ' '
+    - '<gray>Value: {color}{value_format} {type_name}'
+components:
+  traits_leveled:
+    context: Stat
+    lore:
+    - ' '
+    - '<gray>{{traits_leveled}} {color}↓'
+  stat_modifiers_click:
+    context: Stat
+    lore:
+    - '<yellow>{{stat_modifiers_click}}'
+  trait_modifiers_click:
+    context: Trait
+    lore:
+    - '<yellow>{{trait_modifiers_click}}'
+  showing_stat_modifiers:
+    context: Stat
+    lore:
+    - '<green>← {{showing_stat_modifiers}} <gray>({modifier_count})'
+  showing_trait_modifiers:
+    context: Trait
+    lore:
+    - '<green>← {{showing_trait_modifiers}} <gray>({modifier_count})'
+  effective_trait_value:
+    context: Trait
+    lore:
+    - ' '
+    - '<gray>{{effective_trait}}: {color}{effective_value}'
+formats:
+  value_add: '+{value}'
+  value_multiply: '{value}x'
+  value_add_percent: '+{value}%'
+

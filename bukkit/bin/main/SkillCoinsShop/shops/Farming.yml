@@ -1,0 +1,186 @@
+pages:
+  page1:
+    items:
+      # Seeds
+      '1':
+        material: WHEAT_SEEDS
+        buy: 2
+        sell: 0.5
+      '2':
+        material: BEETROOT_SEEDS
+        buy: 3
+        sell: 0.75
+      '3':
+        material: MELON_SEEDS
+        buy: 5
+        sell: 1
+      '4':
+        material: PUMPKIN_SEEDS
+        buy: 5
+        sell: 1
+      '5':
+        material: CARROT
+        buy: 3
+        sell: 0.75
+      '6':
+        material: POTATO
+        buy: 3
+        sell: 0.75
+      
+      # Crops
+      '7':
+        material: WHEAT
+        buy: 5
+        sell: 1
+      '8':
+        material: BEETROOT
+        buy: 4
+        sell: 1
+      '9':
+        material: MELON_SLICE
+        buy: 3
+        sell: 0.75
+      '10':
+        material: PUMPKIN
+        buy: 8
+        sell: 2
+      '11':
+        material: SUGAR_CANE
+        buy: 4
+        sell: 1
+      '12':
+        material: BAMBOO
+        buy: 2
+        sell: 0.5
+      '13':
+        material: CACTUS
+        buy: 5
+        sell: 1
+      '14':
+        material: SWEET_BERRIES
+        buy: 3
+        sell: 0.75
+      '15':
+        material: GLOW_BERRIES
+        buy: 5
+        sell: 1
+      
+      # Flowers
+      '16':
+        material: DANDELION
+        buy: 3
+        sell: 0.75
+      '17':
+        material: POPPY
+        buy: 3
+        sell: 0.75
+      '18':
+        material: BLUE_ORCHID
+        buy: 4
+        sell: 1
+      '19':
+        material: ALLIUM
+        buy: 4
+        sell: 1
+      '20':
+        material: AZURE_BLUET
+        buy: 4
+        sell: 1
+      '21':
+        material: TULIP
+        buy: 4
+        sell: 1
+      '22':
+        material: OXEYE_DAISY
+        buy: 4
+        sell: 1
+      '23':
+        material: SUNFLOWER
+        buy: 6
+        sell: 1.5
+      '24':
+        material: LILAC
+        buy: 6
+        sell: 1.5
+      '25':
+        material: ROSE_BUSH
+        buy: 6
+        sell: 1.5
+      '26':
+        material: PEONY
+        buy: 6
+        sell: 1.5
+      
+      # Saplings
+      '27':
+        material: OAK_SAPLING
+        buy: 5
+        sell: 1
+      '28':
+        material: SPRUCE_SAPLING
+        buy: 5
+        sell: 1
+      '29':
+        material: BIRCH_SAPLING
+        buy: 5
+        sell: 1
+      '30':
+        material: JUNGLE_SAPLING
+        buy: 6
+        sell: 1.5
+      '31':
+        material: ACACIA_SAPLING
+        buy: 5
+        sell: 1
+      '32':
+        material: DARK_OAK_SAPLING
+        buy: 6
+        sell: 1.5
+      '33':
+        material: MANGROVE_PROPAGULE
+        buy: 7
+        sell: 1.75
+      '34':
+        material: CHERRY_SAPLING
+        buy: 8
+        sell: 2
+      
+      # Farm Animals Items
+      '35':
+        material: EGG
+        buy: 2
+        sell: 0.5
+      '36':
+        material: MILK_BUCKET
+        buy: 15
+        sell: 4
+      '37':
+        material: LEATHER
+        buy: 10
+        sell: 2.5
+      '38':
+        material: FEATHER
+        buy: 5
+        sell: 1
+      '39':
+        material: WOOL
+        buy: 5
+        sell: 1
+      
+      # Misc Farming
+      '40':
+        material: BONE_MEAL
+        buy: 3
+        sell: 0.75
+      '41':
+        material: COMPOSTER
+        buy: 20
+        sell: 5
+      '42':
+        material: WATER_BUCKET
+        buy: 30
+        sell: 7
+      '43':
+        material: BUCKET
+        buy: 25
+        sell: 6

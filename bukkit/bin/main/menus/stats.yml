@@ -1,0 +1,71 @@
+title: '{{stats_title}}'
+size: 4
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  skull:
+    pos: 1,4
+    material: player_head
+    display_name: '<yellow>{player}'
+    lore:
+      - '{entries[\n]}'
+  back:
+    material: arrow
+    pos: 3,0
+    display_name: '<green>{{back}}'
+    lore:
+      - '<gray>{{back_click}}'
+templates:
+  stat:
+    contexts:
+      strength: {group: upper_left, order: 1, material: red_stained_glass_pane}
+      health: {group: upper_left, order: 2, material: orange_stained_glass_pane}
+      regeneration: {group: upper_left, order: 3, material: yellow_stained_glass_pane}
+      luck: { group: upper_right, order: 1, material: green_stained_glass_pane}
+      wisdom: {group: upper_right, order: 2, material: blue_stained_glass_pane}
+      toughness: {group: upper_right, order: 3, material: purple_stained_glass_pane}
+      crit_chance: {group: lower, order: 3, material: lime_stained_glass_pane}
+      crit_damage: {group: lower, order: 4, material: cyan_stained_glass_pane}
+      speed: {group: lower, order: 5, material: white_stained_glass_pane}
+    groups:
+      upper_left:
+        start: 1,0
+        end: 1,3
+        align: right
+      upper_right:
+        start: 1,5
+        end: 1,8
+        align: left
+      lower:
+        start: 2,0
+        end: 2,8
+        align: center
+    display_name: '{color}{stat}'
+    lore:
+      - text: '{stat_desc}'
+        wrap: true
+        style: '<gray>'
+      - component: leveled_by
+      - ' '
+      - '<gray>{{your_level}}: {color}{level}'
+      - ' '
+      - '{traits[\n]}'
+      - ' '
+      - '<yellow>{{stat_info_click}}'
+components:
+  leveled_by:
+    context: Stat
+    lore:
+      - ' '
+      - text: '<1>{{skills}}: <2>{skills[, ]}'
+        wrap: true
+        styles:
+          1: '<gray>'
+          2: '<white>'
+formats:
+  player_stat_entry: '{color}{symbol} {stat} <white>{level}'
+  trait_entry: '<#d0d0d0>{trait}: {color}{level}'
+  luck_trait_desc_chance: ' <dark_gray>({chance})'
+  luck_trait_desc_added: ' <dark_gray>({added})'
+  luck_trait_desc_both: ' <dark_gray>({added}, {chance})'

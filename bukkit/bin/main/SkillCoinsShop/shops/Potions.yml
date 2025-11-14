@@ -1,0 +1,128 @@
+pages:
+  page1:
+    items:
+      # Brewing Basics
+      '1':
+        material: BREWING_STAND
+        buy: 60
+        sell: 15
+      '2':
+        material: CAULDRON
+        buy: 50
+        sell: 12
+      '3':
+        material: BLAZE_POWDER
+        buy: 20
+        sell: 5
+      '4':
+        material: NETHER_WART
+        buy: 15
+        sell: 4
+      '5':
+        material: GLASS_BOTTLE
+        buy: 5
+        sell: 1
+      
+      # Base Potions
+      '6':
+        material: POTION
+        buy: 10
+        sell: 2.5
+      '7':
+        material: SPLASH_POTION
+        buy: 15
+        sell: 4
+      '8':
+        material: LINGERING_POTION
+        buy: 25
+        sell: 6
+      
+      # Potion Ingredients
+      '9':
+        material: SUGAR
+        buy: 5
+        sell: 1
+      '10':
+        material: RABBIT_FOOT
+        buy: 30
+        sell: 7
+      '11':
+        material: GLISTERING_MELON_SLICE
+        buy: 10
+        sell: 2.5
+      '12':
+        material: SPIDER_EYE
+        buy: 8
+        sell: 2
+      '13':
+        material: FERMENTED_SPIDER_EYE
+        buy: 15
+        sell: 4
+      '14':
+        material: MAGMA_CREAM
+        buy: 25
+        sell: 6
+      '15':
+        material: BLAZE_ROD
+        buy: 40
+        sell: 10
+      '16':
+        material: GHAST_TEAR
+        buy: 35
+        sell: 9
+      '17':
+        material: GOLDEN_CARROT
+        buy: 15
+        sell: 4
+      '18':
+        material: PUFFERFISH
+        buy: 20
+        sell: 5
+      '19':
+        material: TURTLE_HELMET
+        buy: 150
+        sell: 37
+      '20':
+        material: PHANTOM_MEMBRANE
+        buy: 35
+        sell: 9
+      
+      # Modifiers
+      '21':
+        material: REDSTONE
+        buy: 10
+        sell: 2.5
+      '22':
+        material: GLOWSTONE_DUST
+        buy: 8
+        sell: 2
+      '23':
+        material: GUNPOWDER
+        buy: 10
+        sell: 2.5
+      '24':
+        material: DRAGON_BREATH
+        buy: 100
+        sell: 25
+      
+      # Special Items
+      '25':
+        material: ENCHANTED_GOLDEN_APPLE
+        buy: 500
+        sell: 125
+      '26':
+        material: GOLDEN_APPLE
+        buy: 100
+        sell: 25
+      '27':
+        material: TOTEM_OF_UNDYING
+        buy: 1000
+        sell: 250
+      '28':
+        material: ENDER_PEARL
+        buy: 25
+        sell: 6
+      '29':
+        material: ENDER_EYE
+        buy: 50
+        sell: 12

@@ -1,0 +1,13 @@
+pages:
+  page1:
+    items:
+      # Premium items that can be bought with tokens
+      placeholder:
+        material: BARRIER
+        buy: 999999
+        displayname: "&cComing Soon"
+        lore:
+          - "&7Premium items will be"
+          - "&7available here soon!"
+          - ""
+          - "&8(This section is under development)"

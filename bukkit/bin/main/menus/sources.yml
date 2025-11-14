@@ -1,0 +1,61 @@
+title: '{{sources_title}} ({current_page}/{total_pages})'
+size: 6
+fill:
+  enabled: true
+  material: black_stained_glass_pane
+items:
+  back:
+    pos: 5,0
+    material: arrow
+    display_name: '<green>{{back}}'
+    lore:
+      - '<gray>{{back_click}}'
+  next_page:
+    pos: 5,5
+    material: arrow
+    display_name: '<gold>{{next_page}}'
+    lore:
+      - '<yellow>{{next_page_click}}'
+  previous_page:
+    pos: 5,3
+    material: arrow
+    display_name: '<gold>{{previous_page}}'
+    lore:
+      - '<yellow>{{previous_page_click}}'
+  sorter:
+    pos: 5,4
+    material: hopper
+    display_name: '<aqua>{{sorter}}'
+    lore:
+      - '{sort_types[\n]}'
+      - ' '
+      - '<yellow>{{sort_click}}'
+templates:
+  source:
+    material: gray_dye
+    display_name: '<white>{source_name}'
+    lore:
+      - '<gray>{xp_unit}: {source_xp}'
+      - component: multiplied_xp
+components:
+  multiplied_xp:
+    context: XpSource
+    lore:
+      - ' '
+      - '<white>{{multiplied_xp}}: {source_xp}'
+      - text: '{{multiplied_desc}}'
+        wrap: true
+        style: '<gray><italic>'
+formats:
+  sort_type_entry: '<gray>{selected}{type_name}'
+  selected: '<white>> '
+  source_xp: '<green>{xp}'
+  source_xp_rate: '<green>{xp}/{unit}'
+options:
+  source_start: 1,1
+  source_end: 4,8
+  items_per_page: 28
+  use_track: false
+  track: []
+  xp_format: '#.##'
+  income_format: '0.00'

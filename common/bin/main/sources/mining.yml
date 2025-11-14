@@ -1,0 +1,160 @@
+default:
+  type: block
+  trigger: break
+  check_replace: true
+  menu_item:
+    material: '{block}'
+sources:
+  stone:
+    block: stone
+    xp: 0.2
+  cobblestone:
+    block: cobblestone
+    xp: 0.2
+  andesite:
+    block: andesite
+    xp: 0.2
+  diorite:
+    block: diorite
+    xp: 0.2
+  granite:
+    block: granite
+    xp: 0.2
+  sandstone:
+    block: sandstone
+    xp: 0.2
+  coal_ore:
+    block: coal_ore
+    xp: 1.0
+  nether_quartz_ore:
+    block: nether_quartz_ore
+    xp: 1.8
+  iron_ore:
+    block: iron_ore
+    xp: 1.8
+  lapis_ore:
+    block: lapis_ore
+    xp: 30.6
+  redstone_ore:
+    block: redstone_ore
+    xp: 5.9
+  gold_ore:
+    block: gold_ore
+    xp: 17.8
+  diamond_ore:
+    block: diamond_ore
+    xp: 47.3
+  emerald_ore:
+    block: emerald_ore
+    xp: 100.0
+  terracotta:
+    block: terracotta
+    xp: 0.5
+  white_terracotta:
+    block: white_terracotta
+    xp: 0.5
+  orange_terracotta:
+    block: orange_terracotta
+    xp: 0.5
+  yellow_terracotta:
+    block: yellow_terracotta
+    xp: 0.5
+  light_gray_terracotta:
+    block: light_gray_terracotta
+    xp: 0.5
+  brown_terracotta:
+    block: brown_terracotta
+    xp: 0.5
+  red_terracotta:
+    block: red_terracotta
+    xp: 0.5
+  netherrack:
+    block: netherrack
+    xp: 0.1
+  blackstone:
+    block: blackstone
+    xp: 0.3
+  basalt:
+    block: basalt
+    xp: 0.4
+  magma_block:
+    block: magma_block
+    xp: 0.7
+  nether_gold_ore:
+    block: nether_gold_ore
+    xp: 10.0
+  ancient_debris:
+    block: ancient_debris
+    xp: 500.0
+  end_stone:
+    block: end_stone
+    xp: 0.5
+  obsidian:
+    block: obsidian
+    xp: 10.0
+  deepslate:
+    block: deepslate
+    xp: 0.4
+  copper_ore:
+    block: copper_ore
+    xp: 3.5
+  tuff:
+    block: tuff
+    xp: 0.5
+  calcite:
+    block: calcite
+    xp: 0.8
+  smooth_basalt:
+    block: smooth_basalt
+    xp: 0.8
+  amethyst_block:
+    block: amethyst_block
+    xp: 4.0
+  amethyst_cluster:
+    block: amethyst_cluster
+    xp: 6.0
+    support_block: side
+  deepslate_coal_ore:
+    block: deepslate_coal_ore
+    xp: 1.2
+  deepslate_iron_ore:
+    block: deepslate_iron_ore
+    xp: 2.2
+  deepslate_copper_ore:
+    block: deepslate_copper_ore
+    xp: 4.2
+  deepslate_gold_ore:
+    block: deepslate_gold_ore
+    xp: 21.4
+  deepslate_redstone_ore:
+    block: deepslate_redstone_ore
+    xp: 7.1
+  deepslate_lapis_ore:
+    block: deepslate_lapis_ore
+    xp: 36.7
+  deepslate_emerald_ore:
+    block: deepslate_emerald_ore
+    xp: 120.0
+  deepslate_diamond_ore:
+    block: deepslate_diamond_ore
+    xp: 56.8
+  dripstone_block:
+    block: dripstone_block
+    xp: 3.2
+  ice:
+    block: ice
+    xp: 0.3
+  packed_ice:
+    block: packed_ice
+    xp: 0.8
+  blue_ice:
+    block: blue_ice
+    xp: 1.3
+  reinforced_deepslate:
+    block: reinforced_deepslate
+    xp: 125.0
+tags:
+  mining_luck_applicable:
+    - '*'
+  speed_mine_applicable:
+    - '*'
