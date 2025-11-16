@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Шанс пронзить"
   stun:
     name: Оглушить
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% шанс снизить скорость передвижения врага на {reduction_percent}% на 2 секунды."
     info: "{value}% Шанс оглушения"
   shielding:
     name: Стальная стена
@@ -334,7 +334,7 @@ commands:
     logs:
       header: "<gray>Анти-AFK логи для игрока <red>{player} <gray>({count} В целом) <dark_gray>| <gray> Страница {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Показывает Анти-АФК для этого игрока.
   armor:
     modifier:
       add:
