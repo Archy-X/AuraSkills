@@ -12,9 +12,9 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("net.kyori:adventure-api:4.17.0")
+    api("net.kyori:adventure-api:4.25.0")
     api("co.aikar:acf-core:0.5.1-SNAPSHOT")
-    api("net.kyori:adventure-text-serializer-legacy:4.17.0")
+    api("net.kyori:adventure-text-serializer-legacy:4.25.0")
     api("dev.aurelium:polyglot:1.2.4")
     api("com.ezylang:EvalEx:3.3.0")
     api("org.spongepowered:configurate-yaml:4.2.0")
