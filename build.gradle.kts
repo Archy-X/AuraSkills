@@ -58,8 +58,8 @@ jreleaser {
                     setActive("NEVER")
                     url = "https://central.sonatype.com/api/v1/publisher"
                     stagingRepositories = listOf("api/build/staging-deploy", "api-bukkit/build/staging-deploy")
-                    username = gradleProject.property("sonatypeUsername").toString()
-                    password = gradleProject.property("sonatypePassword").toString()
+                    username = (gradleProject.findProperty("sonatypeUsername") ?: "").toString()
+                    password = (gradleProject.findProperty("sonatypePassword") ?: "").toString()
                 })
             }
             nexus2 {
@@ -71,8 +71,8 @@ jreleaser {
                     closeRepository = true
                     releaseRepository = true
                     stagingRepositories = listOf("api/build/staging-deploy", "api-bukkit/build/staging-deploy")
-                    username = gradleProject.property("sonatypeUsername").toString()
-                    password = gradleProject.property("sonatypePassword").toString()
+                    username = (gradleProject.findProperty("sonatypeUsername") ?: "").toString()
+                    password = (gradleProject.findProperty("sonatypePassword") ?: "").toString()
                 })
             }
         }
@@ -85,7 +85,7 @@ jreleaser {
             name = "AuraSkills"
             tagName = gradleProject.property("projectVersion").toString()
             releaseName = gradleProject.property("projectVersion").toString()
-            token = gradleProject.property("jreleaserGithubToken").toString()
+            token = (gradleProject.findProperty("jreleaserGithubToken") ?: "").toString()
             draft = true
             checksums = false
             signatures = false
