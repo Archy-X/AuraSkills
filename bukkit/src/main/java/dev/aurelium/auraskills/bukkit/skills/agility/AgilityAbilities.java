@@ -186,14 +186,25 @@ public class AgilityAbilities extends BukkitAbilityImpl {
     }
 
     public void startFleetingRemoveTimer() {
-        plugin.getScheduler().timerSync(new TaskRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    plugin.getScheduler().executeAtEntity(player, (task) -> removeFleeting(player));
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().timerSync(new TaskRunnable() {
+                @Override
+                public void run() {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        plugin.getScheduler().executeAtEntity(player, (task) -> removeFleeting(player));
+                    }
                 }
-            }
-        }, 5, 5, TimeUnit.SECONDS);
+            }, 5, 5, TimeUnit.SECONDS);
+        } else {
+            plugin.getScheduler().timerSync(new TaskRunnable() {
+                @Override
+                public void run() {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        removeFleeting(player);
+                    }
+                }
+            }, 5, 5, TimeUnit.SECONDS);
+        }
     }
 
     public void removeFleeting(Player player) {

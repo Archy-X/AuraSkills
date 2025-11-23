@@ -23,6 +23,10 @@ public class BukkitScheduler extends Scheduler {
         this.foliaLib = new FoliaLib(plugin);
     }
 
+    public boolean isFolia() {
+        return foliaLib.isFolia();
+    }
+
     @Override
     public Task executeSync(Runnable runnable) {
         WrappedTask task = foliaLib.getScheduler().runLater(runnable, 1L);

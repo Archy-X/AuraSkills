@@ -50,7 +50,11 @@ public class LuckTrait extends TraitImpl {
 
     @Override
     public void reload(Player player, Trait trait) {
-        plugin.getScheduler().executeAtEntity(player, (task) -> setLuck(player));
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> setLuck(player));
+        } else {
+            setLuck(player);
+        }
     }
 
     @Override
