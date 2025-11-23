@@ -8,19 +8,27 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
+import org.jetbrains.annotations.Nullable;
 
 public class LevelerContext {
 
     private final AuraSkillsApi api;
-    private final SourceType sourceType;
+    private final @Nullable SourceType sourceType;
 
-    public LevelerContext(AuraSkillsApi api, SourceType sourceType) {
+    public LevelerContext(AuraSkillsApi api) {
+        this(api, null);
+    }
+
+    public LevelerContext(AuraSkillsApi api, @Nullable SourceType sourceType) {
         this.api = api;
         this.sourceType = sourceType;
     }
 
     public boolean disabled() {
-        return !sourceType.isEnabled();
+        if (sourceType != null) {
+            return !sourceType.isEnabled();
+        }
+        return false;
     }
 
     public boolean failsChecks(Cancellable event, Player player, Location location, Skill skill) {
