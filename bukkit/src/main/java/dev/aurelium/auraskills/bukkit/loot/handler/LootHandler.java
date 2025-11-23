@@ -79,6 +79,14 @@ public abstract class LootHandler extends AbstractLootHandler {
         giveXp(player, loot, source, skill);
     }
 
+    protected void giveFishingCommandLoot(Player player, CommandLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill) {
+        if (!(event.getCaught() instanceof Item itemEntity)) return;
+
+        itemEntity.setItemStack(new ItemStack(Material.AIR));
+
+        giveCommandLoot(player, loot, source, skill);
+    }
+
     protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropCause cause, LootTable table) {
         Block block = breakEvent.getBlock();
         BukkitItemSupplier bukkitItemSupplier = new BukkitItemSupplier(loot.getItem());
