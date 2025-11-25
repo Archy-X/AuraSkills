@@ -81,16 +81,13 @@ public class HpTrait extends TraitImpl {
     public void reload(Player player, Trait trait) {
         if (plugin.getScheduler().isFolia()) {
             plugin.getScheduler().executeAtEntity(player, (task) -> {
-                reloadHp(player);
+                setHealth(player, plugin.getUser(player));
+                plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
             });
         } else {
-            reloadHp(player);
+            setHealth(player, plugin.getUser(player));
+            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
         }
-    }
-
-    private void reloadHp(Player player) {
-        setHealthInternal(player, plugin.getUser(player));
-        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
@@ -155,18 +152,8 @@ public class HpTrait extends TraitImpl {
         worldChangeHealth.remove(playerID);
     }
 
-    private void setHealth(Player player, User user) {
-        if (plugin.getScheduler().isFolia()) {
-            plugin.getScheduler().executeAtEntity(player, (task) -> {
-                setHealthInternal(player, user);
-            });
-        } else {
-            setHealthInternal(player, user);
-        }
-    }
-
     @SuppressWarnings("removal")
-    private void setHealthInternal(Player player, User user) {
+    private void setHealth(Player player, User user) {
         Trait trait = Traits.HP;
 
         double modifier = user.getBonusTraitLevel(trait);
