@@ -68,17 +68,26 @@ public class HpTrait extends TraitImpl {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> {
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> {
+                applyScaling(event.getPlayer());
+            });
+        } else {
             applyScaling(event.getPlayer());
-        });
+        }
     }
 
     @Override
     public void reload(Player player, Trait trait) {
-        plugin.getScheduler().executeAtEntity(player, (task) -> {
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                setHealth(player, plugin.getUser(player));
+                plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+            });
+        } else {
             setHealth(player, plugin.getUser(player));
             plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
-        });
+        }
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
@@ -133,75 +142,87 @@ public class HpTrait extends TraitImpl {
         }
 
         double finalNewHealth = newHealth;
-        plugin.getScheduler().executeAtEntity(player, (task) -> {
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                player.setHealth(finalNewHealth);
+            });
+        } else {
             player.setHealth(finalNewHealth);
-        });
+        }
         worldChangeHealth.remove(playerID);
     }
 
-    @SuppressWarnings("removal")
     private void setHealth(Player player, User user) {
-        plugin.getScheduler().executeAtEntity(player, (task) -> {
-            Trait trait = Traits.HP;
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                setHealthInternal(player, user);
+            });
+        } else {
+            setHealthInternal(player, user);
+        }
+    }
 
-            double modifier = user.getBonusTraitLevel(trait);
-            AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
-            if (attribute == null) return;
-            double originalMaxHealth = attribute.getValue();
-            boolean hasChange = true;
-            // Removes existing modifiers of the same name and check for change
+    @SuppressWarnings("removal")
+    private void setHealthInternal(Player player, User user) {
+        Trait trait = Traits.HP;
+
+        double modifier = user.getBonusTraitLevel(trait);
+        AttributeInstance attribute = player.getAttribute(AttributeCompat.maxHealth);
+        if (attribute == null) return;
+        double originalMaxHealth = attribute.getValue();
+        boolean hasChange = true;
+        // Removes existing modifiers of the same name and check for change
+        for (AttributeModifier am : attribute.getModifiers()) {
+            if (isSkillsHealthModifier(am)) {
+                // Check for any changes, if not, return
+                if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
+                    hasChange = false;
+                }
+                // Removes if it has changed
+                if (hasChange) {
+                    attribute.removeModifier(am);
+                }
+            }
+        }
+        // Disable health if disabled or in disable world
+        if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) || !trait.isEnabled()) {
+            player.setHealthScaled(false);
             for (AttributeModifier am : attribute.getModifiers()) {
                 if (isSkillsHealthModifier(am)) {
-                    // Check for any changes, if not, return
-                    if (Math.abs(originalMaxHealth - (originalMaxHealth - am.getAmount() + modifier)) <= threshold) {
-                        hasChange = false;
-                    }
-                    // Removes if it has changed
-                    if (hasChange) {
-                        attribute.removeModifier(am);
-                    }
+                    attribute.removeModifier(am);
                 }
             }
-            // Disable health if disabled or in disable world
-            if (plugin.getWorldManager().isInDisabledWorld(player.getLocation()) || !trait.isEnabled()) {
-                player.setHealthScaled(false);
-                for (AttributeModifier am : attribute.getModifiers()) {
-                    if (isSkillsHealthModifier(am)) {
-                        attribute.removeModifier(am);
-                    }
-                }
-                if (player.getHealth() >= originalMaxHealth) {
+            if (player.getHealth() >= originalMaxHealth) {
+                player.setHealth(attribute.getValue());
+            }
+            return;
+        }
+        // Force base health if enabled
+        if (trait.optionBoolean("force_base_health", false)) {
+            attribute.setBaseValue(20.0);
+        }
+        // Return if no change
+        if (hasChange) {
+            // Applies modifier
+            if (VersionUtils.isAtLeastVersion(21)) {
+                NamespacedKey modifierKey = new NamespacedKey(plugin, ATTRIBUTE_KEY);
+                attribute.addModifier(new AttributeModifier(modifierKey, modifier, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
+            } else {
+                attribute.addModifier(new AttributeModifier(ATTRIBUTE_ID, "skillsHealth", modifier, Operation.ADD_NUMBER));
+            }
+            // Sets health to max if over max
+            if (player.getHealth() > attribute.getValue()) {
+                player.setHealth(attribute.getValue());
+            }
+            if (trait.optionBoolean("keep_full_on_increase", false) && attribute.getValue() > originalMaxHealth) {
+                // Heals player to full health if had full health before modifier
+                final double threshold = 0.01;
+                if (player.getHealth() >= originalMaxHealth - threshold) {
                     player.setHealth(attribute.getValue());
                 }
-                return;
             }
-            // Force base health if enabled
-            if (trait.optionBoolean("force_base_health", false)) {
-                attribute.setBaseValue(20.0);
-            }
-            // Return if no change
-            if (hasChange) {
-                // Applies modifier
-                if (VersionUtils.isAtLeastVersion(21)) {
-                    NamespacedKey modifierKey = new NamespacedKey(plugin, ATTRIBUTE_KEY);
-                    attribute.addModifier(new AttributeModifier(modifierKey, modifier, Operation.ADD_NUMBER, EquipmentSlotGroup.ANY));
-                } else {
-                    attribute.addModifier(new AttributeModifier(ATTRIBUTE_ID, "skillsHealth", modifier, Operation.ADD_NUMBER));
-                }
-                // Sets health to max if over max
-                if (player.getHealth() > attribute.getValue()) {
-                    player.setHealth(attribute.getValue());
-                }
-                if (trait.optionBoolean("keep_full_on_increase", false) && attribute.getValue() > originalMaxHealth) {
-                    // Heals player to full health if had full health before modifier
-                    final double threshold = 0.01;
-                    if (player.getHealth() >= originalMaxHealth - threshold) {
-                        player.setHealth(attribute.getValue());
-                    }
-                }
-            }
-            applyScaling(player);
-        });
+        }
+        applyScaling(player);
     }
 
     private boolean isSkillsHealthModifier(AttributeModifier am) {
