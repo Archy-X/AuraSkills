@@ -79,12 +79,15 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public void reload(Player player, Trait trait) {
-        reloadHp(player);
-    }
-
-    private void reloadHp(Player player) {
-        setHealth(player, plugin.getUser(player));
-        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                setHealthInternal(player, plugin.getUser(player));
+                plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+            });
+        } else {
+            setHealthInternal(player, plugin.getUser(player));
+            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+        }
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
