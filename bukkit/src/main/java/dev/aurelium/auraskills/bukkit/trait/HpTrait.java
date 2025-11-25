@@ -79,13 +79,7 @@ public class HpTrait extends TraitImpl {
 
     @Override
     public void reload(Player player, Trait trait) {
-        if (plugin.getScheduler().isFolia()) {
-            plugin.getScheduler().executeAtEntity(player, (task) -> {
-                reloadHp(player);
-            });
-        } else {
-            reloadHp(player);
-        }
+        reloadHp(player);
     }
 
     private void reloadHp(Player player) {
@@ -155,8 +149,18 @@ public class HpTrait extends TraitImpl {
         worldChangeHealth.remove(playerID);
     }
 
-    @SuppressWarnings("removal")
     private void setHealth(Player player, User user) {
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                setHealthInternal(player, user);
+            });
+        } else {
+            setHealthInternal(player, user);
+        }
+    }
+
+    @SuppressWarnings("removal")
+    private void setHealthInternal(Player player, User user) {
         Trait trait = Traits.HP;
 
         double modifier = user.getBonusTraitLevel(trait);
