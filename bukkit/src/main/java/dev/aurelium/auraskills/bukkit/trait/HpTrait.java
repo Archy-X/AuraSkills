@@ -69,7 +69,9 @@ public class HpTrait extends TraitImpl {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (plugin.getScheduler().isFolia()) {
-            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> applyScaling(event.getPlayer()));
+            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> {
+                applyScaling(event.getPlayer());
+            });
         } else {
             applyScaling(event.getPlayer());
         }
