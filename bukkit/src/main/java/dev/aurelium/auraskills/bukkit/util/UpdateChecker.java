@@ -199,13 +199,15 @@ public class UpdateChecker {
                 if (arr != null && arr.length >= 1) {
                     try {
                         return Integer.parseInt(arr[0]);
-                    } catch (NumberFormatException ignored) {}
+                    } catch (NumberFormatException ignored) {
+                    }
                 }
             } else {
                 String buildNumStr = suffixStr.substring(suffixStr.indexOf(".") + 1);
                 try {
                     return Integer.parseInt(buildNumStr);
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         return -1;
