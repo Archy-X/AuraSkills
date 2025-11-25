@@ -69,9 +69,7 @@ public class HpTrait extends TraitImpl {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if (plugin.getScheduler().isFolia()) {
-            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> {
-                applyScaling(event.getPlayer());
-            });
+            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> applyScaling(event.getPlayer()));
         } else {
             applyScaling(event.getPlayer());
         }
@@ -81,13 +79,16 @@ public class HpTrait extends TraitImpl {
     public void reload(Player player, Trait trait) {
         if (plugin.getScheduler().isFolia()) {
             plugin.getScheduler().executeAtEntity(player, (task) -> {
-                setHealth(player, plugin.getUser(player));
-                plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+                reloadHp(player);
             });
         } else {
-            setHealth(player, plugin.getUser(player));
-            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
+            reloadHp(player);
         }
+    }
+
+    private void reloadHp(Player player) {
+        setHealthInternal(player, plugin.getUser(player));
+        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
