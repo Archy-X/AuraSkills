@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api("dev.aurelium:slate:1.2.0") {
+    api("dev.aurelium:slate:1.2.1") {
         exclude("org.spongepowered", "configurate-yaml")
     }
     // api(files("../../Slate/build/libs/Slate-1.2.0-all.jar"))
