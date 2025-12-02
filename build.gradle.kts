@@ -103,7 +103,7 @@ jreleaser {
                 val releaseTitle = gradleProject.property("releaseTitle").toString()
                 val repoBaseUrl = gradleProject.property("repoBaseUrl").toString()
                 val changelogLink = "${repoBaseUrl}/blob/master/Changelog.md#${gradleProject.property("projectVersion").toString().replace(".", "")}"
-                content = "${releaseTitle}\n\nSee the [changelog](${changelogLink}) for a full list of changes in this release.\n\nThis release includes work by"
+                content = "${releaseTitle}\n\nSee the [changelog](${changelogLink}) for a full list of changes in this release."
             }
         }
     }
