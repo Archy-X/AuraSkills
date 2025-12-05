@@ -248,6 +248,38 @@ requirement:
     list: [ ]
 damage:
   correct_last_damage: true
+# PvP balance settings
+pvp:
+  # When enabled, players in PvP combat (10 second duration after last hit) will only have equipment stats applied.
+  # This ensures that two players with the same equipment have equal stats in PvP, regardless of their skill levels.
+  # Combat state begins when players damage each other and lasts for 10 seconds after the last hit.
+  # Skills and other non-equipment modifiers will still apply in PvE combat and when not in combat.
+  #
+  # Combat is tracked automatically - when you attack or are attacked by another player,
+  # you enter combat mode for 10 seconds. Your stats will dynamically adjust.
+  only_equipment_stats: false
+  # List of abilities to disable during PvP combat.
+  # This works independently of the only_equipment_stats option above.
+  # Players in combat (10 second duration) will not be able to use these abilities.
+  disabled_abilities:
+    - 'auraskills/bow_master'
+    - 'auraskills/stun'
+    - 'auraskills/charged_shot'
+    - 'auraskills/parry'
+    - 'auraskills/fighter'
+    - 'auraskills/sword_master'
+    - 'auraskills/first_strike'
+    - 'auraskills/bleed'
+    - 'auraskills/shielding'
+    - 'auraskills/immunity'
+    - 'auraskills/no_debuff'
+    - 'auraskills/scythe_master'
+    - 'auraskills/axe_master'
+    - 'auraskills/valor'
+    - 'auraskills/shredder'
+    - 'auraskills/pick_master'
+    - 'auraskills/stamina'
+    - 'auraskills/enchanted_strength'
 critical:
   enabled:
     sword: true

@@ -15,6 +15,7 @@ import dev.aurelium.auraskills.bukkit.antiafk.BukkitAntiAfkManager;
 import dev.aurelium.auraskills.bukkit.api.ApiAuraSkillsBukkit;
 import dev.aurelium.auraskills.bukkit.api.ApiBukkitRegistrationUtil;
 import dev.aurelium.auraskills.bukkit.api.implementation.BukkitApiProvider;
+import dev.aurelium.auraskills.bukkit.combat.CombatTracker;
 import dev.aurelium.auraskills.bukkit.commands.CommandRegistrar;
 import dev.aurelium.auraskills.bukkit.commands.ConfirmManager;
 import dev.aurelium.auraskills.bukkit.config.BukkitConfigProvider;
@@ -167,6 +168,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     private PresetManager presetManager;
     private PlatformUtil platformUtil;
     private BukkitAntiAfkManager antiAfkManager;
+    private CombatTracker combatTracker;
     private boolean nbtApiEnabled;
     // For unit tests
     private final boolean isMock;
@@ -260,6 +262,7 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
         levelManager = new BukkitLevelManager(this);
         antiAfkManager = new BukkitAntiAfkManager(this); // Requires config loaded
         antiAfkManager.registerChecks();
+        combatTracker = new CombatTracker(this); // Track PvP combat state
         registerPriorityEvents();
         // Enabled bStats
         @Nullable Metrics metrics;
@@ -682,6 +685,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     @Override
     public BukkitAntiAfkManager getAntiAfkManager() {
         return antiAfkManager;
+    }
+
+    public CombatTracker getCombatTracker() {
+        return combatTracker;
     }
 
     @Override
