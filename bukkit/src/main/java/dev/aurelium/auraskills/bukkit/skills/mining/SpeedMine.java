@@ -31,8 +31,8 @@ public class SpeedMine extends ReadiedManaAbility {
     @SuppressWarnings("deprecation")
     public void onActivate(Player player, User user) {
         int amplifier = manaAbility.optionInt("haste_level", 10) - 1;
-        player.addPotionEffect(new PotionEffect(CompatUtil.haste(), (int) (getValue(user) * 20),
-                amplifier, false, false), true);
+        plugin.getScheduler().executeAtEntity(player, task -> player.addPotionEffect(new PotionEffect(CompatUtil.haste(), (int) (getValue(user) * 20),
+                amplifier, false, false), true));
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
     }
 
