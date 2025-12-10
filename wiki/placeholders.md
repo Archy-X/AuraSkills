@@ -16,6 +16,9 @@ AuraSkills provides PlaceholderAPI placeholders that work out of the box, withou
 * `%auraskills_average%` - Average skill level
 * `%auraskills_average_int%` - Average skill level rounded to an integer
 * `%auraskills_average_1%` - Average skill level rounded to one decimal
+* `%auraskills_average_stat%` - Average stat level
+* `%auraskills_average_stat_int%` - Average stat level rounded to an integer
+* `%auraskills_average_stat_1%` - Average stat level rounded to one decimal
 * `%auraskills_hp%` - Hp as an integer
 * `%auraskills_hp_1%` - Hp rounded to 1 decimal
 * `%auraskills_hp_2%` - Hp rounded to 2 decimals
@@ -40,6 +43,7 @@ AuraSkills provides PlaceholderAPI placeholders that work out of the box, withou
 * `%auraskills_xp_progress_[skill]%` - Gets the exact percent progress to the next level
 * `%auraskills_xp_int_[skill]%` - Gets the current XP for a player rounded to an integer
 * `%auraskills_xp_formatted_[skill]%` - Gets the current XP for a player formatted with suffixes
+* `%auraskills_xp_bar_[skill]%` - Gets the progress bar for a skill as shown in menus
 * `%auraskills_xp_[skill]%` - Gets the exact skill XP for a player
 * `%auraskills_multiplier%` - Gets a player's permission XP multiplier rounded up to 2 decimal places (1 = normal, 2 = 2x XP)
 * `%auraskills_multiplier_[skill]%` - Gets a player's permission XP multiplier for a specific skill rounded up to 2 decimal places (1 = normal, 2 = 2x XP)
