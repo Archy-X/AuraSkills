@@ -9,9 +9,9 @@ AuraSkills provides PlaceholderAPI placeholders that work out of the box, withou
 ## List
 
 * `%auraskills_power%` - Combined skill level
-* `%auraskills_[skill]%` - Level for a certain skill (ex: %aureliumskills\_farming%)
+* `%auraskills_[skill]%` - Level for a certain skill (ex: %auraskills\_farming%)
 * `%auraskills_[skill]_roman%` - Level for a certain skill as a roman numeral
-* `%auraskills_[stat]%` - Level for a certain stat (ex: %aureliumskills\_health%)
+* `%auraskills_[stat]%` - Level for a certain stat (ex: %auraskills\_health%)
 * `%auraskills_[stat]_int%` - Level for a certain stat rounded to an integer
 * `%auraskills_average%` - Average skill level
 * `%auraskills_average_int%` - Average skill level rounded to an integer

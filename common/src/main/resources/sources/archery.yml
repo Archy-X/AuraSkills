@@ -170,3 +170,14 @@ sources:
     xp: 9.0
   breeze:
     xp: 15.0
+  camel:
+    xp: 2.0
+  camel_husk:
+    xp: 2.0
+  nautilus:
+    xp: 5.0
+  parched:
+    xp: 8.0
+  zombie_nautilus:
+    xp: 7.0
+file_version: 1
