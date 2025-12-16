@@ -4,12 +4,12 @@ Changelog for versions since 2.0.0.
 
 ## 2.3.10
 
-## New Features
+### New Features
 
 - Add 1.21.11 support
 - Add nautilus, zombie nautilus, parched, camel, and camel husk to Fighting and Archery sources
 
-## Bug Fixes
+### Bug Fixes
 
 - Fix CustomRegenEvent may only be triggered synchronously
 - Fix error when changing some alchemy source menu_item material
