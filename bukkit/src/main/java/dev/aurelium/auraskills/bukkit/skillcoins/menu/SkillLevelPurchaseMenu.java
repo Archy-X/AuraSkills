@@ -166,17 +166,27 @@ public class SkillLevelPurchaseMenu {
                 inv.setItem(skillSlots[slotIndex++], skillItem);
             }
             
-            ItemStack back = new ItemStack(Material.BARRIER);
+            // Back button (slot 48) - Arrow style for back
+            ItemStack back = new ItemStack(Material.ARROW);
             ItemMeta backMeta = back.getItemMeta();
             if (backMeta != null) {
-                backMeta.setDisplayName(ChatColor.of("#FF5555") + "← Back");
+                backMeta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Return to main shop");
                 backMeta.setLore(lore);
                 back.setItemMeta(backMeta);
             }
-            inv.setItem(53, back);
+            inv.setItem(48, back);
+            
+            // Close button (slot 53) - Barrier style for close
+            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemMeta closeMeta = close.getItemMeta();
+            if (closeMeta != null) {
+                closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+                close.setItemMeta(closeMeta);
+            }
+            inv.setItem(53, close);
             
             player.openInventory(inv);
         } catch (Exception e) {
@@ -447,10 +457,11 @@ public class SkillLevelPurchaseMenu {
         if (inv == null) return;
         
         try {
+            // Back button (slot 48) - Arrow style
             ItemStack back = new ItemStack(Material.ARROW);
             ItemMeta meta = back.getItemMeta();
             if (meta != null) {
-                meta.setDisplayName(ChatColor.of("#FFFF00") + "← Back / Quick Select");
+                meta.setDisplayName(ChatColor.of("#55FF55") + "← Back / Quick Select");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Left Click: " + ChatColor.of("#FFFFFF") + "Return to skill list");
@@ -458,7 +469,16 @@ public class SkillLevelPurchaseMenu {
                 meta.setLore(lore);
                 back.setItemMeta(meta);
             }
-            inv.setItem(53, back);
+            inv.setItem(48, back);
+            
+            // Close button (slot 53) - Barrier style
+            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemMeta closeMeta = close.getItemMeta();
+            if (closeMeta != null) {
+                closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+                close.setItemMeta(closeMeta);
+            }
+            inv.setItem(53, close);
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Error adding back button", e);
         }
@@ -552,9 +572,16 @@ public class SkillLevelPurchaseMenu {
     }
     
     private void handleSelectionClick(Player player, int slot, ItemStack clicked) {
-        if (slot == 53) {
+        // Back button at slot 48 - return to shop
+        if (slot == 48 && clicked.getType() == Material.ARROW) {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             new ShopMainMenu(plugin, economy).open(player);
+            return;
+        }
+        
+        // Close button at slot 53
+        if (slot == 53 && clicked.getType() == Material.BARRIER) {
+            player.closeInventory();
             return;
         }
         
@@ -604,13 +631,17 @@ public class SkillLevelPurchaseMenu {
             updatePurchaseInventory(player);
         } else if (slot == 49) {
             performPurchase(player, skill, quantity);
-        } else if (slot == 53) {
+        } else if (slot == 48) {
+            // Back button - left click returns to skill list, right click opens quick select
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             if (isRightClick) {
                 openQuickSelect(player);
             } else {
                 openSkillSelection(player);
             }
+        } else if (slot == 53) {
+            // Close button
+            player.closeInventory();
         }
     }
     

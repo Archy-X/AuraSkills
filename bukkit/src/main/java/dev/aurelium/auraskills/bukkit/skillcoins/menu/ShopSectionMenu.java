@@ -202,6 +202,7 @@ public class ShopSectionMenu {
             addBalanceDisplay(inv, coins);
             addNavigationButtons(inv, page, maxPage);
             addBackButton(inv);
+            addCloseButton(inv);
             
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error updating section inventory", e);
@@ -242,6 +243,7 @@ public class ShopSectionMenu {
             addBalanceDisplay(inv, coins);
             addNavigationButtons(inv, page, maxPage);
             addBackButton(inv);
+            addCloseButton(inv);
             
             return inv;
             
@@ -447,25 +449,48 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Add back button
+     * Add back button (using Arrow to match Quest plugin style)
      */
     private void addBackButton(Inventory inv) {
         if (inv == null) return;
         
         try {
-            ItemStack back = new ItemStack(Material.BARRIER);
+            ItemStack back = new ItemStack(Material.ARROW);
             ItemMeta meta = back.getItemMeta();
             if (meta != null) {
-                meta.setDisplayName(ChatColor.of("#FF5555") + "← Back");
+                meta.setDisplayName(ChatColor.of("#FF5555") + "§l← Back");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Return to main shop menu");
                 meta.setLore(lore);
                 back.setItemMeta(meta);
             }
-            inv.setItem(53, back);
+            inv.setItem(48, back); // Match Quest plugin position
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Error adding back button", e);
+        }
+    }
+    
+    /**
+     * Add close button (slot 53)
+     */
+    private void addCloseButton(Inventory inv) {
+        if (inv == null) return;
+        
+        try {
+            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemMeta meta = close.getItemMeta();
+            if (meta != null) {
+                meta.setDisplayName(ChatColor.of("#FF5555") + "§l✗ Close");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.of("#808080") + "Click to close menu");
+                meta.setLore(lore);
+                close.setItemMeta(meta);
+            }
+            inv.setItem(53, close);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error adding close button", e);
         }
     }
     

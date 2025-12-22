@@ -1,9 +1,12 @@
 package dev.aurelium.auraskills.bukkit.skillcoins.menu;
 
+import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.skillcoins.shop.ShopSection;
 import dev.aurelium.auraskills.common.skillcoins.CurrencyType;
 import dev.aurelium.auraskills.common.skillcoins.EconomyProvider;
+import dev.aurelium.auraskills.common.user.User;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +21,10 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -36,8 +42,12 @@ public class ShopMainMenu {
     
     private final AuraSkills plugin;
     private final EconomyProvider economy;
-    private static final String MENU_TITLE = ChatColor.of("#00FFFF") + "❖ " + ChatColor.of("#FFFFFF") + "SkillCoins Shop";
+    private static final String MENU_TITLE = ChatColor.AQUA + "❖ " + ChatColor.WHITE + "SkillCoins Shop";
+    private static final String SKILL_SELECT_TITLE = ChatColor.GOLD + "✦ " + ChatColor.WHITE + "Select Skill to Buy";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,##0.00");
+    
+    // Track players in skill selection mode
+    private final Set<UUID> skillSelectionPlayers = new HashSet<>();
     
     public ShopMainMenu(AuraSkills plugin, EconomyProvider economy) {
         if (plugin == null) {
@@ -74,7 +84,7 @@ public class ShopMainMenu {
             // Create inventory
             Inventory inv = createInventory(player);
             if (inv == null) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ Error creating shop menu!");
+                player.sendMessage(ChatColor.RED + "✖ Error creating shop menu!");
                 plugin.getLogger().severe("Failed to create inventory for player: " + player.getName());
                 return;
             }
@@ -84,7 +94,7 @@ public class ShopMainMenu {
             
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error opening main shop menu for " + player.getName(), e);
-            player.sendMessage(ChatColor.of("#FF5555") + "✖ An error occurred opening the shop!");
+            player.sendMessage(ChatColor.RED + "✖ An error occurred opening the shop!");
         }
     }
     
@@ -124,6 +134,9 @@ public class ShopMainMenu {
             
             // Add shop sections with validation
             addShopSections(inv);
+            
+            // Add Level Buy button at top (slot 4) - new feature
+            addLevelBuyButton(inv);
             
             // Add close button (slot 53)
             addCloseButton(inv);
@@ -171,16 +184,16 @@ public class ShopMainMenu {
             if (meta instanceof SkullMeta) {
                 SkullMeta skullMeta = (SkullMeta) meta;
                 skullMeta.setOwningPlayer(player);
-                skullMeta.setDisplayName(ChatColor.of("#00FFFF") + "SkillCoins Shop " + 
-                        ChatColor.of("#FFD700") + "♦ " + player.getName());
+                skullMeta.setDisplayName(ChatColor.AQUA + "SkillCoins Shop " + 
+                        ChatColor.GOLD + "♦ " + player.getName());
                 
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.of("#808080") + "Welcome to the SkillCoins shop!");
-                lore.add(ChatColor.of("#808080") + "Browse categories below to buy");
-                lore.add(ChatColor.of("#808080") + "and sell items using your earnings.");
+                lore.add(ChatColor.GRAY + "Welcome to the SkillCoins shop!");
+                lore.add(ChatColor.GRAY + "Browse categories below to buy");
+                lore.add(ChatColor.GRAY + "and sell items using your earnings.");
                 lore.add("");
-                lore.add(ChatColor.of("#00FFFF") + "▸ Your balance is on the right →");
+                lore.add(ChatColor.AQUA + "▸ Your balance is on the right →");
                 
                 skullMeta.setLore(lore);
                 playerHead.setItemMeta(skullMeta);
@@ -202,17 +215,17 @@ public class ShopMainMenu {
             ItemStack balanceItem = new ItemStack(Material.GOLD_INGOT);
             ItemMeta balanceMeta = balanceItem.getItemMeta();
             if (balanceMeta != null) {
-                balanceMeta.setDisplayName(ChatColor.of("#FFD700") + "⬥ Your Balance");
+                balanceMeta.setDisplayName(ChatColor.GOLD + "⬥ Your Balance");
                 
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.of("#FFFF00") + "SkillCoins: " + 
-                        ChatColor.of("#FFFFFF") + MONEY_FORMAT.format(coins));
-                lore.add(ChatColor.of("#00FFFF") + "SkillTokens: " + 
-                        ChatColor.of("#FFFFFF") + MONEY_FORMAT.format(tokens));
+                lore.add(ChatColor.YELLOW + "SkillCoins: " + 
+                        ChatColor.WHITE + MONEY_FORMAT.format(coins));
+                lore.add(ChatColor.AQUA + "SkillTokens: " + 
+                        ChatColor.WHITE + MONEY_FORMAT.format(tokens));
                 lore.add("");
-                lore.add(ChatColor.of("#808080") + "Earn more by leveling skills");
-                lore.add(ChatColor.of("#808080") + "and completing objectives!");
+                lore.add(ChatColor.GRAY + "Earn more by leveling skills");
+                lore.add(ChatColor.GRAY + "and completing objectives!");
                 
                 balanceMeta.setLore(lore);
                 balanceItem.setItemMeta(balanceMeta);
@@ -252,6 +265,9 @@ public class ShopMainMenu {
                 try {
                     int slot = section.getSlot();
                     
+                    // Skip slot 4 as it's reserved for Level Buy button
+                    if (slot == 4) continue;
+                    
                     // Validate slot is within inventory bounds
                     if (slot < 0 || slot >= inv.getSize()) {
                         plugin.getLogger().warning("Invalid slot " + slot + " for section " + section.getId());
@@ -272,18 +288,18 @@ public class ShopMainMenu {
                             displayName = ChatColor.translateAlternateColorCodes('&', displayName);
                             meta.setDisplayName(displayName);
                         } else {
-                            meta.setDisplayName(ChatColor.of("#00FFFF") + section.getId());
+                            meta.setDisplayName(ChatColor.AQUA + section.getId());
                         }
                         
                         List<String> lore = new ArrayList<>();
                         lore.add("");
-                        lore.add(ChatColor.of("#808080") + "Browse and purchase items");
-                        lore.add(ChatColor.of("#808080") + "in this category");
+                        lore.add(ChatColor.GRAY + "Browse and purchase items");
+                        lore.add(ChatColor.GRAY + "in this category");
                         lore.add("");
-                        lore.add(ChatColor.of("#808080") + "Items: " + 
-                                ChatColor.of("#FFFFFF") + section.getItemCount());
+                        lore.add(ChatColor.GRAY + "Items: " + 
+                                ChatColor.WHITE + section.getItemCount());
                         lore.add("");
-                        lore.add(ChatColor.of("#FFFF00") + "▸ Click to open!");
+                        lore.add(ChatColor.YELLOW + "▸ Click to open!");
                         
                         meta.setLore(lore);
                         item.setItemMeta(meta);
@@ -300,6 +316,40 @@ public class ShopMainMenu {
     }
     
     /**
+     * Add Level Buy button at slot 4 - allows purchasing skill levels with tokens
+     */
+    private void addLevelBuyButton(Inventory inv) {
+        if (inv == null) return;
+        
+        try {
+            ItemStack levelBuy = new ItemStack(Material.EXPERIENCE_BOTTLE);
+            ItemMeta meta = levelBuy.getItemMeta();
+            if (meta != null) {
+                meta.setDisplayName(ChatColor.GOLD + "✦ " + ChatColor.WHITE + "Buy Skill Levels");
+                
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Purchase skill levels using");
+                lore.add(ChatColor.GRAY + "your Skill Tokens!");
+                lore.add("");
+                lore.add(ChatColor.AQUA + "Cost: " + ChatColor.WHITE + "10 Tokens per level");
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Select a skill and the levels");
+                lore.add(ChatColor.GRAY + "you want to purchase.");
+                lore.add("");
+                lore.add(ChatColor.YELLOW + "▸ Click to open!");
+                
+                meta.setLore(lore);
+                levelBuy.setItemMeta(meta);
+            }
+            
+            inv.setItem(4, levelBuy);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error adding level buy button", e);
+        }
+    }
+    
+    /**
      * Add close button
      */
     private void addCloseButton(Inventory inv) {
@@ -309,10 +359,10 @@ public class ShopMainMenu {
             ItemStack close = new ItemStack(Material.BARRIER);
             ItemMeta closeMeta = close.getItemMeta();
             if (closeMeta != null) {
-                closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+                closeMeta.setDisplayName(ChatColor.RED + "✖ Close");
                 List<String> closeLore = new ArrayList<>();
                 closeLore.add("");
-                closeLore.add(ChatColor.of("#808080") + "Close this menu");
+                closeLore.add(ChatColor.GRAY + "Close this menu");
                 closeMeta.setLore(closeLore);
                 close.setItemMeta(closeMeta);
             }
@@ -328,7 +378,7 @@ public class ShopMainMenu {
      */
     public boolean isMenuTitle(String title) {
         if (title == null) return false;
-        return title.equals(MENU_TITLE);
+        return title.equals(MENU_TITLE) || title.equals(SKILL_SELECT_TITLE);
     }
     
     /**
@@ -361,10 +411,24 @@ public class ShopMainMenu {
             }
             
             int slot = event.getSlot();
+            String title = event.getView().getTitle();
+            
+            // Check if we're in skill selection mode
+            if (title.equals(SKILL_SELECT_TITLE)) {
+                handleSkillSelectionClick(player, slot, clicked);
+                return;
+            }
             
             // Handle close button
             if (slot == 53 && clicked.getType() == Material.BARRIER) {
                 player.closeInventory();
+                return;
+            }
+            
+            // Handle Level Buy button (slot 4)
+            if (slot == 4 && clicked.getType() == Material.EXPERIENCE_BOTTLE) {
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+                openSkillSelectionForLevelBuy(player);
                 return;
             }
             
@@ -373,6 +437,67 @@ public class ShopMainMenu {
             
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error handling main menu click", e);
+        }
+    }
+    
+    /**
+     * Handle clicks in skill selection mode
+     */
+    private void handleSkillSelectionClick(Player player, int slot, ItemStack clicked) {
+        // Handle back button
+        if (slot == 45 && clicked.getType() == Material.ARROW) {
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+            skillSelectionPlayers.remove(player.getUniqueId());
+            open(player);
+            return;
+        }
+        
+        // Handle close button
+        if (slot == 53 && clicked.getType() == Material.BARRIER) {
+            skillSelectionPlayers.remove(player.getUniqueId());
+            player.closeInventory();
+            return;
+        }
+        
+        // Check if it's a skill slot
+        int[] skillSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
+        int skillIndex = -1;
+        for (int i = 0; i < skillSlots.length; i++) {
+            if (skillSlots[i] == slot) {
+                skillIndex = i;
+                break;
+            }
+        }
+        
+        if (skillIndex == -1) return;
+        
+        // Find the skill at this index
+        User user = plugin.getUser(player);
+        if (user == null) return;
+        
+        int currentIndex = 0;
+        for (Skill skill : Skills.values()) {
+            if (!skill.isEnabled()) continue;
+            
+            if (currentIndex == skillIndex) {
+                int currentLevel = user.getSkillLevel(skill);
+                int maxLevel = skill.getMaxLevel();
+                
+                if (currentLevel >= maxLevel) {
+                    player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 1.0f);
+                    player.sendMessage(ChatColor.RED + "This skill is already at maximum level!");
+                    return;
+                }
+                
+                // Open the new LevelBuyMenu for this skill
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+                skillSelectionPlayers.remove(player.getUniqueId());
+                
+                LevelBuyMenu levelBuyMenu = new LevelBuyMenu(plugin, economy);
+                levelBuyMenu.open(player, skill);
+                return;
+            }
+            currentIndex++;
         }
     }
     
@@ -394,7 +519,7 @@ public class ShopMainMenu {
             }
             
             if (sections == null || sections.isEmpty()) {
-                player.sendMessage(ChatColor.of("#FF5555") + "✖ No shop sections available!");
+                player.sendMessage(ChatColor.RED + "✖ No shop sections available!");
                 return;
             }
             
@@ -421,14 +546,14 @@ public class ShopMainMenu {
                             new TokenExchangeMenu(plugin, economy).open(player);
                         } catch (Exception e) {
                             plugin.getLogger().log(Level.SEVERE, "Error opening token exchange", e);
-                            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening token exchange!");
+                            player.sendMessage(ChatColor.RED + "✖ Error opening token exchange!");
                         }
                     } else if (sectionId.equalsIgnoreCase("SkillLevels")) {
                         try {
                             new SkillLevelPurchaseMenu(plugin, economy).open(player);
                         } catch (Exception e) {
                             plugin.getLogger().log(Level.SEVERE, "Error opening skill purchase", e);
-                            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening skill purchase!");
+                            player.sendMessage(ChatColor.RED + "✖ Error opening skill purchase!");
                         }
                     } else {
                         // Regular shop section
@@ -436,7 +561,7 @@ public class ShopMainMenu {
                             new ShopSectionMenu(plugin, economy, section).open(player, 0);
                         } catch (Exception e) {
                             plugin.getLogger().log(Level.SEVERE, "Error opening section " + sectionId, e);
-                            player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening shop section!");
+                            player.sendMessage(ChatColor.RED + "✖ Error opening shop section!");
                         }
                     }
                     return;
@@ -445,6 +570,125 @@ public class ShopMainMenu {
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error in handleSectionClick", e);
         }
+    }
+    
+    /**
+     * Open skill selection for Level Buy menu
+     */
+    private void openSkillSelectionForLevelBuy(Player player) {
+        if (player == null) return;
+        
+        try {
+            String skillSelectTitle = ChatColor.GOLD + "✦ " + ChatColor.WHITE + "Select Skill to Buy";
+            Inventory inv = Bukkit.createInventory(null, 54, skillSelectTitle);
+            
+            // Fill background
+            ItemStack filler = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+            ItemMeta fillerMeta = filler.getItemMeta();
+            if (fillerMeta != null) {
+                fillerMeta.setDisplayName(" ");
+                filler.setItemMeta(fillerMeta);
+            }
+            for (int i = 0; i < 54; i++) {
+                inv.setItem(i, filler);
+            }
+            
+            User user = plugin.getUser(player);
+            if (user == null) return;
+            
+            // Add skills in a nice layout
+            int[] skillSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
+            int slotIndex = 0;
+            
+            for (Skill skill : Skills.values()) {
+                if (!skill.isEnabled() || slotIndex >= skillSlots.length) continue;
+                
+                int currentLevel = user.getSkillLevel(skill);
+                int maxLevel = skill.getMaxLevel();
+                
+                Material icon = getSkillIcon(skill);
+                ItemStack skillItem = new ItemStack(icon);
+                ItemMeta meta = skillItem.getItemMeta();
+                
+                if (meta != null) {
+                    if (currentLevel >= maxLevel) {
+                        meta.setDisplayName(ChatColor.GOLD + "★ " + skill.getDisplayName(Locale.ENGLISH) + ChatColor.GRAY + " [MAX]");
+                        List<String> lore = new ArrayList<>();
+                        lore.add("");
+                        lore.add(ChatColor.GRAY + "Level: " + ChatColor.WHITE + currentLevel + "/" + maxLevel);
+                        lore.add("");
+                        lore.add(ChatColor.GREEN + "This skill is at maximum level!");
+                        meta.setLore(lore);
+                    } else {
+                        meta.setDisplayName(ChatColor.AQUA + skill.getDisplayName(Locale.ENGLISH));
+                        List<String> lore = new ArrayList<>();
+                        lore.add("");
+                        lore.add(ChatColor.GRAY + "Current Level: " + ChatColor.WHITE + currentLevel);
+                        lore.add(ChatColor.GRAY + "Max Level: " + ChatColor.WHITE + maxLevel);
+                        lore.add(ChatColor.GRAY + "Available: " + ChatColor.GREEN + (maxLevel - currentLevel) + " levels");
+                        lore.add("");
+                        lore.add(ChatColor.YELLOW + "▸ Click to purchase levels!");
+                        meta.setLore(lore);
+                    }
+                    skillItem.setItemMeta(meta);
+                }
+                
+                inv.setItem(skillSlots[slotIndex++], skillItem);
+            }
+            
+            // Back button (slot 45)
+            ItemStack back = new ItemStack(Material.ARROW);
+            ItemMeta backMeta = back.getItemMeta();
+            if (backMeta != null) {
+                backMeta.setDisplayName(ChatColor.GREEN + "« Back");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Return to shop");
+                backMeta.setLore(lore);
+                back.setItemMeta(backMeta);
+            }
+            inv.setItem(45, back);
+            
+            // Close button (slot 53)
+            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemMeta closeMeta = close.getItemMeta();
+            if (closeMeta != null) {
+                closeMeta.setDisplayName(ChatColor.RED + "✖ Close");
+                close.setItemMeta(closeMeta);
+            }
+            inv.setItem(53, close);
+            
+            // Store that we're in skill selection mode
+            skillSelectionPlayers.add(player.getUniqueId());
+            
+            player.openInventory(inv);
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Error opening skill selection", e);
+            player.sendMessage(ChatColor.RED + "✖ Error opening skill selection!");
+        }
+    }
+    
+    private Material getSkillIcon(Skill skill) {
+        String skillName = skill.getId().getKey().toLowerCase();
+        
+        return switch (skillName) {
+            case "farming" -> Material.IRON_HOE;
+            case "foraging" -> Material.IRON_AXE;
+            case "mining" -> Material.IRON_PICKAXE;
+            case "fishing" -> Material.FISHING_ROD;
+            case "excavation" -> Material.IRON_SHOVEL;
+            case "archery" -> Material.BOW;
+            case "defense" -> Material.CHAINMAIL_CHESTPLATE;
+            case "fighting" -> Material.IRON_SWORD;
+            case "endurance" -> Material.GOLDEN_APPLE;
+            case "agility" -> Material.FEATHER;
+            case "alchemy" -> Material.POTION;
+            case "enchanting" -> Material.ENCHANTING_TABLE;
+            case "sorcery" -> Material.BLAZE_ROD;
+            case "healing" -> Material.SPLASH_POTION;
+            case "forging" -> Material.ANVIL;
+            default -> Material.EXPERIENCE_BOTTLE;
+        };
     }
     
     /**

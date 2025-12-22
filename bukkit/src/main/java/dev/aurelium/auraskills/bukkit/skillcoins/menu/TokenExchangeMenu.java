@@ -279,18 +279,27 @@ public class TokenExchangeMenu {
         }
         inv.setItem(49, confirm);
         
-        // Back button (slot 53)
+        // Back button (slot 48) - matches Quest plugin navbar pattern
         ItemStack back = new ItemStack(Material.ARROW);
         ItemMeta backMeta = back.getItemMeta();
         if (backMeta != null) {
-            backMeta.setDisplayName(ChatColor.of("#FFFF00") + "← Back");
+            backMeta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
             List<String> backLore = new ArrayList<>();
             backLore.add("");
             backLore.add(ChatColor.of("#808080") + "Return to main shop");
             backMeta.setLore(backLore);
             back.setItemMeta(backMeta);
         }
-        inv.setItem(53, back);
+        inv.setItem(48, back);
+        
+        // Close button (slot 53) - barrier for close
+        ItemStack close = new ItemStack(Material.BARRIER);
+        ItemMeta closeMeta = close.getItemMeta();
+        if (closeMeta != null) {
+            closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+            close.setItemMeta(closeMeta);
+        }
+        inv.setItem(53, close);
         
             if (isNewInventory) {
                 // First time opening - need to show the inventory
@@ -396,10 +405,12 @@ public class TokenExchangeMenu {
             openQuickSelect(player);
         } else if (slot == 49) { // Confirm
             performPurchase(player, quantity, uuid);
-        } else if (slot == 53) { // Back
+        } else if (slot == 48) { // Back button
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             cleanupPlayerData(uuid);
             new ShopMainMenu(plugin, economy).open(player);
+        } else if (slot == 53) { // Close button
+            player.closeInventory();
         }
     }
     

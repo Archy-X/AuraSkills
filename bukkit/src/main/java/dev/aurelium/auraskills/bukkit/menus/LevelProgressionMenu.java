@@ -469,6 +469,14 @@ public class LevelProgressionMenu {
         if (totalMoney > 0) {
             message.append(TextUtil.replace(info.menu().getFormat("money_reward_entry"), "{amount}", NumberUtil.format2(totalMoney)));
         }
+        
+        // Add SkillCoins and Token rewards to lore
+        int coinsReward = dev.aurelium.auraskills.bukkit.skillcoins.TokenRewardListener.getCoinsRewardForLevel(level);
+        int tokenReward = dev.aurelium.auraskills.bukkit.skillcoins.TokenRewardListener.getTokenRewardForLevel(level);
+        
+        message.append(TextUtil.replace(info.menu().getFormat("skillcoins_reward_entry"), "{amount}", String.valueOf(coinsReward)));
+        message.append(TextUtil.replace(info.menu().getFormat("token_reward_entry"), "{amount}", String.valueOf(tokenReward)));
+        
         return message.toString();
     }
 

@@ -36,6 +36,7 @@ public class MenuManager implements Listener {
     private final Map<UUID, TokenExchangeMenu> tokenMenus = new ConcurrentHashMap<>();
     private final Map<UUID, SkillLevelPurchaseMenu> skillMenus = new ConcurrentHashMap<>();
     private final Map<UUID, SellMenu> sellMenus = new ConcurrentHashMap<>();
+    private final Map<UUID, LevelBuyMenu> levelBuyMenus = new ConcurrentHashMap<>();
     
     private MenuManager(AuraSkills plugin) {
         if (plugin == null) {
@@ -113,6 +114,19 @@ public class MenuManager implements Listener {
         sellMenus.put(player.getUniqueId(), menu);
     }
     
+    public void registerLevelBuyMenu(Player player, LevelBuyMenu menu) {
+        if (player == null || menu == null) {
+            plugin.getLogger().warning("Attempted to register null level buy menu or player");
+            return;
+        }
+        levelBuyMenus.put(player.getUniqueId(), menu);
+    }
+    
+    public void unregisterLevelBuyMenu(Player player) {
+        if (player == null) return;
+        levelBuyMenus.remove(player.getUniqueId());
+    }
+    
     /**
      * Unregister all menus for a player (thread-safe cleanup)
      * @param playerId The player's UUID
@@ -126,6 +140,7 @@ public class MenuManager implements Listener {
         tokenMenus.remove(playerId);
         skillMenus.remove(playerId);
         sellMenus.remove(playerId);
+        levelBuyMenus.remove(playerId);
     }
     
     /**
@@ -158,6 +173,7 @@ public class MenuManager implements Listener {
             if (title == null) return;
             
             // Delegate to appropriate menu handler (order matters - check most specific first)
+            if (handleLevelBuyMenu(playerId, title, event)) return;
             if (handleTransactionMenu(playerId, title, event)) return;
             if (handleTokenMenu(playerId, title, event)) return;
             if (handleSkillMenu(playerId, title, event)) return;
@@ -205,6 +221,7 @@ public class MenuManager implements Listener {
             }
             
             // Delegate to appropriate menu handler and cleanup
+            handleLevelBuyClose(playerId, title, event);
             handleTransactionClose(playerId, title, event);
             handleTokenClose(playerId, title, event);
             handleSkillClose(playerId, title, event);
@@ -218,6 +235,20 @@ public class MenuManager implements Listener {
     }
     
     // Helper methods for delegation with error handling
+    
+    private boolean handleLevelBuyMenu(UUID playerId, String title, InventoryClickEvent event) {
+        try {
+            LevelBuyMenu menu = levelBuyMenus.get(playerId);
+            if (menu != null && menu.isMenuTitle(title)) {
+                menu.handleClick(event);
+                return true;
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.SEVERE, "Error in level buy menu click", e);
+            levelBuyMenus.remove(playerId);
+        }
+        return false;
+    }
     
     private boolean handleTransactionMenu(UUID playerId, String title, InventoryClickEvent event) {
         try {
@@ -301,6 +332,19 @@ public class MenuManager implements Listener {
             sellMenus.remove(playerId);
         }
         return false;
+    }
+    
+    private void handleLevelBuyClose(UUID playerId, String title, InventoryCloseEvent event) {
+        try {
+            LevelBuyMenu menu = levelBuyMenus.get(playerId);
+            if (menu != null && menu.isMenuTitle(title)) {
+                menu.handleClose(event);
+                levelBuyMenus.remove(playerId);
+            }
+        } catch (Exception e) {
+            plugin.getLogger().log(Level.WARNING, "Error closing level buy menu", e);
+            levelBuyMenus.remove(playerId);
+        }
     }
     
     private void handleTransactionClose(UUID playerId, String title, InventoryCloseEvent event) {

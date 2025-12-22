@@ -11,7 +11,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 /**
- * Listener that rewards players with Skill Tokens when they level up skills
+ * Listener that rewards players with Skill Tokens AND SkillCoins when they level up skills
+ * 
+ * Rewards are shown in the level lore and in chat messages
  */
 public class TokenRewardListener implements Listener {
 
@@ -33,16 +35,25 @@ public class TokenRewardListener implements Listener {
         // Calculate token reward based on level (scaled rewards)
         int tokenReward = calculateTokenReward(level);
         
+        // Calculate SkillCoins reward based on level
+        int coinsReward = calculateCoinsReward(level);
+        
         // Award tokens
         plugin.getSkillCoinsEconomy().addBalance(player.getUniqueId(), CurrencyType.TOKENS, tokenReward);
+        
+        // Award coins
+        plugin.getSkillCoinsEconomy().addBalance(player.getUniqueId(), CurrencyType.COINS, coinsReward);
         
         // Send notification message
         player.sendMessage(ChatColor.GOLD + "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         player.sendMessage("");
-        player.sendMessage(ChatColor.GREEN + "  ✦ " + ChatColor.YELLOW + ChatColor.BOLD + "SKILL TOKEN REWARD" + ChatColor.GREEN + " ✦");
+        player.sendMessage(ChatColor.GREEN + "  ✦ " + ChatColor.YELLOW + ChatColor.BOLD + "LEVEL UP REWARDS" + ChatColor.GREEN + " ✦");
         player.sendMessage("");
-        player.sendMessage(ChatColor.GRAY + "  You earned " + ChatColor.AQUA + ChatColor.BOLD + tokenReward + " Skill Token" + (tokenReward > 1 ? "s" : ""));
-        player.sendMessage(ChatColor.GRAY + "  for reaching " + ChatColor.WHITE + event.getSkill().getDisplayName(event.getUser().getLocale()) + " Level " + level + ChatColor.GRAY + "!");
+        player.sendMessage(ChatColor.GRAY + "  " + event.getSkill().getDisplayName(event.getUser().getLocale()) + 
+                " Level " + ChatColor.WHITE + level);
+        player.sendMessage("");
+        player.sendMessage(ChatColor.GOLD + "  ⬥ " + ChatColor.YELLOW + coinsReward + " SkillCoins");
+        player.sendMessage(ChatColor.AQUA + "  ⬥ " + ChatColor.WHITE + tokenReward + " Skill Token" + (tokenReward > 1 ? "s" : ""));
         player.sendMessage("");
         player.sendMessage(ChatColor.GRAY + "  Use tokens to purchase skill levels at " + ChatColor.YELLOW + "/shop");
         player.sendMessage("");
@@ -69,6 +80,71 @@ public class TokenRewardListener implements Listener {
             return 7; // Levels 76-90: 7 tokens
         } else {
             return 10; // Levels 91+: 10 tokens
+        }
+    }
+    
+    /**
+     * Calculate SkillCoins reward based on level
+     * Scales with level for progression
+     */
+    private int calculateCoinsReward(int level) {
+        // Base reward of 10 coins, scaling up with level
+        int baseReward = 10;
+        
+        if (level <= 10) {
+            return baseReward + (level * 2); // 12-30 coins
+        } else if (level <= 25) {
+            return baseReward + 20 + ((level - 10) * 3); // 33-65 coins
+        } else if (level <= 50) {
+            return baseReward + 65 + ((level - 25) * 4); // 79-165 coins
+        } else if (level <= 75) {
+            return baseReward + 165 + ((level - 50) * 5); // 180-290 coins
+        } else if (level <= 90) {
+            return baseReward + 290 + ((level - 75) * 7); // 307-395 coins
+        } else {
+            return baseReward + 395 + ((level - 90) * 10); // 405+ coins
+        }
+    }
+    
+    /**
+     * Get the SkillCoins reward for a specific level
+     * Can be called from other classes to display in lore
+     */
+    public static int getCoinsRewardForLevel(int level) {
+        int baseReward = 10;
+        
+        if (level <= 10) {
+            return baseReward + (level * 2);
+        } else if (level <= 25) {
+            return baseReward + 20 + ((level - 10) * 3);
+        } else if (level <= 50) {
+            return baseReward + 65 + ((level - 25) * 4);
+        } else if (level <= 75) {
+            return baseReward + 165 + ((level - 50) * 5);
+        } else if (level <= 90) {
+            return baseReward + 290 + ((level - 75) * 7);
+        } else {
+            return baseReward + 395 + ((level - 90) * 10);
+        }
+    }
+    
+    /**
+     * Get the Token reward for a specific level
+     * Can be called from other classes to display in lore
+     */
+    public static int getTokenRewardForLevel(int level) {
+        if (level <= 10) {
+            return 1;
+        } else if (level <= 25) {
+            return 2;
+        } else if (level <= 50) {
+            return 3;
+        } else if (level <= 75) {
+            return 5;
+        } else if (level <= 90) {
+            return 7;
+        } else {
+            return 10;
         }
     }
 }

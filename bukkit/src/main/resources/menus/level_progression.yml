@@ -284,6 +284,8 @@ formats:
   attack_speed_entry: '<gray>{{attack_speed}}: <red>+{value}% '
   stat_reward_entry: '\n  {color}+{num} {symbol} {stat}'
   money_reward_entry: '\n  <green>${amount}'
+  skillcoins_reward_entry: '\n  <gold>⬥ {amount} SkillCoins'
+  token_reward_entry: '\n  <aqua>⬥ {amount} Skill Token(s)'
 options:
   use_level_as_amount: false
   over_max_stack_amount: 1
