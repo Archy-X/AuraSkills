@@ -374,20 +374,20 @@ public class TokenExchangeMenu {
     private void handleExchangeClick(Player player, int slot, UUID uuid) {
         int quantity = playerQuantities.getOrDefault(uuid, MIN_QUANTITY);
         
-        // Quantity adjustments
-        if (slot == 20 && quantity > 10) { // -10
+        // Quantity adjustments - EXACT same slots as TransactionMenu (19, 20, 22, 24, 25)
+        if (slot == 19 && quantity > 10) { // -10
             playerQuantities.put(uuid, quantity - 10);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 0.8f);
             updateExchangeMenu(player);
-        } else if (slot == 21 && quantity > MIN_QUANTITY) { // -1
+        } else if (slot == 20 && quantity > MIN_QUANTITY) { // -1
             playerQuantities.put(uuid, quantity - 1);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 0.9f);
             updateExchangeMenu(player);
-        } else if (slot == 23 && quantity < MAX_QUANTITY) { // +1
+        } else if (slot == 24 && quantity < MAX_QUANTITY) { // +1
             playerQuantities.put(uuid, quantity + 1);
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.1f);
             updateExchangeMenu(player);
-        } else if (slot == 24 && quantity + 10 <= MAX_QUANTITY) { // +10
+        } else if (slot == 25 && quantity + 10 <= MAX_QUANTITY) { // +10
             playerQuantities.put(uuid, Math.min(MAX_QUANTITY, quantity + 10));
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.2f);
             updateExchangeMenu(player);

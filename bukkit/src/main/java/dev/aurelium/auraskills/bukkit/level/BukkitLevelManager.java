@@ -113,5 +113,39 @@ public class BukkitLevelManager extends LevelManager {
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, SoundCategory.MASTER, 1f, 0.5f);
         }
     }
+    
+    /**
+     * Check if level up messages should be suppressed by WDP-Start.
+     * This is used during Quest 2 (foraging level up) to prevent message spam.
+     * ONLY suppresses FORAGING skill level ups - all other skills show normal messages.
+     */
+    @Override
+    protected boolean shouldSuppressLevelUpMessages(@NotNull User user, @NotNull Skill skill) {
+        Player player = ((BukkitUser) user).getPlayer();
+        if (player == null) return false;
+        
+        // ONLY suppress FORAGING skill - let all other skills show messages normally
+        if (!skill.getId().getKey().equalsIgnoreCase("foraging")) {
+            return false;
+        }
+        
+        // Check if WDP-Start plugin is loaded and wants to suppress messages
+        try {
+            Class<?> apiClass = Class.forName("com.wdp.start.api.WDPStartAPI");
+            java.lang.reflect.Method isAvailable = apiClass.getMethod("isAvailable");
+            java.lang.reflect.Method shouldSuppress = apiClass.getMethod("shouldSuppressLevelUpMessages", Player.class);
+            
+            Boolean available = (Boolean) isAvailable.invoke(null);
+            if (available != null && available) {
+                Boolean suppress = (Boolean) shouldSuppress.invoke(null, player);
+                return suppress != null && suppress;
+            }
+        } catch (ClassNotFoundException e) {
+            // WDP-Start not installed, that's fine
+        } catch (Exception e) {
+            plugin.logger().warn("Error checking WDP-Start API: " + e.getMessage());
+        }
+        return false;
+    }
 
 }

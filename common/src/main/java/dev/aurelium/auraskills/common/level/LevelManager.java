@@ -46,6 +46,17 @@ public abstract class LevelManager {
     }
 
     public abstract void playLevelUpSound(@NotNull User user);
+    
+    /**
+     * Check if level up messages should be suppressed for this user and skill.
+     * Override in platform-specific implementations to check for plugins like WDP-Start.
+     * @param user The user to check
+     * @param skill The skill being leveled up
+     * @return true if messages should be suppressed
+     */
+    protected boolean shouldSuppressLevelUpMessages(@NotNull User user, @NotNull Skill skill) {
+        return false; // Default: don't suppress
+    }
 
     public void addXp(User user, Skill skill, @Nullable XpSource source, double amount) {
         if (amount == 0) return; // Ignore if source amount is 0
@@ -181,15 +192,19 @@ public abstract class LevelManager {
         // Calls event
         plugin.getEventHandler().callSkillLevelUpEvent(user, skill, level);
 
-        // Sends messages
+        // Sends messages - check if suppressed by WDP-Start
+        boolean suppressMessages = shouldSuppressLevelUpMessages(user, skill);
+        
         LevelUpMessenger messenger = new LevelUpMessenger(plugin, user, locale, skill, level, rewards);
-        if (plugin.configBoolean(Option.LEVELER_TITLE_ENABLED)) {
+        if (!suppressMessages && plugin.configBoolean(Option.LEVELER_TITLE_ENABLED)) {
             messenger.sendTitle();
         }
-        if (plugin.configBoolean(Option.LEVELER_SOUND_ENABLED)) {
+        if (!suppressMessages && plugin.configBoolean(Option.LEVELER_SOUND_ENABLED)) {
             playLevelUpSound(user);
         }
-        messenger.sendChatMessage();
+        if (!suppressMessages) {
+            messenger.sendChatMessage();
+        }
 
         // Check for multiple level ups in a row after a delay
         plugin.getScheduler().scheduleSync(() -> checkLevelUp(user, skill), Tick.MS * plugin.configInt(Option.LEVELER_DOUBLE_CHECK_DELAY), TimeUnit.MILLISECONDS);
