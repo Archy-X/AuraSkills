@@ -292,11 +292,15 @@ public class TokenExchangeMenu {
         }
         inv.setItem(48, back);
         
-        // Close button (slot 53) - barrier for close
-        ItemStack close = new ItemStack(Material.BARRIER);
+        // Back button (slot 53) - use arrow to return to main shop
+        ItemStack close = new ItemStack(Material.ARROW);
         ItemMeta closeMeta = close.getItemMeta();
         if (closeMeta != null) {
-            closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+            closeMeta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            lore.add(ChatColor.of("#808080") + "Return to main shop");
+            closeMeta.setLore(lore);
             close.setItemMeta(closeMeta);
         }
         inv.setItem(53, close);
@@ -409,8 +413,10 @@ public class TokenExchangeMenu {
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
             cleanupPlayerData(uuid);
             new ShopMainMenu(plugin, economy).open(player);
-        } else if (slot == 53) { // Close button
-            player.closeInventory();
+        } else if (slot == 53) { // Back button
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+            cleanupPlayerData(uuid);
+            new ShopMainMenu(plugin, economy).open(player);
         }
     }
     

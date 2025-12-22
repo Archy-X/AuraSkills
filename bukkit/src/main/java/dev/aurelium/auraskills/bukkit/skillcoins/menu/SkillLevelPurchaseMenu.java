@@ -179,11 +179,15 @@ public class SkillLevelPurchaseMenu {
             }
             inv.setItem(48, back);
             
-            // Close button (slot 53) - Barrier style for close
-            ItemStack close = new ItemStack(Material.BARRIER);
+            // Back button (slot 53) - use arrow to return to main shop
+            ItemStack close = new ItemStack(Material.ARROW);
             ItemMeta closeMeta = close.getItemMeta();
             if (closeMeta != null) {
-                closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+                closeMeta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.of("#808080") + "Return to main shop");
+                closeMeta.setLore(lore);
                 close.setItemMeta(closeMeta);
             }
             inv.setItem(53, close);
@@ -199,22 +203,19 @@ public class SkillLevelPurchaseMenu {
         if (player == null || skill == null) return;
         
         try {
-            UUID uuid = player.getUniqueId();
-            selectedSkills.put(uuid, skill);
-            quantities.putIfAbsent(uuid, MIN_QUANTITY);
-            
-            User user = plugin.getUser(player);
-            if (user == null) return;
-            
-            String skillName = skill.getDisplayName(user.getLocale());
-            if (skillName.length() > 15) {
-                skillName = skillName.substring(0, 12) + "...";
+            // Delegate to the new LevelBuyMenu for a richer selection and purchase flow
+            try {
+                // Close current selection inventory to avoid overlap/desync
+                player.closeInventory();
+                // Cleanup skill menu session data for this player
+                cleanupPlayerData(player.getUniqueId());
+                // Open the new LevelBuyMenu
+                LevelBuyMenu levelBuyMenu = new LevelBuyMenu(plugin, economy);
+                levelBuyMenu.open(player, skill);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "Error opening new LevelBuyMenu", e);
+                player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening level buy menu!");
             }
-            
-            String menuTitle = ChatColor.of("#55FF55") + "Buy: " + ChatColor.of("#FFFFFF") + skillName;
-            menuTitles.put(uuid, menuTitle);
-            
-            updatePurchaseInventory(player);
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error opening purchase menu", e);
             player.sendMessage(ChatColor.of("#FF5555") + "✖ Error opening purchase menu!");
@@ -471,11 +472,15 @@ public class SkillLevelPurchaseMenu {
             }
             inv.setItem(48, back);
             
-            // Close button (slot 53) - Barrier style
-            ItemStack close = new ItemStack(Material.BARRIER);
+            // Back button (slot 53) - Arrow style to return to main shop
+            ItemStack close = new ItemStack(Material.ARROW);
             ItemMeta closeMeta = close.getItemMeta();
             if (closeMeta != null) {
-                closeMeta.setDisplayName(ChatColor.of("#FF5555") + "✖ Close");
+                closeMeta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.of("#808080") + "Return to main shop");
+                closeMeta.setLore(lore);
                 close.setItemMeta(closeMeta);
             }
             inv.setItem(53, close);
@@ -579,9 +584,10 @@ public class SkillLevelPurchaseMenu {
             return;
         }
         
-        // Close button at slot 53
-        if (slot == 53 && clicked.getType() == Material.BARRIER) {
-            player.closeInventory();
+        // Back button at slot 53
+        if (slot == 53 && clicked.getType() == Material.ARROW) {
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+            new ShopMainMenu(plugin, economy).open(player);
             return;
         }
         
@@ -640,8 +646,9 @@ public class SkillLevelPurchaseMenu {
                 openSkillSelection(player);
             }
         } else if (slot == 53) {
-            // Close button
-            player.closeInventory();
+            // Back button: return to main shop
+            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+            new ShopMainMenu(plugin, economy).open(player);
         }
     }
     

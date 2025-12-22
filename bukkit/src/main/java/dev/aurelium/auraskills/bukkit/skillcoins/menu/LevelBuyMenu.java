@@ -193,16 +193,8 @@ public class LevelBuyMenu {
     }
     
     private void fillBackground(Inventory inv) {
-        ItemStack filler = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-        ItemMeta meta = filler.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(" ");
-            filler.setItemMeta(meta);
-        }
-        
-        for (int i = 0; i < inv.getSize(); i++) {
-            inv.setItem(i, filler);
-        }
+        // Intentionally left blank — do not fill with black glass to avoid clutter
+        if (inv == null) return;
     }
     
     private void addTopControls(Inventory inv, Player player, Skill skill, int currentLevel, int maxLevel, int selectedLevel) {
@@ -229,17 +221,11 @@ public class LevelBuyMenu {
         }
         inv.setItem(0, skillItem);
         
-        // Slot 1: Minus button (-10)
-        createControlButton(inv, 1, Material.RED_STAINED_GLASS_PANE, 
-                ChatColor.of("#FF5555") + "▼▼ -10 Levels",
-                selectedLevel - 10 > currentLevel,
-                Arrays.asList("", ChatColor.GRAY + "Remove 10 from selection"));
-        
-        // Slot 2: Minus button (-1)
-        createControlButton(inv, 2, Material.ORANGE_STAINED_GLASS_PANE,
-                ChatColor.of("#FF8800") + "▼ -1 Level",
-                selectedLevel > currentLevel + 1,
-                Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
+            // Slot 1: Minus button (-1) - cleaner single-step control
+            createControlButton(inv, 1, Material.ORANGE_TERRACOTTA,
+                    ChatColor.RED + "▼ -1 Level",
+                    selectedLevel > currentLevel + 1,
+                    Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
         
         // Slot 4: Confirm/Purchase Button
         if (levelsToBuy > 0 && canAfford && currentLevel < maxLevel) {
@@ -291,16 +277,10 @@ public class LevelBuyMenu {
         }
         
         // Slot 6: Plus button (+1)
-        createControlButton(inv, 6, Material.LIME_STAINED_GLASS_PANE,
+        createControlButton(inv, 6, Material.LIME_TERRACOTTA,
                 ChatColor.of("#55FF55") + "▲ +1 Level",
                 selectedLevel < maxLevel,
                 Arrays.asList("", ChatColor.GRAY + "Add 1 to selection"));
-        
-        // Slot 7: Plus button (+10)
-        createControlButton(inv, 7, Material.GREEN_STAINED_GLASS_PANE,
-                ChatColor.of("#00AA00") + "▲▲ +10 Levels",
-                selectedLevel + 10 <= maxLevel,
-                Arrays.asList("", ChatColor.GRAY + "Add 10 to selection"));
         
         // Slot 8: Balance Display
         ItemStack balance = new ItemStack(Material.GOLD_NUGGET);
@@ -356,8 +336,6 @@ public class LevelBuyMenu {
                 lore.add("");
                 lore.add(ChatColor.AQUA + "SELECTED FOR PURCHASE");
                 lore.add("");
-                addRewardLore(lore, level);
-                lore.add("");
                 lore.add(ChatColor.YELLOW + "▸ Click to deselect this level");
             } else {
                 // Not selected, can be purchased - red/orange glass
@@ -365,8 +343,6 @@ public class LevelBuyMenu {
                 displayName = ChatColor.RED + "Level " + level;
                 lore.add("");
                 lore.add(ChatColor.GRAY + "Locked");
-                lore.add("");
-                addRewardLore(lore, level);
                 lore.add("");
                 lore.add(ChatColor.GOLD + "Cost: " + ChatColor.WHITE + TOKENS_PER_LEVEL + " Tokens");
                 lore.add("");
@@ -448,11 +424,15 @@ public class LevelBuyMenu {
             inv.setItem(50, next);
         }
         
-        // Close button (slot 53) - Barrier style
-        ItemStack close = new ItemStack(Material.BARRIER);
+        // Close button (slot 53) - Back arrow (acts as back)
+        ItemStack close = new ItemStack(Material.ARROW);
         ItemMeta closeMeta = close.getItemMeta();
         if (closeMeta != null) {
-            closeMeta.setDisplayName(ChatColor.RED + "✖ Close");
+            closeMeta.setDisplayName(ChatColor.GREEN + "← Back");
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            lore.add(ChatColor.GRAY + "Return to main shop");
+            closeMeta.setLore(lore);
             close.setItemMeta(closeMeta);
         }
         inv.setItem(53, close);
@@ -463,58 +443,47 @@ public class LevelBuyMenu {
      */
     public void handleClick(InventoryClickEvent event) {
         event.setCancelled(true);
-        
+
         if (!(event.getWhoClicked() instanceof Player)) return;
         Player player = (Player) event.getWhoClicked();
         UUID uuid = player.getUniqueId();
-        
+
         Skill skill = selectedSkill.get(uuid);
         if (skill == null) return;
-        
+
         User user = plugin.getUser(player);
         if (user == null) return;
-        
+
         int slot = event.getRawSlot();
         int currentLevel = user.getSkillLevel(skill);
         int maxLevel = skill.getMaxLevel();
         int selectedLevel = selectedUpToLevel.getOrDefault(uuid, currentLevel + 1);
         int page = currentPage.getOrDefault(uuid, 0);
-        
+
+        Runnable updateTask = null;
+
         // Check for control buttons
         switch (slot) {
-            case 1: // -10 levels
-                if (selectedLevel - 10 > currentLevel) {
-                    selectedUpToLevel.put(uuid, selectedLevel - 10);
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
-                }
-                return;
-            case 2: // -1 level
+            case 1: // -1 level
                 if (selectedLevel > currentLevel + 1) {
                     selectedUpToLevel.put(uuid, selectedLevel - 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
+                    updateTask = () -> updateInventory(player);
                 }
-                return;
+                break;
             case 4: // Confirm purchase
                 if (currentLevel < maxLevel) {
                     processPurchase(player, skill, currentLevel, selectedLevel);
                 }
-                return;
+                break;
             case 6: // +1 level
                 if (selectedLevel < maxLevel) {
                     selectedUpToLevel.put(uuid, selectedLevel + 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
+                    updateTask = () -> updateInventory(player);
                 }
-                return;
-            case 7: // +10 levels
-                if (selectedLevel + 10 <= maxLevel) {
-                    selectedUpToLevel.put(uuid, selectedLevel + 10);
-                    player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
-                }
-                return;
+                break;
+            // removed ±10 controls for cleaner single-step selection
             case 45: // Back
                 player.closeInventory();
                 // Open shop main menu
@@ -522,27 +491,31 @@ public class LevelBuyMenu {
                     ShopMainMenu shopMenu = new ShopMainMenu(plugin, economy);
                     shopMenu.open(player);
                 });
-                return;
+                break;
             case 48: // Previous page
                 if (page > 0) {
                     currentPage.put(uuid, page - 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
+                    updateTask = () -> updateInventory(player);
                 }
-                return;
+                break;
             case 50: // Next page
                 int maxPage = (maxLevel - 1) / ITEMS_PER_PAGE;
                 if (page < maxPage) {
                     currentPage.put(uuid, page + 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                    updateInventory(player);
+                    updateTask = () -> updateInventory(player);
                 }
-                return;
+                break;
             case 53: // Close
                 player.closeInventory();
-                return;
+                // Also open main shop menu (slot 53 acts as Back in non-root menus)
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    new ShopMainMenu(plugin, economy).open(player);
+                });
+                break;
         }
-        
+
         // Check if clicked on a level in the track
         int trackIndex = -1;
         for (int i = 0; i < TRACK.length; i++) {
@@ -551,18 +524,18 @@ public class LevelBuyMenu {
                 break;
             }
         }
-        
+
         if (trackIndex != -1) {
             int clickedLevel = (page * ITEMS_PER_PAGE) + trackIndex + 1;
-            
+
             if (clickedLevel <= currentLevel) {
                 // Can't select already unlocked levels
                 player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 1.0f);
                 return;
             }
-            
+
             if (clickedLevel > maxLevel) return;
-            
+
             // Toggle selection
             if (clickedLevel <= selectedLevel) {
                 // Clicking on a selected level - deselect down to the clicked level minus 1
@@ -576,9 +549,14 @@ public class LevelBuyMenu {
                 // Clicking on an unselected level - select up to that level
                 selectedUpToLevel.put(uuid, clickedLevel);
             }
-            
+
             player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.2f);
-            updateInventory(player);
+            updateTask = () -> updateInventory(player);
+        }
+
+        // If an update is needed, schedule it after the event
+        if (updateTask != null) {
+            Bukkit.getScheduler().runTask(plugin, updateTask);
         }
     }
     

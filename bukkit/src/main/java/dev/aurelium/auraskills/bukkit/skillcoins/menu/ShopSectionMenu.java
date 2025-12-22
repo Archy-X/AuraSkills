@@ -472,19 +472,19 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Add close button (slot 53)
+     * Add back button at slot 53 (acts as back in section menus)
      */
     private void addCloseButton(Inventory inv) {
         if (inv == null) return;
         
         try {
-            ItemStack close = new ItemStack(Material.BARRIER);
+            ItemStack close = new ItemStack(Material.ARROW);
             ItemMeta meta = close.getItemMeta();
             if (meta != null) {
-                meta.setDisplayName(ChatColor.of("#FF5555") + "§l✗ Close");
+                meta.setDisplayName(ChatColor.of("#55FF55") + "← Back");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.of("#808080") + "Click to close menu");
+                lore.add(ChatColor.of("#808080") + "Return to main shop menu");
                 meta.setLore(lore);
                 close.setItemMeta(meta);
             }
@@ -556,8 +556,8 @@ public class ShopSectionMenu {
                 return;
             }
             
-            // Back button
-            if (slot == 53 && clicked.getType() == Material.BARRIER) {
+            // Back button (slot 53 now uses ARROW)
+            if (slot == 53 && clicked.getType() == Material.ARROW) {
                 playSound(player, Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
                 new ShopMainMenu(plugin, economy).open(player);
                 return;

@@ -89,6 +89,7 @@ public class SellMenu {
         
         openMenus.add(player.getUniqueId());
         player.openInventory(inv);
+        player.updateInventory();
     }
     
     /**
