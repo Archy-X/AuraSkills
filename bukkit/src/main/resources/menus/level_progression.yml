@@ -19,28 +19,6 @@ items:
         2: '<gold>'
     - ' '
     - '<yellow>{{leaderboard_click}}'
-  back:
-    pos: 5,0
-    material: arrow
-    display_name: '<green>{{back}}'
-    lore:
-    - '<gray>{{back_click}}'
-  close:
-    pos: 5,1
-    material: barrier
-    display_name: '<red>{{close}}'
-  next_page:
-    pos: 5,8
-    material: arrow
-    display_name: '<gold>{{next_page}}'
-    lore:
-    - '<yellow>{{next_page_click}}'
-  previous_page:
-    pos: 5,7
-    material: arrow
-    display_name: '<gold>{{previous_page}}'
-    lore:
-    - '<yellow>{{previous_page_click}}'
   sources:
     pos: 0,2
     material: experience_bottle
@@ -78,6 +56,32 @@ items:
     - component: job_active
     - component: job_limit
     - component: job_cooldown
+  page:
+    pos: 5,0
+    material: book
+    display_name: '<aqua>{{page}}'
+  close:
+    pos: 5,1
+    material: barrier
+    display_name: '<red>{{close}}'
+  previous_page:
+    pos: 5,3
+    material: arrow
+    display_name: '<gold>{{previous_page}}'
+    lore:
+    - '<yellow>{{previous_page_click}}'
+  next_page:
+    pos: 5,5
+    material: arrow
+    display_name: '<gold>{{next_page}}'
+    lore:
+    - '<yellow>{{next_page_click}}'
+  back:
+    pos: 5,8
+    material: arrow
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
 templates:
   skill:
     pos: 0,0
