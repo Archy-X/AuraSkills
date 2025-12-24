@@ -19,9 +19,13 @@ public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
+        User user = plugin.getUser(player);
+
+        // Exit combat when player dies
+        plugin.getCombatTracker().exitCombat(user);
+
         if (plugin.configBoolean(Option.ON_DEATH_RESET_SKILLS) || plugin.configBoolean(Option.ON_DEATH_RESET_XP)) {
-            Player player = event.getEntity();
-            User user = plugin.getUser(player);
             for (Skill skill : plugin.getSkillRegistry().getValues()) {
                 if (plugin.configBoolean(Option.ON_DEATH_RESET_SKILLS)) {
                     user.resetSkill(skill);

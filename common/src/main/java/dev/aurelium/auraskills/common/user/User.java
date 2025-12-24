@@ -239,6 +239,10 @@ public abstract class User {
         return userStats.getBonusTraitLevel(trait);
     }
 
+    public double getBonusTraitLevelEquipmentOnly(Trait trait) {
+        return userStats.getBonusTraitLevelEquipmentOnly(trait);
+    }
+
     @Nullable
     public TraitModifier getTraitModifier(String name) {
         return userStats.getTraitModifier(name);
