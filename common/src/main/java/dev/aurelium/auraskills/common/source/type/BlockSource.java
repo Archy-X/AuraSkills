@@ -24,8 +24,9 @@ public class BlockSource extends Source implements BlockXpSource {
     private final BlockXpSourceState[] afterStates;
     private final String stateMultiplier;
     private final SupportBlockType supportBlockType;
+    private final boolean allowBoneMeal;
 
-    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, int maxBlocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType) {
+    public BlockSource(AuraSkillsPlugin plugin, SourceValues values, String[] blocks, int maxBlocks, BlockTriggers[] triggers, boolean checkReplace, BlockXpSourceState[] states, BlockXpSourceState[] afterStates, String stateMultiplier, SupportBlockType supportBlockType, boolean allowBoneMeal) {
         super(plugin, values);
         this.blocks = blocks;
         this.maxBlocks = maxBlocks;
@@ -35,6 +36,7 @@ public class BlockSource extends Source implements BlockXpSource {
         this.afterStates = afterStates;
         this.stateMultiplier = stateMultiplier;
         this.supportBlockType = supportBlockType;
+        this.allowBoneMeal = allowBoneMeal;
     }
 
     @Override
@@ -100,6 +102,11 @@ public class BlockSource extends Source implements BlockXpSource {
 
     public SupportBlockType getSupportBlockType() {
         return supportBlockType;
+    }
+
+    @Override
+    public boolean allowBoneMeal() {
+        return allowBoneMeal;
     }
 
     @Override

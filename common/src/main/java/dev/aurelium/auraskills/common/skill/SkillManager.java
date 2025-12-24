@@ -29,6 +29,7 @@ public class SkillManager {
     private final SkillSupplier supplier;
     private final Set<File> contentDirectories;
     private final Map<SourceType, Boolean> sourceEnabledCache = new ConcurrentHashMap<>();
+    private final Map<Class<?>, List<SkillSource<?>>> typeToSourceCache = new ConcurrentHashMap<>();
 
     public SkillManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -89,6 +90,10 @@ public class SkillManager {
     @SuppressWarnings("unchecked")
     @NotNull
     public <T extends XpSource> List<SkillSource<T>> getSourcesOfType(Class<T> typeClass) {
+        List<SkillSource<?>> cached = typeToSourceCache.get(typeClass);
+        if (cached != null) {
+            return (List<SkillSource<T>>) (List<?>) cached;
+        }
         var list = new ArrayList<SkillSource<T>>();
         for (Skill skill : getEnabledSkills()) {
             for (XpSource source : skill.getSources()) {
@@ -97,7 +102,13 @@ public class SkillManager {
                 }
             }
         }
+        typeToSourceCache.put(typeClass, (List<SkillSource<?>>) (List<?>) list);
         return list;
+    }
+
+    public void clearCache() {
+        sourceEnabledCache.clear();
+        typeToSourceCache.clear();
     }
 
     /**

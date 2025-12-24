@@ -50,6 +50,7 @@ public class SkillLoader {
         try {
             // Unregister existing skills
             plugin.getSkillManager().unregisterAll();
+            plugin.getSkillManager().clearCache();
             // Unregister existing abilities
             plugin.getAbilityManager().unregisterAll();
             plugin.getManaAbilityManager().unregisterAll();

@@ -30,6 +30,7 @@ repositories {
     maven("https://repo.nexomc.com/snapshots/")
     maven("https://repo.nexomc.com/releases/")
     maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.fancyinnovations.com/releases")
     mavenLocal()
 }
 
@@ -37,10 +38,10 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":api-bukkit"))
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    implementation("de.tr7zw:item-nbt-api:2.15.3")
+    implementation("de.tr7zw:item-nbt-api:2.15.5")
     implementation("org.bstats:bstats-bukkit:3.0.2")
-    implementation("net.kyori:adventure-text-minimessage:4.16.0")
-    implementation("net.kyori:adventure-platform-bukkit:4.3.3")
+    implementation("net.kyori:adventure-text-minimessage:4.25.0")
+    implementation("net.kyori:adventure-platform-bukkit:4.4.1")
     implementation("com.tcoded:FoliaLib:0.5.1")
     compileOnly("org.jetbrains:annotations:24.1.0")
     compileOnly("org.spigotmc:spigot-api:1.21.9-R0.1-SNAPSHOT")
@@ -59,6 +60,7 @@ dependencies {
     compileOnly("com.github.Slimefun:Slimefun4:RC-37")
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
+    compileOnly("de.oliver:FancyHolograms:2.8.0")
     testImplementation(testFixtures(project(":common")))
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.59.0")
     testImplementation("org.slf4j:slf4j-simple:2.0.17")
@@ -140,7 +142,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.10")
+        minecraftVersion("1.21.11")
     }
 
     test {
