@@ -82,7 +82,7 @@ public class AgilityAbilities extends BukkitAbilityImpl {
 
                 double intensity = event.getIntensity(player);
                 double multiplier = 1 + (getValue(ability, user) / 100);
-                PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
+                PotionUtil.applyEffect(plugin, player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier * intensity), effect.getAmplifier()));
             }
         }
     }
@@ -150,13 +150,13 @@ public class AgilityAbilities extends BukkitAbilityImpl {
                 duration = 180;
             }
             duration = (int) (multiplier * duration);
-            PotionUtil.applyEffect(player, new PotionEffect(potionEffectType, duration * 20, amplifier));
+            PotionUtil.applyEffect(plugin, player, new PotionEffect(potionEffectType, duration * 20, amplifier));
         }
         // Apply custom effects
         if (meta.hasCustomEffects()) {
             for (PotionEffect effect : meta.getCustomEffects()) {
                 if (effect.getType().equals(PotionEffectType.SPEED) || CompatUtil.isEffect(effect.getType(), Set.of("jump_boost", "jump"))) {
-                    PotionUtil.applyEffect(player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
+                    PotionUtil.applyEffect(plugin, player, new PotionEffect(effect.getType(), (int) (effect.getDuration() * multiplier), effect.getAmplifier()));
                 }
             }
         }
