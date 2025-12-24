@@ -170,8 +170,6 @@ public class LevelBuyMenu {
             
             inv.clear();
             
-            // Fill with dark glass
-            fillBackground(inv);
             
             // Add top controls (replacing rank/sources/abilities)
             addTopControls(inv, player, skill, currentLevel, maxLevel, selectedLevel);
@@ -221,8 +219,8 @@ public class LevelBuyMenu {
         }
         inv.setItem(0, skillItem);
         
-            // Slot 1: Minus button (-1) - cleaner single-step control
-            createControlButton(inv, 1, Material.ORANGE_TERRACOTTA,
+            // Slot 2: Minus button (-1) - cleaner single-step control
+            createControlButton(inv, 2, Material.ORANGE_TERRACOTTA,
                     ChatColor.RED + "▼ -1 Level",
                     selectedLevel > currentLevel + 1,
                     Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
@@ -360,15 +358,6 @@ public class LevelBuyMenu {
         }
     }
     
-    private void addRewardLore(List<String> lore, int level) {
-        int coinsReward = TokenRewardListener.getCoinsRewardForLevel(level);
-        int tokenReward = TokenRewardListener.getTokenRewardForLevel(level);
-        
-        lore.add(ChatColor.GRAY + "Rewards:");
-        lore.add(ChatColor.GOLD + "  ⬥ " + coinsReward + " SkillCoins");
-        lore.add(ChatColor.AQUA + "  ⬥ " + tokenReward + " Token" + (tokenReward > 1 ? "s" : ""));
-    }
-    
     private void addNavigation(Inventory inv, int page, int maxLevel) {
         int maxPage = (maxLevel - 1) / ITEMS_PER_PAGE;
         
@@ -384,6 +373,15 @@ public class LevelBuyMenu {
             back.setItemMeta(backMeta);
         }
         inv.setItem(45, back);
+        
+        // Close button (slot 46) - matches level progression layout
+        ItemStack close = new ItemStack(Material.BARRIER);
+        ItemMeta closeMeta = close.getItemMeta();
+        if (closeMeta != null) {
+            closeMeta.setDisplayName(ChatColor.RED + "✖ Close");
+            close.setItemMeta(closeMeta);
+        }
+        inv.setItem(46, close);
         
         // Previous page (slot 48)
         if (page > 0) {
@@ -424,18 +422,7 @@ public class LevelBuyMenu {
             inv.setItem(50, next);
         }
         
-        // Close button (slot 53) - Back arrow (acts as back)
-        ItemStack close = new ItemStack(Material.ARROW);
-        ItemMeta closeMeta = close.getItemMeta();
-        if (closeMeta != null) {
-            closeMeta.setDisplayName(ChatColor.GREEN + "← Back");
-            List<String> lore = new ArrayList<>();
-            lore.add("");
-            lore.add(ChatColor.GRAY + "Return to main shop");
-            closeMeta.setLore(lore);
-            close.setItemMeta(closeMeta);
-        }
-        inv.setItem(53, close);
+        // Slot 53 remains empty (matches level progression layout)
     }
     
     /**
@@ -492,6 +479,13 @@ public class LevelBuyMenu {
                     shopMenu.open(player);
                 });
                 break;
+            case 46: // Close
+                player.closeInventory();
+                // Also open main shop menu (slot 46 acts as Close)
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    new ShopMainMenu(plugin, economy).open(player);
+                });
+                break;
             case 48: // Previous page
                 if (page > 0) {
                     currentPage.put(uuid, page - 1);
@@ -506,13 +500,6 @@ public class LevelBuyMenu {
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
                     updateTask = () -> updateInventory(player);
                 }
-                break;
-            case 53: // Close
-                player.closeInventory();
-                // Also open main shop menu (slot 53 acts as Back in non-root menus)
-                Bukkit.getScheduler().runTask(plugin, () -> {
-                    new ShopMainMenu(plugin, economy).open(player);
-                });
                 break;
         }
 
@@ -540,9 +527,9 @@ public class LevelBuyMenu {
             if (clickedLevel <= selectedLevel) {
                 // Clicking on a selected level - deselect down to the clicked level minus 1
                 // But at minimum keep 1 level selected
-                int newSelection = clickedLevel - 1;
-                if (newSelection < currentLevel + 1) {
-                    newSelection = currentLevel + 1;
+                int newSelection = clickedLevel;
+                if (newSelection < currentLevel) {
+                    newSelection = currentLevel;
                 }
                 selectedUpToLevel.put(uuid, newSelection);
             } else {

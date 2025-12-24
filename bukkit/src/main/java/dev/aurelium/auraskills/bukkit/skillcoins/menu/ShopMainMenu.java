@@ -444,61 +444,59 @@ public class ShopMainMenu {
      * Handle clicks in skill selection mode
      */
     private void handleSkillSelectionClick(Player player, int slot, ItemStack clicked) {
-        // Handle back button
-        if (slot == 45 && clicked.getType() == Material.ARROW) {
-            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-            skillSelectionPlayers.remove(player.getUniqueId());
-            open(player);
-            return;
-        }
-        
-        // Handle close button
+        // Handle close button (slot 53)
         if (slot == 53 && clicked.getType() == Material.BARRIER) {
             skillSelectionPlayers.remove(player.getUniqueId());
             player.closeInventory();
             return;
         }
         
-        // Check if it's a skill slot
-        int[] skillSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
-        int skillIndex = -1;
-        for (int i = 0; i < skillSlots.length; i++) {
-            if (skillSlots[i] == slot) {
-                skillIndex = i;
-                break;
-            }
-        }
+        // Check if it's a skill slot and find which skill it is
+        Skill clickedSkill = getSkillFromSlot(slot);
+        if (clickedSkill == null) return;
         
-        if (skillIndex == -1) return;
-        
-        // Find the skill at this index
         User user = plugin.getUser(player);
         if (user == null) return;
         
-        int currentIndex = 0;
-        for (Skill skill : Skills.values()) {
-            if (!skill.isEnabled()) continue;
-            
-            if (currentIndex == skillIndex) {
-                int currentLevel = user.getSkillLevel(skill);
-                int maxLevel = skill.getMaxLevel();
-                
-                if (currentLevel >= maxLevel) {
-                    player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 1.0f);
-                    player.sendMessage(ChatColor.RED + "This skill is already at maximum level!");
-                    return;
-                }
-                
-                // Open the new LevelBuyMenu for this skill
-                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
-                skillSelectionPlayers.remove(player.getUniqueId());
-                
-                LevelBuyMenu levelBuyMenu = new LevelBuyMenu(plugin, economy);
-                levelBuyMenu.open(player, skill);
-                return;
-            }
-            currentIndex++;
+        int currentLevel = user.getSkillLevel(clickedSkill);
+        int maxLevel = clickedSkill.getMaxLevel();
+        
+        if (currentLevel >= maxLevel) {
+            player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 1.0f);
+            player.sendMessage(ChatColor.RED + "This skill is already at maximum level!");
+            return;
         }
+        
+        // Open the new LevelBuyMenu for this skill
+        player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
+        skillSelectionPlayers.remove(player.getUniqueId());
+        
+        LevelBuyMenu levelBuyMenu = new LevelBuyMenu(plugin, economy);
+        levelBuyMenu.open(player, clickedSkill);
+    }
+    
+    /**
+     * Get the skill associated with a slot in the skill selection menu
+     */
+    private Skill getSkillFromSlot(int slot) {
+        return switch (slot) {
+            case 10 -> Skills.ARCHERY;
+            case 11 -> Skills.FIGHTING;
+            case 12 -> Skills.DEFENSE;
+            case 13 -> Skills.ENDURANCE;
+            case 19 -> Skills.FARMING;
+            case 20 -> Skills.FORAGING;
+            case 21 -> Skills.MINING;
+            case 22 -> Skills.FISHING;
+            case 23 -> Skills.EXCAVATION;
+            case 28 -> Skills.AGILITY;
+            case 29 -> Skills.ALCHEMY;
+            case 30 -> Skills.ENCHANTING;
+            case 31 -> Skills.SORCERY;
+            case 32 -> Skills.HEALING;
+            case 33 -> Skills.FORGING;
+            default -> null;
+        };
     }
     
     /**
@@ -582,7 +580,7 @@ public class ShopMainMenu {
             String skillSelectTitle = ChatColor.GOLD + "✦ " + ChatColor.WHITE + "Select Skill to Buy";
             Inventory inv = Bukkit.createInventory(null, 54, skillSelectTitle);
             
-            // Fill background
+            // Fill background with black glass
             ItemStack filler = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
             ItemMeta fillerMeta = filler.getItemMeta();
             if (fillerMeta != null) {
@@ -596,60 +594,33 @@ public class ShopMainMenu {
             User user = plugin.getUser(player);
             if (user == null) return;
             
-            // Add skills in a nice layout
-            int[] skillSlots = {11, 12, 13, 14, 15, 20, 21, 22, 23, 24, 29, 30, 31, 32, 33};
-            int slotIndex = 0;
+            // Add skills in a layout matching the main /skills menu
+            // First row: Archery, Fighting, Defense, Endurance
+            // Second row: Farming, Foraging, Mining, Fishing, Excavation  
+            // Third row: Agility, Alchemy, Enchanting, Sorcery, Healing, Forging
             
-            for (Skill skill : Skills.values()) {
-                if (!skill.isEnabled() || slotIndex >= skillSlots.length) continue;
-                
-                int currentLevel = user.getSkillLevel(skill);
-                int maxLevel = skill.getMaxLevel();
-                
-                Material icon = getSkillIcon(skill);
-                ItemStack skillItem = new ItemStack(icon);
-                ItemMeta meta = skillItem.getItemMeta();
-                
-                if (meta != null) {
-                    if (currentLevel >= maxLevel) {
-                        meta.setDisplayName(ChatColor.GOLD + "★ " + skill.getDisplayName(Locale.ENGLISH) + ChatColor.GRAY + " [MAX]");
-                        List<String> lore = new ArrayList<>();
-                        lore.add("");
-                        lore.add(ChatColor.GRAY + "Level: " + ChatColor.WHITE + currentLevel + "/" + maxLevel);
-                        lore.add("");
-                        lore.add(ChatColor.GREEN + "This skill is at maximum level!");
-                        meta.setLore(lore);
-                    } else {
-                        meta.setDisplayName(ChatColor.AQUA + skill.getDisplayName(Locale.ENGLISH));
-                        List<String> lore = new ArrayList<>();
-                        lore.add("");
-                        lore.add(ChatColor.GRAY + "Current Level: " + ChatColor.WHITE + currentLevel);
-                        lore.add(ChatColor.GRAY + "Max Level: " + ChatColor.WHITE + maxLevel);
-                        lore.add(ChatColor.GRAY + "Available: " + ChatColor.GREEN + (maxLevel - currentLevel) + " levels");
-                        lore.add("");
-                        lore.add(ChatColor.YELLOW + "▸ Click to purchase levels!");
-                        meta.setLore(lore);
-                    }
-                    skillItem.setItemMeta(meta);
-                }
-                
-                inv.setItem(skillSlots[slotIndex++], skillItem);
-            }
+            // First row (slots 9-17)
+            addSkillToMenu(inv, Skills.ARCHERY, 10, user);
+            addSkillToMenu(inv, Skills.FIGHTING, 11, user);
+            addSkillToMenu(inv, Skills.DEFENSE, 12, user);
+            addSkillToMenu(inv, Skills.ENDURANCE, 13, user);
             
-            // Back button (slot 45)
-            ItemStack back = new ItemStack(Material.ARROW);
-            ItemMeta backMeta = back.getItemMeta();
-            if (backMeta != null) {
-                backMeta.setDisplayName(ChatColor.GREEN + "« Back");
-                List<String> lore = new ArrayList<>();
-                lore.add("");
-                lore.add(ChatColor.GRAY + "Return to shop");
-                backMeta.setLore(lore);
-                back.setItemMeta(backMeta);
-            }
-            inv.setItem(45, back);
+            // Second row (slots 18-26)
+            addSkillToMenu(inv, Skills.FARMING, 19, user);
+            addSkillToMenu(inv, Skills.FORAGING, 20, user);
+            addSkillToMenu(inv, Skills.MINING, 21, user);
+            addSkillToMenu(inv, Skills.FISHING, 22, user);
+            addSkillToMenu(inv, Skills.EXCAVATION, 23, user);
             
-            // Close button (slot 53)
+            // Third row (slots 27-35)
+            addSkillToMenu(inv, Skills.AGILITY, 28, user);
+            addSkillToMenu(inv, Skills.ALCHEMY, 29, user);
+            addSkillToMenu(inv, Skills.ENCHANTING, 30, user);
+            addSkillToMenu(inv, Skills.SORCERY, 31, user);
+            addSkillToMenu(inv, Skills.HEALING, 32, user);
+            addSkillToMenu(inv, Skills.FORGING, 33, user);
+            
+            // Close button (slot 53) - only close button, no back button in middle
             ItemStack close = new ItemStack(Material.BARRIER);
             ItemMeta closeMeta = close.getItemMeta();
             if (closeMeta != null) {
@@ -666,6 +637,45 @@ public class ShopMainMenu {
             plugin.getLogger().log(Level.SEVERE, "Error opening skill selection", e);
             player.sendMessage(ChatColor.RED + "✖ Error opening skill selection!");
         }
+    }
+    
+    /**
+     * Add a skill to the menu with proper formatting
+     */
+    private void addSkillToMenu(Inventory inv, Skill skill, int slot, User user) {
+        if (!skill.isEnabled()) return;
+        
+        int currentLevel = user.getSkillLevel(skill);
+        int maxLevel = skill.getMaxLevel();
+        
+        Material icon = getSkillIcon(skill);
+        ItemStack skillItem = new ItemStack(icon);
+        ItemMeta meta = skillItem.getItemMeta();
+        
+        if (meta != null) {
+            if (currentLevel >= maxLevel) {
+                meta.setDisplayName(ChatColor.GOLD + "★ " + skill.getDisplayName(Locale.ENGLISH) + ChatColor.GRAY + " [MAX]");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Level: " + ChatColor.WHITE + currentLevel + "/" + maxLevel);
+                lore.add("");
+                lore.add(ChatColor.GREEN + "This skill is at maximum level!");
+                meta.setLore(lore);
+            } else {
+                meta.setDisplayName(ChatColor.AQUA + skill.getDisplayName(Locale.ENGLISH));
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Current Level: " + ChatColor.WHITE + currentLevel);
+                lore.add(ChatColor.GRAY + "Max Level: " + ChatColor.WHITE + maxLevel);
+                lore.add(ChatColor.GRAY + "Available: " + ChatColor.GREEN + (maxLevel - currentLevel) + " levels");
+                lore.add("");
+                lore.add(ChatColor.YELLOW + "▸ Click to purchase levels!");
+                meta.setLore(lore);
+            }
+            skillItem.setItemMeta(meta);
+        }
+        
+        inv.setItem(slot, skillItem);
     }
     
     private Material getSkillIcon(Skill skill) {

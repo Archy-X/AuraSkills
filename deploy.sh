@@ -7,7 +7,7 @@
 
 # Configuration
 PROJECT_DIR="/root/WDP-Rework/SkillCoins/AuraSkills-Coins"
-CONTAINER_NAME="mc_server"  # Use container name instead of ID
+CONTAINER_NAME="b8f24891-b5be-4847-a96e-c705c500aece"  # Use container name
 SERVER_DIR="/var/lib/pterodactyl/volumes/b8f24891-b5be-4847-a96e-c705c500aece"
 PLUGINS_DIR="${SERVER_DIR}/plugins"
 JAR_NAME="AuraSkills-2.3.8.jar"
@@ -78,6 +78,8 @@ fi
 BUILD_JAR="${PROJECT_DIR}/bukkit/build/libs/${JAR_NAME}"
 if [[ ! -f "$BUILD_JAR" ]]; then
     log_error "Built JAR not found: $BUILD_JAR"
+    log_info "Available JARs in build directory:"
+    ls -la "${PROJECT_DIR}/bukkit/build/libs/" | grep -E "\.jar$" || echo "  No JAR files found"
     exit 1
 fi
 
@@ -89,16 +91,21 @@ log_success "JAR built: ${JAR_NAME} (${JAR_SIZE})"
 ################################################################################
 log_step "Stopping Minecraft server container..."
 
-# Use the full container UUID (name, not ID)
-CONTAINER_ID="b8f24891-b5be-4847-a96e-c705c500aece"
-
-# Check if container exists by name
-if ! docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_ID}$"; then
-    log_error "Container not found: ${CONTAINER_ID}"
+# Check if container exists
+if ! docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+    log_error "Container not found: ${CONTAINER_NAME}"
     log_info "Available containers:"
-    docker ps -a --format "  {{.Names}}" | head -5
+    docker ps -a --format "  {{.Names}}" | head -10
     exit 1
 fi
+
+# Get the actual container ID
+CONTAINER_ID=$(docker ps -a --format '{{.Names}} {{.ID}}' | grep "^${CONTAINER_NAME}" | awk '{print $2}')
+if [[ -z "$CONTAINER_ID" ]]; then
+    log_error "Could not extract container ID"
+    exit 1
+fi
+log_info "Found container: ${CONTAINER_NAME} (${CONTAINER_ID})"
 
 # Function to check if container is running using docker inspect
 is_running() {
@@ -106,12 +113,17 @@ is_running() {
     [[ "$status" == "true" ]]
 }
 
+# Function to get container status
+get_container_status() {
+    docker inspect -f '{{.State.Status}}' "$CONTAINER_ID" 2>/dev/null || echo "unknown"
+}
+
 # Check if container is running
 if is_running; then
     log_info "Container is running, initiating stop..."
     
     # Send stop signal
-    docker stop "$CONTAINER_ID" >/dev/null 2>&1 &
+    docker stop "$CONTAINER_NAME" >/dev/null 2>&1
     
     # Wait for container to stop with timeout
     TIMEOUT=60
@@ -138,7 +150,7 @@ if is_running; then
     if is_running; then
         echo ""  # New line after progress
         log_warning "Graceful shutdown timeout (${TIMEOUT}s), forcing stop..."
-        docker kill "$CONTAINER_ID" >/dev/null 2>&1
+        docker kill "$CONTAINER_NAME" >/dev/null 2>&1
         sleep 3
         
         # Final check
@@ -150,13 +162,33 @@ if is_running; then
         fi
     fi
 else
-    CONTAINER_STATUS=$(docker inspect -f '{{.State.Status}}' "$CONTAINER_ID" 2>/dev/null || echo "unknown")
+    CONTAINER_STATUS=$(get_container_status)
     log_info "Container already stopped (status: ${CONTAINER_STATUS})"
 fi
 
 # Wait for filesystem to be ready
 log_info "Waiting for filesystem to sync..."
 sleep 3
+
+# Verify server directory exists
+if [[ ! -d "$SERVER_DIR" ]]; then
+    log_error "Server directory not found: $SERVER_DIR"
+    log_info "Available directories:"
+    ls -la /var/lib/pterodactyl/volumes/ 2>/dev/null | head -10 || echo "  No volumes directory found"
+    exit 1
+fi
+
+# Verify plugins directory exists
+if [[ ! -d "$PLUGINS_DIR" ]]; then
+    log_error "Plugins directory not found: $PLUGINS_DIR"
+    log_info "Creating plugins directory..."
+    mkdir -p "$PLUGINS_DIR"
+    if [[ ! -d "$PLUGINS_DIR" ]]; then
+        log_error "Failed to create plugins directory"
+        exit 1
+    fi
+    log_success "Plugins directory created"
+fi
 
 ################################################################################
 # STEP 3: Backup Current Plugin
@@ -199,7 +231,11 @@ fi
 log_step "Deploying new plugin..."
 
 # Copy JAR
-cp "$BUILD_JAR" "${PLUGINS_DIR}/"
+log_info "Copying JAR to plugins directory..."
+if ! cp "$BUILD_JAR" "${PLUGINS_DIR}/"; then
+    log_error "Failed to copy JAR to plugins directory"
+    exit 1
+fi
 
 # Verify copy
 if [[ ! -f "${PLUGINS_DIR}/${JAR_NAME}" ]]; then
@@ -208,8 +244,11 @@ if [[ ! -f "${PLUGINS_DIR}/${JAR_NAME}" ]]; then
 fi
 
 # Set ownership
-chown pterodactyl:pterodactyl "${PLUGINS_DIR}/${JAR_NAME}"
-log_success "Plugin JAR deployed and ownership set"
+if ! chown pterodactyl:pterodactyl "${PLUGINS_DIR}/${JAR_NAME}"; then
+    log_warning "Failed to set ownership (may not be critical)"
+else
+    log_success "Plugin JAR deployed and ownership set"
+fi
 
 ################################################################################
 # STEP 6: Start Container
@@ -217,13 +256,14 @@ log_success "Plugin JAR deployed and ownership set"
 log_step "Starting Minecraft server container..."
 
 # Start container
-if ! docker start "$CONTAINER_ID" >/dev/null 2>&1; then
+log_info "Starting container..."
+if ! docker start "$CONTAINER_NAME" >/dev/null 2>&1; then
     log_error "Failed to send start command to container"
     exit 1
 fi
 
 # Verify container starts using docker inspect
-TIMEOUT=30
+TIMEOUT=60
 ELAPSED=0
 
 while [[ $ELAPSED -lt $TIMEOUT ]]; do
@@ -234,7 +274,7 @@ while [[ $ELAPSED -lt $TIMEOUT ]]; do
         break
     fi
     
-    if (( ELAPSED % 2 == 0 )); then
+    if (( ELAPSED % 5 == 0 )) && (( ELAPSED > 0 )); then
         echo -ne "  ${CYAN}└─${NC} Waiting for container to start... ${ELAPSED}s / ${TIMEOUT}s\r"
     fi
     
@@ -245,7 +285,7 @@ done
 if ! is_running; then
     echo ""  # New line after progress
     log_error "Container failed to start within ${TIMEOUT}s"
-    log_error "Check logs: docker logs ${CONTAINER_ID}"
+    log_error "Check logs: docker logs ${CONTAINER_NAME}"
     exit 1
 fi
 
@@ -323,7 +363,7 @@ echo ""
 log_info "Logs:"
 echo "  • Build: ${BUILD_LOG}"
 echo "  • Server: ${LOG_FILE}"
-echo "  • Container: docker logs ${CONTAINER_ID}"
+echo "  • Container: docker logs ${CONTAINER_NAME}"
 echo ""
 
 # Ask to follow logs
@@ -333,9 +373,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     if [[ -f "$LOG_FILE" ]]; then
         log_info "Following logs (Ctrl+C to exit)..."
         sleep 1
-        tail -f "$LOG_FILE" | grep --color=auto -E "AuraSkills|ERROR|WARN|$"
+        tail -f "$LOG_FILE" | grep --color=auto -E "AuraSkills|ERROR|WARN|Done"
     else
         log_warning "Log file not available yet"
+        log_info "Container logs: docker logs ${CONTAINER_NAME}"
     fi
 fi
 

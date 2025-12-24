@@ -254,7 +254,7 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Fill border with validation
+     * Fill border with validation - updated layout
      */
     private void fillBorder(Inventory inv) {
         if (inv == null) return;
@@ -267,7 +267,7 @@ public class ShopSectionMenu {
                 border.setItemMeta(meta);
             }
             
-            // Fill bottom row only (slots 45-53)
+            // Fill bottom row with black glass (slots 45-53)
             for (int i = 45; i < 54; i++) {
                 inv.setItem(i, border);
             }
@@ -363,7 +363,7 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Add page info display
+     * Add page info display - slot 45
      */
     private void addPageInfo(Inventory inv, int page, int maxPage, int startIndex, int endIndex, int totalItems) {
         if (inv == null) return;
@@ -388,7 +388,7 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Add balance display
+     * Add balance display - slot 46
      */
     private void addBalanceDisplay(Inventory inv, double coins) {
         if (inv == null) return;
@@ -408,13 +408,13 @@ public class ShopSectionMenu {
     }
     
     /**
-     * Add navigation buttons
+     * Add navigation buttons - updated layout
      */
     private void addNavigationButtons(Inventory inv, int page, int maxPage) {
         if (inv == null) return;
         
         try {
-            // Previous page button (slot 48)
+            // Previous page button (slot 48) - only when you can go back
             if (page > 0) {
                 ItemStack prevPage = new ItemStack(Material.ARROW);
                 ItemMeta meta = prevPage.getItemMeta();
@@ -428,8 +428,9 @@ public class ShopSectionMenu {
                 }
                 inv.setItem(48, prevPage);
             }
+            // If no previous page, slot 48 remains black glass
             
-            // Next page button (slot 50)
+            // Next page button (slot 50) - yellow text only
             if (page < maxPage) {
                 ItemStack nextPage = new ItemStack(Material.ARROW);
                 ItemMeta meta = nextPage.getItemMeta();
@@ -443,13 +444,14 @@ public class ShopSectionMenu {
                 }
                 inv.setItem(50, nextPage);
             }
+            // If no next page, slot 50 remains black glass
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Error adding navigation buttons", e);
         }
     }
     
     /**
-     * Add back button (using Arrow to match Quest plugin style)
+     * Add back button - slot 53
      */
     private void addBackButton(Inventory inv) {
         if (inv == null) return;
@@ -458,21 +460,21 @@ public class ShopSectionMenu {
             ItemStack back = new ItemStack(Material.ARROW);
             ItemMeta meta = back.getItemMeta();
             if (meta != null) {
-                meta.setDisplayName(ChatColor.of("#FF5555") + "§l← Back");
+                meta.setDisplayName(ChatColor.of("#FF5555") + "← Back");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Return to main shop menu");
                 meta.setLore(lore);
                 back.setItemMeta(meta);
             }
-            inv.setItem(48, back); // Match Quest plugin position
+            inv.setItem(53, back);
         } catch (Exception e) {
             plugin.getLogger().log(Level.WARNING, "Error adding back button", e);
         }
     }
     
     /**
-     * Add back button at slot 53 (acts as back in section menus)
+     * Add close button - slot 53 (redundant with back button, keeping for compatibility)
      */
     private void addCloseButton(Inventory inv) {
         if (inv == null) return;
