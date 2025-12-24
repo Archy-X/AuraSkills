@@ -684,6 +684,7 @@ leveler:
   mana_ability_unlock: Mana Ability Unlock
   mana_ability_level_up: Mana Ability Level Up
   unclaimed_item: "<red>You have unclaimed items because your inventory was full, use <yellow>/skills claimitems <red>to claim them"
+  limit_reached: "<red>Limit reached, {time} seconds remaining"
 menus:
   common:
     close: "Close"
@@ -721,6 +722,7 @@ menus:
     your_skills_desc: "Upgrade Skills by doing various tasks to unlock valuable stat boosts, abilities, and more!"
     your_skills_hover: "Hover over a Skill for more information!"
     your_skills_click: "Click on a Skill to view level progression!"
+    skill_xp_limited: "XP limited"
     skill_click: "Click to view Level Progression!"
     stats: "Stats"
     stats_desc: "Earn stat buffs by leveling up skills"

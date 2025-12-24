@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: マナアビリティーアンロック
   mana_ability_level_up: マナアビリティーアンロック
   unclaimed_item: "<red>インベントリがいっぱいのため、受け取っていないアイテムがあります。 <yellow>/skills claimitems <red>で受け取る"
+  limit_reached: "<red>上限に達しました、残り{time}秒です"
 menus:
   common:
     close: "閉じる"
@@ -564,6 +565,7 @@ menus:
     your_skills_desc: "様々なタスクをこなしてスキルをアップグレードし、貴重なステータスブーストやアビリティなどをアンロックしよう！"
     your_skills_hover: "スキルにカーソルを合わせると詳細が表示されます！"
     your_skills_click: "スキルをクリックすると、レベルアップが表示されます！"
+    skill_xp_limited: "XP制限"
     skill_click: "クリックするとレベル進行が表示されます！"
     stats: "統計"
     stats_desc: "スキルのレベルアップでステータスバフを獲得"
