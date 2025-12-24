@@ -451,7 +451,7 @@ public class LevelBuyMenu {
 
         // Check for control buttons
         switch (slot) {
-            case 1: // -1 level
+            case 3: // -1 level
                 if (selectedLevel > currentLevel + 1) {
                     selectedUpToLevel.put(uuid, selectedLevel - 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
