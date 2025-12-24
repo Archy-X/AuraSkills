@@ -219,11 +219,11 @@ public class LevelBuyMenu {
         }
         inv.setItem(0, skillItem);
         
-            // Slot 2: Minus button (-1) - cleaner single-step control
-            createControlButton(inv, 2, Material.ORANGE_TERRACOTTA,
-                    ChatColor.RED + "▼ -1 Level",
-                    selectedLevel > currentLevel + 1,
-                    Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
+        // Slot 3: Minus button (-1) - cleaner single-step control
+        createControlButton(inv, 3, Material.ORANGE_TERRACOTTA,
+                ChatColor.RED + "▼ -1 Level",
+                selectedLevel > currentLevel + 1,
+                Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
         
         // Slot 4: Confirm/Purchase Button
         if (levelsToBuy > 0 && canAfford && currentLevel < maxLevel) {
