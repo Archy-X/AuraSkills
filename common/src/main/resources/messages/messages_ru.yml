@@ -591,6 +591,10 @@ menus:
     next_page_click: "Нажмите чтобы перейти к следующей странице"
     previous_page: "Предыдущая страница"
     previous_page_click: "Нажмите чтобы перейти к предыдущей странице"
+    page: "Страница"
+    page_text: "Страница"
+    balance: "⛃"
+    balance_text: "Ваш баланс"
   skills:
     skills_title: "Ваши навыки"
     your_skills: "Ваши навыки"

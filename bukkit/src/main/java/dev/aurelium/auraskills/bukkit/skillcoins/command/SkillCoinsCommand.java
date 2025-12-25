@@ -27,8 +27,8 @@ public class SkillCoinsCommand extends BaseCommand {
         double tokens = plugin.getSkillCoinsEconomy().getBalance(player.getUniqueId(), CurrencyType.TOKENS);
         
         player.sendMessage(ChatColor.GOLD + "━━━━━━━ " + ChatColor.YELLOW + "Your Balance" + ChatColor.GOLD + " ━━━━━━━");
-        player.sendMessage(ChatColor.YELLOW + "SkillCoins: " + ChatColor.WHITE + String.format("%.2f", coins));
-        player.sendMessage(ChatColor.AQUA + "SkillTokens: " + ChatColor.WHITE + String.format("%.2f", tokens));
+        player.sendMessage(ChatColor.YELLOW + "⛃: " + ChatColor.WHITE + String.format("%.2f", coins));
+        player.sendMessage(ChatColor.AQUA + "🎟: " + ChatColor.WHITE + String.format("%.2f", tokens));
         player.sendMessage(ChatColor.GOLD + "━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
     
@@ -148,8 +148,8 @@ public class SkillCoinsCommand extends BaseCommand {
         double tokens = plugin.getSkillCoinsEconomy().getBalance(target.getUniqueId(), CurrencyType.TOKENS);
         
         sender.sendMessage(ChatColor.GOLD + "━━━━━━━ " + ChatColor.YELLOW + playerName + "'s Balance" + ChatColor.GOLD + " ━━━━━━━");
-        sender.sendMessage(ChatColor.YELLOW + "SkillCoins: " + ChatColor.WHITE + String.format("%.2f", coins));
-        sender.sendMessage(ChatColor.AQUA + "SkillTokens: " + ChatColor.WHITE + String.format("%.2f", tokens));
+        sender.sendMessage(ChatColor.YELLOW + "⛃: " + ChatColor.WHITE + String.format("%.2f", coins));
+        sender.sendMessage(ChatColor.AQUA + "🎟: " + ChatColor.WHITE + String.format("%.2f", tokens));
         sender.sendMessage(ChatColor.GOLD + "━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
 }

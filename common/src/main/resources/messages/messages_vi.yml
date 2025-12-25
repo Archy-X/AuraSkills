@@ -558,6 +558,10 @@ menus:
     next_page_click: "Nhấn để qua trang tiếp theo"
     previous_page: "Trang trước"
     previous_page_click: "Nhấn để trở lại trang trước"
+    page: "Trang"
+    page_text: "Trang"
+    balance: "⛃"
+    balance_text: "Số dư của bạn"
   skills:
     skills_title: "Khả năng của bạn"
     your_skills: "Khả năng của bạn"

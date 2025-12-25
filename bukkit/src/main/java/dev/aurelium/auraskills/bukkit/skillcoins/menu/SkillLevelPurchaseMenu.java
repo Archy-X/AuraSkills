@@ -107,7 +107,7 @@ public class SkillLevelPurchaseMenu {
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Purchase skill levels");
-                lore.add(ChatColor.of("#808080") + "using Skill Tokens");
+                lore.add(ChatColor.of("#808080") + "using 🎟");
                 lore.add("");
                 lore.add(ChatColor.of("#FFFF00") + "Select a skill below!");
                 infoMeta.setLore(lore);
@@ -118,14 +118,14 @@ public class SkillLevelPurchaseMenu {
             ItemStack balance = new ItemStack(Material.EMERALD);
             ItemMeta balanceMeta = balance.getItemMeta();
             if (balanceMeta != null) {
-                balanceMeta.setDisplayName(ChatColor.of("#00FFFF") + "Your Tokens");
+                balanceMeta.setDisplayName(ChatColor.of("#00FFFF") + "Your Tokens 🎟");
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#00FFFF") + "Tokens: " + ChatColor.of("#FFFFFF") + 
-                        MONEY_FORMAT.format(tokenBalance));
+                        MONEY_FORMAT.format(tokenBalance) + " 🎟");
                 lore.add("");
                 lore.add(ChatColor.of("#808080") + "Cost: " + ChatColor.of("#00FFFF") + 
-                        TOKENS_PER_LEVEL + " tokens per level");
+                        TOKENS_PER_LEVEL + " 🎟 per level");
                 balanceMeta.setLore(lore);
                 balance.setItemMeta(balanceMeta);
             }
@@ -403,7 +403,7 @@ public class SkillLevelPurchaseMenu {
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.of("#00FFFF") + "Tokens: " + ChatColor.of("#FFFFFF") + 
-                        MONEY_FORMAT.format(tokenBalance));
+                        MONEY_FORMAT.format(tokenBalance) + " 🎟");
                 meta.setLore(lore);
                 balance.setItemMeta(meta);
             }

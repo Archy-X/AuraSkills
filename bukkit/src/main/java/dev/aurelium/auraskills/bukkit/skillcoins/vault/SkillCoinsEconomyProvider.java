@@ -40,11 +40,11 @@ public class SkillCoinsEconomyProvider implements Economy {
         this.useCoins = useCoins;
         
         if (useCoins) {
-            this.currencyName = "SkillCoin";
-            this.currencyNamePlural = "SkillCoins";
+            this.currencyName = "⛃";
+            this.currencyNamePlural = "⛃";
         } else {
-            this.currencyName = "SkillToken";
-            this.currencyNamePlural = "SkillTokens";
+            this.currencyName = "🎟";
+            this.currencyNamePlural = "🎟";
         }
     }
     

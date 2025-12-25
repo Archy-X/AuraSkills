@@ -558,6 +558,10 @@ menus:
     next_page_click: "Sonraki sayfaya gitmek için tıklayın"
     previous_page: "Önceki Sayfa"
     previous_page_click: "Önceki sayfaya gitmek için tıklayın"
+    page: "Sayfa"
+    page_text: "Sayfa"
+    balance: "⛃"
+    balance_text: "Bakiyeniz"
   skills:
     skills_title: "Yetenekleriniz"
     your_skills: "Yetenekleriniz"

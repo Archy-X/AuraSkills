@@ -558,6 +558,10 @@ menus:
     next_page_click: "คลิกเพื่อไปยังหน้าถัดไป"
     previous_page: "หน้าก่อนหน้า"
     previous_page_click: "คลิกเพื่อไปยังหน้าก่อนหน้า"
+    page: "หน้า"
+    page_text: "หน้า"
+    balance: "⛃"
+    balance_text: "ยอดคงเหลือของคุณ"
   skills:
     skills_title: "ทักษะของคุณs"
     your_skills: "ทักษะของคุณ"

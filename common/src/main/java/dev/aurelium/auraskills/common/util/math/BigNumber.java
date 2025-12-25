@@ -7,9 +7,10 @@ public class BigNumber {
         int exp = (int) (Math.log(count) / Math.log(1000));
         double val = count / Math.pow(1000, exp);
         if (val == (long) val) { // Format as an integer
-            return String.format("%d%c", (long) val, "KMBTQU".charAt(exp - 1));
+            // Use lowercase suffix letters to match formatting convention (e.g., 12k)
+            return String.format("%d%c", (long) val, "kmbtqu".charAt(exp - 1));
         } else {
-            return String.format("%.1f%c", val, "KMBTQU".charAt(exp - 1));
+            return String.format("%.1f%c", val, "kmbtqu".charAt(exp - 1));
         }
     }
 

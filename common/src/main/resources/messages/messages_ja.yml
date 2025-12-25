@@ -558,6 +558,10 @@ menus:
     next_page_click: "クリックして次のページへ"
     previous_page: "前のページ"
     previous_page_click: "クリックして前のページへ"
+    page: "ページ"
+    page_text: "ページ"
+    balance: "⛃"
+    balance_text: "あなたの残高"
   skills:
     skills_title: "あなたのスキル"
     your_skills: "あなたのスキル"

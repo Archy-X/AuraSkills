@@ -591,6 +591,10 @@ menus:
     next_page_click: "Cliquez pour aller à la page suivante"
     previous_page: "Page précedente"
     previous_page_click: "Cliquez pour aller à la page précédente"
+    page: "Page"
+    page_text: "Page"
+    balance: "⛃"
+    balance_text: "Votre solde"
   skills:
     skills_title: "Vos compétences"
     your_skills: "Vos compétences"

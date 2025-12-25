@@ -6,11 +6,11 @@ pages:
         buy: 100
         currency: coins
         tokens: 1
-        displayname: "&b1 Skill Token"
+        displayname: "&b1 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &6100 SkillCoins"
-          - "&7Receive: &b1 Skill Token"
+          - "&7Cost: &6100 ⛃"
+          - "&7Receive: &b1 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -19,11 +19,11 @@ pages:
         buy: 450
         currency: coins
         tokens: 5
-        displayname: "&b5 Skill Tokens"
+        displayname: "&b5 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &6450 SkillCoins"
-          - "&7Receive: &b5 Skill Tokens"
+          - "&7Cost: &6450 ⛃"
+          - "&7Receive: &b5 🎟"
           - ""
           - "&a10% Discount!"
           - "&eClick to purchase!"
@@ -33,11 +33,11 @@ pages:
         buy: 850
         currency: coins
         tokens: 10
-        displayname: "&b10 Skill Tokens"
+        displayname: "&b10 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &6850 SkillCoins"
-          - "&7Receive: &b10 Skill Tokens"
+          - "&7Cost: &6850 ⛃"
+          - "&7Receive: &b10 🎟"
           - ""
           - "&a15% Discount!"
           - "&eClick to purchase!"
@@ -47,11 +47,11 @@ pages:
         buy: 2000
         currency: coins
         tokens: 25
-        displayname: "&b25 Skill Tokens"
+        displayname: "&b25 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &62,000 SkillCoins"
-          - "&7Receive: &b25 Skill Tokens"
+          - "&7Cost: &62,000 ⛃"
+          - "&7Receive: &b25 🎟"
           - ""
           - "&a20% Discount!"
           - "&eClick to purchase!"
@@ -61,11 +61,11 @@ pages:
         buy: 3750
         currency: coins
         tokens: 50
-        displayname: "&b50 Skill Tokens"
+        displayname: "&b50 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &63,750 SkillCoins"
-          - "&7Receive: &b50 Skill Tokens"
+          - "&7Cost: &63,750 ⛃"
+          - "&7Receive: &b50 🎟"
           - ""
           - "&a25% Discount!"
           - "&eClick to purchase!"
@@ -75,11 +75,11 @@ pages:
         buy: 7000
         currency: coins
         tokens: 100
-        displayname: "&b100 Skill Tokens"
+        displayname: "&b100 🎟"
         lore:
           - "&7Exchange coins for tokens"
-          - "&7Cost: &67,000 SkillCoins"
-          - "&7Receive: &b100 Skill Tokens"
+          - "&7Cost: &67,000 ⛃"
+          - "&7Receive: &b100 🎟"
           - ""
           - "&a30% Discount!"
           - "&eClick to purchase!"

@@ -42,7 +42,7 @@ public class ShopMainMenu {
     
     private final AuraSkills plugin;
     private final EconomyProvider economy;
-    private static final String MENU_TITLE = ChatColor.AQUA + "❖ " + ChatColor.WHITE + "SkillCoins Shop";
+    private static final String MENU_TITLE = ChatColor.AQUA + "❖ " + ChatColor.WHITE + "⛃ SkillCoins Shop";
     private static final String SKILL_SELECT_TITLE = ChatColor.GOLD + "✦ " + ChatColor.WHITE + "Select Skill to Buy";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,##0.00");
     
@@ -184,12 +184,12 @@ public class ShopMainMenu {
             if (meta instanceof SkullMeta) {
                 SkullMeta skullMeta = (SkullMeta) meta;
                 skullMeta.setOwningPlayer(player);
-                skullMeta.setDisplayName(ChatColor.AQUA + "SkillCoins Shop " + 
+                skullMeta.setDisplayName(ChatColor.AQUA + "⛃ Shop " + 
                         ChatColor.GOLD + "♦ " + player.getName());
                 
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.GRAY + "Welcome to the SkillCoins shop!");
+                lore.add(ChatColor.GRAY + "Welcome to the ⛃ Shop!");
                 lore.add(ChatColor.GRAY + "Browse categories below to buy");
                 lore.add(ChatColor.GRAY + "and sell items using your earnings.");
                 lore.add("");
@@ -219,10 +219,10 @@ public class ShopMainMenu {
                 
                 List<String> lore = new ArrayList<>();
                 lore.add("");
-                lore.add(ChatColor.YELLOW + "SkillCoins: " + 
-                        ChatColor.WHITE + MONEY_FORMAT.format(coins));
-                lore.add(ChatColor.AQUA + "SkillTokens: " + 
-                        ChatColor.WHITE + MONEY_FORMAT.format(tokens));
+                lore.add(ChatColor.YELLOW + "⛃: " + 
+                        ChatColor.WHITE + MONEY_FORMAT.format(coins) + " ⛃");
+                lore.add(ChatColor.AQUA + "🎟: " + 
+                        ChatColor.WHITE + MONEY_FORMAT.format(tokens) + " 🎟");
                 lore.add("");
                 lore.add(ChatColor.GRAY + "Earn more by leveling skills");
                 lore.add(ChatColor.GRAY + "and completing objectives!");
@@ -330,9 +330,9 @@ public class ShopMainMenu {
                 List<String> lore = new ArrayList<>();
                 lore.add("");
                 lore.add(ChatColor.GRAY + "Purchase skill levels using");
-                lore.add(ChatColor.GRAY + "your Skill Tokens!");
+                lore.add(ChatColor.GRAY + "your 🎟!");
                 lore.add("");
-                lore.add(ChatColor.AQUA + "Cost: " + ChatColor.WHITE + "10 Tokens per level");
+                lore.add(ChatColor.AQUA + "Cost: " + ChatColor.WHITE + "10 🎟 per level");
                 lore.add("");
                 lore.add(ChatColor.GRAY + "Select a skill and the levels");
                 lore.add(ChatColor.GRAY + "you want to purchase.");

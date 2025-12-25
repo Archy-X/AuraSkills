@@ -591,6 +591,10 @@ menus:
     next_page_click: "點選進入下一頁"
     previous_page: "上一頁"
     previous_page_click: "點選進入上一頁"
+    page: "頁"
+    page_text: "頁"
+    balance: "⛃"
+    balance_text: "您的餘額"
   skills:
     skills_title: "你的技能"
     your_skills: "你的技能"

@@ -284,12 +284,12 @@ public class LevelBuyMenu {
         ItemStack balance = new ItemStack(Material.GOLD_NUGGET);
         ItemMeta balanceMeta = balance.getItemMeta();
         if (balanceMeta != null) {
-            balanceMeta.setDisplayName(ChatColor.of("#FFD700") + "⬥ Your Tokens");
+            balanceMeta.setDisplayName(ChatColor.of("#FFD700") + "⬥ Your 🎟");
             List<String> lore = new ArrayList<>();
             lore.add("");
-            lore.add(ChatColor.AQUA + "Tokens: " + ChatColor.WHITE + MONEY_FORMAT.format(tokenBalance));
+            lore.add(ChatColor.AQUA + "🎟: " + ChatColor.WHITE + MONEY_FORMAT.format(tokenBalance));
             lore.add("");
-            lore.add(ChatColor.GRAY + "Cost per level: " + ChatColor.YELLOW + TOKENS_PER_LEVEL);
+            lore.add(ChatColor.GRAY + "Cost per level: " + ChatColor.YELLOW + TOKENS_PER_LEVEL + " 🎟");
             balanceMeta.setLore(lore);
             balance.setItemMeta(balanceMeta);
         }

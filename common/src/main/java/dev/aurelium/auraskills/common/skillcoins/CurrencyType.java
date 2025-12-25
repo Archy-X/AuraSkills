@@ -7,12 +7,12 @@ public enum CurrencyType {
     /**
      * Skill Coins - earned through gameplay and used to purchase items
      */
-    COINS("SkillCoins"),
+    COINS("⛃"),
     
     /**
      * Skill Tokens - premium currency (optional future use)
      */
-    TOKENS("SkillTokens");
+    TOKENS("🎟");
     
     private final String displayName;
     

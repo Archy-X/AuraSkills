@@ -1,13 +1,13 @@
 # SkillCoins Shop System
 
 ## Overview
-A complete shop system integrated into AuraSkills that allows players to buy and sell items using **SkillCoins** and **SkillTokens**.
+A complete shop system integrated into AuraSkills that allows players to buy and sell items using **⛃** and **🎟**.
 
 ## Features
 
 ### Currency System
-- **SkillCoins**: Primary currency earned through gameplay
-- **SkillTokens**: Premium/special currency (future expansion)
+- **⛃**: Primary currency earned through gameplay
+- **🎟**: Premium/special currency (future expansion)
 - File-based storage in `plugins/AuraSkills/skillcoins/`
 - Automatic save/load on player join/quit
 

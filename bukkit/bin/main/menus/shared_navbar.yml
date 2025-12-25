@@ -11,15 +11,19 @@ navbar:
     - ''
     - '<gray>{{balance_text}}: <white>{balance}'
     
-  glass_left_1:
-    slot: 46
-    material: black_stained_glass_pane
-    display_name: ' '
-    
-  glass_left_2:
-    slot: 47
-    material: black_stained_glass_pane
-    display_name: ' '
+  glass:
+    - slot: 46
+      material: black_stained_glass_pane
+      display_name: ' '
+    - slot: 47
+      material: black_stained_glass_pane
+      display_name: ' '
+    - slot: 51
+      material: black_stained_glass_pane
+      display_name: ' '
+    - slot: 52
+      material: black_stained_glass_pane
+      display_name: ' '
     
   previous_page:
     slot: 48
@@ -42,16 +46,6 @@ navbar:
     display_name: '<gold>{{next_page}}'
     lore:
     - '<yellow>{{next_page_click}}'
-    
-  glass_right_1:
-    slot: 51
-    material: black_stained_glass_pane
-    display_name: ' '
-    
-  glass_right_2:
-    slot: 52
-    material: black_stained_glass_pane
-    display_name: ' '
     
   back_close:
     slot: 53

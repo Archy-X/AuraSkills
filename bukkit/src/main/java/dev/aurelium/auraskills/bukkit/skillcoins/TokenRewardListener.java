@@ -41,8 +41,10 @@ public class TokenRewardListener implements Listener {
         // Award tokens
         plugin.getSkillCoinsEconomy().addBalance(player.getUniqueId(), CurrencyType.TOKENS, tokenReward);
         
-        // Award coins
-        plugin.getSkillCoinsEconomy().addBalance(player.getUniqueId(), CurrencyType.COINS, coinsReward);
+        // Award coins only if coinsReward > 0 (scaled payout on multiples of 5)
+        if (coinsReward > 0) {
+            plugin.getSkillCoinsEconomy().addBalance(player.getUniqueId(), CurrencyType.COINS, coinsReward);
+        }
         
         // Send notification message
         player.sendMessage(ChatColor.GOLD + "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -52,10 +54,12 @@ public class TokenRewardListener implements Listener {
         player.sendMessage(ChatColor.GRAY + "  " + event.getSkill().getDisplayName(event.getUser().getLocale()) + 
                 " Level " + ChatColor.WHITE + level);
         player.sendMessage("");
-        player.sendMessage(ChatColor.GOLD + "  ⬥ " + ChatColor.YELLOW + coinsReward + " SkillCoins");
-        player.sendMessage(ChatColor.AQUA + "  ⬥ " + ChatColor.WHITE + tokenReward + " Skill Token" + (tokenReward > 1 ? "s" : ""));
+        if (coinsReward > 0) {
+            player.sendMessage(ChatColor.GOLD + "  ⬥ " + ChatColor.YELLOW + coinsReward + " ⛃");
+        }
+        player.sendMessage(ChatColor.AQUA + "  ⬥ " + ChatColor.WHITE + tokenReward + " 🎟");
         player.sendMessage("");
-        player.sendMessage(ChatColor.GRAY + "  Use tokens to purchase skill levels at " + ChatColor.YELLOW + "/shop");
+        player.sendMessage(ChatColor.GRAY + "  Use 🎟 to purchase skill levels at " + ChatColor.YELLOW + "/shop");
         player.sendMessage("");
         player.sendMessage(ChatColor.GOLD + "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         
@@ -85,9 +89,13 @@ public class TokenRewardListener implements Listener {
     
     /**
      * Calculate SkillCoins reward based on level
-     * Scales with level for progression
+     * Scales with level for progression but only pays out on multiples of 5
      */
     private int calculateCoinsReward(int level) {
+        // Only give coins on multiples of 5 (scaled option)
+        if (level % 5 != 0) {
+            return 0;
+        }
         // Base reward of 10 coins, scaling up with level
         int baseReward = 10;
         

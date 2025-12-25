@@ -6,7 +6,27 @@ description: List of PlaceholderAPI placeholders
 
 AuraSkills provides PlaceholderAPI placeholders that work out of the box, without needing to download an ecloud expansion. Due to the plugin renaming in 2.0, existing placeholders prefixed with `%aureliumskills_` will still work alongside `%auraskills_` placeholders. However, you should slowly migrate your placeholders to use `%auraskills_`, since the old prefix may be removed in later versions.
 
-## List
+## Currency & Balance Placeholders
+
+### SkillCoins (Primary Currency)
+* `%auraskills_coins%` or `%auraskills_skillcoins%` - Raw coin balance (1234.56)
+* `%auraskills_coins_1%` or `%auraskills_skillcoins_1%` - Balance with 1 decimal (1234.6)
+* `%auraskills_coins_2%` or `%auraskills_skillcoins_2%` - Balance with 2 decimals (1234.56)
+* `%auraskills_coins_icon%` or `%auraskills_skillcoins_icon%` - Balance with ⛃ icon (1234 ⛃)
+* `%auraskills_coins_formatted%` or `%auraskills_skillcoins_formatted%` - Formatted with K/M and icon (1.2k ⛃)
+* `%auraskills_coins_k%` or `%auraskills_skillcoins_k%` - K/M format only (1.2k)
+
+### SkillTokens (Premium Currency)
+* `%auraskills_tokens%` or `%auraskills_skilltokens%` - Raw token balance (10.00)
+* `%auraskills_tokens_1%` or `%auraskills_skilltokens_1%` - Balance with 1 decimal (10.0)
+* `%auraskills_tokens_2%` or `%auraskills_skilltokens_2%` - Balance with 2 decimals (10.00)
+* `%auraskills_tokens_icon%` or `%auraskills_skilltokens_icon%` - Balance with 🎟 icon (10 🎟)
+* `%auraskills_tokens_formatted%` or `%auraskills_skilltokens_formatted%` - Formatted balance (10)
+
+### Combined Display
+* `%auraskills_coins_balance%` or `%auraskills_balance%` - Combined display (⛃ 1234 | 🎟 10)
+
+## Skill & Stat Placeholders
 
 * `%auraskills_power%` - Combined skill level
 * `%auraskills_[skill]%` - Level for a certain skill (ex: %auraskills\_farming%)

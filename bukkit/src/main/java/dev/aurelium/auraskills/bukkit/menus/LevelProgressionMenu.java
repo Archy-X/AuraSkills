@@ -474,8 +474,12 @@ public class LevelProgressionMenu {
         int coinsReward = dev.aurelium.auraskills.bukkit.skillcoins.TokenRewardListener.getCoinsRewardForLevel(level);
         int tokenReward = dev.aurelium.auraskills.bukkit.skillcoins.TokenRewardListener.getTokenRewardForLevel(level);
         
-        message.append(TextUtil.replace(info.menu().getFormat("skillcoins_reward_entry"), "{amount}", String.valueOf(coinsReward)));
-        message.append(TextUtil.replace(info.menu().getFormat("token_reward_entry"), "{amount}", String.valueOf(tokenReward)));
+        if (coinsReward > 0) {
+            message.append(TextUtil.replace(info.menu().getFormat("skillcoins_reward_entry"), "{amount}", String.valueOf(coinsReward)));
+        }
+        if (tokenReward > 0) {
+            message.append(TextUtil.replace(info.menu().getFormat("token_reward_entry"), "{amount}", String.valueOf(tokenReward)));
+        }
         
         return message.toString();
     }

@@ -558,6 +558,10 @@ menus:
     next_page_click: "다음 페이지로 이동하려면 클릭하세요."
     previous_page: "이전 페이지"
     previous_page_click: "이전 페이지로 이동하려면 클릭하세요."
+    page: "페이지"
+    page_text: "페이지"
+    balance: "⛃"
+    balance_text: "잔액"
   skills:
     skills_title: "자신의 스킬"
     your_skills: "자신의 스킬"

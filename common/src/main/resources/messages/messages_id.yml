@@ -591,6 +591,10 @@ menus:
     next_page_click: "Klik untuk pergi ke halaman berikutnya"
     previous_page: "Halaman Sebelumnya"
     previous_page_click: "Klik untuk pergi ke halaman sebelumnya"
+    page: "Halaman"
+    page_text: "Halaman"
+    balance: "⛃"
+    balance_text: "Saldo Anda"
   skills:
     skills_title: "Skill Anda"
     your_skills: "Skill Anda"

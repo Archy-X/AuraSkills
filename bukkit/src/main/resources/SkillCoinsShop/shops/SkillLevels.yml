@@ -10,7 +10,7 @@ pages:
         displayname: "&aFarming Level"
         lore:
           - "&7Purchase 1 level in Farming"
-          - "&7Cost: &b10 Skill Tokens"
+          - "&7Cost: &b10 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -22,7 +22,7 @@ pages:
         displayname: "&aForaging Level"
         lore:
           - "&7Purchase 1 level in Foraging"
-          - "&7Cost: &b10 Skill Tokens"
+          - "&7Cost: &b10 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -34,7 +34,7 @@ pages:
         displayname: "&aMining Level"
         lore:
           - "&7Purchase 1 level in Mining"
-          - "&7Cost: &b10 Skill Tokens"
+          - "&7Cost: &b10 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -46,7 +46,7 @@ pages:
         displayname: "&aFishing Level"
         lore:
           - "&7Purchase 1 level in Fishing"
-          - "&7Cost: &b10 Skill Tokens"
+          - "&7Cost: &b10 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -58,7 +58,7 @@ pages:
         displayname: "&aExcavation Level"
         lore:
           - "&7Purchase 1 level in Excavation"
-          - "&7Cost: &b10 Skill Tokens"
+          - "&7Cost: &b10 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -70,7 +70,7 @@ pages:
         displayname: "&aArchery Level"
         lore:
           - "&7Purchase 1 level in Archery"
-          - "&7Cost: &b12 Skill Tokens"
+          - "&7Cost: &b12 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -82,7 +82,7 @@ pages:
         displayname: "&aFighting Level"
         lore:
           - "&7Purchase 1 level in Fighting"
-          - "&7Cost: &b12 Skill Tokens"
+          - "&7Cost: &b12 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -94,7 +94,7 @@ pages:
         displayname: "&aDefense Level"
         lore:
           - "&7Purchase 1 level in Defense"
-          - "&7Cost: &b12 Skill Tokens"
+          - "&7Cost: &b12 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -106,7 +106,7 @@ pages:
         displayname: "&aAgility Level"
         lore:
           - "&7Purchase 1 level in Agility"
-          - "&7Cost: &b8 Skill Tokens"
+          - "&7Cost: &b8 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -118,7 +118,7 @@ pages:
         displayname: "&aEndurance Level"
         lore:
           - "&7Purchase 1 level in Endurance"
-          - "&7Cost: &b8 Skill Tokens"
+          - "&7Cost: &b8 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -131,7 +131,7 @@ pages:
         displayname: "&aAlchemy Level"
         lore:
           - "&7Purchase 1 level in Alchemy"
-          - "&7Cost: &b15 Skill Tokens"
+          - "&7Cost: &b15 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -143,7 +143,7 @@ pages:
         displayname: "&aEnchanting Level"
         lore:
           - "&7Purchase 1 level in Enchanting"
-          - "&7Cost: &b15 Skill Tokens"
+          - "&7Cost: &b15 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -155,7 +155,7 @@ pages:
         displayname: "&aSorcery Level"
         lore:
           - "&7Purchase 1 level in Sorcery"
-          - "&7Cost: &b15 Skill Tokens"
+          - "&7Cost: &b15 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -167,7 +167,7 @@ pages:
         displayname: "&aHealing Level"
         lore:
           - "&7Purchase 1 level in Healing"
-          - "&7Cost: &b15 Skill Tokens"
+          - "&7Cost: &b15 🎟"
           - ""
           - "&eClick to purchase!"
       
@@ -179,6 +179,6 @@ pages:
         displayname: "&aForging Level"
         lore:
           - "&7Purchase 1 level in Forging"
-          - "&7Cost: &b15 Skill Tokens"
+          - "&7Cost: &b15 🎟"
           - ""
           - "&eClick to purchase!"

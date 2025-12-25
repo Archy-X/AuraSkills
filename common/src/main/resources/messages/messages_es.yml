@@ -558,6 +558,11 @@ menus:
     next_page_click: "Click para ir a la página siguiente"
     previous_page: "Página Anterior"
     previous_page_click: "Click para ir a la página anterior"
+    page: "Página"
+    page_text: "Página"
+    balance: "⛃"
+    balance_text: "Tu Saldo"
+    trait: "Rasgo"
   skills:
     skills_title: "Tus Habilidades"
     your_skills: "Tus Habilidades"

@@ -558,6 +558,12 @@ menus:
     next_page_click: "Click to go to next page"
     previous_page: "Previous Page"
     previous_page_click: "Click to go to previous page"
+    page: "Page"
+    page_text: "Page"
+    balance: "⛃"
+    balance_text: "Your Balance"
+    coins_text: "⛃"
+    tokens_text: "🎟"
   skills:
     skills_title: "Your Skills"
     your_skills: "Your Skills"

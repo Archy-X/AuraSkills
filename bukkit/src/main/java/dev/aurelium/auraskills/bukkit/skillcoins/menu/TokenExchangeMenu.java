@@ -33,7 +33,7 @@ import java.util.logging.Level;
  */
 public class TokenExchangeMenu {
     
-    private static final String MENU_TITLE = "§a✦ §fToken Exchange";
+    private static final String MENU_TITLE = "§a✦ §f🎟 Token Exchange";
     private static final String PRESET_TITLE = "§e⚡ §fQuick Select Amount";
     private static final DecimalFormat MONEY_FORMAT = new DecimalFormat("#,##0.00");
     private static final int COINS_PER_TOKEN = 100; // Base rate: 100 coins = 1 token
@@ -152,17 +152,17 @@ public class TokenExchangeMenu {
         ItemStack tokenDisplay = new ItemStack(Material.PAPER, Math.min(quantity, 64));
         ItemMeta tokenMeta = tokenDisplay.getItemMeta();
         if (tokenMeta != null) {
-            tokenMeta.setDisplayName(ChatColor.of("#00FFFF") + "✦ Skill Tokens");
+            tokenMeta.setDisplayName(ChatColor.of("#00FFFF") + "✦ 🎟 Tokens");
             
             List<String> lore = new ArrayList<>();
             lore.add("");
-            lore.add(ChatColor.of("#808080") + "Tokens to Purchase: " + ChatColor.of("#FFFFFF") + quantity);
+            lore.add(ChatColor.of("#808080") + "🎟 to Purchase: " + ChatColor.of("#FFFFFF") + quantity);
             lore.add(ChatColor.of("#808080") + "Exchange Rate: " + ChatColor.of("#FFD700") + 
-                    COINS_PER_TOKEN + " coins" + ChatColor.of("#808080") + " = " + 
-                    ChatColor.of("#00FFFF") + "1 token");
+                    COINS_PER_TOKEN + " ⛃" + ChatColor.of("#808080") + " = " + 
+                    ChatColor.of("#00FFFF") + "1 🎟");
             lore.add("");
             lore.add(ChatColor.of("#FFD700") + "Total Cost: " + ChatColor.of("#FFFFFF") + 
-                    MONEY_FORMAT.format(totalCoins) + " Coins");
+                    MONEY_FORMAT.format(totalCoins) + " ⛃");
             lore.add("");
             
             if (coinBalance >= totalCoins) {
@@ -200,7 +200,7 @@ public class TokenExchangeMenu {
             qtyMeta.setDisplayName(ChatColor.of("#FFFF00") + "Quantity: " + ChatColor.of("#FFFFFF") + quantity);
             List<String> qtyLore = new ArrayList<>();
             qtyLore.add("");
-            qtyLore.add(ChatColor.of("#808080") + "Tokens to purchase");
+            qtyLore.add(ChatColor.of("#808080") + "🎟 to purchase");
             qtyLore.add(ChatColor.of("#808080") + "Use the buttons to adjust");
             qtyMeta.setLore(qtyLore);
             qtyDisplay.setItemMeta(qtyMeta);
@@ -243,9 +243,9 @@ public class TokenExchangeMenu {
             balanceMeta.setDisplayName(ChatColor.of("#FFD700") + "Your Balance");
             List<String> balanceLore = new ArrayList<>();
             balanceLore.add("");
-            balanceLore.add(ChatColor.of("#FFD700") + "Coins: " + ChatColor.of("#FFFFFF") + 
+            balanceLore.add(ChatColor.of("#FFD700") + "⛃: " + ChatColor.of("#FFFFFF") + 
                     MONEY_FORMAT.format(coinBalance));
-            balanceLore.add(ChatColor.of("#00FFFF") + "Tokens: " + ChatColor.of("#FFFFFF") + 
+            balanceLore.add(ChatColor.of("#00FFFF") + "🎟: " + ChatColor.of("#FFFFFF") + 
                     MONEY_FORMAT.format(tokenBalance));
             balanceMeta.setLore(balanceLore);
             balanceItem.setItemMeta(balanceMeta);

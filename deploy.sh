@@ -10,7 +10,14 @@ PROJECT_DIR="/root/WDP-Rework/SkillCoins/AuraSkills-Coins"
 CONTAINER_NAME="b8f24891-b5be-4847-a96e-c705c500aece"  # Use container name
 SERVER_DIR="/var/lib/pterodactyl/volumes/b8f24891-b5be-4847-a96e-c705c500aece"
 PLUGINS_DIR="${SERVER_DIR}/plugins"
-JAR_NAME="AuraSkills-2.3.8.jar"
+# Attempt to find the latest built AuraSkills JAR automatically
+LATEST_JAR_FILE=$(ls -1 "${PROJECT_DIR}/bukkit/build/libs/"AuraSkills-*.jar 2>/dev/null | sort -V | tail -1)
+if [[ -z "$LATEST_JAR_FILE" ]]; then
+    # Fallback to the hardcoded name if the pattern fails
+    JAR_NAME="AuraSkills-2.3.8.jar"
+else
+    JAR_NAME=$(basename "$LATEST_JAR_FILE")
+fi
 
 # Colors
 readonly RED='\033[0;31m'

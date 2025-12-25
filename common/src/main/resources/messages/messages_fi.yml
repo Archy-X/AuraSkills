@@ -558,6 +558,10 @@ menus:
     next_page_click: "Napsauta siirtyäksesi seuraavalle sivulle"
     previous_page: "Edellinen sivu"
     previous_page_click: "Napsauta siirtyäksesi edelliselle sivulle"
+    page: "Sivu"
+    page_text: "Sivu"
+    balance: "⛃"
+    balance_text: "Saldo"
   skills:
     skills_title: "Sinun taitosi"
     your_skills: "Sinun taitosi"

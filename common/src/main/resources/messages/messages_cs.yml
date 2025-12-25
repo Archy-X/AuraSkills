@@ -558,6 +558,10 @@ menus:
     next_page_click: "Kliknutím přejdeš na další stránku"
     previous_page: "Předchozí stránka"
     previous_page_click: "Kliknutím přejdeš na předchozí stránku"
+    page: "Stránka"
+    page_text: "Stránka"
+    balance: "⛃"
+    balance_text: "Tvůj zůstatek"
   skills:
     skills_title: "Tvoje dovednosti"
     your_skills: "Tvé dovednosti"
