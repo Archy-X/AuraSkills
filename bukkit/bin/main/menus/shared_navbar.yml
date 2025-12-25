@@ -1,0 +1,71 @@
+# Shared navbar configuration for all menus
+# Layout: [Balance] [Glass] [Glass] [Prev] [Page] [Next] [Glass] [Glass] [Back/Close]
+# Slots: 45-53 (bottom row)
+
+navbar:
+  balance:
+    slot: 45
+    material: gold_nugget
+    display_name: '<gold>{{balance}}'
+    lore:
+    - ''
+    - '<gray>{{balance_text}}: <white>{balance}'
+    
+  glass_left_1:
+    slot: 46
+    material: black_stained_glass_pane
+    display_name: ' '
+    
+  glass_left_2:
+    slot: 47
+    material: black_stained_glass_pane
+    display_name: ' '
+    
+  previous_page:
+    slot: 48
+    material: arrow
+    display_name: '<gold>{{previous_page}}'
+    lore:
+    - '<yellow>{{previous_page_click}}'
+    
+  page_info:
+    slot: 49
+    material: paper
+    display_name: '<aqua>{{page}}'
+    lore:
+    - ''
+    - '<gray>{{page_text}}: <white>{page}'
+    
+  next_page:
+    slot: 50
+    material: arrow
+    display_name: '<gold>{{next_page}}'
+    lore:
+    - '<yellow>{{next_page_click}}'
+    
+  glass_right_1:
+    slot: 51
+    material: black_stained_glass_pane
+    display_name: ' '
+    
+  glass_right_2:
+    slot: 52
+    material: black_stained_glass_pane
+    display_name: ' '
+    
+  back_close:
+    slot: 53
+    material: arrow
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
+    
+# Exceptions for menus that should only show back button
+exceptions:
+  skill_selection:
+    - skills
+    - skill_select
+    - skill_abilities
+    - skill_sources
+    - skill_stats
+    - stat_info

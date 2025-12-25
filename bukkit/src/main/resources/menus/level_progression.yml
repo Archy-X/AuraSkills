@@ -56,27 +56,49 @@ items:
     - component: job_active
     - component: job_limit
     - component: job_cooldown
-  page:
+  balance:
     pos: 5,0
-    material: book
-    display_name: '<aqua>{{page}}'
-  close:
+    material: gold_nugget
+    display_name: '<gold>{{balance}}'
+    lore:
+    - ''
+    - '<gray>{{balance_text}}: <white>{balance}'
+  glass_left_1:
     pos: 5,1
-    material: barrier
-    display_name: '<red>{{close}}'
+    material: black_stained_glass_pane
+    display_name: ' '
+  glass_left_2:
+    pos: 5,2
+    material: black_stained_glass_pane
+    display_name: ' '
   previous_page:
     pos: 5,3
     material: arrow
     display_name: '<gold>{{previous_page}}'
     lore:
     - '<yellow>{{previous_page_click}}'
+  page_info:
+    pos: 5,4
+    material: paper
+    display_name: '<aqua>{{page}}'
+    lore:
+    - ''
+    - '<gray>{{page_text}}: <white>{page}'
   next_page:
     pos: 5,5
     material: arrow
     display_name: '<gold>{{next_page}}'
     lore:
     - '<yellow>{{next_page_click}}'
-  back:
+  glass_right_1:
+    pos: 5,6
+    material: black_stained_glass_pane
+    display_name: ' '
+  glass_right_2:
+    pos: 5,7
+    material: black_stained_glass_pane
+    display_name: ' '
+  back_close:
     pos: 5,8
     material: arrow
     display_name: '<green>{{back}}'

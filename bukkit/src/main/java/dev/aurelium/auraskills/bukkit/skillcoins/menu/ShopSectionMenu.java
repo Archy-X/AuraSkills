@@ -39,6 +39,7 @@ public class ShopSectionMenu {
     private final AuraSkills plugin;
     private final EconomyProvider economy;
     private final ShopSection section;
+    private final SharedNavbarManager navbarManager;
     private String menuTitle;
     private static final int ITEMS_PER_PAGE = 45; // 5 rows of 9
     private static final ConcurrentHashMap<UUID, Integer> playerPages = new ConcurrentHashMap<>();
@@ -58,6 +59,7 @@ public class ShopSectionMenu {
         this.plugin = plugin;
         this.economy = economy;
         this.section = section;
+        this.navbarManager = new SharedNavbarManager(plugin, economy);
         this.menuTitle = generateMenuTitle(section);
     }
     
@@ -198,11 +200,7 @@ public class ShopSectionMenu {
             addPageItems(inv, allItems, startIndex, endIndex);
             
             // Add navigation and info bar (slots 45-53)
-            addPageInfo(inv, page, maxPage, startIndex, endIndex, allItems.size());
-            addBalanceDisplay(inv, coins);
-            addNavigationButtons(inv, page, maxPage);
-            addBackButton(inv);
-            addCloseButton(inv);
+            navbarManager.addNavbar(inv, "shop_section", page, maxPage, player);
             
         } catch (Exception e) {
             plugin.getLogger().log(Level.SEVERE, "Error updating section inventory", e);
@@ -239,11 +237,7 @@ public class ShopSectionMenu {
             addPageItems(inv, allItems, startIndex, endIndex);
             
             // Add navigation and info bar (slots 45-53)
-            addPageInfo(inv, page, maxPage, startIndex, endIndex, allItems.size());
-            addBalanceDisplay(inv, coins);
-            addNavigationButtons(inv, page, maxPage);
-            addBackButton(inv);
-            addCloseButton(inv);
+            navbarManager.addNavbar(inv, "shop_section", page, maxPage, player);
             
             return inv;
             

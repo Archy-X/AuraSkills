@@ -21,10 +21,12 @@ items:
     - text: '{{your_skills_click}}'
       wrap: true
       style: '<yellow>'
-  close:
+  back:
     pos: 4,8
-    material: barrier
-    display_name: '<red>{{close}}'
+    material: arrow
+    display_name: '<green>{{back}}'
+    lore:
+    - '<gray>{{back_click}}'
   stats:
     pos: 0,8
     material: player_head
