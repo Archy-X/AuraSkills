@@ -44,7 +44,7 @@ public abstract class HologramsHook extends Hook implements Listener {
         numberFormat = new DecimalFormat("#." + TextUtil.repeat('#', plugin.configInt(Option.DAMAGE_HOLOGRAMS_DECIMAL_MAX)));
     }
 
-    public abstract void createHologram(Location location, String text);
+    public abstract void createHologram(Location location, String text, Player player);
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -70,7 +70,7 @@ public abstract class HologramsHook extends Hook implements Listener {
 
         boolean critical = player.hasMetadata("skillsCritical");
 
-        createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), critical));
+        createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), critical), player);
     }
 
     private Location getLocation(Entity entity) {

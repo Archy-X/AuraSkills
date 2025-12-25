@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.loot.*;
 import dev.aurelium.auraskills.api.skill.Skill;
+import dev.aurelium.auraskills.api.source.LevelerContext;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
@@ -51,9 +52,11 @@ public abstract class LootHandler extends AbstractLootHandler {
 
     protected final AuraSkills plugin;
     private final TextFormatter tf = new TextFormatter();
+    private final LevelerContext levelerContext;
 
     public LootHandler(AuraSkills plugin) {
         this.plugin = plugin;
+        this.levelerContext = new LevelerContext(plugin.getApi());
     }
 
     protected void giveCommandLoot(Player player, CommandLoot loot, @Nullable XpSource source, Skill skill) {
@@ -74,6 +77,14 @@ public abstract class LootHandler extends AbstractLootHandler {
         }
         attemptSendMessage(player, loot);
         giveXp(player, loot, source, skill);
+    }
+
+    protected void giveFishingCommandLoot(Player player, CommandLoot loot, PlayerFishEvent event, @Nullable XpSource source, Skill skill) {
+        if (!(event.getCaught() instanceof Item itemEntity)) return;
+
+        itemEntity.setItemStack(new ItemStack(Material.AIR));
+
+        giveCommandLoot(player, loot, source, skill);
     }
 
     protected void giveBlockItemLoot(Player player, ItemLoot loot, BlockBreakEvent breakEvent, Skill skill, LootDropCause cause, LootTable table) {
@@ -206,11 +217,8 @@ public abstract class LootHandler extends AbstractLootHandler {
     }
 
     private void giveXp(Player player, Loot loot, @Nullable XpSource source, Skill skill) {
-        if (plugin.getHookManager().isRegistered(WorldGuardHook.class)) {
-            // Check generic xp-gain and skill-specific flags
-            if (plugin.getHookManager().getHook(WorldGuardHook.class).isBlocked(player.getLocation(), player, skill)) {
-                return;
-            }
+        if (levelerContext.failsChecks(player, player.getLocation(), skill)) {
+            return;
         }
 
         User user = plugin.getUser(player);

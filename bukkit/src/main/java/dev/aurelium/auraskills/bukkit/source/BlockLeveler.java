@@ -183,14 +183,17 @@ public class BlockLeveler extends SourceLeveler {
             }
         }
 
-        for (String metaKey : List.of("fertilized", "filledManually")) {
+        if (isFertilized(block)) {
+            return true;
+        }
+
+        for (String metaKey : List.of("filledManually")) {
             List<MetadataValue> metaDataList = block.getMetadata(metaKey);
-            if (metaDataList != null && !metaDataList.isEmpty()) {
+            if (!metaDataList.isEmpty()) {
                 MetadataValue metaDataValue = metaDataList.getFirst();
                 if (metaDataValue.asBoolean()) {
-                    // Only remove the filledManually tag if levelled is empty.
-                    // Or when we are dealing with other meta keys.
-                    if ((metaKey.equals("filledManually") && emptyLeveler) || !metaKey.equals("filledManually")) {
+                    // Only remove the filledManually tag if levelled is empty
+                    if (emptyLeveler) {
                         block.removeMetadata(metaKey, plugin);
                     }
                     return true;
@@ -198,6 +201,19 @@ public class BlockLeveler extends SourceLeveler {
             }
         }
 
+        return false;
+    }
+
+    private boolean isFertilized(Block block) {
+        String key = "fertilized";
+        List<MetadataValue> metaDataList = block.getMetadata(key);
+        if (!metaDataList.isEmpty()) {
+            MetadataValue metaDataValue = metaDataList.getFirst();
+            if (metaDataValue.asBoolean()) {
+                block.removeMetadata(key, plugin);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -246,15 +262,7 @@ public class BlockLeveler extends SourceLeveler {
         for (SkillSource<BlockXpSource> entry : sources) {
             BlockXpSource source = entry.source();
 
-            // Check block type (material)
-            boolean blockMatches = false;
-            for (String blockName : source.getBlocks()) {
-                if (block.getType().name().equalsIgnoreCase(blockName)) {
-                    blockMatches = true;
-                    break;
-                }
-            }
-            if (!blockMatches) {
+            if (!matchesMaterial(source, block)) {
                 continue;
             }
 
@@ -270,6 +278,28 @@ public class BlockLeveler extends SourceLeveler {
             return entry;
         }
         return null;
+    }
+
+    public SkillSource<BlockXpSource> getSourceByMaterialOnly(Block block) {
+        List<SkillSource<BlockXpSource>> sources = plugin.getSkillManager().getSourcesOfType(BlockXpSource.class);
+        for (SkillSource<BlockXpSource> entry : sources) {
+            BlockXpSource source = entry.source();
+            if (matchesMaterial(source, block)) {
+                return entry;
+            }
+        }
+        return null;
+    }
+
+    private boolean matchesMaterial(BlockXpSource candidate, Block block) {
+        boolean blockMatches = false;
+        for (String blockName : candidate.getBlocks()) {
+            if (block.getType().name().equalsIgnoreCase(blockName)) {
+                blockMatches = true;
+                break;
+            }
+        }
+        return blockMatches;
     }
 
     private boolean matchesStates(Block block, BlockXpSource.BlockXpSourceState[] states) {

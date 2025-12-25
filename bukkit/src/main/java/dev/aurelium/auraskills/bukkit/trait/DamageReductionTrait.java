@@ -44,6 +44,10 @@ public class DamageReductionTrait extends TraitImpl {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void damageListener(DamageEvent event) {
+        if (!Traits.DAMAGE_REDUCTION.isEnabled()) {
+            return;
+        }
+
         // LOW to make sure it runs before ability modifiers
         DamageMeta meta = event.getDamageMeta();
         Player player = meta.getTargetAsPlayer();

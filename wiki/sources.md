@@ -99,6 +99,7 @@ The block source (`type: block`) gives XP for breaking or interacting with block
 * `state_multiplier` - An expression with block state variables that evaluates to a number to multiply the base `xp` given.
 * `support_block` - A direction defined for some blocks that will automatically break if an adjacent block is broken. Valid values are `above`, `below`, `side`, and `none`. This ensures that the block can be unmarked as a player placed block when it is indirectly broken. Defaults to `none`.
 * `max_blocks` - The maximum number of blocks Treecapitator can break for this trunk type.
+* `allow_bone_meal` - If false, crops that have been fertilized with bone meal will not give skill XP (true by default). Only applies to block sources with `interact` trigger like sweet_berry_bush.
 
 ### Brewing
 

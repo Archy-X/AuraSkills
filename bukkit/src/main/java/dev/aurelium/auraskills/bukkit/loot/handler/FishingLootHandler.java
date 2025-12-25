@@ -104,7 +104,7 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (selectedLoot instanceof ItemLoot itemLoot) {
                     giveFishingItemLoot(player, itemLoot, event, source, skill, cause, table);
                 } else if (selectedLoot instanceof CommandLoot commandLoot) {
-                    giveCommandLoot(player, commandLoot, source, skill);
+                    giveFishingCommandLoot(player, commandLoot, event, source, skill);
                 } else if (selectedLoot instanceof EntityLoot entityLoot) {
                     giveFishingEntityLoot(player, entityLoot, event, source, skill, cause);
                 }

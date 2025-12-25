@@ -2,6 +2,58 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.10
+
+### New Features
+
+- Add 1.21.11 support
+- Add nautilus, zombie nautilus, parched, camel, and camel husk to Fighting and Archery sources
+
+### Bug Fixes
+
+- Fix CustomRegenEvent may only be triggered synchronously
+- Fix error when changing some alchemy source menu_item material
+
+## 2.3.9
+
+### New Features
+
+- Add `allow_bone_meal` option to block sources
+  - If false, crops that have been fertilized with bone meal will not give skill XP (true by default)
+  - Only applies to block sources with `interact` trigger like sweet_berry_bush
+  - This reverts default behavior to before 2.3.8
+- Support FancyHolograms for damage holograms
+  - Must be enabled in config with `hooks.FancyHolograms.enabled`
+- Add menu item and template variants
+  - Variants are a more powerful version of contexts that can show different items for a single template/item
+    based on properties and context filters
+  - Variants are defined with a `variants` list of mappings on an item or template
+  - Each variant can have the following filtering keys that match an item to a variant:
+    - A single `context` or list of `contexts` to filter for templates (if a list, any context can be matched)
+    - A `properties` mapping with a set of key-value properties to filter for (if multiple, all properties must be matched)
+  - A variant can have the following keys that define the actual item appearance for a given variant:
+    - Any keys that define a base item, such as `material`, `key`, and meta keys like `enchantments`
+    - A `pos` or `group` and `order`
+    - A `display_name` and `lore`
+- Allow duplicate of the same template context items using `pos` list
+
+### Changes
+
+- Make backup loading and saving async
+  - Backups load much faster by loading users in parallel
+- Remove delayed attribute updates for non-Folia servers introduced in 2.3.8 to fix issues
+- Fishing command loot now overrides vanilla item loot, instead of both being given
+
+### Bug Fixes
+
+- Fix SQL migration error on older MySQL versions
+- Fix SQL key too long using prefix index for modifiers table
+- Fix NPE with Nexo when breaking custom blocks
+- Fix damage_reduction trait not disabling correctly
+- Fix error removing Fleeting on server shutdown
+- Fix loot tables giving XP without skill permission
+- Fix level up title not working on newer versions
+
 ## 2.3.8
 
 ### New Features

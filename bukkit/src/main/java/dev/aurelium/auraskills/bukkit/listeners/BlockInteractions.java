@@ -1,6 +1,9 @@
 package dev.aurelium.auraskills.bukkit.listeners;
 
+import dev.aurelium.auraskills.api.source.SkillSource;
+import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,7 +13,7 @@ import org.bukkit.event.block.CauldronLevelChangeEvent;
 import org.bukkit.event.block.CauldronLevelChangeEvent.ChangeReason;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.*;
+import java.util.Set;
 
 public class BlockInteractions implements Listener {
 
@@ -26,6 +29,14 @@ public class BlockInteractions implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockFertilize(BlockFertilizeEvent event) {
         Block block = event.getBlock();
+        SkillSource<BlockXpSource> skillSource = plugin.getLevelManager().getLeveler(BlockLeveler.class).getSourceByMaterialOnly(block);
+        if (skillSource == null) {
+            return;
+        }
+        BlockXpSource source = skillSource.source();
+        if (source.allowBoneMeal()) { // Don't mark if bone meal should give XP
+            return;
+        }
         block.setMetadata("fertilized", new FixedMetadataValue(plugin, true));
     }
 

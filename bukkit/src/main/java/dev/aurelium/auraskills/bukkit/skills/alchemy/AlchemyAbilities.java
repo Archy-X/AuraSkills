@@ -364,6 +364,8 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
 
         if (failsChecks(player, ability)) return;
 
+        if (player.isDead() || player.getHealth() == 0.0) return;
+
         User user = plugin.getUser(player);
 
         AttributeInstance entityAttribute = entity.getAttribute(AttributeCompat.maxHealth);

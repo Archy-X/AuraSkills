@@ -45,14 +45,12 @@ public class LevelBuyMenu {
     private final Map<UUID, Skill> selectedSkill = new ConcurrentHashMap<>();
     private final Map<UUID, Integer> selectedUpToLevel = new ConcurrentHashMap<>();  // Level they want to upgrade TO
     private final Map<UUID, Integer> currentPage = new ConcurrentHashMap<>();
-    private final SharedNavbarManager navbarManager;
     
     public LevelBuyMenu(AuraSkills plugin, EconomyProvider economy) {
         if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
         if (economy == null) throw new IllegalArgumentException("Economy cannot be null");
         this.plugin = plugin;
         this.economy = economy;
-        this.navbarManager = new SharedNavbarManager(plugin, economy);
     }
     
     /**
@@ -180,7 +178,7 @@ public class LevelBuyMenu {
             addLevelTrack(inv, skill, currentLevel, maxLevel, selectedLevel, page);
             
             // Add navigation
-            addNavigation(inv, page, maxLevel, player);
+            addNavigation(inv, page, maxLevel);
             
             if (isNewInventory) {
                 player.openInventory(inv);
@@ -221,11 +219,11 @@ public class LevelBuyMenu {
         }
         inv.setItem(0, skillItem);
         
-            // Slot 2: Minus button (-1) - cleaner single-step control
-            createControlButton(inv, 2, Material.ORANGE_TERRACOTTA,
-                    ChatColor.RED + "▼ -1 Level",
-                    selectedLevel > currentLevel + 1,
-                    Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
+        // Slot 3: Minus button (-1) - cleaner single-step control
+        createControlButton(inv, 3, Material.ORANGE_TERRACOTTA,
+                ChatColor.RED + "▼ -1 Level",
+                selectedLevel > currentLevel + 1,
+                Arrays.asList("", ChatColor.GRAY + "Remove 1 from selection"));
         
         // Slot 4: Confirm/Purchase Button
         if (levelsToBuy > 0 && canAfford && currentLevel < maxLevel) {
@@ -282,7 +280,20 @@ public class LevelBuyMenu {
                 selectedLevel < maxLevel,
                 Arrays.asList("", ChatColor.GRAY + "Add 1 to selection"));
         
-        // Balance display removed - now in navbar
+        // Slot 8: Balance Display
+        ItemStack balance = new ItemStack(Material.GOLD_NUGGET);
+        ItemMeta balanceMeta = balance.getItemMeta();
+        if (balanceMeta != null) {
+            balanceMeta.setDisplayName(ChatColor.of("#FFD700") + "⬥ Your Tokens");
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            lore.add(ChatColor.AQUA + "Tokens: " + ChatColor.WHITE + MONEY_FORMAT.format(tokenBalance));
+            lore.add("");
+            lore.add(ChatColor.GRAY + "Cost per level: " + ChatColor.YELLOW + TOKENS_PER_LEVEL);
+            balanceMeta.setLore(lore);
+            balance.setItemMeta(balanceMeta);
+        }
+        inv.setItem(8, balance);
     }
     
     private void createControlButton(Inventory inv, int slot, Material material, String name, boolean enabled, List<String> lore) {
@@ -347,8 +358,71 @@ public class LevelBuyMenu {
         }
     }
     
-    private void addNavigation(Inventory inv, int page, int maxLevel, Player player) {
-        navbarManager.addNavbar(inv, "level_buy", page, maxLevel, player);
+    private void addNavigation(Inventory inv, int page, int maxLevel) {
+        int maxPage = (maxLevel - 1) / ITEMS_PER_PAGE;
+        
+        // Back button (slot 45) - Arrow style like Quest plugin
+        ItemStack back = new ItemStack(Material.ARROW);
+        ItemMeta backMeta = back.getItemMeta();
+        if (backMeta != null) {
+            backMeta.setDisplayName(ChatColor.GREEN + "« Back");
+            List<String> lore = new ArrayList<>();
+            lore.add("");
+            lore.add(ChatColor.GRAY + "Return to shop");
+            backMeta.setLore(lore);
+            back.setItemMeta(backMeta);
+        }
+        inv.setItem(45, back);
+        
+        // Close button (slot 46) - matches level progression layout
+        ItemStack close = new ItemStack(Material.BARRIER);
+        ItemMeta closeMeta = close.getItemMeta();
+        if (closeMeta != null) {
+            closeMeta.setDisplayName(ChatColor.RED + "✖ Close");
+            close.setItemMeta(closeMeta);
+        }
+        inv.setItem(46, close);
+        
+        // Previous page (slot 48)
+        if (page > 0) {
+            ItemStack prev = new ItemStack(Material.ARROW);
+            ItemMeta prevMeta = prev.getItemMeta();
+            if (prevMeta != null) {
+                prevMeta.setDisplayName(ChatColor.GOLD + "« Previous Page");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Go to page " + page);
+                prevMeta.setLore(lore);
+                prev.setItemMeta(prevMeta);
+            }
+            inv.setItem(48, prev);
+        }
+        
+        // Page indicator (slot 49)
+        ItemStack pageItem = new ItemStack(Material.PAPER);
+        ItemMeta pageMeta = pageItem.getItemMeta();
+        if (pageMeta != null) {
+            pageMeta.setDisplayName(ChatColor.YELLOW + "Page " + (page + 1) + " / " + (maxPage + 1));
+            pageItem.setItemMeta(pageMeta);
+        }
+        inv.setItem(49, pageItem);
+        
+        // Next page (slot 50)
+        if (page < maxPage) {
+            ItemStack next = new ItemStack(Material.ARROW);
+            ItemMeta nextMeta = next.getItemMeta();
+            if (nextMeta != null) {
+                nextMeta.setDisplayName(ChatColor.GOLD + "Next Page »");
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add(ChatColor.GRAY + "Go to page " + (page + 2));
+                nextMeta.setLore(lore);
+                next.setItemMeta(nextMeta);
+            }
+            inv.setItem(50, next);
+        }
+        
+        // Slot 53 remains empty (matches level progression layout)
     }
     
     /**
@@ -377,7 +451,7 @@ public class LevelBuyMenu {
 
         // Check for control buttons
         switch (slot) {
-            case 2: // -1 level
+            case 3: // -1 level
                 if (selectedLevel > currentLevel + 1) {
                     selectedUpToLevel.put(uuid, selectedLevel - 1);
                     player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 0.5f, 1.0f);
