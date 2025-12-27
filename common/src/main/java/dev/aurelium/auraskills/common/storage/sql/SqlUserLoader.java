@@ -21,10 +21,7 @@ import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -73,12 +70,138 @@ public class SqlUserLoader {
                 u.player_uuid = ?;
             """;
 
+    private static final String LOAD_QUERY_MARIADB = """
+            SELECT
+                u.*,
+            
+                /* ================= skill_levels ================= */
+                COALESCE((
+                    SELECT CONCAT(
+                        CAST('[' AS CHAR CHARACTER SET utf8mb4),
+                        GROUP_CONCAT(
+                            CONCAT(
+                                CAST('{' AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST('"name":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(s.skill_name) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST(',"level":' AS CHAR CHARACTER SET utf8mb4),
+                                s.skill_level,
+            
+                                CAST(',"xp":' AS CHAR CHARACTER SET utf8mb4),
+                                s.skill_xp,
+            
+                                CAST('}' AS CHAR CHARACTER SET utf8mb4)
+                            )
+                            SEPARATOR ','
+                        ),
+                        CAST(']' AS CHAR CHARACTER SET utf8mb4)
+                    )
+                    FROM auraskills_skill_levels s
+                    WHERE s.user_id = u.user_id
+                ), CAST('[]' AS CHAR CHARACTER SET utf8mb4)) AS skill_levels,
+            
+                /* ================= key_values ================= */
+                COALESCE((
+                    SELECT CONCAT(
+                        CAST('[' AS CHAR CHARACTER SET utf8mb4),
+                        GROUP_CONCAT(
+                            CONCAT(
+                                CAST('{' AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST('"data_id":' AS CHAR CHARACTER SET utf8mb4),
+                                k.data_id,
+            
+                                CAST(',"category_id":' AS CHAR CHARACTER SET utf8mb4),
+                                k.category_id,
+            
+                                CAST(',"key_name":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(k.key_name) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST(',"value":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(k.value) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST('}' AS CHAR CHARACTER SET utf8mb4)
+                            )
+                            SEPARATOR ','
+                        ),
+                        CAST(']' AS CHAR CHARACTER SET utf8mb4)
+                    )
+                    FROM auraskills_key_values k
+                    WHERE k.user_id = u.user_id
+                ), CAST('[]' AS CHAR CHARACTER SET utf8mb4)) AS key_values,
+            
+                /* ================= modifiers ================= */
+                COALESCE((
+                    SELECT CONCAT(
+                        CAST('[' AS CHAR CHARACTER SET utf8mb4),
+                        GROUP_CONCAT(
+                            CONCAT(
+                                CAST('{' AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST('"modifier_type":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(m.modifier_type) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST(',"type_id":' AS CHAR CHARACTER SET utf8mb4),
+                                m.type_id,
+            
+                                CAST(',"modifier_name":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(m.modifier_name) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST(',"modifier_value":' AS CHAR CHARACTER SET utf8mb4),
+                                m.modifier_value,
+            
+                                CAST(',"modifier_operation":' AS CHAR CHARACTER SET utf8mb4),
+                                CAST(JSON_QUOTE(m.modifier_operation) AS CHAR CHARACTER SET utf8mb4),
+            
+                                CAST(',"expiration_time":' AS CHAR CHARACTER SET utf8mb4),
+                                m.expiration_time,
+            
+                                CAST(',"remaining_duration":' AS CHAR CHARACTER SET utf8mb4),
+                                m.remaining_duration,
+            
+                                CAST('}' AS CHAR CHARACTER SET utf8mb4)
+                            )
+                            SEPARATOR ','
+                        ),
+                        CAST(']' AS CHAR CHARACTER SET utf8mb4)
+                    )
+                    FROM auraskills_modifiers m
+                    WHERE m.user_id = u.user_id
+                ), CAST('[]' AS CHAR CHARACTER SET utf8mb4)) AS modifiers
+            
+            FROM auraskills_users u
+            WHERE u.player_uuid = ?;
+            """;
+
     public SqlUserLoader(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void loadUser(UUID uuid, User user, Connection connection) {
-        try (PreparedStatement statement = connection.prepareStatement(LOAD_QUERY)) {
+        DatabaseMetaData meta = null;
+        String sql = LOAD_QUERY;
+        try {
+            meta = connection.getMetaData();
+
+            String product = meta.getDatabaseProductName();
+            int major = meta.getDatabaseMajorVersion();
+            int minor = meta.getDatabaseMinorVersion();
+
+            boolean supportsJsonAgg =
+                    product.equalsIgnoreCase("MySQL")
+                            && (major > 5 || (major == 5 && minor >= 7));
+
+            sql = supportsJsonAgg
+                    ? LOAD_QUERY
+                    : LOAD_QUERY_MARIADB;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, uuid.toString());
 
             try (ResultSet rs = statement.executeQuery()) {
