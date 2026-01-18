@@ -242,7 +242,9 @@ public class ConfigurateItemParser {
     }
 
     public void parsePotionData(ItemStack item, ConfigurationNode node) {
-        PotionMeta potionMeta = (PotionMeta) getMeta(item);
+        ItemMeta meta = getMeta(item);
+        if (!(meta instanceof PotionMeta potionMeta)) return;
+
         String typeName = node.node("type").getString("WATER").toUpperCase(Locale.ROOT);
         PotionType potionType = PotionType.valueOf(substitutePotionType(typeName));
         boolean extended = node.node("extended").getBoolean(false);
