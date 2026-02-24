@@ -5,7 +5,7 @@
 abilities:
   bountiful_harvest:
     name: Bohatá Sklizeň
-    desc: "Přidá +{value} Šance v rybolovu, což zvyšuje šanci na chycení vzácných předmětů."
+    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
     info: "+{value} Šance v zemědělství"
   farmer:
     name: Farmář
