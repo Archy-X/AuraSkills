@@ -2,7 +2,6 @@ package dev.aurelium.auraskills.common.config;
 
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
-import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.message.PlatformLogger;
 import dev.aurelium.auraskills.common.skill.LoadedSkill;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
@@ -145,9 +144,8 @@ public abstract class ConfigProvider {
     }
 
     public boolean jobSelectionEnabled() {
-        boolean economyEnabled = plugin.getHookManager().isRegistered(EconomyHook.class);
         boolean selectionEnabled = plugin.configBoolean(Option.JOBS_SELECTION_REQUIRE_SELECTION);
-        return plugin.configBoolean(Option.JOBS_ENABLED) && economyEnabled && selectionEnabled;
+        return plugin.configBoolean(Option.JOBS_ENABLED) && selectionEnabled;
     }
 
     public void setOverrides(Map<Option, Object> overrides) {
