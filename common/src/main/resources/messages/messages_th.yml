@@ -334,12 +334,12 @@ commands:
     logs:
       header: ""
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: แสดงบันทึกการป้องกันการ AFK สำหรับผู้เล่นที่กำหนด
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
-        already_exists: "<yellow>An armor modifier with stat {color}{stat} <yellow>already exists on your armor! Remove it first with /sk armor modifier remove"
+        added: "เพิ่มตัวปรับค่าสถานะให้กับชุดเกราะด้วยค่าสถานะ: {stat}, ค่า: {value}, การทำงาน: {operation}"
+        already_exists: "<yellow>มีตัวปรับแต่งเกราะที่มีค่าสถานะ {color}{stat} <yellow>อยู่แล้วบนเกราะของคุณ! ลบออกก่อนด้วยคำสั่ง /sk armor modifier remove"
         desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
         does_not_exist: "<yellow>Your item does not have a {color}{stat} <yellow>modifier!"
