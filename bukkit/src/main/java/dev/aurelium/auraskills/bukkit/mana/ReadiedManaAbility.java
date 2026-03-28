@@ -1,11 +1,15 @@
 package dev.aurelium.auraskills.bukkit.mana;
 
+import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.mana.ManaAbilityData;
 import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
+import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -15,21 +19,33 @@ import org.bukkit.block.data.type.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public abstract class ReadiedManaAbility extends ManaAbilityProvider {
 
     private final String[] materials;
     private final Action[] actions;
+    protected final Map<UUID, AbilityBlocksRegistry> abilityBlocksMap = new HashMap<>();
 
     public ReadiedManaAbility(AuraSkills plugin, ManaAbility manaAbility, ManaAbilityMessage activateMessage, @Nullable ManaAbilityMessage stopMessage, String[] materials, Action[] actions) {
         super(plugin, manaAbility, activateMessage, stopMessage);
@@ -47,6 +63,11 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         return materialMatches(player.getInventory().getItemInMainHand().getType().toString(), player);
     }
 
+    protected boolean isHoldingMaterial(Player player, ItemStack item) {
+        if (item == null) return false;
+        return materialMatches(item.getType().toString(), player);
+    }
+
     protected boolean materialMatches(String checked, Player player) {
         for (String material : materials) {
             if (checked.contains(material)) {
@@ -56,13 +77,90 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
         return false;
     }
 
+    // Stop if the tool isn't meeting the requirements.
+    protected void stopBreak(Player player, ItemStack newItem) {
+        if (isHoldingMaterial(player, newItem)) {
+            return;
+        }
+        clearAbilityBlocksMaps(player);
+    }
+
+    protected void clearAbilityBlocksMaps(Player player) {
+        // Apply damage, if applicable
+        AbilityBlocksRegistry registry = abilityBlocksMap.remove(player.getUniqueId());
+        if (registry != null) {
+            for (AbilityBlocks abilityBlocks : registry.getValues()) {
+                setHoldingMaterialDurability(player, abilityBlocks.getBlocksBroken(), manaAbility.optionDouble("durability_multiplier", 0));
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItemHeldChange(PlayerItemHeldEvent event) {
+        Player player = event.getPlayer();
+        ItemStack newItem = player.getInventory().getItem(event.getNewSlot());
+        stopBreak(player, newItem);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItemHeldSwap(PlayerSwapHandItemsEvent event) {
+        Player player = event.getPlayer();
+        ItemStack newItem = event.getOffHandItem();
+        stopBreak(player, newItem);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItemHeldDrag(InventoryDragEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+        if (event.getInventorySlots().contains(player.getInventory().getHeldItemSlot())) {
+            ItemStack newItem = event.getNewItems().get(player.getInventory().getHeldItemSlot());
+            stopBreak(player, newItem);
+        }
+    }
+
+    protected void scheduleDropItemCheck(Player player, ItemStack item) {
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            if (isHoldingMaterial(player)) {
+                return;
+            }
+            clearAbilityBlocksMaps(player);
+        });
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItemHeldClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) return;
+
+        if (event.getClick() == ClickType.NUMBER_KEY) {
+            ItemStack newItem = player.getInventory().getItem(event.getHotbarButton());
+            stopBreak(player, newItem);
+        }
+
+        int heldSlot = player.getInventory().getHeldItemSlot();
+        if (event.getClick() == ClickType.DROP || event.getClick() == ClickType.CONTROL_DROP) {
+            if (event.getSlot() != heldSlot) return;
+            ItemStack droppedItem = event.getCurrentItem();
+            scheduleDropItemCheck(player, droppedItem);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItemHeldDrop(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        ItemStack droppedItem = event.getItemDrop().getItemStack();
+        scheduleDropItemCheck(player, droppedItem);
+    }
+
     protected void setHoldingMaterialDurability(Player player, int count, double multiplier) {
-        if (multiplier <= 0) return;
+        setHoldingMaterialDurability(player, player.getInventory().getItemInMainHand(), count, multiplier);
+    }
+
+    protected void setHoldingMaterialDurability(Player player, ItemStack item, int count, double multiplier) {
+        if (item == null || multiplier <= 0) return;
 
         int takenDamage = (int) (count * multiplier);
         if (takenDamage <= 0) return;
 
-        ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
         if (meta == null || meta.isUnbreakable()) return;
 
@@ -222,6 +320,80 @@ public abstract class ReadiedManaAbility extends ManaAbilityProvider {
             }
         }
         return false;
+    }
+
+    protected static class AbilityBlocks {
+
+        private final UUID id;
+        private final Block originalBlock;
+        private int blocksBroken;
+        private int maxBlocks;
+
+        public AbilityBlocks(Block originalBlock, BlockXpSource source) {
+            this.id = UUID.randomUUID();
+            this.originalBlock = originalBlock;
+            setMaxBlocks(source);
+        }
+
+        public UUID getId() {
+            return id;
+        }
+
+        public Block getOriginalBlock() {
+            return originalBlock;
+        }
+
+        public int getBlocksBroken() {
+            return blocksBroken;
+        }
+
+        public void incrementBlocksBroken() {
+            blocksBroken++;
+        }
+
+        public int getMaxBlocks() {
+            return maxBlocks;
+        }
+
+        public void setMaxBlocks(int maxBlocks) {
+            this.maxBlocks = maxBlocks;
+        }
+
+        private void setMaxBlocks(BlockXpSource source) {
+            int maxBlocks = (source != null && source.getMaxBlocks() >= 1) ? source.getMaxBlocks() : BlockSource.DEFAULT_MAX_BLOCKS;
+            double multiplier = ManaAbilities.TREECAPITATOR.optionDouble("max_blocks_multiplier", 1.0);
+            this.maxBlocks = (int) (maxBlocks * multiplier);
+        }
+
+    }
+
+    public static class AbilityBlocksRegistry {
+        private final Map<UUID, AbilityBlocks> blocks = new HashMap<>();
+
+        public AbilityBlocksRegistry(AbilityBlocks abilityBlocks) {
+            put(abilityBlocks);
+        }
+
+        public void put(AbilityBlocks abilityBlocks) {
+            blocks.put(abilityBlocks.getId(), abilityBlocks);
+        }
+
+        public Collection<AbilityBlocks> getValues() {
+            return blocks.values();
+        }
+
+        public boolean hasValue(AbilityBlocks abilityBlocks) {
+            return blocks.containsKey(abilityBlocks.getId());
+        }
+
+        public AbilityBlocks get(AbilityBlocks abilityBlocks) {
+            return blocks.get(abilityBlocks.getId());
+        }
+
+        public AbilityBlocks remove(AbilityBlocks abilityBlocks) {
+            return blocks.remove(abilityBlocks.getId());
+        }
+
     }
 
 }

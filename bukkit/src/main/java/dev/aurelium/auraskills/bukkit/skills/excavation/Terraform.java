@@ -24,6 +24,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class Terraform extends ReadiedManaAbility {
 
@@ -89,29 +90,42 @@ public class Terraform extends ReadiedManaAbility {
     }
 
     private void terraformBreak(Player player, Block block) {
+        UUID uuid = player.getUniqueId();
         Material material = block.getType();
         BlockFace[] faces = new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST};
         LinkedList<Block> toCheck = new LinkedList<>();
         toCheck.add(block);
 
-        int count = 0;
-        int maxCount = manaAbility.optionInt("max_blocks", 61);
-        if (manaAbility.optionBoolean("max_limit_durability", false)) {
-            maxCount = getHoldingMaterialDurability(player, maxCount);
+        AbilityBlocks terrain = new AbilityBlocks(null, null);
+        terrain.setMaxBlocks(manaAbility.optionInt("max_blocks", 61));
+        AbilityBlocksRegistry registry = abilityBlocksMap.get(uuid);
+        if (registry == null) {
+            registry = new AbilityBlocksRegistry(terrain);
+            abilityBlocksMap.put(uuid, registry);
+        } else {
+            registry.put(terrain);
         }
 
-        while ((block = toCheck.poll()) != null && count < maxCount) {
+        if (manaAbility.optionBoolean("max_limit_durability", false)) {
+            terrain.setMaxBlocks(getHoldingMaterialDurability(player, terrain.getMaxBlocks()));
+        }
+
+        while ((block = toCheck.poll()) != null && terrain.getBlocksBroken() < terrain.getMaxBlocks() &&
+                abilityBlocksMap.containsKey(uuid) && registry.hasValue(terrain)) {
             if (block.getType() == material) {
                 block.setMetadata("AureliumSkills-Terraform", new FixedMetadataValue(plugin, true));
                 breakBlock(player, block);
                 for (BlockFace face : faces) {
                     toCheck.add(block.getRelative(face));
                 }
-                count++;
+                terrain.incrementBlocksBroken();
             }
         }
 
-        setHoldingMaterialDurability(player, count, manaAbility.optionDouble("durability_multiplier", 0));
+        if (abilityBlocksMap.containsKey(uuid) && registry.hasValue(terrain)) {
+            registry.remove(terrain);
+            setHoldingMaterialDurability(player, terrain.getBlocksBroken(), manaAbility.optionDouble("durability_multiplier", 0));
+        }
     }
 
     private void breakBlock(Player player, Block block) {
