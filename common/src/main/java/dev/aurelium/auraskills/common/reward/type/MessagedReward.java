@@ -56,7 +56,8 @@ public abstract class MessagedReward extends SkillReward {
 
     private String replacePlaceholders(String message, User user, Skill skill, int level) {
         message = TextUtil.replace(message, "{player}", user.getUsername(),
-                "{skill}", skill.toString().toLowerCase(Locale.ROOT),
+                "{skill}", skill.getId().getSimpleName(),
+                "{skill_name}", skill.getDisplayName(plugin.getDefaultLanguage()),
                 "{level}", String.valueOf(level));
         if (hooks.isRegistered(PlaceholderHook.class)) {
             message = hooks.getHook(PlaceholderHook.class).setPlaceholders(user, message);

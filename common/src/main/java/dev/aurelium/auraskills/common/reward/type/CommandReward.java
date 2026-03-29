@@ -9,8 +9,6 @@ import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
-
 public class CommandReward extends MessagedReward {
 
     @NotNull
@@ -48,7 +46,8 @@ public class CommandReward extends MessagedReward {
 
     private void executeCommand(CommandExecutor executor, String command, User user, Skill skill, int level) {
         String executedCommand = TextUtil.replace(command, "{player}", user.getUsername(),
-                "{skill}", skill.toString().toLowerCase(Locale.ROOT),
+                "{skill}", skill.getId().getSimpleName(),
+                "{skill_name}", skill.getDisplayName(plugin.getDefaultLanguage()),
                 "{level}", String.valueOf(level));
         if (plugin.getHookManager().isRegistered(PlaceholderHook.class)) {
             executedCommand = plugin.getHookManager().getHook(PlaceholderHook.class).setPlaceholders(user, executedCommand);
