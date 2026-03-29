@@ -5,12 +5,12 @@
 abilities:
   bountiful_harvest:
     name: Bohatá Sklizeň
-    desc: "Grants +{value} Farming Luck, which increases the chance for extra drops."
+    desc: "Přidá +{value} Šance v rybolovu, což zvyšuje šanci na chycení vzácných předmětů."
     info: "+{value} Šance v zemědělství"
   farmer:
     name: Farmář
     desc: "Získejte o {value}% více XP při farmaření."
-    info: "+{value} % XP"
+    info: "+{value}% XP"
   scythe_master:
     name: Mistr kosy
     desc: "Zvýší poškození motykou o {value}%"
@@ -70,7 +70,7 @@ abilities:
   fisher:
     name: Rybář
     desc: "Získejte o {value}% více XP k rybaření"
-    info: "+{value} % XP"
+    info: "+{value}% XP"
   treasure_hunter:
     name: Lovec pokladů
     desc: "O {value}% vyšší šance na získání vzácné kořisti při rybolovu."
