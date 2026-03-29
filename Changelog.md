@@ -2,6 +2,22 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.11
+
+### New Features
+
+- Add 26.1 support
+- Add {skill_name} placeholder to rewards for skill display name
+
+### Changes
+
+- Job selection now works without an economy plugin
+- Update Czech, Polish, and Chinese Simplified messages
+
+### Bug Fixes
+
+- Fix Life Steal ability healing players that are dead
+
 ## 2.3.10
 
 ### New Features
