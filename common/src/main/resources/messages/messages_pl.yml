@@ -741,7 +741,7 @@ menus:
     sources_click: "Kliknij, aby zobaczyć źródła {skill}"
     abilities: "Zdolności"
     abilities_desc: "<2>Zdolności</2> <1>są biernymi umiejętnościami, które odblokowujesz i ulepszasz w miarę podnoszenia umiejętności.</1>"
-    mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę.</1>"
+    mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności wymagających aktywacji i zużywających manę.</1>"
     abilities_click: "Kliknij, aby zobaczyć zdolności {skill}"
     job: Praca
     job_desc: Wybranie {skill} jako Twojej pracy pozwala zarabiać pieniądze podczas zdobywania XP.
