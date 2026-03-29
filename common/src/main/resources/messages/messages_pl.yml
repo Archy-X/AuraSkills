@@ -613,6 +613,8 @@ commands:
     saved: "<green>Dane o umiejętnościach zapisane!"
     desc: Zapisuje dane umiejętności.
   skill:
+    addlevel:
+      desc: Dodaje określoną liczbę poziomów do umiejętności.
     setall:
       set: "<gray>Wszystkie umiejętności zostały ustawione na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
       desc: Ustawia wszystkie umiejętności gracza na określonym poziomie.
@@ -739,7 +741,7 @@ menus:
     sources_click: "Kliknij, aby zobaczyć źródła {skill}"
     abilities: "Zdolności"
     abilities_desc: "<2>Zdolności</2> <1>są biernymi umiejętnościami, które odblokowujesz i ulepszasz w miarę podnoszenia umiejętności.</1>"
-    mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności<gray>wymagających aktywacji i zużywających manę.</1>"
+    mana_abilities_desc: "<3>Zdolności Many</3> <1>są specjalnym rodzajem zdolności wymagających aktywacji i zużywających manę.</1>"
     abilities_click: "Kliknij, aby zobaczyć zdolności {skill}"
     job: Praca
     job_desc: Wybranie {skill} jako Twojej pracy pozwala zarabiać pieniądze podczas zdobywania XP.
@@ -800,6 +802,7 @@ menus:
     chestplate_desc: "Przyznany przez napierśnik."
     leggings_desc: "Przyznane przez spodnie."
     boots_desc: "Przyznane przez buty."
+    effective_trait: "Efektywne {trait_name}"
 mana_abilities:
   replenish:
     name: Autoprzesadzanie
@@ -1036,4 +1039,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 38
+file_version: 39
