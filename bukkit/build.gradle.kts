@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import java.util.jar.JarFile
 
 plugins {
     `java-library`
@@ -44,7 +45,7 @@ dependencies {
     implementation("net.kyori:adventure-platform-bukkit:4.4.1")
     implementation("com.tcoded:FoliaLib:0.5.1")
     compileOnly("org.jetbrains:annotations:24.1.0")
-    compileOnly("org.spigotmc:spigot-api:1.21.9-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:26.1-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.5") {
         exclude("org.spigotmc", "spigot-api")
@@ -62,7 +63,8 @@ dependencies {
     compileOnly("com.nexomc:nexo:1.6.0")
     compileOnly("de.oliver:FancyHolograms:2.8.0")
     testImplementation(testFixtures(project(":common")))
-    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.59.0")
+    testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.108.0")
+    testImplementation("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
     testImplementation("org.slf4j:slf4j-simple:2.0.17")
     testImplementation("com.mysql:mysql-connector-j:9.3.0")
     testImplementation(platform("org.junit:junit-bom:5.13.2"))
