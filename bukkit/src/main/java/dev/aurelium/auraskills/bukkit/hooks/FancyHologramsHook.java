@@ -3,12 +3,14 @@ package dev.aurelium.auraskills.bukkit.hooks;
 import de.oliver.fancyholograms.api.FancyHologramsPlugin;
 import de.oliver.fancyholograms.api.HologramManager;
 import de.oliver.fancyholograms.api.data.TextHologramData;
+import de.oliver.fancyholograms.api.events.HologramsLoadedEvent;
 import de.oliver.fancyholograms.api.hologram.Hologram;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.hooks.Hook;
 import org.bukkit.Location;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
@@ -29,6 +31,7 @@ public class FancyHologramsHook extends HologramsHook {
         TextHologramData data = new TextHologramData("auraskills_" + UUID.randomUUID(), location);
         data.setText(List.of(text));
         data.setBillboard(Billboard.CENTER);
+        data.setPersistent(false);
         HologramManager manager = FancyHologramsPlugin.get().getHologramManager();
         Hologram hologram = manager.create(data);
         manager.addHologram(hologram);
@@ -41,6 +44,15 @@ public class FancyHologramsHook extends HologramsHook {
         plugin.getScheduler().scheduleAtLocation(hologram.getData().getLocation(), () -> {
             manager.removeHologram(hologram);
         }, 30L * 50L, TimeUnit.MILLISECONDS);
+    }
+
+    @EventHandler
+    public void onLoad(HologramsLoadedEvent event) {
+        for (Hologram hologram : event.getManager()) {
+            if (hologram.getName().startsWith("auraskills_")) {
+                FancyHologramsPlugin.get().getHologramManager().removeHologram(hologram);
+            }
+        }
     }
 
     @Override
