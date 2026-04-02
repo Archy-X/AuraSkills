@@ -16,7 +16,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Uninstaller {
 
     public void removeAttributes(CommandSender sender) {
-        File playerDataFolder = new File(Bukkit.getWorlds().get(0).getWorldFolder(), "playerdata");
+        File playerDataFolder;
+        if (VersionUtils.isAtLeastVersion(26)) {
+            playerDataFolder = new File(Bukkit.getWorlds().getFirst().getWorldFolder(), "players/data");
+        } else {
+            playerDataFolder = new File(Bukkit.getWorlds().getFirst().getWorldFolder(), "playerdata");
+        }
         int successful = 0;
         int error = 0;
         int total = 0;
