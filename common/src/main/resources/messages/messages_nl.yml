@@ -179,7 +179,7 @@ abilities:
   golden_heal:
     name: Gouden Genezing
     desc: "Verhoogt regeneratie effect Gezondheidswinst met {value}%"
-    info: "+{value}% Effect Regen"
+    info: "+{value}% Effect herstel"
   recovery:
     name: Herstel
     desc: "Verhoogt natuurlijke regeneratie met minder dan de helft gezondheid met {value}%"
@@ -274,7 +274,7 @@ abilities:
   disenchanter:
     name: Debetovert
     desc: Krijg {value}% meer ervaring wanneer je voorwerpen met behulp van een hoofdsteen disenchant.
-    info: "+{value}% Grindstone EXP"
+    info: "+{value}% Slijpsteen EXP"
   forger:
     name: Smederij
     desc: Verdien {value}% meer smeden XP.
@@ -328,13 +328,13 @@ acf:
     location_please_specify_xyz: "<red>Error: Specificeer de coördinaten x, y en z. Voorbeeld: <yellow>world:x,y,z."
     location_console_not_relative: "<red>Error: Console mag geen relatieve coördinaten gebruiken voor locatie."
 commands:
-  prefix: "<dark_gray>[<aqua>Skills<dark_gray>]<reset> "
+  prefix: "<dark_gray>[<aqua>vaardigheden<dark_gray>]<reset> "
   antiafk:
-    failed: "<red>{player} failed anti-AFK check {check} <gray>(Count: {count})"
+    failed: "<red>{player} heeft de anti-AFK controle niet gedaan of geslaagd {check} <gray>(Count: {count})"
     logs:
-      header: "<gray>Anti-AFK logs for <red>{player} <gray>({count} total) <dark_gray>| <gray>Page {page}/{total_pages}:"
+      header: "<gray>Anti-AFK logs voor <red>{player} <gray>({count} totaal) <dark_gray>| <gray>Pagina {page}/{total_pages}:"
       entry: "<gray>{timestamp} - {message}"
-      desc: Show anti-AFK logs for a given player.
+      desc: Toon anti-AFK logs voor een opgegeven speler.
   armor:
     modifier:
       add:
@@ -505,28 +505,28 @@ commands:
       existing: "<yellow>Player {player} already has the job {job}"
       desc: Adds a skill as a job for yourself or a specified player.
     remove:
-      removed: "<white>Removed job {job} from player {player}"
-      unchanged: "<yellow>Nothing was changed since player {player} does not have the job {job}"
-      desc: Removes a skill as a job for yourself or a specified player.
+      removed: "<white>Verwijder functie {job} van speler {player}"
+      unchanged: "<yellow>Er is niks veranderd omdat speler {player} de functie {job} niet heeft"
+      desc: Verwijder een vaardigheid als een functie voor jezelf of een opgegeven speler.
     removeall:
-      removed: "<white>Removed all jobs from player {player}"
-      desc: Removes all joined jobs for yourself or a specified player.
+      removed: "<white>Verwijder alle functies van speler {player}"
+      desc: Verwijder alle toegetreden functies voor jezelf of een opgegeven speler.
   lang:
     set: "<gray>Taal ingesteld op <aqua>{lang}"
     not_found: "<yellow>Taal niet gevonden!"
-    desc: Changes your player language.
+    desc: Wijzig je spelerstaal.
   mana:
     display: "<white>Jouw {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} van {player}: <aqua>{current}/{max}"
-    desc: Display your or another player's current and max mana
+    desc: Toon jou of een opgegeven speler's huidige en maximale mana
     add:
-      added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
-      desc: Adds mana to a player
+      added: "<gray>Toegevoegd <aqua>{amount} {mana_unit} <gray>aan speler <gold>{player}"
+      desc: Voegt mana toe aan een speler
     remove:
-      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
-      desc: Removes mana from a player
+      removed: "<gray>Verwijderd <aqua>{amount} {mana_unit} <gray>van speler <gold>{player}"
+      desc: Verwijderd mana van een speler
     set:
-      set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
+      set: "<gray>Zet speler <gold>{player} <gray>naar <aqua>{amount} {mana_unit}"
       desc: Sets the mana of a player
     at_least_zero: "<yellow>{mana_unit} moet ten minste nul zijn!"
     console_specify_player: "<yellow>Console moet een speler opgeven!"
