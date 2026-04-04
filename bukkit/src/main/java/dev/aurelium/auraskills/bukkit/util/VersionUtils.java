@@ -113,6 +113,9 @@ public class VersionUtils {
         int index = version.lastIndexOf("MC:");
         if (index != -1) {
             version = version.substring(index + 4, version.length() - 1);
+        } else if (version.contains(".build.")) {
+            int buildIndex = version.indexOf(".build.");
+            version = version.substring(0, buildIndex);
         } else if (version.endsWith("SNAPSHOT")) {
             // getBukkitVersion()
             index = version.indexOf('-');

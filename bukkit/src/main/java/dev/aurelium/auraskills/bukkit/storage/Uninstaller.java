@@ -16,12 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Uninstaller {
 
     public void removeAttributes(CommandSender sender) {
-        File playerDataFolder;
-        if (VersionUtils.isAtLeastVersion(26)) {
-            playerDataFolder = new File(Bukkit.getWorlds().getFirst().getWorldFolder(), "players/data");
-        } else {
-            playerDataFolder = new File(Bukkit.getWorlds().getFirst().getWorldFolder(), "playerdata");
-        }
+        File playerDataFolder = getPlayerDataFolder();
         int successful = 0;
         int error = 0;
         int total = 0;
@@ -48,6 +43,24 @@ public class Uninstaller {
             }
         }
         sender.sendMessage("Searched " + total + " offline players. Successfully removed attributes from " + successful + " players. Failed to remove on " + error + " players.");
+    }
+
+    private File getPlayerDataFolder() {
+        File playerDataFolder;
+        if (VersionUtils.isAtLeastVersion(26)) {
+            File worldFolder = Bukkit.getWorlds().getFirst().getWorldFolder();
+            if (worldFolder.toString().contains("/dimensions/")) {
+                // Handle Paper
+                worldFolder = worldFolder.getParentFile().getParentFile().getParentFile();
+                if (!worldFolder.isDirectory() || !new File(worldFolder, "players").exists()) {
+                    throw new RuntimeException("Invalid world directory: " + worldFolder);
+                }
+            }
+            playerDataFolder = new File(worldFolder, "players/data");
+        } else {
+            playerDataFolder = new File(Bukkit.getWorlds().getFirst().getWorldFolder(), "playerdata");
+        }
+        return playerDataFolder;
     }
 
     private boolean removePlayer(NBTFileHandle nbtFile) throws IOException {
