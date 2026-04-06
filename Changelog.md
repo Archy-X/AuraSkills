@@ -2,6 +2,17 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.3.12
+
+### New Features
+
+- Add support for Paper 26.1.1 version and world format
+
+### Bug Fixes
+
+- Fix resethealth command not working in 26.1+
+- Fix FancyHolograms damage holograms not being removed
+
 ## 2.3.11
 
 ### New Features
