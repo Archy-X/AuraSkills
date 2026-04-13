@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import com.sk89q.worldedit.WorldEdit;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockBreakEvent;
+import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockDropItemEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -14,18 +15,22 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -146,11 +151,19 @@ public class Treecapitator extends ReadiedManaAbility {
                 ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
-                    adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
+                    if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                        breakBlockWithBlockDropItemEvent(player, adjacentBlock);
+                    } else {
+                        adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
+                    }
                 }
                 adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
             } else {
-                adjacentBlock.breakNaturally();
+                if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                    breakBlockWithBlockDropItemEvent(player, adjacentBlock);
+                } else {
+                    adjacentBlock.breakNaturally();
+                }
             }
 
             tree.incrementBlocksBroken();
@@ -169,6 +182,32 @@ public class Treecapitator extends ReadiedManaAbility {
         }
 
         onComplete.run();
+    }
+
+    private void breakBlockWithBlockDropItemEvent(Player player, Block block) {
+        Collection<ItemStack> drops = block.getDrops(player.getInventory().getItemInMainHand(), player);
+        BlockState blockState = block.getState();
+
+        // To get item list for BlockDropItemEvent, drop items manually and save them temporarily.
+        Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
+        List<Item> items = new ArrayList<>();
+        for (ItemStack drop : drops) {
+            if (drop == null) continue;
+            items.add(block.getWorld().dropItem(dropLoc, drop));
+        }
+
+        // If event has been cancelled, remove dropped items because they should not be dropped.
+        ManaAbilityBlockDropItemEvent blockDropItemEvent = new ManaAbilityBlockDropItemEvent(block, blockState, player, items);
+        Bukkit.getPluginManager().callEvent(blockDropItemEvent);
+        if (blockDropItemEvent.isCancelled()) {
+            for (Item item : blockDropItemEvent.getItems()) {
+                item.remove();
+            }
+        }
+
+        // Instead of Block#breakNaturally, it gives the effect that the block seems to have broken naturally.
+        block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+        block.setType(Material.AIR);
     }
 
     @Nullable
