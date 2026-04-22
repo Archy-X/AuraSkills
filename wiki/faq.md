@@ -52,8 +52,19 @@ See the [XP Multipliers page](skills/xp-multipliers.md) for more details.
 
 ### What server software is supported?
 
-Only Spigot and Paper are officially supported, but many Paper forks like Purpur will likely work. CraftBukkit and modded hybrid servers (Arclight, Mohist, etc) are not supported.
+Paper, Spigot, and Purpur are officially supported, but many Paper forks will likely work. CraftBukkit and modded hybrid servers (Arclight, Mohist, etc) are not supported.
 
 ### Why am I not appearing on the leaderboard? / How do I exclude op players from the leaderboard?
 
 The `auraskills.leaderboard.exclude` permission controls whether a player is shown on the leaderboard. This is `false` by default, but if a player has `auraskills.*` then that player will be excluded. Simply set this permission individually to `false` (want the player to show) or `true` (do not want the player to show.
+
+### My health keeps increasing and I can't remove it
+
+This issue is often caused by an incompatibility with minigame plugins and switching between worlds. Changing a few hp
+settings in `stats.yml` under `traits.auraskills/hp` may fix it:
+- Set `update_delay` to 1
+- Set `force_base_health` to true
+
+However, this will break plugins that modify the max_health attribute base value directly instead of using attribute
+modifiers.
+

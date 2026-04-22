@@ -186,7 +186,7 @@ public class SkillsItem {
         List<PersistentDataContainer> containers = getContainerList(metaType, modifierType);
         containers.removeIf(c -> {
             @Nullable String typeName = c.get(getTypeKey(metaType), PersistentDataType.STRING);
-            return typeName == null || typeName.equals(identified.getId().toString());
+            return typeName == null || typeName.equals(identified.getId().toString()) || typeName.equals(identified.getId().getSimpleName());
         });
 
         saveContainerList(containers, metaType, modifierType);
