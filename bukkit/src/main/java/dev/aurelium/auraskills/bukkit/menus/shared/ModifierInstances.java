@@ -168,7 +168,7 @@ public class ModifierInstances {
         } else if (itemData != null) {
             displayName = itemData.displayName();
         } else {
-            displayName = modifier.name();
+            displayName = getFallbackDisplayName(id, user.getLocale());
         }
 
         String desc;
@@ -262,13 +262,23 @@ public class ModifierInstances {
     }
 
     private String getFallbackDescription(String modifierName, Locale locale) {
-        String path = "menus.stat_info.modifiers." + modifierName;
+        String path = "menus.stat_info.custom_descriptions." + modifierName;
         String customMsg = plugin.getMsg(MessageKey.of(path), locale);
         if (!customMsg.equals(path)) {
             return customMsg;
         }
         // Fallback default description
         return plugin.getMsg(MenuMessage.CUSTOM_MODIFIER_DESC, locale);
+    }
+
+    private String getFallbackDisplayName(String modifierName, Locale locale) {
+        String path = "menus.stat_info.custom_names." + modifierName;
+        String customMsg = plugin.getMsg(MessageKey.of(path), locale);
+        if (!customMsg.equals(path)) {
+            return customMsg;
+        }
+        // Fallback default description
+        return modifierName;
     }
 
     public static ItemStack getFallbackItem() {
