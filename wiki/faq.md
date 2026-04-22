@@ -6,7 +6,7 @@ description: Frequently-asked questions
 
 ### How do I remove the health and mana display above the hotbar?
 
-Set `action_bar.idle` to false in config.yml.
+Set `action_bar.idle` to false in config.yml to fully disable it. Alternatively, players can toggle it individually using `/abtoggle`.
 
 ### How do I prevent duplicated XP and items from placed blocks?
 

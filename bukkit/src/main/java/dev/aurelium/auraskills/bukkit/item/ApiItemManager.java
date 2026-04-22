@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.config.ConfigNode;
 import dev.aurelium.auraskills.api.item.ItemFilter;
 import dev.aurelium.auraskills.api.item.ItemManager;
 import dev.aurelium.auraskills.api.item.ModifierType;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
@@ -16,6 +17,7 @@ import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.util.ConfigurateItemParser;
 import dev.aurelium.auraskills.common.api.implementation.ApiConfigNode;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -185,4 +187,23 @@ public class ApiItemManager implements ItemManager {
         }
     }
 
+    @Override
+    public void register(NamespacedId key, ItemStack item) {
+        plugin.getItemRegistry().register(key, item.clone());
+    }
+
+    @Override
+    public void unregister(NamespacedId key) {
+        plugin.getItemRegistry().unregister(key);
+    }
+
+    @Override
+    public boolean isRegistered(NamespacedId key) {
+        return plugin.getItemRegistry().containsItem(key);
+    }
+
+    @Override
+    public @Nullable ItemStack getRegisteredItem(NamespacedId key) {
+        return plugin.getItemRegistry().getItem(key);
+    }
 }
