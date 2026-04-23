@@ -48,6 +48,13 @@ public class DamageListener implements Listener {
                 return;
             }
             if (target.hasMetadata("NPC")) return;
+
+            // Track PvP combat state
+            if (player != null) {
+                // Both attacker and target are players - this is PvP
+                plugin.getCombatTracker().enterCombat(player);
+                plugin.getCombatTracker().enterCombat(target);
+            }
         }
 
         if (player == null && !(event.getEntity() instanceof Player)) {
