@@ -1,7 +1,6 @@
 package dev.aurelium.auraskills.bukkit.skills.foraging;
 
 import com.sk89q.worldedit.WorldEdit;
-import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockBreakEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -14,9 +13,7 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.source.type.BlockSource;
 import dev.aurelium.auraskills.common.user.User;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -143,11 +140,7 @@ public class Treecapitator extends ReadiedManaAbility {
 
             if (manaAbility.optionBoolean("call_block_break_event", false)) {
                 adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
-                ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
-                }
+                player.breakBlock(adjacentBlock);
                 adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
             } else {
                 adjacentBlock.breakNaturally();
