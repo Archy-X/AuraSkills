@@ -35,7 +35,6 @@ mana_abilities:
     durability_multiplier: 0
     max_limit_durability: false
     call_block_break_event: false
-    call_block_drop_item_event: false
   auraskills/speed_mine:
     enabled: true
     base_value: 10.0
@@ -82,7 +81,6 @@ mana_abilities:
     max_blocks: 61
     durability_multiplier: 0
     max_limit_durability: false
-    call_block_drop_item_event: false
   auraskills/charged_shot:
     enabled: true
     base_value: 0.5
