@@ -61,6 +61,8 @@ AuraSkills provides PlaceholderAPI placeholders that work out of the box, withou
 * `%auraskills_mability_[ability]_value%` - Gets the mana ability value.
 * `%auraskills_mability_[ability]_value_int%` - Gets mana ability value rounded to an integer
 * `%auraskills_mability_[ability]_active%` - Returns true if mana ability is active, false otherwise.
+* `%auraskills_mability_[ability]_cost%` - Gets mana ability mana cost.
+* `%auraskills_mability_[ability]_cost_int%` - Gets mana ability mana cost rounded to an integer.
 * `%auraskills_trait_[trait]%` - Gets the effective level of a trait.
 * `%auraskills_trait_[trait]_bonus%` - Gets the bonus level of a trait (level excluding the base value).
 * `%auraskills_trait_[trait]_menu%` - Gets the trait in the same format displayed in the stats menu.
