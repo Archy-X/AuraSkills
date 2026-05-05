@@ -1,6 +1,5 @@
 package dev.aurelium.auraskills.bukkit.skills.excavation;
 
-import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockDropItemEvent;
 import dev.aurelium.auraskills.api.event.mana.TerraformBlockBreakEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -13,22 +12,18 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Terraform extends ReadiedManaAbility {
 
@@ -127,33 +122,7 @@ public class Terraform extends ReadiedManaAbility {
         TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
-                Collection<ItemStack> drops = block.getDrops(player.getInventory().getItemInMainHand(), player);
-                BlockState blockState = block.getState();
-
-                // To get item list for BlockDropItemEvent, drop items manually and save them temporarily.
-                Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
-                List<Item> items = new ArrayList<>();
-                for (ItemStack drop : drops) {
-                    if (drop == null) continue;
-                    items.add(block.getWorld().dropItem(dropLoc, drop));
-                }
-
-                // If event has been cancelled, remove dropped items because they should not be dropped.
-                ManaAbilityBlockDropItemEvent blockDropItemEvent = new ManaAbilityBlockDropItemEvent(block, blockState, player, items);
-                Bukkit.getPluginManager().callEvent(blockDropItemEvent);
-                if (blockDropItemEvent.isCancelled()) {
-                    for (Item item : blockDropItemEvent.getItems()) {
-                        item.remove();
-                    }
-                }
-
-                // Instead of Block#breakNaturally, it gives the effect that the block seems to have broken naturally.
-                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
-                block.setType(Material.AIR);
-            } else {
-                block.breakNaturally(player.getInventory().getItemInMainHand());
-            }
+            block.breakNaturally(player.getInventory().getItemInMainHand());
         }
         block.removeMetadata("AureliumSkills-Terraform", plugin);
     }
