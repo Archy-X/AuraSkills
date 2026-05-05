@@ -119,11 +119,17 @@ public class Terraform extends ReadiedManaAbility {
             block.removeMetadata("AureliumSkills-Terraform", plugin);
             return;
         }
-        TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
-        Bukkit.getPluginManager().callEvent(event);
-        if (!event.isCancelled()) {
-            block.breakNaturally(player.getInventory().getItemInMainHand());
+
+        if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+            player.breakBlock(block);
+        } else {
+            TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
+            Bukkit.getPluginManager().callEvent(event);
+            if (!event.isCancelled()) {
+                block.breakNaturally(player.getInventory().getItemInMainHand());
+            }
         }
+
         block.removeMetadata("AureliumSkills-Terraform", plugin);
     }
 

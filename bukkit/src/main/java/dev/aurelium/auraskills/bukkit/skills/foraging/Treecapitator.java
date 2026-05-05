@@ -141,7 +141,11 @@ public class Treecapitator extends ReadiedManaAbility {
                 continue;
             }
 
-            if (manaAbility.optionBoolean("call_block_break_event", false)) {
+            if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
+                player.breakBlock(adjacentBlock);
+                adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
+            } else if (manaAbility.optionBoolean("call_block_break_event", false)) {
                 adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
                 ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
                 Bukkit.getPluginManager().callEvent(event);
