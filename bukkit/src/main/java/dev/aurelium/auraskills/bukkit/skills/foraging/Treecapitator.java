@@ -23,6 +23,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,6 +71,11 @@ public class Treecapitator extends ReadiedManaAbility {
             }
         }
         return false;
+    }
+
+    protected boolean isHoldingMaterial(Player player, ItemStack item) {
+        if (item == null) return false;
+        return materialMatches(item.getType().toString(), player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -132,7 +138,29 @@ public class Treecapitator extends ReadiedManaAbility {
             onComplete.run();
             return;
         }
+
+        // Reduce max blocks and retry if player isn't holding the correct material.
+        ItemStack handItem = player.getInventory().getItemInMainHand();
+        if (!isHoldingMaterial(player, handItem)) {
+            tree.setMaxBlocks(tree.getMaxBlocks() - 1);
+            breakBlock(player, user, block, tree, taskCount, onComplete);
+            return;
+        }
+
+        // If the block wasn't broken due to item swapping try to break it.
+        BlockXpSource source = getSource(block);
+        if (plugin.getSkillManager().hasTag(source, SourceTag.TREECAPITATOR_APPLICABLE) && !plugin.getRegionManager().isPlacedBlock(block)) {
+            callBlockBreakEvent(player, user, tree, block, source);
+        }
+
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
+            handItem = player.getInventory().getItemInMainHand();
+            if (!isHoldingMaterial(player, handItem)) {
+                tree.setMaxBlocks(tree.getMaxBlocks() - 1);
+                breakBlock(player, user, block, tree, taskCount, onComplete);
+                return;
+            }
+
             BlockXpSource adjSource = getSource(adjacentBlock);
             if (!plugin.getSkillManager().hasTag(adjSource, SourceTag.TREECAPITATOR_APPLICABLE))
                 continue; // Check block is leaf or trunk
@@ -141,22 +169,8 @@ public class Treecapitator extends ReadiedManaAbility {
                 continue;
             }
 
-            if (manaAbility.optionBoolean("call_block_break_event", false)) {
-                adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
-                ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
-                }
-                adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
-            } else {
-                adjacentBlock.breakNaturally();
-            }
+            callBlockBreakEvent(player, user, tree, adjacentBlock, adjSource);
 
-            tree.incrementBlocksBroken();
-            if (adjSource != null && giveXp) {
-                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
-            }
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
             if (adjacentBlock.getX() > originalBlock.getX() + 6 || adjacentBlock.getZ() > originalBlock.getZ() + 6 || adjacentBlock.getY() > originalBlock.getY() + 31) {
@@ -169,6 +183,26 @@ public class Treecapitator extends ReadiedManaAbility {
         }
 
         onComplete.run();
+    }
+
+    protected void callBlockBreakEvent(Player player, User user, TreecapitatorTree tree, Block block, BlockXpSource source) {
+        if (manaAbility.optionBoolean("call_block_break_event", false)) {
+            block.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
+            ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(block, player);
+            Bukkit.getPluginManager().callEvent(event);
+            if (!event.isCancelled()) {
+                block.breakNaturally(player.getInventory().getItemInMainHand());
+            }
+            block.removeMetadata("AureliumSkills-Treecapitator", plugin);
+        } else {
+            block.breakNaturally();
+        }
+
+        tree.incrementBlocksBroken();
+
+        if (source != null && giveXp) {
+            plugin.getLevelManager().addXp(user, manaAbility.getSkill(), source, source.getXp());
+        }
     }
 
     @Nullable
