@@ -457,9 +457,17 @@ public class SkillsItem {
         meta.setLore(lore);
     }
 
-    public void removeModifierLore(Stat stat, Locale locale) {
+    public void removeModifierLore(NamespaceIdentified identified, Locale locale) {
         List<String> lore = meta.getLore();
-        if (lore != null && !lore.isEmpty()) lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
+        if (lore == null || lore.isEmpty()) return;
+
+        if (identified instanceof Stat stat) {
+            lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
+        } else if (identified instanceof Trait trait) {
+            lore.removeIf(line -> line.contains(trait.getDisplayName(locale)));
+        } else if (identified instanceof Skill skill) {
+            lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        }
         meta.setLore(lore);
     }
 
@@ -503,6 +511,14 @@ public class SkillsItem {
         meta.setLore(lore);
     }
 
+    public void removeMultiplierLore(Skill skill, Locale locale) {
+        List<String> lore = meta.getLore();
+        if (lore == null || lore.isEmpty()) return;
+
+        lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        meta.setLore(lore);
+    }
+
     public void addRequirementLore(ModifierType type, Skill skill, int level, Locale locale) {
         String text = TextUtil.replace(plugin.getMsg(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
         List<String> lore;
@@ -514,12 +530,12 @@ public class SkillsItem {
         }
     }
 
-    public void removeRequirementLore(Skill skill) {
+    public void removeRequirementLore(Skill skill, Locale locale) {
         List<String> lore = meta.getLore();
         if (lore != null) {
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
-                if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.name().toLowerCase(Locale.ROOT)))) {
+                if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.getDisplayName(locale)))) {
                     lore.remove(line);
                 }
             }
