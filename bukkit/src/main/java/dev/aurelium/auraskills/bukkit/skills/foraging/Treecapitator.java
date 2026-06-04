@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class Treecapitator extends ReadiedManaAbility {
 
@@ -125,39 +126,26 @@ public class Treecapitator extends ReadiedManaAbility {
             tree.setMaxBlocks(getHoldingMaterialDurability(player, tree.getMaxBlocks()));
         }
 
-        breakBlock(player, user, block, tree, taskCount, () -> {
+        breakBlock(player, user, block, tree, taskCount, broken -> {
             taskCount.decrementAndGet();
-            if (taskCount.get() == 0) {
-                setHoldingMaterialDurability(player, tree.getBlocksBroken(), multiplier);
+            if (broken > 0 && isHoldingMaterial(player, player.getInventory().getItemInMainHand())) {
+                setHoldingMaterialDurability(player, broken, multiplier);
             }
         });
     }
 
-    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
+    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Consumer<Integer> onComplete) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
-            onComplete.run();
+            onComplete.accept(0);
             return;
         }
 
-        // Reduce max blocks and retry if player isn't holding the correct material.
-        ItemStack handItem = player.getInventory().getItemInMainHand();
-        if (!isHoldingMaterial(player, handItem)) {
-            tree.setMaxBlocks(tree.getMaxBlocks() - 1);
-            breakBlock(player, user, block, tree, taskCount, onComplete);
-            return;
-        }
-
-        // If the block wasn't broken due to item swapping try to break it.
-        BlockXpSource source = getSource(block);
-        if (plugin.getSkillManager().hasTag(source, SourceTag.TREECAPITATOR_APPLICABLE) && !plugin.getRegionManager().isPlacedBlock(block)) {
-            callBlockBreakEvent(player, user, tree, block, source);
-        }
-
+        int brokenThisRun = 0;
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
-            handItem = player.getInventory().getItemInMainHand();
+            ItemStack handItem = player.getInventory().getItemInMainHand();
             if (!isHoldingMaterial(player, handItem)) {
-                tree.setMaxBlocks(tree.getMaxBlocks() - 1);
-                breakBlock(player, user, block, tree, taskCount, onComplete);
+                tree.setMaxBlocks(0);
+                onComplete.accept(brokenThisRun);
                 return;
             }
 
@@ -170,11 +158,12 @@ public class Treecapitator extends ReadiedManaAbility {
             }
 
             callBlockBreakEvent(player, user, tree, adjacentBlock, adjSource);
+            brokenThisRun++;
 
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
             if (adjacentBlock.getX() > originalBlock.getX() + 6 || adjacentBlock.getZ() > originalBlock.getZ() + 6 || adjacentBlock.getY() > originalBlock.getY() + 31) {
-                onComplete.run();
+                onComplete.accept(brokenThisRun);
                 return;
             }
             // Break the next blocks
@@ -182,7 +171,7 @@ public class Treecapitator extends ReadiedManaAbility {
             plugin.getScheduler().scheduleAtLocation(adjacentBlock.getLocation(), () -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
 
-        onComplete.run();
+        onComplete.accept(brokenThisRun);
     }
 
     protected void callBlockBreakEvent(Player player, User user, TreecapitatorTree tree, Block block, BlockXpSource source) {
