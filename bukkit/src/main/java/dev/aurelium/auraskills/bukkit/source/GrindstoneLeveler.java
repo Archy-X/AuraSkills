@@ -51,22 +51,20 @@ public class GrindstoneLeveler extends SourceLeveler {
 
         if (failsChecks(event, player, location, skill)) return;
 
-        double multiplier = getTotalLevelMultiplier(source, inventory, skill);
+        ItemStack topItem = inventory.getItem(0);
+        ItemStack bottomItem = inventory.getItem(1);
+        int totalLevel = getTotalLevel(topItem) + getTotalLevel(bottomItem);
+        if (totalLevel == 0) return; // No disenchantable enchants (e.g., only curses)
+
+        double multiplier = getTotalLevelMultiplier(source, totalLevel, skill);
 
         plugin.getLevelManager().addXp(plugin.getUser(player), skill, source, multiplier * source.getXp());
     }
 
-    private double getTotalLevelMultiplier(GrindstoneXpSource source, Inventory inventory, Skill skill) {
-        // Get the repair cost multiplier from placeholder
+    private double getTotalLevelMultiplier(GrindstoneXpSource source, int totalLevel, Skill skill) {
         double multiplier = 1;
         String multiplierString = source.getMultiplier();
         if (multiplierString != null) {
-            int totalLevel = 0;
-            ItemStack topItem = inventory.getItem(0); // Get item in top slot
-            totalLevel += getTotalLevel(topItem);
-            ItemStack bottomItem = inventory.getItem(1); // Get item in bottom slot
-            totalLevel += getTotalLevel(bottomItem);
-
             multiplierString = TextUtil.replace(multiplierString, "{total_level}", String.valueOf(totalLevel));
             try {
                 multiplier = Double.parseDouble(multiplierString);
