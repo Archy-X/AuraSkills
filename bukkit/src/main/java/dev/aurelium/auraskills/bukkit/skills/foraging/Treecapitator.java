@@ -23,12 +23,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class Treecapitator extends ReadiedManaAbility {
 
@@ -70,6 +72,11 @@ public class Treecapitator extends ReadiedManaAbility {
             }
         }
         return false;
+    }
+
+    protected boolean isHoldingMaterial(Player player, ItemStack item) {
+        if (item == null) return false;
+        return materialMatches(item.getType().toString(), player);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -119,20 +126,29 @@ public class Treecapitator extends ReadiedManaAbility {
             tree.setMaxBlocks(getHoldingMaterialDurability(player, tree.getMaxBlocks()));
         }
 
-        breakBlock(player, user, block, tree, taskCount, () -> {
+        breakBlock(player, user, block, tree, taskCount, broken -> {
             taskCount.decrementAndGet();
-            if (taskCount.get() == 0) {
-                setHoldingMaterialDurability(player, tree.getBlocksBroken(), multiplier);
+            if (broken > 0 && isHoldingMaterial(player, player.getInventory().getItemInMainHand())) {
+                setHoldingMaterialDurability(player, broken, multiplier);
             }
         });
     }
 
-    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Runnable onComplete) {
+    private void breakBlock(Player player, User user, Block block, TreecapitatorTree tree, AtomicInteger taskCount, Consumer<Integer> onComplete) {
         if (tree.getBlocksBroken() > tree.getMaxBlocks()) {
-            onComplete.run();
+            onComplete.accept(0);
             return;
         }
+
+        int brokenThisRun = 0;
         for (Block adjacentBlock : BlockFaceUtil.getSurroundingBlocks(block)) {
+            ItemStack handItem = player.getInventory().getItemInMainHand();
+            if (!isHoldingMaterial(player, handItem)) {
+                tree.setMaxBlocks(0);
+                onComplete.accept(brokenThisRun);
+                return;
+            }
+
             BlockXpSource adjSource = getSource(adjacentBlock);
             if (!plugin.getSkillManager().hasTag(adjSource, SourceTag.TREECAPITATOR_APPLICABLE))
                 continue; // Check block is leaf or trunk
@@ -141,26 +157,13 @@ public class Treecapitator extends ReadiedManaAbility {
                 continue;
             }
 
-            if (manaAbility.optionBoolean("call_block_break_event", false)) {
-                adjacentBlock.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
-                ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(adjacentBlock, player);
-                Bukkit.getPluginManager().callEvent(event);
-                if (!event.isCancelled()) {
-                    adjacentBlock.breakNaturally(player.getInventory().getItemInMainHand());
-                }
-                adjacentBlock.removeMetadata("AureliumSkills-Treecapitator", plugin);
-            } else {
-                adjacentBlock.breakNaturally();
-            }
+            callBlockBreakEvent(player, user, tree, adjacentBlock, adjSource);
+            brokenThisRun++;
 
-            tree.incrementBlocksBroken();
-            if (adjSource != null && giveXp) {
-                plugin.getLevelManager().addXp(user, manaAbility.getSkill(), adjSource, adjSource.getXp());
-            }
             // Continue breaking blocks
             Block originalBlock = tree.getOriginalBlock();
             if (adjacentBlock.getX() > originalBlock.getX() + 6 || adjacentBlock.getZ() > originalBlock.getZ() + 6 || adjacentBlock.getY() > originalBlock.getY() + 31) {
-                onComplete.run();
+                onComplete.accept(brokenThisRun);
                 return;
             }
             // Break the next blocks
@@ -168,7 +171,27 @@ public class Treecapitator extends ReadiedManaAbility {
             plugin.getScheduler().scheduleAtLocation(adjacentBlock.getLocation(), () -> breakBlock(player, user, adjacentBlock, tree, taskCount, onComplete), 50, TimeUnit.MILLISECONDS);
         }
 
-        onComplete.run();
+        onComplete.accept(brokenThisRun);
+    }
+
+    protected void callBlockBreakEvent(Player player, User user, TreecapitatorTree tree, Block block, BlockXpSource source) {
+        if (manaAbility.optionBoolean("call_block_break_event", false)) {
+            block.setMetadata("AureliumSkills-Treecapitator", new FixedMetadataValue(plugin, true));
+            ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(block, player);
+            Bukkit.getPluginManager().callEvent(event);
+            if (!event.isCancelled()) {
+                block.breakNaturally(player.getInventory().getItemInMainHand());
+            }
+            block.removeMetadata("AureliumSkills-Treecapitator", plugin);
+        } else {
+            block.breakNaturally();
+        }
+
+        tree.incrementBlocksBroken();
+
+        if (source != null && giveXp) {
+            plugin.getLevelManager().addXp(user, manaAbility.getSkill(), source, source.getXp());
+        }
     }
 
     @Nullable
