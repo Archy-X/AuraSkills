@@ -73,6 +73,11 @@ Specific options for each hook are under the section with the plugin name below:
 * `format_last` - If true, parsing of MiniMessage will happen after placeholders (like hp and mana) are replaced on each send. This makes MiniMessage gradients work at the cost of performance.
 * `update_async` - If true, the idle action bar will be updated and sent asynchronously. This is an experimental option.
 
+::: info
+The text of the action bar can be changed in `messages/global.yml` under `action_bar.idle` (and other nearby keys
+like `hp_display` and `mana_display`).
+:::
+
 ### Boss bar
 
 `boss_bar:`
@@ -88,6 +93,12 @@ Specific options for each hook are under the section with the plugin name below:
   * Available colors are BLUE, GREEN, PINK, PURPLE, WHITE, RED, and YELLOW
   * Available styles are PROGRESS, NOTCHED\_6, NOTCHED\_10, NOTCHED\_12, and NOTCHED\_20
 * `animate_progress` - Toggles boss bar animation (the delay when updating progress).
+
+::: info
+The text of the boss bar can be changed in `messages/global.yml` under `action_bar.boss_bar_xp` (and other nearby keys).
+If you want to show the player's current and required XP to level up instead of a percentage, replace the `{percent}` placeholder
+with `{current_xp}/{level_xp}`
+:::
 
 ### Jobs
 

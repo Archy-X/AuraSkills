@@ -174,7 +174,9 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                             .replace("_active", "")
                             .replace("_value_int", "")
                             .replace("_value", "")
-                            .replace("_roman", ""));
+                            .replace("_roman", "")
+                            .replace("_cost_int", "")
+                            .replace("_cost", ""));
             ManaAbility manaAbility = plugin.getManaAbilityRegistry().getOrNull(id);
 
             if (manaAbility == null) return null;
@@ -190,6 +192,10 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                     return String.valueOf(user.getManaAbilityData(manaAbility).isActivated());
                 } else if (identifier.endsWith("roman")) {
                     return RomanNumber.toRomanAlways(user.getManaAbilityLevel(manaAbility));
+                } else if (identifier.endsWith("cost")) {
+                    return String.valueOf(manaAbility.getManaCost(user.getManaAbilityLevel(manaAbility)));
+                } else if (identifier.endsWith("cost_int")) {
+                    return String.valueOf(Math.round(manaAbility.getManaCost(user.getManaAbilityLevel(manaAbility))));
                 } else if (identifier.endsWith(manaAbility.name().toLowerCase(Locale.ROOT))) {
                     return String.valueOf(user.getManaAbilityLevel(manaAbility));
                 }
@@ -484,6 +490,8 @@ public class PlaceholderApiProvider extends PlaceholderExpansion {
                 "%auraskills_mability_[ability]_active%",
                 "%auraskills_mability_[ability]_value%",
                 "%auraskills_mability_[ability]_value_int%",
+                "%auraskills_mability_[ability]_cost%",
+                "%auraskills_mability_[ability]_cost_int%",
                 "%auraskills_trait_[trait]",
                 "%auraskills_trait_[trait]_bonus",
                 "%auraskills_trait_[trait]_menu",

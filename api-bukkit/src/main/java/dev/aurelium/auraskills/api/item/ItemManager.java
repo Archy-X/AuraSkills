@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.api.item;
 
 import dev.aurelium.auraskills.api.config.ConfigNode;
+import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -13,6 +14,7 @@ import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
 import java.util.List;
@@ -233,4 +235,36 @@ public interface ItemManager {
     @Deprecated
     List<ItemStack> parseMultipleItems(ConfigurationNode config);
 
+    /**
+     * Registers an item to the AuraSkills item registry with a given
+     * {@link NamespacedId}. Registered items can usually be referenced in
+     * item configs in the plugin using `key` instead of `material`.
+     *
+     * @param key the key to register under
+     * @param item the item to register
+     */
+    void register(NamespacedId key, ItemStack item);
+
+    /**
+     * Unregisters an item from the AuraSkills item registry.
+     *
+     * @param key the key to unregister
+     */
+    void unregister(NamespacedId key);
+
+    /**
+     * Checks if an item is registered under a given key.
+     *
+     * @param key the key to check
+     * @return whether an item is registered with this key
+     */
+    boolean isRegistered(NamespacedId key);
+
+    /**
+     * Gets the item registered under a given key.
+     *
+     * @param key the key the item is registered under
+     * @return the item, or null if there is no item under this key
+     */
+    @Nullable ItemStack getRegisteredItem(NamespacedId key);
 }
