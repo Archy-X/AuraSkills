@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.bukkit.skills.foraging;
 import com.sk89q.worldedit.WorldEdit;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockBreakEvent;
 import dev.aurelium.auraskills.api.event.mana.ManaAbilityBlockDropItemEvent;
-import dev.aurelium.auraskills.api.event.mana.TerraformBlockDropItemEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.source.XpSource;
@@ -184,25 +183,29 @@ public class Treecapitator extends ReadiedManaAbility {
             ManaAbilityBlockBreakEvent event = new ManaAbilityBlockBreakEvent(block, player);
             Bukkit.getPluginManager().callEvent(event);
             if (!event.isCancelled()) {
-                List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
-                BlockState blockState = block.getState();
+                if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                    List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
+                    BlockState blockState = block.getState();
 
-                Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
-                List<Item> droppedItems = new ArrayList<>();
-                for (ItemStack drop : drops) {
-                    droppedItems.add(block.getWorld().dropItem(dropLoc, drop));
-                }
-
-                ManaAbilityBlockDropItemEvent manaAbilityBlockDropItemEvent = new ManaAbilityBlockDropItemEvent(block, blockState, player, droppedItems);
-                Bukkit.getPluginManager().callEvent(manaAbilityBlockDropItemEvent);
-                if (manaAbilityBlockDropItemEvent.isCancelled()) {
-                    for (Item droppedItem : droppedItems) {
-                        droppedItem.remove();
+                    Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
+                    List<Item> droppedItems = new ArrayList<>();
+                    for (ItemStack drop : drops) {
+                        droppedItems.add(block.getWorld().dropItem(dropLoc, drop));
                     }
-                }
 
-                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
-                block.setType(Material.AIR);
+                    ManaAbilityBlockDropItemEvent manaAbilityBlockDropItemEvent = new ManaAbilityBlockDropItemEvent(block, blockState, player, droppedItems);
+                    Bukkit.getPluginManager().callEvent(manaAbilityBlockDropItemEvent);
+                    if (manaAbilityBlockDropItemEvent.isCancelled()) {
+                        for (Item droppedItem : droppedItems) {
+                            droppedItem.remove();
+                        }
+                    }
+
+                    block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+                    block.setType(Material.AIR);
+                } else {
+                    block.breakNaturally(player.getInventory().getItemInMainHand());
+                }
             }
             block.removeMetadata("AureliumSkills-Treecapitator", plugin);
         } else {

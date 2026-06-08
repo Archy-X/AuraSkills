@@ -126,25 +126,29 @@ public class Terraform extends ReadiedManaAbility {
         TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
-            BlockState blockState = block.getState();
+            if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
+                BlockState blockState = block.getState();
 
-            Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
-            List<Item> droppedItems = new ArrayList<>();
-            for (ItemStack drop : drops) {
-                droppedItems.add(block.getWorld().dropItem(dropLoc, drop));
-            }
-
-            TerraformBlockDropItemEvent terraformBlockDropItemEvent = new TerraformBlockDropItemEvent(block, blockState, player, droppedItems);
-            Bukkit.getPluginManager().callEvent(terraformBlockDropItemEvent);
-            if (terraformBlockDropItemEvent.isCancelled()) {
-                for (Item droppedItem : droppedItems) {
-                    droppedItem.remove();
+                Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
+                List<Item> droppedItems = new ArrayList<>();
+                for (ItemStack drop : drops) {
+                    droppedItems.add(block.getWorld().dropItem(dropLoc, drop));
                 }
-            }
 
-            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
-            block.setType(Material.AIR);
+                TerraformBlockDropItemEvent terraformBlockDropItemEvent = new TerraformBlockDropItemEvent(block, blockState, player, droppedItems);
+                Bukkit.getPluginManager().callEvent(terraformBlockDropItemEvent);
+                if (terraformBlockDropItemEvent.isCancelled()) {
+                    for (Item droppedItem : droppedItems) {
+                        droppedItem.remove();
+                    }
+                }
+
+                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+                block.setType(Material.AIR);
+            } else {
+                block.breakNaturally(player.getInventory().getItemInMainHand());
+            }
         }
         block.removeMetadata("AureliumSkills-Terraform", plugin);
     }
