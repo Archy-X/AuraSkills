@@ -137,8 +137,8 @@ public class BackupProvider {
             return;
         }
 
-        long deleteBefore = System.currentTimeMillis()
-                - TimeUnit.DAYS.toMillis(plugin.configInt(Option.AUTOMATIC_BACKUPS_DELETE_OLDER_THAN_DAYS));
+        int retentionDays = Math.max(1, plugin.configInt(Option.AUTOMATIC_BACKUPS_DELETE_OLDER_THAN_DAYS));
+        long deleteBefore = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(retentionDays);
         for (File backupFile : backupFiles) {
             if (backupFile.lastModified() < deleteBefore && !backupFile.delete()) {
                 plugin.logger().warn("Failed to delete old backup " + backupFile.getName());
