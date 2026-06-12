@@ -1,9 +1,20 @@
 package dev.aurelium.auraskills.bukkit.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Flags;
+import co.aikar.commands.annotation.Optional;
+import co.aikar.commands.annotation.Subcommand;
 import com.google.common.reflect.TypeToken;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dev.aurelium.auraskills.api.registry.NamespacedId;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
@@ -59,15 +70,17 @@ public class OpenMenuCommand extends BaseCommand {
 
     private void openMenuLogError(CommandSender sender, String menuName, Player target, @Nullable JsonArg properties, int page) {
         Locale locale = plugin.getLocale(sender);
-        try {
-            plugin.getSlate().openMenuUnchecked(target, menuName, getProperties(target, menuName, properties), page);
-        } catch (Exception e) {
-            target.closeInventory(); // Ensure players can't take items out
-            var errorMsg = TextUtil.replace(plugin.getMsg(ACFCoreMessage.ERROR_PREFIX, locale),
-                    "{message}", e.getMessage() != null ? e.getMessage() : "Check console for error");
-            sender.sendMessage(errorMsg);
-            e.printStackTrace();
-        }
+        plugin.getScheduler().executeAtEntity(target, task -> {
+            try {
+                plugin.getSlate().openMenuUnchecked(target, menuName, getProperties(target, menuName, properties), page);
+            } catch (Exception e) {
+                target.closeInventory(); // Ensure players can't take items out
+                var errorMsg = TextUtil.replace(plugin.getMsg(ACFCoreMessage.ERROR_PREFIX, locale),
+                        "{message}", e.getMessage() != null ? e.getMessage() : "Check console for error");
+                sender.sendMessage(errorMsg);
+                e.printStackTrace();
+            }
+        });
     }
 
     private Map<String, Object> getProperties(Player player, String menuName, @Nullable JsonArg propString) {
