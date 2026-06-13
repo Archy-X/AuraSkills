@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Mana-kyky avattu
   mana_ability_level_up: Mana-kyvyn taso nousi
   unclaimed_item: "<red>Sinulla on lunastamattomia kohteita, koska varastosi oli täynnä. Käytä <yellow> /skills claimitems lunastaaksesi ne <red>"
+  limit_reached: "<red>Raja saavutettu, {time} sekuntia jäljellä"
 menus:
   common:
     close: "Sulje"
@@ -564,6 +565,7 @@ menus:
     your_skills_desc: "Päivitä taitojasi tekemällä erilaisia tehtäviä avataksesi arvokkaita tehostuksia, kykyjä ja paljon muuta!"
     your_skills_hover: "Vie hiiri taidon päälle saadaksesi lisätietoja!"
     your_skills_click: "Napsauta taitoa nähdäksesi tason etenemisen!"
+    skill_xp_limited: "XP rajoitettu"
     skill_click: "Napsauta nähdäksesi tason edistyminen!"
     stats: "Tilastot"
     stats_desc: "Ansaitse buffeja kehittämällä taitoja"

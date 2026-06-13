@@ -109,6 +109,8 @@ public abstract class User {
 
     public abstract double getPermissionMultiplier(Skill skill);
 
+    public abstract double getPermissionLimitMultiplier(Skill skill);
+
     public abstract boolean hasSkillPermission(Skill skill);
 
     public abstract void setCommandLocale(Locale locale);
