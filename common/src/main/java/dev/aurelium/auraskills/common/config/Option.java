@@ -174,6 +174,8 @@ public enum Option {
     AUTOMATIC_BACKUPS_ENABLED("automatic_backups.enabled", OptionType.BOOLEAN),
     AUTOMATIC_BACKUPS_MINIMUM_INTERVAL_HOURS("automatic_backups.minimum_interval_hours", OptionType.DOUBLE),
     AUTOMATIC_BACKUPS_MAX_USERS("automatic_backups.max_users", OptionType.INT),
+    AUTOMATIC_BACKUPS_DELETE_OLD_BACKUPS("automatic_backups.delete_old_backups", OptionType.BOOLEAN),
+    AUTOMATIC_BACKUPS_DELETE_OLDER_THAN_DAYS("automatic_backups.delete_older_than_days", OptionType.INT),
     SAVE_BLANK_PROFILES("save_blank_profiles", OptionType.BOOLEAN);
 
     private final String path;
