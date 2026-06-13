@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.skills.excavation;
 
 import dev.aurelium.auraskills.api.event.mana.TerraformBlockBreakEvent;
+import dev.aurelium.auraskills.api.event.mana.TerraformBlockDropItemEvent;
 import dev.aurelium.auraskills.api.mana.ManaAbilities;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
@@ -12,18 +13,21 @@ import dev.aurelium.auraskills.common.message.type.ManaAbilityMessage;
 import dev.aurelium.auraskills.common.source.SourceTag;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Terraform extends ReadiedManaAbility {
 
@@ -122,7 +126,29 @@ public class Terraform extends ReadiedManaAbility {
         TerraformBlockBreakEvent event = new TerraformBlockBreakEvent(block, player);
         Bukkit.getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            block.breakNaturally(player.getInventory().getItemInMainHand());
+            if (manaAbility.optionBoolean("call_block_drop_item_event", false)) {
+                List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
+                BlockState blockState = block.getState();
+
+                Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
+                List<Item> droppedItems = new ArrayList<>();
+                for (ItemStack drop : drops) {
+                    droppedItems.add(block.getWorld().dropItem(dropLoc, drop));
+                }
+
+                TerraformBlockDropItemEvent terraformBlockDropItemEvent = new TerraformBlockDropItemEvent(block, blockState, player, droppedItems);
+                Bukkit.getPluginManager().callEvent(terraformBlockDropItemEvent);
+                if (terraformBlockDropItemEvent.isCancelled()) {
+                    for (Item droppedItem : droppedItems) {
+                        droppedItem.remove();
+                    }
+                }
+
+                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+                block.setType(Material.AIR);
+            } else {
+                block.breakNaturally(player.getInventory().getItemInMainHand());
+            }
         }
         block.removeMetadata("AureliumSkills-Terraform", plugin);
     }
