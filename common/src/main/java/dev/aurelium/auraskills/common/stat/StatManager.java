@@ -72,6 +72,7 @@ public abstract class StatManager {
         if (user == null) return;
 
         for (Stat stat : plugin.getStatRegistry().getValues()) {
+            if (!isLoaded(stat)) continue;
             user.getUserStats().recalculateStat(stat);
         }
         if (reload) {

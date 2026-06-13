@@ -92,14 +92,17 @@ public class VersionUtils {
     }
 
     public static int getPatchVersion(String version) {
-        if (version.startsWith("1.")) {
-            return 0;
-        } else {
-            int firstDot = version.indexOf(".");
-            int lastDot = version.lastIndexOf(".");
-            if (firstDot != lastDot) {
-                return Integer.parseInt(version.substring(lastDot + 1));
+        try {
+            if (version.startsWith("1.")) {
+                return 0;
+            } else {
+                int firstDot = version.indexOf(".");
+                int lastDot = version.lastIndexOf(".");
+                if (firstDot != lastDot) {
+                    return Integer.parseInt(version.substring(lastDot + 1));
+                }
             }
+        } catch (Exception ignored) {
         }
         return 0;
     }
@@ -118,8 +121,17 @@ public class VersionUtils {
             version = version.substring(0, buildIndex);
         } else if (version.endsWith("SNAPSHOT")) {
             // getBukkitVersion()
-            index = version.indexOf('-');
-            version = version.substring(0, index);
+            index = version.lastIndexOf('-');
+            if (index != -1) {
+                version = version.substring(0, index);
+            }
+            // Strip trailing non-numeric metadata (e.g. ".local" from "26.1.2.local")
+            if (!version.startsWith("1.")) {
+                String[] parts = version.split("\\.");
+                if (parts.length > 3) {
+                    version = parts[0] + "." + parts[1] + "." + parts[2];
+                }
+            }
         }
 
         version = version.split(" ")[0]; // Remove extra words
