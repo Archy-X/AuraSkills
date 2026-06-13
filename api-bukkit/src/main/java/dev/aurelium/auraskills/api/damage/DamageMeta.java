@@ -121,4 +121,12 @@ public class DamageMeta {
         return source;
     }
 
+    /**
+     * Checks if this damage event is a PvP scenario (player attacking player).
+     *
+     * @return true if both attacker and target are players, false otherwise
+     */
+    public boolean isPvP() {
+        return getAttackerAsPlayer() != null && getTargetAsPlayer() != null;
+    }
 }
