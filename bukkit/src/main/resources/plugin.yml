@@ -68,8 +68,13 @@ permissions:
     description: All permissions related to the creation of items using AuraSkills modifiers
     children:
       auraskills.command.item.modifier: true
+      auraskills.command.item.modifier.other: true
+      auraskills.command.item.trait: true
+      auraskills.command.item.trait.other: true
       auraskills.command.item.requirement: true
+      auraskills.command.item.requirement.other: true
       auraskills.command.item.multiplier: true
+      auraskills.command.item.multiplier.other: true
       auraskills.command.item.register: true
       auraskills.command.item.give: true
       auraskills.command.item.ignore: true
@@ -79,8 +84,13 @@ permissions:
     description: All permissions related to the creation of armors using AuraSkills modifiers
     children:
       auraskills.command.armor.modifier: true
+      auraskills.command.armor.modifier.other: true
+      auraskills.command.armor.trait: true
+      auraskills.command.armor.trait.other: true
       auraskills.command.armor.requirement: true
+      auraskills.command.armor.requirement.other: true
       auraskills.command.armor.multiplier: true
+      auraskills.command.armor.multiplier.other: true
     default: false
 
   auraskills.command.admin:
@@ -183,15 +193,35 @@ permissions:
     default: op
   auraskills.command.armor.modifier:
     default: op
+  auraskills.command.armor.modifier.other:
+    default: op
+  auraskills.command.armor.trait:
+    default: op
+  auraskills.command.armor.trait.other:
+    default: op
   auraskills.command.armor.requirement:
+    default: op
+  auraskills.command.armor.requirement.other:
     default: op
   auraskills.command.armor.multiplier:
     default: op
+  auraskills.command.armor.multiplier.other:
+    default: op
   auraskills.command.item.modifier:
+    default: op
+  auraskills.command.item.modifier.other:
+    default: op
+  auraskills.command.item.trait:
+    default: op
+  auraskills.command.item.trait.other:
     default: op
   auraskills.command.item.requirement:
     default: op
+  auraskills.command.item.requirement.other:
+    default: op
   auraskills.command.item.multiplier:
+    default: op
+  auraskills.command.item.multiplier.other:
     default: op
   auraskills.command.item.register:
     default: op

@@ -32,7 +32,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillsItem {
@@ -457,9 +462,17 @@ public class SkillsItem {
         meta.setLore(lore);
     }
 
-    public void removeModifierLore(Stat stat, Locale locale) {
+    public void removeModifierLore(NamespaceIdentified identified, Locale locale) {
         List<String> lore = meta.getLore();
-        if (lore != null && !lore.isEmpty()) lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
+        if (lore == null || lore.isEmpty()) return;
+
+        if (identified instanceof Stat stat) {
+            lore.removeIf(line -> line.contains(stat.getDisplayName(locale)));
+        } else if (identified instanceof Trait trait) {
+            lore.removeIf(line -> line.contains(trait.getDisplayName(locale)));
+        } else if (identified instanceof Skill skill) {
+            lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        }
         meta.setLore(lore);
     }
 
@@ -503,6 +516,26 @@ public class SkillsItem {
         meta.setLore(lore);
     }
 
+    public void removeMultiplierLore(ModifierType type, @Nullable Skill skill, Locale locale) {
+        List<String> lore = meta.getLore();
+        if (lore == null || lore.isEmpty()) return;
+
+        if (skill != null) { // Skill multiplier
+            lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        } else { // Global multiplier
+            // We don't have the value so we target both variants.
+            String message = plugin.getMsg(CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_GLOBAL_LORE"), locale);
+            String messageSubtract = plugin.getMsg(CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_GLOBAL_LORE_SUBTRACT"), locale);
+            // Clear the placeholder so we have a safe value to compare with.
+            String target = message.replace("{value}", "");
+            String targetSubtract = messageSubtract.replace("{value}", "");
+
+            lore.removeIf(line -> line.contains(target) || line.contains(targetSubtract));
+        }
+
+        meta.setLore(lore);
+    }
+
     public void addRequirementLore(ModifierType type, Skill skill, int level, Locale locale) {
         String text = TextUtil.replace(plugin.getMsg(CommandMessage.valueOf(type.name() + "_REQUIREMENT_ADD_LORE"), locale), "{skill}", skill.getDisplayName(locale), "{level}", String.valueOf(level));
         List<String> lore;
@@ -514,12 +547,12 @@ public class SkillsItem {
         }
     }
 
-    public void removeRequirementLore(Skill skill) {
+    public void removeRequirementLore(Skill skill, Locale locale) {
         List<String> lore = meta.getLore();
         if (lore != null) {
             for (int i = 0; i < lore.size(); i++) {
                 String line = lore.get(i);
-                if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.name().toLowerCase(Locale.ROOT)))) {
+                if (line.contains("Requires") && line.contains(TextUtil.capitalize(skill.getDisplayName(locale)))) {
                     lore.remove(line);
                 }
             }
