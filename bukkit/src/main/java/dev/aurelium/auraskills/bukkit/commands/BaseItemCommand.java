@@ -16,10 +16,12 @@ import dev.aurelium.auraskills.bukkit.item.SkillsItem;
 import dev.aurelium.auraskills.bukkit.item.SkillsItem.MetaType;
 import dev.aurelium.auraskills.bukkit.stat.StatFormat;
 import dev.aurelium.auraskills.common.message.type.ACFCoreMessage;
+import dev.aurelium.auraskills.common.message.type.ACFMinecraftMessage;
 import dev.aurelium.auraskills.common.message.type.CommandMessage;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +43,7 @@ public class BaseItemCommand {
 
     protected void handlePlayerTarget(
                 CommandIssuer issuer,
-                Player other,
+                @Nullable Player other,
                 BiConsumer<Player, Locale> action) {
         Locale locale = plugin.getLocale(issuer);
         if (other == null) {
@@ -51,8 +53,7 @@ public class BaseItemCommand {
             }
 
             Player player = issuer.getIssuer();
-            if (!checkItemHeld(issuer, player, locale)) {
-                issuer.sendMessage(plugin.getMsg(ACFCoreMessage.ERROR_PERFORMING_COMMAND, locale));
+            if (missingHeldItem(issuer, player, locale)) {
                 return;
             }
 
@@ -60,21 +61,20 @@ public class BaseItemCommand {
             return;
         }
 
-        if (!checkItemHeld(issuer, other, locale)) {
-            issuer.sendMessage(plugin.getMsg(ACFCoreMessage.ERROR_PERFORMING_COMMAND, locale));
+        if (missingHeldItem(issuer, other, locale)) {
             return;
         }
 
         action.accept(other, locale);
     }
 
-    private boolean checkItemHeld(CommandIssuer issuer, Player player, Locale locale) {
+    private boolean missingHeldItem(CommandIssuer issuer, Player player, Locale locale) {
         ItemStack item = player.getInventory().getItemInMainHand();
-        if (item == null || item.getType().isAir()) {
-            issuer.sendMessage(plugin.getMsg(ACFCoreMessage.ERROR_PERFORMING_COMMAND, locale));
-            return false;
+        if (item.getType().isAir()) {
+            issuer.sendMessage(plugin.getMsg(ACFMinecraftMessage.YOU_MUST_BE_HOLDING_ITEM, locale));
+            return true;
         }
-        return true;
+        return false;
     }
 
     protected CommandMessage getCommandMessage(String key) {
@@ -319,7 +319,7 @@ public class BaseItemCommand {
                     }
                     skillsItem.removeMultiplier(commandModifierType, skill);
                     if (lore) {
-                        skillsItem.removeMultiplierLore(skill, locale);
+                        skillsItem.removeMultiplierLore(commandModifierType, skill, locale);
                     }
                 }
             }
@@ -342,7 +342,7 @@ public class BaseItemCommand {
                     }
                     skillsItem.removeMultiplier(commandModifierType, null);
                     if (lore) {
-                        skillsItem.removeMultiplierLore(null, locale);
+                        skillsItem.removeMultiplierLore(commandModifierType, null, locale);
                     }
                 }
             }
@@ -359,7 +359,7 @@ public class BaseItemCommand {
         }
     }
 
-    protected void onItemMultiplierRemove(CommandIssuer issuer, Player player, String target, Boolean lore) {
+    protected void onItemMultiplierRemove(CommandIssuer issuer, Player player, String target, boolean lore) {
         Locale locale = plugin.getLocale(issuer);
         ItemStack item = player.getInventory().getItemInMainHand();
         Skill skill = plugin.getSkillRegistry().getOrNull(NamespacedId.fromDefault(target));
@@ -370,7 +370,7 @@ public class BaseItemCommand {
             if (multiplier.skill() == skill) {
                 skillsItem.removeMultiplier(commandModifierType, skill);
                 if (lore) {
-                    skillsItem.removeMultiplierLore(skill, locale);
+                    skillsItem.removeMultiplierLore(commandModifierType, skill, locale);
                 }
                 removed = true;
                 break;

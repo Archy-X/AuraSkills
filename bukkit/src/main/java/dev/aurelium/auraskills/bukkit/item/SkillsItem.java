@@ -32,7 +32,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SkillsItem {
@@ -511,11 +516,23 @@ public class SkillsItem {
         meta.setLore(lore);
     }
 
-    public void removeMultiplierLore(Skill skill, Locale locale) {
+    public void removeMultiplierLore(ModifierType type, @Nullable Skill skill, Locale locale) {
         List<String> lore = meta.getLore();
         if (lore == null || lore.isEmpty()) return;
 
-        lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        if (skill != null) { // Skill multiplier
+            lore.removeIf(line -> line.contains(skill.getDisplayName(locale)));
+        } else { // Global multiplier
+            // We don't have the value so we target both variants.
+            String message = plugin.getMsg(CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_GLOBAL_LORE"), locale);
+            String messageSubtract = plugin.getMsg(CommandMessage.valueOf(type.name() + "_MULTIPLIER_ADD_GLOBAL_LORE_SUBTRACT"), locale);
+            // Clear the placeholder so we have a safe value to compare with.
+            String target = message.replace("{value}", "");
+            String targetSubtract = messageSubtract.replace("{value}", "");
+
+            lore.removeIf(line -> line.contains(target) || line.contains(targetSubtract));
+        }
+
         meta.setLore(lore);
     }
 

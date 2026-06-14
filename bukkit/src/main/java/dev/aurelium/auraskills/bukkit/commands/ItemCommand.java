@@ -245,24 +245,28 @@ public class ItemCommand extends BaseCommand {
     @CommandCompletion("@players @item_keys")
     @Description("%desc_item_give")
     public void onItemGive(CommandSender sender, @Flags("other") Player player, String key, @Default("-1") int amount) {
-        ItemStack item = plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key)).clone();
+        ItemStack item = plugin.getItemRegistry().getItem(NamespacedId.fromDefault(key));
         Locale locale = plugin.getLocale(sender);
         if (item != null) {
+            // Avoid the registry item from changing.
+            ItemStack clonedItem = item.clone();
+
             if (amount != -1) {
-                item.setAmount(amount);
+                clonedItem.setAmount(amount);
             }
+
             plugin.getScheduler().executeAtEntity(player, (task) -> {
-                ItemStack leftoverItem = ItemUtils.addItemToInventory(player, item);
+                ItemStack leftoverItem = ItemUtils.addItemToInventory(player, clonedItem);
 
                 String senderMsg = TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_SENDER, locale),
-                        "{amount}", String.valueOf(item.getAmount()), "{key}", key, "{player}", player.getName());
+                        "{amount}", String.valueOf(clonedItem.getAmount()), "{key}", key, "{player}", player.getName());
                 if (!senderMsg.isEmpty()) {
                     sender.sendMessage(plugin.getPrefix(locale) + senderMsg);
                 }
 
                 if (!sender.equals(player)) {
                     String message = TextUtil.replace(plugin.getMsg(CommandMessage.ITEM_GIVE_RECEIVER, locale),
-                            "{amount}", String.valueOf(item.getAmount()), "{key}", key);
+                            "{amount}", String.valueOf(clonedItem.getAmount()), "{key}", key);
                     if (!message.isEmpty()) {
                         player.sendMessage(plugin.getPrefix(locale) + message);
                     }
