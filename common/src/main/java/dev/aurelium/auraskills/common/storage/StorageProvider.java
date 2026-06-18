@@ -53,9 +53,8 @@ public abstract class StorageProvider {
                 plugin.getStatManager().recalculateStats(user, false);
                 // Applies user item/armor modifiers for the first time
                 plugin.getModifierManager().applyModifiers(user, false);
-                plugin.getStatManager().reloadAllTraits(user);
-
                 plugin.getEventHandler().callUserLoadEvent(user); // Call event
+                plugin.getStatManager().reloadAllTraits(user);
             });
 
             // Update permissions

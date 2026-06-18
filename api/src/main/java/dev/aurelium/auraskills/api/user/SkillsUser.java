@@ -4,6 +4,7 @@ import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
+import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.api.stat.StatModifier;
 import dev.aurelium.auraskills.api.trait.Trait;
@@ -175,12 +176,16 @@ public interface SkillsUser {
      */
     void addStatModifier(StatModifier statModifier);
 
+    void addStatModifier(StatModifier statModifier, boolean reload);
+
     /**
      * Removes a stat modifier from the player.
      *
      * @param name the name of the stat modifier to remove
      */
     void removeStatModifier(String name);
+
+    void removeStatModifier(String name, boolean reload);
 
     /**
      * Gets a stat modifier from its name.
@@ -205,12 +210,16 @@ public interface SkillsUser {
      */
     void addTraitModifier(TraitModifier traitModifier);
 
+    void addTraitModifier(TraitModifier traitModifier, boolean reload);
+
     /**
      * Removes a trait modifier from the player with a given name.
      *
      * @param name the name of the trait modifier to remove
      */
     void removeTraitModifier(String name);
+
+    void removeTraitModifier(String name, boolean reload);
 
     /**
      * Gets a trait modifier from its name
@@ -354,5 +363,7 @@ public interface SkillsUser {
      * exception was thrown.
      */
     CompletableFuture<Boolean> save(boolean removeFromMemory);
+
+    void reloadStatOrTrait(ReloadableIdentifier statOrTrait);
 
 }
