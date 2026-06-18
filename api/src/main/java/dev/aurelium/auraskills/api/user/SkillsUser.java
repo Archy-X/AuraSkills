@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api.user;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
@@ -365,5 +366,32 @@ public interface SkillsUser {
     CompletableFuture<Boolean> save(boolean removeFromMemory);
 
     void reloadStatOrTrait(ReloadableIdentifier statOrTrait);
+
+    /**
+     * Gets a map of active skill XP multipliers for this user.
+     * This only gets custom multipliers from items and armor,
+     * not multipliers from permissions or abilities.
+     *
+     * @return multipliers from custom items
+     */
+    Map<String, Multiplier> getMultipliers();
+
+    /**
+     * Adds a custom skill XP multiplier for this user.
+     * Since these multipliers are not persistent, it is
+     * recommended to use permission multipliers instead.
+     *
+     * @param multiplier the multiplier to add
+     */
+    void addMultiplier(Multiplier multiplier);
+
+    /**
+     * Removes a custom skill XP multiplier for this user.
+     * This can only remove custom multipliers from items,
+     * armor, or the API.
+     *
+     * @param name the name of the multiplier to remove
+     */
+    void removeMultiplier(String name);
 
 }

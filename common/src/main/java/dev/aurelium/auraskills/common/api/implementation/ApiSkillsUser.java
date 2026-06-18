@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
@@ -302,5 +303,20 @@ public class ApiSkillsUser implements SkillsUser {
     @Override
     public void reloadStatOrTrait(ReloadableIdentifier statOrTrait) {
         plugin.getStatManager().reload(user, statOrTrait);
+    }
+
+    @Override
+    public Map<String, Multiplier> getMultipliers() {
+        return user.getMultipliers();
+    }
+
+    @Override
+    public void addMultiplier(Multiplier multiplier) {
+        user.addMultiplier(multiplier);
+    }
+
+    @Override
+    public void removeMultiplier(String name) {
+        user.removeMultiplier(name);
     }
 }

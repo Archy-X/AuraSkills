@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.common.api.implementation;
 
 import dev.aurelium.auraskills.api.ability.Ability;
 import dev.aurelium.auraskills.api.mana.ManaAbility;
+import dev.aurelium.auraskills.api.skill.Multiplier;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
@@ -262,6 +263,21 @@ public class OfflineSkillsUser implements SkillsUser {
 
     @Override
     public void reloadStatOrTrait(ReloadableIdentifier statOrTrait) {
+
+    }
+
+    @Override
+    public Map<String, Multiplier> getMultipliers() {
+        return Map.of();
+    }
+
+    @Override
+    public void addMultiplier(Multiplier multiplier) {
+
+    }
+
+    @Override
+    public void removeMultiplier(String name) {
 
     }
 }
