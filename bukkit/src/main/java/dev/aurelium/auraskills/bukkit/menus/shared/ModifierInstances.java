@@ -10,6 +10,7 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier;
 import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.BuiltInModifier;
+import dev.aurelium.auraskills.api.item.ModifierMenuData;
 import dev.aurelium.auraskills.bukkit.item.StatModifiers;
 import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.user.BukkitUser;
@@ -160,13 +161,19 @@ public class ModifierInstances {
     }
 
     private ModifierInstance createInstance(NamespaceIdentified identified, String id, AuraSkillsModifier<?> modifier, BuiltInModifier builtIn, User user, int index) {
-        @Nullable ItemModifierData itemData = getItemModifierData(user, id);
+        @Nullable ModifierMenuData menuData = getModifierMenuData(user, id); // Regular item/armor modifiers
+        if (menuData == null) {
+            // Menu data set as metadata on the modifier instance itself
+            if (modifier.getMetadataCopy().get(AuraSkillsModifier.MENU_DATA_KEY) instanceof ModifierMenuData attachedData) {
+                menuData = attachedData;
+            }
+        }
 
         String displayName;
         if (builtIn != null) {
             displayName = builtIn.getDisplayName(plugin, user.getLocale());
-        } else if (itemData != null) {
-            displayName = itemData.displayName();
+        } else if (menuData != null) {
+            displayName = menuData.displayName();
         } else {
             displayName = getFallbackDisplayName(id, user.getLocale());
         }
@@ -174,8 +181,8 @@ public class ModifierInstances {
         String desc;
         if (builtIn != null) {
             desc = builtIn.getDescriptionMessage(plugin, user);
-        } else if (itemData != null) {
-            desc = itemData.description();
+        } else if (menuData != null) {
+            desc = menuData.description();
         } else {
             desc = getFallbackDescription(id, user.getLocale());
         }
@@ -185,7 +192,7 @@ public class ModifierInstances {
                 id,
                 modifier.value(),
                 modifier.operation(),
-                itemData != null ? itemData.item() : getFallbackItem(),
+                menuData != null ? menuData.item() : getFallbackItem(),
                 displayName,
                 desc,
                 index
@@ -193,7 +200,7 @@ public class ModifierInstances {
     }
 
     @Nullable
-    private ItemModifierData getItemModifierData(User user, String id) {
+    private ModifierMenuData getModifierMenuData(User user, String id) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) {
             return null;
@@ -249,16 +256,12 @@ public class ModifierInstances {
             item.setItemMeta(meta);
         }
 
-        return new ItemModifierData(getDisplayName(item), plugin.getMsg(descKey, user.getLocale()), item);
+        return new ModifierMenuData(getDisplayName(item), plugin.getMsg(descKey, user.getLocale()), item);
     }
 
     private String getDisplayName(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         return meta == null || !meta.hasDisplayName() ? "!!REMOVE!!" : meta.getDisplayName();
-    }
-
-    record ItemModifierData(String displayName, String description, ItemStack item) {
-
     }
 
     private String getFallbackDescription(String modifierName, Locale locale) {

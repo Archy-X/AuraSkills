@@ -3,10 +3,15 @@ package dev.aurelium.auraskills.api.util;
 import dev.aurelium.auraskills.api.stat.ReloadableIdentifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AuraSkillsModifier<T extends ReloadableIdentifier> {
+
+    public static final String MENU_DATA_KEY = "menu_data";
 
     protected final String name;
     protected final T type;
@@ -15,6 +20,7 @@ public abstract class AuraSkillsModifier<T extends ReloadableIdentifier> {
     private long expirationTime;
     private boolean pauseOffline;
     private boolean nonPersistent;
+    private Map<String, Object> metadata = null;
 
     public AuraSkillsModifier(String name, T type, double value, @NotNull Operation operation) {
         this.name = name;
@@ -62,6 +68,26 @@ public abstract class AuraSkillsModifier<T extends ReloadableIdentifier> {
 
     public void setNonPersistent() {
         this.nonPersistent = true;
+    }
+
+    public Map<String, Object> getMetadataCopy() {
+        if (metadata == null) {
+            return new HashMap<>();
+        }
+        return new HashMap<>(metadata);
+    }
+
+    public void setMetadata(String key, Object value) {
+        if (metadata == null) {
+            metadata = new ConcurrentHashMap<>();
+        }
+        metadata.put(key, value);
+    }
+
+    public void removeMetadata(String key) {
+        if (metadata != null) {
+            metadata.remove(key);
+        }
     }
 
     @Override
