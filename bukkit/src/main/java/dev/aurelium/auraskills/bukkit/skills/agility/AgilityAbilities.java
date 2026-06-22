@@ -137,9 +137,9 @@ public class AgilityAbilities extends BukkitAbilityImpl {
             }
             PotionEffectType potionEffectType;
             if (isLeaping) {
-                potionEffectType = PotionEffectType.SPEED;
-            } else {
                 potionEffectType = CompatUtil.jumpBoost();
+            } else {
+                potionEffectType = PotionEffectType.SPEED;
             }
             int duration;
             if (bukkitPotionType.isExtended()) {
