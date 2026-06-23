@@ -73,18 +73,19 @@ public class BukkitRegionManager extends RegionManager {
     }
 
     private void addLoadRegionAsync(Block block) {
-        plugin.getScheduler().executeAsync(() -> {
-            Region region = getRegionFromBlock(block);
-            if (region == null) {
-                int regionX = (int) Math.floor((double) block.getChunk().getX() / 32.0);
-                int regionZ = (int) Math.floor((double) block.getChunk().getZ() / 32.0);
-                region = new Region(block.getWorld().getName(), regionX, regionZ);
+        Region region = getRegionFromBlock(block);
+        if (region == null) {
+            int regionX = (int) Math.floor((double) block.getChunk().getX() / 32.0);
+            int regionZ = (int) Math.floor((double) block.getChunk().getZ() / 32.0);
+            region = new Region(block.getWorld().getName(), regionX, regionZ);
 
-                RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
-                regions.put(regionCoordinate, region);
-            }
-            loadRegion(region);
-            addToRegion(block, region);
+            RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
+            regions.put(regionCoordinate, region);
+        }
+        Region finalRegion = region;
+        plugin.getScheduler().executeAsync(() -> {
+            loadRegion(finalRegion);
+            addToRegion(block, finalRegion);
         });
     }
 
