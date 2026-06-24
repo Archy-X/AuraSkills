@@ -20,7 +20,7 @@ public class TimerCountdown {
 
     public TimerCountdown(AuraSkills plugin) {
         this.plugin = plugin;
-        this.period = Math.min(plugin.configInt(Option.MANA_COOLDOWN_TIMER_PERIOD), 1);
+        this.period = Math.max(plugin.configInt(Option.MANA_COOLDOWN_TIMER_PERIOD), 1);
         startCountdown();
     }
 
