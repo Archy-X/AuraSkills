@@ -121,7 +121,7 @@ abilities:
     info: "{value}% Xuyên thủng"
   stun:
     name: Choáng
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}% tỉ lệ giảm tốc độ di chuyển của kẻ địch đi {reduction_percent}% trong 2 giây."
     info: "{value}% Cơ hội làm chậm"
   shielding:
     name: Lá chắn
