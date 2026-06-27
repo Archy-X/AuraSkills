@@ -682,6 +682,7 @@ leveler:
   mana_ability_unlock: Manafähigkeit freigeschaltet
   mana_ability_level_up: Manafähigkeiten Levelaufstieg
   unclaimed_item: "<red>Du hast unbeanspruchte Gegenstände, weil dein Inventar voll war, benutze <yellow>/Skills um <red>to sie zu beanspruchen"
+  limit_reached: "<red>Limit erreicht, noch {time} Sekunden übrig"
 menus:
   common:
     close: "Schließen"
@@ -719,6 +720,7 @@ menus:
     your_skills_desc: "Verbessere deine Fertigkeiten, indem du verschiedene Aufgaben erledigst um wertvolle Statistik-Boosts freizuschalten, Fähigkeiten, und mehr!"
     your_skills_hover: "Fahre über eine Fertigkeit um weitere Informationen zu erhalten!"
     your_skills_click: "Klicke auf eine Fertigkeit, um den Stufenfortschritt zu sehen!"
+    skill_xp_limited: "XP begrenzt"
     skill_click: "Klicken, um den Levelfortschritt anzuzeigen!"
     stats: "Stats"
     stats_desc: "Erhalte stat buffs indem du Skills hochlevelst."

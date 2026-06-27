@@ -12,6 +12,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/foraging:
     abilities:
       - auraskills/lumberjack
@@ -25,6 +29,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/mining:
     abilities:
       - auraskills/lucky_miner
@@ -38,6 +46,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/fishing:
     abilities:
       - auraskills/lucky_catch
@@ -51,6 +63,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/excavation:
     abilities:
       - auraskills/bigger_scoop
@@ -64,6 +80,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/archery:
     abilities:
       - auraskills/retrieval
@@ -77,6 +97,10 @@ skills:
       max_level: 100
       spawner_multiplier: 1
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/defense:
     abilities:
       - auraskills/shielding
@@ -93,6 +117,10 @@ skills:
       min: 0
       allow_shield_blocking: false
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/fighting:
     abilities:
       - auraskills/parry
@@ -106,6 +134,10 @@ skills:
       max_level: 100
       spawner_multiplier: 1
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/agility:
     abilities:
       - auraskills/light_fall
@@ -118,6 +150,10 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/alchemy:
     abilities:
       - auraskills/alchemist
@@ -131,6 +167,10 @@ skills:
       check_cancelled: true
       check_multiplier_permissions: true
       ignore_custom_potions: false
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
   auraskills/enchanting:
     abilities:
       - auraskills/xp_convert
@@ -143,4 +183,8 @@ skills:
       max_level: 100
       check_cancelled: true
       check_multiplier_permissions: true
-file_version: 1
+      limiter:
+        enabled: true
+        cap: -1
+        time: -1
+file_version: 2
