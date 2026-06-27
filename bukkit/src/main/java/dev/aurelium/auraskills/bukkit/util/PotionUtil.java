@@ -1,5 +1,6 @@
 package dev.aurelium.auraskills.bukkit.util;
 
+import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.item.BukkitPotionType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -50,9 +51,9 @@ public class PotionUtil {
         return minutes + ":" + String.format("%02d", seconds % 60);
     }
 
-    public static void applyEffect(Player player, PotionEffect effect) {
+    public static void applyEffect(AuraSkills plugin, Player player, PotionEffect effect) {
         if (!effect.getType().isInstant()) {
-            player.addPotionEffect(effect);
+            plugin.getScheduler().executeAtEntity(player, task -> player.addPotionEffect(effect));
         }
     }
 

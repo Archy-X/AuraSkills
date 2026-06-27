@@ -68,23 +68,26 @@ public class HpTrait extends TraitImpl {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        applyScaling(event.getPlayer());
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(event.getPlayer(), (task) -> {
+                applyScaling(event.getPlayer());
+            });
+        } else {
+            applyScaling(event.getPlayer());
+        }
     }
 
     @Override
     public void reload(Player player, Trait trait) {
         if (plugin.getScheduler().isFolia()) {
             plugin.getScheduler().executeAtEntity(player, (task) -> {
-                reloadHp(player);
+                setHealthInternal(player, plugin.getUser(player));
+                plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
             });
         } else {
-            reloadHp(player);
+            setHealthInternal(player, plugin.getUser(player));
+            plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
         }
-    }
-
-    private void reloadHp(Player player) {
-        setHealth(player, plugin.getUser(player));
-        plugin.getAbilityManager().getAbilityImpl(AgilityAbilities.class).removeFleeting(player);
     }
 
     public String getMenuDisplay(double value, Trait trait, @Nullable NumberFormat format) {
@@ -138,12 +141,29 @@ public class HpTrait extends TraitImpl {
             newHealth = maxHealth;
         }
 
-        player.setHealth(newHealth);
+        double finalNewHealth = newHealth;
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                player.setHealth(finalNewHealth);
+            });
+        } else {
+            player.setHealth(finalNewHealth);
+        }
         worldChangeHealth.remove(playerID);
     }
 
-    @SuppressWarnings("removal")
     private void setHealth(Player player, User user) {
+        if (plugin.getScheduler().isFolia()) {
+            plugin.getScheduler().executeAtEntity(player, (task) -> {
+                setHealthInternal(player, user);
+            });
+        } else {
+            setHealthInternal(player, user);
+        }
+    }
+
+    @SuppressWarnings("removal")
+    private void setHealthInternal(Player player, User user) {
         Trait trait = Traits.HP;
 
         double modifier = user.getBonusTraitLevel(trait);
