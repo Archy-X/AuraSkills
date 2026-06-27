@@ -283,6 +283,8 @@ automatic_backups:
   enabled: true
   minimum_interval_hours: 24
   max_users: 50000
+  delete_old_backups: false
+  delete_older_than_days: 7
 save_blank_profiles: false
 experimental:
   optimize_leaderboard_updating: false
