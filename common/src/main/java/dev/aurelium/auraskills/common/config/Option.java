@@ -89,6 +89,7 @@ public enum Option {
     DAMAGE_HOLOGRAMS_SCALING("damage_holograms.scaling", OptionType.BOOLEAN),
     DAMAGE_HOLOGRAMS_DECIMAL_MAX("damage_holograms.decimal.max_amount", OptionType.INT),
     DAMAGE_HOLOGRAMS_DECIMAL_LESS_THAN("damage_holograms.decimal.display_when_less_than", OptionType.INT),
+    DAMAGE_HOLOGRAMS_MIN_DAMAGE("damage_holograms.min_damage", OptionType.DOUBLE),
     DAMAGE_HOLOGRAMS_OFFSET_X("damage_holograms.offset.x", OptionType.DOUBLE),
     DAMAGE_HOLOGRAMS_OFFSET_Y("damage_holograms.offset.y", OptionType.DOUBLE),
     DAMAGE_HOLOGRAMS_OFFSET_Z("damage_holograms.offset.z", OptionType.DOUBLE),

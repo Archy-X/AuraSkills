@@ -70,7 +70,11 @@ public abstract class HologramsHook extends Hook implements Listener {
 
         boolean critical = player.hasMetadata("skillsCritical");
 
-        createHologram(getLocation(event.getEntity()), getText(event.getFinalDamage(), critical), player);
+        double finalDamage = event.getFinalDamage();
+        if (finalDamage < plugin.configDouble(Option.DAMAGE_HOLOGRAMS_MIN_DAMAGE)) {
+            return;
+        }
+        createHologram(getLocation(event.getEntity()), getText(finalDamage, critical), player);
     }
 
     private Location getLocation(Entity entity) {

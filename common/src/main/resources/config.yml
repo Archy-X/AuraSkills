@@ -155,6 +155,7 @@ enable_roman_numerals: false
 damage_holograms:
   enabled: true
   scaling: true
+  min_damage: 0.1
   decimal:
     display_when_less_than: 1
     max_amount: 1
