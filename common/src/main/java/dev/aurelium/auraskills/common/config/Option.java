@@ -149,6 +149,9 @@ public enum Option {
     REQUIREMENT_BLOCKS_BYPASS_IF_OP("requirement.blocks.bypass_if_op", OptionType.BOOLEAN),
     // Damage options
     DAMAGE_CORRECT_LAST_DAMAGE("damage.correct_last_damage", OptionType.BOOLEAN),
+    // PvP options
+    PVP_ONLY_EQUIPMENT_STATS("pvp.only_equipment_stats", OptionType.BOOLEAN),
+    PVP_DISABLED_ABILITIES("pvp.disabled_abilities", OptionType.LIST),
     // Critical options
     CRITICAL_ENABLED_SWORD("critical.enabled.sword", OptionType.BOOLEAN),
     CRITICAL_ENABLED_BOW("critical.enabled.bow", OptionType.BOOLEAN),
