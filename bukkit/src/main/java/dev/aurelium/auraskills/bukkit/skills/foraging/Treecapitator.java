@@ -187,6 +187,9 @@ public class Treecapitator extends ReadiedManaAbility {
                     List<ItemStack> drops = new ArrayList<>(block.getDrops(player.getInventory().getItemInMainHand(), player));
                     BlockState blockState = block.getState();
 
+                    block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+                    block.setType(Material.AIR);
+
                     Location dropLoc = block.getLocation().add(0.5, 0.25, 0.5);
                     List<Item> droppedItems = new ArrayList<>();
                     for (ItemStack drop : drops) {
@@ -200,9 +203,6 @@ public class Treecapitator extends ReadiedManaAbility {
                             droppedItem.remove();
                         }
                     }
-
-                    block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
-                    block.setType(Material.AIR);
                 } else {
                     block.breakNaturally(player.getInventory().getItemInMainHand());
                 }
