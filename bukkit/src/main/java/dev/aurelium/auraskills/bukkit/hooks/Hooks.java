@@ -17,7 +17,8 @@ public enum Hooks implements HookType {
     VAULT(VaultHook.class, "Vault"),
     WORLD_GUARD(WorldGuardHook.class, "WorldGuard"),
     MYTHIC_MOBS(MythicMobsHook.class, "MythicMobs"),
-    NEXO(NexoHook.class, "Nexo", false);
+    NEXO(NexoHook.class, "Nexo", false),
+    PACKET_EVENTS(PacketEventsHook.class, "packetevents");
 
     private final Class<? extends Hook> hookClass;
     private final String pluginName;

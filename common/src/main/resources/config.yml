@@ -60,6 +60,8 @@ hooks:
     prevent_regular_xp: false
   Nexo:
     enabled: true
+  packetevents:
+    enabled: true
 action_bar:
   enabled: true
   idle: true
