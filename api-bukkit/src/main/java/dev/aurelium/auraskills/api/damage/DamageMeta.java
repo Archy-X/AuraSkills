@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.api.damage;
 
 import dev.aurelium.auraskills.api.AuraSkillsApi;
 import dev.aurelium.auraskills.api.user.SkillsUser;
+import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -16,6 +17,7 @@ public class DamageMeta {
 
     private final DamageType damageType;
     private final EntityDamageEvent.DamageCause damageCause;
+    private final @Nullable DamageSource damageSource;
     private final List<DamageModifier> attackModifiers = new ArrayList<>();
     private final List<DamageModifier> defenseModifiers = new ArrayList<>();
     private final Entity attacker;
@@ -23,11 +25,12 @@ public class DamageMeta {
     private final String source;
     private double damage;
 
-    public DamageMeta(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, double damage, String source) {
+    public DamageMeta(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, @Nullable DamageSource damageSource, double damage, String source) {
         this.attacker = attacker;
         this.target = target;
         this.damageType = damageType;
         this.damageCause = damageCause;
+        this.damageSource = damageSource;
         this.damage = damage;
         this.source = source;
     }
@@ -38,6 +41,10 @@ public class DamageMeta {
 
     public EntityDamageEvent.DamageCause getDamageCause() {
         return damageCause;
+    }
+
+    public @Nullable DamageSource getDamageSource() {
+        return damageSource;
     }
 
     public List<DamageModifier> getAttackModifiers() {

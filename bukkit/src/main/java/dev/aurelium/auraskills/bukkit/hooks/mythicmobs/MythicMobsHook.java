@@ -75,7 +75,7 @@ public class MythicMobsHook extends Hook implements Listener {
 
         DamageResult result = damageHandler.handleDamage(
                 BukkitAdapter.adapt(attacker), BukkitAdapter.adapt(target), getDamageType(attacker),
-                event.getDamageMetadata().getDamageCause(), event.getDamage(), "mythicmobs");
+                event.getDamageMetadata().getDamageCause(), null, event.getDamage(), "mythicmobs");
 
         if (result.cancel()) {
             event.setCancelled(true);

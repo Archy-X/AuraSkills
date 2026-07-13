@@ -5,14 +5,15 @@ import dev.aurelium.auraskills.api.damage.DamageType;
 import dev.aurelium.auraskills.api.event.damage.DamageEvent;
 import dev.aurelium.auraskills.common.damage.DamageResult;
 import org.bukkit.Bukkit;
+import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class DamageHandler {
 
-    public DamageResult handleDamage(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, double damage, String source) {
-        var damageMeta = new DamageMeta(attacker, target, damageType, damageCause, damage, source);
+    public DamageResult handleDamage(@Nullable Entity attacker, Entity target, DamageType damageType, EntityDamageEvent.DamageCause damageCause, @Nullable DamageSource damageSource, double damage, String source) {
+        var damageMeta = new DamageMeta(attacker, target, damageType, damageCause, damageSource, damage, source);
 
         var event = new DamageEvent(damageMeta);
         Bukkit.getPluginManager().callEvent(event);

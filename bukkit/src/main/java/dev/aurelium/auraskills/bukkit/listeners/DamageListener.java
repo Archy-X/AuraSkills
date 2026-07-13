@@ -57,7 +57,7 @@ public class DamageListener implements Listener {
 
         DamageResult result = damageHandler.handleDamage(
                 event.getDamager(), event.getEntity(), getDamageType(event, player),
-                event.getCause(), event.getDamage(), "vanilla");
+                event.getCause(), event.getDamageSource(), event.getDamage(), "vanilla");
 
         if (result.cancel()) {
             event.setCancelled(true);
