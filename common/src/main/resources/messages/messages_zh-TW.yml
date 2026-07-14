@@ -121,7 +121,7 @@ abilities:
     info: "{value}% 穿刺機率"
   stun:
     name: 眩晕
-    desc: "{value}% chance to decrease enemy movement speed by {reduction_percent}% for 2 seconds."
+    desc: "{value}%的機率使敵人2秒內緩速{reduction_percent}%。"
     info: "{value}% 暈眩機率"
   shielding:
     name: 盾
@@ -524,7 +524,7 @@ commands:
       desc: Adds mana to a player
     remove:
       removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
-      desc: Removes mana from a player
+      desc: 移除玩家的法力
     set:
       set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
       desc: Sets the mana of a player
