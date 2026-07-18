@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.user.BukkitUser;
 import dev.aurelium.auraskills.common.ui.ActionBarManager;
 import dev.aurelium.auraskills.common.ui.UiProvider;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.paper.util.AdventureUtil;
 import dev.aurelium.slate.text.TextFormatter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -91,8 +92,11 @@ public class BukkitUiProvider implements UiProvider {
         int fadeInMs = fadeIn * 50;
         int stayMs = stay * 50;
         int fadeOutMs = fadeOut * 50;
-        plugin.getAudiences().player(player).showTitle(Title.title(cTitle, cSubtitle,
-                Times.times(Duration.ofMillis(fadeInMs), Duration.ofMillis(stayMs), Duration.ofMillis(fadeOutMs))));
+
+        Title titleObj = Title.title(cTitle, cSubtitle,
+                Times.times(Duration.ofMillis(fadeInMs), Duration.ofMillis(stayMs), Duration.ofMillis(fadeOutMs)));
+
+        AdventureUtil.showTitle(player, titleObj, plugin.getAudiences());
     }
 
 }

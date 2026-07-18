@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.bukkit.item.TraitModifiers;
 import dev.aurelium.auraskills.bukkit.item.UserEquipment;
 import dev.aurelium.auraskills.common.api.implementation.ApiSkillsUser;
 import dev.aurelium.auraskills.common.user.User;
+import dev.aurelium.auraskills.paper.util.AdventureUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -78,7 +79,7 @@ public class BukkitUser extends User {
             return;
         }
         if (player != null) {
-            plugin.getAudiences().player(player).sendMessage(component);
+            AdventureUtil.sendMessage(player, component, plugin.getAudiences());
         }
     }
 

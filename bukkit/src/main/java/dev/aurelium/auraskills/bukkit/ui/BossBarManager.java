@@ -11,8 +11,8 @@ import dev.aurelium.auraskills.common.message.type.ActionBarMessage;
 import dev.aurelium.auraskills.common.util.math.BigNumber;
 import dev.aurelium.auraskills.common.util.math.RomanNumber;
 import dev.aurelium.auraskills.common.util.text.TextUtil;
+import dev.aurelium.auraskills.paper.util.AdventureUtil;
 import dev.aurelium.slate.text.TextFormatter;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -125,14 +125,13 @@ public class BossBarManager implements Listener {
             overlays.put(skill, overlay);
         }
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Audience audience = plugin.getAudiences().player(player);
             for (Map.Entry<UUID, BossBar> entry : singleBossBars.entrySet()) {
-                audience.hideBossBar(entry.getValue());
+                AdventureUtil.hideBossBar(player, entry.getValue(), plugin.getAudiences());
             }
             for (Map.Entry<UUID, Map<Skill, BossBar>> entry : bossBars.entrySet()) {
                 Map<Skill, BossBar> bossBars = entry.getValue();
                 for (Map.Entry<Skill, BossBar> bossBarEntry : bossBars.entrySet()) {
-                    audience.hideBossBar(bossBarEntry.getValue());
+                    AdventureUtil.hideBossBar(player, bossBarEntry.getValue(), plugin.getAudiences());
                 }
             }
         }
@@ -203,7 +202,7 @@ public class BossBarManager implements Listener {
         } else {  // Update the progress later to display its animation from progressOld to progressNew
             plugin.getScheduler().scheduleAtEntity(player, () -> bossBar.progress(progressNew), 2 * 50, TimeUnit.MILLISECONDS);
         }
-        plugin.getAudiences().player(player).showBossBar(bossBar);
+        AdventureUtil.showBossBar(player, bossBar, plugin.getAudiences());
 
         // Add to maps
         if (mode.equals("single")) {
@@ -225,7 +224,7 @@ public class BossBarManager implements Listener {
         bossBar.name(name); // Update the boss bar to the new text value
         bossBar.color(getColor(skill));
 
-        plugin.getAudiences().player(player).showBossBar(bossBar);
+        AdventureUtil.showBossBar(player, bossBar, plugin.getAudiences());
     }
 
     private String getBossBarText(Player player, Skill skill, double currentXp, long levelXp, double xpGained, int level, boolean maxed, double income, Locale locale) {
@@ -300,7 +299,10 @@ public class BossBarManager implements Listener {
                     return;
                 }
                 if (bossBar != null) {
-                    plugin.getAudiences().player(playerId).hideBossBar(bossBar);
+                    Player player = Bukkit.getPlayer(playerId);
+                    if (player != null) {
+                        AdventureUtil.hideBossBar(player, bossBar, plugin.getAudiences());
+                    }
                 }
                 singleCheckCurrentActions.remove(playerId);
             }, stayTime * 50L, TimeUnit.MILLISECONDS);
@@ -323,7 +325,10 @@ public class BossBarManager implements Listener {
                     return;
                 }
                 if (bossBar != null) {
-                    plugin.getAudiences().player(playerId).hideBossBar(bossBar);
+                    Player player = Bukkit.getPlayer(playerId);
+                    if (player != null) {
+                        AdventureUtil.hideBossBar(player, bossBar, plugin.getAudiences());
+                    }
                 }
                 checkCurrentActions.remove(playerId);
             }, stayTime * 50L, TimeUnit.MILLISECONDS);

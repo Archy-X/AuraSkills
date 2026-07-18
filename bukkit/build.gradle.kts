@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import java.util.jar.JarFile
 
 plugins {
     `java-library`
@@ -40,6 +39,7 @@ repositories {
 dependencies {
     implementation(project(":common"))
     implementation(project(":api-bukkit"))
+    implementation(project(":paper"))
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
     implementation("de.tr7zw:item-nbt-api:2.15.7")
     implementation("org.bstats:bstats-bukkit:3.0.2")
