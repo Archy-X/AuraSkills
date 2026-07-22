@@ -338,7 +338,7 @@ commands:
   armor:
     modifier:
       add:
-        added: "Added stat modifier to armor with stat: {stat}, value: {value}, operation: {operation}"
+        added: "Modificateur de statistiques ajouté pour les armures avec les statistiques {statistique}, valeur: {valeur], opération: {opération}"
         already_exists: "<yellow>Un modificateur d'armure avec la stat {color}{stat} <yellow>existe déjà sur votre armure ! Supprimez-le d'abord avec /sk armor modifier remove"
         desc: Adds an armor stat modifier to the item held, along with lore by default.
       remove:
