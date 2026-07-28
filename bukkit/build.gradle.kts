@@ -41,7 +41,7 @@ dependencies {
     implementation(project(":api-bukkit"))
     implementation(project(":paper"))
     implementation("co.aikar:acf-paper:0.5.1-SNAPSHOT")
-    implementation("de.tr7zw:item-nbt-api:2.15.7")
+    implementation("de.tr7zw:item-nbt-api:2.16.0")
     implementation("org.bstats:bstats-bukkit:3.0.2")
     implementation("com.tcoded:FoliaLib:0.5.1")
     compileOnly("net.kyori:adventure-text-minimessage:5.2.0")
