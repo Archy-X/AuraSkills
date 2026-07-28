@@ -5,9 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 
+import java.util.List;
+
 public class PotionUtil {
 
-    public static int getDuration(BukkitPotionType potionData) {
+    public static int getDuration(BukkitPotionType potionData, List<PotionEffect> customEffects) {
         PotionType potionType = potionData.getType();
         if (potionType == null) return 0;
 
@@ -16,6 +18,12 @@ public class PotionUtil {
             for (PotionEffect effect : potionType.getPotionEffects()) {
                 maxDuration = Math.max(maxDuration, effect.getDuration());
             }
+            if (potionType.getPotionEffects().isEmpty()) {
+                for (PotionEffect customEffect : customEffects) {
+                    maxDuration = Math.max(maxDuration, customEffect.getDuration());
+                }
+            }
+
             return maxDuration;
         } else {
             String type = potionData.getType().toString();

@@ -116,10 +116,10 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
         BukkitPotionType bukkitPotionType = new BukkitPotionType(potionMeta);
 
         PotionType potionType = bukkitPotionType.getType();
-        if (potionType != null && !isApplicablePotion(potionType)) {
+        if (potionType == null || (!isApplicablePotion(potionType) && potionMeta.getCustomEffects().isEmpty())) {
             return item;
         }
-        int originalDuration = PotionUtil.getDuration(bukkitPotionType);
+        int originalDuration = PotionUtil.getDuration(bukkitPotionType, potionMeta.getCustomEffects());
         int duration = (int) (originalDuration * multiplier); // Get duration in ticks
         int durationBonus = duration - originalDuration;
 
@@ -170,7 +170,7 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
 
         PotionEffectType effectType = potionType.getEffectType();
         if (effectType != null) {
-            int duration = PotionUtil.getDuration(bukkitPotionType);
+            int duration = PotionUtil.getDuration(bukkitPotionType, meta.getCustomEffects());
             if (!potionType.toString().contains("TURTLE_MASTER")) {
                 // Get amplifier
                 int amplifier = 0;
@@ -239,7 +239,7 @@ public class AlchemyAbilities extends BukkitAbilityImpl {
                 // Calculate and get multipliers
                 double splasherMultiplier = getSplasherMultiplier(event.getPotion().getShooter(), event.getAffectedEntities());
                 double intensity = event.getIntensity(player);
-                int duration = (int) ((PotionUtil.getDuration(bukkitPotionType) + durationBonus) * splasherMultiplier * intensity);
+                int duration = (int) ((effect.getDuration() + durationBonus) * splasherMultiplier * intensity);
                 // Apply normal effects
                 if (!potionType.toString().contains("TURTLE_MASTER")) {
                     // Apply Sugar Rush
