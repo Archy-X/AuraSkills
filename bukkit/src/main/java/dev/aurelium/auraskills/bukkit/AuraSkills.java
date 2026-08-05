@@ -371,7 +371,10 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
             metaConfig.node("last_automatic_backup").set(System.currentTimeMillis());
             FileUtil.saveYamlFile(metaFile, metaConfig);
 
-            backupProvider.saveBackupSync(false);
+            File backupFile = backupProvider.saveBackupSync(false);
+            if (backupFile != null && configBoolean(Option.AUTOMATIC_BACKUPS_DELETE_OLD_BACKUPS)) {
+                backupProvider.deleteOldBackups();
+            }
         }
     }
 

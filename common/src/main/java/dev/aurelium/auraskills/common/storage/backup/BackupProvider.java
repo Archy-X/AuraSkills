@@ -28,8 +28,12 @@ import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 public class BackupProvider {
+
+    private static final Pattern BACKUP_FILE_PATTERN = Pattern.compile(
+            "backup-\\d{4}-\\d{2}-\\d{2}_\\d{1,2}-\\d{1,2}-\\d{1,2}\\.yml");
 
     public final AuraSkillsPlugin plugin;
     public final UserManager playerManager;
@@ -123,6 +127,23 @@ public class BackupProvider {
         // Save the backup file
         loader.save(config);
         return backupFile;
+    }
+
+    public void deleteOldBackups() {
+        File backupFolder = new File(plugin.getPluginFolder(), "backups");
+        File[] backupFiles = backupFolder.listFiles(file ->
+                file.isFile() && BACKUP_FILE_PATTERN.matcher(file.getName()).matches());
+        if (backupFiles == null) {
+            return;
+        }
+
+        int retentionDays = Math.max(1, plugin.configInt(Option.AUTOMATIC_BACKUPS_DELETE_OLDER_THAN_DAYS));
+        long deleteBefore = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(retentionDays);
+        for (File backupFile : backupFiles) {
+            if (backupFile.lastModified() < deleteBefore && !backupFile.delete()) {
+                plugin.logger().warn("Failed to delete old backup " + backupFile.getName());
+            }
+        }
     }
 
     public void loadBackupAsync(File file, Runnable onComplete, Consumer<Throwable> onError) {
