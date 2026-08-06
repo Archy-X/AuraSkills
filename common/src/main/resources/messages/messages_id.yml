@@ -566,6 +566,7 @@ leveler:
   mana_ability_unlock: Kemampuan Mana Terbuka
   mana_ability_level_up: Kemampuan Mana Naik Level
   unclaimed_item: "<red>Anda memiliki item yang belum diklaim karena inventaris Anda penuh, gunakan <yellow>/skills claimitems <red>untuk mengklaimnya"
+  limit_reached: "<red>Batas tercapai, tersisa {time} detik"
 menus:
   common:
     close: "Tutup"
@@ -597,6 +598,7 @@ menus:
     your_skills_desc: "Tingkatkan Skill dengan melakukan berbagai tugas untuk membuka peningkatan statistik, kemampuan, dan banyak lagi!"
     your_skills_hover: "Arahkan kursor ke Skill untuk informasi lebih lanjut!"
     your_skills_click: "Klik pada Skill untuk melihat perkembangan level!"
+    skill_xp_limited: "XP dibatasi"
     skill_click: "Klik untuk melihat Perkembangan Level!"
     stats: "Statistik"
     stats_desc: "Dapatkan buff statistik dengan menaikkan level skill"
