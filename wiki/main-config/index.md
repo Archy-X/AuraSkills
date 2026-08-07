@@ -19,7 +19,7 @@ Last Updated Version: `2.3.6`
 `sql:`
 
 * `enabled` - Whether SQL should be used for data storage (requires a restart to enable).
-* `type` - The type of SQL database to use; currently only `mysql` is supported.
+* `type` - The type of SQL database to use: `mysql` (also accepts `mariadb`) or `postgres`. The PostgreSQL driver is downloaded automatically the first time the server starts with it selected, so the machine needs internet access on that startup.
 * `host` - SQL hostname
 * `port`- Port (must be number)
 * `database` - Database name (must be created already)

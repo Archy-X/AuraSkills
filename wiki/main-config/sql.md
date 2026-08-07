@@ -4,13 +4,15 @@ description: Guide to setting up and configuring a SQL database for storage
 
 # SQL
 
-The options under the `sql` section of the main `config.yml` file allow the storage of player data in a SQL database instead of the default YAML flatfile format. Currently only MySQL (and MariaDB) databases work. Using SQL for data storage enables better performance at high player counts, allows syncing of data between multiple servers, and makes it easier for third-party applications to interact with data.
+The options under the `sql` section of the main `config.yml` file allow the storage of player data in a SQL database instead of the default YAML flatfile format. MySQL (including MariaDB) and PostgreSQL are supported, selected with the `type` option. Using SQL for data storage enables better performance at high player counts, allows syncing of data between multiple servers, and makes it easier for third-party applications to interact with data.
 
 ## Basic Setup
 
 Before configuring the AuraSkills config, a SQL database must already be created separately (either through the server panel or terminal). This database should have a host (usually an IP address), database name, port, username, and password.
 
-The options for configuring SQL are under the `sql` section of `config.yml`. To enable SQL, set the `enabled` option to true. Enter the host address under `host` and the name of your database under `database`. Then, enter the username and password of the database under their corresponding options. Enter the port number of the database under `port`. If desired, SSL can be enabled under the `ssl` option.
+The options for configuring SQL are under the `sql` section of `config.yml`. To enable SQL, set the `enabled` option to true. Set `type` to `mysql` or `postgres` to match your database. Enter the host address under `host` and the name of your database under `database`. Then, enter the username and password of the database under their corresponding options. Enter the port number of the database under `port` (PostgreSQL usually uses 5432). If desired, SSL can be enabled under the `ssl` option.
+
+Choosing `postgres` makes the server download the PostgreSQL driver from Maven Central the first time it starts, so it needs internet access on that startup. The driver is then cached in the server's `libraries` folder.
 
 Once the server is restarted, SQL should be successfully working. AuraSkills will automatically create tables in the database. If SQL is not working, check the server console for any errors on startup and double check your database credentials are correct.&#x20;
 

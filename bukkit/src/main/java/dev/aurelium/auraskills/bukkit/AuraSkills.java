@@ -431,8 +431,16 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
     }
 
     private void initStorageProvider() {
-        // MySQL storage
-        StorageType type = configBoolean(Option.SQL_ENABLED) ? StorageType.MYSQL : StorageType.YAML;
+        StorageType type = StorageType.YAML;
+        if (configBoolean(Option.SQL_ENABLED)) {
+            String configured = configString(Option.SQL_TYPE);
+            type = StorageType.fromConfigValue(configured);
+            if (type == null) {
+                // Fall back rather than refusing to start, so a typo doesn't take a server down
+                logger().warn("Unknown sql.type \"" + configured + "\", falling back to mysql");
+                type = StorageType.MYSQL;
+            }
+        }
         StorageFactory storageFactory = new BukkitStorageFactory(this);
         storageProvider = storageFactory.createStorageProvider(type);
         storageProvider.startAutoSaving();

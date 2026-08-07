@@ -9,6 +9,8 @@
 
 sql:
   enabled: false
+  # Database engine to use: mysql (also accepts mariadb) or postgres.
+  # The postgres driver is downloaded automatically on the first startup that needs it.
   type: mysql
   host: localhost
   port: 3306

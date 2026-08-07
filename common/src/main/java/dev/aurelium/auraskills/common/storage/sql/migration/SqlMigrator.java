@@ -24,6 +24,7 @@ public class SqlMigrator {
     }
 
     public void runMigrations() throws Exception {
+        String dialectId = pool.getDialect().id();
         try (Connection conn = pool.getConnection()) {
             createSchemaMigrationsTable(conn);
 
@@ -31,10 +32,18 @@ public class SqlMigrator {
 
             for (Migrations migration : Migrations.values()) {
                 String fileName = migration.getFileName();
-                // Skip already applied migrations
+                // Skip already applied migrations. The recorded name is the bare file name and
+                // never includes the dialect, so databases created before Postgres support
+                // still count their migrations as applied.
                 if (applied.contains(fileName)) continue;
 
-                InputStream is = plugin.getResource("db/migrations/" + fileName + ".sql");
+                // Each file must hold exactly one statement: MySQL rejects multiple statements
+                // per execute unless allowMultiQueries is set, which it is not.
+                String resource = "db/migrations/" + dialectId + "/" + fileName + ".sql";
+                InputStream is = plugin.getResource(resource);
+                if (is == null) {
+                    throw new IllegalStateException("Missing migration resource " + resource);
+                }
 
                 String sql = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
@@ -52,20 +61,13 @@ public class SqlMigrator {
     }
 
     private void createSchemaMigrationsTable(Connection connection) throws SQLException {
-        DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(pool.getDatabaseName(), null, TABLE_PREFIX + MIGRATION_TABLE, null);
-        if (tables.next()) {
+        String table = TABLE_PREFIX + MIGRATION_TABLE;
+        if (pool.getDialect().tableExists(connection, table)) {
             return;
         }
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("""
-                    CREATE TABLE IF NOT EXISTS %s (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        file_name VARCHAR(255) NOT NULL UNIQUE,
-                        applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )
-                    """.formatted(TABLE_PREFIX + MIGRATION_TABLE));
-            plugin.logger().info("Created table " + TABLE_PREFIX + SqlMigrator.MIGRATION_TABLE);
+            statement.executeUpdate(pool.getDialect().migrationsTableDdl(table));
+            plugin.logger().info("Created table " + table);
         }
     }
 

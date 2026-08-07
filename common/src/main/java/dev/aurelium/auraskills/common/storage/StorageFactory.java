@@ -7,6 +7,7 @@ import dev.aurelium.auraskills.common.storage.sql.DatabaseCredentials;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
 import dev.aurelium.auraskills.common.storage.sql.pool.ConnectionPool;
 import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
+import dev.aurelium.auraskills.common.storage.sql.pool.PostgresConnectionPool;
 
 public abstract class StorageFactory {
 
@@ -19,7 +20,10 @@ public abstract class StorageFactory {
     public StorageProvider createStorageProvider(StorageType type) {
         switch (type) {
             case MYSQL:
-                ConnectionPool pool = new MySqlConnectionPool(plugin, getCredentials());
+            case POSTGRES:
+                ConnectionPool pool = type == StorageType.POSTGRES
+                        ? new PostgresConnectionPool(plugin, getCredentials())
+                        : new MySqlConnectionPool(plugin, getCredentials());
                 pool.enable();
                 return new SqlStorageProvider(plugin, pool);
             case YAML:

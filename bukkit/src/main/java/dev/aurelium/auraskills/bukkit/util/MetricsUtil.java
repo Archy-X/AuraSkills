@@ -3,7 +3,6 @@ package dev.aurelium.auraskills.bukkit.util;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
-import dev.aurelium.auraskills.common.storage.sql.pool.MySqlConnectionPool;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 
@@ -21,13 +20,10 @@ public class MetricsUtil {
         metrics.addCustomChart(new SimplePie("default_language", () ->
                 plugin.configString(Option.DEFAULT_LANGUAGE)));
         metrics.addCustomChart(new SimplePie("storage_type", () -> {
-            String type = "yaml";
             if (plugin.getStorageProvider() instanceof SqlStorageProvider sql) {
-                if (sql.getPool() instanceof MySqlConnectionPool) {
-                    type = "mysql";
-                }
+                return sql.getPool().getDialect().id();
             }
-            return type;
+            return "yaml";
         }));
     }
 

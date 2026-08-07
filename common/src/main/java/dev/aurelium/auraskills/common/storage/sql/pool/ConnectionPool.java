@@ -5,10 +5,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.storage.sql.DatabaseCredentials;
+import dev.aurelium.auraskills.common.storage.sql.dialect.SqlDialect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
 
 public abstract class ConnectionPool {
 
@@ -27,10 +27,14 @@ public abstract class ConnectionPool {
 
     public abstract void configure(HikariConfig config, DatabaseCredentials credentials);
 
+    /**
+     * The SQL flavor spoken by this pool's database.
+     */
+    public abstract SqlDialect getDialect();
+
     public void enable() {
         HikariConfig config = new HikariConfig();
 
-        config.addDataSourceProperty("socketTimeout", String.valueOf(TimeUnit.SECONDS.toMillis(30)));
         config.setPoolName("auraskills-hikari");
         config.setMaximumPoolSize(plugin.configInt(Option.SQL_POOL_MAXIMUM_POOL_SIZE));
         config.setMinimumIdle(plugin.configInt(Option.SQL_POOL_MINIMUM_IDLE));

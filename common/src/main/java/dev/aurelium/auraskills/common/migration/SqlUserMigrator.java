@@ -12,7 +12,9 @@ import dev.aurelium.auraskills.api.util.AuraSkillsModifier.Operation;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.ability.AbilityData;
+import dev.aurelium.auraskills.common.storage.sql.SqlQueries;
 import dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider;
+import dev.aurelium.auraskills.common.storage.sql.dialect.SqlDialect;
 import dev.aurelium.auraskills.common.util.data.KeyIntPair;
 import dev.aurelium.auraskills.common.util.data.Pair;
 
@@ -24,11 +26,13 @@ public class SqlUserMigrator {
 
     private final AuraSkillsPlugin plugin;
     private final SqlStorageProvider storageProvider;
+    private final SqlDialect dialect;
     private final String tablePrefix = "auraskills_";
 
     public SqlUserMigrator(AuraSkillsPlugin plugin, SqlStorageProvider storageProvider) {
         this.plugin = plugin;
         this.storageProvider = storageProvider;
+        this.dialect = storageProvider.getPool().getDialect();
     }
 
     public void migrate() {
@@ -79,7 +83,7 @@ public class SqlUserMigrator {
         String locale = rs.getString("LOCALE");
         double mana = rs.getDouble("MANA");
 
-        String usersQuery = "INSERT IGNORE INTO " + tablePrefix + "users (player_uuid, locale, mana) VALUES (?, ?, ?);";
+        String usersQuery = dialect.insertIgnore(tablePrefix + "users", List.of("player_uuid", "locale", "mana"));
         try (PreparedStatement statement = connection.prepareStatement(usersQuery)) {
             statement.setString(1, playerUuid.toString());
             statement.setString(2, locale);
@@ -91,7 +95,7 @@ public class SqlUserMigrator {
         int userId = storageProvider.getUserId(connection, playerUuid);
 
         // Insert into skill levels table
-        String skillLevelsQuery = "INSERT IGNORE INTO " + tablePrefix + "skill_levels (user_id, skill_name, skill_level, skill_xp) VALUES (?, ?, ?, ?)";
+        String skillLevelsQuery = dialect.insertIgnore(tablePrefix + "skill_levels", SqlQueries.SKILL_LEVEL_COLUMNS);
         try (PreparedStatement statement = connection.prepareStatement(skillLevelsQuery)) {
             statement.setInt(1, userId);
             for (Map.Entry<Skill, Pair<Integer, Double>> entry : getOldSkillLevelsAndXp(rs).entrySet()) {
@@ -115,7 +119,7 @@ public class SqlUserMigrator {
         // Insert into key values table
         String statModifiersStr = rs.getString("STAT_MODIFIERS");
         List<StatModifier> modifiers = parseStatModifiers(statModifiersStr);
-        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
+        String query = dialect.insertIgnore(tablePrefix + "key_values", SqlQueries.KEY_VALUE_COLUMNS);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, SqlStorageProvider.STAT_MODIFIER_ID);
@@ -132,7 +136,7 @@ public class SqlUserMigrator {
     private void migrateAbilityData(Connection connection, ResultSet rs, int userId) throws SQLException {
         String abilityDataStr = rs.getString("ABILITY_DATA");
         Map<AbstractAbility, AbilityData> abilityData = parseAbilityData(abilityDataStr);
-        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
+        String query = dialect.insertIgnore(tablePrefix + "key_values", SqlQueries.KEY_VALUE_COLUMNS);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, SqlStorageProvider.ABILITY_DATA_ID);
@@ -151,7 +155,7 @@ public class SqlUserMigrator {
     private void migrateUnclaimedItems(Connection connection, ResultSet rs, int userId) throws SQLException {
         String unclaimedItemsStr = rs.getString("UNCLAIMED_ITEMS");
         List<KeyIntPair> unclaimedItems = parseUnclaimedItems(unclaimedItemsStr);
-        String query = "INSERT IGNORE INTO " + tablePrefix + "key_values (user_id, data_id, category_id, key_name, value) VALUES (?, ?, ?, ?, ?);";
+        String query = dialect.insertIgnore(tablePrefix + "key_values", SqlQueries.KEY_VALUE_COLUMNS);
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, userId);
             statement.setInt(2, SqlStorageProvider.UNCLAIMED_ITEMS_ID);

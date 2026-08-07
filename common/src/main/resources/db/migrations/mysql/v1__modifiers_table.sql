@@ -8,7 +8,12 @@ SELECT
     END AS modifier_type,
     category_id AS type_id,
     SUBSTRING_INDEX(key_name, '||', 1) AS modifier_name,
-    CAST(`value` AS DECIMAL(30, 10)) AS modifier_value,
+    -- Casting a non-numeric value aborts the statement under the default strict mode, so
+    -- anything unparseable becomes 0. Kept in step with postgres/v1__modifiers_table.sql.
+    CASE
+        WHEN `value` REGEXP '^-?[0-9]+(\\.[0-9]+)?$' THEN CAST(`value` AS DECIMAL(30, 10))
+        ELSE 0
+    END AS modifier_value,
     CASE
         WHEN key_name LIKE '%||%' THEN
             CASE

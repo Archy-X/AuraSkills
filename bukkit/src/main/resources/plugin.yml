@@ -24,6 +24,8 @@ libraries:
 - net.kyori:adventure-api:4.25.0
 - net.kyori:adventure-text-minimessage:4.25.0
 - net.kyori:adventure-platform-bukkit:4.4.1
+# Driver for sql.type: postgres. MySQL's driver is already supplied by the server.
+- org.postgresql:postgresql:42.7.5
 
 permissions:
   auraskills.*:

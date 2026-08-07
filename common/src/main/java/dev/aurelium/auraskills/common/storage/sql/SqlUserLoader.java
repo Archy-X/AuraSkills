@@ -33,52 +33,15 @@ import static dev.aurelium.auraskills.common.storage.sql.SqlStorageProvider.*;
 public class SqlUserLoader {
 
     private final AuraSkillsPlugin plugin;
-    private static final String LOAD_QUERY = """
-            SELECT u.*,
-                (
-                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                        'name', s.skill_name,
-                        'level', s.skill_level,
-                        'xp', s.skill_xp
-                    ))
-                    FROM auraskills_skill_levels s
-                    WHERE s.user_id = u.user_id
-                ) AS skill_levels,
-                (
-                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                        'data_id', k.data_id,
-                        'category_id', k.category_id,
-                        'key_name', k.key_name,
-                        'value', k.value
-                    ))
-                    FROM auraskills_key_values k
-                    WHERE k.user_id = u.user_id
-                ) AS key_values,
-                (
-                    SELECT JSON_ARRAYAGG(JSON_OBJECT(
-                        'modifier_type', m.modifier_type,
-                        'type_id', m.type_id,
-                        'modifier_name', m.modifier_name,
-                        'modifier_value', m.modifier_value,
-                        'modifier_operation', m.modifier_operation,
-                        'expiration_time', m.expiration_time,
-                        'remaining_duration', m.remaining_duration
-                    ))
-                    FROM auraskills_modifiers m
-                    WHERE m.user_id = u.user_id
-                ) AS modifiers
-            FROM
-                auraskills_users u
-            WHERE
-                u.player_uuid = ?;
-            """;
+    private final String loadQuery;
 
-    public SqlUserLoader(AuraSkillsPlugin plugin) {
+    public SqlUserLoader(AuraSkillsPlugin plugin, SqlQueries queries) {
         this.plugin = plugin;
+        this.loadQuery = queries.loadUser();
     }
 
     public void loadUser(UUID uuid, User user, Connection connection) {
-        try (PreparedStatement statement = connection.prepareStatement(LOAD_QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(loadQuery)) {
             statement.setString(1, uuid.toString());
 
             try (ResultSet rs = statement.executeQuery()) {

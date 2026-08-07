@@ -4,6 +4,7 @@ public enum Option {
 
     // Mysql Options
     SQL_ENABLED("sql.enabled", OptionType.BOOLEAN),
+    SQL_TYPE("sql.type", OptionType.STRING),
     SQL_HOST("sql.host", OptionType.STRING),
     SQL_PORT("sql.port", OptionType.INT),
     SQL_DATABASE("sql.database", OptionType.STRING),
