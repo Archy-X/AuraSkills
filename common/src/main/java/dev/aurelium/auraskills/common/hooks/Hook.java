@@ -19,4 +19,14 @@ public abstract class Hook {
 
     public abstract Class<? extends Hook> getTypeClass();
 
+    /**
+     * Called when the plugin is disabled, allowing the hook to unregister anything
+     * it registered with the hooked plugin. Hooks that leave listeners registered
+     * after the plugin is disabled can cause errors when the hooked plugin calls
+     * into classes that are no longer loadable.
+     */
+    public void disable() {
+
+    }
+
 }

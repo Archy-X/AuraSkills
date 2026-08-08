@@ -66,4 +66,18 @@ public class HookManager {
         this.hooks.put(type, hook);
     }
 
+    /**
+     * Disables and removes all registered hooks. Called when the plugin is disabled.
+     */
+    public void disableHooks() {
+        for (Hook hook : this.hooks.values()) {
+            try {
+                hook.disable();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.hooks.clear();
+    }
+
 }

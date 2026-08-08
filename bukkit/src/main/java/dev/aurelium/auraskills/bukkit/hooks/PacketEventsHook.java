@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.bukkit.hooks;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.EventManager;
 import com.github.retrooper.packetevents.event.PacketListener;
+import com.github.retrooper.packetevents.event.PacketListenerCommon;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType.Play.Server;
@@ -22,17 +23,24 @@ public class PacketEventsHook extends Hook {
     private static final int PAUSE_MILLIS = 2500;
 
     private final AuraSkills plugin;
+    private final PacketListenerCommon listener;
 
     public PacketEventsHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
         this.plugin = plugin;
         EventManager events = PacketEvents.getAPI().getEventManager();
-        events.registerListener(new AuraSkillsPacketListener(), PacketListenerPriority.MONITOR);
+        this.listener = events.registerListener(new AuraSkillsPacketListener(), PacketListenerPriority.MONITOR);
     }
 
     @Override
     public Class<? extends Hook> getTypeClass() {
         return PacketEventsHook.class;
+    }
+
+    @Override
+    public void disable() {
+        // Unregister so PacketEvents doesn't call into the plugin after its classloader is closed
+        PacketEvents.getAPI().getEventManager().unregisterListener(listener);
     }
 
     public void sendActionBar(Player player, Component component) {

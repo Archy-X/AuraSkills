@@ -318,6 +318,9 @@ public class AuraSkills extends JavaPlugin implements AuraSkillsPlugin {
 
     @Override
     public void onDisable() {
+        if (hookManager != null) {
+            hookManager.disableHooks();
+        }
         if (scheduler != null) {
             scheduler.shutdown();
         }
