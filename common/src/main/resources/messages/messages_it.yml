@@ -357,11 +357,11 @@ commands:
         already_exists: "<yellow>Un modificatore di armatura col tratto {trait} <yellow>esiste già sul tuo oggetto! Rimuovilo prima con /sk armor trait remove"
         desc: Adds an armor trait modifier to the item held, along with lore by default.
       remove:
-        desc: Removes an armor trait modifier from the item held.
+        desc: Rimuove un modificatore del tratto dell'armatura dall'oggetto impugnato.
       list:
         desc: Lists all item trait modifiers on the item held.
       removeall:
-        desc: Removes all armor trait modifiers from the item held.
+        desc: Rimuove tutti i modificatori dei tratti dell'armatura dall'oggetto impugnato.
     multiplier:
       add:
         added: "<aqua>{target} <gray>moltiplicatore con valore <aqua>{value} <gray>è stato aggiunto al tuo oggetto"
@@ -428,7 +428,7 @@ commands:
       remove:
         does_not_exist: "<yellow>aIl tuo oggetto non ha un {color}{stat} <yellow>modificatore!"
         removed: "{color}{stat} <gray>modificatore è stato rimosso dall'oggetto"
-        desc: Removes an item stat modifier from the item held, and the lore associated with it by default.
+        desc: Rimuove un modificatore della statistica dell'oggetto dall'oggetto impugnato e la lore ad esso associata per impostazione predefinita.
       list:
         header: "<white>Modificatori oggetto trovati:"
         desc: Lists all item stat modifiers on the item held.
