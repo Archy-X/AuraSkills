@@ -485,16 +485,16 @@ commands:
         desc: Elenca i requisiti di oggetto sull'oggetto impugnato.
       removeall:
         removed: "<gray>Tutti i requisiti oggetto sono stati rimossi dal tuo oggetto"
-        desc: Removes all item requirements from the item held.
+        desc: Rimuove tutti i requisiti dell'oggetto dall'oggetto impugnato.
       use: "<yellow>Non hai riscontrato i requisiti per utilizzare quest'oggetto: {requirements}"
     unregister:
       unregistered: "<white>Elimina oggetto con la chiave {key}"
       not_registered: "<yellow>Non ci sono oggetti registrati con la chiave {key}"
-      desc: Unregisters an item from the item registry with the given key
+      desc: Annulla la registrazione di un oggetto dal registro degli oggetti con la chiave fornita
     ignore:
       add:
         added: "<gray>Your item will now be ignored by mana ability interactions"
-        desc: Adds the tag that ignores the held item from mana ability interactions.
+        desc: Aggiunge il tag che ignora l'oggetto impugnato dalle interazioni dell'abilità mana.
       remove:
         removed: "<gray>Your item will no longer be ignored by mana ability interactions"
         desc: Removes the tag that ignores the held item from mana ability interactions.
