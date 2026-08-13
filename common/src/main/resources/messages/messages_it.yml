@@ -355,11 +355,11 @@ commands:
       add:
         added: "Added trait modifier to armor with trait: {trait}, value: {value}, operation: {operation}"
         already_exists: "<yellow>Un modificatore di armatura col tratto {trait} <yellow>esiste già sul tuo oggetto! Rimuovilo prima con /sk armor trait remove"
-        desc: Adds an armor trait modifier to the item held, along with lore by default.
+        desc: Aggiunge un modificatore del tratto dell'armatura all'oggetto impugnato, insieme alla lore per impostazione predefinita.
       remove:
         desc: Rimuove un modificatore del tratto dell'armatura dall'oggetto impugnato.
       list:
-        desc: Lists all item trait modifiers on the item held.
+        desc: Elenca tutti i modificatori dei tratti dell'oggetto sull'oggetto impugnato.
       removeall:
         desc: Rimuove tutti i modificatori dei tratti dell'armatura dall'oggetto impugnato.
     multiplier:
@@ -434,7 +434,7 @@ commands:
         desc: Lists all item stat modifiers on the item held.
       removeall:
         removed: "<gray>Tutti i modificatori oggetto sono stati rimossi dal tuo oggetto"
-        desc: Removes all item stat modifiers from the item held.
+        desc: Rimuove tutti i modificatori delle statistiche dell'oggetto dall'oggetto impugnato.
     trait:
       add:
         added: "Added trait modifier to item with trait: {trait}, value: {value}, operation: {operation}"
