@@ -523,7 +523,7 @@ commands:
       added: "<gray>Aggiunti <aqua>{amount} {mana_unit} <gray>al giocatore <gold>{player}"
       desc: Aggiunge mana a un giocatore
     remove:
-      removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
+      removed: "<gray>Rimosso <aqua>{amount} {mana_unit} <gray>dal giocatore <gold>{player}"
       desc: Rimuove il mana da un giocatore
     set:
       set: "<gray>Imposta il giocatore <gold>{player} <gray>a <aqua>{amount} {mana_unit}"
@@ -658,17 +658,17 @@ commands:
     desc: Mostra la versione del plugin attualmente installata e l'ultima disponibile.
   xp:
     add:
-      added: "<gray>Added <aqua>{amount} {skill} <gray>XP to player <gray>{player}"
+      added: "<gray>Aggiunti <aqua>{amount} <gray>XP in <aqua>{skill} <gray>al giocatore {player}"
       desc: Aggiunge XP dell'abilità a un giocatore per una determinata abilità.
     set:
-      set: "<gray>Set <aqua>{skill} <gray>XP for player <gray>{player} <gray>to {amount}"
+      set: "<gray>Impostati gli XP in <aqua>{skill} <gray>per il giocatore <gray>{player} <gray>a {amount}"
       desc: Imposta gli XP dell'abilità di un giocatore per una determinata abilità a una certa quantità.
     remove:
-      removed: "<gray>Removed <aqua>{amount} {skill} <gray>XP from player <gold>{player}"
+      removed: "<gray>Rimossi <aqua>{amount} <gray>XP in <aqua>{skill} <gray>dal giocatore <gold>{player}"
       desc: Rimuove XP dell'abilità da un giocatore in una determinata abilità.
   manaability:
     resetcooldown:
-      cooldown_reset: "<gray>Cooldown for <aqua>{ability} <gray>has been reset for player <gold>{player}"
+      cooldown_reset: "<gray>Il tempo di ricarica per <aqua>{ability} <gray>è stato azzerato per il giocatore <gold>{player}"
       desc: Ripristina il tempo di ricarica di una specifica abilità di mana per un giocatore, riempiendo facoltativamente il mana.
   unknown_skill: "<yellow>Abilità sconosciuta!"
   unknown_mana_ability: "<yellow>Abilità mana sconosciuta!"
@@ -710,7 +710,7 @@ menus:
     previous_page: "Pagina Precedente"
     previous_page_click: "Clicca per andare alla pagina precedente"
     trait: "Tratto"
-    trait_gain: "<1>You gain {color}{level_modifier} {trait_name} <1>trait level per {color}1 {stat_name} <1>stat level."
+    trait_gain: "<1>Ottieni {color}{level_modifier} <1>livelli del tratto {trait_name} per ogni {color}1 <1>livello della statistica {stat_name}."
     trait_level: "Livello del tratto"
     base: "Base"
     modifiers_additive: "Modificatori (Additivi)"
