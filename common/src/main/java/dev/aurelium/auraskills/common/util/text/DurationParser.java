@@ -13,6 +13,15 @@ public final class DurationParser {
             "(?:(\\d+)y)?(?:(\\d+)mo)?(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?(?:(\\d+)s)?"
     );
 
+    public static Duration parseOrTicks(String input) {
+        try {
+            long l = Long.parseLong(input);
+            return Duration.ofMillis(l * 50);
+        } catch (NumberFormatException e) {
+            return parse(input);
+        }
+    }
+
     public static Duration parse(String input) {
         Matcher matcher = DURATION_PATTERN.matcher(input);
         if (!matcher.matches()) {

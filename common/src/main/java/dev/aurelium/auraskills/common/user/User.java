@@ -119,6 +119,8 @@ public abstract class User {
 
     public abstract boolean hasPermission(String permission);
 
+    public abstract void playSound(String sound, String category, float volume, float pitch);
+
     public int getSkillLevel(Skill skill) {
         return skillLevels.getOrDefault(skill, plugin.config().getStartLevel());
     }

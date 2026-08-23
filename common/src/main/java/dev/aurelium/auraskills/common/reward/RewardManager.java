@@ -5,14 +5,17 @@ import dev.aurelium.auraskills.api.skill.CustomSkill;
 import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.stat.Stat;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
+import dev.aurelium.auraskills.common.action.UserAction;
 import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.reward.parser.RewardParser;
+import dev.aurelium.auraskills.common.reward.type.ActionReward;
 import dev.aurelium.auraskills.common.reward.type.CommandReward;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.file.FileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.io.File;
 import java.io.IOException;
@@ -188,6 +191,18 @@ public class RewardManager {
                     e.printStackTrace();
                 }
             }
+        }
+        try {
+            UserAction action = UserAction.parse(config);
+            if (action != null) {
+                return new ActionReward(plugin, skill,
+                        config.node("menu_message").getString(),
+                        config.node("chat_message").getString(),
+                        action);
+            }
+        } catch (SerializationException e) {
+            plugin.logger().warn("Failed to parse reward action");
+            e.printStackTrace();
         }
         throw new IllegalArgumentException("Unrecognized reward type: " + type);
     }

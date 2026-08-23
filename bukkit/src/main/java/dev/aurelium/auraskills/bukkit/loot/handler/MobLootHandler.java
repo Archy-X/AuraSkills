@@ -1,6 +1,7 @@
 package dev.aurelium.auraskills.bukkit.loot.handler;
 
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootContext;
 import dev.aurelium.auraskills.api.loot.LootPool;
@@ -10,10 +11,13 @@ import dev.aurelium.auraskills.api.skill.Skill;
 import dev.aurelium.auraskills.api.skill.Skills;
 import dev.aurelium.auraskills.api.source.type.EntityXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.loot.context.LootActionContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.EntityLeveler;
+import dev.aurelium.auraskills.common.loot.ActionLoot;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.GroupLoot;
 import dev.aurelium.auraskills.common.user.User;
 import dev.aurelium.auraskills.common.util.data.Pair;
 import org.bukkit.entity.*;
@@ -65,7 +69,6 @@ public class MobLootHandler extends LootHandler implements Listener {
             skill = skillSource.skill();
         }
 
-        label:
         for (LootPool pool : table.getPools()) {
             // Skip pool if no loot in the pool match the mob context
             if (isPoolUnobtainable(pool, entity.getType())) {
@@ -86,19 +89,30 @@ public class MobLootHandler extends LootHandler implements Listener {
             if (rolled < chance) {
                 Loot selectedLoot = selectLoot(pool, context, user);
                 // Give loot
-                switch (selectedLoot) {
-                    case null:
-                        break label;
-                    case ItemLoot itemLoot:
-                        giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
-                        break;
-                    case CommandLoot commandLoot:
-                        giveCommandLoot(player, commandLoot, null, skill);
-                        break;
-                    default:
-                        break;
+                if (selectedLoot == null) {
+                    break;
                 }
-                break;
+                giveLoot(selectedLoot, player, entity, skill, cause, table);
+
+                if (!pool.shouldRollNext()) {
+                    break;
+                }
+            }
+        }
+    }
+
+    private void giveLoot(Loot selectedLoot, Player player, LivingEntity entity, Skill skill, Cause cause, LootTable table) {
+        if (selectedLoot instanceof ItemLoot itemLoot) {
+            giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
+        } else if (selectedLoot instanceof CommandLoot commandLoot) {
+            giveCommandLoot(player, commandLoot, null, skill);
+        } else if (selectedLoot instanceof ActionLoot actionLoot) {
+            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, null);
+            giveActionLoot(player, actionLoot, lootActionContext, null, skill);
+        } else if (selectedLoot instanceof GroupLoot groupLoot) {
+            for (Loot entry : groupLoot.getEntries()) {
+                // Recursively give each entry in the group
+                giveLoot(entry, player, entity, skill, cause, table);
             }
         }
     }

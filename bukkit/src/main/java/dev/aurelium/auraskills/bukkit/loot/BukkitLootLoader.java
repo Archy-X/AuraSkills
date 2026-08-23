@@ -23,6 +23,7 @@ public class BukkitLootLoader extends LootLoader {
             case ITEM -> new ItemLootParser(manager);
             case COMMAND -> new CommandLootParser();
             case ENTITY -> new EntityLootParser(manager);
+            default -> throw new IllegalArgumentException("No loot parser for type " + type);
         };
     }
 

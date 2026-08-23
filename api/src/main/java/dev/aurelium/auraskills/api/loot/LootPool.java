@@ -10,15 +10,18 @@ public class LootPool extends LootOptioned {
     private final double baseChance;
     private final int selectionPriority;
     private final boolean overrideVanillaLoot;
+    private final boolean rollNext;
     private final Random random = new Random();
 
-    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot, Map<String, Object> options, LootRequirements requirements) {
+    public LootPool(String name, List<Loot> loot, double baseChance, int selectionPriority, boolean overrideVanillaLoot,
+            boolean rollNext, Map<String, Object> options, LootRequirements requirements) {
         super(options, requirements);
         this.name = name;
         this.loot = loot;
         this.baseChance = baseChance;
         this.selectionPriority = selectionPriority;
         this.overrideVanillaLoot = overrideVanillaLoot;
+        this.rollNext = rollNext;
     }
 
     public String getName() {
@@ -39,6 +42,10 @@ public class LootPool extends LootOptioned {
 
     public boolean overridesVanillaLoot() {
         return overrideVanillaLoot;
+    }
+
+    public boolean shouldRollNext() {
+        return rollNext;
     }
 
     /**

@@ -36,7 +36,15 @@ Each pool has a loot section containing a map list of the loot entries. This use
 
 ## Loot entries
 
-Currently, there are two types of loot: item loot and command loot. Each loot entry must have certain required keys and can optionally have more. Optional keys are either notated with (optional) or have their default values specified on this page. Each key is explained below:
+Loot entries can be one of the following types:
+* [Item](#item-loot)
+* [Command](#command-loot)
+* [Entity](#entity-loot) (Fishing only)
+* [Group](#group-loot)
+
+Each loot entry must have certain required keys and can optionally have more.
+Optional keys are either notated with (optional) or have their default values specified on this page.
+Each key is explained below:
 
 Universal Keys (apply to any loot type):
 
@@ -172,7 +180,9 @@ Command loot is used to execute any command when the player gets the loot, eithe
 Command loot keys:
 
 * `executor` - Who should execute the command, either console or player (defaults to console)
-* `command` - The command without the beginning /, supports {player} placeholder and all PlaceholderAPI placeholders
+* `command` - The command without the beginning /, supports built-in [string placeholders](#string-placeholders)
+  and all PlaceholderAPI placeholders
+* `commands` - A list of multiple commands to run. Only `commands` or `command` should be defined, not both.
 
 Example:
 
@@ -181,6 +191,17 @@ Example:
   weight: 10
   executor: console
   command: say hi
+```
+
+Example of running multiple commands:
+
+```yaml
+- type: command
+  weight: 10
+  executor: console
+  commands:
+    - say 1
+    - say 2
 ```
 
 ### Entity loot
@@ -201,6 +222,138 @@ Entity loot keys:
   * `horizontal` - Overrides the default horizontal velocity of the entity when spawned.
   * `vertical` - Overrides the default vertical velocity of the entity when spawned.
 * `hand`, `off_hand`, `feet`, `legs`, `chest`, `head` - Defines equipment on the spawned entity. The value is a mapping in the same item format as regular item loot (Using keys `material`, `enchantments`, etc.)
+
+### Group loot
+
+(`type: group`)
+
+A loot entry with this type is simply a list of multiple other loot types. This allows multiple loot entries to be
+given at the same time for a single roll.
+
+Group loot keys:
+* `entries` - A list of any loot entries that will be given together when the group loot is selected. The
+  following keys will not do anything if defined on individual entries in the group: `weight` and `sources`. Those
+  should only be defined on the group itself.
+
+For example, you can run a command and send an action bar together:
+
+```yaml
+- type: group
+  weight: 10
+  entries:
+    - type: command
+      executor: console
+      command: say hi
+    - type: action_bar
+      message: '<green>Earned loot'
+      duration: 20
+```
+
+### Action bar
+
+(`type: action_bar`)
+
+Shows the player a message on the action bar when given.
+
+Action bar keys:
+* `message` - The message to send. Supports MiniMessage and PlceholderAPI.
+  Additionally supports built-in [string placeholders](#string-placeholders).
+* `duration` - The amount of time to pause the idle action bar so the message stays visible. Use either a plain number
+  (ticks) or a string like `2s` (defaults to 40 ticks).
+
+Example:
+
+```yaml
+- type: action_bar
+  message: '<gold>You earned loot in {skill}!'
+  duration: 40
+```
+
+### Title
+
+(`type: title`)
+
+Shows the player a title message in the center of the screen.
+
+Keys:
+- `title` - The main title text, supports MiniMessage. If not present, the title is blank.
+- `subtitle` - The subtitle text, supports MiniMessage. If not present, the subtitle is blank.
+- `fade_in` - The duration of the title fading in. Use a plain number for ticks or a format like `1s`.
+- `stay` - The duration to keep the title on the screen.
+- `fade_out` - The duration of the title fading out.
+
+Example:
+
+```yaml
+- type: title
+  title: '<red>Title'
+  subtitle: '<gray>A subtitle'
+```
+
+### Chat
+
+(`type: chat`)
+
+Sends the player a chat message.
+
+Keys:
+- `text` - The text of the message to send, supports MiniMessage.
+
+Example:
+
+```yaml
+- type: chat
+  text: '<green>A chat message'
+```
+
+### Money
+
+(`type: money`)
+
+Use one of the following keys, not both:
+- `amount` - A fixed amount of money to give.
+- `formula` - An expression for determining the amount of money to give for a given `level` variable.
+
+Example:
+
+```yaml
+- type: money
+  formula: '100+10*level*level'
+```
+
+### Sound
+
+(`type: sound`)
+
+Keys:
+- `sound` - The name of the sound.
+- `category` - The category of the sound, such as `players`, `blocks`, or `ui`. Defaults to `master`.
+- `volume` - The volume of the sound. Defaults to 1.
+- `pitch` - The pitch of the sound. Defaults to 1.
+
+Example:
+
+```yaml
+- type: sound
+  sound: entity.player.levelup
+  category: ui
+  volume: 0.8
+  pitch: 1.2
+```
+
+## String placeholders
+
+In addition to all PlaceholderAPI placeholders, some loot types have values that
+support custom built-in placeholders:
+* `{player}` - Player username
+* `{world}` - Name of the world the player is in
+* `{skill}` - The display name of the skill the loot was obtained in
+* `{skill_id}` - The official lowercase id of the skill
+
+If the loot was obtained from a block (Excavation, Mining, etc.), the following placeholders
+are also available:
+* `{x}, {y}, {z}` - coordinates of the block (integers)
+* `{x_center}, {y_center}, {z_center}` - decimal coordinates of the center of the block
 
 ## Loot selection
 

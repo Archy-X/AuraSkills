@@ -2,6 +2,7 @@ package dev.aurelium.auraskills.bukkit.loot.handler;
 
 import dev.aurelium.auraskills.api.ability.Abilities;
 import dev.aurelium.auraskills.api.event.loot.LootDropEvent;
+import dev.aurelium.auraskills.api.event.loot.LootDropEvent.Cause;
 import dev.aurelium.auraskills.api.loot.Loot;
 import dev.aurelium.auraskills.api.loot.LootPool;
 import dev.aurelium.auraskills.api.loot.LootTable;
@@ -11,11 +12,14 @@ import dev.aurelium.auraskills.api.source.SkillSource;
 import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.FishingXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.bukkit.loot.context.LootActionContext;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.source.FishingLeveler;
 import dev.aurelium.auraskills.bukkit.util.VersionUtils;
+import dev.aurelium.auraskills.common.loot.ActionLoot;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.GroupLoot;
 import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Item;
@@ -101,14 +105,28 @@ public class FishingLootHandler extends LootHandler implements Listener {
                 if (selectedLoot == null) { // Continue iterating pools
                     continue;
                 }
-                if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveFishingItemLoot(player, itemLoot, event, source, skill, cause, table);
-                } else if (selectedLoot instanceof CommandLoot commandLoot) {
-                    giveFishingCommandLoot(player, commandLoot, event, source, skill);
-                } else if (selectedLoot instanceof EntityLoot entityLoot) {
-                    giveFishingEntityLoot(player, entityLoot, event, source, skill, cause);
+                giveLoot(event, selectedLoot, player, source, skill, cause, table);
+                if (!pool.shouldRollNext()) {
+                    break; // Stop iterating pools
                 }
-                break; // Stop iterating pools
+            }
+        }
+    }
+
+    private void giveLoot(PlayerFishEvent event, Loot selectedLoot, Player player, XpSource source, Skill skill, Cause cause, LootTable table) {
+        if (selectedLoot instanceof ItemLoot itemLoot) {
+            giveFishingItemLoot(player, itemLoot, event, source, skill, cause, table);
+        } else if (selectedLoot instanceof CommandLoot commandLoot) {
+            giveFishingCommandLoot(player, commandLoot, event, source, skill);
+        } else if (selectedLoot instanceof EntityLoot entityLoot) {
+            giveFishingEntityLoot(player, entityLoot, event, source, skill, cause);
+        } else if (selectedLoot instanceof ActionLoot actionLoot) {
+            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, null);
+            giveActionLoot(player, actionLoot, lootActionContext, source, skill);
+        } else if (selectedLoot instanceof GroupLoot groupLoot) {
+            for (Loot entry : groupLoot.getEntries()) {
+                // Recursively give each entry in the group
+                giveLoot(event, entry, player, source, skill, cause, table);
             }
         }
     }

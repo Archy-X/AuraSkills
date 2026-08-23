@@ -9,6 +9,7 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardFlags.FlagKey;
 import dev.aurelium.auraskills.bukkit.hooks.WorldGuardHook;
+import dev.aurelium.auraskills.bukkit.loot.context.LootActionContext;
 import dev.aurelium.auraskills.bukkit.loot.context.MobContext;
 import dev.aurelium.auraskills.bukkit.loot.item.BukkitItemSupplier;
 import dev.aurelium.auraskills.bukkit.loot.type.EntityLoot;
@@ -17,6 +18,7 @@ import dev.aurelium.auraskills.bukkit.util.ItemUtils;
 import dev.aurelium.auraskills.common.commands.CommandExecutor;
 import dev.aurelium.auraskills.common.hooks.PlaceholderHook;
 import dev.aurelium.auraskills.common.loot.AbstractLootHandler;
+import dev.aurelium.auraskills.common.loot.ActionLoot;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
 import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.message.MessageKey;
@@ -57,6 +59,15 @@ public abstract class LootHandler extends AbstractLootHandler {
     public LootHandler(AuraSkills plugin) {
         this.plugin = plugin;
         this.levelerContext = new LevelerContext(plugin.getApi());
+    }
+
+    protected void giveActionLoot(Player player, ActionLoot loot, LootActionContext actionContext, @Nullable XpSource source, Skill skill) {
+        User user = plugin.getUser(player);
+
+        loot.getAction().run(plugin, user, actionContext);
+
+        attemptSendMessage(player, loot);
+        giveXp(player, loot, source, skill);
     }
 
     protected void giveCommandLoot(Player player, CommandLoot loot, @Nullable XpSource source, Skill skill) {

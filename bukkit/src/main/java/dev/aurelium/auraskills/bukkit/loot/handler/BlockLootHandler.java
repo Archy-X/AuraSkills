@@ -12,11 +12,14 @@ import dev.aurelium.auraskills.api.source.XpSource;
 import dev.aurelium.auraskills.api.source.type.BlockXpSource;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import dev.aurelium.auraskills.bukkit.hooks.SlimefunHook;
+import dev.aurelium.auraskills.bukkit.loot.context.LootActionContext;
 import dev.aurelium.auraskills.bukkit.loot.type.ItemLoot;
 import dev.aurelium.auraskills.bukkit.skills.excavation.ExcavationLootProvider;
 import dev.aurelium.auraskills.bukkit.source.BlockLeveler;
 import dev.aurelium.auraskills.common.config.Option;
+import dev.aurelium.auraskills.common.loot.ActionLoot;
 import dev.aurelium.auraskills.common.loot.CommandLoot;
+import dev.aurelium.auraskills.common.loot.GroupLoot;
 import dev.aurelium.auraskills.common.loot.SkillLootProvider;
 import dev.aurelium.auraskills.common.loot.SourceContext;
 import dev.aurelium.auraskills.common.user.User;
@@ -147,19 +150,30 @@ public class BlockLootHandler extends LootHandler implements Listener {
             Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource), plugin.getUser(player));
             // Give loot
             if (selectedLoot != null) {
-                if (selectedLoot instanceof ItemLoot itemLoot) {
-                    giveBlockItemLoot(player, itemLoot, event, skill, cause, table);
-                } else if (selectedLoot instanceof CommandLoot commandLoot) {
-                    giveCommandLoot(player, commandLoot, null, skill);
-                }
+                giveLoot(table, player, event, skill, cause, selectedLoot);
                 // Override vanilla loot if enabled
                 if (pool.overridesVanillaLoot()) {
                     event.setDropItems(false);
                 }
-                return true;
+                return !pool.shouldRollNext();
             }
         }
         return false;
     }
 
+    private void giveLoot(LootTable table, Player player, BlockBreakEvent event, Skill skill, LootDropCause cause, Loot selectedLoot) {
+        if (selectedLoot instanceof ItemLoot itemLoot) {
+            giveBlockItemLoot(player, itemLoot, event, skill, cause, table);
+        } else if (selectedLoot instanceof CommandLoot commandLoot) {
+            giveCommandLoot(player, commandLoot, null, skill);
+        } else if (selectedLoot instanceof ActionLoot actionLoot) {
+            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, event.getBlock());
+            giveActionLoot(player, actionLoot, lootActionContext, null, skill);
+        } else if (selectedLoot instanceof GroupLoot groupLoot) {
+            for (Loot entry : groupLoot.getEntries()) {
+                // Recursively give each entry in the group
+                giveLoot(table, player, event, skill, cause, entry);
+            }
+        }
+    }
 }
