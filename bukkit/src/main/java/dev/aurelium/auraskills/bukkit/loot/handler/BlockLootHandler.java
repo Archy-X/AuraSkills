@@ -29,8 +29,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -150,7 +152,7 @@ public class BlockLootHandler extends LootHandler implements Listener {
             Loot selectedLoot = selectLoot(pool, new SourceContext(originalSource), plugin.getUser(player));
             // Give loot
             if (selectedLoot != null) {
-                giveLoot(table, player, event, skill, cause, selectedLoot);
+                giveLoot(table, player, event, skill, cause, selectedLoot, null);
                 // Override vanilla loot if enabled
                 if (pool.overridesVanillaLoot()) {
                     event.setDropItems(false);
@@ -161,18 +163,20 @@ public class BlockLootHandler extends LootHandler implements Listener {
         return false;
     }
 
-    private void giveLoot(LootTable table, Player player, BlockBreakEvent event, Skill skill, LootDropCause cause, Loot selectedLoot) {
+    private void giveLoot(LootTable table, Player player, BlockBreakEvent event, Skill skill, LootDropCause cause, Loot selectedLoot, @Nullable LootActionContext sharedContext) {
         if (selectedLoot instanceof ItemLoot itemLoot) {
             giveBlockItemLoot(player, itemLoot, event, skill, cause, table);
         } else if (selectedLoot instanceof CommandLoot commandLoot) {
             giveCommandLoot(player, commandLoot, null, skill);
         } else if (selectedLoot instanceof ActionLoot actionLoot) {
-            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, event.getBlock());
+            LootActionContext lootActionContext = Objects.requireNonNullElseGet(sharedContext, () ->
+                    new LootActionContext(plugin, player, plugin.getUser(player), skill, event.getBlock()));
             giveActionLoot(player, actionLoot, lootActionContext, null, skill);
         } else if (selectedLoot instanceof GroupLoot groupLoot) {
+            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, event.getBlock());
             for (Loot entry : groupLoot.getEntries()) {
                 // Recursively give each entry in the group
-                giveLoot(table, player, event, skill, cause, entry);
+                giveLoot(table, player, event, skill, cause, entry, lootActionContext);
             }
         }
     }
