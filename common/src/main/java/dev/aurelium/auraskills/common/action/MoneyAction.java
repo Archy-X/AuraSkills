@@ -3,6 +3,7 @@ package dev.aurelium.auraskills.common.action;
 import com.ezylang.evalex.EvaluationException;
 import com.ezylang.evalex.Expression;
 import com.ezylang.evalex.parser.ParseException;
+import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.common.AuraSkillsPlugin;
 import dev.aurelium.auraskills.common.hooks.EconomyHook;
 import dev.aurelium.auraskills.common.user.User;
@@ -22,7 +23,10 @@ public record MoneyAction(double amount, @Nullable String formula) implements Us
         if (!plugin.getHookManager().isRegistered(EconomyHook.class)) {
             return;
         }
-        plugin.getHookManager().getHook(EconomyHook.class).deposit(user, getAmount(plugin, context));
+        double computedAmount = getAmount(plugin, context);
+        context.setMetadata("money_amount", NumberUtil.format2(computedAmount));
+        context.setMetadata("money_amount_int", NumberUtil.format0(computedAmount));
+        plugin.getHookManager().getHook(EconomyHook.class).deposit(user, computedAmount);
     }
 
     private double getAmount(AuraSkillsPlugin plugin, ActionContext context) {

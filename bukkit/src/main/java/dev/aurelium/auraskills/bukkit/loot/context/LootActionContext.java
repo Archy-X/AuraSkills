@@ -11,6 +11,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 public class LootActionContext implements ActionContext {
 
     private final AuraSkills plugin;
@@ -18,6 +22,7 @@ public class LootActionContext implements ActionContext {
     private final User user;
     private final Skill skill;
     private final @Nullable Block block;
+    private final Map<String, String> metadata = new HashMap<>();
 
     public LootActionContext(AuraSkills plugin, Player player, User user, Skill skill, @Nullable Block block) {
         this.plugin = plugin;
@@ -33,7 +38,12 @@ public class LootActionContext implements ActionContext {
                 "{player}", player.getName(),
                 "{world}", player.getWorld().getName(),
                 "{skill}", skill.getDisplayName(user.getLocale()),
-                "{skill_id}", skill.getId().getSimpleName());
+                "{skill_id}", skill.getId().getSimpleName(),
+                "{level}", String.valueOf(user.getSkillLevel(skill)),
+                "{xp}", String.valueOf(user.getSkillXp(skill)));
+        for (Entry<String, String> entry : metadata.entrySet()) {
+            rep = rep.replace("{" + entry.getKey() + "}", entry.getValue());
+        }
         if (block != null) {
             rep = TextUtil.replace(rep,
                     "{x}", String.valueOf(block.getX()),
@@ -53,5 +63,15 @@ public class LootActionContext implements ActionContext {
     public void setExpressionVariables(Expression expression) {
         expression.with("level", user.getSkillLevel(skill))
                 .with("xp", user.getSkillXp(skill));
+    }
+
+    @Override
+    public void setMetadata(String key, String value) {
+        metadata.put(key, value);
+    }
+
+    @Override
+    public @Nullable String getMetadata(String key) {
+        return metadata.get(key);
     }
 }
