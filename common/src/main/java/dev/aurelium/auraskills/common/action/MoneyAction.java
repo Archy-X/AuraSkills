@@ -33,7 +33,8 @@ public record MoneyAction(double amount, @Nullable String formula) implements Us
         if (formula == null && amount > 0) {
             return amount;
         } else if (formula != null) {
-            Expression expression = new Expression(formula);
+            String replaced = context.replacePlaceholders(formula);
+            Expression expression = new Expression(replaced);
             context.setExpressionVariables(expression);
             try {
                 return expression.evaluate().getNumberValue().doubleValue();
