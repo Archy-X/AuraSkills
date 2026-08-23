@@ -25,6 +25,8 @@ public record TitleAction(
 
     @Override
     public void run(AuraSkillsPlugin plugin, User user, ActionContext context) {
-        plugin.getUiProvider().sendTitle(user, title, subtitle, (int) fadeIn.toMillis() / 50, (int) stay.toMillis() / 50, (int) fadeOut.toMillis() / 50);
+        String formattedTitle = context.replacePlaceholders(title);
+        String formattedSubtitle = context.replacePlaceholders(subtitle);
+        plugin.getUiProvider().sendTitle(user, formattedTitle, formattedSubtitle, (int) fadeIn.toMillis() / 50, (int) stay.toMillis() / 50, (int) fadeOut.toMillis() / 50);
     }
 }

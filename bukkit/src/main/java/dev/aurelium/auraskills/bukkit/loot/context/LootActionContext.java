@@ -34,6 +34,9 @@ public class LootActionContext implements ActionContext {
 
     @Override
     public String replacePlaceholders(String input) {
+        if (input == null) {
+            return null;
+        }
         String rep = TextUtil.replace(input,
                 "{player}", player.getName(),
                 "{world}", player.getWorld().getName(),

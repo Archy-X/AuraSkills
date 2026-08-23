@@ -245,7 +245,7 @@ For example, you can run a command and send an action bar together:
       executor: console
       command: say hi
     - type: action_bar
-      message: '<green>Earned loot'
+      text: '<green>Earned loot'
       duration: 20
 ```
 
@@ -256,7 +256,7 @@ For example, you can run a command and send an action bar together:
 Shows the player a message on the action bar when given.
 
 Action bar keys:
-* `message` - The message to send. Supports MiniMessage and PlceholderAPI.
+* `text` - The message to send. Supports MiniMessage and PlceholderAPI.
   Additionally supports built-in [string placeholders](#string-placeholders).
 * `duration` - The amount of time to pause the idle action bar so the message stays visible. Use either a plain number
   (ticks) or a string like `2s` (defaults to 40 ticks).
@@ -265,7 +265,7 @@ Example:
 
 ```yaml
 - type: action_bar
-  message: '<gold>You earned loot in {skill}!'
+  text: '<gold>You earned loot in {skill}!'
   duration: 40
 ```
 

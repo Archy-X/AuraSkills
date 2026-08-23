@@ -30,6 +30,9 @@ public class RewardActionContext implements ActionContext {
 
     @Override
     public String replacePlaceholders(String input) {
+        if (input == null) {
+            return null;
+        }
         String rep = TextUtil.replace(input,
                 "{player}", user.getUsername(),
                 "{skill}", skill.getId().getSimpleName(),
