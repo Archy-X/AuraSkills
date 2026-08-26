@@ -13,6 +13,7 @@ import dev.aurelium.auraskills.common.hooks.HookManager;
 import dev.aurelium.auraskills.common.item.ItemRegistry;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.level.LevelManager;
+import dev.aurelium.auraskills.common.level.XpLimiter;
 import dev.aurelium.auraskills.common.level.XpRequirements;
 import dev.aurelium.auraskills.common.mana.ManaAbilityManager;
 import dev.aurelium.auraskills.common.mana.ManaAbilityRegistry;
@@ -65,6 +66,8 @@ public interface AuraSkillsPlugin {
     UserManager getUserManager();
 
     XpRequirements getXpRequirements();
+
+    XpLimiter getXpLimiter();
 
     PlatformLogger logger();
 

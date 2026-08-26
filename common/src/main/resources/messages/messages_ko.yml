@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: 마나 능력 잠금 해제
   mana_ability_level_up: 마나 능력 레벨 업
   unclaimed_item: "<red>인벤토리가 가득 차서 수령하지 않은 아이템이 있습니다. <yellow>/skillsclaimitems<red>를 사용하여 수령하세요."
+  limit_reached: "<red>제한에 도달했습니다. {time}초 남았습니다"
 menus:
   common:
     close: "닫기"
@@ -564,6 +565,7 @@ menus:
     your_skills_desc: "귀중한 능력치 부스트, 능력 등을 잠금 해제하려면 다양한 작업을 수행하여 스킬을 업그레이드하세요!"
     your_skills_hover: "자세한 내용을 보려면 스킬 위에 마우스를 올리세요!"
     your_skills_click: "레벨 진행 상황을 보려면 스킬을 클릭하세요!"
+    skill_xp_limited: "XP 제한됨"
     skill_click: "레벨 진행 상황을 보려면 클릭하세요!"
     stats: "스탯"
     stats_desc: "스킬 레벨을 올려 능력치 버프를 획득하세요"
