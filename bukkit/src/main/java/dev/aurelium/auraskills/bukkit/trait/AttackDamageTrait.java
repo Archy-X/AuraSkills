@@ -8,6 +8,7 @@ import dev.aurelium.auraskills.api.trait.Trait;
 import dev.aurelium.auraskills.api.trait.Traits;
 import dev.aurelium.auraskills.api.util.NumberUtil;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
+import dev.aurelium.auraskills.common.config.Option;
 import dev.aurelium.auraskills.common.user.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,7 @@ public class AttackDamageTrait extends TraitImpl {
                 return;
             }
 
-            meta.addAttackModifier(applyStrength(user));
+            meta.addAttackModifier(applyStrength(user, meta.isPvP()));
         }
     }
 
@@ -58,8 +59,16 @@ public class AttackDamageTrait extends TraitImpl {
         }
     }
 
-    private DamageModifier applyStrength(User user) {
-        double value = user.getBonusTraitLevel(Traits.ATTACK_DAMAGE);
+    private DamageModifier applyStrength(User user, boolean isPvP) {
+        double value;
+
+        // Check if PvP equipment-only mode is enabled
+        if (isPvP && plugin.configBoolean(Option.PVP_ONLY_EQUIPMENT_STATS)) {
+            value = user.getBonusTraitLevelEquipmentOnly(Traits.ATTACK_DAMAGE);
+        } else {
+            value = user.getBonusTraitLevel(Traits.ATTACK_DAMAGE);
+        }
+
         if (Traits.ATTACK_DAMAGE.optionBoolean("use_percent")) {
             return new DamageModifier(value / 100, DamageModifier.Operation.MULTIPLY);
         } else {
