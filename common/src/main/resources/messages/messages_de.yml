@@ -613,6 +613,8 @@ commands:
     saved: "<green>Fertigkeitsdaten gespeichert!"
     desc: Speichert Fertigkeitsdaten.
   skill:
+    addlevel:
+      desc: Fügt einer Fertigkeit eine bestimmte Anzahl von Level hinzu.
     setall:
       set: "<gray>Alle Fertigkeiten von Spieler <gold>{player} <gray>auf Stufe <aqua>{level} <gray>gesetzt"
       desc: Setzt alle Fertigkeiten eines Spielers auf ein Level.
