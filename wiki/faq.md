@@ -38,7 +38,9 @@ To uninstall, put the plugin back and run `skills resethealth` in the console wh
 
 ### Why do I not have the right amount of extra hearts on my screen when my HP is high enough?
 
-Visual hearts are scaled, meaning it takes more HP to get each additional heart. Your actual health matches the HP value on the action bar. This is enabled to prevent hearts from blocking the screen at high health stats. You can disable this by setting `health.health-scaling` to false in config.yml
+Visual hearts are scaled, meaning it takes more HP to for each additional heart to appear.
+Your actual health matches the HP value on the action bar. This is enabled to prevent hearts from blocking the screen
+at high HP values. You can disable this by setting `traits.auraskills/hp.health_scaling` to false in stats.yml.
 
 ### How do I migrate from YAML file to MySQL database storage?
 
