@@ -51,6 +51,9 @@ public class PlayerJoinQuit implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        // Clear combat state
+        plugin.getCombatTracker().clearCombatState(player);
+
         // Don't save users with no profile to avoid data loss
         if (!plugin.getUserManager().hasUser(player.getUniqueId())) {
             return;
