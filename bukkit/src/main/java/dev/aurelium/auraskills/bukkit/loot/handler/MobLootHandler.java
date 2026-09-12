@@ -29,6 +29,7 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 
@@ -92,7 +93,7 @@ public class MobLootHandler extends LootHandler implements Listener {
                 if (selectedLoot == null) {
                     break;
                 }
-                giveLoot(selectedLoot, player, entity, skill, cause, table);
+                giveLoot(selectedLoot, player, entity, skill, cause, table, null);
 
                 if (!pool.shouldRollNext()) {
                     break;
@@ -101,18 +102,21 @@ public class MobLootHandler extends LootHandler implements Listener {
         }
     }
 
-    private void giveLoot(Loot selectedLoot, Player player, LivingEntity entity, Skill skill, Cause cause, LootTable table) {
+    private void giveLoot(Loot selectedLoot, Player player, LivingEntity entity, Skill skill, Cause cause, LootTable table,
+            @Nullable LootActionContext sharedContext) {
         if (selectedLoot instanceof ItemLoot itemLoot) {
             giveMobItemLoot(player, itemLoot, entity.getLocation(), skill, cause, table);
         } else if (selectedLoot instanceof CommandLoot commandLoot) {
             giveCommandLoot(player, commandLoot, null, skill);
         } else if (selectedLoot instanceof ActionLoot actionLoot) {
-            var lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, null);
+            var lootActionContext = Objects.requireNonNullElseGet(sharedContext, () ->
+                    new LootActionContext(plugin, player, plugin.getUser(player), skill, null));
             giveActionLoot(player, actionLoot, lootActionContext, null, skill);
         } else if (selectedLoot instanceof GroupLoot groupLoot) {
+            LootActionContext lootActionContext = new LootActionContext(plugin, player, plugin.getUser(player), skill, null);
             for (Loot entry : groupLoot.getEntries()) {
                 // Recursively give each entry in the group
-                giveLoot(entry, player, entity, skill, cause, table);
+                giveLoot(entry, player, entity, skill, cause, table, lootActionContext);
             }
         }
     }
