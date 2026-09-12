@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Kĩ năng ma pháp
   mana_ability_level_up: Lên cắp Kĩ năng Ma pháp
   unclaimed_item: "<red>Bạn có vật phẩm chưa nhận do kho đồ đã đầy, dùng <yellow>/skills claimitems <red>để nhận"
+  limit_reached: "<red>Đã đạt giới hạn, còn lại {time} giây"
 menus:
   common:
     close: "Đóng"
@@ -564,6 +565,7 @@ menus:
     your_skills_desc: "Thăng cấp Khả năng bằng cách thực hiện các nhiệm vụ khác nhau để mở khóa chỉ số, Kĩ năng và hơn thế nữa!"
     your_skills_hover: "Di chuột qua một Khả năng để xem thêm!"
     your_skills_click: "Nhấn vào một Khả năng để xem tiến trình!"
+    skill_xp_limited: "XP bị giới hạn"
     skill_click: "Nhấn để xem tiến trình thăng cấp!"
     stats: "Chỉ số"
     stats_desc: "Tăng Chỉ số khi thăng cấp Khả năng"

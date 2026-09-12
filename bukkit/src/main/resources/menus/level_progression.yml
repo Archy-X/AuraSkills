@@ -141,6 +141,7 @@ templates:
     - component: mana_ability_info
     - ' '
     - component: progress
+    - component: skill_xp_limited
     - component: max_level
   unlocked:
     material: lime_stained_glass_pane
@@ -205,6 +206,10 @@ components:
     - '<gray>{{progress_to_level}} {next_level}: <yellow>{percent}%'
     - '{bar}'
     - '<gray>{current_xp}/{level_xp} {xp_unit}'
+  skill_xp_limited:
+    context: Skill
+    lore:
+    - '<red>{{skill_xp_limited}}'
   max_level:
     context: Skill
     lore:
