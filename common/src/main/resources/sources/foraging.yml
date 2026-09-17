@@ -33,6 +33,9 @@ sources:
   cherry_log:
     block: cherry_log
     xp: 8.0
+  poplar_log:
+    block: poplar_log
+    xp: 8.0
   oak_leaves:
     block: oak_leaves
     xp: 0.8
@@ -56,6 +59,15 @@ sources:
     xp: 0.8
   cherry_leaves:
     block: cherry_leaves
+    xp: 0.8
+  red_poplar_leaves:
+    block: red_poplar_leaves
+    xp: 0.8
+  orange_poplar_leaves:
+    block: orange_poplar_leaves
+    xp: 0.8
+  yellow_poplar_leaves:
+    block: yellow_poplar_leaves
     xp: 0.8
   crimson_stem:
     block: crimson_stem
@@ -139,4 +151,4 @@ tags:
   trunks:
     - '*_log'
     - '*_stem'
-file_version: 1
+file_version: 2
