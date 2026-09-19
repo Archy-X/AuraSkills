@@ -518,46 +518,46 @@ commands:
   mana:
     display: "<white>Ваш {mana_unit}: <aqua>{current}/{max}"
     display_other: "<white>{mana_unit} из {player}: <aqua>{current}/{max}"
-    desc: Display your or another player's current and max mana
+    desc: Показать текущую и максимальную ману вашего персонажа или другого игрока
     add:
       added: "<gray>Added <aqua>{amount} {mana_unit} <gray>to player <gold>{player}"
-      desc: Adds mana to a player
+      desc: Добавляет игроку ману
     remove:
       removed: "<gray>Removed <aqua>{amount} {mana_unit} <gray>from player <gold>{player}"
-      desc: Removes mana from a player
+      desc: Отнимает ману у игрока
     set:
       set: "<gray>Set player <gold>{player} <gray>to <aqua>{amount} {mana_unit}"
-      desc: Sets the mana of a player
+      desc: Устанавливает ману игрока
     at_least_zero: "<yellow>{mana_unit}должно быть не меньше нуля!"
     console_specify_player: "<yellow>В консоли должен быть указан игрок!"
   modifier:
     add:
       added: "{color}{stat} <gray>уровень скилла <aqua>{value} <gray>с именем <white>{name} <gray>добавлено игроку <gold>{player}"
       already_exists: "<yellow>Модификатор с именем {name} уже существует на <gold>{player}<yellow>! Удалите его с помощью <gold>/sk modifier remove {player} {name}"
-      desc: Adds a stat modifier to a player.
+      desc: Добавляет модификатор характеристик игроку.
     addtemp:
       added: "Added temporary stat modifier to {player} with stat: {stat}, name: {name}, value: {value}, duration: {duration}, operation: {operation}"
-      desc: Adds a temporary stat modifier to a player.
+      desc: Добавляет игроку временный модификатор характеристик.
     remove:
       not_found: "<yellow>Модификатор {name} не найден для игрока <gold>{player}"
       removed: "<gray>Модификатор <white>{name} <gray>удален с игрока <gold>{player}"
-      desc: Removes a specific stat modifier from a player.
+      desc: Снимает с игрока модификатор определенной характеристики.
     list:
       all_stats_header: "<gray>Модификаторы характеристик для игрока <gold>{player}:"
       all_stats_entry: "  <white>{name} - {color}{stat} <white>Уровень <gold>{value}"
       one_stat_header: "<gray>Модификаторы характеристик ({color}{stat}<gray>) для игрока <gold>{player}:"
       one_stat_entry: "  <white>{name} - {color}{stat} <white>Уровень <gold>{value}"
       players_only: "<yellow>Только игроки могут указывать свои собственные модификаторы! Попробуйте указать игрока"
-      desc: Lists all or a specific stat's modifiers for a player.
+      desc: Выводит все модификаторы характеристик игрока или модификаторы одной конкретной характеристики.
     removeall:
       removed_all_stats: "<gray>Удалены <aqua>{num} <gray>модификаторы характеристик у игрока <gold>{player}"
       removed_one_stat: "<gray>Удалены <aqua>{num} {color}{stat} <gray>модификаторы от игрока <gold>{player}"
       players_only: "<yellow>Только игроки могут удалять свои собственные модификаторы! Попробуйте указать игрока"
-      desc: Removes all stat modifiers from a player.
+      desc: Снимает с игрока все модификаторы характеристик.
   trait:
     add:
       already_exists: "<yellow>Модификатор с именем {name} уже существует на игроке <gold>{player}<yellow>! Удалите его с помощью <gold>/sk trait remove {player} {name}"
-      desc: Adds a trait modifier to a player.
+      desc: Добавляет модификатор черты игроку.
     addtemp:
       added: "Added temporary trait modifier to {player} with trait: {trait}, name: {name}, value: {value}, duration: {duration}"
       desc: Adds a temporary trait modifier to a player.
