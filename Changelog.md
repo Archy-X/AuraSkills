@@ -2,6 +2,66 @@
 
 Changelog for versions since 2.0.0.
 
+## 2.4.0
+
+### New Features
+
+- Add 26.3 support
+- Add poplar blocks to Foraging sources
+- Add shelf mushroom to Farming sources
+  - Must be large variant and naturally generated to receive XP
+- New loot and reward types:
+  - `sound` type to play a sound
+  - `action_bar` type to send an action bar and pause the idle action bar
+  - `title` type to send a title
+  - `chat` type to send a chat message
+- New loot types:
+  - `group` type to grant multiple other loot types in the `entries` list at the same time
+  - `money` type to give money through Vault, same functionality as the money reward
+- Add options to delete automatic backups older than a configured number of days
+  - `delete_old_backups` - Whether old backups are deleted (defaults to false)
+  - `delete_older_than_days` - Backups older than this number of days will be deleted, calculated from the filesystem last modified time
+- Add `call_block_drop_item_event` option for Treecapitator and Terraform
+- Add packetevents support
+- Add `min_damage` option to not show damage holograms below a value
+- Add new parameters to item and armor commands:
+  - Allow `[player]` parameter to allow item/armor commands to target other players
+  - Add `[overwrite]` flag to overwrite existing modifiers without having to remove them first
+  - Updated syntax:
+    - `skills item|armor modifier|trait|multiplier add <stat|trait|skill> <value> [operation] [lore] [overwrite] [player]`
+    - `skills item|armor requirement add <skill> <level> [lore] [overwrite] [player]`
+    - `skills item|armor modifier|trait|multiplier|requirement remove <stat|trait|skill> [lore] [player]`
+    - `skills item|armor modifier|trait|multiplier|requirement list|removeall [player]`
+  - Add new permissions for using the `[player]` parameter to target others such as `auraskills.command.item.modifier.other`
+- Add `%auraskills_mability_[id]_cost%` and `cost_int` placeholders
+- Allow editing of custom modifier names in stat_info menu
+  - Display names are changed in the `menus.stat_info.custom_names` section of a messages file (not menu file)
+  - Descriptions are changed in the `menus.stat_info.custom_descriptions` section
+  - Use the key `stat_modifier_<modifierName>` or `trait_modifier_<modifierName>` (replace <modifierName> with the actual modifier name)
+- Add `check_replace_all_states` option to block sources to track player block placements for the source regardless of block states
+
+### Changes
+
+- Adventure libraries are no longer bundled in the jar and use plugin.yml libraries
+- Permissions for trait commands now use `auraskills.command.item.trait` instead of `auraskills.command.item.modifier` (same for `armor` permission)
+- Treecapitator is now stopped immediately when not holding an axe
+
+### Bug Fixes
+
+- Make the Alchemist ability work with custom effects
+- Fix `mana.cooldown_timer_period` option always using 1
+- Fix async chunk retrieval error on Folia
+- Fix hp hearts config not reloading
+- Fix Sugar Rush adding the wrong effect on potion drink
+- Fix error with openmenu command on Folia
+- Fix grindstone source to always reject when total enchant level is 0
+- Fix progress must be between error with boss bar
+- Fix hex colors for skill names in stat_info menu
+
+### API Changes
+
+- Add item registry methods to ItemManager API
+
 ## 2.3.12
 
 ### New Features
