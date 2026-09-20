@@ -245,6 +245,11 @@ public class BlockLeveler extends SourceLeveler {
 
     @Nullable
     public SkillSource<BlockXpSource> getSource(Block block, BlockXpSource.BlockTriggers trigger) {
+        return getSource(block, trigger, false);
+    }
+
+    @Nullable
+    public SkillSource<BlockXpSource> getSource(Block block, BlockXpSource.BlockTriggers trigger, boolean isReplaceCheck) {
         // Optimize by immediately rejecting air blocks
         if (block.getType().isAir()) {
             return null;
@@ -267,7 +272,8 @@ public class BlockLeveler extends SourceLeveler {
             }
 
             // Check block state
-            if (source.getStates() != null) {
+            boolean ignoreStates = isReplaceCheck && source.checkReplaceAllStates();
+            if (!ignoreStates && source.getStates() != null) {
                 // Skip if no state matches
                 if (!matchesStates(block, source.getStates())) {
                     continue;

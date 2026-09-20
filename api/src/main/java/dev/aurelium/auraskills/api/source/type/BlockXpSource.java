@@ -44,6 +44,14 @@ public interface BlockXpSource extends XpSource {
     boolean checkReplace();
 
     /**
+     * Gets whether placements of the block by the player should be tracked
+     * regardless of any state/states filter on the source.
+     *
+     * @return Whether all block states of this source will be tracked as player placed.
+     */
+    boolean checkReplaceAllStates();
+
+    /**
      * Gets the valid block states of the source.
      *
      * @return The valid block states. If there are no block states set (all block state valid), it will return null.

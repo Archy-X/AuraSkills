@@ -82,7 +82,7 @@ sources:
   shelf_mushroom:
     block: shelf_mushroom
     xp: 5.0
-    check_replace: true
+    check_replace_all_states: true
     state:
       age: 1
   kelp:

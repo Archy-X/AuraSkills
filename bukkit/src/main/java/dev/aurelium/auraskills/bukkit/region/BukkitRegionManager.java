@@ -47,7 +47,7 @@ public class BukkitRegionManager extends RegionManager {
             blockLeveler = plugin.getLevelManager().getLeveler(BlockLeveler.class);
         }
 
-        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK);
+        SkillSource<BlockXpSource> skillSource = blockLeveler.getSource(block, BlockXpSource.BlockTriggers.BREAK, true);
 
         if (skillSource == null) { // Not a source
             return;
