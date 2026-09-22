@@ -106,6 +106,54 @@ public class UserStats {
         return level;
     }
 
+    /**
+     * Gets the bonus trait level using only equipment modifiers (item and armor).
+     * This is used for PvP balance when only equipment stats should apply.
+     *
+     * @param trait the trait to calculate
+     * @return the bonus trait level from equipment only
+     */
+    public double getBonusTraitLevelEquipmentOnly(Trait trait) {
+        if (!trait.isEnabled() || plugin.getWorldManager().isDisabledWorld(user.getWorld())) {
+            return 0.0;
+        }
+
+        double level = 0.0; // Don't include skill-based trait levels
+
+        // Filter modifiers to only include equipment (item and armor)
+        List<AuraSkillsModifier<?>> modifiers = new ArrayList<>();
+        for (var traitMod : traitModifiers.values()) {
+            if (isEquipmentModifier(traitMod.name())) {
+                modifiers.add(traitMod);
+            }
+        }
+
+        for (var statMod : statModifiers.values()) {
+            if (statMod.stat() == null) continue;
+            if (!isEquipmentModifier(statMod.name())) continue;
+
+            // If the trait is linked to a direct stat, add the "multiply" and "add_percent" stat modifiers for that stat
+            if (statMod.stat().hasDirectTrait() && trait.equals(statMod.stat().getTraits().getFirst())) {
+                if (statMod.operation() == Operation.MULTIPLY || statMod.operation() == Operation.ADD_PERCENT) {
+                    modifiers.add(statMod);
+                }
+            }
+        }
+
+        level = calculateModifiers(level, modifiers, trait);
+        return level;
+    }
+
+    /**
+     * Checks if a modifier name indicates it's from equipment (item or armor).
+     *
+     * @param modifierName the name of the modifier
+     * @return true if the modifier is from equipment
+     */
+    private boolean isEquipmentModifier(String modifierName) {
+        return modifierName.startsWith(StatModifier.ITEM_PREFIX) || modifierName.startsWith(TraitModifier.ITEM_PREFIX);
+    }
+
     @Nullable
     public TraitModifier getTraitModifier(String name) {
         return traitModifiers.get(name);
