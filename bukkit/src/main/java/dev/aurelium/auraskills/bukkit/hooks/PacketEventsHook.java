@@ -22,6 +22,7 @@ public class PacketEventsHook extends Hook {
     private static final int PAUSE_MILLIS = 2500;
 
     private final AuraSkills plugin;
+    private volatile boolean enabled = true;
 
     public PacketEventsHook(AuraSkills plugin, ConfigurationNode config) {
         super(plugin, config);
@@ -35,10 +36,24 @@ public class PacketEventsHook extends Hook {
         return PacketEventsHook.class;
     }
 
-    public void sendActionBar(Player player, Component component) {
-        WrapperPlayServerActionBar packet = new WrapperPlayServerActionBar(component);
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-        PacketEvents.getAPI().getPlayerManager().sendPacketSilently(player, packet);
+    public void sendActionBar(Player player, Component component) {
+        if (component == null || !player.isOnline()) return;
+
+        try {
+            WrapperPlayServerActionBar packet = new WrapperPlayServerActionBar(component);
+
+            PacketEvents.getAPI().getPlayerManager().sendPacketSilently(player, packet);
+        } catch (Exception e) {
+            if (enabled) {
+                this.enabled = false;
+                plugin.logger().severe("Failed to send action bar with packetevents, disabling packetevents support");
+                e.printStackTrace();
+            }
+        }
     }
 
     private ActionBarManager getActionBar() {
@@ -49,19 +64,29 @@ public class PacketEventsHook extends Hook {
 
         @Override
         public void onPacketSend(PacketSendEvent event) {
-            if (event.getPacketType() == Server.SYSTEM_CHAT_MESSAGE) {
-                Object playerObj = event.getPlayer();
-                if (playerObj instanceof Player player) {
-                    var packet = new WrapperPlayServerSystemChatMessage(event);
+            if (!enabled) return;
 
-                    if (packet.isOverlay()) {
+            try {
+                if (event.getPacketType() == Server.SYSTEM_CHAT_MESSAGE) {
+                    Object playerObj = event.getPlayer();
+                    if (playerObj instanceof Player player) {
+                        var packet = new WrapperPlayServerSystemChatMessage(event);
+
+                        if (packet.isOverlay()) {
+                            getActionBar().setPaused(plugin.getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
+                        }
+                    }
+                } else if (event.getPacketType() == Server.ACTION_BAR) {
+                    Object playerObj = event.getPlayer();
+                    if (playerObj instanceof Player player) {
                         getActionBar().setPaused(plugin.getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
                     }
                 }
-            } else if (event.getPacketType() == Server.ACTION_BAR) {
-                Object playerObj = event.getPlayer();
-                if (playerObj instanceof Player player) {
-                    getActionBar().setPaused(plugin.getUser(player), PAUSE_MILLIS, TimeUnit.MILLISECONDS);
+            } catch (Exception e) {
+                if (enabled) {
+                    enabled = false;
+                    plugin.logger().severe("Failed to handle packet send with packetevents, disabling packetevents support.");
+                    e.printStackTrace();
                 }
             }
         }

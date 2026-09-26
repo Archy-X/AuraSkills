@@ -58,7 +58,6 @@ public class BukkitUiProvider implements UiProvider {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void sendActionBar(User user, String message) {
         Player player = ((BukkitUser) user).getPlayer();
         if (player == null) return;
@@ -66,13 +65,27 @@ public class BukkitUiProvider implements UiProvider {
         if (plugin.getHookManager().isRegistered(PacketEventsHook.class)) {
             PacketEventsHook hook = plugin.getHookManager().getHook(PacketEventsHook.class);
 
-            hook.sendActionBar(player, legacySerializer.deserialize(message));
+            if (hook.isEnabled()) {
+                hook.sendActionBar(player, legacySerializer.deserialize(message));
+            } else {
+                sendSpigotActionBar(message, player);
+            }
         } else if (plugin.getHookManager().isRegistered(ProtocolLibHook.class)) {
             ProtocolLibHook hook = plugin.getHookManager().getHook(ProtocolLibHook.class);
-            hook.sendActionBar(player, message);
+
+            if (hook.isEnabled()) {
+                hook.sendActionBar(player, message);
+            } else {
+                sendSpigotActionBar(message, player);
+            }
         } else {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+            sendSpigotActionBar(message, player);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private static void sendSpigotActionBar(String message, Player player) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
     }
 
     @Override

@@ -64,7 +64,7 @@ dependencies {
     compileOnly("io.lumine:Mythic-Dist:5.6.1")
     compileOnly("com.nexomc:nexo:1.6.0")
     compileOnly("de.oliver:FancyHolograms:2.8.0")
-    compileOnly("com.github.retrooper:packetevents-spigot:2.13.0")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.14.0")
     testImplementation(testFixtures(project(":common")))
     testImplementation("org.mockbukkit.mockbukkit:mockbukkit-v1.21:4.108.0")
     testImplementation("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
