@@ -61,6 +61,8 @@ public class HealingAbilities extends BukkitAbilityImpl {
 
         if (failsChecks(player, ability)) return;
 
+        if (!event.getRespawnReason().equals(PlayerRespawnEvent.RespawnReason.DEATH)) return;
+
         User user = plugin.getUser(player);
 
         double healthBonus = getValue(ability, user);
