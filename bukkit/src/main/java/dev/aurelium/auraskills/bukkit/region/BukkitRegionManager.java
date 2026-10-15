@@ -14,7 +14,7 @@ public class BukkitRegionManager extends RegionManager {
 
     private final AuraSkills plugin;
     @Nullable
-    private BlockLeveler blockLeveler; // Lazy initialized in handleBlockPlace
+    private volatile BlockLeveler blockLeveler; // Lazy initialized in handleBlockPlace
 
     public BukkitRegionManager(AuraSkills plugin) {
         super(plugin);
@@ -63,44 +63,25 @@ public class BukkitRegionManager extends RegionManager {
     }
 
     public void addPlacedBlock(Block block) {
-        Region region = getRegionFromBlock(block);
-        // Create region if it does not exist
-        if (region == null || region.shouldReload()) {
-            addLoadRegionAsync(block);
-        } else {
-            addToRegion(block, region, block.getChunk().getX(), block.getChunk().getZ());
-        }
-    }
-
-    private void addLoadRegionAsync(Block block) {
-        Region region = getRegionFromBlock(block);
         int chunkX = block.getChunk().getX();
         int chunkZ = block.getChunk().getZ();
-        if (region == null) {
-            int regionX = (int) Math.floor((double) chunkX / 32.0);
-            int regionZ = (int) Math.floor((double) chunkZ / 32.0);
-            region = new Region(block.getWorld().getName(), regionX, regionZ);
 
-            RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
-            regions.put(regionCoordinate, region);
-        }
-        Region finalRegion = region;
-        plugin.getScheduler().executeAsync(() -> {
-            loadRegion(finalRegion);
-            addToRegion(block, finalRegion, chunkX, chunkZ);
-        });
+        int regionX = (int) Math.floor((double) chunkX / 32.0);
+        int regionZ = (int) Math.floor((double) chunkZ / 32.0);
+
+        RegionCoordinate regionCoordinate = new RegionCoordinate(block.getWorld().getName(), regionX, regionZ);
+
+        Region region = getOrScheduleLoad(regionCoordinate);
+        addToRegion(block, region, chunkX, chunkZ);
     }
 
     private void addToRegion(Block block, Region region, int chunkX, int chunkZ) {
         byte regionChunkX = (byte) (chunkX - region.getX() * 32);
         byte regionChunkZ = (byte) (chunkZ - region.getZ() * 32);
-        ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
-        // Create chunk data if it does not exist
-        if (chunkData == null) {
-            chunkData = new ChunkData(region, regionChunkX, regionChunkZ);
-            region.setChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ), chunkData);
+        ChunkData chunkData = region.getOrCreateChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
+        if (chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ())) && !region.isModified()) {
+            region.setModified(true);
         }
-        chunkData.addPlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
     }
 
     public void removePlacedBlock(Block block) {
@@ -110,7 +91,9 @@ public class BukkitRegionManager extends RegionManager {
             byte regionChunkZ = (byte) (block.getChunk().getZ() - region.getZ() * 32);
             ChunkData chunkData = region.getChunkData(new ChunkCoordinate(regionChunkX, regionChunkZ));
             if (chunkData != null) {
-                chunkData.removePlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ()));
+                if (chunkData.removePlacedBlock(new BlockPosition(block.getX(), block.getY(), block.getZ())) && !region.isModified()) {
+                    region.setModified(true);
+                }
             }
         }
     }

@@ -29,20 +29,8 @@ public class RegionListener implements Listener {
         int regionZ = (int) Math.floor((double) chunk.getZ() / 32.0);
 
         RegionCoordinate regionCoordinate = new RegionCoordinate(event.getWorld().getName(), regionX, regionZ);
-        Region region = regionManager.getRegion(regionCoordinate);
 
-        if (region == null || region.shouldReload()) {
-            plugin.getScheduler().executeAsync(() -> {
-                Region obtainedRegion = regionManager.getRegion(regionCoordinate);
-                if (obtainedRegion == null) {
-                    obtainedRegion = new Region(event.getWorld().getName(), regionX, regionZ);
-                    regionManager.setRegion(regionCoordinate, obtainedRegion);
-                    regionManager.loadRegion(obtainedRegion);
-                } else if (obtainedRegion.shouldReload()) {
-                    regionManager.loadRegion(obtainedRegion);
-                }
-            });
-        }
+        regionManager.getOrScheduleLoad(regionCoordinate);
     }
 
     public void startSaveTimer() {

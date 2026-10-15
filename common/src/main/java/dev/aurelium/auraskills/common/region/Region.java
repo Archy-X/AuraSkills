@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Region {
 
@@ -12,8 +13,9 @@ public class Region {
     private final int x;
     private final int z;
     private final ConcurrentMap<ChunkCoordinate, ChunkData> chunks;
-    private boolean reload;
-    private boolean loading;
+    private volatile boolean reload;
+    private final AtomicBoolean loading = new AtomicBoolean(false);
+    private volatile boolean modified;
 
     public Region(String worldName, int x, int z) {
         this.worldName = worldName;
@@ -21,7 +23,6 @@ public class Region {
         this.z = z;
         this.chunks = new ConcurrentHashMap<>();
         this.reload = false;
-        this.loading = false;
     }
 
     public String getWorldName() {
@@ -34,6 +35,10 @@ public class Region {
 
     public int getZ() {
         return z;
+    }
+
+    public ChunkData getOrCreateChunkData(ChunkCoordinate chunkCoordinate) {
+        return chunks.computeIfAbsent(chunkCoordinate, k -> new ChunkData(this, k.getX(), k.getZ()));
     }
 
     @Nullable
@@ -57,12 +62,23 @@ public class Region {
         return reload;
     }
 
+    public boolean tryStartLoading() {
+        return loading.compareAndSet(false, true);
+    }
+
+    public void finishLoading() {
+        loading.set(false);
+    }
+
     public boolean isLoading() {
-        return loading;
+        return loading.get();
     }
 
-    public void setLoading(boolean loading) {
-        this.loading = loading;
+    public boolean isModified() {
+        return modified;
     }
 
+    public void setModified(boolean modified) {
+        this.modified = modified;
+    }
 }

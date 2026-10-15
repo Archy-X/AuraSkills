@@ -37,12 +37,12 @@ public class ChunkData {
         return placedBlocks;
     }
 
-    public void addPlacedBlock(BlockPosition blockPosition) {
-        this.placedBlocks.put(blockPosition, blockPosition);
+    public boolean addPlacedBlock(BlockPosition blockPosition) {
+        return this.placedBlocks.put(blockPosition, blockPosition) == null;
     }
 
-    public void removePlacedBlock(BlockPosition blockPosition) {
-        this.placedBlocks.remove(blockPosition);
+    public boolean removePlacedBlock(BlockPosition blockPosition) {
+        return this.placedBlocks.remove(blockPosition) != null;
     }
 
 }

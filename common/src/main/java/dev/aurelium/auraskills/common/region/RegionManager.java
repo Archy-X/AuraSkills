@@ -18,7 +18,7 @@ public abstract class RegionManager {
 
     protected final AuraSkillsPlugin plugin;
     protected final ConcurrentMap<RegionCoordinate, Region> regions;
-    private boolean saving;
+    private volatile boolean saving;
 
     public RegionManager(AuraSkillsPlugin plugin) {
         this.plugin = plugin;
@@ -37,38 +37,64 @@ public abstract class RegionManager {
         regions.clear();
     }
 
-    public void setRegion(RegionCoordinate coordinate, Region region) {
-        regions.put(coordinate, region);
+    public Region getOrScheduleLoad(RegionCoordinate coord) {
+        Region region = regions.get(coord);
+        if (region == null) {
+            Region fresh = new Region(coord.getWorldName(), coord.getX(), coord.getZ());
+            Region prev = regions.putIfAbsent(coord, fresh);
+            if (prev == null) {
+                scheduleLoad(fresh);
+                return fresh;
+            }
+            region = prev;
+        }
+        if (region.shouldReload()) {
+            scheduleLoad(region);
+        }
+        return region;
     }
 
-    public void loadRegion(Region region) {
-        if (region.isLoading()) return;
-        region.setLoading(true);
-
-        RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ());
-        String worldName = regionCoordinate.getWorldName();
-        int regionX = regionCoordinate.getX();
-        int regionZ = regionCoordinate.getZ();
-
-        File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
-        if (file.exists()) {
-            if (saving) {
-                region.setReload(true);
-            }
-            try {
-                loadNbtFile(file, region);
-            } catch (IOException e) {
-                boolean deleted = file.delete();
-                if (deleted) {
-                    plugin.logger().warn("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
-                }
-                region.setReload(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-                region.setReload(false);
-            }
+    private void scheduleLoad(Region region) {
+        if (!region.tryStartLoading()) return;
+        try {
+            plugin.getScheduler().executeAsync(() -> loadRegionOwned(region));
+        } catch (RuntimeException e) {
+            regions.remove(new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ()), region);
+            region.finishLoading();
         }
-        region.setLoading(false);
+    }
+
+    private void loadRegionOwned(Region region) {
+        boolean succeeded = false;
+        try {
+            RegionCoordinate regionCoordinate = new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ());
+            String worldName = regionCoordinate.getWorldName();
+            int regionX = regionCoordinate.getX();
+            int regionZ = regionCoordinate.getZ();
+
+            File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
+            if (file.exists()) {
+                if (saving) {
+                    region.setReload(true);
+                }
+                try {
+                    loadNbtFile(file, region);
+                    succeeded = true;
+                } catch (IOException e) {
+                    boolean deleted = file.delete();
+                    if (deleted) {
+                        plugin.logger().warn("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } finally {
+            if (!succeeded) {
+                region.setReload(false);
+            }
+            region.finishLoading();
+        }
     }
 
     private void loadNbtFile(File file, Region region) throws IOException {
@@ -93,11 +119,10 @@ public abstract class RegionManager {
     }
 
     private void loadChunk(Region region, ChunkCoordinate chunkCoordinate, CompoundTag compound) {
-        ChunkData chunkData = region.getChunkData(chunkCoordinate);
-        if (chunkData == null) {
-            chunkData = new ChunkData(region, chunkCoordinate.getX(), chunkCoordinate.getZ());
-        }
+        ChunkData chunkData = region.getOrCreateChunkData(chunkCoordinate);
         ListTag<?> placedBlocks = compound.getListTag("placed_blocks");
+        if (placedBlocks == null) return;
+
         for (CompoundTag block : placedBlocks.asCompoundTagList()) {
             int x = block.getInt("x");
             int y = block.getInt("y");
@@ -110,9 +135,12 @@ public abstract class RegionManager {
     private void saveRegion(String worldName, int regionX, int regionZ) {
         RegionCoordinate regionCoordinate = new RegionCoordinate(worldName, regionX, regionZ);
         Region region = getRegion(regionCoordinate);
-        if (region == null) return;
+        if (region == null || region.isLoading()) return;
         if (region.getChunkMap().isEmpty()) return;
+        if (!region.isModified()) return;
 
+        region.setModified(false);
+        boolean saved = false;
         File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         try {
             if (!file.exists()) {
@@ -143,11 +171,16 @@ public abstract class RegionManager {
             } else {
                 NBTUtil.write(namedTag, file);
             }
+            saved = true;
         } catch (IOException e) {
             e.printStackTrace();
             boolean deleted = file.delete();
             if (deleted) {
                 plugin.logger().warn("Deleted " + file.getName() + " because it was corrupted, this won't affect anything");
+            }
+        } finally {
+            if (!saved) {
+                region.setModified(true);
             }
         }
     }
@@ -189,23 +222,26 @@ public abstract class RegionManager {
     public void saveAllRegions(boolean clearUnused, boolean serverShutdown) {
         if (saving && !serverShutdown) return;
         saving = true;
-        for (Region region : regions.values()) {
-            try {
-                saveRegion(region.getWorldName(), region.getX(), region.getZ());
-                // Clear region from memory if no chunks are loaded in it
-                if (clearUnused) {
-                    if (isRegionUnused(region)) {
-                        regions.remove(new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ()));
+        try {
+            for (Region region : regions.values()) {
+                try {
+                    saveRegion(region.getWorldName(), region.getX(), region.getZ());
+                    // Clear region from memory if no chunks are loaded in it
+                    if (clearUnused) {
+                        if (!region.isLoading() && !region.isModified() && isRegionUnused(region)) {
+                            regions.remove(new RegionCoordinate(region.getWorldName(), region.getX(), region.getZ()));
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
-        if (!serverShutdown) {
-            plugin.getScheduler().scheduleSync(() -> saving = false, 1, TimeUnit.SECONDS);
-        } else {
-            saving = false;
+        } finally {
+            if (!serverShutdown) {
+                plugin.getScheduler().scheduleSync(() -> saving = false, 1, TimeUnit.SECONDS);
+            } else {
+                saving = false;
+            }
         }
     }
 
