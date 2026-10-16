@@ -137,6 +137,43 @@ public abstract class ManaAbilityProvider implements Listener {
         if (plugin.configBoolean(Option.DISABLE_IN_CREATIVE_MODE)) {
             return player.getGameMode().equals(GameMode.CREATIVE);
         }
+        // Check if mana ability is disabled during combat
+        return isDisabledInCombat(player);
+    }
+
+    /**
+     * Checks if this mana ability is disabled during PvP combat.
+     *
+     * @param player the player to check
+     * @return true if the player is in combat and the mana ability is disabled during combat
+     */
+    protected boolean isDisabledInCombat(Player player) {
+        if (player == null) return false;
+
+        User user = plugin.getUser(player);
+
+        // Check if player is in combat
+        if (!plugin.getCombatTracker().isInCombat(user)) {
+            return false;
+        }
+
+        // Get the list of disabled abilities during combat
+        java.util.List<String> disabledAbilities = plugin.configStringList(Option.PVP_DISABLED_ABILITIES);
+        if (disabledAbilities.isEmpty()) {
+            return false;
+        }
+
+        // Check if this mana ability is in the disabled list
+        String abilityId = manaAbility.getId().toString();
+        String abilityName = manaAbility.getId().getKey();
+
+        for (String disabled : disabledAbilities) {
+            // Support both namespaced ID and just the key
+            if (disabled.equalsIgnoreCase(abilityId) || disabled.equalsIgnoreCase(abilityName)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

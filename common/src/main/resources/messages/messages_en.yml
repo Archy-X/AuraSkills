@@ -1039,4 +1039,7 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 39
+combat:
+  enter: "<red>You are now in combat! <gray>(Equipment stats only)"
+  exit: "<green>You are no longer in combat! <gray>(Full stats restored)"
+file_version: 40
