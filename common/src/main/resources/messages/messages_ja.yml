@@ -622,6 +622,7 @@ commands:
       set: "<gold>{player}の{skill}スキルがレベル{level}に設定されました"
       desc: Sets a specific skill to a level for a player.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level must be at least {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: マナ
   hp: 体力
   xp: 経験値
-file_version: 39
+file_version: 40
