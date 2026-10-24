@@ -622,6 +622,7 @@ commands:
       set: "<gray>Skill <aqua>{skill} <gray>disetel ke level <aqua>{level} <gray>untuk pemain <gold>{player}"
       desc: Sets a specific skill to a level for a player.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Level minimal harus {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: Sihir
   hp: Darah
   xp: XP
-file_version: 39
+file_version: 40
