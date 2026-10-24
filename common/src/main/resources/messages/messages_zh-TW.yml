@@ -622,6 +622,7 @@ commands:
       set: "<gray>將玩家<gold>{player}<gray>的技能<aqua>{skill} 設定成等級<aqua>{level}"
       desc: Sets a specific skill to a level for a player.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>等級必須至少為 {level}！"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: 法力
   hp: 血量
   xp: 經驗
-file_version: 39
+file_version: 40
