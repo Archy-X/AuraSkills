@@ -622,6 +622,7 @@ commands:
       set: "<gray>Навыки <aqua>{skill} <gray>установлены на уровень <aqua>{level} <gray>для игрока <gold>{player}"
       desc: Sets a specific skill to a level for a player.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>Уровень должен быть не менее {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: МАНЫ
   hp: ЖИЗНЕЙ
   xp: ОПЫТ
-file_version: 39
+file_version: 40
