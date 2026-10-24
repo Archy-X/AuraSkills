@@ -622,6 +622,7 @@ commands:
       set: "<gray>玩家 <gold>{player} <gray>的技能 <aqua>{skill} <gray>的等级已设置为 <aqua>{level}"
       desc: 将玩家的特定技能等级设置为指定值。
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: 将玩家指定或所有技能的等级重置至初始值。
     at_least: "<yellow>所需等级至少应为 {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: 魔法值
   hp: 血量
   xp: 经验
-file_version: 39
+file_version: 40
