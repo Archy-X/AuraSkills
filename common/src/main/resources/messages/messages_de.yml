@@ -622,6 +622,7 @@ commands:
       set: "<gray>Fertigkeit <aqua>{skill} <gray>wurde auf Level <aqua>{level} <gray>für Spieler <gold>{player} <gray>gesetzt"
       desc: Setzt eine bestimmte Fertigkeit eines Spielers auf ein Level.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Setzt alle Fähigkeiten eines Spielers oder eine bestimmte Fertigkeit auf das Startlevel zurück.
     at_least: "<yellow>Stufe muss mindestens {level} sein!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: Mana
   hp: LP
   xp: EP
-file_version: 39
+file_version: 40
