@@ -52,7 +52,24 @@ public class CommandRegistrar {
 
     private void registerReplacements(PaperCommandManager manager) {
         var replacements = manager.getCommandReplacements();
-        replacements.addReplacement("skills_alias", "skills|sk|skill");
+
+        String manaAliases = String.join("|", plugin.configStringList(Option.COMMANDS_MANA_ALIASES));
+        replacements.addReplacement("mana_alias", manaAliases);
+
+        String skillsAliases = String.join("|", plugin.configStringList(Option.COMMANDS_SKILLS_ALIASES));
+        replacements.addReplacement("skills_alias", skillsAliases);
+
+        String statsAliases = String.join("|", plugin.configStringList(Option.COMMANDS_STATS_ALIASES));
+        replacements.addReplacement("stats_alias", statsAliases);
+
+        String toggleAliases = String.join("|", plugin.configStringList(Option.COMMANDS_SKILLS_TOGGLE_ALIASES));
+        replacements.addReplacement("skills_toggle_alias", toggleAliases);
+
+        String topAliases = String.join("|", plugin.configStringList(Option.COMMANDS_SKILLS_TOP_ALIASES));
+        replacements.addReplacement("skills_top_alias", topAliases);
+
+        String rankAliases = String.join("|", plugin.configStringList(Option.COMMANDS_SKILLS_RANK_ALIASES));
+        replacements.addReplacement("skills_rank_alias", rankAliases);
         // Add description replacements for each command
         for (Command command : Command.values()) {
             String lower = command.name().toLowerCase(Locale.ROOT);
@@ -248,23 +265,29 @@ public class CommandRegistrar {
     }
 
     private void registerBaseCommands(PaperCommandManager manager) {
-        manager.registerCommand(new SkillsRootCommand(plugin));
-        manager.registerCommand(new StatsCommand(plugin));
-        manager.registerCommand(new SkillCommand(plugin));
-        manager.registerCommand(new ManaCommand(plugin));
-        manager.registerCommand(new ModifierCommand(plugin));
-        manager.registerCommand(new ItemCommand(plugin));
-        manager.registerCommand(new ArmorCommand(plugin));
-        manager.registerCommand(new ProfileCommand(plugin));
-        manager.registerCommand(new BackupCommand(plugin));
-        manager.registerCommand(new XpCommand(plugin));
-        manager.registerCommand(new PresetCommand(plugin));
-        manager.registerCommand(new StorageCommand(plugin));
-        manager.registerCommand(new OpenMenuCommand(plugin));
-        manager.registerCommand(new ManaAbilityCommand(plugin));
-        manager.registerCommand(new TraitCommand(plugin));
-        manager.registerCommand(new JobsCommand(plugin));
-        manager.registerCommand(new AntiAfkCommand(plugin));
+        if (plugin.configBoolean(Option.COMMANDS_MANA_ENABLED)) {
+            manager.registerCommand(new ManaCommand(plugin));
+        }
+        if (plugin.configBoolean(Option.COMMANDS_STATS_ENABLED)) {
+            manager.registerCommand(new StatsCommand(plugin));
+        }
+        if (plugin.configBoolean(Option.COMMANDS_SKILLS_ENABLED)) {
+            manager.registerCommand(new SkillsRootCommand(plugin));
+            manager.registerCommand(new SkillCommand(plugin));
+            manager.registerCommand(new ModifierCommand(plugin));
+            manager.registerCommand(new ItemCommand(plugin));
+            manager.registerCommand(new ArmorCommand(plugin));
+            manager.registerCommand(new ProfileCommand(plugin));
+            manager.registerCommand(new BackupCommand(plugin));
+            manager.registerCommand(new XpCommand(plugin));
+            manager.registerCommand(new PresetCommand(plugin));
+            manager.registerCommand(new StorageCommand(plugin));
+            manager.registerCommand(new OpenMenuCommand(plugin));
+            manager.registerCommand(new ManaAbilityCommand(plugin));
+            manager.registerCommand(new TraitCommand(plugin));
+            manager.registerCommand(new JobsCommand(plugin));
+            manager.registerCommand(new AntiAfkCommand(plugin));
+        }
     }
 
     public void registerSkillCommands(PaperCommandManager manager) {

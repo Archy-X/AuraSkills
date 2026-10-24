@@ -12,7 +12,7 @@ import dev.aurelium.auraskills.common.user.User;
 
 import java.util.Locale;
 
-@CommandAlias("mana")
+@CommandAlias("%mana_alias")
 public class ManaCommand extends BaseCommand {
 
     private final AuraSkillsPlugin plugin;

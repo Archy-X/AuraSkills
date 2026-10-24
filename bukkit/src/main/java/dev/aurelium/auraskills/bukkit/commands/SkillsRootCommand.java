@@ -65,7 +65,7 @@ public class SkillsRootCommand extends BaseCommand {
     }
 
     @Subcommand("top")
-    @CommandAlias("skilltop")
+    @CommandAlias("%skills_top_alias")
     @CommandCompletion("@skill_top")
     @CommandPermission("auraskills.command.top")
     @Description("%desc_top")
@@ -209,7 +209,7 @@ public class SkillsRootCommand extends BaseCommand {
     }
 
     @Subcommand("toggle")
-    @CommandAlias("abtoggle")
+    @CommandAlias("%skills_toggle_alias")
     @CommandPermission("auraskills.command.abtoggle")
     @Description("%desc_toggle")
     public void onActionBarToggle(Player player) {
@@ -229,7 +229,7 @@ public class SkillsRootCommand extends BaseCommand {
     }
 
     @Subcommand("rank")
-    @CommandAlias("skillrank")
+    @CommandAlias("%skills_rank_alias")
     @CommandPermission("auraskills.command.rank")
     @Description("%desc_rank")
     public void onRank(Player player) {

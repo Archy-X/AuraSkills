@@ -270,6 +270,30 @@ source:
     gain_period_ticks: 12000
   entity:
     give_alchemy_on_potion_combat: false
+commands:
+  mana:
+    enabled: true
+    aliases:
+    - mana
+  skills:
+    enabled: true
+    aliases:
+    - skills
+    - sk
+    - skill
+    toggle:
+      aliases:
+      - abtoggle
+    top:
+      aliases:
+      - skilltop
+    rank:
+      aliases:
+      - skillrank
+  stats:
+    enabled: true
+    aliases:
+    - stats
 menus:
   lore_wrapping_width: 43
   placeholder_api: true

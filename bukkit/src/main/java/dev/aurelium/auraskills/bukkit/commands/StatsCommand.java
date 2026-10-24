@@ -8,7 +8,7 @@ import co.aikar.commands.annotation.Description;
 import dev.aurelium.auraskills.bukkit.AuraSkills;
 import org.bukkit.entity.Player;
 
-@CommandAlias("stats")
+@CommandAlias("%stats_alias")
 public class StatsCommand extends BaseCommand {
 
     private final AuraSkills plugin;

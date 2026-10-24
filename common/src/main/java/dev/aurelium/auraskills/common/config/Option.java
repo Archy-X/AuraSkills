@@ -163,6 +163,16 @@ public enum Option {
     SOURCE_GRINDSTONE_BLOCKED_ENCHANTS("source.grindstone.blocked_enchants", OptionType.LIST),
     SOURCE_STATISTIC_GAIN_PERIOD_TICKS("source.statistic.gain_period_ticks", OptionType.INT),
     SOURCE_ENTITY_GIVE_ALCHEMY_ON_POTION_COMBAT("source.entity.give_alchemy_on_potion_combat", OptionType.BOOLEAN),
+    // Command options
+    COMMANDS_MANA_ENABLED("commands.mana.enabled", OptionType.BOOLEAN),
+    COMMANDS_MANA_ALIASES("commands.mana.aliases", OptionType.LIST),
+    COMMANDS_SKILLS_ENABLED("commands.skills.enabled", OptionType.BOOLEAN),
+    COMMANDS_SKILLS_ALIASES("commands.skills.aliases", OptionType.LIST),
+    COMMANDS_SKILLS_TOGGLE_ALIASES("commands.skills.toggle.aliases", OptionType.LIST),
+    COMMANDS_SKILLS_TOP_ALIASES("commands.skills.top.aliases", OptionType.LIST),
+    COMMANDS_SKILLS_RANK_ALIASES("commands.skills.rank.aliases", OptionType.LIST),
+    COMMANDS_STATS_ENABLED("commands.stats.enabled", OptionType.BOOLEAN),
+    COMMANDS_STATS_ALIASES("commands.stats.aliases", OptionType.LIST),
     // Menu options
     MENUS_LORE_WRAPPING_WIDTH("menus.lore_wrapping_width", OptionType.INT),
     MENUS_PLACEHOLDER_API("menus.placeholder_api", OptionType.BOOLEAN),
