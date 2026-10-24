@@ -16,6 +16,27 @@ public record UserState(UUID uuid, Map<Skill, Integer> skillLevels, Map<Skill, D
         return new UserState(newUuid, skillLevels, skillXp, statModifiers, traitModifiers, mana);
     }
 
+    public UserState withSkills(Map<Skill, Integer> newSkillLevels, Map<Skill, Double> newSkillXp) {
+        return new UserState(uuid, newSkillLevels, newSkillXp, statModifiers, traitModifiers, mana);
+    }
+
+    public boolean isEmpty(AuraSkillsPlugin plugin) {
+        for (Integer value : skillLevels.values()) {
+            if (value != null && value != plugin.config().getStartLevel()) {
+                return false;
+            }
+        }
+        for (Double value : skillXp.values()) {
+            if (value != null && value != 0.0) {
+                return false;
+            }
+        }
+        if (!statModifiers.isEmpty() || !traitModifiers.isEmpty()) {
+            return false;
+        }
+        return mana == 0.0;
+    }
+
     public static UserState createEmpty(UUID uuid, AuraSkillsPlugin plugin) {
         // Fill maps with registered skills and default levels
         Map<Skill, Integer> levels = new ConcurrentHashMap<>();

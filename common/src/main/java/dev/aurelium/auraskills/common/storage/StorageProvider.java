@@ -42,6 +42,7 @@ public abstract class StorageProvider {
             lockAcquired = lock.readLock().tryLock(LOAD_TIMEOUT_MS, TimeUnit.MILLISECONDS);
             if (!lockAcquired) {
                 plugin.logger().warn("Load timout exceeded for user " + uuid);
+                return;
             }
 
             User user = loadRaw(uuid, platformPlayer);
