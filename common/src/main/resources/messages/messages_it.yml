@@ -622,6 +622,7 @@ commands:
       set: "<gray>Abilità <aqua>{skill} <gray>imposatata al livello <aqua>{level} <gray>per il giocatore <gold>{player}"
       desc: Imposta un'abilità specifica a un livello per un giocatore.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Ripristina tutte le abilità o un'abilità specifica al livello iniziale per un giocatore.
     at_least: "<yellow>Il livello deve essere almeno {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: Mana
   hp: PS
   xp: XP
-file_version: 39
+file_version: 40
