@@ -64,7 +64,7 @@ public class PacketEventsHook extends Hook {
 
         @Override
         public void onPacketSend(PacketSendEvent event) {
-            if (!enabled) return;
+            if (!enabled || !plugin.isEnabled()) return;
 
             try {
                 if (event.getPacketType() == Server.SYSTEM_CHAT_MESSAGE) {
@@ -83,6 +83,8 @@ public class PacketEventsHook extends Hook {
                     }
                 }
             } catch (Exception e) {
+                if (!plugin.isEnabled()) return;
+
                 if (enabled) {
                     enabled = false;
                     plugin.logger().severe("Failed to handle packet send with packetevents, disabling packetevents support.");

@@ -57,6 +57,8 @@ public class ProtocolLibHook extends Hook {
     }
 
     private void disableAndPrint(Exception e, String cause) {
+        if (!skillsPlugin.isEnabled()) return;
+
         if (enabled) {
             this.enabled = false;
             plugin.logger().severe("Failed to " + cause + " with ProtocolLib, disabling ProtocolLib support");
