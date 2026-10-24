@@ -622,6 +622,7 @@ commands:
       set: "<gray>Dovednosti <aqua>{skill} <gray>nastavena na level <aqua>{level} <gray>pro hráče <gold>{player}"
       desc: Nastaví konkrétní dovednost hráče na určitou úroveň.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resetuje všechny dovednosti nebo konkrétní dovednost hráče na počáteční úroveň.
     at_least: "<yellow>Úroveň musí být alespoň {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 39
+file_version: 40
