@@ -622,6 +622,7 @@ commands:
       set: "<gray>Umiejętność <aqua>{skill} <gray>ustawiona na poziom <aqua>{level} <gray>dla gracza <gold>{player}"
       desc: Ustawia konkretną umiejętność na określonym poziomie dla gracza.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resetuje wszystkie umiejętności lub określone umiejętności do poziomu startowego gracza.
     at_least: "<yellow>Poziom musi wynosić co najmniej {level}!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: Mana
   hp: HP
   xp: XP
-file_version: 39
+file_version: 40
