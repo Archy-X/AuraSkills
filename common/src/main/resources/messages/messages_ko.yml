@@ -622,6 +622,7 @@ commands:
       set: "<gray>사용자 <gold>{player} <gray>의 <aqua>{skill} 스킬 레벨이 <aqua>{level} <gray>으로 설정되었습니다."
       desc: Sets a specific skill to a level for a player.
     reset:
+      no_data: This player has no skill data or was already reset.
       desc: Resets all skills or a specific skill to the starting level for a player.
     at_least: "<yellow>레벨은 최소 {level} 이상이어야 합니다!"
   skills:
@@ -1039,4 +1040,4 @@ units:
   mana: 마나
   hp: 체력
   xp: 경험치
-file_version: 39
+file_version: 40
