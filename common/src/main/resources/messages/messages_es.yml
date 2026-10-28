@@ -533,6 +533,7 @@ leveler:
   mana_ability_unlock: Habilidad de Maná Desbloqueada
   mana_ability_level_up: Nuevo Nivel de Habilidad de Maná
   unclaimed_item: "<red>Tienes objetos sin reclamar porque tu invnetario estaba lleno, usa <yellow>/skills claimitems <red>para reclamarlos"
+  limit_reached: "<red>Límite alcanzado, quedan {time} segundos"
 menus:
   common:
     close: "Cerrar"
@@ -564,6 +565,7 @@ menus:
     your_skills_desc: "Mejora las habilidades haciendo varias tareas<gray>para desbloquear mejoras de estadísticas, habilidades y mucho más!"
     your_skills_hover: "¡Coloca el cursor sobre una habilidad para obtener más información!"
     your_skills_click: "¡Haz click en una habilidad para ver el progreso de nivel!"
+    skill_xp_limited: "XP limitado"
     skill_click: "¡Click para ver el progreso de Nivel!"
     stats: "Estadísticas"
     stats_desc: "Gana ventajas de estadísticas al subir de nivel las habilidades"
