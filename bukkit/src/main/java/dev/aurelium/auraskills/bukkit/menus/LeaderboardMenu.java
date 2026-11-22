@@ -8,18 +8,23 @@ import dev.aurelium.auraskills.bukkit.util.VersionUtils;
 import dev.aurelium.auraskills.common.leaderboard.LeaderboardManager;
 import dev.aurelium.auraskills.common.leaderboard.SkillValue;
 import dev.aurelium.slate.builder.MenuBuilder;
+import dev.aurelium.slate.menu.ActiveMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class LeaderboardMenu {
 
     private final AuraSkills plugin;
+    private final Map<UUID, PlayerProfile> profileCache = new ConcurrentHashMap<>();
 
     public LeaderboardMenu(AuraSkills plugin) {
         this.plugin = plugin;
@@ -55,8 +60,9 @@ public class LeaderboardMenu {
                 Skill skill = (Skill) t.menu().getProperty("skill");
                 SkillValue value = lb.getSkillValue(skill, t.value());
                 if (value == null) return null;
+
                 if (t.item().getItemMeta() instanceof SkullMeta meta) {
-                    setSkullTexture(meta, value);
+                    setSkullTexture(t.menu(), t.item(), meta, value, t.value());
                     t.item().setItemMeta(meta);
                 }
                 return t.item();
@@ -64,14 +70,37 @@ public class LeaderboardMenu {
         });
     }
 
-    private void setSkullTexture(SkullMeta meta, SkillValue value) {
+    private void setSkullTexture(ActiveMenu menu, ItemStack item, SkullMeta meta, SkillValue value, Integer place) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(value.id());
-        if (VersionUtils.isAtLeastVersion(18, 1)) {
-            if (!offlinePlayer.getPlayerProfile().isComplete()) {
-                return;
-            }
+        if (!VersionUtils.isAtLeastVersion(18, 1)) {
+            meta.setOwningPlayer(offlinePlayer);
+            return;
         }
-        meta.setOwningPlayer(offlinePlayer);
+
+        PlayerProfile playerProfile = offlinePlayer.getPlayerProfile();
+        if (playerProfile.isComplete()) {
+            if (offlinePlayer.isOnline()) {
+                profileCache.remove(value.id());
+            }
+            meta.setOwnerProfile(playerProfile);
+            return;
+        }
+
+        PlayerProfile cached = profileCache.get(value.id());
+        if (cached != null && cached.isComplete()) {
+            meta.setOwnerProfile(cached);
+            return;
+        }
+
+        playerProfile.update().thenAcceptAsync(profile -> {
+            profileCache.put(value.id(), profile);
+
+            meta.setOwnerProfile(profile);
+            item.setItemMeta(meta);
+
+            // Update the item in the menu
+            plugin.getScheduler().executeSync(() -> menu.replaceBaseItem("leaderboard_player", item, place));
+        }, plugin.getScheduler()::executeAsync);
     }
 
 }

@@ -132,16 +132,13 @@ public abstract class RegionManager {
         region.setChunkData(chunkCoordinate, chunkData);
     }
 
-    private void saveRegion(String worldName, int regionX, int regionZ) {
-        RegionCoordinate regionCoordinate = new RegionCoordinate(worldName, regionX, regionZ);
-        Region region = getRegion(regionCoordinate);
+    public void saveRegion(File file, Region region) {
         if (region == null || region.isLoading()) return;
         if (region.getChunkMap().isEmpty()) return;
         if (!region.isModified()) return;
 
         region.setModified(false);
         boolean saved = false;
-        File file = new File(plugin.getPluginFolder() + "/regiondata/" + worldName + "/r." + regionX + "." + regionZ + ".asrg");
         try {
             if (!file.exists()) {
                 File parent = file.getParentFile();
@@ -169,6 +166,7 @@ public abstract class RegionManager {
                     }
                 }
             } else {
+                plugin.logger().severe("Compound tag size: " + compoundTag.size());
                 NBTUtil.write(namedTag, file);
             }
             saved = true;
@@ -225,7 +223,9 @@ public abstract class RegionManager {
         try {
             for (Region region : regions.values()) {
                 try {
-                    saveRegion(region.getWorldName(), region.getX(), region.getZ());
+                    File file = new File(plugin.getPluginFolder() + "/regiondata/" + region.getWorldName() + "/r." + region.getX() + "." + region.getZ() + ".asrg");
+
+                    saveRegion(file, region);
                     // Clear region from memory if no chunks are loaded in it
                     if (clearUnused) {
                         if (!region.isLoading() && !region.isModified() && isRegionUnused(region)) {
